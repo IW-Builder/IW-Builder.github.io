@@ -1,0 +1,230 @@
+{
+  "favorite": false,
+  "title": "Effect: effectPresentChoice",
+  "description": "A focused native-feature authoring example.",
+  "background": "You visit a small guild office to arrange a delivery.",
+  "instructions": "Keep the scene brief. Respect tracker values and the defined native forms. Do not invent mechanical changes.",
+  "authorStyle": "Clear, concise prose.",
+  "recommendedAIModel": null,
+  "firstInput": "Begin at the guild office. The clerk asks what assistance you need.",
+  "objective": "Arrange your guild visit.",
+  "imageModel": "manticore",
+  "imageStyle": "photo_1",
+  "illustrationStyleNonCharacterLowPriority": "",
+  "illustrationStyleNonCharacterHighPriority": "",
+  "illustrationStyleCharacterLowPriority": "",
+  "illustrationStyleCharacterHighPriority": "",
+  "imageStyleCharacterPre": "",
+  "imageStyleCharacterPost": "",
+  "imageStyleNonCharacterPre": "",
+  "imageStyleNonCharacterPost": "",
+  "mature": false,
+  "nsfw": false,
+  "contentWarnings": "",
+  "enableAISpecificInstructionBlocks": false,
+  "previewImage": "",
+  "fullSizePreviewImage": "",
+  "previewImageOptions": [],
+  "fullSizePreviewImageOptions": [],
+  "currentPreviewImageIndex": -1,
+  "imagePromptDetails": {
+    "illustrClothes": "",
+    "illustrSetting": "",
+    "illustrSubject": "",
+    "illustrAppearance": "",
+    "illustrIsCharacter": false,
+    "illustrExpressionPosition": ""
+  },
+  "permissionsOnceShared": {
+    "sharing": false,
+    "editing": false
+  },
+  "allowChangeCharacterName": false,
+  "allowChangeCharacterDescription": false,
+  "allowChangeCharacterSkills": false,
+  "allowChangeCharacterItemValues": false,
+  "allowChangeCharacterPortrait": false,
+  "allowChangeCharacterNewPortrait": false,
+  "conditions": [],
+  "schemaVersion": 2.4,
+  "skills": [
+    "Observation",
+    "Persuasion"
+  ],
+  "possibleCharacters": [
+    {
+      "name": "Avery",
+      "description": "An attentive courier.",
+      "portrait": "",
+      "portraitPromptDetails": {
+        "illustrAppearance": "",
+        "illustrClothes": "",
+        "illustrExpressionPosition": "",
+        "illustrSetting": ""
+      },
+      "fullSizePortrait": "",
+      "portraitOptions": [],
+      "fullSizePortraitOptions": [],
+      "currentPortraitIndex": -1,
+      "characterId": "pc-visitor",
+      "skills": {
+        "Observation": 2,
+        "Persuasion": 3
+      },
+      "initialTrackedItemValues": []
+    }
+  ],
+  "triggerEvents": [
+    {
+      "id": "trg-demo",
+      "name": "Demo",
+      "advancedLogic": false,
+      "triggerEffects": [
+        {
+          "id": "node-effect-effectPresentChoice-2",
+          "data": {
+            "path": "",
+            "valueDelimiter": "newline",
+            "updateMode": "replace",
+            "minSelections": null,
+            "choices": "Courier\nArchivist",
+            "maxSelections": null,
+            "targetTrackedItemId": "GJlIgehdL",
+            "selectionMode": "single",
+            "message": "Choose your guild assignment."
+          },
+          "type": "effectPresentChoice"
+        }
+      ],
+      "triggerMidGame": false,
+      "triggerConditions": [
+        {
+          "id": "node-effect-effectPresentChoice-1",
+          "data": 2,
+          "type": "triggerOnTurn",
+          "category": "condition"
+        }
+      ],
+      "triggerOnStartOfGame": false,
+      "canTriggerMoreThanOnce": false
+    },
+    {
+      "id": "trg-answer-followup",
+      "name": "Answer Followup",
+      "advancedLogic": false,
+      "triggerEffects": [
+        {
+          "id": "node-effect-effectPresentChoice-4",
+          "data": "Stored answer: <<$answer>>",
+          "type": "effectShowMessage"
+        }
+      ],
+      "triggerMidGame": false,
+      "triggerConditions": [
+        {
+          "id": "node-effect-effectPresentChoice-3",
+          "data": "$answer != \"\"",
+          "type": "triggerOnPawScript",
+          "category": "condition"
+        }
+      ],
+      "triggerOnStartOfGame": false,
+      "canTriggerMoreThanOnce": false
+    }
+  ],
+  "victoryCondition": null,
+  "defeatCondition": null,
+  "trackedItems": [
+    {
+      "id": "NiZ70GY5u",
+      "name": "Coins",
+      "positionInList": 0,
+      "dataType": "number",
+      "visibility": "everyone",
+      "description": "Example coins",
+      "updateInstructions": "",
+      "formatExample": "",
+      "enforceFormat": false,
+      "formatSchema": "",
+      "initialValue": "10",
+      "initialValueBasedOnPC": "same",
+      "autoUpdate": false,
+      "variableName": "coins",
+      "driftAcknowledgedForName": null
+    },
+    {
+      "id": "y5vtjAS8e",
+      "name": "Flag",
+      "positionInList": 1,
+      "dataType": "number",
+      "visibility": "everyone",
+      "description": "Example flag",
+      "updateInstructions": "",
+      "formatExample": "",
+      "enforceFormat": false,
+      "formatSchema": "",
+      "initialValue": "0",
+      "initialValueBasedOnPC": "same",
+      "autoUpdate": false,
+      "variableName": "flag",
+      "driftAcknowledgedForName": null
+    },
+    {
+      "id": "XGR0wxDQU",
+      "name": "Note",
+      "positionInList": 2,
+      "dataType": "text",
+      "visibility": "everyone",
+      "description": "Example note",
+      "updateInstructions": "",
+      "formatExample": "",
+      "enforceFormat": false,
+      "formatSchema": "",
+      "initialValue": "",
+      "initialValueBasedOnPC": "same",
+      "autoUpdate": false,
+      "variableName": "note",
+      "driftAcknowledgedForName": null
+    },
+    {
+      "id": "GJlIgehdL",
+      "name": "Answer",
+      "positionInList": 3,
+      "dataType": "text",
+      "visibility": "everyone",
+      "description": "Example answer",
+      "updateInstructions": "",
+      "formatExample": "",
+      "enforceFormat": false,
+      "formatSchema": "",
+      "initialValue": "",
+      "initialValueBasedOnPC": "same",
+      "autoUpdate": false,
+      "variableName": "answer",
+      "driftAcknowledgedForName": null
+    }
+  ],
+  "hideSkillSystem": false,
+  "autoAdvanceVersion": false,
+  "version": "1.0",
+  "charSelectText": "",
+  "descriptionRequest": "",
+  "evaluationRequest": "",
+  "summaryRequest": "",
+  "instructionBlocks": [],
+  "NPCs": [
+    {
+      "id": "npc-clerk",
+      "name": "Mara",
+      "one_liner": "Mara is the practical guild clerk.",
+      "detail": "She answers directly and likes complete addresses.",
+      "appearance": "Short grey hair and ink-stained cuffs.",
+      "location": "guild office",
+      "names": [
+        "Mara"
+      ]
+    }
+  ],
+  "loreBookEntries": [],
+  "designNotes": ""
+}

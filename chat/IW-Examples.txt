@@ -1,0 +1,3103 @@
+Infinite Worlds Authoring Kit: generated text edition. Source paths below identify sections within this upload. This is reference material, not one JSON world to import. The Examples edition includes all native payload snippets plus selected complete recipes; other complete worlds remain in the full kit and can be requested by path. Follow Authoring-Prompt.md for the authoring task. Load referenced material selectively; ask for a missing companion when required. Do not claim the Python validator ran unless actual execution tools and the full tools folder are available.
+
+
+===== BEGIN FILE: examples/README.md =====
+# Cookbook: complete, independent exports
+
+Every linked JSON is a whole world with declared targets, not a fragment to paste into a random array. The purpose is to make native shapes copyable. Structural/reference checks do not prove execution. This is an authoring reference. index.json records example scope and verification status; ../reference/Known-Limits.md describes remaining platform boundaries. Rename/remap IDs when combining examples. Sample-library modules remain separate because they require creative and dependency adaptation.
+
+For lightweight payload lookup, use [Payloads.md](Payloads.md). Full files below remain standalone imports.
+
+## Native conditions and effects
+
+### Conditions
+
+| Example | Demonstrates |
+| --- | --- |
+| [triggerOnEvent](condition-triggerOnEvent.json) | Recognize an AI-judged narrative Scenario; define it once in root conditions. |
+| [triggerOnRandomChance](condition-triggerOnRandomChance.json) | Apply a percentage chance to an otherwise eligible trigger. |
+| [triggerOnCharacter](condition-triggerOnCharacter.json) | Limit an event to selected player characters. |
+| [triggerOnTrackedItem](condition-triggerOnTrackedItem.json) | Compare a tracker with a threshold or text condition. |
+| [triggerPrereqs](condition-triggerPrereqs.json) | Require another trigger to have fired this turn or earlier in the game. |
+| [triggerBlockers](condition-triggerBlockers.json) | Suppress an event if another trigger fired this turn or earlier in the game. |
+| [triggerOnPawScript](condition-triggerOnPawScript.json) | Evaluate a deterministic state predicate. |
+| [triggerOnTurn](condition-triggerOnTurn.json) | Run at a specified turn. |
+
+### Effects
+
+| Example | Demonstrates |
+| --- | --- |
+| [effectShowMessage](effect-effectShowMessage.json) | Display an authoritative player-facing result. |
+| [effectTellAIWhatToDo](effect-effectTellAIWhatToDo.json) | Guide subsequent narration. |
+| [effectGiveInfo](effect-effectGiveInfo.json) | Supply background information to the AI. |
+| [effectSetTrackedItemValue](effect-effectSetTrackedItemValue.json) | Set or modify a tracked value with a native operation. |
+| [effectModifyTrackedItemDetails](effect-effectModifyTrackedItemDetails.json) | Change selected tracker settings through explicit override flags. |
+| [effectChangePCName](effect-effectChangePCName.json) | Change the active player character name. |
+| [effectChangePCDescription](effect-effectChangePCDescription.json) | Change the active player character description. |
+| [effectChangePCSkill](effect-effectChangePCSkill.json) | Increase/decrease a named skill with a level boundary. |
+| [effectChangeObjective](effect-effectChangeObjective.json) | Replace the current story objective. |
+| [effectChangeVictoryCondition](effect-effectChangeVictoryCondition.json) | Replace the native victory criterion/message. |
+| [effectChangeDefeatCondition](effect-effectChangeDefeatCondition.json) | Replace the native defeat criterion/message. |
+| [effectChangeMainInstructions](effect-effectChangeMainInstructions.json) | Replace main storyteller instructions. |
+| [effectModifyInstructionBlock](effect-effectModifyInstructionBlock.json) | Install, replace or clear a named instruction block. |
+| [effectModifyKeywordBlock](effect-effectModifyKeywordBlock.json) | Change a keyword block and its activation keywords. |
+| [effectChangeAuthorStyle](effect-effectChangeAuthorStyle.json) | Change the requested prose style. |
+| [effectChangeDescriptionInstructions](effect-effectChangeDescriptionInstructions.json) | Change Description specialist instructions. |
+| [effectPresentChoice](effect-effectPresentChoice.json) | Ask the player to select from defined options and store the result. |
+| [effectRequestInput](effect-effectRequestInput.json) | Request text and store it in a tracker. |
+| [effectFireRandomTrigger](effect-effectFireRandomTrigger.json) | Dispatch a random listed trigger or the nothing sentinel; extra dispatch semantics are bounded. |
+| [effectRunScript](effect-effectRunScript.json) | Execute sequential tracker updates in PawScript. |
+| [effectEndsGame](effect-effectEndsGame.json) | End the game; boolean data controls whether continuing is allowed. |
+
+## Combined recipes and other fixtures
+
+- [logic-groups](logic-groups.json): Nested logic nodes with native shape.
+- [native-text-operations](native-text-operations.json): Append, remove all matches and replace text.
+- [character-starting-values](character-starting-values.json): Fixed, fixed-choice and script-choice per-PC values.
+- [npc-keyword-portrait-ending](npc-keyword-portrait-ending.json): NPC, keyword, portrait descriptors and natural-language endings.
+- [recipe-request-commit](recipe-request-commit.json): Optional precise transaction using a fresh AI request and script receipt.
+- [recipe-choice-followup](recipe-choice-followup.json): Answer-dependent objective using a later ordered trigger.
+- [recipe-threshold-unlock](recipe-threshold-unlock.json): State threshold grants access and modifies content once.
+- [probe-skills](probe-skills.json): Editor-baseline Evaluation installed explicitly; capped skill effects and runtime readout.
+- [probe-template-timing](probe-template-timing.json): Compare live block interpolation with effect-installed interpolation.
+- [showcase-glass-ledger](showcase-glass-ledger.json): Integrated cast, alternate PCs, planning choice, precise transactions, countdown, optional prose, Scenario and script-triggered endings.
+
+## Request -> deterministic commit [PATTERN]
+
+Use `recipe-request-commit.json` when an AI-interpreted purchase needs exact state accounting. The example offers one guild ticket for 5 coins; its intentionally small event catalog is not a requirement for other worlds.
+
+1. AI writes Request every turn: `turn` copies CURRENT TURN from the permanent Turn Context block and `event` is BUY_TICKET or NONE. Instructions classify the current request, not narrated success.
+2. The first ordered trigger resets the receipt for the current turn. It does **not** erase the AI request before consumption.
+3. A following trigger requires the fresh turn stamp and purchase event. One script checks ownership/funds, deducts coins and grants the ticket together, or writes the rejection reason.
+4. A later conditional effect displays the receipt and totals only for a fresh non-NONE request, then clears the request. A persistent receipt supplies next-turn continuity.
+5. Narration describes a purchase attempt until the receipt is available. It then continues from the authoritative result next turn.
+
+The turn stamp protects against reuse, not misclassification. A model can still classify a vague input incorrectly or invent prose; this is not a perfect parser. Correctly bound native menus provide constrained answers that subsequent triggers can consume in the same turn. Native thresholds and timed effects need no AI request layer at all.
+
+## Choice → follow-up
+
+Correctly bound single-answer forms update their target immediately, and a later trigger can update the objective or show a receipt in the same turn. Use consistent target IDs. The single-choice example supports a fresh import without retargeting; ../reference/Import-Integrity.md explains reference checks for composed worlds.
+
+## Threshold unlock
+
+`recipe-threshold-unlock.json` establishes a reputation threshold, records a persistent flag and installs an instruction block. The flag makes the operation idempotent even though the trigger is repeatable. It does not require region switching, an action catalog or any particular movement system.
+
+## Showcase scope
+
+`showcase-glass-ledger.json` combines two player characters, Skills, a crew, keyword lore, a player-selected startup plan, an exact purchase/recovery sequence, a countdown, a player-optional prose block, a Scenario and endings. It is an integration example, not an action-engine requirement for other worlds. The showcase selects its approach through a player-controlled startup tracker.
+
+It intentionally excludes unrelated demonstrations such as renaming the PC mid-game, switching all specialist rules, and dispatching random inactive triggers. Those have their own isolated examples. Video is not made a required dependency before its context variables are characterized. The showcase composition is structurally validated; runtime verification of an adapted world should focus on its actual feature dependencies.
+
+## Optional verification
+
+The cookbook is supplied to the authoring AI as examples. You do not need to play every world. index.json records the examples' purpose and verification scope. ../reference/Known-Limits.md identifies behavior that needs checking only when a design depends on it. Structural validation and a successful runtime check are separate claims.
+
+
+For reference integrity and importing, see ../reference/Import-Integrity.md.
+
+## YAML path operations
+
+[yaml-path-operations.json](yaml-path-operations.json) demonstrates set, remove, append and adjust on separate turns. Its paths match the declared YAML structure. This composition is structurally validated; its full runtime sequence is not certified.
+
+## Narrative-first example
+
+[narrative-last-ferry.json](narrative-last-ferry.json) demonstrates a focused opening, distinct NPC voices, optional lore and bounded AI memory without a custom action engine. [PATTERN]: structurally checked, not a runtime-qualified benchmark.
+
+===== END FILE: examples/README.md =====
+
+===== BEGIN FILE: examples/Payloads.md =====
+# Compact native payload cookbook
+
+[DOCUMENTED] Exact payload shapes, extracted from the complete example worlds. These are snippets, not independently importable worlds. Read ../reference/Schema.md for field semantics and ../reference/Triggers.md for timing. Copy the node into triggerConditions or triggerEffects as appropriate, assign a unique node ID, and declare/remap every target. For a coherent transaction, choose one complete recipe rather than concatenating unrelated snippets.
+
+Every authored trigger also needs an id, name, conditions/effects arrays and explicit triggerOnStartOfGame, triggerMidGame and canTriggerMoreThanOnce flags. Conditions normally AND together. Scripts are bare code strings; messages may contain templates. String payload values remain JSON strings.
+
+## triggerBlockers
+
+Suppress an event if another trigger fired this turn or earlier in the game. Full world: [condition-triggerBlockers.json](condition-triggerBlockers.json).
+
+```json
+{
+  "category": "condition",
+  "type": "triggerBlockers",
+  "data": {
+    "blockers": [
+      "trg-anchor"
+    ],
+    "firedThisTurn": true
+  },
+  "id": "node-condition-triggerBlockers-3"
+}
+```
+
+Dependencies: triggerEvents trg-anchor (Anchor).
+
+## triggerOnCharacter
+
+Limit an event to selected player characters. Full world: [condition-triggerOnCharacter.json](condition-triggerOnCharacter.json).
+
+```json
+{
+  "category": "condition",
+  "type": "triggerOnCharacter",
+  "data": [
+    "pc-visitor"
+  ],
+  "id": "node-condition-triggerOnCharacter-1"
+}
+```
+
+Dependencies: possibleCharacters pc-visitor (Avery).
+
+## triggerOnEvent
+
+Recognize an AI-judged narrative Scenario; define it once in root conditions. Full world: [condition-triggerOnEvent.json](condition-triggerOnEvent.json).
+
+```json
+{
+  "category": "condition",
+  "type": "triggerOnEvent",
+  "data": "The player explicitly asks the clerk for a receipt.",
+  "id": "node-condition-triggerOnEvent-1"
+}
+```
+
+Dependencies: root conditions must include the Scenario text.
+
+## triggerOnPawScript
+
+Evaluate a deterministic state predicate. Full world: [condition-triggerOnPawScript.json](condition-triggerOnPawScript.json).
+
+```json
+{
+  "category": "condition",
+  "type": "triggerOnPawScript",
+  "data": "$coins >= 10",
+  "id": "node-condition-triggerOnPawScript-1"
+}
+```
+
+Dependencies: script/template roots: $coins.
+
+## triggerOnRandomChance
+
+Apply a percentage chance to an otherwise eligible trigger. Full world: [condition-triggerOnRandomChance.json](condition-triggerOnRandomChance.json).
+
+```json
+{
+  "category": "condition",
+  "type": "triggerOnRandomChance",
+  "data": "50",
+  "id": "node-condition-triggerOnRandomChance-1"
+}
+```
+
+## triggerOnTrackedItem
+
+Compare a tracker with a threshold or text condition. Full world: [condition-triggerOnTrackedItem.json](condition-triggerOnTrackedItem.json).
+
+```json
+{
+  "category": "condition",
+  "type": "triggerOnTrackedItem",
+  "data": {
+    "trackedItemID": "o8pvrgyOL",
+    "inequality": "at_least",
+    "requiredValue": "10",
+    "textComparison": "contains"
+  },
+  "id": "node-condition-triggerOnTrackedItem-1"
+}
+```
+
+Dependencies: trackedItems o8pvrgyOL (Coins).
+
+## triggerOnTurn
+
+Run at a specified turn. Full world: [condition-triggerOnTurn.json](condition-triggerOnTurn.json).
+
+```json
+{
+  "category": "condition",
+  "type": "triggerOnTurn",
+  "data": 2,
+  "id": "node-condition-triggerOnTurn-1"
+}
+```
+
+## triggerPrereqs
+
+Require another trigger to have fired this turn or earlier in the game. Full world: [condition-triggerPrereqs.json](condition-triggerPrereqs.json).
+
+```json
+{
+  "category": "condition",
+  "type": "triggerPrereqs",
+  "data": {
+    "prereqs": [
+      "trg-anchor"
+    ],
+    "firedThisTurn": true
+  },
+  "id": "node-condition-triggerPrereqs-3"
+}
+```
+
+Dependencies: triggerEvents trg-anchor (Anchor).
+
+## effectChangeAuthorStyle
+
+Change the requested prose style. Full world: [effect-effectChangeAuthorStyle.json](effect-effectChangeAuthorStyle.json).
+
+```json
+{
+  "type": "effectChangeAuthorStyle",
+  "data": "Use short paragraphs and dry, understated humor.",
+  "id": "node-effect-effectChangeAuthorStyle-2"
+}
+```
+
+## effectChangeDefeatCondition
+
+Replace the native defeat criterion/message. Full world: [effect-effectChangeDefeatCondition.json](effect-effectChangeDefeatCondition.json).
+
+```json
+{
+  "type": "effectChangeDefeatCondition",
+  "data": {
+    "condition": "The player has explicitly abandoned the demonstration.",
+    "text": "The demonstration ends unfinished.",
+    "alreadyFired": false
+  },
+  "id": "node-effect-effectChangeDefeatCondition-2"
+}
+```
+
+## effectChangeDescriptionInstructions
+
+Change Description specialist instructions. Full world: [effect-effectChangeDescriptionInstructions.json](effect-effectChangeDescriptionInstructions.json).
+
+```json
+{
+  "type": "effectChangeDescriptionInstructions",
+  "data": "Write a concise second-person scene grounded in the guild office. Keep the player's intentions intact.",
+  "id": "node-effect-effectChangeDescriptionInstructions-2"
+}
+```
+
+## effectChangeMainInstructions
+
+Replace main storyteller instructions. Full world: [effect-effectChangeMainInstructions.json](effect-effectChangeMainInstructions.json).
+
+```json
+{
+  "type": "effectChangeMainInstructions",
+  "data": "Continue a short guild-office scene. Mara is the clerk. Respect the tracker values; the player decides what to do next.",
+  "id": "node-effect-effectChangeMainInstructions-2"
+}
+```
+
+## effectChangeObjective
+
+Replace the current story objective. Full world: [effect-effectChangeObjective.json](effect-effectChangeObjective.json).
+
+```json
+{
+  "type": "effectChangeObjective",
+  "data": "Learn why the silver seal is missing.",
+  "id": "node-effect-effectChangeObjective-2"
+}
+```
+
+## effectChangePCDescription
+
+Change the active player character description. Full world: [effect-effectChangePCDescription.json](effect-effectChangePCDescription.json).
+
+```json
+{
+  "type": "effectChangePCDescription",
+  "data": "Avery Reed is a courier newly recognized by the guild.",
+  "id": "node-effect-effectChangePCDescription-2"
+}
+```
+
+## effectChangePCName
+
+Change the active player character name. Full world: [effect-effectChangePCName.json](effect-effectChangePCName.json).
+
+```json
+{
+  "type": "effectChangePCName",
+  "data": "Avery Reed",
+  "id": "node-effect-effectChangePCName-2"
+}
+```
+
+## effectChangePCSkill
+
+Increase/decrease a named skill with a level boundary. Full world: [effect-effectChangePCSkill.json](effect-effectChangePCSkill.json).
+
+```json
+{
+  "type": "effectChangePCSkill",
+  "data": {
+    "name": "Observation",
+    "amount": 2,
+    "minmax": 4,
+    "increase": true
+  },
+  "id": "node-effect-effectChangePCSkill-2"
+}
+```
+
+## effectChangeVictoryCondition
+
+Replace the native victory criterion/message. Full world: [effect-effectChangeVictoryCondition.json](effect-effectChangeVictoryCondition.json).
+
+```json
+{
+  "type": "effectChangeVictoryCondition",
+  "data": {
+    "condition": "The player has explicitly asked to finish the demonstration.",
+    "text": "The demonstration is complete.",
+    "alreadyFired": false
+  },
+  "id": "node-effect-effectChangeVictoryCondition-2"
+}
+```
+
+## effectEndsGame
+
+End the game; boolean data controls whether continuing is allowed. Full world: [effect-effectEndsGame.json](effect-effectEndsGame.json).
+
+```json
+{
+  "type": "effectEndsGame",
+  "data": true,
+  "id": "node-effect-effectEndsGame-3"
+}
+```
+
+## effectFireRandomTrigger
+
+Dispatch a random listed trigger or the nothing sentinel; extra dispatch semantics are bounded. Full world: [effect-effectFireRandomTrigger.json](effect-effectFireRandomTrigger.json).
+
+```json
+{
+  "type": "effectFireRandomTrigger",
+  "data": [
+    "trg-child-a",
+    "trg-child-b"
+  ],
+  "id": "node-effect-effectFireRandomTrigger-2"
+}
+```
+
+Dependencies: triggerEvents trg-child-a (Child A); triggerEvents trg-child-b (Child B).
+
+## effectGiveInfo
+
+Supply background information to the AI. Full world: [effect-effectGiveInfo.json](effect-effectGiveInfo.json).
+
+```json
+{
+  "type": "effectGiveInfo",
+  "data": "Mara has just learned that the courier route is clear.",
+  "id": "node-effect-effectGiveInfo-2"
+}
+```
+
+## effectModifyInstructionBlock
+
+Install, replace or clear a named instruction block. Full world: [effect-effectModifyInstructionBlock.json](effect-effectModifyInstructionBlock.json).
+
+```json
+{
+  "type": "effectModifyInstructionBlock",
+  "data": {
+    "id": "blk-guidance",
+    "content": "Mara now offers the courier assignment."
+  },
+  "id": "node-effect-effectModifyInstructionBlock-2"
+}
+```
+
+Dependencies: instructionBlocks blk-guidance (Guild Guidance).
+
+## effectModifyKeywordBlock
+
+Change a keyword block and its activation keywords. Full world: [effect-effectModifyKeywordBlock.json](effect-effectModifyKeywordBlock.json).
+
+```json
+{
+  "type": "effectModifyKeywordBlock",
+  "data": {
+    "id": "kw-guild",
+    "keywords": [
+      "silver seal",
+      "crescent"
+    ],
+    "content": "The silver seal has a crescent engraving and is kept in the clerk's desk."
+  },
+  "id": "node-effect-effectModifyKeywordBlock-2"
+}
+```
+
+Dependencies: loreBookEntries kw-guild (Guild Seal).
+
+## effectModifyTrackedItemDetails
+
+Change selected tracker settings through explicit override flags. Full world: [effect-effectModifyTrackedItemDetails.json](effect-effectModifyTrackedItemDetails.json).
+
+```json
+{
+  "type": "effectModifyTrackedItemDetails",
+  "data": {
+    "trackedItemID": "SRdpskbWh",
+    "overrideName": false,
+    "overrideDescription": false,
+    "overrideVisibility": true,
+    "overrideAutoUpdate": true,
+    "overrideUpdateInstructions": true,
+    "name": "Note",
+    "description": "",
+    "updateInstructions": "Record one brief observation about the guild each turn.",
+    "visibility": "everyone",
+    "autoUpdate": true
+  },
+  "id": "node-effect-effectModifyTrackedItemDetails-2"
+}
+```
+
+Dependencies: trackedItems SRdpskbWh (Note).
+
+## effectPresentChoice
+
+Ask the player to select from defined options and store the result. Full world: [effect-effectPresentChoice.json](effect-effectPresentChoice.json).
+
+```json
+{
+  "id": "node-effect-effectPresentChoice-2",
+  "data": {
+    "path": "",
+    "valueDelimiter": "newline",
+    "updateMode": "replace",
+    "minSelections": null,
+    "choices": "Courier\nArchivist",
+    "maxSelections": null,
+    "targetTrackedItemId": "GJlIgehdL",
+    "selectionMode": "single",
+    "message": "Choose your guild assignment."
+  },
+  "type": "effectPresentChoice"
+}
+```
+
+Dependencies: trackedItems GJlIgehdL (Answer).
+
+## effectRequestInput
+
+Request text and store it in a tracker. Full world: [effect-effectRequestInput.json](effect-effectRequestInput.json).
+
+```json
+{
+  "id": "node-effect-effectRequestInput-2",
+  "data": {
+    "path": "",
+    "inputMode": "single",
+    "requestText": "What nickname should the clerk use?",
+    "requiresInput": true,
+    "targetTrackedItemId": "jcbMjWZOx"
+  },
+  "type": "effectRequestInput"
+}
+```
+
+Dependencies: trackedItems jcbMjWZOx (Answer).
+
+## effectRunScript
+
+Execute sequential tracker updates in PawScript. Full world: [effect-effectRunScript.json](effect-effectRunScript.json).
+
+```json
+{
+  "type": "effectRunScript",
+  "data": "$coins -= 2\n$flag = 1",
+  "name": "Spend Coins and Mark Flag",
+  "id": "node-effect-effectRunScript-2"
+}
+```
+
+Dependencies: script/template roots: $coins, $flag.
+
+## effectSetTrackedItemValue
+
+Set or modify a tracked value with a native operation. Full world: [effect-effectSetTrackedItemValue.json](effect-effectSetTrackedItemValue.json).
+
+```json
+{
+  "type": "effectSetTrackedItemValue",
+  "data": {
+    "trackedItemID": "NR2bqLfoi",
+    "action": "add",
+    "newValue": "2",
+    "replaceWith": "",
+    "path": "",
+    "updateMode": "path",
+    "listExpression": "",
+    "targetExpression": ""
+  },
+  "id": "node-effect-effectSetTrackedItemValue-2"
+}
+```
+
+Dependencies: trackedItems NR2bqLfoi (Coins).
+
+## effectShowMessage
+
+Display an authoritative player-facing result. Full world: [effect-effectShowMessage.json](effect-effectShowMessage.json).
+
+```json
+{
+  "type": "effectShowMessage",
+  "data": "The clerk has recorded your visit.",
+  "id": "node-effect-effectShowMessage-2"
+}
+```
+
+## effectTellAIWhatToDo
+
+Guide subsequent narration. Full world: [effect-effectTellAIWhatToDo.json](effect-effectTellAIWhatToDo.json).
+
+```json
+{
+  "type": "effectTellAIWhatToDo",
+  "data": "On the next scene, have Mara ask which assignment interests the player.",
+  "id": "node-effect-effectTellAIWhatToDo-2"
+}
+```
+
+
+===== END FILE: examples/Payloads.md =====
+
+===== BEGIN FILE: examples/index.json =====
+[
+  {
+    "file": "condition-triggerOnEvent.json",
+    "purpose": "One native condition: triggerOnEvent",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Structurally validated; complete runtime behavior not certified."
+  },
+  {
+    "file": "condition-triggerOnRandomChance.json",
+    "purpose": "One native condition: triggerOnRandomChance",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Structurally validated; complete runtime behavior not certified."
+  },
+  {
+    "file": "condition-triggerOnCharacter.json",
+    "purpose": "One native condition: triggerOnCharacter",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Structurally validated; complete runtime behavior not certified."
+  },
+  {
+    "file": "condition-triggerOnTrackedItem.json",
+    "purpose": "One native condition: triggerOnTrackedItem",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Structurally validated; complete runtime behavior not certified."
+  },
+  {
+    "file": "condition-triggerPrereqs.json",
+    "purpose": "One native condition: triggerPrereqs",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Structurally validated; complete runtime behavior not certified."
+  },
+  {
+    "file": "condition-triggerBlockers.json",
+    "purpose": "One native condition: triggerBlockers",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Structurally validated; complete runtime behavior not certified."
+  },
+  {
+    "file": "condition-triggerOnPawScript.json",
+    "purpose": "One native condition: triggerOnPawScript",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Structurally validated; complete runtime behavior not certified."
+  },
+  {
+    "file": "condition-triggerOnTurn.json",
+    "purpose": "One native condition: triggerOnTurn",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Structurally validated; complete runtime behavior not certified."
+  },
+  {
+    "file": "effect-effectShowMessage.json",
+    "purpose": "One native effect: effectShowMessage",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Structurally validated; complete runtime behavior not certified."
+  },
+  {
+    "file": "effect-effectTellAIWhatToDo.json",
+    "purpose": "One native effect: effectTellAIWhatToDo",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Structurally validated; complete runtime behavior not certified."
+  },
+  {
+    "file": "effect-effectGiveInfo.json",
+    "purpose": "One native effect: effectGiveInfo",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Structurally validated; complete runtime behavior not certified."
+  },
+  {
+    "file": "effect-effectSetTrackedItemValue.json",
+    "purpose": "One native effect: effectSetTrackedItemValue",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Structurally validated; complete runtime behavior not certified."
+  },
+  {
+    "file": "effect-effectModifyTrackedItemDetails.json",
+    "purpose": "One native effect: effectModifyTrackedItemDetails",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Structurally validated; complete runtime behavior not certified."
+  },
+  {
+    "file": "effect-effectChangePCName.json",
+    "purpose": "One native effect: effectChangePCName",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Structurally validated; complete runtime behavior not certified."
+  },
+  {
+    "file": "effect-effectChangePCDescription.json",
+    "purpose": "One native effect: effectChangePCDescription",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Structurally validated; complete runtime behavior not certified."
+  },
+  {
+    "file": "effect-effectChangePCSkill.json",
+    "purpose": "One native effect: effectChangePCSkill",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Structurally validated; complete runtime behavior not certified."
+  },
+  {
+    "file": "effect-effectChangeObjective.json",
+    "purpose": "One native effect: effectChangeObjective",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Structurally validated; complete runtime behavior not certified."
+  },
+  {
+    "file": "effect-effectChangeVictoryCondition.json",
+    "purpose": "One native effect: effectChangeVictoryCondition",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Structurally validated; complete runtime behavior not certified."
+  },
+  {
+    "file": "effect-effectChangeDefeatCondition.json",
+    "purpose": "One native effect: effectChangeDefeatCondition",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Structurally validated; complete runtime behavior not certified."
+  },
+  {
+    "file": "effect-effectChangeMainInstructions.json",
+    "purpose": "One native effect: effectChangeMainInstructions",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Structurally validated; complete runtime behavior not certified."
+  },
+  {
+    "file": "effect-effectModifyInstructionBlock.json",
+    "purpose": "One native effect: effectModifyInstructionBlock",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Structurally validated; complete runtime behavior not certified."
+  },
+  {
+    "file": "effect-effectModifyKeywordBlock.json",
+    "purpose": "One native effect: effectModifyKeywordBlock",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Structurally validated; complete runtime behavior not certified."
+  },
+  {
+    "file": "effect-effectChangeAuthorStyle.json",
+    "purpose": "One native effect: effectChangeAuthorStyle",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Structurally validated; complete runtime behavior not certified."
+  },
+  {
+    "file": "effect-effectChangeDescriptionInstructions.json",
+    "purpose": "One native effect: effectChangeDescriptionInstructions",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Structurally validated; complete runtime behavior not certified."
+  },
+  {
+    "file": "effect-effectPresentChoice.json",
+    "purpose": "One native effect: effectPresentChoice",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Single-answer update and same-turn follow-up verified. Fresh-import binding verified."
+  },
+  {
+    "file": "effect-effectRequestInput.json",
+    "purpose": "One native effect: effectRequestInput",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Single-answer update and same-turn follow-up verified."
+  },
+  {
+    "file": "effect-effectFireRandomTrigger.json",
+    "purpose": "One native effect: effectFireRandomTrigger",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Structurally validated; complete runtime behavior not certified."
+  },
+  {
+    "file": "effect-effectRunScript.json",
+    "purpose": "One native effect: effectRunScript",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Structurally validated; complete runtime behavior not certified."
+  },
+  {
+    "file": "effect-effectEndsGame.json",
+    "purpose": "One native effect: effectEndsGame",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Structurally validated; complete runtime behavior not certified."
+  },
+  {
+    "file": "logic-groups.json",
+    "purpose": "Nested logic nodes with native shape.",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Structurally validated; complete runtime behavior not certified."
+  },
+  {
+    "file": "native-text-operations.json",
+    "purpose": "Append, remove all matches and replace text.",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Structurally validated; complete runtime behavior not certified."
+  },
+  {
+    "file": "character-starting-values.json",
+    "purpose": "Fixed, fixed-choice and script-choice per-PC values.",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Structurally validated; complete runtime behavior not certified."
+  },
+  {
+    "file": "npc-keyword-portrait-ending.json",
+    "purpose": "NPC, keyword, portrait descriptors and natural-language endings.",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Structurally validated; complete runtime behavior not certified."
+  },
+  {
+    "file": "recipe-request-commit.json",
+    "purpose": "Optional precise transaction using a fresh AI request and script receipt.",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Component behaviors are documented; this complete composition is not runtime-qualified."
+  },
+  {
+    "file": "recipe-choice-followup.json",
+    "purpose": "Choice response updates objective in a later ordered trigger.",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Component behaviors are documented; this complete composition is not runtime-qualified."
+  },
+  {
+    "file": "recipe-threshold-unlock.json",
+    "purpose": "State threshold grants access and modifies content once.",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Structurally validated; complete runtime behavior not certified."
+  },
+  {
+    "file": "probe-skills.json",
+    "purpose": "Editor-baseline Evaluation installed explicitly; capped skill effects and runtime readout.",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Numeric skill updates and caps verified; generated skill labels can disagree."
+  },
+  {
+    "file": "probe-template-timing.json",
+    "purpose": "Compare live block interpolation with effect-installed interpolation.",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Block interpolation and pre-opening/first-turn execution behavior verified."
+  },
+  {
+    "file": "showcase-glass-ledger.json",
+    "purpose": "Integrated cast, alternate PCs, planning choice, precise transactions, countdown, optional prose, Scenario and script-triggered endings.",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Component behaviors are documented; this complete composition is not runtime-qualified."
+  },
+  {
+    "file": "optional-block.json",
+    "purpose": "Player preference, cached application and dynamic instructions.",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Structurally validated; complete runtime behavior not certified."
+  },
+  {
+    "file": "yaml-path-operations.json",
+    "purpose": "Set, remove, append and adjust paths on separate turns.",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Component behaviors are documented; this complete composition is not runtime-qualified."
+  },
+  {
+    "file": "narrative-last-ferry.json",
+    "purpose": "Narrative-first opening, distinct NPC voices, optional lore and bounded AI memory.",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Not runtime-qualified; a creative authoring example."
+  }
+]
+===== END FILE: examples/index.json =====
+
+===== BEGIN FILE: examples/narrative-last-ferry.json =====
+{
+  "favorite": false,
+  "title": "The Last Ferry at Bellweather",
+  "description": "Keep a small harbor town connected through the last stormy week of its ferry season. A warm, wry story about favors, departures and choosing what deserves to stay.",
+  "background": "Bellweather is a tidal harbor town where the ferry is both public transport and an unofficial parcel service. The council plans to end the autumn route after Friday. You have returned to help run the dockside parcel office for one week while your aunt recovers from a broken wrist. You know the town, but several people remember your departure differently. The story begins on Monday evening. There is no hidden villain or mandatory solution: relationships, practical choices and the promises you keep shape the week.",
+  "instructions": "Run an open-ended, grounded small-town drama with warmth and occasional dry humor. The player is an adult returning to Bellweather for a week; do not invent a specific past romance or family grievance for them without their input. Give NPCs their own practical concerns and let conversations include silence, interruptions and small tasks. Offer several reasonable approaches, including refusing or renegotiating a request. Keep ordinary mistakes recoverable through conversation, effort or changed plans. Do not invent exact money, health or inventory mechanics. The player may read, deliver, discuss or set aside the envelope; it contains a handwritten invitation from a mainland choir to perform at Friday's final crossing, not a threat or legal notice. No character knows its contents before reading it or being told. Ada is transporting a rescued canary to her sister and is reluctant to admit that she is moving away. Reveal this through her choices, not omniscient exposition. Miri and Tomas have the opening roles described in firstInput; deeper details come from their cards. Use the Harbor Notes tracker only for promises actually made and plans explicitly agreed. Do not turn vague friendliness into commitment. The week can end in farewell, a practical campaign to preserve the route, or another outcome arising from the player's choices; no ending is forced.",
+  "authorStyle": "Second-person present. Concrete coastal detail in small doses: wet wool, diesel ticking as an engine cools, warm paper against a coat. Dialogue is conversational, with contractions and distinct voices. Write compact scenes that leave room for the player to answer. Avoid constant rhetorical questions, sentimental speeches and announcing emotional lessons. Humor comes from habits and timing rather than mockery.",
+  "recommendedAIModel": null,
+  "firstInput": "Rain drums on the parcel-office roof just before the last ferry. Miri Vale, the dispatcher, stands behind the counter with a soaked envelope marked Deliver before departure. She wants to get everyone home and covers worry with brisk jokes. Tomas Reed, the ferry mechanic, is outside adjusting a temperamental gangway lamp; he dislikes grand promises but always helps with a concrete job. A passenger called Ada waits under the awning with a covered birdcage and an unusually heavy suitcase. Begin with Miri asking whether I can carry the envelope to the ferry while she finds Ada a dry place to wait. Do not reveal the envelope contents, decide my answer, or introduce the whole cast at once.",
+  "objective": "Help keep the harbor connected through Friday and decide which promises you want to carry beyond this week.",
+  "imageModel": "manticore",
+  "imageStyle": "photo_1",
+  "illustrationStyleNonCharacterLowPriority": "",
+  "illustrationStyleNonCharacterHighPriority": "",
+  "illustrationStyleCharacterLowPriority": "",
+  "illustrationStyleCharacterHighPriority": "",
+  "imageStyleCharacterPre": "",
+  "imageStyleCharacterPost": "",
+  "imageStyleNonCharacterPre": "",
+  "imageStyleNonCharacterPost": "",
+  "mature": false,
+  "nsfw": false,
+  "contentWarnings": "",
+  "enableAISpecificInstructionBlocks": false,
+  "previewImage": "",
+  "fullSizePreviewImage": "",
+  "previewImageOptions": [],
+  "fullSizePreviewImageOptions": [],
+  "currentPreviewImageIndex": -1,
+  "imagePromptDetails": {
+    "illustrClothes": "",
+    "illustrSetting": "",
+    "illustrSubject": "",
+    "illustrAppearance": "",
+    "illustrIsCharacter": false,
+    "illustrExpressionPosition": ""
+  },
+  "permissionsOnceShared": {
+    "sharing": false,
+    "editing": false
+  },
+  "allowChangeCharacterName": false,
+  "allowChangeCharacterDescription": false,
+  "allowChangeCharacterSkills": false,
+  "allowChangeCharacterItemValues": false,
+  "allowChangeCharacterPortrait": false,
+  "allowChangeCharacterNewPortrait": false,
+  "conditions": [],
+  "schemaVersion": 2.4,
+  "skills": [
+    "Observation",
+    "Practical Work",
+    "Conversation"
+  ],
+  "possibleCharacters": [
+    {
+      "name": "Alex",
+      "description": "An adult returning to help at the harbor parcel office. Choose your own reasons for leaving and returning during play.",
+      "portrait": "",
+      "portraitPromptDetails": {
+        "illustrAppearance": "",
+        "illustrClothes": "",
+        "illustrExpressionPosition": "",
+        "illustrSetting": ""
+      },
+      "fullSizePortrait": "",
+      "portraitOptions": [],
+      "fullSizePortraitOptions": [],
+      "currentPortraitIndex": -1,
+      "characterId": "BellPC001",
+      "skills": {
+        "Observation": 3,
+        "Practical Work": 3,
+        "Conversation": 3
+      },
+      "initialTrackedItemValues": []
+    }
+  ],
+  "triggerEvents": [],
+  "victoryCondition": null,
+  "defeatCondition": null,
+  "trackedItems": [
+    {
+      "id": "BellNote1",
+      "name": "Harbor Notes",
+      "variableName": "harbor_notes",
+      "dataType": "yaml",
+      "visibility": "ai_only",
+      "autoUpdate": true,
+      "initialValue": "promises: []\nplans: []",
+      "initialValueBasedOnPC": "same",
+      "description": "Bounded memory of explicit commitments and practical plans.",
+      "updateInstructions": "Record only promises explicitly made by the player or an NPC and plans actually agreed in the scene. Each record includes who, what and whether it is open or completed. Keep at most six current promises and four plans, prioritizing unresolved commitments; remove completed entries once their consequences have been reflected in the story. Do not add inferred intentions, secret facts or invented dates.",
+      "formatExample": "",
+      "formatSchema": "",
+      "enforceFormat": false,
+      "positionInList": 0,
+      "driftAcknowledgedForName": null
+    }
+  ],
+  "hideSkillSystem": false,
+  "autoAdvanceVersion": false,
+  "version": "1.0",
+  "charSelectText": "Choose how you return to Bellweather. Both roles support conversation, practical work and exploration.",
+  "descriptionRequest": "",
+  "evaluationRequest": "",
+  "summaryRequest": "",
+  "instructionBlocks": [
+    {
+      "id": "BellBlk01",
+      "name": "Time and Place",
+      "content": "Write whereWhen once at the beginning of outcomeDescription as {Specific place}, Bellweather, at HH:MM AM/PM on {weekday}. Follow with a blank line and horizontal rule. Begin Monday at 6:20 PM. Advance time reasonably from events, including any explicit waiting or travel; do not advance a day just to force the plot."
+    }
+  ],
+  "NPCs": [
+    {
+      "id": "BellNPC01",
+      "name": "Miri Vale",
+      "names": [
+        "Miri",
+        "Miri Vale"
+      ],
+      "one_liner": "Miri is the dispatcher: brisk jokes, practical kindness, determined to get everyone home safely.",
+      "detail": "She keeps spare gloves in the lost-property drawer and pretends they were left by passengers. She wants the final week to run well, even if the route cannot be saved. She asks for specific help instead of sympathy. Her voice is quick and conversational: \"Good news: the roof only leaks where the paperwork is.\" She can disagree with the player without becoming hostile.",
+      "appearance": "A stocky woman in her fifties with a dark cropped fringe and a red cardigan under a reflective vest.",
+      "location": "parcel office",
+      "secret_info": "She has accepted a mainland job but has not yet told Tomas.",
+      "img_appearance": "Woman in her fifties, dark cropped fringe, expressive face.",
+      "img_clothing": "Red cardigan and reflective work vest."
+    },
+    {
+      "id": "BellNPC02",
+      "name": "Tomas Reed",
+      "names": [
+        "Tomas",
+        "Tomas Reed"
+      ],
+      "one_liner": "Tomas maintains the ferry and dock lights; skeptical of speeches, generous with practical help.",
+      "detail": "He pauses before replying and usually touches the thing he is talking about. He is proud of reliable repairs, not daring improvisation. He says \"That might work. Show me where\" when someone proposes a plan. He wants the route preserved but distrusts plans that ignore the crew's workload. Let his opinion change when shown concrete evidence.",
+      "appearance": "A tall man in his forties with sandy stubble, a waterproof cap and an old burn scar on his wrist.",
+      "location": "ferry dock",
+      "secret_info": "He has kept the original brass ferry bell in his workshop because its cracked note reminds him of his father."
+    },
+    {
+      "id": "BellNPC03",
+      "name": "Ada Finch",
+      "names": [
+        "Ada",
+        "Ada Finch"
+      ],
+      "one_liner": "Ada is a departing passenger carrying a covered birdcage; observant, guarded and quietly funny.",
+      "detail": "She answers an intrusive question with a precise observation about the harbor. She wants to leave without turning her departure into a town event. Kindness earns a small true detail rather than an immediate confession. She talks to the canary in a matter-of-fact voice, as though it were a difficult colleague.",
+      "appearance": "An older woman in a moss-green raincoat, silver hair pinned unevenly, holding the handle of a battered brown suitcase.",
+      "location": "dock awning",
+      "secret_info": "Her sister needs help on the mainland, and Ada is relieved as well as sad to go."
+    }
+  ],
+  "loreBookEntries": [
+    {
+      "id": "BellLore1",
+      "name": "The old bell",
+      "keywords": [
+        "brass bell",
+        "ferry bell"
+      ],
+      "content": "The original ferry bell cracked during a winter rescue. Tomas keeps it in his workshop; the town disagrees about whether its uneven note is beautiful. This is background, not knowledge the player automatically has. A character can explain it when the subject arises."
+    },
+    {
+      "id": "BellLore2",
+      "name": "Friday market",
+      "keywords": [
+        "Friday market"
+      ],
+      "content": "Friday market occupies the lane above the dock. Bakers sell their remaining bread cheaply near closing. It is a place to gather opinions or ask practical favors, not an automatic campaign-success event."
+    }
+  ],
+  "designNotes": "Narrative-first authoring example; no custom action parser or exact-resource system."
+}
+===== END FILE: examples/narrative-last-ferry.json =====
+
+===== BEGIN FILE: examples/recipe-request-commit.json =====
+{
+  "favorite": false,
+  "title": "Request and Commit: Ticket",
+  "description": "A compact IW example for inspection and runtime testing.",
+  "background": "You are visiting a quiet guild office. Its clerk is ready to hear what brings you to the guild.",
+  "instructions": "The guild sells one admission ticket for 5 coins. Coins and Ticket are maintained by triggers. For a purchase request narrate presenting payment and waiting, not receiving the ticket. The post-turn receipt states success or rejection. On the next turn continue from Coins, Ticket and the receipt; do not repeat the transaction without a fresh request. Other conversation is free-form.",
+  "authorStyle": "Clear, concise prose with a little warmth.",
+  "recommendedAIModel": null,
+  "firstInput": "Begin at the guild office and explain the immediate situation.",
+  "objective": "Visit the guild office and speak with Mara.",
+  "imageModel": "manticore",
+  "imageStyle": "photo_1",
+  "illustrationStyleNonCharacterLowPriority": "",
+  "illustrationStyleNonCharacterHighPriority": "",
+  "illustrationStyleCharacterLowPriority": "",
+  "illustrationStyleCharacterHighPriority": "",
+  "imageStyleCharacterPre": "",
+  "imageStyleCharacterPost": "",
+  "imageStyleNonCharacterPre": "",
+  "imageStyleNonCharacterPost": "",
+  "mature": false,
+  "nsfw": false,
+  "contentWarnings": "",
+  "enableAISpecificInstructionBlocks": false,
+  "previewImage": "",
+  "fullSizePreviewImage": "",
+  "previewImageOptions": [],
+  "fullSizePreviewImageOptions": [],
+  "currentPreviewImageIndex": -1,
+  "imagePromptDetails": {
+    "illustrClothes": "",
+    "illustrSetting": "",
+    "illustrSubject": "",
+    "illustrAppearance": "",
+    "illustrIsCharacter": false,
+    "illustrExpressionPosition": ""
+  },
+  "permissionsOnceShared": {
+    "sharing": true,
+    "editing": true
+  },
+  "allowChangeCharacterName": false,
+  "allowChangeCharacterDescription": false,
+  "allowChangeCharacterSkills": false,
+  "allowChangeCharacterItemValues": false,
+  "allowChangeCharacterPortrait": false,
+  "allowChangeCharacterNewPortrait": false,
+  "conditions": [],
+  "schemaVersion": 2.4,
+  "skills": [
+    "Observation",
+    "Persuasion"
+  ],
+  "possibleCharacters": [
+    {
+      "name": "Avery",
+      "description": "An observant courier visiting the guild.",
+      "portrait": "",
+      "portraitPromptDetails": {
+        "illustrAppearance": "",
+        "illustrClothes": "",
+        "illustrExpressionPosition": "",
+        "illustrSetting": ""
+      },
+      "fullSizePortrait": "",
+      "portraitOptions": [],
+      "fullSizePortraitOptions": [],
+      "currentPortraitIndex": -1,
+      "characterId": "pc-visitor",
+      "skills": {
+        "Observation": 2,
+        "Persuasion": 3
+      },
+      "initialTrackedItemValues": []
+    }
+  ],
+  "triggerEvents": [
+    {
+      "id": "trg-receipt-reset",
+      "name": "Receipt Reset",
+      "triggerConditions": [],
+      "triggerEffects": [
+        {
+          "type": "effectRunScript",
+          "data": "$receipt.turn = $game.turn_number\n$receipt.accepted = 0\n$receipt.message = \"No purchase requested.\"",
+          "name": "Initialize This Turn Receipt",
+          "id": "node-recipe-request-commit-1"
+        }
+      ],
+      "triggerOnStartOfGame": true,
+      "triggerMidGame": true,
+      "canTriggerMoreThanOnce": true,
+      "advancedLogic": false
+    },
+    {
+      "id": "trg-purchase-request",
+      "name": "Purchase Request",
+      "triggerConditions": [
+        {
+          "category": "condition",
+          "type": "triggerOnPawScript",
+          "data": "$request.turn = $game.turn_number and $request.event = \"BUY_TICKET\"",
+          "id": "node-recipe-request-commit-2"
+        }
+      ],
+      "triggerEffects": [
+        {
+          "type": "effectRunScript",
+          "data": "if $ticket = 1\n  $receipt.message = \"Ticket already owned; no charge.\"\nelse if $coins < 5\n  $receipt.message = \"Insufficient coins; no charge.\"\nelse\n  $coins -= 5\n  $ticket = 1\n  $receipt.accepted = 1\n  $receipt.message = \"Ticket purchased for 5 coins.\"",
+          "name": "Validate and Purchase Ticket",
+          "id": "node-recipe-request-commit-3"
+        }
+      ],
+      "triggerOnStartOfGame": true,
+      "triggerMidGame": true,
+      "canTriggerMoreThanOnce": true,
+      "advancedLogic": false
+    },
+    {
+      "id": "trg-receipt-output",
+      "name": "Receipt Output",
+      "triggerConditions": [
+        {
+          "id": "trg-receipt-output-requested",
+          "category": "condition",
+          "type": "triggerOnPawScript",
+          "data": "$request.turn = $game.turn_number and $request.event != \"NONE\""
+        }
+      ],
+      "triggerEffects": [
+        {
+          "type": "effectShowMessage",
+          "data": "<<$receipt.message>> Coins: <<$coins>>. Ticket: <<$ticket>>.",
+          "id": "node-recipe-request-commit-4"
+        },
+        {
+          "type": "effectRunScript",
+          "data": "$request.turn = 0\n$request.event = \"NONE\"",
+          "name": "Consume Purchase Request",
+          "id": "node-recipe-request-commit-5"
+        }
+      ],
+      "triggerOnStartOfGame": true,
+      "triggerMidGame": true,
+      "canTriggerMoreThanOnce": true,
+      "advancedLogic": false
+    }
+  ],
+  "victoryCondition": null,
+  "defeatCondition": null,
+  "trackedItems": [
+    {
+      "id": "1nPWP54dE",
+      "name": "Coins",
+      "positionInList": 0,
+      "dataType": "number",
+      "visibility": "everyone",
+      "description": "Example coins",
+      "updateInstructions": "",
+      "formatExample": "",
+      "enforceFormat": false,
+      "formatSchema": "",
+      "initialValue": "10",
+      "initialValueBasedOnPC": "same",
+      "autoUpdate": false,
+      "variableName": "coins",
+      "driftAcknowledgedForName": null
+    },
+    {
+      "id": "jDr2prqOs",
+      "name": "Flag",
+      "positionInList": 1,
+      "dataType": "number",
+      "visibility": "everyone",
+      "description": "Example flag",
+      "updateInstructions": "",
+      "formatExample": "",
+      "enforceFormat": false,
+      "formatSchema": "",
+      "initialValue": "0",
+      "initialValueBasedOnPC": "same",
+      "autoUpdate": false,
+      "variableName": "flag",
+      "driftAcknowledgedForName": null
+    },
+    {
+      "id": "ibsENuel7",
+      "name": "Note",
+      "positionInList": 2,
+      "dataType": "text",
+      "visibility": "everyone",
+      "description": "Example note",
+      "updateInstructions": "",
+      "formatExample": "",
+      "enforceFormat": false,
+      "formatSchema": "",
+      "initialValue": "",
+      "initialValueBasedOnPC": "same",
+      "autoUpdate": false,
+      "variableName": "note",
+      "driftAcknowledgedForName": null
+    },
+    {
+      "id": "dmoAIrOoS",
+      "name": "Answer",
+      "positionInList": 3,
+      "dataType": "text",
+      "visibility": "everyone",
+      "description": "Example answer",
+      "updateInstructions": "",
+      "formatExample": "",
+      "enforceFormat": false,
+      "formatSchema": "",
+      "initialValue": "",
+      "initialValueBasedOnPC": "same",
+      "autoUpdate": false,
+      "variableName": "answer",
+      "driftAcknowledgedForName": null
+    },
+    {
+      "id": "ertPO96O1",
+      "name": "Ticket",
+      "positionInList": 4,
+      "dataType": "number",
+      "visibility": "everyone",
+      "description": "Example ticket",
+      "updateInstructions": "",
+      "formatExample": "",
+      "enforceFormat": false,
+      "formatSchema": "",
+      "initialValue": "0",
+      "initialValueBasedOnPC": "same",
+      "autoUpdate": false,
+      "variableName": "ticket",
+      "driftAcknowledgedForName": null
+    },
+    {
+      "id": "hsTTm0VXN",
+      "name": "Request",
+      "positionInList": 5,
+      "dataType": "yaml",
+      "visibility": "ai_only",
+      "description": "Example request",
+      "updateInstructions": "Write exactly turn and event EVERY turn, even when unchanged. turn is current the CURRENT TURN value in the permanent Turn Context block as a number. event is BUY_TICKET only when the current player input explicitly requests buying one guild ticket; otherwise NONE. Classify intent, not narrated possession. Do not infer success.",
+      "formatExample": "",
+      "enforceFormat": false,
+      "formatSchema": "",
+      "initialValue": "turn: 0\nevent: NONE",
+      "initialValueBasedOnPC": "same",
+      "autoUpdate": true,
+      "variableName": "request",
+      "driftAcknowledgedForName": null
+    },
+    {
+      "id": "Kkkw05ssa",
+      "name": "Receipt",
+      "positionInList": 6,
+      "dataType": "yaml",
+      "visibility": "ai_only",
+      "description": "Example receipt",
+      "updateInstructions": "",
+      "formatExample": "",
+      "enforceFormat": false,
+      "formatSchema": "",
+      "initialValue": "turn: 0\naccepted: 0\nmessage: No purchase processed.",
+      "initialValueBasedOnPC": "same",
+      "autoUpdate": false,
+      "variableName": "receipt",
+      "driftAcknowledgedForName": null
+    }
+  ],
+  "hideSkillSystem": false,
+  "autoAdvanceVersion": false,
+  "version": "1.0",
+  "charSelectText": "Choose the guild visitor.",
+  "descriptionRequest": "",
+  "evaluationRequest": "",
+  "summaryRequest": "",
+  "instructionBlocks": [
+    {
+      "id": "blk-guidance",
+      "name": "Guild Guidance",
+      "content": "The clerk waits behind the desk."
+    },
+    {
+      "id": "blk-turn-context",
+      "name": "Turn Context",
+      "content": "CURRENT TURN: <<$game.turn_number>>. The request tracker must copy this number into its turn field for the current input."
+    }
+  ],
+  "NPCs": [
+    {
+      "id": "npc-clerk",
+      "name": "Mara",
+      "names": [
+        "Mara",
+        "guild clerk"
+      ],
+      "one_liner": "Mara is the practical clerk at the guild office.",
+      "detail": "Mara wants clear requests and dislikes vague promises. Her dry humor softens when someone admits an honest mistake.",
+      "appearance": "A middle-aged woman with cropped black hair and ink-stained fingers.",
+      "location": "Guild office",
+      "secret_info": "She is planning to retire after training her replacement.",
+      "img_appearance": "Middle-aged woman, cropped black hair, ink-stained fingers.",
+      "img_clothing": "Navy waistcoat over a cream shirt.",
+      "positionInList": 0
+    }
+  ],
+  "loreBookEntries": [
+    {
+      "id": "kw-guild",
+      "name": "Guild Seal",
+      "keywords": [
+        "silver seal"
+      ],
+      "content": "The silver seal identifies the guild; it has a crescent engraving."
+    }
+  ],
+  "designNotes": "Authoring example. See the example index for scope and verification status."
+}
+===== END FILE: examples/recipe-request-commit.json =====
+
+===== BEGIN FILE: examples/recipe-choice-followup.json =====
+{
+  "favorite": false,
+  "title": "Choice and Follow-up",
+  "description": "A compact IW example for inspection and runtime testing.",
+  "background": "You are visiting a quiet guild office. Its clerk is ready to hear what brings you to the guild.",
+  "instructions": "Keep the scene short and grounded. Follow the defined trackers and messages. Do not invent mechanical rewards.",
+  "authorStyle": "Clear, concise prose with a little warmth.",
+  "recommendedAIModel": null,
+  "firstInput": "Begin at the guild office and explain the immediate situation.",
+  "objective": "Visit the guild office and speak with Mara.",
+  "imageModel": "manticore",
+  "imageStyle": "photo_1",
+  "illustrationStyleNonCharacterLowPriority": "",
+  "illustrationStyleNonCharacterHighPriority": "",
+  "illustrationStyleCharacterLowPriority": "",
+  "illustrationStyleCharacterHighPriority": "",
+  "imageStyleCharacterPre": "",
+  "imageStyleCharacterPost": "",
+  "imageStyleNonCharacterPre": "",
+  "imageStyleNonCharacterPost": "",
+  "mature": false,
+  "nsfw": false,
+  "contentWarnings": "",
+  "enableAISpecificInstructionBlocks": false,
+  "previewImage": "",
+  "fullSizePreviewImage": "",
+  "previewImageOptions": [],
+  "fullSizePreviewImageOptions": [],
+  "currentPreviewImageIndex": -1,
+  "imagePromptDetails": {
+    "illustrClothes": "",
+    "illustrSetting": "",
+    "illustrSubject": "",
+    "illustrAppearance": "",
+    "illustrIsCharacter": false,
+    "illustrExpressionPosition": ""
+  },
+  "permissionsOnceShared": {
+    "sharing": true,
+    "editing": true
+  },
+  "allowChangeCharacterName": false,
+  "allowChangeCharacterDescription": false,
+  "allowChangeCharacterSkills": false,
+  "allowChangeCharacterItemValues": false,
+  "allowChangeCharacterPortrait": false,
+  "allowChangeCharacterNewPortrait": false,
+  "conditions": [],
+  "schemaVersion": 2.4,
+  "skills": [
+    "Observation",
+    "Persuasion"
+  ],
+  "possibleCharacters": [
+    {
+      "name": "Avery",
+      "description": "An observant courier visiting the guild.",
+      "portrait": "",
+      "portraitPromptDetails": {
+        "illustrAppearance": "",
+        "illustrClothes": "",
+        "illustrExpressionPosition": "",
+        "illustrSetting": ""
+      },
+      "fullSizePortrait": "",
+      "portraitOptions": [],
+      "fullSizePortraitOptions": [],
+      "currentPortraitIndex": -1,
+      "characterId": "pc-visitor",
+      "skills": {
+        "Observation": 2,
+        "Persuasion": 3
+      },
+      "initialTrackedItemValues": []
+    }
+  ],
+  "triggerEvents": [
+    {
+      "id": "trg-ask",
+      "name": "Ask",
+      "triggerConditions": [],
+      "triggerEffects": [
+        {
+          "type": "effectPresentChoice",
+          "data": {
+            "message": "Choose your guild assignment.",
+            "choices": "Courier\nArchivist",
+            "targetTrackedItemId": "yq8k6l1cc",
+            "selectionMode": "single",
+            "updateMode": "replace",
+            "minSelections": null,
+            "maxSelections": null,
+            "valueDelimiter": "newline",
+            "path": ""
+          },
+          "id": "node-recipe-choice-followup-1"
+        }
+      ],
+      "triggerOnStartOfGame": true,
+      "triggerMidGame": false,
+      "canTriggerMoreThanOnce": false,
+      "advancedLogic": false
+    },
+    {
+      "id": "trg-answer",
+      "name": "Answer",
+      "triggerConditions": [
+        {
+          "category": "condition",
+          "type": "triggerOnPawScript",
+          "data": "$answer != \"\"",
+          "id": "node-recipe-choice-followup-2"
+        }
+      ],
+      "triggerEffects": [
+        {
+          "type": "effectChangeObjective",
+          "data": "Complete the <<$answer>> assignment.",
+          "id": "node-recipe-choice-followup-3"
+        },
+        {
+          "type": "effectShowMessage",
+          "data": "Assignment selected: <<$answer>>",
+          "id": "node-recipe-choice-followup-4"
+        }
+      ],
+      "triggerOnStartOfGame": true,
+      "triggerMidGame": true,
+      "canTriggerMoreThanOnce": false,
+      "advancedLogic": false
+    }
+  ],
+  "victoryCondition": null,
+  "defeatCondition": null,
+  "trackedItems": [
+    {
+      "id": "SB0KKxsfQ",
+      "name": "Coins",
+      "positionInList": 0,
+      "dataType": "number",
+      "visibility": "everyone",
+      "description": "Example coins",
+      "updateInstructions": "",
+      "formatExample": "",
+      "enforceFormat": false,
+      "formatSchema": "",
+      "initialValue": "10",
+      "initialValueBasedOnPC": "same",
+      "autoUpdate": false,
+      "variableName": "coins",
+      "driftAcknowledgedForName": null
+    },
+    {
+      "id": "vvebddQ10",
+      "name": "Flag",
+      "positionInList": 1,
+      "dataType": "number",
+      "visibility": "everyone",
+      "description": "Example flag",
+      "updateInstructions": "",
+      "formatExample": "",
+      "enforceFormat": false,
+      "formatSchema": "",
+      "initialValue": "0",
+      "initialValueBasedOnPC": "same",
+      "autoUpdate": false,
+      "variableName": "flag",
+      "driftAcknowledgedForName": null
+    },
+    {
+      "id": "M67M8keQY",
+      "name": "Note",
+      "positionInList": 2,
+      "dataType": "text",
+      "visibility": "everyone",
+      "description": "Example note",
+      "updateInstructions": "",
+      "formatExample": "",
+      "enforceFormat": false,
+      "formatSchema": "",
+      "initialValue": "",
+      "initialValueBasedOnPC": "same",
+      "autoUpdate": false,
+      "variableName": "note",
+      "driftAcknowledgedForName": null
+    },
+    {
+      "id": "yq8k6l1cc",
+      "name": "Answer",
+      "positionInList": 3,
+      "dataType": "text",
+      "visibility": "everyone",
+      "description": "Example answer",
+      "updateInstructions": "",
+      "formatExample": "",
+      "enforceFormat": false,
+      "formatSchema": "",
+      "initialValue": "",
+      "initialValueBasedOnPC": "same",
+      "autoUpdate": false,
+      "variableName": "answer",
+      "driftAcknowledgedForName": null
+    }
+  ],
+  "hideSkillSystem": false,
+  "autoAdvanceVersion": false,
+  "version": "1.0",
+  "charSelectText": "Choose the guild visitor.",
+  "descriptionRequest": "",
+  "evaluationRequest": "",
+  "summaryRequest": "",
+  "instructionBlocks": [
+    {
+      "id": "blk-guidance",
+      "name": "Guild Guidance",
+      "content": "The clerk waits behind the desk."
+    }
+  ],
+  "NPCs": [
+    {
+      "id": "npc-clerk",
+      "name": "Mara",
+      "names": [
+        "Mara",
+        "guild clerk"
+      ],
+      "one_liner": "Mara is the practical clerk at the guild office.",
+      "detail": "Mara wants clear requests and dislikes vague promises. Her dry humor softens when someone admits an honest mistake.",
+      "appearance": "A middle-aged woman with cropped black hair and ink-stained fingers.",
+      "location": "Guild office",
+      "secret_info": "She is planning to retire after training her replacement.",
+      "img_appearance": "Middle-aged woman, cropped black hair, ink-stained fingers.",
+      "img_clothing": "Navy waistcoat over a cream shirt.",
+      "positionInList": 0
+    }
+  ],
+  "loreBookEntries": [
+    {
+      "id": "kw-guild",
+      "name": "Guild Seal",
+      "keywords": [
+        "silver seal"
+      ],
+      "content": "The silver seal identifies the guild; it has a crescent engraving."
+    }
+  ],
+  "designNotes": "Authoring example. See the example index for scope and verification status."
+}
+===== END FILE: examples/recipe-choice-followup.json =====
+
+===== BEGIN FILE: examples/recipe-threshold-unlock.json =====
+{
+  "favorite": false,
+  "title": "Threshold Unlock",
+  "description": "A compact IW example for inspection and runtime testing.",
+  "background": "You are visiting a quiet guild office. Its clerk is ready to hear what brings you to the guild.",
+  "instructions": "Keep the scene short and grounded. Follow the defined trackers and messages. Do not invent mechanical rewards.",
+  "authorStyle": "Clear, concise prose with a little warmth.",
+  "recommendedAIModel": null,
+  "firstInput": "Begin at the guild office and explain the immediate situation.",
+  "objective": "Visit the guild office and speak with Mara.",
+  "imageModel": "manticore",
+  "imageStyle": "photo_1",
+  "illustrationStyleNonCharacterLowPriority": "",
+  "illustrationStyleNonCharacterHighPriority": "",
+  "illustrationStyleCharacterLowPriority": "",
+  "illustrationStyleCharacterHighPriority": "",
+  "imageStyleCharacterPre": "",
+  "imageStyleCharacterPost": "",
+  "imageStyleNonCharacterPre": "",
+  "imageStyleNonCharacterPost": "",
+  "mature": false,
+  "nsfw": false,
+  "contentWarnings": "",
+  "enableAISpecificInstructionBlocks": false,
+  "previewImage": "",
+  "fullSizePreviewImage": "",
+  "previewImageOptions": [],
+  "fullSizePreviewImageOptions": [],
+  "currentPreviewImageIndex": -1,
+  "imagePromptDetails": {
+    "illustrClothes": "",
+    "illustrSetting": "",
+    "illustrSubject": "",
+    "illustrAppearance": "",
+    "illustrIsCharacter": false,
+    "illustrExpressionPosition": ""
+  },
+  "permissionsOnceShared": {
+    "sharing": true,
+    "editing": true
+  },
+  "allowChangeCharacterName": false,
+  "allowChangeCharacterDescription": false,
+  "allowChangeCharacterSkills": false,
+  "allowChangeCharacterItemValues": false,
+  "allowChangeCharacterPortrait": false,
+  "allowChangeCharacterNewPortrait": false,
+  "conditions": [],
+  "schemaVersion": 2.4,
+  "skills": [
+    "Observation",
+    "Persuasion"
+  ],
+  "possibleCharacters": [
+    {
+      "name": "Avery",
+      "description": "An observant courier visiting the guild.",
+      "portrait": "",
+      "portraitPromptDetails": {
+        "illustrAppearance": "",
+        "illustrClothes": "",
+        "illustrExpressionPosition": "",
+        "illustrSetting": ""
+      },
+      "fullSizePortrait": "",
+      "portraitOptions": [],
+      "fullSizePortraitOptions": [],
+      "currentPortraitIndex": -1,
+      "characterId": "pc-visitor",
+      "skills": {
+        "Observation": 2,
+        "Persuasion": 3
+      },
+      "initialTrackedItemValues": []
+    }
+  ],
+  "triggerEvents": [
+    {
+      "id": "trg-practice",
+      "name": "Practice",
+      "triggerConditions": [
+        {
+          "category": "condition",
+          "type": "triggerOnTurn",
+          "data": 2,
+          "id": "node-recipe-threshold-unlock-1"
+        }
+      ],
+      "triggerEffects": [
+        {
+          "type": "effectSetTrackedItemValue",
+          "data": {
+            "trackedItemID": "PY93TpM6p",
+            "action": "set",
+            "newValue": "3",
+            "replaceWith": "",
+            "path": "",
+            "updateMode": "path",
+            "listExpression": "",
+            "targetExpression": ""
+          },
+          "id": "node-recipe-threshold-unlock-2"
+        }
+      ],
+      "triggerOnStartOfGame": false,
+      "triggerMidGame": false,
+      "canTriggerMoreThanOnce": false,
+      "advancedLogic": false
+    },
+    {
+      "id": "trg-unlock",
+      "name": "Unlock",
+      "triggerConditions": [
+        {
+          "category": "condition",
+          "type": "triggerOnPawScript",
+          "data": "$reputation >= 3 and $flag = 0",
+          "id": "node-recipe-threshold-unlock-3"
+        }
+      ],
+      "triggerEffects": [
+        {
+          "type": "effectRunScript",
+          "data": "$flag = 1",
+          "name": "Record Archive Access",
+          "id": "node-recipe-threshold-unlock-4"
+        },
+        {
+          "type": "effectModifyInstructionBlock",
+          "data": {
+            "id": "blk-guidance",
+            "content": "Mara grants the player archive access. The archive holds ordinary guild records."
+          },
+          "id": "node-recipe-threshold-unlock-5"
+        },
+        {
+          "type": "effectShowMessage",
+          "data": "Archive access granted.",
+          "id": "node-recipe-threshold-unlock-6"
+        }
+      ],
+      "triggerOnStartOfGame": false,
+      "triggerMidGame": false,
+      "canTriggerMoreThanOnce": true,
+      "advancedLogic": false
+    }
+  ],
+  "victoryCondition": null,
+  "defeatCondition": null,
+  "trackedItems": [
+    {
+      "id": "xJuWSTghY",
+      "name": "Coins",
+      "positionInList": 0,
+      "dataType": "number",
+      "visibility": "everyone",
+      "description": "Example coins",
+      "updateInstructions": "",
+      "formatExample": "",
+      "enforceFormat": false,
+      "formatSchema": "",
+      "initialValue": "10",
+      "initialValueBasedOnPC": "same",
+      "autoUpdate": false,
+      "variableName": "coins",
+      "driftAcknowledgedForName": null
+    },
+    {
+      "id": "A7sITMhat",
+      "name": "Flag",
+      "positionInList": 1,
+      "dataType": "number",
+      "visibility": "everyone",
+      "description": "Example flag",
+      "updateInstructions": "",
+      "formatExample": "",
+      "enforceFormat": false,
+      "formatSchema": "",
+      "initialValue": "0",
+      "initialValueBasedOnPC": "same",
+      "autoUpdate": false,
+      "variableName": "flag",
+      "driftAcknowledgedForName": null
+    },
+    {
+      "id": "vSpoTw7iQ",
+      "name": "Note",
+      "positionInList": 2,
+      "dataType": "text",
+      "visibility": "everyone",
+      "description": "Example note",
+      "updateInstructions": "",
+      "formatExample": "",
+      "enforceFormat": false,
+      "formatSchema": "",
+      "initialValue": "",
+      "initialValueBasedOnPC": "same",
+      "autoUpdate": false,
+      "variableName": "note",
+      "driftAcknowledgedForName": null
+    },
+    {
+      "id": "6iVxbL4jd",
+      "name": "Answer",
+      "positionInList": 3,
+      "dataType": "text",
+      "visibility": "everyone",
+      "description": "Example answer",
+      "updateInstructions": "",
+      "formatExample": "",
+      "enforceFormat": false,
+      "formatSchema": "",
+      "initialValue": "",
+      "initialValueBasedOnPC": "same",
+      "autoUpdate": false,
+      "variableName": "answer",
+      "driftAcknowledgedForName": null
+    },
+    {
+      "id": "PY93TpM6p",
+      "name": "Reputation",
+      "positionInList": 4,
+      "dataType": "number",
+      "visibility": "everyone",
+      "description": "Example reputation",
+      "updateInstructions": "",
+      "formatExample": "",
+      "enforceFormat": false,
+      "formatSchema": "",
+      "initialValue": "0",
+      "initialValueBasedOnPC": "same",
+      "autoUpdate": false,
+      "variableName": "reputation",
+      "driftAcknowledgedForName": null
+    }
+  ],
+  "hideSkillSystem": false,
+  "autoAdvanceVersion": false,
+  "version": "1.0",
+  "charSelectText": "Choose the guild visitor.",
+  "descriptionRequest": "",
+  "evaluationRequest": "",
+  "summaryRequest": "",
+  "instructionBlocks": [
+    {
+      "id": "blk-guidance",
+      "name": "Guild Guidance",
+      "content": "The clerk waits behind the desk."
+    }
+  ],
+  "NPCs": [
+    {
+      "id": "npc-clerk",
+      "name": "Mara",
+      "names": [
+        "Mara",
+        "guild clerk"
+      ],
+      "one_liner": "Mara is the practical clerk at the guild office.",
+      "detail": "Mara wants clear requests and dislikes vague promises. Her dry humor softens when someone admits an honest mistake.",
+      "appearance": "A middle-aged woman with cropped black hair and ink-stained fingers.",
+      "location": "Guild office",
+      "secret_info": "She is planning to retire after training her replacement.",
+      "img_appearance": "Middle-aged woman, cropped black hair, ink-stained fingers.",
+      "img_clothing": "Navy waistcoat over a cream shirt.",
+      "positionInList": 0
+    }
+  ],
+  "loreBookEntries": [
+    {
+      "id": "kw-guild",
+      "name": "Guild Seal",
+      "keywords": [
+        "silver seal"
+      ],
+      "content": "The silver seal identifies the guild; it has a crescent engraving."
+    }
+  ],
+  "designNotes": "Authoring example. See the example index for scope and verification status."
+}
+===== END FILE: examples/recipe-threshold-unlock.json =====
+
+===== BEGIN FILE: examples/optional-block.json =====
+{
+  "favorite": false,
+  "title": "Optional Instruction Block Example",
+  "description": "Player-controlled optional guidance, applied once per preference change.",
+  "background": "A quiet reading room. You may look around or talk to the attendant.",
+  "instructions": "Tell a short interactive scene in a reading room. Follow any active Optional Detail instructions. The Extra Detail preference belongs to the player; do not alter it. No special actions, action codes, scores or resource systems are required.",
+  "authorStyle": "",
+  "recommendedAIModel": null,
+  "firstInput": "Look around.",
+  "objective": "Try the extra-detail preference.",
+  "imageModel": "manticore",
+  "imageStyle": "photo_1",
+  "illustrationStyleNonCharacterLowPriority": "",
+  "illustrationStyleNonCharacterHighPriority": "",
+  "illustrationStyleCharacterLowPriority": "",
+  "illustrationStyleCharacterHighPriority": "",
+  "imageStyleCharacterPre": "",
+  "imageStyleCharacterPost": "",
+  "imageStyleNonCharacterPre": "",
+  "imageStyleNonCharacterPost": "",
+  "mature": false,
+  "nsfw": false,
+  "contentWarnings": "",
+  "enableAISpecificInstructionBlocks": false,
+  "previewImage": "",
+  "fullSizePreviewImage": "",
+  "previewImageOptions": [],
+  "fullSizePreviewImageOptions": [],
+  "currentPreviewImageIndex": -1,
+  "imagePromptDetails": {
+    "illustrClothes": "",
+    "illustrSetting": "",
+    "illustrSubject": "",
+    "illustrAppearance": "",
+    "illustrIsCharacter": false,
+    "illustrExpressionPosition": ""
+  },
+  "permissionsOnceShared": {
+    "sharing": true,
+    "editing": true
+  },
+  "allowChangeCharacterName": false,
+  "allowChangeCharacterDescription": false,
+  "allowChangeCharacterSkills": false,
+  "allowChangeCharacterItemValues": false,
+  "allowChangeCharacterPortrait": false,
+  "allowChangeCharacterNewPortrait": false,
+  "conditions": [],
+  "schemaVersion": 2.4,
+  "skills": [
+    "Generic skill"
+  ],
+  "possibleCharacters": [
+    {
+      "name": "Player character",
+      "description": "",
+      "portrait": "",
+      "portraitPromptDetails": {
+        "illustrAppearance": "",
+        "illustrClothes": "",
+        "illustrExpressionPosition": "",
+        "illustrSetting": ""
+      },
+      "fullSizePortrait": "",
+      "portraitOptions": [],
+      "fullSizePortraitOptions": [],
+      "currentPortraitIndex": -1,
+      "characterId": "c7038c97-b50f-57be-9e33-9ce2914d80ef",
+      "skills": {
+        "Generic skill": 3
+      },
+      "initialTrackedItemValues": []
+    }
+  ],
+  "triggerEvents": [
+    {
+      "id": "588f50b7-79be-5f86-a4a0-af91266dfdf8",
+      "name": "Extra Detail: On",
+      "triggerOnStartOfGame": true,
+      "triggerMidGame": true,
+      "canTriggerMoreThanOnce": true,
+      "triggerConditions": [
+        {
+          "id": "22909dbe-cf09-5c9c-90f9-d04eeb93e137",
+          "category": "condition",
+          "type": "triggerOnTrackedItem",
+          "data": {
+            "trackedItemID": "kMZNmwITA",
+            "inequality": "is_exactly",
+            "requiredValue": "On",
+            "textComparison": "contains"
+          }
+        },
+        {
+          "id": "37b3b07a-be7b-5ac6-95ac-cf6bd83434fa",
+          "category": "condition",
+          "type": "triggerOnTrackedItem",
+          "data": {
+            "trackedItemID": "kbpAjsda5",
+            "inequality": "is_exactly",
+            "requiredValue": "Enabled",
+            "textComparison": "does_not_contain"
+          }
+        }
+      ],
+      "triggerEffects": [
+        {
+          "id": "a160ec6e-addb-549f-822a-19fb96d1716a",
+          "type": "effectModifyInstructionBlock",
+          "data": {
+            "id": "168bc985-5b1c-5540-bb03-3cabb942cfe9",
+            "content": "Include a concrete sensory detail when describing the current scene."
+          }
+        },
+        {
+          "id": "3dd8a1c6-b7d2-551b-b6d3-811252919849",
+          "type": "effectSetTrackedItemValue",
+          "data": {
+            "trackedItemID": "kbpAjsda5",
+            "action": "set",
+            "newValue": "Enabled",
+            "replaceWith": "",
+            "path": "",
+            "updateMode": "path",
+            "listExpression": "",
+            "targetExpression": ""
+          }
+        }
+      ]
+    },
+    {
+      "id": "5b7f75e9-9289-5068-a808-bd845bce08c9",
+      "name": "Extra Detail: Off",
+      "triggerOnStartOfGame": true,
+      "triggerMidGame": true,
+      "canTriggerMoreThanOnce": true,
+      "triggerConditions": [
+        {
+          "id": "d15de872-0a9d-52b0-8de9-c70c7d7809e5",
+          "category": "condition",
+          "type": "triggerOnTrackedItem",
+          "data": {
+            "trackedItemID": "kMZNmwITA",
+            "inequality": "is_exactly",
+            "requiredValue": "Off",
+            "textComparison": "contains"
+          }
+        },
+        {
+          "id": "31ae1156-72e9-5398-a1c2-d4cf51e5531d",
+          "category": "condition",
+          "type": "triggerOnTrackedItem",
+          "data": {
+            "trackedItemID": "kbpAjsda5",
+            "inequality": "is_exactly",
+            "requiredValue": "Disabled",
+            "textComparison": "does_not_contain"
+          }
+        }
+      ],
+      "triggerEffects": [
+        {
+          "id": "a9bc32c7-79cb-5a1d-aa0b-8f75634b7455",
+          "type": "effectModifyInstructionBlock",
+          "data": {
+            "id": "168bc985-5b1c-5540-bb03-3cabb942cfe9",
+            "content": ""
+          }
+        },
+        {
+          "id": "2c6f4dcd-0b20-573e-93ff-9ced18f03797",
+          "type": "effectSetTrackedItemValue",
+          "data": {
+            "trackedItemID": "kbpAjsda5",
+            "action": "set",
+            "newValue": "Disabled",
+            "replaceWith": "",
+            "path": "",
+            "updateMode": "path",
+            "listExpression": "",
+            "targetExpression": ""
+          }
+        }
+      ]
+    }
+  ],
+  "victoryCondition": null,
+  "defeatCondition": null,
+  "trackedItems": [
+    {
+      "id": "kMZNmwITA",
+      "name": "Extra Detail (On|Off)",
+      "positionInList": 0,
+      "dataType": "text",
+      "visibility": "player_only",
+      "description": "Player preference for extra sensory detail.",
+      "updateInstructions": "",
+      "formatExample": "",
+      "enforceFormat": false,
+      "formatSchema": "",
+      "initialValue": "On",
+      "initialValueBasedOnPC": "player",
+      "autoUpdate": false,
+      "variableName": "extra_detail",
+      "driftAcknowledgedForName": null,
+      "initialValueChoices": [
+        "On",
+        "Off"
+      ]
+    },
+    {
+      "id": "kbpAjsda5",
+      "name": "Detail Applied",
+      "positionInList": 1,
+      "dataType": "text",
+      "visibility": "hidden_boring",
+      "description": "Applied-state cache; do not edit.",
+      "updateInstructions": "",
+      "formatExample": "",
+      "enforceFormat": false,
+      "formatSchema": "",
+      "initialValue": "",
+      "initialValueBasedOnPC": "same",
+      "autoUpdate": false,
+      "variableName": "detail_applied",
+      "driftAcknowledgedForName": null
+    }
+  ],
+  "hideSkillSystem": true,
+  "autoAdvanceVersion": false,
+  "version": "1.0",
+  "charSelectText": "",
+  "descriptionRequest": "Describe the immediate result briefly, following the active instructions.",
+  "evaluationRequest": "",
+  "summaryRequest": "",
+  "instructionBlocks": [
+    {
+      "id": "168bc985-5b1c-5540-bb03-3cabb942cfe9",
+      "name": "Optional Detail",
+      "content": ""
+    }
+  ],
+  "NPCs": [],
+  "loreBookEntries": [],
+  "designNotes": "Authoring example. See the example index for scope and verification status."
+}
+===== END FILE: examples/optional-block.json =====
+
+===== BEGIN FILE: examples/showcase-glass-ledger.json =====
+{
+  "favorite": false,
+  "title": "The Glass Ledger — Showcase",
+  "description": "An understated caper about recovering a stolen ledger before the auction begins.",
+  "background": "The Glass Ledger proves that the harbor guild has been stealing wages. Tonight it is displayed at a private auction. Your crew meets in a rented map shop before attempting a quiet recovery. No one in the crew wants anyone hurt.",
+  "instructions": "Run a compact, nonviolent caper. Nia is in the opening room: a patient planner with a pencilled map who wants to recover stolen wages. Offer planning, crew conversation and explicit preparation. The fixed resource/caper steps are defined by the Caper Rules block; other actions use ordinary narrative judgment. Keep secrets out of unearned player knowledge. Do not add a second mandatory objective.",
+  "authorStyle": "Second-person present. Wry dialogue, tactile detail, compact scenes and resourceful characters. Keep consequences legible.",
+  "recommendedAIModel": null,
+  "firstInput": "Begin at 8:00 PM in the rented map shop. Nia unfolds the floor plan and reviews the selected approach: <<$plan>>. Introduce only Nia and the immediate preparation.",
+  "objective": "Prepare the selected approach, recover the Glass Ledger and leave safely.",
+  "imageModel": "manticore",
+  "imageStyle": "photo_1",
+  "illustrationStyleNonCharacterLowPriority": "",
+  "illustrationStyleNonCharacterHighPriority": "",
+  "illustrationStyleCharacterLowPriority": "",
+  "illustrationStyleCharacterHighPriority": "",
+  "imageStyleCharacterPre": "",
+  "imageStyleCharacterPost": "",
+  "imageStyleNonCharacterPre": "",
+  "imageStyleNonCharacterPost": "",
+  "mature": false,
+  "nsfw": false,
+  "contentWarnings": "",
+  "enableAISpecificInstructionBlocks": false,
+  "previewImage": "",
+  "fullSizePreviewImage": "",
+  "previewImageOptions": [],
+  "fullSizePreviewImageOptions": [],
+  "currentPreviewImageIndex": -1,
+  "imagePromptDetails": {
+    "illustrClothes": "",
+    "illustrSetting": "",
+    "illustrSubject": "",
+    "illustrAppearance": "",
+    "illustrIsCharacter": false,
+    "illustrExpressionPosition": ""
+  },
+  "permissionsOnceShared": {
+    "sharing": true,
+    "editing": true
+  },
+  "allowChangeCharacterName": false,
+  "allowChangeCharacterDescription": false,
+  "allowChangeCharacterSkills": false,
+  "allowChangeCharacterItemValues": false,
+  "allowChangeCharacterPortrait": false,
+  "allowChangeCharacterNewPortrait": false,
+  "conditions": [
+    "The player explicitly promises the recovered ledger to the unpaid harbor workers."
+  ],
+  "schemaVersion": 2.4,
+  "skills": [
+    "Observation",
+    "Persuasion",
+    "Engineering"
+  ],
+  "possibleCharacters": [
+    {
+      "name": "Avery",
+      "description": "An experienced negotiator working with the map-shop crew.",
+      "portrait": "",
+      "portraitPromptDetails": {
+        "illustrAppearance": "",
+        "illustrClothes": "",
+        "illustrExpressionPosition": "",
+        "illustrSetting": ""
+      },
+      "fullSizePortrait": "",
+      "portraitOptions": [],
+      "fullSizePortraitOptions": [],
+      "currentPortraitIndex": -1,
+      "characterId": "pc-avery",
+      "skills": {
+        "Observation": 3,
+        "Persuasion": 4,
+        "Engineering": 2
+      },
+      "initialTrackedItemValues": []
+    },
+    {
+      "name": "Morgan",
+      "description": "An experienced technician working with the map-shop crew.",
+      "portrait": "",
+      "portraitPromptDetails": {
+        "illustrAppearance": "",
+        "illustrClothes": "",
+        "illustrExpressionPosition": "",
+        "illustrSetting": ""
+      },
+      "fullSizePortrait": "",
+      "portraitOptions": [],
+      "fullSizePortraitOptions": [],
+      "currentPortraitIndex": -1,
+      "characterId": "pc-morgan",
+      "skills": {
+        "Observation": 3,
+        "Persuasion": 2,
+        "Engineering": 4
+      },
+      "initialTrackedItemValues": []
+    }
+  ],
+  "triggerEvents": [
+    {
+      "id": "trg-acknowledge-plan",
+      "name": "Acknowledge Plan",
+      "triggerConditions": [
+        {
+          "category": "condition",
+          "type": "triggerOnPawScript",
+          "data": "$plan != \"\"",
+          "id": "node-showcase-glass-ledger-1"
+        }
+      ],
+      "triggerEffects": [
+        {
+          "type": "effectChangeObjective",
+          "data": "Prepare the <<$plan>> approach, recover the ledger, then leave.",
+          "id": "node-showcase-glass-ledger-2"
+        },
+        {
+          "type": "effectShowMessage",
+          "data": "Approach: <<$plan>>. Tools cost 4 coins.",
+          "id": "node-showcase-glass-ledger-3"
+        }
+      ],
+      "triggerOnStartOfGame": true,
+      "triggerMidGame": true,
+      "canTriggerMoreThanOnce": false,
+      "advancedLogic": false
+    },
+    {
+      "id": "trg-receipt-reset",
+      "name": "Receipt Reset",
+      "triggerConditions": [],
+      "triggerEffects": [
+        {
+          "type": "effectRunScript",
+          "data": "$receipt = \"No caper transaction requested.\"",
+          "name": "Initialize Caper Receipt",
+          "id": "node-showcase-glass-ledger-4"
+        }
+      ],
+      "triggerOnStartOfGame": true,
+      "triggerMidGame": true,
+      "canTriggerMoreThanOnce": true,
+      "advancedLogic": false
+    },
+    {
+      "id": "trg-process-request",
+      "name": "Process Request",
+      "triggerConditions": [
+        {
+          "category": "condition",
+          "type": "triggerOnPawScript",
+          "data": "$request.turn = $game.turn_number and $request.event != \"NONE\"",
+          "id": "node-showcase-glass-ledger-5"
+        }
+      ],
+      "triggerEffects": [
+        {
+          "type": "effectRunScript",
+          "data": "if $state.finished = 1\n  $receipt = \"The caper is already complete.\"\nelse if $state.remaining <= 0\n  $receipt = \"The auction has begun; this attempt is over.\"\nelse if $request.event = \"BUY_TOOLS\"\n  if $state.tools = 1\n    $receipt = \"Tools already owned; no charge.\"\n  else if $coins >= 4\n    $coins -= 4\n    $state.tools = 1\n    $receipt = \"Tools purchased for 4 coins.\"\n  else\n    $receipt = \"Not enough coins for tools.\"\nelse if $request.event = \"RECOVER_LEDGER\"\n  if $plan != \"\" and $state.tools = 1\n    $state.ledger = 1\n    $receipt = \"Glass Ledger recovered.\"\n  else\n    $receipt = \"Choose an approach and obtain tools first.\"\nelse if $request.event = \"LEAVE\"\n  if $state.ledger = 1\n    $state.finished = 1\n    $receipt = \"You leave safely with the Glass Ledger.\"\n  else\n    $receipt = \"You can withdraw, but the ledger has not been recovered.\"",
+          "name": "Resolve Caper Transaction",
+          "id": "node-showcase-glass-ledger-6"
+        }
+      ],
+      "triggerOnStartOfGame": true,
+      "triggerMidGame": true,
+      "canTriggerMoreThanOnce": true,
+      "advancedLogic": false
+    },
+    {
+      "id": "trg-countdown",
+      "name": "Countdown",
+      "triggerConditions": [
+        {
+          "category": "condition",
+          "type": "triggerOnPawScript",
+          "data": "$game.turn_number > 1 and $plan != \"\" and $state.finished = 0 and $state.remaining > 0",
+          "id": "node-showcase-glass-ledger-7"
+        }
+      ],
+      "triggerEffects": [
+        {
+          "type": "effectRunScript",
+          "data": "$state.remaining -= 1",
+          "name": "Spend One Caper Beat",
+          "id": "node-showcase-glass-ledger-8"
+        }
+      ],
+      "triggerOnStartOfGame": false,
+      "triggerMidGame": false,
+      "canTriggerMoreThanOnce": true,
+      "advancedLogic": false
+    },
+    {
+      "id": "trg-detail-on",
+      "name": "Detail On",
+      "triggerConditions": [
+        {
+          "category": "condition",
+          "type": "triggerOnPawScript",
+          "data": "$extra_detail = \"On\" and $detail_cache != \"Enabled\"",
+          "id": "node-showcase-glass-ledger-9"
+        }
+      ],
+      "triggerEffects": [
+        {
+          "type": "effectModifyInstructionBlock",
+          "data": {
+            "id": "blk-detail",
+            "content": "Include one concrete sensory detail per scene without extending its length."
+          },
+          "id": "node-showcase-glass-ledger-10"
+        },
+        {
+          "type": "effectRunScript",
+          "data": "$detail_cache = \"Enabled\"",
+          "name": "Cache Detail Enabled",
+          "id": "node-showcase-glass-ledger-11"
+        }
+      ],
+      "triggerOnStartOfGame": true,
+      "triggerMidGame": true,
+      "canTriggerMoreThanOnce": true,
+      "advancedLogic": false
+    },
+    {
+      "id": "trg-detail-off",
+      "name": "Detail Off",
+      "triggerConditions": [
+        {
+          "category": "condition",
+          "type": "triggerOnPawScript",
+          "data": "$extra_detail = \"Off\" and $detail_cache != \"Disabled\"",
+          "id": "node-showcase-glass-ledger-12"
+        }
+      ],
+      "triggerEffects": [
+        {
+          "type": "effectModifyInstructionBlock",
+          "data": {
+            "id": "blk-detail",
+            "content": ""
+          },
+          "id": "node-showcase-glass-ledger-13"
+        },
+        {
+          "type": "effectRunScript",
+          "data": "$detail_cache = \"Disabled\"",
+          "name": "Cache Detail Disabled",
+          "id": "node-showcase-glass-ledger-14"
+        }
+      ],
+      "triggerOnStartOfGame": true,
+      "triggerMidGame": true,
+      "canTriggerMoreThanOnce": true,
+      "advancedLogic": false
+    },
+    {
+      "id": "trg-promise",
+      "name": "Promise",
+      "triggerConditions": [
+        {
+          "category": "condition",
+          "type": "triggerOnEvent",
+          "data": "The player explicitly promises the recovered ledger to the unpaid harbor workers.",
+          "id": "node-showcase-glass-ledger-15"
+        }
+      ],
+      "triggerEffects": [
+        {
+          "type": "effectGiveInfo",
+          "data": "The crew remembers the promise to return the evidence to the workers.",
+          "id": "node-showcase-glass-ledger-16"
+        }
+      ],
+      "triggerOnStartOfGame": false,
+      "triggerMidGame": false,
+      "canTriggerMoreThanOnce": false,
+      "advancedLogic": false
+    },
+    {
+      "id": "trg-receipt",
+      "name": "Receipt",
+      "triggerConditions": [
+        {
+          "id": "trg-receipt-requested",
+          "category": "condition",
+          "type": "triggerOnPawScript",
+          "data": "$request.turn = $game.turn_number and $request.event != \"NONE\""
+        }
+      ],
+      "triggerEffects": [
+        {
+          "type": "effectShowMessage",
+          "data": "<<$receipt>> Coins: <<$coins>>. Beats: <<$state.remaining>>.",
+          "id": "node-showcase-glass-ledger-17"
+        },
+        {
+          "type": "effectRunScript",
+          "data": "$request.turn = 0\n$request.event = \"NONE\"",
+          "name": "Consume Caper Request",
+          "id": "node-showcase-glass-ledger-18"
+        }
+      ],
+      "triggerOnStartOfGame": true,
+      "triggerMidGame": true,
+      "canTriggerMoreThanOnce": true,
+      "advancedLogic": false
+    },
+    {
+      "id": "trg-success",
+      "name": "Success",
+      "triggerConditions": [
+        {
+          "category": "condition",
+          "type": "triggerOnPawScript",
+          "data": "$state.finished = 1",
+          "id": "node-showcase-glass-ledger-19"
+        }
+      ],
+      "triggerEffects": [
+        {
+          "type": "effectShowMessage",
+          "data": "The evidence is safe. Your crew can choose what comes next.",
+          "id": "node-showcase-glass-ledger-20"
+        },
+        {
+          "type": "effectEndsGame",
+          "data": true,
+          "id": "node-showcase-glass-ledger-21"
+        }
+      ],
+      "triggerOnStartOfGame": false,
+      "triggerMidGame": false,
+      "canTriggerMoreThanOnce": false,
+      "advancedLogic": false
+    },
+    {
+      "id": "trg-timeout",
+      "name": "Timeout",
+      "triggerConditions": [
+        {
+          "category": "condition",
+          "type": "triggerOnPawScript",
+          "data": "$state.remaining = 0 and $state.finished = 0",
+          "id": "node-showcase-glass-ledger-22"
+        }
+      ],
+      "triggerEffects": [
+        {
+          "type": "effectShowMessage",
+          "data": "The auction begins before the crew is ready. You withdraw safely; continuation is permitted.",
+          "id": "node-showcase-glass-ledger-23"
+        },
+        {
+          "type": "effectEndsGame",
+          "data": true,
+          "id": "node-showcase-glass-ledger-24"
+        }
+      ],
+      "triggerOnStartOfGame": false,
+      "triggerMidGame": false,
+      "canTriggerMoreThanOnce": false,
+      "advancedLogic": false
+    }
+  ],
+  "victoryCondition": null,
+  "defeatCondition": null,
+  "trackedItems": [
+    {
+      "id": "nzr9cnDuo",
+      "name": "Coins",
+      "positionInList": 0,
+      "dataType": "number",
+      "visibility": "everyone",
+      "description": "Example coins",
+      "updateInstructions": "",
+      "formatExample": "",
+      "enforceFormat": false,
+      "formatSchema": "",
+      "initialValue": "12",
+      "initialValueBasedOnPC": "same",
+      "autoUpdate": false,
+      "variableName": "coins",
+      "driftAcknowledgedForName": null
+    },
+    {
+      "id": "qKfRA7vRe",
+      "name": "Plan",
+      "positionInList": 1,
+      "dataType": "text",
+      "visibility": "everyone",
+      "description": "Example plan",
+      "updateInstructions": "",
+      "formatExample": "",
+      "enforceFormat": false,
+      "formatSchema": "",
+      "initialValue": "Guests",
+      "initialValueBasedOnPC": "player",
+      "autoUpdate": false,
+      "variableName": "plan",
+      "driftAcknowledgedForName": null,
+      "initialValueChoices": [
+        "Guests",
+        "Service"
+      ]
+    },
+    {
+      "id": "yhK6linEz",
+      "name": "Request",
+      "positionInList": 2,
+      "dataType": "yaml",
+      "visibility": "ai_only",
+      "description": "Example request",
+      "updateInstructions": "Write turn=the CURRENT TURN value in the permanent Turn Context block as number and event EVERY turn. From the current explicit player request select one: BUY_TOOLS, RECOVER_LEDGER, LEAVE, or NONE. Talking or asking about an action is NONE. Do not infer completion from prose.",
+      "formatExample": "",
+      "enforceFormat": false,
+      "formatSchema": "",
+      "initialValue": "turn: 0\nevent: NONE",
+      "initialValueBasedOnPC": "same",
+      "autoUpdate": true,
+      "variableName": "request",
+      "driftAcknowledgedForName": null
+    },
+    {
+      "id": "oW6C9cIlg",
+      "name": "State",
+      "positionInList": 3,
+      "dataType": "yaml",
+      "visibility": "ai_only",
+      "description": "Example state",
+      "updateInstructions": "",
+      "formatExample": "",
+      "enforceFormat": false,
+      "formatSchema": "",
+      "initialValue": "tools: 0\nledger: 0\nfinished: 0\nremaining: 8",
+      "initialValueBasedOnPC": "same",
+      "autoUpdate": false,
+      "variableName": "state",
+      "driftAcknowledgedForName": null
+    },
+    {
+      "id": "OTvEy5AxE",
+      "name": "Receipt",
+      "positionInList": 4,
+      "dataType": "text",
+      "visibility": "ai_only",
+      "description": "Example receipt",
+      "updateInstructions": "",
+      "formatExample": "",
+      "enforceFormat": false,
+      "formatSchema": "",
+      "initialValue": "",
+      "initialValueBasedOnPC": "same",
+      "autoUpdate": false,
+      "variableName": "receipt",
+      "driftAcknowledgedForName": null
+    },
+    {
+      "id": "KaKnk20l9",
+      "name": "Extra Detail",
+      "positionInList": 5,
+      "dataType": "text",
+      "visibility": "player_only",
+      "description": "Example extra detail",
+      "updateInstructions": "",
+      "formatExample": "",
+      "enforceFormat": false,
+      "formatSchema": "",
+      "initialValue": "Off",
+      "initialValueBasedOnPC": "player",
+      "autoUpdate": false,
+      "variableName": "extra_detail",
+      "driftAcknowledgedForName": null,
+      "initialValueChoices": [
+        "On",
+        "Off"
+      ]
+    },
+    {
+      "id": "AzPojr8mB",
+      "name": "Detail Cache",
+      "positionInList": 6,
+      "dataType": "text",
+      "visibility": "hidden_boring",
+      "description": "Example detail cache",
+      "updateInstructions": "",
+      "formatExample": "",
+      "enforceFormat": false,
+      "formatSchema": "",
+      "initialValue": "",
+      "initialValueBasedOnPC": "same",
+      "autoUpdate": false,
+      "variableName": "detail_cache",
+      "driftAcknowledgedForName": null
+    }
+  ],
+  "hideSkillSystem": false,
+  "autoAdvanceVersion": false,
+  "version": "1.0",
+  "charSelectText": "Choose a negotiator or a technician. Both can complete the caper.",
+  "descriptionRequest": "",
+  "evaluationRequest": "",
+  "summaryRequest": "",
+  "instructionBlocks": [
+    {
+      "id": "blk-core",
+      "name": "Caper Rules",
+      "content": "The crew can prepare and talk freely. Tools cost 4 coins once. Once an approach is selected, each later turn before completion spends one of the eight remaining beats. Recovering the ledger requires a selected plan and purchased tools; leaving successfully requires the ledger. These exact changes occur in triggers: narrate attempts without awarding resources or declaring success before the receipt. Continue from state and receipt next turn. Current coins: <<$coins>>. Approach: <<$plan>>. Tools: <<$state.tools>>. Ledger: <<$state.ledger>>. Remaining beats: <<$state.remaining>>. Both plans support success; details and complications can differ."
+    },
+    {
+      "id": "blk-detail",
+      "name": "Optional Detail",
+      "content": ""
+    },
+    {
+      "id": "blk-time",
+      "name": "Time and Location",
+      "content": "Use whereWhen as a single opening header in outcomeDescription: {Place}, at HH:MM AM/PM. Start at 8:00 PM in the map shop; advance time reasonably for scene events. Follow the header with a blank line and horizontal rule. The beat counter is a gameplay deadline, not a fixed number of clock minutes."
+    },
+    {
+      "id": "blk-turn-context",
+      "name": "Turn Context",
+      "content": "CURRENT TURN: <<$game.turn_number>>. The request tracker must copy this number into its turn field for the current input."
+    }
+  ],
+  "NPCs": [
+    {
+      "id": "npc-nia",
+      "name": "Nia",
+      "names": [
+        "Nia"
+      ],
+      "one_liner": "Nia is the crew's planner. She states a plan as a question, then waits for a real answer.",
+      "detail": "Patient, quietly stubborn; wants unpaid workers to receive the evidence. She states a plan as a question, then waits for a real answer. Under pressure she folds and refolds one map corner. She will change a plan to protect a worker even when it costs time.",
+      "appearance": "Broad-shouldered, silver braid looped through a pencil, navy coat with patched elbows.",
+      "location": "map shop",
+      "secret_info": "",
+      "img_appearance": "Broad-shouldered, silver braid looped through a pencil, navy coat with patched elbows.",
+      "img_clothing": "Practical evening clothes appropriate to the harbor.",
+      "positionInList": 0
+    },
+    {
+      "id": "npc-joss",
+      "name": "Joss",
+      "names": [
+        "Joss"
+      ],
+      "one_liner": "Joss is the crew's driver. He speaks in departure times and distances, with a dry half-smile instead of reassurance.",
+      "detail": "Laconic and punctual; insists on a clear departure signal. He speaks in departure times and distances, with a dry half-smile instead of reassurance. He refuses surprise passengers but will not abandon the crew.",
+      "appearance": "Lean man with a crooked nose, close-cropped hair and a worn leather driving coat.",
+      "location": "back lane",
+      "secret_info": "",
+      "img_appearance": "Lean man with a crooked nose, close-cropped hair and a worn leather driving coat.",
+      "img_clothing": "Practical evening clothes appropriate to the harbor.",
+      "positionInList": 1
+    },
+    {
+      "id": "npc-em",
+      "name": "Em",
+      "names": [
+        "Em"
+      ],
+      "one_liner": "Em is the crew's locksmith. She describes locks as badly behaved acquaintances.",
+      "detail": "Dry humor; values clean work more than speed. She describes locks as badly behaved acquaintances. Her jokes are precise and quiet; rushed hands make her stop the conversation and restart the task.",
+      "appearance": "Compact woman with a freckled face, round spectacles and a velvet tool roll.",
+      "location": "map shop",
+      "secret_info": "",
+      "img_appearance": "Compact woman with a freckled face, round spectacles and a velvet tool roll.",
+      "img_clothing": "Practical evening clothes appropriate to the harbor.",
+      "positionInList": 2
+    },
+    {
+      "id": "npc-rafi",
+      "name": "Rafi",
+      "names": [
+        "Rafi"
+      ],
+      "one_liner": "Rafi is the crew's lookout. He fills anxious silences with elaborate guesses, then becomes sharply concise when reporting something he actually saw.",
+      "detail": "Talkative when nervous; watches arrivals carefully. He fills anxious silences with elaborate guesses, then becomes sharply concise when reporting something he actually saw. He wants to be trusted with more than lookout duty.",
+      "appearance": "Tall, restless man in a mustard scarf and an oversized rain cape.",
+      "location": "opposite roof",
+      "secret_info": "",
+      "img_appearance": "Tall, restless man in a mustard scarf and an oversized rain cape.",
+      "img_clothing": "Practical evening clothes appropriate to the harbor.",
+      "positionInList": 3
+    },
+    {
+      "id": "npc-sol",
+      "name": "Sol",
+      "names": [
+        "Sol"
+      ],
+      "one_liner": "Sol is the crew's forger. He corrects the weight of paper before discussing the morality of forgery.",
+      "detail": "Meticulous; treats convincing stationery as an art. He corrects the weight of paper before discussing the morality of forgery. He speaks with gentle ceremonial formality and hates waste.",
+      "appearance": "Bald older man with immaculate cuffs, a green eye shade tucked in his pocket and a violet ink stain at one thumb.",
+      "location": "print shop",
+      "secret_info": "",
+      "img_appearance": "Bald older man with immaculate cuffs, a green eye shade tucked in his pocket and a violet ink stain at one thumb.",
+      "img_clothing": "Practical evening clothes appropriate to the harbor.",
+      "positionInList": 4
+    },
+    {
+      "id": "npc-tess",
+      "name": "Tess",
+      "names": [
+        "Tess"
+      ],
+      "one_liner": "Tess is the crew's porter. She greets people by the last useful thing they did.",
+      "detail": "Friendly and physically assured; remembers staff routines. She greets people by the last useful thing they did. Her warmth is practical: carrying a crate, finding a chair, sharing a sandwich. She notices who gets ignored.",
+      "appearance": "Sturdy woman with close-shaved dark hair, a chipped front tooth and rolled linen sleeves.",
+      "location": "service yard",
+      "secret_info": "",
+      "img_appearance": "Sturdy woman with close-shaved dark hair, a chipped front tooth and rolled linen sleeves.",
+      "img_clothing": "Practical evening clothes appropriate to the harbor.",
+      "positionInList": 5
+    },
+    {
+      "id": "npc-ivo",
+      "name": "Ivo",
+      "names": [
+        "Ivo"
+      ],
+      "one_liner": "Ivo is the crew's accountant. He hesitates over personal questions but becomes clear and passionate when explaining stolen wages.",
+      "detail": "Soft-spoken; can explain why the ledger matters. He hesitates over personal questions but becomes clear and passionate when explaining stolen wages. He gives concrete examples instead of grand speeches.",
+      "appearance": "Narrow-faced man with tired eyes, a burgundy waistcoat and a brass counting chain.",
+      "location": "map shop",
+      "secret_info": "",
+      "img_appearance": "Narrow-faced man with tired eyes, a burgundy waistcoat and a brass counting chain.",
+      "img_clothing": "Practical evening clothes appropriate to the harbor.",
+      "positionInList": 6
+    },
+    {
+      "id": "npc-bea",
+      "name": "Bea",
+      "names": [
+        "Bea"
+      ],
+      "one_liner": "Bea is the crew's fence. She names a price once and lets silence do the negotiating.",
+      "detail": "Practical; can arrange safe transfer of evidence, but refuses stolen personal valuables. She names a price once and lets silence do the negotiating. Beneath that reserve she remembers every worker whose testimony she has protected.",
+      "appearance": "Older woman with white curls, bright brass earrings and a spotless black oilskin coat.",
+      "location": "canal warehouse",
+      "secret_info": "",
+      "img_appearance": "Older woman with white curls, bright brass earrings and a spotless black oilskin coat.",
+      "img_clothing": "Practical evening clothes appropriate to the harbor.",
+      "positionInList": 7
+    }
+  ],
+  "loreBookEntries": [
+    {
+      "id": "kw-auction",
+      "name": "Auction House",
+      "keywords": [
+        "auction house",
+        "service corridor"
+      ],
+      "content": "The auction house occupies a former customs office. Guests use the front hall; staff use the service corridor. Both lead toward the ledger display. The crew's floor plan gives only ordinary architecture, not secret solutions."
+    }
+  ],
+  "designNotes": "Authoring example. See the example index for scope and verification status."
+}
+===== END FILE: examples/showcase-glass-ledger.json =====
+
+===== BEGIN FILE: examples/character-starting-values.json =====
+{
+  "favorite": false,
+  "title": "Character Starting Values",
+  "description": "A compact IW example for inspection and runtime testing.",
+  "background": "You are visiting a quiet guild office. Its clerk is ready to hear what brings you to the guild.",
+  "instructions": "Keep the scene short and grounded. Follow the defined trackers and messages. Do not invent mechanical rewards.",
+  "authorStyle": "Clear, concise prose with a little warmth.",
+  "recommendedAIModel": null,
+  "firstInput": "Begin at the guild office and explain the immediate situation.",
+  "objective": "Visit the guild office and speak with Mara.",
+  "imageModel": "manticore",
+  "imageStyle": "photo_1",
+  "illustrationStyleNonCharacterLowPriority": "",
+  "illustrationStyleNonCharacterHighPriority": "",
+  "illustrationStyleCharacterLowPriority": "",
+  "illustrationStyleCharacterHighPriority": "",
+  "imageStyleCharacterPre": "",
+  "imageStyleCharacterPost": "",
+  "imageStyleNonCharacterPre": "",
+  "imageStyleNonCharacterPost": "",
+  "mature": false,
+  "nsfw": false,
+  "contentWarnings": "",
+  "enableAISpecificInstructionBlocks": false,
+  "previewImage": "",
+  "fullSizePreviewImage": "",
+  "previewImageOptions": [],
+  "fullSizePreviewImageOptions": [],
+  "currentPreviewImageIndex": -1,
+  "imagePromptDetails": {
+    "illustrClothes": "",
+    "illustrSetting": "",
+    "illustrSubject": "",
+    "illustrAppearance": "",
+    "illustrIsCharacter": false,
+    "illustrExpressionPosition": ""
+  },
+  "permissionsOnceShared": {
+    "sharing": true,
+    "editing": true
+  },
+  "allowChangeCharacterName": false,
+  "allowChangeCharacterDescription": false,
+  "allowChangeCharacterSkills": false,
+  "allowChangeCharacterItemValues": false,
+  "allowChangeCharacterPortrait": false,
+  "allowChangeCharacterNewPortrait": false,
+  "conditions": [],
+  "schemaVersion": 2.4,
+  "skills": [
+    "Observation",
+    "Persuasion"
+  ],
+  "possibleCharacters": [
+    {
+      "name": "Avery",
+      "description": "An observant courier visiting the guild.",
+      "portrait": "",
+      "portraitPromptDetails": {
+        "illustrAppearance": "",
+        "illustrClothes": "",
+        "illustrExpressionPosition": "",
+        "illustrSetting": ""
+      },
+      "fullSizePortrait": "",
+      "portraitOptions": [],
+      "fullSizePortraitOptions": [],
+      "currentPortraitIndex": -1,
+      "characterId": "pc-avery",
+      "skills": {
+        "Observation": 2,
+        "Persuasion": 3
+      },
+      "initialTrackedItemValues": [
+        {
+          "id": "VPVDXusjp",
+          "name": "Origin",
+          "visibility": "everyone",
+          "initialValueBasedOnPC": "character",
+          "initialPCValue": "Harbor"
+        },
+        {
+          "id": "z4yHm9g1j",
+          "name": "Route",
+          "visibility": "everyone",
+          "initialValueBasedOnPC": "character",
+          "initialPCValue": [
+            "Canal",
+            "Market"
+          ]
+        },
+        {
+          "id": "VcLYWWwR2",
+          "name": "Specialty",
+          "visibility": "everyone",
+          "initialValueBasedOnPC": "character",
+          "initialPCValue": "",
+          "initialPCValueChoicesScript": "$specialties"
+        }
+      ]
+    },
+    {
+      "name": "Morgan",
+      "description": "An observant courier visiting the guild.",
+      "portrait": "",
+      "portraitPromptDetails": {
+        "illustrAppearance": "",
+        "illustrClothes": "",
+        "illustrExpressionPosition": "",
+        "illustrSetting": ""
+      },
+      "fullSizePortrait": "",
+      "portraitOptions": [],
+      "fullSizePortraitOptions": [],
+      "currentPortraitIndex": -1,
+      "characterId": "pc-morgan",
+      "skills": {
+        "Observation": 2,
+        "Persuasion": 3
+      },
+      "initialTrackedItemValues": [
+        {
+          "id": "VPVDXusjp",
+          "name": "Origin",
+          "visibility": "everyone",
+          "initialValueBasedOnPC": "character",
+          "initialPCValue": "Uptown"
+        },
+        {
+          "id": "z4yHm9g1j",
+          "name": "Route",
+          "visibility": "everyone",
+          "initialValueBasedOnPC": "character",
+          "initialPCValue": [
+            "Canal",
+            "Market"
+          ]
+        },
+        {
+          "id": "VcLYWWwR2",
+          "name": "Specialty",
+          "visibility": "everyone",
+          "initialValueBasedOnPC": "character",
+          "initialPCValue": "",
+          "initialPCValueChoicesScript": "$specialties"
+        }
+      ]
+    }
+  ],
+  "triggerEvents": [],
+  "victoryCondition": null,
+  "defeatCondition": null,
+  "trackedItems": [
+    {
+      "id": "VPVDXusjp",
+      "name": "Origin",
+      "positionInList": 0,
+      "dataType": "text",
+      "visibility": "everyone",
+      "description": "Example origin",
+      "updateInstructions": "",
+      "formatExample": "",
+      "enforceFormat": false,
+      "formatSchema": "",
+      "initialValue": "Harbor",
+      "initialValueBasedOnPC": "character",
+      "autoUpdate": false,
+      "variableName": "origin",
+      "driftAcknowledgedForName": null
+    },
+    {
+      "id": "z4yHm9g1j",
+      "name": "Route",
+      "positionInList": 1,
+      "dataType": "text",
+      "visibility": "everyone",
+      "description": "Example route",
+      "updateInstructions": "",
+      "formatExample": "",
+      "enforceFormat": false,
+      "formatSchema": "",
+      "initialValue": "Canal",
+      "initialValueBasedOnPC": "character",
+      "autoUpdate": false,
+      "variableName": "route",
+      "driftAcknowledgedForName": null
+    },
+    {
+      "id": "VcLYWWwR2",
+      "name": "Specialty",
+      "positionInList": 2,
+      "dataType": "text",
+      "visibility": "everyone",
+      "description": "Example specialty",
+      "updateInstructions": "",
+      "formatExample": "",
+      "enforceFormat": false,
+      "formatSchema": "",
+      "initialValue": "Locks",
+      "initialValueBasedOnPC": "character",
+      "autoUpdate": false,
+      "variableName": "specialty",
+      "driftAcknowledgedForName": null
+    },
+    {
+      "id": "pRWcbqeJB",
+      "name": "Specialties",
+      "positionInList": 3,
+      "dataType": "yaml",
+      "visibility": "everyone",
+      "description": "Example specialties",
+      "updateInstructions": "",
+      "formatExample": "",
+      "enforceFormat": false,
+      "formatSchema": "",
+      "initialValue": "- Locks\n- Signals",
+      "initialValueBasedOnPC": "same",
+      "autoUpdate": false,
+      "variableName": "specialties",
+      "driftAcknowledgedForName": null
+    }
+  ],
+  "hideSkillSystem": false,
+  "autoAdvanceVersion": false,
+  "version": "1.0",
+  "charSelectText": "Choose the guild visitor.",
+  "descriptionRequest": "",
+  "evaluationRequest": "",
+  "summaryRequest": "",
+  "instructionBlocks": [
+    {
+      "id": "blk-guidance",
+      "name": "Guild Guidance",
+      "content": "The clerk waits behind the desk."
+    }
+  ],
+  "NPCs": [
+    {
+      "id": "npc-clerk",
+      "name": "Mara",
+      "names": [
+        "Mara",
+        "guild clerk"
+      ],
+      "one_liner": "Mara is the practical clerk at the guild office.",
+      "detail": "Mara wants clear requests and dislikes vague promises. Her dry humor softens when someone admits an honest mistake.",
+      "appearance": "A middle-aged woman with cropped black hair and ink-stained fingers.",
+      "location": "Guild office",
+      "secret_info": "She is planning to retire after training her replacement.",
+      "img_appearance": "Middle-aged woman, cropped black hair, ink-stained fingers.",
+      "img_clothing": "Navy waistcoat over a cream shirt.",
+      "positionInList": 0
+    }
+  ],
+  "loreBookEntries": [
+    {
+      "id": "kw-guild",
+      "name": "Guild Seal",
+      "keywords": [
+        "silver seal"
+      ],
+      "content": "The silver seal identifies the guild; it has a crescent engraving."
+    }
+  ],
+  "designNotes": "Authoring example. See the example index for scope and verification status."
+}
+===== END FILE: examples/character-starting-values.json =====

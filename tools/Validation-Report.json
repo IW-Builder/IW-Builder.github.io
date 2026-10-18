@@ -1,0 +1,223 @@
+{
+  "kitVersion": "1.2.0",
+  "schemaProfileVersion": "1.1.0",
+  "structuralValidation": {
+    "World-Template.json": {
+      "errors": 0,
+      "warnings": {}
+    },
+    "library/Sample-Blocks.json": {
+      "errors": 0,
+      "warnings": {
+        "unverified-expression": 3,
+        "unverified-script": 3,
+        "authoring-placeholder": 5,
+        "unknown-script-root": 1,
+        "context-root-unverified": 8
+      }
+    },
+    "examples/character-starting-values.json": {
+      "errors": 0,
+      "warnings": {
+        "unverified-choice-expression": 2
+      }
+    },
+    "examples/condition-triggerBlockers.json": {
+      "errors": 0,
+      "warnings": {}
+    },
+    "examples/condition-triggerOnCharacter.json": {
+      "errors": 0,
+      "warnings": {}
+    },
+    "examples/condition-triggerOnEvent.json": {
+      "errors": 0,
+      "warnings": {}
+    },
+    "examples/condition-triggerOnPawScript.json": {
+      "errors": 0,
+      "warnings": {
+        "unverified-expression": 1
+      }
+    },
+    "examples/condition-triggerOnRandomChance.json": {
+      "errors": 0,
+      "warnings": {}
+    },
+    "examples/condition-triggerOnTrackedItem.json": {
+      "errors": 0,
+      "warnings": {}
+    },
+    "examples/condition-triggerOnTurn.json": {
+      "errors": 0,
+      "warnings": {}
+    },
+    "examples/condition-triggerPrereqs.json": {
+      "errors": 0,
+      "warnings": {}
+    },
+    "examples/effect-effectChangeAuthorStyle.json": {
+      "errors": 0,
+      "warnings": {}
+    },
+    "examples/effect-effectChangeDefeatCondition.json": {
+      "errors": 0,
+      "warnings": {}
+    },
+    "examples/effect-effectChangeDescriptionInstructions.json": {
+      "errors": 0,
+      "warnings": {}
+    },
+    "examples/effect-effectChangeMainInstructions.json": {
+      "errors": 0,
+      "warnings": {}
+    },
+    "examples/effect-effectChangeObjective.json": {
+      "errors": 0,
+      "warnings": {}
+    },
+    "examples/effect-effectChangePCDescription.json": {
+      "errors": 0,
+      "warnings": {}
+    },
+    "examples/effect-effectChangePCName.json": {
+      "errors": 0,
+      "warnings": {}
+    },
+    "examples/effect-effectChangePCSkill.json": {
+      "errors": 0,
+      "warnings": {}
+    },
+    "examples/effect-effectChangeVictoryCondition.json": {
+      "errors": 0,
+      "warnings": {}
+    },
+    "examples/effect-effectEndsGame.json": {
+      "errors": 0,
+      "warnings": {}
+    },
+    "examples/effect-effectFireRandomTrigger.json": {
+      "errors": 0,
+      "warnings": {
+        "saved-inactive-trigger": 2
+      }
+    },
+    "examples/effect-effectGiveInfo.json": {
+      "errors": 0,
+      "warnings": {}
+    },
+    "examples/effect-effectModifyInstructionBlock.json": {
+      "errors": 0,
+      "warnings": {}
+    },
+    "examples/effect-effectModifyKeywordBlock.json": {
+      "errors": 0,
+      "warnings": {}
+    },
+    "examples/effect-effectModifyTrackedItemDetails.json": {
+      "errors": 0,
+      "warnings": {}
+    },
+    "examples/effect-effectPresentChoice.json": {
+      "errors": 0,
+      "warnings": {
+        "unverified-expression": 1
+      }
+    },
+    "examples/effect-effectRequestInput.json": {
+      "errors": 0,
+      "warnings": {
+        "unverified-expression": 1
+      }
+    },
+    "examples/effect-effectRunScript.json": {
+      "errors": 0,
+      "warnings": {
+        "unverified-script": 1
+      }
+    },
+    "examples/effect-effectSetTrackedItemValue.json": {
+      "errors": 0,
+      "warnings": {}
+    },
+    "examples/effect-effectShowMessage.json": {
+      "errors": 0,
+      "warnings": {}
+    },
+    "examples/effect-effectTellAIWhatToDo.json": {
+      "errors": 0,
+      "warnings": {}
+    },
+    "examples/logic-groups.json": {
+      "errors": 0,
+      "warnings": {
+        "unverified-expression": 2
+      }
+    },
+    "examples/narrative-last-ferry.json": {
+      "errors": 0,
+      "warnings": {}
+    },
+    "examples/native-text-operations.json": {
+      "errors": 0,
+      "warnings": {}
+    },
+    "examples/npc-keyword-portrait-ending.json": {
+      "errors": 0,
+      "warnings": {}
+    },
+    "examples/optional-block.json": {
+      "errors": 0,
+      "warnings": {}
+    },
+    "examples/probe-skills.json": {
+      "errors": 0,
+      "warnings": {}
+    },
+    "examples/probe-template-timing.json": {
+      "errors": 0,
+      "warnings": {
+        "unverified-script": 1
+      }
+    },
+    "examples/recipe-choice-followup.json": {
+      "errors": 0,
+      "warnings": {
+        "unverified-expression": 1
+      }
+    },
+    "examples/recipe-request-commit.json": {
+      "errors": 0,
+      "warnings": {
+        "unverified-script": 3,
+        "unverified-expression": 2
+      }
+    },
+    "examples/recipe-threshold-unlock.json": {
+      "errors": 0,
+      "warnings": {
+        "unverified-expression": 1,
+        "unverified-script": 1
+      }
+    },
+    "examples/showcase-glass-ledger.json": {
+      "errors": 0,
+      "warnings": {
+        "unverified-expression": 8,
+        "unverified-script": 6
+      }
+    },
+    "examples/yaml-path-operations.json": {
+      "errors": 0,
+      "warnings": {}
+    }
+  },
+  "negativeChecks": [
+    "Out-of-range skill -1",
+    "Out-of-range skill 6",
+    "Missing input tracker target"
+  ],
+  "localMarkdownLinks": "passed",
+  "nativeRuntimeExecutedByChecker": false,
+  "scope": "Structural and explicit-reference validation; runtime status is listed separately in examples/index.json."
+}

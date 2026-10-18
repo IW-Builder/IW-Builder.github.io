@@ -1,0 +1,246 @@
+{
+  "favorite": false,
+  "title": "Optional Instruction Block Example",
+  "description": "Player-controlled optional guidance, applied once per preference change.",
+  "background": "A quiet reading room. You may look around or talk to the attendant.",
+  "instructions": "Tell a short interactive scene in a reading room. Follow any active Optional Detail instructions. The Extra Detail preference belongs to the player; do not alter it. No special actions, action codes, scores or resource systems are required.",
+  "authorStyle": "",
+  "recommendedAIModel": null,
+  "firstInput": "Look around.",
+  "objective": "Try the extra-detail preference.",
+  "imageModel": "manticore",
+  "imageStyle": "photo_1",
+  "illustrationStyleNonCharacterLowPriority": "",
+  "illustrationStyleNonCharacterHighPriority": "",
+  "illustrationStyleCharacterLowPriority": "",
+  "illustrationStyleCharacterHighPriority": "",
+  "imageStyleCharacterPre": "",
+  "imageStyleCharacterPost": "",
+  "imageStyleNonCharacterPre": "",
+  "imageStyleNonCharacterPost": "",
+  "mature": false,
+  "nsfw": false,
+  "contentWarnings": "",
+  "enableAISpecificInstructionBlocks": false,
+  "previewImage": "",
+  "fullSizePreviewImage": "",
+  "previewImageOptions": [],
+  "fullSizePreviewImageOptions": [],
+  "currentPreviewImageIndex": -1,
+  "imagePromptDetails": {
+    "illustrClothes": "",
+    "illustrSetting": "",
+    "illustrSubject": "",
+    "illustrAppearance": "",
+    "illustrIsCharacter": false,
+    "illustrExpressionPosition": ""
+  },
+  "permissionsOnceShared": {
+    "sharing": true,
+    "editing": true
+  },
+  "allowChangeCharacterName": false,
+  "allowChangeCharacterDescription": false,
+  "allowChangeCharacterSkills": false,
+  "allowChangeCharacterItemValues": false,
+  "allowChangeCharacterPortrait": false,
+  "allowChangeCharacterNewPortrait": false,
+  "conditions": [],
+  "schemaVersion": 2.4,
+  "skills": [
+    "Generic skill"
+  ],
+  "possibleCharacters": [
+    {
+      "name": "Player character",
+      "description": "",
+      "portrait": "",
+      "portraitPromptDetails": {
+        "illustrAppearance": "",
+        "illustrClothes": "",
+        "illustrExpressionPosition": "",
+        "illustrSetting": ""
+      },
+      "fullSizePortrait": "",
+      "portraitOptions": [],
+      "fullSizePortraitOptions": [],
+      "currentPortraitIndex": -1,
+      "characterId": "c7038c97-b50f-57be-9e33-9ce2914d80ef",
+      "skills": {
+        "Generic skill": 3
+      },
+      "initialTrackedItemValues": []
+    }
+  ],
+  "triggerEvents": [
+    {
+      "id": "588f50b7-79be-5f86-a4a0-af91266dfdf8",
+      "name": "Extra Detail: On",
+      "triggerOnStartOfGame": true,
+      "triggerMidGame": true,
+      "canTriggerMoreThanOnce": true,
+      "triggerConditions": [
+        {
+          "id": "22909dbe-cf09-5c9c-90f9-d04eeb93e137",
+          "category": "condition",
+          "type": "triggerOnTrackedItem",
+          "data": {
+            "trackedItemID": "kMZNmwITA",
+            "inequality": "is_exactly",
+            "requiredValue": "On",
+            "textComparison": "contains"
+          }
+        },
+        {
+          "id": "37b3b07a-be7b-5ac6-95ac-cf6bd83434fa",
+          "category": "condition",
+          "type": "triggerOnTrackedItem",
+          "data": {
+            "trackedItemID": "kbpAjsda5",
+            "inequality": "is_exactly",
+            "requiredValue": "Enabled",
+            "textComparison": "does_not_contain"
+          }
+        }
+      ],
+      "triggerEffects": [
+        {
+          "id": "a160ec6e-addb-549f-822a-19fb96d1716a",
+          "type": "effectModifyInstructionBlock",
+          "data": {
+            "id": "168bc985-5b1c-5540-bb03-3cabb942cfe9",
+            "content": "Include a concrete sensory detail when describing the current scene."
+          }
+        },
+        {
+          "id": "3dd8a1c6-b7d2-551b-b6d3-811252919849",
+          "type": "effectSetTrackedItemValue",
+          "data": {
+            "trackedItemID": "kbpAjsda5",
+            "action": "set",
+            "newValue": "Enabled",
+            "replaceWith": "",
+            "path": "",
+            "updateMode": "path",
+            "listExpression": "",
+            "targetExpression": ""
+          }
+        }
+      ]
+    },
+    {
+      "id": "5b7f75e9-9289-5068-a808-bd845bce08c9",
+      "name": "Extra Detail: Off",
+      "triggerOnStartOfGame": true,
+      "triggerMidGame": true,
+      "canTriggerMoreThanOnce": true,
+      "triggerConditions": [
+        {
+          "id": "d15de872-0a9d-52b0-8de9-c70c7d7809e5",
+          "category": "condition",
+          "type": "triggerOnTrackedItem",
+          "data": {
+            "trackedItemID": "kMZNmwITA",
+            "inequality": "is_exactly",
+            "requiredValue": "Off",
+            "textComparison": "contains"
+          }
+        },
+        {
+          "id": "31ae1156-72e9-5398-a1c2-d4cf51e5531d",
+          "category": "condition",
+          "type": "triggerOnTrackedItem",
+          "data": {
+            "trackedItemID": "kbpAjsda5",
+            "inequality": "is_exactly",
+            "requiredValue": "Disabled",
+            "textComparison": "does_not_contain"
+          }
+        }
+      ],
+      "triggerEffects": [
+        {
+          "id": "a9bc32c7-79cb-5a1d-aa0b-8f75634b7455",
+          "type": "effectModifyInstructionBlock",
+          "data": {
+            "id": "168bc985-5b1c-5540-bb03-3cabb942cfe9",
+            "content": ""
+          }
+        },
+        {
+          "id": "2c6f4dcd-0b20-573e-93ff-9ced18f03797",
+          "type": "effectSetTrackedItemValue",
+          "data": {
+            "trackedItemID": "kbpAjsda5",
+            "action": "set",
+            "newValue": "Disabled",
+            "replaceWith": "",
+            "path": "",
+            "updateMode": "path",
+            "listExpression": "",
+            "targetExpression": ""
+          }
+        }
+      ]
+    }
+  ],
+  "victoryCondition": null,
+  "defeatCondition": null,
+  "trackedItems": [
+    {
+      "id": "kMZNmwITA",
+      "name": "Extra Detail (On|Off)",
+      "positionInList": 0,
+      "dataType": "text",
+      "visibility": "player_only",
+      "description": "Player preference for extra sensory detail.",
+      "updateInstructions": "",
+      "formatExample": "",
+      "enforceFormat": false,
+      "formatSchema": "",
+      "initialValue": "On",
+      "initialValueBasedOnPC": "player",
+      "autoUpdate": false,
+      "variableName": "extra_detail",
+      "driftAcknowledgedForName": null,
+      "initialValueChoices": [
+        "On",
+        "Off"
+      ]
+    },
+    {
+      "id": "kbpAjsda5",
+      "name": "Detail Applied",
+      "positionInList": 1,
+      "dataType": "text",
+      "visibility": "hidden_boring",
+      "description": "Applied-state cache; do not edit.",
+      "updateInstructions": "",
+      "formatExample": "",
+      "enforceFormat": false,
+      "formatSchema": "",
+      "initialValue": "",
+      "initialValueBasedOnPC": "same",
+      "autoUpdate": false,
+      "variableName": "detail_applied",
+      "driftAcknowledgedForName": null
+    }
+  ],
+  "hideSkillSystem": true,
+  "autoAdvanceVersion": false,
+  "version": "1.0",
+  "charSelectText": "",
+  "descriptionRequest": "Describe the immediate result briefly, following the active instructions.",
+  "evaluationRequest": "",
+  "summaryRequest": "",
+  "instructionBlocks": [
+    {
+      "id": "168bc985-5b1c-5540-bb03-3cabb942cfe9",
+      "name": "Optional Detail",
+      "content": ""
+    }
+  ],
+  "NPCs": [],
+  "loreBookEntries": [],
+  "designNotes": "Authoring example. See the example index for scope and verification status."
+}

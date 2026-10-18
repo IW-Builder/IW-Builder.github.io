@@ -1,0 +1,316 @@
+{
+  "favorite": false,
+  "title": "Skills Probe",
+  "description": "A compact IW example for inspection and runtime testing.",
+  "background": "You are visiting a quiet guild office. Its clerk is ready to hear what brings you to the guild.",
+  "instructions": "Keep the scene short and grounded. Follow the defined trackers and messages. Do not invent mechanical rewards.",
+  "authorStyle": "Clear, concise prose with a little warmth.",
+  "recommendedAIModel": null,
+  "firstInput": "Begin at the guild office and explain the immediate situation.",
+  "objective": "Help Mara examine a misplaced delivery.",
+  "imageModel": "manticore",
+  "imageStyle": "photo_1",
+  "illustrationStyleNonCharacterLowPriority": "",
+  "illustrationStyleNonCharacterHighPriority": "",
+  "illustrationStyleCharacterLowPriority": "",
+  "illustrationStyleCharacterHighPriority": "",
+  "imageStyleCharacterPre": "",
+  "imageStyleCharacterPost": "",
+  "imageStyleNonCharacterPre": "",
+  "imageStyleNonCharacterPost": "",
+  "mature": false,
+  "nsfw": false,
+  "contentWarnings": "",
+  "enableAISpecificInstructionBlocks": false,
+  "previewImage": "",
+  "fullSizePreviewImage": "",
+  "previewImageOptions": [],
+  "fullSizePreviewImageOptions": [],
+  "currentPreviewImageIndex": -1,
+  "imagePromptDetails": {
+    "illustrClothes": "",
+    "illustrSetting": "",
+    "illustrSubject": "",
+    "illustrAppearance": "",
+    "illustrIsCharacter": false,
+    "illustrExpressionPosition": ""
+  },
+  "permissionsOnceShared": {
+    "sharing": true,
+    "editing": true
+  },
+  "allowChangeCharacterName": false,
+  "allowChangeCharacterDescription": false,
+  "allowChangeCharacterSkills": false,
+  "allowChangeCharacterItemValues": false,
+  "allowChangeCharacterPortrait": false,
+  "allowChangeCharacterNewPortrait": false,
+  "conditions": [],
+  "schemaVersion": 2.4,
+  "skills": [
+    "Observation",
+    "Persuasion"
+  ],
+  "possibleCharacters": [
+    {
+      "name": "Avery",
+      "description": "An observant courier visiting the guild.",
+      "portrait": "",
+      "portraitPromptDetails": {
+        "illustrAppearance": "",
+        "illustrClothes": "",
+        "illustrExpressionPosition": "",
+        "illustrSetting": ""
+      },
+      "fullSizePortrait": "",
+      "portraitOptions": [],
+      "fullSizePortraitOptions": [],
+      "currentPortraitIndex": -1,
+      "characterId": "pc-visitor",
+      "skills": {
+        "Observation": 2,
+        "Persuasion": 3
+      },
+      "initialTrackedItemValues": []
+    }
+  ],
+  "triggerEvents": [
+    {
+      "id": "trg-raise-two",
+      "name": "Raise Two",
+      "triggerConditions": [
+        {
+          "category": "condition",
+          "type": "triggerOnTurn",
+          "data": 2,
+          "id": "node-probe-skills-1"
+        }
+      ],
+      "triggerEffects": [
+        {
+          "type": "effectChangePCSkill",
+          "data": {
+            "name": "Observation",
+            "amount": 2,
+            "minmax": 4,
+            "increase": true
+          },
+          "id": "node-probe-skills-2"
+        }
+      ],
+      "triggerOnStartOfGame": false,
+      "triggerMidGame": false,
+      "canTriggerMoreThanOnce": false,
+      "advancedLogic": false
+    },
+    {
+      "id": "trg-raise-one",
+      "name": "Raise One",
+      "triggerConditions": [
+        {
+          "category": "condition",
+          "type": "triggerOnTurn",
+          "data": 2,
+          "id": "node-probe-skills-3"
+        }
+      ],
+      "triggerEffects": [
+        {
+          "type": "effectChangePCSkill",
+          "data": {
+            "name": "Observation",
+            "amount": 1,
+            "minmax": 4,
+            "increase": true
+          },
+          "id": "node-probe-skills-4"
+        },
+        {
+          "type": "effectShowMessage",
+          "data": "After increases: <<$player.skills_and_levels>>",
+          "id": "node-probe-skills-5"
+        }
+      ],
+      "triggerOnStartOfGame": false,
+      "triggerMidGame": false,
+      "canTriggerMoreThanOnce": false,
+      "advancedLogic": false
+    },
+    {
+      "id": "trg-lower-one",
+      "name": "Lower One",
+      "triggerConditions": [
+        {
+          "category": "condition",
+          "type": "triggerOnTurn",
+          "data": 3,
+          "id": "node-probe-skills-6"
+        }
+      ],
+      "triggerEffects": [
+        {
+          "type": "effectChangePCSkill",
+          "data": {
+            "name": "Observation",
+            "amount": 1,
+            "minmax": 2,
+            "increase": false
+          },
+          "id": "node-probe-skills-7"
+        }
+      ],
+      "triggerOnStartOfGame": false,
+      "triggerMidGame": false,
+      "canTriggerMoreThanOnce": false,
+      "advancedLogic": false
+    },
+    {
+      "id": "trg-lower-two",
+      "name": "Lower Two",
+      "triggerConditions": [
+        {
+          "category": "condition",
+          "type": "triggerOnTurn",
+          "data": 3,
+          "id": "node-probe-skills-8"
+        }
+      ],
+      "triggerEffects": [
+        {
+          "type": "effectChangePCSkill",
+          "data": {
+            "name": "Observation",
+            "amount": 2,
+            "minmax": 2,
+            "increase": false
+          },
+          "id": "node-probe-skills-9"
+        },
+        {
+          "type": "effectShowMessage",
+          "data": "After decreases: <<$player.skills_and_levels>>",
+          "id": "node-probe-skills-10"
+        }
+      ],
+      "triggerOnStartOfGame": false,
+      "triggerMidGame": false,
+      "canTriggerMoreThanOnce": false,
+      "advancedLogic": false
+    }
+  ],
+  "victoryCondition": null,
+  "defeatCondition": null,
+  "trackedItems": [
+    {
+      "id": "jTxNc2XyZ",
+      "name": "Coins",
+      "positionInList": 0,
+      "dataType": "number",
+      "visibility": "everyone",
+      "description": "Example coins",
+      "updateInstructions": "",
+      "formatExample": "",
+      "enforceFormat": false,
+      "formatSchema": "",
+      "initialValue": "10",
+      "initialValueBasedOnPC": "same",
+      "autoUpdate": false,
+      "variableName": "coins",
+      "driftAcknowledgedForName": null
+    },
+    {
+      "id": "MzLtaqQ9W",
+      "name": "Flag",
+      "positionInList": 1,
+      "dataType": "number",
+      "visibility": "everyone",
+      "description": "Example flag",
+      "updateInstructions": "",
+      "formatExample": "",
+      "enforceFormat": false,
+      "formatSchema": "",
+      "initialValue": "0",
+      "initialValueBasedOnPC": "same",
+      "autoUpdate": false,
+      "variableName": "flag",
+      "driftAcknowledgedForName": null
+    },
+    {
+      "id": "2BjyEPS3Q",
+      "name": "Note",
+      "positionInList": 2,
+      "dataType": "text",
+      "visibility": "everyone",
+      "description": "Example note",
+      "updateInstructions": "",
+      "formatExample": "",
+      "enforceFormat": false,
+      "formatSchema": "",
+      "initialValue": "",
+      "initialValueBasedOnPC": "same",
+      "autoUpdate": false,
+      "variableName": "note",
+      "driftAcknowledgedForName": null
+    },
+    {
+      "id": "XEmYrpu2w",
+      "name": "Answer",
+      "positionInList": 3,
+      "dataType": "text",
+      "visibility": "everyone",
+      "description": "Example answer",
+      "updateInstructions": "",
+      "formatExample": "",
+      "enforceFormat": false,
+      "formatSchema": "",
+      "initialValue": "",
+      "initialValueBasedOnPC": "same",
+      "autoUpdate": false,
+      "variableName": "answer",
+      "driftAcknowledgedForName": null
+    }
+  ],
+  "hideSkillSystem": false,
+  "autoAdvanceVersion": false,
+  "version": "1.0",
+  "charSelectText": "Choose the guild visitor.",
+  "descriptionRequest": "",
+  "evaluationRequest": "Firstly, if I have made any assertions in my description, evaluate whether you judge that they are reasonable and likely. If they are nonsensical, incoherent or blatantly impossible, the action should be DENIED. On the other hand, if the action is trivial and there is nothing to complicate it, skip the evaluation entirely and deem the action a SUCCESS. Don't overthink this! If the action doesn't warrant further evaluation, make a judgement and move on.\n\nAssuming the action is not a trivial SUCCESS or DENIED, I would like you to evaluate what skill would be needed to succeed in this action, and how difficult it would be to do so. Please indicate which skill which is needed to succeed.\nIf applicable use this list: (<<skill_list>>) and a difficulty (from the list: <<difficulty_list>>). For example: {<<skill_example>>: <<difficulty_example>>}. Consider the difficulties carefully, evaluating what might be feasible in the situation. Identifying the skill and difficulty is very important!\n\nThen, evaluate whether I would succeed in the action. To evaluate, consider my proficiency in various skills using either (<<skills_and_levels>>) or logical application of other skills. By comparing these difficulties to the stated difficulty of the action, you should conclusively decide whether the action is a SUCCESS or a FAILURE.\n\nBase your decision on player character description, past, rest of the instructions and common sense - for example, if my skill is low but you know that I am able to perform the given action due to past events, treat me as more competent in this case. Again, don't overthink this - just make a sensible judgement given the information available to you and based on what makes sense for the story.\n\nIn some situations, you may wish to evaluate the action as a PARTIAL_SUCCESS instead - this is for something where my abilities are sufficient that I don't simply fail completely (or where failing completely would make for a boring story) but I also don't success. Either I achieve some but not all of what I wanted, I fail but have some silver lining, or I succeed but there are drawbacks or side-effects rather than a \"clean\" success.\n\nIn total, your evaluation should consist of an extremely brief discussion of your thinking (just a single sentence), a skill and difficulty, and then either DENIED, SUCCESS, FAILURE, or PARTIAL_SUCCESS (along with any clarifying remarks).\n\nThat's all you need to do for the evaluation, which should be returned in the 'evaluation' argument. Remember to conclude with one of DENIED, SUCCESS, FAILURE, or PARTIAL_SUCCESS.",
+  "summaryRequest": "",
+  "instructionBlocks": [
+    {
+      "id": "blk-guidance",
+      "name": "Guild Guidance",
+      "content": "The clerk waits behind the desk."
+    }
+  ],
+  "NPCs": [
+    {
+      "id": "npc-clerk",
+      "name": "Mara",
+      "names": [
+        "Mara",
+        "guild clerk"
+      ],
+      "one_liner": "Mara is the practical clerk at the guild office.",
+      "detail": "Mara wants clear requests and dislikes vague promises. Her dry humor softens when someone admits an honest mistake.",
+      "appearance": "A middle-aged woman with cropped black hair and ink-stained fingers.",
+      "location": "Guild office",
+      "secret_info": "She is planning to retire after training her replacement.",
+      "img_appearance": "Middle-aged woman, cropped black hair, ink-stained fingers.",
+      "img_clothing": "Navy waistcoat over a cream shirt.",
+      "positionInList": 0
+    }
+  ],
+  "loreBookEntries": [
+    {
+      "id": "kw-guild",
+      "name": "Guild Seal",
+      "keywords": [
+        "silver seal"
+      ],
+      "content": "The silver seal identifies the guild; it has a crescent engraving."
+    }
+  ],
+  "designNotes": "Authoring example. See the example index for scope and verification status."
+}

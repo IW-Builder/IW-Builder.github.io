@@ -1,0 +1,320 @@
+{
+  "favorite": false,
+  "title": "Request and Commit: Ticket",
+  "description": "A compact IW example for inspection and runtime testing.",
+  "background": "You are visiting a quiet guild office. Its clerk is ready to hear what brings you to the guild.",
+  "instructions": "The guild sells one admission ticket for 5 coins. Coins and Ticket are maintained by triggers. For a purchase request narrate presenting payment and waiting, not receiving the ticket. The post-turn receipt states success or rejection. On the next turn continue from Coins, Ticket and the receipt; do not repeat the transaction without a fresh request. Other conversation is free-form.",
+  "authorStyle": "Clear, concise prose with a little warmth.",
+  "recommendedAIModel": null,
+  "firstInput": "Begin at the guild office and explain the immediate situation.",
+  "objective": "Visit the guild office and speak with Mara.",
+  "imageModel": "manticore",
+  "imageStyle": "photo_1",
+  "illustrationStyleNonCharacterLowPriority": "",
+  "illustrationStyleNonCharacterHighPriority": "",
+  "illustrationStyleCharacterLowPriority": "",
+  "illustrationStyleCharacterHighPriority": "",
+  "imageStyleCharacterPre": "",
+  "imageStyleCharacterPost": "",
+  "imageStyleNonCharacterPre": "",
+  "imageStyleNonCharacterPost": "",
+  "mature": false,
+  "nsfw": false,
+  "contentWarnings": "",
+  "enableAISpecificInstructionBlocks": false,
+  "previewImage": "",
+  "fullSizePreviewImage": "",
+  "previewImageOptions": [],
+  "fullSizePreviewImageOptions": [],
+  "currentPreviewImageIndex": -1,
+  "imagePromptDetails": {
+    "illustrClothes": "",
+    "illustrSetting": "",
+    "illustrSubject": "",
+    "illustrAppearance": "",
+    "illustrIsCharacter": false,
+    "illustrExpressionPosition": ""
+  },
+  "permissionsOnceShared": {
+    "sharing": true,
+    "editing": true
+  },
+  "allowChangeCharacterName": false,
+  "allowChangeCharacterDescription": false,
+  "allowChangeCharacterSkills": false,
+  "allowChangeCharacterItemValues": false,
+  "allowChangeCharacterPortrait": false,
+  "allowChangeCharacterNewPortrait": false,
+  "conditions": [],
+  "schemaVersion": 2.4,
+  "skills": [
+    "Observation",
+    "Persuasion"
+  ],
+  "possibleCharacters": [
+    {
+      "name": "Avery",
+      "description": "An observant courier visiting the guild.",
+      "portrait": "",
+      "portraitPromptDetails": {
+        "illustrAppearance": "",
+        "illustrClothes": "",
+        "illustrExpressionPosition": "",
+        "illustrSetting": ""
+      },
+      "fullSizePortrait": "",
+      "portraitOptions": [],
+      "fullSizePortraitOptions": [],
+      "currentPortraitIndex": -1,
+      "characterId": "pc-visitor",
+      "skills": {
+        "Observation": 2,
+        "Persuasion": 3
+      },
+      "initialTrackedItemValues": []
+    }
+  ],
+  "triggerEvents": [
+    {
+      "id": "trg-receipt-reset",
+      "name": "Receipt Reset",
+      "triggerConditions": [],
+      "triggerEffects": [
+        {
+          "type": "effectRunScript",
+          "data": "$receipt.turn = $game.turn_number\n$receipt.accepted = 0\n$receipt.message = \"No purchase requested.\"",
+          "name": "Initialize This Turn Receipt",
+          "id": "node-recipe-request-commit-1"
+        }
+      ],
+      "triggerOnStartOfGame": true,
+      "triggerMidGame": true,
+      "canTriggerMoreThanOnce": true,
+      "advancedLogic": false
+    },
+    {
+      "id": "trg-purchase-request",
+      "name": "Purchase Request",
+      "triggerConditions": [
+        {
+          "category": "condition",
+          "type": "triggerOnPawScript",
+          "data": "$request.turn = $game.turn_number and $request.event = \"BUY_TICKET\"",
+          "id": "node-recipe-request-commit-2"
+        }
+      ],
+      "triggerEffects": [
+        {
+          "type": "effectRunScript",
+          "data": "if $ticket = 1\n  $receipt.message = \"Ticket already owned; no charge.\"\nelse if $coins < 5\n  $receipt.message = \"Insufficient coins; no charge.\"\nelse\n  $coins -= 5\n  $ticket = 1\n  $receipt.accepted = 1\n  $receipt.message = \"Ticket purchased for 5 coins.\"",
+          "name": "Validate and Purchase Ticket",
+          "id": "node-recipe-request-commit-3"
+        }
+      ],
+      "triggerOnStartOfGame": true,
+      "triggerMidGame": true,
+      "canTriggerMoreThanOnce": true,
+      "advancedLogic": false
+    },
+    {
+      "id": "trg-receipt-output",
+      "name": "Receipt Output",
+      "triggerConditions": [
+        {
+          "id": "trg-receipt-output-requested",
+          "category": "condition",
+          "type": "triggerOnPawScript",
+          "data": "$request.turn = $game.turn_number and $request.event != \"NONE\""
+        }
+      ],
+      "triggerEffects": [
+        {
+          "type": "effectShowMessage",
+          "data": "<<$receipt.message>> Coins: <<$coins>>. Ticket: <<$ticket>>.",
+          "id": "node-recipe-request-commit-4"
+        },
+        {
+          "type": "effectRunScript",
+          "data": "$request.turn = 0\n$request.event = \"NONE\"",
+          "name": "Consume Purchase Request",
+          "id": "node-recipe-request-commit-5"
+        }
+      ],
+      "triggerOnStartOfGame": true,
+      "triggerMidGame": true,
+      "canTriggerMoreThanOnce": true,
+      "advancedLogic": false
+    }
+  ],
+  "victoryCondition": null,
+  "defeatCondition": null,
+  "trackedItems": [
+    {
+      "id": "1nPWP54dE",
+      "name": "Coins",
+      "positionInList": 0,
+      "dataType": "number",
+      "visibility": "everyone",
+      "description": "Example coins",
+      "updateInstructions": "",
+      "formatExample": "",
+      "enforceFormat": false,
+      "formatSchema": "",
+      "initialValue": "10",
+      "initialValueBasedOnPC": "same",
+      "autoUpdate": false,
+      "variableName": "coins",
+      "driftAcknowledgedForName": null
+    },
+    {
+      "id": "jDr2prqOs",
+      "name": "Flag",
+      "positionInList": 1,
+      "dataType": "number",
+      "visibility": "everyone",
+      "description": "Example flag",
+      "updateInstructions": "",
+      "formatExample": "",
+      "enforceFormat": false,
+      "formatSchema": "",
+      "initialValue": "0",
+      "initialValueBasedOnPC": "same",
+      "autoUpdate": false,
+      "variableName": "flag",
+      "driftAcknowledgedForName": null
+    },
+    {
+      "id": "ibsENuel7",
+      "name": "Note",
+      "positionInList": 2,
+      "dataType": "text",
+      "visibility": "everyone",
+      "description": "Example note",
+      "updateInstructions": "",
+      "formatExample": "",
+      "enforceFormat": false,
+      "formatSchema": "",
+      "initialValue": "",
+      "initialValueBasedOnPC": "same",
+      "autoUpdate": false,
+      "variableName": "note",
+      "driftAcknowledgedForName": null
+    },
+    {
+      "id": "dmoAIrOoS",
+      "name": "Answer",
+      "positionInList": 3,
+      "dataType": "text",
+      "visibility": "everyone",
+      "description": "Example answer",
+      "updateInstructions": "",
+      "formatExample": "",
+      "enforceFormat": false,
+      "formatSchema": "",
+      "initialValue": "",
+      "initialValueBasedOnPC": "same",
+      "autoUpdate": false,
+      "variableName": "answer",
+      "driftAcknowledgedForName": null
+    },
+    {
+      "id": "ertPO96O1",
+      "name": "Ticket",
+      "positionInList": 4,
+      "dataType": "number",
+      "visibility": "everyone",
+      "description": "Example ticket",
+      "updateInstructions": "",
+      "formatExample": "",
+      "enforceFormat": false,
+      "formatSchema": "",
+      "initialValue": "0",
+      "initialValueBasedOnPC": "same",
+      "autoUpdate": false,
+      "variableName": "ticket",
+      "driftAcknowledgedForName": null
+    },
+    {
+      "id": "hsTTm0VXN",
+      "name": "Request",
+      "positionInList": 5,
+      "dataType": "yaml",
+      "visibility": "ai_only",
+      "description": "Example request",
+      "updateInstructions": "Write exactly turn and event EVERY turn, even when unchanged. turn is current the CURRENT TURN value in the permanent Turn Context block as a number. event is BUY_TICKET only when the current player input explicitly requests buying one guild ticket; otherwise NONE. Classify intent, not narrated possession. Do not infer success.",
+      "formatExample": "",
+      "enforceFormat": false,
+      "formatSchema": "",
+      "initialValue": "turn: 0\nevent: NONE",
+      "initialValueBasedOnPC": "same",
+      "autoUpdate": true,
+      "variableName": "request",
+      "driftAcknowledgedForName": null
+    },
+    {
+      "id": "Kkkw05ssa",
+      "name": "Receipt",
+      "positionInList": 6,
+      "dataType": "yaml",
+      "visibility": "ai_only",
+      "description": "Example receipt",
+      "updateInstructions": "",
+      "formatExample": "",
+      "enforceFormat": false,
+      "formatSchema": "",
+      "initialValue": "turn: 0\naccepted: 0\nmessage: No purchase processed.",
+      "initialValueBasedOnPC": "same",
+      "autoUpdate": false,
+      "variableName": "receipt",
+      "driftAcknowledgedForName": null
+    }
+  ],
+  "hideSkillSystem": false,
+  "autoAdvanceVersion": false,
+  "version": "1.0",
+  "charSelectText": "Choose the guild visitor.",
+  "descriptionRequest": "",
+  "evaluationRequest": "",
+  "summaryRequest": "",
+  "instructionBlocks": [
+    {
+      "id": "blk-guidance",
+      "name": "Guild Guidance",
+      "content": "The clerk waits behind the desk."
+    },
+    {
+      "id": "blk-turn-context",
+      "name": "Turn Context",
+      "content": "CURRENT TURN: <<$game.turn_number>>. The request tracker must copy this number into its turn field for the current input."
+    }
+  ],
+  "NPCs": [
+    {
+      "id": "npc-clerk",
+      "name": "Mara",
+      "names": [
+        "Mara",
+        "guild clerk"
+      ],
+      "one_liner": "Mara is the practical clerk at the guild office.",
+      "detail": "Mara wants clear requests and dislikes vague promises. Her dry humor softens when someone admits an honest mistake.",
+      "appearance": "A middle-aged woman with cropped black hair and ink-stained fingers.",
+      "location": "Guild office",
+      "secret_info": "She is planning to retire after training her replacement.",
+      "img_appearance": "Middle-aged woman, cropped black hair, ink-stained fingers.",
+      "img_clothing": "Navy waistcoat over a cream shirt.",
+      "positionInList": 0
+    }
+  ],
+  "loreBookEntries": [
+    {
+      "id": "kw-guild",
+      "name": "Guild Seal",
+      "keywords": [
+        "silver seal"
+      ],
+      "content": "The silver seal identifies the guild; it has a crescent engraving."
+    }
+  ],
+  "designNotes": "Authoring example. See the example index for scope and verification status."
+}

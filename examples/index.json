@@ -1,0 +1,296 @@
+[
+  {
+    "file": "condition-triggerOnEvent.json",
+    "purpose": "One native condition: triggerOnEvent",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Structurally validated; complete runtime behavior not certified."
+  },
+  {
+    "file": "condition-triggerOnRandomChance.json",
+    "purpose": "One native condition: triggerOnRandomChance",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Structurally validated; complete runtime behavior not certified."
+  },
+  {
+    "file": "condition-triggerOnCharacter.json",
+    "purpose": "One native condition: triggerOnCharacter",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Structurally validated; complete runtime behavior not certified."
+  },
+  {
+    "file": "condition-triggerOnTrackedItem.json",
+    "purpose": "One native condition: triggerOnTrackedItem",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Structurally validated; complete runtime behavior not certified."
+  },
+  {
+    "file": "condition-triggerPrereqs.json",
+    "purpose": "One native condition: triggerPrereqs",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Structurally validated; complete runtime behavior not certified."
+  },
+  {
+    "file": "condition-triggerBlockers.json",
+    "purpose": "One native condition: triggerBlockers",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Structurally validated; complete runtime behavior not certified."
+  },
+  {
+    "file": "condition-triggerOnPawScript.json",
+    "purpose": "One native condition: triggerOnPawScript",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Structurally validated; complete runtime behavior not certified."
+  },
+  {
+    "file": "condition-triggerOnTurn.json",
+    "purpose": "One native condition: triggerOnTurn",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Structurally validated; complete runtime behavior not certified."
+  },
+  {
+    "file": "effect-effectShowMessage.json",
+    "purpose": "One native effect: effectShowMessage",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Structurally validated; complete runtime behavior not certified."
+  },
+  {
+    "file": "effect-effectTellAIWhatToDo.json",
+    "purpose": "One native effect: effectTellAIWhatToDo",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Structurally validated; complete runtime behavior not certified."
+  },
+  {
+    "file": "effect-effectGiveInfo.json",
+    "purpose": "One native effect: effectGiveInfo",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Structurally validated; complete runtime behavior not certified."
+  },
+  {
+    "file": "effect-effectSetTrackedItemValue.json",
+    "purpose": "One native effect: effectSetTrackedItemValue",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Structurally validated; complete runtime behavior not certified."
+  },
+  {
+    "file": "effect-effectModifyTrackedItemDetails.json",
+    "purpose": "One native effect: effectModifyTrackedItemDetails",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Structurally validated; complete runtime behavior not certified."
+  },
+  {
+    "file": "effect-effectChangePCName.json",
+    "purpose": "One native effect: effectChangePCName",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Structurally validated; complete runtime behavior not certified."
+  },
+  {
+    "file": "effect-effectChangePCDescription.json",
+    "purpose": "One native effect: effectChangePCDescription",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Structurally validated; complete runtime behavior not certified."
+  },
+  {
+    "file": "effect-effectChangePCSkill.json",
+    "purpose": "One native effect: effectChangePCSkill",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Structurally validated; complete runtime behavior not certified."
+  },
+  {
+    "file": "effect-effectChangeObjective.json",
+    "purpose": "One native effect: effectChangeObjective",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Structurally validated; complete runtime behavior not certified."
+  },
+  {
+    "file": "effect-effectChangeVictoryCondition.json",
+    "purpose": "One native effect: effectChangeVictoryCondition",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Structurally validated; complete runtime behavior not certified."
+  },
+  {
+    "file": "effect-effectChangeDefeatCondition.json",
+    "purpose": "One native effect: effectChangeDefeatCondition",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Structurally validated; complete runtime behavior not certified."
+  },
+  {
+    "file": "effect-effectChangeMainInstructions.json",
+    "purpose": "One native effect: effectChangeMainInstructions",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Structurally validated; complete runtime behavior not certified."
+  },
+  {
+    "file": "effect-effectModifyInstructionBlock.json",
+    "purpose": "One native effect: effectModifyInstructionBlock",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Structurally validated; complete runtime behavior not certified."
+  },
+  {
+    "file": "effect-effectModifyKeywordBlock.json",
+    "purpose": "One native effect: effectModifyKeywordBlock",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Structurally validated; complete runtime behavior not certified."
+  },
+  {
+    "file": "effect-effectChangeAuthorStyle.json",
+    "purpose": "One native effect: effectChangeAuthorStyle",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Structurally validated; complete runtime behavior not certified."
+  },
+  {
+    "file": "effect-effectChangeDescriptionInstructions.json",
+    "purpose": "One native effect: effectChangeDescriptionInstructions",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Structurally validated; complete runtime behavior not certified."
+  },
+  {
+    "file": "effect-effectPresentChoice.json",
+    "purpose": "One native effect: effectPresentChoice",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Single-answer update and same-turn follow-up verified. Fresh-import binding verified."
+  },
+  {
+    "file": "effect-effectRequestInput.json",
+    "purpose": "One native effect: effectRequestInput",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Single-answer update and same-turn follow-up verified."
+  },
+  {
+    "file": "effect-effectFireRandomTrigger.json",
+    "purpose": "One native effect: effectFireRandomTrigger",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Structurally validated; complete runtime behavior not certified."
+  },
+  {
+    "file": "effect-effectRunScript.json",
+    "purpose": "One native effect: effectRunScript",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Structurally validated; complete runtime behavior not certified."
+  },
+  {
+    "file": "effect-effectEndsGame.json",
+    "purpose": "One native effect: effectEndsGame",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Structurally validated; complete runtime behavior not certified."
+  },
+  {
+    "file": "logic-groups.json",
+    "purpose": "Nested logic nodes with native shape.",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Structurally validated; complete runtime behavior not certified."
+  },
+  {
+    "file": "native-text-operations.json",
+    "purpose": "Append, remove all matches and replace text.",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Structurally validated; complete runtime behavior not certified."
+  },
+  {
+    "file": "character-starting-values.json",
+    "purpose": "Fixed, fixed-choice and script-choice per-PC values.",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Structurally validated; complete runtime behavior not certified."
+  },
+  {
+    "file": "npc-keyword-portrait-ending.json",
+    "purpose": "NPC, keyword, portrait descriptors and natural-language endings.",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Structurally validated; complete runtime behavior not certified."
+  },
+  {
+    "file": "recipe-request-commit.json",
+    "purpose": "Optional precise transaction using a fresh AI request and script receipt.",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Component behaviors are documented; this complete composition is not runtime-qualified."
+  },
+  {
+    "file": "recipe-choice-followup.json",
+    "purpose": "Choice response updates objective in a later ordered trigger.",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Component behaviors are documented; this complete composition is not runtime-qualified."
+  },
+  {
+    "file": "recipe-threshold-unlock.json",
+    "purpose": "State threshold grants access and modifies content once.",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Structurally validated; complete runtime behavior not certified."
+  },
+  {
+    "file": "probe-skills.json",
+    "purpose": "Editor-baseline Evaluation installed explicitly; capped skill effects and runtime readout.",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Numeric skill updates and caps verified; generated skill labels can disagree."
+  },
+  {
+    "file": "probe-template-timing.json",
+    "purpose": "Compare live block interpolation with effect-installed interpolation.",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Block interpolation and pre-opening/first-turn execution behavior verified."
+  },
+  {
+    "file": "showcase-glass-ledger.json",
+    "purpose": "Integrated cast, alternate PCs, planning choice, precise transactions, countdown, optional prose, Scenario and script-triggered endings.",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Component behaviors are documented; this complete composition is not runtime-qualified."
+  },
+  {
+    "file": "optional-block.json",
+    "purpose": "Player preference, cached application and dynamic instructions.",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Structurally validated; complete runtime behavior not certified."
+  },
+  {
+    "file": "yaml-path-operations.json",
+    "purpose": "Set, remove, append and adjust paths on separate turns.",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Component behaviors are documented; this complete composition is not runtime-qualified."
+  },
+  {
+    "file": "narrative-last-ferry.json",
+    "purpose": "Narrative-first opening, distinct NPC voices, optional lore and bounded AI memory.",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Not runtime-qualified; a creative authoring example."
+  }
+]

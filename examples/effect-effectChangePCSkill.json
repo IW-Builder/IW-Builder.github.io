@@ -1,0 +1,222 @@
+{
+  "favorite": false,
+  "title": "Effect: effectChangePCSkill",
+  "description": "A compact IW example for inspection and runtime testing.",
+  "background": "You are visiting a quiet guild office. Its clerk is ready to hear what brings you to the guild.",
+  "instructions": "Keep the scene short and grounded. Follow the defined trackers and messages. Do not invent mechanical rewards.",
+  "authorStyle": "Clear, concise prose with a little warmth.",
+  "recommendedAIModel": null,
+  "firstInput": "Begin at the guild office and explain the immediate situation.",
+  "objective": "Visit the guild office and speak with Mara.",
+  "imageModel": "manticore",
+  "imageStyle": "photo_1",
+  "illustrationStyleNonCharacterLowPriority": "",
+  "illustrationStyleNonCharacterHighPriority": "",
+  "illustrationStyleCharacterLowPriority": "",
+  "illustrationStyleCharacterHighPriority": "",
+  "imageStyleCharacterPre": "",
+  "imageStyleCharacterPost": "",
+  "imageStyleNonCharacterPre": "",
+  "imageStyleNonCharacterPost": "",
+  "mature": false,
+  "nsfw": false,
+  "contentWarnings": "",
+  "enableAISpecificInstructionBlocks": false,
+  "previewImage": "",
+  "fullSizePreviewImage": "",
+  "previewImageOptions": [],
+  "fullSizePreviewImageOptions": [],
+  "currentPreviewImageIndex": -1,
+  "imagePromptDetails": {
+    "illustrClothes": "",
+    "illustrSetting": "",
+    "illustrSubject": "",
+    "illustrAppearance": "",
+    "illustrIsCharacter": false,
+    "illustrExpressionPosition": ""
+  },
+  "permissionsOnceShared": {
+    "sharing": true,
+    "editing": true
+  },
+  "allowChangeCharacterName": false,
+  "allowChangeCharacterDescription": false,
+  "allowChangeCharacterSkills": false,
+  "allowChangeCharacterItemValues": false,
+  "allowChangeCharacterPortrait": false,
+  "allowChangeCharacterNewPortrait": false,
+  "conditions": [],
+  "schemaVersion": 2.4,
+  "skills": [
+    "Observation",
+    "Persuasion"
+  ],
+  "possibleCharacters": [
+    {
+      "name": "Avery",
+      "description": "An observant courier visiting the guild.",
+      "portrait": "",
+      "portraitPromptDetails": {
+        "illustrAppearance": "",
+        "illustrClothes": "",
+        "illustrExpressionPosition": "",
+        "illustrSetting": ""
+      },
+      "fullSizePortrait": "",
+      "portraitOptions": [],
+      "fullSizePortraitOptions": [],
+      "currentPortraitIndex": -1,
+      "characterId": "pc-visitor",
+      "skills": {
+        "Observation": 2,
+        "Persuasion": 3
+      },
+      "initialTrackedItemValues": []
+    }
+  ],
+  "triggerEvents": [
+    {
+      "id": "trg-demo",
+      "name": "Demo",
+      "triggerConditions": [
+        {
+          "category": "condition",
+          "type": "triggerOnTurn",
+          "data": 2,
+          "id": "node-effect-effectChangePCSkill-1"
+        }
+      ],
+      "triggerEffects": [
+        {
+          "type": "effectChangePCSkill",
+          "data": {
+            "name": "Observation",
+            "amount": 2,
+            "minmax": 4,
+            "increase": true
+          },
+          "id": "node-effect-effectChangePCSkill-2"
+        }
+      ],
+      "triggerOnStartOfGame": false,
+      "triggerMidGame": false,
+      "canTriggerMoreThanOnce": false,
+      "advancedLogic": false
+    }
+  ],
+  "victoryCondition": null,
+  "defeatCondition": null,
+  "trackedItems": [
+    {
+      "id": "kyYuPA2il",
+      "name": "Coins",
+      "positionInList": 0,
+      "dataType": "number",
+      "visibility": "everyone",
+      "description": "Example coins",
+      "updateInstructions": "",
+      "formatExample": "",
+      "enforceFormat": false,
+      "formatSchema": "",
+      "initialValue": "10",
+      "initialValueBasedOnPC": "same",
+      "autoUpdate": false,
+      "variableName": "coins",
+      "driftAcknowledgedForName": null
+    },
+    {
+      "id": "0Ej3HlZXt",
+      "name": "Flag",
+      "positionInList": 1,
+      "dataType": "number",
+      "visibility": "everyone",
+      "description": "Example flag",
+      "updateInstructions": "",
+      "formatExample": "",
+      "enforceFormat": false,
+      "formatSchema": "",
+      "initialValue": "0",
+      "initialValueBasedOnPC": "same",
+      "autoUpdate": false,
+      "variableName": "flag",
+      "driftAcknowledgedForName": null
+    },
+    {
+      "id": "cTTfRfQYl",
+      "name": "Note",
+      "positionInList": 2,
+      "dataType": "text",
+      "visibility": "everyone",
+      "description": "Example note",
+      "updateInstructions": "",
+      "formatExample": "",
+      "enforceFormat": false,
+      "formatSchema": "",
+      "initialValue": "",
+      "initialValueBasedOnPC": "same",
+      "autoUpdate": false,
+      "variableName": "note",
+      "driftAcknowledgedForName": null
+    },
+    {
+      "id": "2OhJ3faQe",
+      "name": "Answer",
+      "positionInList": 3,
+      "dataType": "text",
+      "visibility": "everyone",
+      "description": "Example answer",
+      "updateInstructions": "",
+      "formatExample": "",
+      "enforceFormat": false,
+      "formatSchema": "",
+      "initialValue": "",
+      "initialValueBasedOnPC": "same",
+      "autoUpdate": false,
+      "variableName": "answer",
+      "driftAcknowledgedForName": null
+    }
+  ],
+  "hideSkillSystem": false,
+  "autoAdvanceVersion": false,
+  "version": "1.0",
+  "charSelectText": "Choose the guild visitor.",
+  "descriptionRequest": "",
+  "evaluationRequest": "",
+  "summaryRequest": "",
+  "instructionBlocks": [
+    {
+      "id": "blk-guidance",
+      "name": "Guild Guidance",
+      "content": "The clerk waits behind the desk."
+    }
+  ],
+  "NPCs": [
+    {
+      "id": "npc-clerk",
+      "name": "Mara",
+      "names": [
+        "Mara",
+        "guild clerk"
+      ],
+      "one_liner": "Mara is the practical clerk at the guild office.",
+      "detail": "Mara wants clear requests and dislikes vague promises. Her dry humor softens when someone admits an honest mistake.",
+      "appearance": "A middle-aged woman with cropped black hair and ink-stained fingers.",
+      "location": "Guild office",
+      "secret_info": "She is planning to retire after training her replacement.",
+      "img_appearance": "Middle-aged woman, cropped black hair, ink-stained fingers.",
+      "img_clothing": "Navy waistcoat over a cream shirt.",
+      "positionInList": 0
+    }
+  ],
+  "loreBookEntries": [
+    {
+      "id": "kw-guild",
+      "name": "Guild Seal",
+      "keywords": [
+        "silver seal"
+      ],
+      "content": "The silver seal identifies the guild; it has a crescent engraving."
+    }
+  ],
+  "designNotes": "Authoring example. See the example index for scope and verification status."
+}

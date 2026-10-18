@@ -1,0 +1,24 @@
+{
+  "asOf": "2026-10-17",
+  "source": "Editor model choices",
+  "purpose": "Authoring suggestions, not a validator allowlist",
+  "ids": [
+    "dolphin",
+    "smilodon",
+    "lynx",
+    "massivecat",
+    "caracal",
+    "smilodon-thinking",
+    "grimalkin",
+    "leopard",
+    "massivecat-thinking",
+    "lynx-thinking",
+    "wampus",
+    "wildcat",
+    "leopard-2",
+    "smilodon-2-experimental",
+    "smilodon-2-experimental-thinking",
+    "galaxycat-experimental"
+  ],
+  "guidance": "IDs identify profiles, not capability rankings. Ask which profile the user plays on before adding profile-specific guidance; use only documented or user-reported quirks, and preserve unknown historical IDs."
+}

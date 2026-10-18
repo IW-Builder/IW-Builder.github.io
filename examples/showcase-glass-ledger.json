@@ -1,0 +1,664 @@
+{
+  "favorite": false,
+  "title": "The Glass Ledger — Showcase",
+  "description": "An understated caper about recovering a stolen ledger before the auction begins.",
+  "background": "The Glass Ledger proves that the harbor guild has been stealing wages. Tonight it is displayed at a private auction. Your crew meets in a rented map shop before attempting a quiet recovery. No one in the crew wants anyone hurt.",
+  "instructions": "Run a compact, nonviolent caper. Nia is in the opening room: a patient planner with a pencilled map who wants to recover stolen wages. Offer planning, crew conversation and explicit preparation. The fixed resource/caper steps are defined by the Caper Rules block; other actions use ordinary narrative judgment. Keep secrets out of unearned player knowledge. Do not add a second mandatory objective.",
+  "authorStyle": "Second-person present. Wry dialogue, tactile detail, compact scenes and resourceful characters. Keep consequences legible.",
+  "recommendedAIModel": null,
+  "firstInput": "Begin at 8:00 PM in the rented map shop. Nia unfolds the floor plan and reviews the selected approach: <<$plan>>. Introduce only Nia and the immediate preparation.",
+  "objective": "Prepare the selected approach, recover the Glass Ledger and leave safely.",
+  "imageModel": "manticore",
+  "imageStyle": "photo_1",
+  "illustrationStyleNonCharacterLowPriority": "",
+  "illustrationStyleNonCharacterHighPriority": "",
+  "illustrationStyleCharacterLowPriority": "",
+  "illustrationStyleCharacterHighPriority": "",
+  "imageStyleCharacterPre": "",
+  "imageStyleCharacterPost": "",
+  "imageStyleNonCharacterPre": "",
+  "imageStyleNonCharacterPost": "",
+  "mature": false,
+  "nsfw": false,
+  "contentWarnings": "",
+  "enableAISpecificInstructionBlocks": false,
+  "previewImage": "",
+  "fullSizePreviewImage": "",
+  "previewImageOptions": [],
+  "fullSizePreviewImageOptions": [],
+  "currentPreviewImageIndex": -1,
+  "imagePromptDetails": {
+    "illustrClothes": "",
+    "illustrSetting": "",
+    "illustrSubject": "",
+    "illustrAppearance": "",
+    "illustrIsCharacter": false,
+    "illustrExpressionPosition": ""
+  },
+  "permissionsOnceShared": {
+    "sharing": true,
+    "editing": true
+  },
+  "allowChangeCharacterName": false,
+  "allowChangeCharacterDescription": false,
+  "allowChangeCharacterSkills": false,
+  "allowChangeCharacterItemValues": false,
+  "allowChangeCharacterPortrait": false,
+  "allowChangeCharacterNewPortrait": false,
+  "conditions": [
+    "The player explicitly promises the recovered ledger to the unpaid harbor workers."
+  ],
+  "schemaVersion": 2.4,
+  "skills": [
+    "Observation",
+    "Persuasion",
+    "Engineering"
+  ],
+  "possibleCharacters": [
+    {
+      "name": "Avery",
+      "description": "An experienced negotiator working with the map-shop crew.",
+      "portrait": "",
+      "portraitPromptDetails": {
+        "illustrAppearance": "",
+        "illustrClothes": "",
+        "illustrExpressionPosition": "",
+        "illustrSetting": ""
+      },
+      "fullSizePortrait": "",
+      "portraitOptions": [],
+      "fullSizePortraitOptions": [],
+      "currentPortraitIndex": -1,
+      "characterId": "pc-avery",
+      "skills": {
+        "Observation": 3,
+        "Persuasion": 4,
+        "Engineering": 2
+      },
+      "initialTrackedItemValues": []
+    },
+    {
+      "name": "Morgan",
+      "description": "An experienced technician working with the map-shop crew.",
+      "portrait": "",
+      "portraitPromptDetails": {
+        "illustrAppearance": "",
+        "illustrClothes": "",
+        "illustrExpressionPosition": "",
+        "illustrSetting": ""
+      },
+      "fullSizePortrait": "",
+      "portraitOptions": [],
+      "fullSizePortraitOptions": [],
+      "currentPortraitIndex": -1,
+      "characterId": "pc-morgan",
+      "skills": {
+        "Observation": 3,
+        "Persuasion": 2,
+        "Engineering": 4
+      },
+      "initialTrackedItemValues": []
+    }
+  ],
+  "triggerEvents": [
+    {
+      "id": "trg-acknowledge-plan",
+      "name": "Acknowledge Plan",
+      "triggerConditions": [
+        {
+          "category": "condition",
+          "type": "triggerOnPawScript",
+          "data": "$plan != \"\"",
+          "id": "node-showcase-glass-ledger-1"
+        }
+      ],
+      "triggerEffects": [
+        {
+          "type": "effectChangeObjective",
+          "data": "Prepare the <<$plan>> approach, recover the ledger, then leave.",
+          "id": "node-showcase-glass-ledger-2"
+        },
+        {
+          "type": "effectShowMessage",
+          "data": "Approach: <<$plan>>. Tools cost 4 coins.",
+          "id": "node-showcase-glass-ledger-3"
+        }
+      ],
+      "triggerOnStartOfGame": true,
+      "triggerMidGame": true,
+      "canTriggerMoreThanOnce": false,
+      "advancedLogic": false
+    },
+    {
+      "id": "trg-receipt-reset",
+      "name": "Receipt Reset",
+      "triggerConditions": [],
+      "triggerEffects": [
+        {
+          "type": "effectRunScript",
+          "data": "$receipt = \"No caper transaction requested.\"",
+          "name": "Initialize Caper Receipt",
+          "id": "node-showcase-glass-ledger-4"
+        }
+      ],
+      "triggerOnStartOfGame": true,
+      "triggerMidGame": true,
+      "canTriggerMoreThanOnce": true,
+      "advancedLogic": false
+    },
+    {
+      "id": "trg-process-request",
+      "name": "Process Request",
+      "triggerConditions": [
+        {
+          "category": "condition",
+          "type": "triggerOnPawScript",
+          "data": "$request.turn = $game.turn_number and $request.event != \"NONE\"",
+          "id": "node-showcase-glass-ledger-5"
+        }
+      ],
+      "triggerEffects": [
+        {
+          "type": "effectRunScript",
+          "data": "if $state.finished = 1\n  $receipt = \"The caper is already complete.\"\nelse if $state.remaining <= 0\n  $receipt = \"The auction has begun; this attempt is over.\"\nelse if $request.event = \"BUY_TOOLS\"\n  if $state.tools = 1\n    $receipt = \"Tools already owned; no charge.\"\n  else if $coins >= 4\n    $coins -= 4\n    $state.tools = 1\n    $receipt = \"Tools purchased for 4 coins.\"\n  else\n    $receipt = \"Not enough coins for tools.\"\nelse if $request.event = \"RECOVER_LEDGER\"\n  if $plan != \"\" and $state.tools = 1\n    $state.ledger = 1\n    $receipt = \"Glass Ledger recovered.\"\n  else\n    $receipt = \"Choose an approach and obtain tools first.\"\nelse if $request.event = \"LEAVE\"\n  if $state.ledger = 1\n    $state.finished = 1\n    $receipt = \"You leave safely with the Glass Ledger.\"\n  else\n    $receipt = \"You can withdraw, but the ledger has not been recovered.\"",
+          "name": "Resolve Caper Transaction",
+          "id": "node-showcase-glass-ledger-6"
+        }
+      ],
+      "triggerOnStartOfGame": true,
+      "triggerMidGame": true,
+      "canTriggerMoreThanOnce": true,
+      "advancedLogic": false
+    },
+    {
+      "id": "trg-countdown",
+      "name": "Countdown",
+      "triggerConditions": [
+        {
+          "category": "condition",
+          "type": "triggerOnPawScript",
+          "data": "$game.turn_number > 1 and $plan != \"\" and $state.finished = 0 and $state.remaining > 0",
+          "id": "node-showcase-glass-ledger-7"
+        }
+      ],
+      "triggerEffects": [
+        {
+          "type": "effectRunScript",
+          "data": "$state.remaining -= 1",
+          "name": "Spend One Caper Beat",
+          "id": "node-showcase-glass-ledger-8"
+        }
+      ],
+      "triggerOnStartOfGame": false,
+      "triggerMidGame": false,
+      "canTriggerMoreThanOnce": true,
+      "advancedLogic": false
+    },
+    {
+      "id": "trg-detail-on",
+      "name": "Detail On",
+      "triggerConditions": [
+        {
+          "category": "condition",
+          "type": "triggerOnPawScript",
+          "data": "$extra_detail = \"On\" and $detail_cache != \"Enabled\"",
+          "id": "node-showcase-glass-ledger-9"
+        }
+      ],
+      "triggerEffects": [
+        {
+          "type": "effectModifyInstructionBlock",
+          "data": {
+            "id": "blk-detail",
+            "content": "Include one concrete sensory detail per scene without extending its length."
+          },
+          "id": "node-showcase-glass-ledger-10"
+        },
+        {
+          "type": "effectRunScript",
+          "data": "$detail_cache = \"Enabled\"",
+          "name": "Cache Detail Enabled",
+          "id": "node-showcase-glass-ledger-11"
+        }
+      ],
+      "triggerOnStartOfGame": true,
+      "triggerMidGame": true,
+      "canTriggerMoreThanOnce": true,
+      "advancedLogic": false
+    },
+    {
+      "id": "trg-detail-off",
+      "name": "Detail Off",
+      "triggerConditions": [
+        {
+          "category": "condition",
+          "type": "triggerOnPawScript",
+          "data": "$extra_detail = \"Off\" and $detail_cache != \"Disabled\"",
+          "id": "node-showcase-glass-ledger-12"
+        }
+      ],
+      "triggerEffects": [
+        {
+          "type": "effectModifyInstructionBlock",
+          "data": {
+            "id": "blk-detail",
+            "content": ""
+          },
+          "id": "node-showcase-glass-ledger-13"
+        },
+        {
+          "type": "effectRunScript",
+          "data": "$detail_cache = \"Disabled\"",
+          "name": "Cache Detail Disabled",
+          "id": "node-showcase-glass-ledger-14"
+        }
+      ],
+      "triggerOnStartOfGame": true,
+      "triggerMidGame": true,
+      "canTriggerMoreThanOnce": true,
+      "advancedLogic": false
+    },
+    {
+      "id": "trg-promise",
+      "name": "Promise",
+      "triggerConditions": [
+        {
+          "category": "condition",
+          "type": "triggerOnEvent",
+          "data": "The player explicitly promises the recovered ledger to the unpaid harbor workers.",
+          "id": "node-showcase-glass-ledger-15"
+        }
+      ],
+      "triggerEffects": [
+        {
+          "type": "effectGiveInfo",
+          "data": "The crew remembers the promise to return the evidence to the workers.",
+          "id": "node-showcase-glass-ledger-16"
+        }
+      ],
+      "triggerOnStartOfGame": false,
+      "triggerMidGame": false,
+      "canTriggerMoreThanOnce": false,
+      "advancedLogic": false
+    },
+    {
+      "id": "trg-receipt",
+      "name": "Receipt",
+      "triggerConditions": [
+        {
+          "id": "trg-receipt-requested",
+          "category": "condition",
+          "type": "triggerOnPawScript",
+          "data": "$request.turn = $game.turn_number and $request.event != \"NONE\""
+        }
+      ],
+      "triggerEffects": [
+        {
+          "type": "effectShowMessage",
+          "data": "<<$receipt>> Coins: <<$coins>>. Beats: <<$state.remaining>>.",
+          "id": "node-showcase-glass-ledger-17"
+        },
+        {
+          "type": "effectRunScript",
+          "data": "$request.turn = 0\n$request.event = \"NONE\"",
+          "name": "Consume Caper Request",
+          "id": "node-showcase-glass-ledger-18"
+        }
+      ],
+      "triggerOnStartOfGame": true,
+      "triggerMidGame": true,
+      "canTriggerMoreThanOnce": true,
+      "advancedLogic": false
+    },
+    {
+      "id": "trg-success",
+      "name": "Success",
+      "triggerConditions": [
+        {
+          "category": "condition",
+          "type": "triggerOnPawScript",
+          "data": "$state.finished = 1",
+          "id": "node-showcase-glass-ledger-19"
+        }
+      ],
+      "triggerEffects": [
+        {
+          "type": "effectShowMessage",
+          "data": "The evidence is safe. Your crew can choose what comes next.",
+          "id": "node-showcase-glass-ledger-20"
+        },
+        {
+          "type": "effectEndsGame",
+          "data": true,
+          "id": "node-showcase-glass-ledger-21"
+        }
+      ],
+      "triggerOnStartOfGame": false,
+      "triggerMidGame": false,
+      "canTriggerMoreThanOnce": false,
+      "advancedLogic": false
+    },
+    {
+      "id": "trg-timeout",
+      "name": "Timeout",
+      "triggerConditions": [
+        {
+          "category": "condition",
+          "type": "triggerOnPawScript",
+          "data": "$state.remaining = 0 and $state.finished = 0",
+          "id": "node-showcase-glass-ledger-22"
+        }
+      ],
+      "triggerEffects": [
+        {
+          "type": "effectShowMessage",
+          "data": "The auction begins before the crew is ready. You withdraw safely; continuation is permitted.",
+          "id": "node-showcase-glass-ledger-23"
+        },
+        {
+          "type": "effectEndsGame",
+          "data": true,
+          "id": "node-showcase-glass-ledger-24"
+        }
+      ],
+      "triggerOnStartOfGame": false,
+      "triggerMidGame": false,
+      "canTriggerMoreThanOnce": false,
+      "advancedLogic": false
+    }
+  ],
+  "victoryCondition": null,
+  "defeatCondition": null,
+  "trackedItems": [
+    {
+      "id": "nzr9cnDuo",
+      "name": "Coins",
+      "positionInList": 0,
+      "dataType": "number",
+      "visibility": "everyone",
+      "description": "Example coins",
+      "updateInstructions": "",
+      "formatExample": "",
+      "enforceFormat": false,
+      "formatSchema": "",
+      "initialValue": "12",
+      "initialValueBasedOnPC": "same",
+      "autoUpdate": false,
+      "variableName": "coins",
+      "driftAcknowledgedForName": null
+    },
+    {
+      "id": "qKfRA7vRe",
+      "name": "Plan",
+      "positionInList": 1,
+      "dataType": "text",
+      "visibility": "everyone",
+      "description": "Example plan",
+      "updateInstructions": "",
+      "formatExample": "",
+      "enforceFormat": false,
+      "formatSchema": "",
+      "initialValue": "Guests",
+      "initialValueBasedOnPC": "player",
+      "autoUpdate": false,
+      "variableName": "plan",
+      "driftAcknowledgedForName": null,
+      "initialValueChoices": [
+        "Guests",
+        "Service"
+      ]
+    },
+    {
+      "id": "yhK6linEz",
+      "name": "Request",
+      "positionInList": 2,
+      "dataType": "yaml",
+      "visibility": "ai_only",
+      "description": "Example request",
+      "updateInstructions": "Write turn=the CURRENT TURN value in the permanent Turn Context block as number and event EVERY turn. From the current explicit player request select one: BUY_TOOLS, RECOVER_LEDGER, LEAVE, or NONE. Talking or asking about an action is NONE. Do not infer completion from prose.",
+      "formatExample": "",
+      "enforceFormat": false,
+      "formatSchema": "",
+      "initialValue": "turn: 0\nevent: NONE",
+      "initialValueBasedOnPC": "same",
+      "autoUpdate": true,
+      "variableName": "request",
+      "driftAcknowledgedForName": null
+    },
+    {
+      "id": "oW6C9cIlg",
+      "name": "State",
+      "positionInList": 3,
+      "dataType": "yaml",
+      "visibility": "ai_only",
+      "description": "Example state",
+      "updateInstructions": "",
+      "formatExample": "",
+      "enforceFormat": false,
+      "formatSchema": "",
+      "initialValue": "tools: 0\nledger: 0\nfinished: 0\nremaining: 8",
+      "initialValueBasedOnPC": "same",
+      "autoUpdate": false,
+      "variableName": "state",
+      "driftAcknowledgedForName": null
+    },
+    {
+      "id": "OTvEy5AxE",
+      "name": "Receipt",
+      "positionInList": 4,
+      "dataType": "text",
+      "visibility": "ai_only",
+      "description": "Example receipt",
+      "updateInstructions": "",
+      "formatExample": "",
+      "enforceFormat": false,
+      "formatSchema": "",
+      "initialValue": "",
+      "initialValueBasedOnPC": "same",
+      "autoUpdate": false,
+      "variableName": "receipt",
+      "driftAcknowledgedForName": null
+    },
+    {
+      "id": "KaKnk20l9",
+      "name": "Extra Detail",
+      "positionInList": 5,
+      "dataType": "text",
+      "visibility": "player_only",
+      "description": "Example extra detail",
+      "updateInstructions": "",
+      "formatExample": "",
+      "enforceFormat": false,
+      "formatSchema": "",
+      "initialValue": "Off",
+      "initialValueBasedOnPC": "player",
+      "autoUpdate": false,
+      "variableName": "extra_detail",
+      "driftAcknowledgedForName": null,
+      "initialValueChoices": [
+        "On",
+        "Off"
+      ]
+    },
+    {
+      "id": "AzPojr8mB",
+      "name": "Detail Cache",
+      "positionInList": 6,
+      "dataType": "text",
+      "visibility": "hidden_boring",
+      "description": "Example detail cache",
+      "updateInstructions": "",
+      "formatExample": "",
+      "enforceFormat": false,
+      "formatSchema": "",
+      "initialValue": "",
+      "initialValueBasedOnPC": "same",
+      "autoUpdate": false,
+      "variableName": "detail_cache",
+      "driftAcknowledgedForName": null
+    }
+  ],
+  "hideSkillSystem": false,
+  "autoAdvanceVersion": false,
+  "version": "1.0",
+  "charSelectText": "Choose a negotiator or a technician. Both can complete the caper.",
+  "descriptionRequest": "",
+  "evaluationRequest": "",
+  "summaryRequest": "",
+  "instructionBlocks": [
+    {
+      "id": "blk-core",
+      "name": "Caper Rules",
+      "content": "The crew can prepare and talk freely. Tools cost 4 coins once. Once an approach is selected, each later turn before completion spends one of the eight remaining beats. Recovering the ledger requires a selected plan and purchased tools; leaving successfully requires the ledger. These exact changes occur in triggers: narrate attempts without awarding resources or declaring success before the receipt. Continue from state and receipt next turn. Current coins: <<$coins>>. Approach: <<$plan>>. Tools: <<$state.tools>>. Ledger: <<$state.ledger>>. Remaining beats: <<$state.remaining>>. Both plans support success; details and complications can differ."
+    },
+    {
+      "id": "blk-detail",
+      "name": "Optional Detail",
+      "content": ""
+    },
+    {
+      "id": "blk-time",
+      "name": "Time and Location",
+      "content": "Use whereWhen as a single opening header in outcomeDescription: {Place}, at HH:MM AM/PM. Start at 8:00 PM in the map shop; advance time reasonably for scene events. Follow the header with a blank line and horizontal rule. The beat counter is a gameplay deadline, not a fixed number of clock minutes."
+    },
+    {
+      "id": "blk-turn-context",
+      "name": "Turn Context",
+      "content": "CURRENT TURN: <<$game.turn_number>>. The request tracker must copy this number into its turn field for the current input."
+    }
+  ],
+  "NPCs": [
+    {
+      "id": "npc-nia",
+      "name": "Nia",
+      "names": [
+        "Nia"
+      ],
+      "one_liner": "Nia is the crew's planner. She states a plan as a question, then waits for a real answer.",
+      "detail": "Patient, quietly stubborn; wants unpaid workers to receive the evidence. She states a plan as a question, then waits for a real answer. Under pressure she folds and refolds one map corner. She will change a plan to protect a worker even when it costs time.",
+      "appearance": "Broad-shouldered, silver braid looped through a pencil, navy coat with patched elbows.",
+      "location": "map shop",
+      "secret_info": "",
+      "img_appearance": "Broad-shouldered, silver braid looped through a pencil, navy coat with patched elbows.",
+      "img_clothing": "Practical evening clothes appropriate to the harbor.",
+      "positionInList": 0
+    },
+    {
+      "id": "npc-joss",
+      "name": "Joss",
+      "names": [
+        "Joss"
+      ],
+      "one_liner": "Joss is the crew's driver. He speaks in departure times and distances, with a dry half-smile instead of reassurance.",
+      "detail": "Laconic and punctual; insists on a clear departure signal. He speaks in departure times and distances, with a dry half-smile instead of reassurance. He refuses surprise passengers but will not abandon the crew.",
+      "appearance": "Lean man with a crooked nose, close-cropped hair and a worn leather driving coat.",
+      "location": "back lane",
+      "secret_info": "",
+      "img_appearance": "Lean man with a crooked nose, close-cropped hair and a worn leather driving coat.",
+      "img_clothing": "Practical evening clothes appropriate to the harbor.",
+      "positionInList": 1
+    },
+    {
+      "id": "npc-em",
+      "name": "Em",
+      "names": [
+        "Em"
+      ],
+      "one_liner": "Em is the crew's locksmith. She describes locks as badly behaved acquaintances.",
+      "detail": "Dry humor; values clean work more than speed. She describes locks as badly behaved acquaintances. Her jokes are precise and quiet; rushed hands make her stop the conversation and restart the task.",
+      "appearance": "Compact woman with a freckled face, round spectacles and a velvet tool roll.",
+      "location": "map shop",
+      "secret_info": "",
+      "img_appearance": "Compact woman with a freckled face, round spectacles and a velvet tool roll.",
+      "img_clothing": "Practical evening clothes appropriate to the harbor.",
+      "positionInList": 2
+    },
+    {
+      "id": "npc-rafi",
+      "name": "Rafi",
+      "names": [
+        "Rafi"
+      ],
+      "one_liner": "Rafi is the crew's lookout. He fills anxious silences with elaborate guesses, then becomes sharply concise when reporting something he actually saw.",
+      "detail": "Talkative when nervous; watches arrivals carefully. He fills anxious silences with elaborate guesses, then becomes sharply concise when reporting something he actually saw. He wants to be trusted with more than lookout duty.",
+      "appearance": "Tall, restless man in a mustard scarf and an oversized rain cape.",
+      "location": "opposite roof",
+      "secret_info": "",
+      "img_appearance": "Tall, restless man in a mustard scarf and an oversized rain cape.",
+      "img_clothing": "Practical evening clothes appropriate to the harbor.",
+      "positionInList": 3
+    },
+    {
+      "id": "npc-sol",
+      "name": "Sol",
+      "names": [
+        "Sol"
+      ],
+      "one_liner": "Sol is the crew's forger. He corrects the weight of paper before discussing the morality of forgery.",
+      "detail": "Meticulous; treats convincing stationery as an art. He corrects the weight of paper before discussing the morality of forgery. He speaks with gentle ceremonial formality and hates waste.",
+      "appearance": "Bald older man with immaculate cuffs, a green eye shade tucked in his pocket and a violet ink stain at one thumb.",
+      "location": "print shop",
+      "secret_info": "",
+      "img_appearance": "Bald older man with immaculate cuffs, a green eye shade tucked in his pocket and a violet ink stain at one thumb.",
+      "img_clothing": "Practical evening clothes appropriate to the harbor.",
+      "positionInList": 4
+    },
+    {
+      "id": "npc-tess",
+      "name": "Tess",
+      "names": [
+        "Tess"
+      ],
+      "one_liner": "Tess is the crew's porter. She greets people by the last useful thing they did.",
+      "detail": "Friendly and physically assured; remembers staff routines. She greets people by the last useful thing they did. Her warmth is practical: carrying a crate, finding a chair, sharing a sandwich. She notices who gets ignored.",
+      "appearance": "Sturdy woman with close-shaved dark hair, a chipped front tooth and rolled linen sleeves.",
+      "location": "service yard",
+      "secret_info": "",
+      "img_appearance": "Sturdy woman with close-shaved dark hair, a chipped front tooth and rolled linen sleeves.",
+      "img_clothing": "Practical evening clothes appropriate to the harbor.",
+      "positionInList": 5
+    },
+    {
+      "id": "npc-ivo",
+      "name": "Ivo",
+      "names": [
+        "Ivo"
+      ],
+      "one_liner": "Ivo is the crew's accountant. He hesitates over personal questions but becomes clear and passionate when explaining stolen wages.",
+      "detail": "Soft-spoken; can explain why the ledger matters. He hesitates over personal questions but becomes clear and passionate when explaining stolen wages. He gives concrete examples instead of grand speeches.",
+      "appearance": "Narrow-faced man with tired eyes, a burgundy waistcoat and a brass counting chain.",
+      "location": "map shop",
+      "secret_info": "",
+      "img_appearance": "Narrow-faced man with tired eyes, a burgundy waistcoat and a brass counting chain.",
+      "img_clothing": "Practical evening clothes appropriate to the harbor.",
+      "positionInList": 6
+    },
+    {
+      "id": "npc-bea",
+      "name": "Bea",
+      "names": [
+        "Bea"
+      ],
+      "one_liner": "Bea is the crew's fence. She names a price once and lets silence do the negotiating.",
+      "detail": "Practical; can arrange safe transfer of evidence, but refuses stolen personal valuables. She names a price once and lets silence do the negotiating. Beneath that reserve she remembers every worker whose testimony she has protected.",
+      "appearance": "Older woman with white curls, bright brass earrings and a spotless black oilskin coat.",
+      "location": "canal warehouse",
+      "secret_info": "",
+      "img_appearance": "Older woman with white curls, bright brass earrings and a spotless black oilskin coat.",
+      "img_clothing": "Practical evening clothes appropriate to the harbor.",
+      "positionInList": 7
+    }
+  ],
+  "loreBookEntries": [
+    {
+      "id": "kw-auction",
+      "name": "Auction House",
+      "keywords": [
+        "auction house",
+        "service corridor"
+      ],
+      "content": "The auction house occupies a former customs office. Guests use the front hall; staff use the service corridor. Both lead toward the ledger display. The crew's floor plan gives only ordinary architecture, not secret solutions."
+    }
+  ],
+  "designNotes": "Authoring example. See the example index for scope and verification status."
+}

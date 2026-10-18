@@ -1,0 +1,59 @@
+{
+  "IW-Authoring-Guide.txt": {
+    "sourceFiles": [
+      "Authoring-Prompt.md",
+      "World-Template.json",
+      "reference/Evidence.md",
+      "reference/Craft.md",
+      "reference/Portable-Banks.md",
+      "reference/Trackers.md",
+      "reference/Triggers.md",
+      "reference/Schema.md",
+      "reference/PawScript.md",
+      "reference/Capabilities.md",
+      "reference/Recipes.md",
+      "reference/Import-Integrity.md",
+      "reference/Known-Limits.md",
+      "reference/Default-Evaluation.txt",
+      "reference/Current-AI-Profiles.json"
+    ],
+    "sha256": "e50c60b81f7f1fe3d45d40bc2bde93708d8ef00bc6a2c9aacba02768b4f011a8"
+  },
+  "IW-Examples.txt": {
+    "sourceFiles": [
+      "examples/README.md",
+      "examples/Payloads.md",
+      "examples/index.json",
+      "examples/narrative-last-ferry.json",
+      "examples/recipe-request-commit.json",
+      "examples/recipe-choice-followup.json",
+      "examples/recipe-threshold-unlock.json",
+      "examples/optional-block.json",
+      "examples/showcase-glass-ledger.json",
+      "examples/character-starting-values.json"
+    ],
+    "sha256": "cbd5081c960a1e5e0b2c7d82a942dcc8078a311ee8517dd906d5e8af8234c1fe"
+  },
+  "IW-Sample-Library.txt": {
+    "sourceFiles": [
+      "library/Integration.md",
+      "library/Sample-Blocks.json"
+    ],
+    "sha256": "3765b46eedaf30f716e186670a4fff29aabc0f4aa64db80a747083b43527b87e"
+  },
+  "IW-Tools.txt": {
+    "sourceFiles": [
+      "tools/README.md",
+      "tools/Validation-Report.json",
+      "tools/build_chat_edition.py",
+      "tools/check_package.py",
+      "tools/data_bank.py",
+      "tools/iw-export.schema.json",
+      "tools/static_checks.py",
+      "tools/test_data_bank.py",
+      "tools/test_validator.py",
+      "tools/validate_iw_export.py"
+    ],
+    "sha256": "0242ff4caba47df7260fe07995b1b465a4dde9942855cbfbeb1fabdbe2963d67"
+  }
+}

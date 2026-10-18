@@ -1,0 +1,1805 @@
+{
+  "type": "object",
+  "properties": {
+    "favorite": {
+      "type": "boolean"
+    },
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "background": {
+      "type": "string"
+    },
+    "instructions": {
+      "type": "string"
+    },
+    "authorStyle": {
+      "type": "string"
+    },
+    "recommendedAIModel": {
+      "description": "Obsolete export-only field with no current editor control. Keep null; non-null legacy shape unknown.",
+      "x-observedTypes": [
+        "null"
+      ]
+    },
+    "firstInput": {
+      "type": "string"
+    },
+    "objective": {
+      "type": "string"
+    },
+    "imageModel": {
+      "type": "string"
+    },
+    "imageStyle": {
+      "type": "string",
+      "description": "Opaque image-style identifier. Observed preset and user-defined identifiers; do not enumerate all styles or infer editable text is authoritative from this field alone."
+    },
+    "illustrationStyleNonCharacterLowPriority": {
+      "type": "string",
+      "description": "Retained export field; no matching High/Low Priority control in the current image-style editor. Runtime relevance/precedence is not established."
+    },
+    "illustrationStyleNonCharacterHighPriority": {
+      "type": "string",
+      "description": "Retained export field; no matching High/Low Priority control in the current image-style editor. Runtime relevance/precedence is not established."
+    },
+    "illustrationStyleCharacterLowPriority": {
+      "type": "string",
+      "description": "Retained export field; no matching High/Low Priority control in the current image-style editor. Runtime relevance/precedence is not established."
+    },
+    "illustrationStyleCharacterHighPriority": {
+      "type": "string",
+      "description": "Retained export field; no matching High/Low Priority control in the current image-style editor. Runtime relevance/precedence is not established."
+    },
+    "imageStyleCharacterPre": {
+      "type": "string"
+    },
+    "imageStyleCharacterPost": {
+      "type": "string"
+    },
+    "imageStyleNonCharacterPre": {
+      "type": "string"
+    },
+    "imageStyleNonCharacterPost": {
+      "type": "string"
+    },
+    "mature": {
+      "type": "boolean"
+    },
+    "nsfw": {
+      "type": "boolean"
+    },
+    "contentWarnings": {
+      "type": "string"
+    },
+    "enableAISpecificInstructionBlocks": {
+      "type": "boolean"
+    },
+    "previewImage": {
+      "type": "string"
+    },
+    "fullSizePreviewImage": {
+      "type": "string"
+    },
+    "previewImageOptions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "fullSizePreviewImageOptions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "currentPreviewImageIndex": {
+      "type": "integer"
+    },
+    "imagePromptDetails": {
+      "type": "object",
+      "properties": {
+        "illustrClothes": {
+          "type": "string"
+        },
+        "illustrSetting": {
+          "type": "string"
+        },
+        "illustrSubject": {
+          "type": "string"
+        },
+        "illustrAppearance": {
+          "type": "string"
+        },
+        "illustrIsCharacter": {
+          "type": "boolean"
+        },
+        "illustrExpressionPosition": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true
+    },
+    "permissionsOnceShared": {
+      "type": "object",
+      "properties": {
+        "sharing": {
+          "type": "boolean"
+        },
+        "editing": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": true
+    },
+    "allowChangeCharacterName": {
+      "type": "boolean"
+    },
+    "allowChangeCharacterDescription": {
+      "type": "boolean"
+    },
+    "allowChangeCharacterSkills": {
+      "type": "boolean"
+    },
+    "allowChangeCharacterItemValues": {
+      "type": "boolean"
+    },
+    "allowChangeCharacterPortrait": {
+      "type": "boolean"
+    },
+    "allowChangeCharacterNewPortrait": {
+      "type": "boolean"
+    },
+    "conditions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "maxItems": 10
+    },
+    "schemaVersion": {
+      "type": "number",
+      "description": "Observed 2.4 as a JSON number; other versions are not characterized."
+    },
+    "skills": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1,
+      "description": "At least one skill is required. Custom skills replace the generic skill; they do not need to retain that literal name."
+    },
+    "possibleCharacters": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "portrait": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "x-observedTypes": [
+              "string",
+              "null"
+            ]
+          },
+          "portraitPromptDetails": {
+            "type": "object",
+            "properties": {
+              "illustrAppearance": {
+                "type": "string"
+              },
+              "illustrClothes": {
+                "type": "string"
+              },
+              "illustrExpressionPosition": {
+                "type": "string"
+              },
+              "illustrSetting": {
+                "type": "string"
+              }
+            },
+            "additionalProperties": true
+          },
+          "fullSizePortrait": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "x-observedTypes": [
+              "string",
+              "null"
+            ]
+          },
+          "portraitOptions": {
+            "type": "array",
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "x-observedTypes": [
+                "string",
+                "null"
+              ]
+            }
+          },
+          "fullSizePortraitOptions": {
+            "type": "array",
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "x-observedTypes": [
+                "string",
+                "null"
+              ]
+            }
+          },
+          "currentPortraitIndex": {
+            "type": "integer"
+          },
+          "characterId": {
+            "type": "string"
+          },
+          "skills": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 5
+            },
+            "description": "Map keyed by declared skill display name. Fixed integer skill levels from 0 through 5."
+          },
+          "initialTrackedItemValues": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "visibility": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "initialPCValue": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  ],
+                  "x-observedTypes": [
+                    "string",
+                    "array"
+                  ],
+                  "description": "Observed string for fixed value; array of strings for player single-selection from fixed options. With initialPCValueChoicesScript, observed empty string; do not coerce into a scalar."
+                },
+                "initialValueBasedOnPC": {
+                  "type": "string"
+                },
+                "initialPCValueChoicesScript": {
+                  "type": "string",
+                  "description": "Pawscript expression producing player single-selection options, evaluated at game start using initial tracked-item values including this character values and skills. Result list shape and endpoint semantics not verified."
+                }
+              },
+              "additionalProperties": true
+            }
+          }
+        },
+        "additionalProperties": true
+      }
+    },
+    "triggerEvents": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/trigger"
+      }
+    },
+    "victoryCondition": {
+      "anyOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "condition": {
+              "type": "string",
+              "description": "Natural-language ending criterion in native exports; not a mandatory PawScript expression."
+            },
+            "text": {
+              "type": "string"
+            },
+            "alreadyFired": {
+              "type": "boolean",
+              "description": "Serialized boolean; remained false after a tested native victory, continuation and another turn. Do not rely on it as live ending history."
+            }
+          },
+          "additionalProperties": true
+        }
+      ],
+      "x-observedTypes": [
+        "null",
+        "object"
+      ]
+    },
+    "defeatCondition": {
+      "anyOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "condition": {
+              "type": "string",
+              "description": "Natural-language ending criterion in native exports; not a mandatory PawScript expression."
+            },
+            "text": {
+              "type": "string"
+            },
+            "alreadyFired": {
+              "type": "boolean",
+              "description": "Serialized boolean; remained false after a tested native victory, continuation and another turn. Do not rely on it as live ending history."
+            }
+          },
+          "additionalProperties": true
+        }
+      ],
+      "x-observedTypes": [
+        "null",
+        "object"
+      ]
+    },
+    "descriptionRequest": {
+      "type": "string"
+    },
+    "evaluationRequest": {
+      "type": "string"
+    },
+    "hideSkillSystem": {
+      "type": "boolean"
+    },
+    "summaryRequest": {
+      "type": "string"
+    },
+    "videoPromptInstructions": {
+      "type": "object",
+      "properties": {
+        "videoPlan": {
+          "type": "string"
+        },
+        "videoImagePosition": {
+          "type": "string"
+        },
+        "videoPrompt": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true
+    },
+    "charSelectText": {
+      "type": "string"
+    },
+    "instructionBlocks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "content": {
+            "type": "string"
+          },
+          "selectedAIProfiles": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Opaque model profile IDs. Accept arbitrary historical IDs. Current authoring suggestions are recorded separately, not enforced as an enum. Disabling AI-specific blocks in the editor removes this field on export."
+          }
+        },
+        "additionalProperties": true
+      }
+    },
+    "loreBookEntries": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "content": {
+            "type": "string"
+          },
+          "keywords": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "additionalProperties": true
+      }
+    },
+    "trackedItems": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "positionInList": {
+            "type": "integer"
+          },
+          "dataType": {
+            "type": "string",
+            "x-observedValues": [
+              "text",
+              "number",
+              "yaml",
+              "xml"
+            ]
+          },
+          "visibility": {
+            "type": "string",
+            "x-observedValues": [
+              "everyone",
+              "ai_only_boring",
+              "player_only",
+              "hidden",
+              "ai_only",
+              "hidden_boring"
+            ]
+          },
+          "description": {
+            "type": "string"
+          },
+          "updateInstructions": {
+            "type": "string"
+          },
+          "formatExample": {
+            "type": "string"
+          },
+          "enforceFormat": {
+            "type": "boolean"
+          },
+          "formatSchema": {
+            "type": "string"
+          },
+          "initialValue": {
+            "type": "string"
+          },
+          "initialValueBasedOnPC": {
+            "type": "string",
+            "x-observedValues": [
+              "same",
+              "character",
+              "player"
+            ]
+          },
+          "autoUpdate": {
+            "type": "boolean"
+          },
+          "variableName": {
+            "type": "string"
+          },
+          "driftAcknowledgedForName": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Display name for which variable-name mismatch warning was acknowledged; null when not acknowledged. Does not change variableName or script references. May differ from a subsequently renamed display name.",
+            "x-observedTypes": [
+              "null",
+              "string"
+            ]
+          },
+          "initialValueChoices": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Player startup selection options with initialValueBasedOnPC player; initialValue supplies the stored initial/default choice."
+          }
+        },
+        "additionalProperties": true
+      }
+    },
+    "NPCs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "detail": {
+            "type": "string"
+          },
+          "one_liner": {
+            "type": "string"
+          },
+          "appearance": {
+            "type": "string"
+          },
+          "location": {
+            "type": "string"
+          },
+          "secret_info": {
+            "type": "string"
+          },
+          "names": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "img_appearance": {
+            "type": "string"
+          },
+          "img_clothing": {
+            "type": "string"
+          },
+          "positionInList": {
+            "type": "integer"
+          }
+        },
+        "additionalProperties": true
+      }
+    },
+    "autoAdvanceVersion": {
+      "type": "boolean"
+    },
+    "version": {
+      "type": "string",
+      "description": "Observed string 1.27; distinct from numeric schemaVersion."
+    },
+    "designNotes": {
+      "type": "string"
+    },
+    "showPawScriptButtons": {
+      "type": "boolean"
+    }
+  },
+  "additionalProperties": true,
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "InfiniteWorlds observed export schema — schemaVersion 2.4",
+  "description": "General Infinite Worlds export structure and explicit-reference profile. Compatibility baseline: Save/load system, Image style system and Pawscript update, announced 2026-10-08 (compatibility baseline). Not an official exhaustive importer contract. Unknown fields/discriminators remain permitted and reported. Presence observations alone do not establish importer-required fields.",
+  "x-profileVersion": "1.1.0",
+  "x-observedSchemaVersions": [
+    2.4
+  ],
+  "$defs": {
+    "effect_effectShowMessage": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "effectShowMessage"
+        },
+        "data": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true,
+      "required": [
+        "type"
+      ]
+    },
+    "effect_effectTellAIWhatToDo": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "effectTellAIWhatToDo"
+        },
+        "data": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true,
+      "required": [
+        "type"
+      ]
+    },
+    "effect_effectGiveInfo": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "effectGiveInfo"
+        },
+        "data": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true,
+      "required": [
+        "type"
+      ]
+    },
+    "effect_effectSetTrackedItemValue": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "effectSetTrackedItemValue"
+        },
+        "data": {
+          "type": "object",
+          "properties": {
+            "trackedItemID": {
+              "type": "string"
+            },
+            "action": {
+              "type": "string",
+              "x-observedValues": [
+                "set",
+                "add",
+                "subtract",
+                "replace",
+                "append",
+                "remove",
+                "adjust"
+              ]
+            },
+            "newValue": {
+              "type": "string",
+              "description": "String payload. YAML Path Set accepts YAML text with <<...>> interpolation or a whole structure injected by an expression. Append payload coercion for structured entries is not yet characterized."
+            },
+            "replaceWith": {
+              "type": "string"
+            },
+            "path": {
+              "type": "string",
+              "description": "Plain dotted path within a YAML tracker, for example wallet.coins. Empty path targets the whole tracker."
+            },
+            "updateMode": {
+              "type": "string",
+              "x-observedValues": [
+                "path",
+                "replace"
+              ]
+            },
+            "listExpression": {
+              "type": "string",
+              "description": "Retained native export field. Current editor directs complex list-wide manipulation to Run Script; no current standalone List Update UI is established."
+            },
+            "targetExpression": {
+              "type": "string",
+              "description": "Retained native export field. Current editor directs complex list-wide manipulation to Run Script; no current standalone List Update UI is established."
+            }
+          },
+          "additionalProperties": true
+        },
+        "id": {
+          "type": "string"
+        },
+        "trackedItemID": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true,
+      "required": [
+        "type"
+      ]
+    },
+    "effect_effectModifyTrackedItemDetails": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "effectModifyTrackedItemDetails"
+        },
+        "data": {
+          "type": "object",
+          "properties": {
+            "trackedItemID": {
+              "type": "string"
+            },
+            "overrideName": {
+              "type": "boolean"
+            },
+            "overrideDescription": {
+              "type": "boolean"
+            },
+            "overrideVisibility": {
+              "type": "boolean"
+            },
+            "overrideAutoUpdate": {
+              "type": "boolean"
+            },
+            "overrideUpdateInstructions": {
+              "type": "boolean"
+            },
+            "name": {
+              "type": "string"
+            },
+            "description": {
+              "type": "string"
+            },
+            "updateInstructions": {
+              "type": "string"
+            },
+            "visibility": {
+              "type": "string",
+              "x-observedValues": [
+                "everyone"
+              ]
+            },
+            "autoUpdate": {
+              "type": "boolean"
+            }
+          },
+          "additionalProperties": true
+        },
+        "id": {
+          "type": "string"
+        },
+        "trackedItemID": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true,
+      "required": [
+        "type"
+      ]
+    },
+    "effect_effectChangePCName": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "effectChangePCName"
+        },
+        "data": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true,
+      "required": [
+        "type"
+      ]
+    },
+    "effect_effectChangePCDescription": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "effectChangePCDescription"
+        },
+        "data": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true,
+      "required": [
+        "type"
+      ]
+    },
+    "effect_effectChangePCSkill": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "effectChangePCSkill"
+        },
+        "data": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "amount": {
+              "type": "integer"
+            },
+            "minmax": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 5
+            },
+            "increase": {
+              "type": "boolean"
+            }
+          },
+          "additionalProperties": true
+        },
+        "id": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true,
+      "required": [
+        "type"
+      ]
+    },
+    "effect_effectChangeObjective": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "effectChangeObjective"
+        },
+        "data": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true,
+      "required": [
+        "type"
+      ]
+    },
+    "effect_effectChangeVictoryCondition": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "effectChangeVictoryCondition"
+        },
+        "data": {
+          "type": "object",
+          "properties": {
+            "condition": {
+              "type": "string"
+            },
+            "text": {
+              "type": "string"
+            },
+            "alreadyFired": {
+              "type": "boolean"
+            }
+          },
+          "additionalProperties": true
+        },
+        "id": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true,
+      "required": [
+        "type"
+      ]
+    },
+    "effect_effectChangeDefeatCondition": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "effectChangeDefeatCondition"
+        },
+        "data": {
+          "type": "object",
+          "properties": {
+            "condition": {
+              "type": "string"
+            },
+            "text": {
+              "type": "string"
+            },
+            "alreadyFired": {
+              "type": "boolean"
+            }
+          },
+          "additionalProperties": true
+        },
+        "id": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true,
+      "required": [
+        "type"
+      ]
+    },
+    "effect_effectChangeMainInstructions": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "effectChangeMainInstructions"
+        },
+        "data": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true,
+      "required": [
+        "type"
+      ]
+    },
+    "effect_effectModifyInstructionBlock": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "effectModifyInstructionBlock"
+        },
+        "data": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "content": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": true
+        },
+        "id": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true,
+      "required": [
+        "type"
+      ]
+    },
+    "effect_effectModifyKeywordBlock": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "effectModifyKeywordBlock"
+        },
+        "data": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "keywords": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "content": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": true
+        },
+        "id": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true,
+      "required": [
+        "type"
+      ]
+    },
+    "effect_effectChangeAuthorStyle": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "effectChangeAuthorStyle"
+        },
+        "data": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true,
+      "required": [
+        "type"
+      ]
+    },
+    "effect_effectChangeDescriptionInstructions": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "effectChangeDescriptionInstructions"
+        },
+        "data": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true,
+      "required": [
+        "type"
+      ]
+    },
+    "effect_effectPresentChoice": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "effectPresentChoice"
+        },
+        "data": {
+          "type": "object",
+          "properties": {
+            "message": {
+              "type": "string"
+            },
+            "choices": {
+              "type": "string"
+            },
+            "targetTrackedItemId": {
+              "type": "string"
+            },
+            "selectionMode": {
+              "type": "string",
+              "x-observedValues": [
+                "single",
+                "multiple"
+              ]
+            },
+            "updateMode": {
+              "type": "string",
+              "x-observedValues": [
+                "replace"
+              ]
+            },
+            "minSelections": {
+              "anyOf": [
+                {
+                  "type": "null"
+                },
+                {
+                  "type": "string"
+                }
+              ],
+              "x-observedTypes": [
+                "null",
+                "string"
+              ]
+            },
+            "maxSelections": {
+              "anyOf": [
+                {
+                  "type": "null"
+                },
+                {
+                  "type": "string"
+                }
+              ],
+              "x-observedTypes": [
+                "null",
+                "string"
+              ]
+            },
+            "valueDelimiter": {
+              "type": "string",
+              "x-observedValues": [
+                "newline",
+                "comma"
+              ]
+            },
+            "path": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": true
+        },
+        "id": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true,
+      "required": [
+        "type"
+      ]
+    },
+    "effect_effectRequestInput": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "effectRequestInput"
+        },
+        "data": {
+          "type": "object",
+          "properties": {
+            "requestText": {
+              "type": "string"
+            },
+            "targetTrackedItemId": {
+              "type": "string"
+            },
+            "inputMode": {
+              "type": "string",
+              "x-observedValues": [
+                "single",
+                "multi"
+              ]
+            },
+            "requiresInput": {
+              "type": "boolean"
+            },
+            "path": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": true
+        },
+        "id": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true,
+      "required": [
+        "type"
+      ]
+    },
+    "effect_effectFireRandomTrigger": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "effectFireRandomTrigger"
+        },
+        "data": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "id": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true,
+      "required": [
+        "type"
+      ]
+    },
+    "effect_effectRunScript": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "effectRunScript"
+        },
+        "data": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true,
+      "required": [
+        "type"
+      ]
+    },
+    "effect_effectEndsGame": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "effectEndsGame"
+        },
+        "data": {
+          "type": "boolean",
+          "description": "Editor-described: Player can choose to continue the game checkbox. The effect ends the game; data=true permits optional continuation, data=false does not."
+        },
+        "id": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true,
+      "required": [
+        "type"
+      ]
+    },
+    "effect": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/effect_effectShowMessage"
+        },
+        {
+          "$ref": "#/$defs/effect_effectTellAIWhatToDo"
+        },
+        {
+          "$ref": "#/$defs/effect_effectGiveInfo"
+        },
+        {
+          "$ref": "#/$defs/effect_effectSetTrackedItemValue"
+        },
+        {
+          "$ref": "#/$defs/effect_effectModifyTrackedItemDetails"
+        },
+        {
+          "$ref": "#/$defs/effect_effectChangePCName"
+        },
+        {
+          "$ref": "#/$defs/effect_effectChangePCDescription"
+        },
+        {
+          "$ref": "#/$defs/effect_effectChangePCSkill"
+        },
+        {
+          "$ref": "#/$defs/effect_effectChangeObjective"
+        },
+        {
+          "$ref": "#/$defs/effect_effectChangeVictoryCondition"
+        },
+        {
+          "$ref": "#/$defs/effect_effectChangeDefeatCondition"
+        },
+        {
+          "$ref": "#/$defs/effect_effectChangeMainInstructions"
+        },
+        {
+          "$ref": "#/$defs/effect_effectModifyInstructionBlock"
+        },
+        {
+          "$ref": "#/$defs/effect_effectModifyKeywordBlock"
+        },
+        {
+          "$ref": "#/$defs/effect_effectChangeAuthorStyle"
+        },
+        {
+          "$ref": "#/$defs/effect_effectChangeDescriptionInstructions"
+        },
+        {
+          "$ref": "#/$defs/effect_effectPresentChoice"
+        },
+        {
+          "$ref": "#/$defs/effect_effectRequestInput"
+        },
+        {
+          "$ref": "#/$defs/effect_effectFireRandomTrigger"
+        },
+        {
+          "$ref": "#/$defs/effect_effectRunScript"
+        },
+        {
+          "$ref": "#/$defs/effect_effectEndsGame"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "not": {
+                "enum": [
+                  "effectShowMessage",
+                  "effectTellAIWhatToDo",
+                  "effectGiveInfo",
+                  "effectSetTrackedItemValue",
+                  "effectModifyTrackedItemDetails",
+                  "effectChangePCName",
+                  "effectChangePCDescription",
+                  "effectChangePCSkill",
+                  "effectChangeObjective",
+                  "effectChangeVictoryCondition",
+                  "effectChangeDefeatCondition",
+                  "effectChangeMainInstructions",
+                  "effectModifyInstructionBlock",
+                  "effectModifyKeywordBlock",
+                  "effectChangeAuthorStyle",
+                  "effectChangeDescriptionInstructions",
+                  "effectPresentChoice",
+                  "effectRequestInput",
+                  "effectFireRandomTrigger",
+                  "effectRunScript",
+                  "effectEndsGame"
+                ]
+              }
+            }
+          },
+          "required": [
+            "type"
+          ],
+          "additionalProperties": true,
+          "description": "Unobserved discriminator accepted for forward compatibility."
+        },
+        {
+          "type": "object",
+          "not": {
+            "required": [
+              "type"
+            ]
+          },
+          "additionalProperties": true,
+          "description": "Unclassified object; requiredness is not inferred from export examples."
+        }
+      ],
+      "x-knownDiscriminators": [
+        "effectShowMessage",
+        "effectTellAIWhatToDo",
+        "effectGiveInfo",
+        "effectSetTrackedItemValue",
+        "effectModifyTrackedItemDetails",
+        "effectChangePCName",
+        "effectChangePCDescription",
+        "effectChangePCSkill",
+        "effectChangeObjective",
+        "effectChangeVictoryCondition",
+        "effectChangeDefeatCondition",
+        "effectChangeMainInstructions",
+        "effectModifyInstructionBlock",
+        "effectModifyKeywordBlock",
+        "effectChangeAuthorStyle",
+        "effectChangeDescriptionInstructions",
+        "effectPresentChoice",
+        "effectRequestInput",
+        "effectFireRandomTrigger",
+        "effectRunScript",
+        "effectEndsGame"
+      ],
+      "x-discriminator": "type"
+    },
+    "condition_triggerOnEvent": {
+      "type": "object",
+      "properties": {
+        "category": {
+          "type": "string"
+        },
+        "type": {
+          "const": "triggerOnEvent"
+        },
+        "data": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true,
+      "required": [
+        "type"
+      ]
+    },
+    "condition_triggerOnRandomChance": {
+      "type": "object",
+      "properties": {
+        "category": {
+          "type": "string"
+        },
+        "type": {
+          "const": "triggerOnRandomChance"
+        },
+        "data": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true,
+      "required": [
+        "type"
+      ]
+    },
+    "condition_triggerOnCharacter": {
+      "type": "object",
+      "properties": {
+        "category": {
+          "type": "string"
+        },
+        "type": {
+          "const": "triggerOnCharacter"
+        },
+        "data": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "id": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true,
+      "required": [
+        "type"
+      ]
+    },
+    "condition_triggerOnTrackedItem": {
+      "type": "object",
+      "properties": {
+        "category": {
+          "type": "string"
+        },
+        "type": {
+          "const": "triggerOnTrackedItem"
+        },
+        "data": {
+          "type": "object",
+          "properties": {
+            "trackedItemID": {
+              "type": "string"
+            },
+            "inequality": {
+              "type": "string",
+              "x-observedValues": [
+                "is_exactly",
+                "at_least",
+                "not_equal",
+                "at_most"
+              ]
+            },
+            "requiredValue": {
+              "type": "string"
+            },
+            "textComparison": {
+              "type": "string",
+              "x-observedValues": [
+                "contains",
+                "does_not_contain"
+              ]
+            }
+          },
+          "additionalProperties": true
+        },
+        "id": {
+          "type": "string"
+        },
+        "trackedItemID": {
+          "type": "string"
+        },
+        "inequality": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true,
+      "required": [
+        "type"
+      ]
+    },
+    "condition_triggerPrereqs": {
+      "type": "object",
+      "properties": {
+        "category": {
+          "type": "string"
+        },
+        "type": {
+          "const": "triggerPrereqs"
+        },
+        "data": {
+          "type": "object",
+          "properties": {
+            "prereqs": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "firedThisTurn": {
+              "type": "boolean"
+            }
+          },
+          "additionalProperties": true
+        },
+        "id": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true,
+      "required": [
+        "type"
+      ]
+    },
+    "condition_triggerBlockers": {
+      "type": "object",
+      "properties": {
+        "category": {
+          "type": "string"
+        },
+        "type": {
+          "const": "triggerBlockers"
+        },
+        "data": {
+          "type": "object",
+          "properties": {
+            "blockers": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "firedThisTurn": {
+              "type": "boolean"
+            }
+          },
+          "additionalProperties": true
+        },
+        "id": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true,
+      "required": [
+        "type"
+      ]
+    },
+    "condition_triggerOnPawScript": {
+      "type": "object",
+      "properties": {
+        "category": {
+          "type": "string"
+        },
+        "type": {
+          "const": "triggerOnPawScript"
+        },
+        "data": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true,
+      "required": [
+        "type"
+      ]
+    },
+    "condition_triggerOnTurn": {
+      "type": "object",
+      "properties": {
+        "category": {
+          "type": "string"
+        },
+        "type": {
+          "const": "triggerOnTurn"
+        },
+        "data": {
+          "type": "integer"
+        },
+        "id": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true,
+      "required": [
+        "type"
+      ]
+    },
+    "conditionLeaf": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/condition_triggerOnEvent"
+        },
+        {
+          "$ref": "#/$defs/condition_triggerOnRandomChance"
+        },
+        {
+          "$ref": "#/$defs/condition_triggerOnCharacter"
+        },
+        {
+          "$ref": "#/$defs/condition_triggerOnTrackedItem"
+        },
+        {
+          "$ref": "#/$defs/condition_triggerPrereqs"
+        },
+        {
+          "$ref": "#/$defs/condition_triggerBlockers"
+        },
+        {
+          "$ref": "#/$defs/condition_triggerOnPawScript"
+        },
+        {
+          "$ref": "#/$defs/condition_triggerOnTurn"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "not": {
+                "enum": [
+                  "triggerOnEvent",
+                  "triggerOnRandomChance",
+                  "triggerOnCharacter",
+                  "triggerOnTrackedItem",
+                  "triggerPrereqs",
+                  "triggerBlockers",
+                  "triggerOnPawScript",
+                  "triggerOnTurn"
+                ]
+              }
+            }
+          },
+          "required": [
+            "type"
+          ],
+          "additionalProperties": true,
+          "description": "Unobserved discriminator accepted for forward compatibility."
+        },
+        {
+          "type": "object",
+          "not": {
+            "required": [
+              "type"
+            ]
+          },
+          "additionalProperties": true,
+          "description": "Unclassified object; requiredness is not inferred from export examples."
+        }
+      ],
+      "x-knownDiscriminators": [
+        "triggerOnEvent",
+        "triggerOnRandomChance",
+        "triggerOnCharacter",
+        "triggerOnTrackedItem",
+        "triggerPrereqs",
+        "triggerBlockers",
+        "triggerOnPawScript",
+        "triggerOnTurn"
+      ],
+      "x-discriminator": "type"
+    },
+    "conditionNode": {
+      "anyOf": [
+        {
+          "type": "object",
+          "properties": {
+            "category": {
+              "const": "logic"
+            },
+            "operator": {
+              "type": "string",
+              "x-observedValues": [
+                "and",
+                "or",
+                "none_of"
+              ]
+            },
+            "data": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/conditionNode"
+              }
+            },
+            "id": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "category"
+          ],
+          "additionalProperties": true
+        },
+        {
+          "allOf": [
+            {
+              "type": "object",
+              "properties": {
+                "category": {
+                  "const": "condition"
+                }
+              }
+            },
+            {
+              "$ref": "#/$defs/conditionLeaf"
+            }
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "category": {
+              "type": "string",
+              "not": {
+                "enum": [
+                  "logic",
+                  "condition"
+                ]
+              }
+            }
+          },
+          "required": [
+            "category"
+          ],
+          "additionalProperties": true
+        }
+      ]
+    },
+    "trigger": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "triggerEffects": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/effect"
+          }
+        },
+        "triggerMidGame": {
+          "type": "boolean"
+        },
+        "triggerConditions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/conditionNode"
+          }
+        },
+        "triggerOnStartOfGame": {
+          "type": "boolean"
+        },
+        "advancedLogic": {
+          "type": "boolean"
+        },
+        "canTriggerMoreThanOnce": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": true
+    }
+  },
+  "required": [
+    "skills"
+  ],
+  "x-observedConditionExternalReferences": [
+    "turn_number",
+    "player_action",
+    "skill_player_skill_1",
+    "skill_generic_skill"
+  ],
+  "x-iwCompatibility": {
+    "updateName": "Save/load system, Image style system and Pawscript update",
+    "updateDate": "2026-10-08",
+    "source": "User identification of the Discord announcement; not an application version number."
+  }
+}

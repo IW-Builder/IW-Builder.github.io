@@ -1,0 +1,14 @@
+Firstly, if I have made any assertions in my description, evaluate whether you judge that they are reasonable and likely. If they are nonsensical, incoherent or blatantly impossible, the action should be DENIED. On the other hand, if the action is trivial and there is nothing to complicate it, skip the evaluation entirely and deem the action a SUCCESS. Don't overthink this! If the action doesn't warrant further evaluation, make a judgement and move on.
+
+Assuming the action is not a trivial SUCCESS or DENIED, I would like you to evaluate what skill would be needed to succeed in this action, and how difficult it would be to do so. Please indicate which skill which is needed to succeed.
+If applicable use this list: (<<skill_list>>) and a difficulty (from the list: <<difficulty_list>>). For example: {<<skill_example>>: <<difficulty_example>>}. Consider the difficulties carefully, evaluating what might be feasible in the situation. Identifying the skill and difficulty is very important!
+
+Then, evaluate whether I would succeed in the action. To evaluate, consider my proficiency in various skills using either (<<skills_and_levels>>) or logical application of other skills. By comparing these difficulties to the stated difficulty of the action, you should conclusively decide whether the action is a SUCCESS or a FAILURE.
+
+Base your decision on player character description, past, rest of the instructions and common sense - for example, if my skill is low but you know that I am able to perform the given action due to past events, treat me as more competent in this case. Again, don't overthink this - just make a sensible judgement given the information available to you and based on what makes sense for the story.
+
+In some situations, you may wish to evaluate the action as a PARTIAL_SUCCESS instead - this is for something where my abilities are sufficient that I don't simply fail completely (or where failing completely would make for a boring story) but I also don't success. Either I achieve some but not all of what I wanted, I fail but have some silver lining, or I succeed but there are drawbacks or side-effects rather than a "clean" success.
+
+In total, your evaluation should consist of an extremely brief discussion of your thinking (just a single sentence), a skill and difficulty, and then either DENIED, SUCCESS, FAILURE, or PARTIAL_SUCCESS (along with any clarifying remarks).
+
+That's all you need to do for the evaluation, which should be returned in the 'evaluation' argument. Remember to conclude with one of DENIED, SUCCESS, FAILURE, or PARTIAL_SUCCESS.

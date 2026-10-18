@@ -1,0 +1,255 @@
+{
+  "favorite": false,
+  "title": "YAML Path Operations",
+  "description": "A focused native-feature authoring example.",
+  "background": "You visit a small guild office to arrange a delivery.",
+  "instructions": "Keep the scene brief. Respect tracker values and the defined native forms. Do not invent mechanical changes.",
+  "authorStyle": "Clear, concise prose.",
+  "recommendedAIModel": null,
+  "firstInput": "Begin at the guild office. The clerk asks what assistance you need.",
+  "objective": "Arrange your guild visit.",
+  "imageModel": "manticore",
+  "imageStyle": "photo_1",
+  "illustrationStyleNonCharacterLowPriority": "",
+  "illustrationStyleNonCharacterHighPriority": "",
+  "illustrationStyleCharacterLowPriority": "",
+  "illustrationStyleCharacterHighPriority": "",
+  "imageStyleCharacterPre": "",
+  "imageStyleCharacterPost": "",
+  "imageStyleNonCharacterPre": "",
+  "imageStyleNonCharacterPost": "",
+  "mature": false,
+  "nsfw": false,
+  "contentWarnings": "",
+  "enableAISpecificInstructionBlocks": false,
+  "previewImage": "",
+  "fullSizePreviewImage": "",
+  "previewImageOptions": [],
+  "fullSizePreviewImageOptions": [],
+  "currentPreviewImageIndex": -1,
+  "imagePromptDetails": {
+    "illustrClothes": "",
+    "illustrSetting": "",
+    "illustrSubject": "",
+    "illustrAppearance": "",
+    "illustrIsCharacter": false,
+    "illustrExpressionPosition": ""
+  },
+  "permissionsOnceShared": {
+    "sharing": false,
+    "editing": false
+  },
+  "allowChangeCharacterName": false,
+  "allowChangeCharacterDescription": false,
+  "allowChangeCharacterSkills": false,
+  "allowChangeCharacterItemValues": false,
+  "allowChangeCharacterPortrait": false,
+  "allowChangeCharacterNewPortrait": false,
+  "conditions": [],
+  "schemaVersion": 2.4,
+  "skills": [
+    "Observation",
+    "Persuasion"
+  ],
+  "possibleCharacters": [
+    {
+      "name": "Avery",
+      "description": "An attentive courier.",
+      "portrait": "",
+      "portraitPromptDetails": {
+        "illustrAppearance": "",
+        "illustrClothes": "",
+        "illustrExpressionPosition": "",
+        "illustrSetting": ""
+      },
+      "fullSizePortrait": "",
+      "portraitOptions": [],
+      "fullSizePortraitOptions": [],
+      "currentPortraitIndex": -1,
+      "characterId": "pc-visitor",
+      "skills": {
+        "Observation": 2,
+        "Persuasion": 3
+      },
+      "initialTrackedItemValues": []
+    }
+  ],
+  "triggerEvents": [
+    {
+      "id": "yaml-path-2",
+      "name": "Set Coins",
+      "triggerOnStartOfGame": false,
+      "triggerMidGame": false,
+      "canTriggerMoreThanOnce": false,
+      "advancedLogic": false,
+      "triggerConditions": [
+        {
+          "id": "yaml-condition-2",
+          "category": "condition",
+          "type": "triggerOnTurn",
+          "data": 2
+        }
+      ],
+      "triggerEffects": [
+        {
+          "type": "effectSetTrackedItemValue",
+          "data": {
+            "trackedItemID": "FgKm5pl3P",
+            "action": "set",
+            "newValue": "7",
+            "replaceWith": "",
+            "path": "wallet.coins",
+            "updateMode": "path",
+            "listExpression": "",
+            "targetExpression": ""
+          },
+          "id": "3eb23df3-d70b-9af1-0dcd-e69e556e167a",
+          "trackedItemID": "FgKm5pl3P"
+        }
+      ]
+    },
+    {
+      "id": "yaml-path-3",
+      "name": "Remove Temporary",
+      "triggerOnStartOfGame": false,
+      "triggerMidGame": false,
+      "canTriggerMoreThanOnce": false,
+      "advancedLogic": false,
+      "triggerConditions": [
+        {
+          "id": "yaml-condition-3",
+          "category": "condition",
+          "type": "triggerOnTurn",
+          "data": 3
+        }
+      ],
+      "triggerEffects": [
+        {
+          "type": "effectSetTrackedItemValue",
+          "data": {
+            "trackedItemID": "FgKm5pl3P",
+            "action": "remove",
+            "newValue": "",
+            "replaceWith": "",
+            "path": "temporary",
+            "updateMode": "path",
+            "listExpression": "",
+            "targetExpression": ""
+          },
+          "id": "44c39fe2-8f62-dba5-54f6-5351b8eb922e",
+          "trackedItemID": "FgKm5pl3P"
+        }
+      ]
+    },
+    {
+      "id": "yaml-path-4",
+      "name": "Append Tag",
+      "triggerOnStartOfGame": false,
+      "triggerMidGame": false,
+      "canTriggerMoreThanOnce": false,
+      "advancedLogic": false,
+      "triggerConditions": [
+        {
+          "id": "yaml-condition-4",
+          "category": "condition",
+          "type": "triggerOnTurn",
+          "data": 4
+        }
+      ],
+      "triggerEffects": [
+        {
+          "type": "effectSetTrackedItemValue",
+          "data": {
+            "trackedItemID": "FgKm5pl3P",
+            "action": "append",
+            "newValue": "Poisoned",
+            "replaceWith": "",
+            "path": "tags",
+            "updateMode": "path",
+            "listExpression": "",
+            "targetExpression": ""
+          },
+          "id": "e6d91304-c08c-dd46-fa39-d73c64eb1b09",
+          "trackedItemID": "FgKm5pl3P"
+        }
+      ]
+    },
+    {
+      "id": "yaml-path-5",
+      "name": "Adjust Coins",
+      "triggerOnStartOfGame": false,
+      "triggerMidGame": false,
+      "canTriggerMoreThanOnce": false,
+      "advancedLogic": false,
+      "triggerConditions": [
+        {
+          "id": "yaml-condition-5",
+          "category": "condition",
+          "type": "triggerOnTurn",
+          "data": 5
+        }
+      ],
+      "triggerEffects": [
+        {
+          "type": "effectSetTrackedItemValue",
+          "data": {
+            "trackedItemID": "FgKm5pl3P",
+            "action": "adjust",
+            "newValue": "-2",
+            "replaceWith": "",
+            "path": "wallet.coins",
+            "updateMode": "path",
+            "listExpression": "",
+            "targetExpression": ""
+          },
+          "id": "81fa742b-50c7-d7a8-d49b-969d345382fc",
+          "trackedItemID": "FgKm5pl3P"
+        }
+      ]
+    }
+  ],
+  "victoryCondition": null,
+  "defeatCondition": null,
+  "trackedItems": [
+    {
+      "id": "FgKm5pl3P",
+      "name": "Tracked item YAML",
+      "positionInList": 0,
+      "dataType": "yaml",
+      "visibility": "everyone",
+      "description": "",
+      "updateInstructions": "",
+      "formatExample": "",
+      "enforceFormat": false,
+      "formatSchema": "",
+      "initialValue": "wallet:\n  coins: 10\ntemporary: remove me\ntags:\n  - Ready",
+      "initialValueBasedOnPC": "same",
+      "autoUpdate": false,
+      "variableName": "tracked_item_yaml",
+      "driftAcknowledgedForName": null
+    }
+  ],
+  "hideSkillSystem": false,
+  "autoAdvanceVersion": false,
+  "version": "1.0",
+  "charSelectText": "",
+  "descriptionRequest": "",
+  "evaluationRequest": "",
+  "summaryRequest": "",
+  "instructionBlocks": [],
+  "NPCs": [
+    {
+      "id": "npc-clerk",
+      "name": "Mara",
+      "one_liner": "Mara is the practical guild clerk.",
+      "detail": "She answers directly and likes complete addresses.",
+      "appearance": "Short grey hair and ink-stained cuffs.",
+      "location": "guild office",
+      "names": [
+        "Mara"
+      ]
+    }
+  ],
+  "loreBookEntries": [],
+  "designNotes": ""
+}

@@ -1,0 +1,90 @@
+{
+  "favorite": false,
+  "title": "IW World Template",
+  "description": "",
+  "background": "",
+  "instructions": "",
+  "authorStyle": "",
+  "recommendedAIModel": null,
+  "firstInput": "",
+  "objective": "",
+  "imageModel": "manticore",
+  "imageStyle": "photo_1",
+  "illustrationStyleNonCharacterLowPriority": "",
+  "illustrationStyleNonCharacterHighPriority": "",
+  "illustrationStyleCharacterLowPriority": "",
+  "illustrationStyleCharacterHighPriority": "",
+  "imageStyleCharacterPre": "",
+  "imageStyleCharacterPost": "",
+  "imageStyleNonCharacterPre": "",
+  "imageStyleNonCharacterPost": "",
+  "mature": false,
+  "nsfw": false,
+  "contentWarnings": "",
+  "enableAISpecificInstructionBlocks": false,
+  "previewImage": "",
+  "fullSizePreviewImage": "",
+  "previewImageOptions": [],
+  "fullSizePreviewImageOptions": [],
+  "currentPreviewImageIndex": -1,
+  "imagePromptDetails": {
+    "illustrClothes": "",
+    "illustrSetting": "",
+    "illustrSubject": "",
+    "illustrAppearance": "",
+    "illustrIsCharacter": false,
+    "illustrExpressionPosition": ""
+  },
+  "permissionsOnceShared": {
+    "sharing": true,
+    "editing": true
+  },
+  "allowChangeCharacterName": false,
+  "allowChangeCharacterDescription": false,
+  "allowChangeCharacterSkills": false,
+  "allowChangeCharacterItemValues": false,
+  "allowChangeCharacterPortrait": false,
+  "allowChangeCharacterNewPortrait": false,
+  "conditions": [],
+  "schemaVersion": 2.4,
+  "skills": [
+    "Generic skill"
+  ],
+  "possibleCharacters": [
+    {
+      "name": "Player character",
+      "description": "",
+      "portrait": "",
+      "portraitPromptDetails": {
+        "illustrAppearance": "",
+        "illustrClothes": "",
+        "illustrExpressionPosition": "",
+        "illustrSetting": ""
+      },
+      "fullSizePortrait": "",
+      "portraitOptions": [],
+      "fullSizePortraitOptions": [],
+      "currentPortraitIndex": -1,
+      "characterId": "c7038c97-b50f-57be-9e33-9ce2914d80ef",
+      "skills": {
+        "Generic skill": 3
+      },
+      "initialTrackedItemValues": []
+    }
+  ],
+  "triggerEvents": [],
+  "victoryCondition": null,
+  "defeatCondition": null,
+  "trackedItems": [],
+  "hideSkillSystem": true,
+  "autoAdvanceVersion": false,
+  "version": "1.0",
+  "charSelectText": "",
+  "descriptionRequest": "",
+  "evaluationRequest": "",
+  "summaryRequest": "",
+  "instructionBlocks": [],
+  "NPCs": [],
+  "loreBookEntries": [],
+  "designNotes": ""
+}

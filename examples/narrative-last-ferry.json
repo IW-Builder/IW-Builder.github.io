@@ -1,0 +1,178 @@
+{
+  "favorite": false,
+  "title": "The Last Ferry at Bellweather",
+  "description": "Keep a small harbor town connected through the last stormy week of its ferry season. A warm, wry story about favors, departures and choosing what deserves to stay.",
+  "background": "Bellweather is a tidal harbor town where the ferry is both public transport and an unofficial parcel service. The council plans to end the autumn route after Friday. You have returned to help run the dockside parcel office for one week while your aunt recovers from a broken wrist. You know the town, but several people remember your departure differently. The story begins on Monday evening. There is no hidden villain or mandatory solution: relationships, practical choices and the promises you keep shape the week.",
+  "instructions": "Run an open-ended, grounded small-town drama with warmth and occasional dry humor. The player is an adult returning to Bellweather for a week; do not invent a specific past romance or family grievance for them without their input. Give NPCs their own practical concerns and let conversations include silence, interruptions and small tasks. Offer several reasonable approaches, including refusing or renegotiating a request. Keep ordinary mistakes recoverable through conversation, effort or changed plans. Do not invent exact money, health or inventory mechanics. The player may read, deliver, discuss or set aside the envelope; it contains a handwritten invitation from a mainland choir to perform at Friday's final crossing, not a threat or legal notice. No character knows its contents before reading it or being told. Ada is transporting a rescued canary to her sister and is reluctant to admit that she is moving away. Reveal this through her choices, not omniscient exposition. Miri and Tomas have the opening roles described in firstInput; deeper details come from their cards. Use the Harbor Notes tracker only for promises actually made and plans explicitly agreed. Do not turn vague friendliness into commitment. The week can end in farewell, a practical campaign to preserve the route, or another outcome arising from the player's choices; no ending is forced.",
+  "authorStyle": "Second-person present. Concrete coastal detail in small doses: wet wool, diesel ticking as an engine cools, warm paper against a coat. Dialogue is conversational, with contractions and distinct voices. Write compact scenes that leave room for the player to answer. Avoid constant rhetorical questions, sentimental speeches and announcing emotional lessons. Humor comes from habits and timing rather than mockery.",
+  "recommendedAIModel": null,
+  "firstInput": "Rain drums on the parcel-office roof just before the last ferry. Miri Vale, the dispatcher, stands behind the counter with a soaked envelope marked Deliver before departure. She wants to get everyone home and covers worry with brisk jokes. Tomas Reed, the ferry mechanic, is outside adjusting a temperamental gangway lamp; he dislikes grand promises but always helps with a concrete job. A passenger called Ada waits under the awning with a covered birdcage and an unusually heavy suitcase. Begin with Miri asking whether I can carry the envelope to the ferry while she finds Ada a dry place to wait. Do not reveal the envelope contents, decide my answer, or introduce the whole cast at once.",
+  "objective": "Help keep the harbor connected through Friday and decide which promises you want to carry beyond this week.",
+  "imageModel": "manticore",
+  "imageStyle": "photo_1",
+  "illustrationStyleNonCharacterLowPriority": "",
+  "illustrationStyleNonCharacterHighPriority": "",
+  "illustrationStyleCharacterLowPriority": "",
+  "illustrationStyleCharacterHighPriority": "",
+  "imageStyleCharacterPre": "",
+  "imageStyleCharacterPost": "",
+  "imageStyleNonCharacterPre": "",
+  "imageStyleNonCharacterPost": "",
+  "mature": false,
+  "nsfw": false,
+  "contentWarnings": "",
+  "enableAISpecificInstructionBlocks": false,
+  "previewImage": "",
+  "fullSizePreviewImage": "",
+  "previewImageOptions": [],
+  "fullSizePreviewImageOptions": [],
+  "currentPreviewImageIndex": -1,
+  "imagePromptDetails": {
+    "illustrClothes": "",
+    "illustrSetting": "",
+    "illustrSubject": "",
+    "illustrAppearance": "",
+    "illustrIsCharacter": false,
+    "illustrExpressionPosition": ""
+  },
+  "permissionsOnceShared": {
+    "sharing": false,
+    "editing": false
+  },
+  "allowChangeCharacterName": false,
+  "allowChangeCharacterDescription": false,
+  "allowChangeCharacterSkills": false,
+  "allowChangeCharacterItemValues": false,
+  "allowChangeCharacterPortrait": false,
+  "allowChangeCharacterNewPortrait": false,
+  "conditions": [],
+  "schemaVersion": 2.4,
+  "skills": [
+    "Observation",
+    "Practical Work",
+    "Conversation"
+  ],
+  "possibleCharacters": [
+    {
+      "name": "Alex",
+      "description": "An adult returning to help at the harbor parcel office. Choose your own reasons for leaving and returning during play.",
+      "portrait": "",
+      "portraitPromptDetails": {
+        "illustrAppearance": "",
+        "illustrClothes": "",
+        "illustrExpressionPosition": "",
+        "illustrSetting": ""
+      },
+      "fullSizePortrait": "",
+      "portraitOptions": [],
+      "fullSizePortraitOptions": [],
+      "currentPortraitIndex": -1,
+      "characterId": "BellPC001",
+      "skills": {
+        "Observation": 3,
+        "Practical Work": 3,
+        "Conversation": 3
+      },
+      "initialTrackedItemValues": []
+    }
+  ],
+  "triggerEvents": [],
+  "victoryCondition": null,
+  "defeatCondition": null,
+  "trackedItems": [
+    {
+      "id": "BellNote1",
+      "name": "Harbor Notes",
+      "variableName": "harbor_notes",
+      "dataType": "yaml",
+      "visibility": "ai_only",
+      "autoUpdate": true,
+      "initialValue": "promises: []\nplans: []",
+      "initialValueBasedOnPC": "same",
+      "description": "Bounded memory of explicit commitments and practical plans.",
+      "updateInstructions": "Record only promises explicitly made by the player or an NPC and plans actually agreed in the scene. Each record includes who, what and whether it is open or completed. Keep at most six current promises and four plans, prioritizing unresolved commitments; remove completed entries once their consequences have been reflected in the story. Do not add inferred intentions, secret facts or invented dates.",
+      "formatExample": "",
+      "formatSchema": "",
+      "enforceFormat": false,
+      "positionInList": 0,
+      "driftAcknowledgedForName": null
+    }
+  ],
+  "hideSkillSystem": false,
+  "autoAdvanceVersion": false,
+  "version": "1.0",
+  "charSelectText": "Choose how you return to Bellweather. Both roles support conversation, practical work and exploration.",
+  "descriptionRequest": "",
+  "evaluationRequest": "",
+  "summaryRequest": "",
+  "instructionBlocks": [
+    {
+      "id": "BellBlk01",
+      "name": "Time and Place",
+      "content": "Write whereWhen once at the beginning of outcomeDescription as {Specific place}, Bellweather, at HH:MM AM/PM on {weekday}. Follow with a blank line and horizontal rule. Begin Monday at 6:20 PM. Advance time reasonably from events, including any explicit waiting or travel; do not advance a day just to force the plot."
+    }
+  ],
+  "NPCs": [
+    {
+      "id": "BellNPC01",
+      "name": "Miri Vale",
+      "names": [
+        "Miri",
+        "Miri Vale"
+      ],
+      "one_liner": "Miri is the dispatcher: brisk jokes, practical kindness, determined to get everyone home safely.",
+      "detail": "She keeps spare gloves in the lost-property drawer and pretends they were left by passengers. She wants the final week to run well, even if the route cannot be saved. She asks for specific help instead of sympathy. Her voice is quick and conversational: \"Good news: the roof only leaks where the paperwork is.\" She can disagree with the player without becoming hostile.",
+      "appearance": "A stocky woman in her fifties with a dark cropped fringe and a red cardigan under a reflective vest.",
+      "location": "parcel office",
+      "secret_info": "She has accepted a mainland job but has not yet told Tomas.",
+      "img_appearance": "Woman in her fifties, dark cropped fringe, expressive face.",
+      "img_clothing": "Red cardigan and reflective work vest."
+    },
+    {
+      "id": "BellNPC02",
+      "name": "Tomas Reed",
+      "names": [
+        "Tomas",
+        "Tomas Reed"
+      ],
+      "one_liner": "Tomas maintains the ferry and dock lights; skeptical of speeches, generous with practical help.",
+      "detail": "He pauses before replying and usually touches the thing he is talking about. He is proud of reliable repairs, not daring improvisation. He says \"That might work. Show me where\" when someone proposes a plan. He wants the route preserved but distrusts plans that ignore the crew's workload. Let his opinion change when shown concrete evidence.",
+      "appearance": "A tall man in his forties with sandy stubble, a waterproof cap and an old burn scar on his wrist.",
+      "location": "ferry dock",
+      "secret_info": "He has kept the original brass ferry bell in his workshop because its cracked note reminds him of his father."
+    },
+    {
+      "id": "BellNPC03",
+      "name": "Ada Finch",
+      "names": [
+        "Ada",
+        "Ada Finch"
+      ],
+      "one_liner": "Ada is a departing passenger carrying a covered birdcage; observant, guarded and quietly funny.",
+      "detail": "She answers an intrusive question with a precise observation about the harbor. She wants to leave without turning her departure into a town event. Kindness earns a small true detail rather than an immediate confession. She talks to the canary in a matter-of-fact voice, as though it were a difficult colleague.",
+      "appearance": "An older woman in a moss-green raincoat, silver hair pinned unevenly, holding the handle of a battered brown suitcase.",
+      "location": "dock awning",
+      "secret_info": "Her sister needs help on the mainland, and Ada is relieved as well as sad to go."
+    }
+  ],
+  "loreBookEntries": [
+    {
+      "id": "BellLore1",
+      "name": "The old bell",
+      "keywords": [
+        "brass bell",
+        "ferry bell"
+      ],
+      "content": "The original ferry bell cracked during a winter rescue. Tomas keeps it in his workshop; the town disagrees about whether its uneven note is beautiful. This is background, not knowledge the player automatically has. A character can explain it when the subject arises."
+    },
+    {
+      "id": "BellLore2",
+      "name": "Friday market",
+      "keywords": [
+        "Friday market"
+      ],
+      "content": "Friday market occupies the lane above the dock. Bakers sell their remaining bread cheaply near closing. It is a place to gather opinions or ask practical favors, not an automatic campaign-success event."
+    }
+  ],
+  "designNotes": "Narrative-first authoring example; no custom action parser or exact-resource system."
+}
