@@ -1,3 +1,7 @@
+---
+title: "Gemini 4 Argon - Shard of the Loom.md"
+permalink: /samples/shard-of-the-loom/
+---
 Total cost: $1.30
 
 # Player:
