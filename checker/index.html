@@ -1,0 +1,3072 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IW World Checker</title>
+<meta name="description" content="Validate an Infinite Worlds export entirely in
+  your browser. Nothing is uploaded.">
+<!-- Python runtime (Pyodide). This is the page's ONLY external dependency.
+     To self-host: download a Pyodide release, serve it locally, and point
+     PYODIDE_BASE below at that directory instead. -->
+<script src="https://cdn.jsdelivr.net/pyodide/v0.26.4/full/pyodide.js"></script>
+<style>
+:root{
+  --bg:#0f1420; --panel:#171e2e; --line:#29324d; --text:#e8ecf5;
+  --muted:#9aa6c4; --accent:#6ea8fe;
+  --ok:#58c58f; --warn:#e8b04b; --err:#f27474;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);
+  font:15px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+main{max-width:880px;margin:0 auto;padding:24px 16px 64px}
+h1{font-size:26px;margin:8px 0 4px}
+h2{font-size:19px;margin:2px 0 8px}
+h3{font-size:15px;margin:16px 0 6px}
+.lede{color:var(--muted);margin:0 0 20px}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:12px;
+  padding:16px 18px;margin:14px 0}
+label{display:block;font-weight:600;margin-bottom:8px}
+textarea{width:100%;min-height:240px;resize:vertical;background:#0b101c;
+  color:var(--text);border:1px solid var(--line);border-radius:8px;
+  padding:10px 12px;
+  font:13px/1.45 ui-monospace,SFMono-Regular,Consolas,monospace}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:12px}
+button{background:var(--accent);color:#0b1220;border:0;border-radius:8px;
+  padding:9px 16px;font-weight:600;cursor:pointer}
+button.ghost{background:transparent;color:var(--accent);
+  border:1px solid var(--accent)}
+button:disabled{opacity:.45;cursor:not-allowed}
+#engineStatus,.muted{color:var(--muted);font-size:13px}
+.hidden{display:none}
+.verdict{border-radius:10px;padding:12px 14px;font-weight:600;margin:6px 0 4px}
+.verdict.ok{background:rgba(88,197,143,.12);border:1px solid var(--ok)}
+.verdict.warn{background:rgba(232,176,75,.12);border:1px solid var(--warn)}
+.verdict.err{background:rgba(242,116,116,.12);border:1px solid var(--err)}
+ul.notes{margin:6px 0 0;padding-left:20px}
+ul.notes li{margin:2px 0}
+.finding{border:1px solid var(--line);border-left:4px solid var(--line);
+  border-radius:8px;padding:10px 12px;margin:10px 0;background:#141a29}
+.finding.error{border-left-color:var(--err)}
+.finding.warning{border-left-color:var(--warn)}
+.ftop{display:flex;gap:8px;align-items:baseline;flex-wrap:wrap}
+.sev{font-size:11px;font-weight:700;letter-spacing:.06em;padding:2px 7px;
+  border-radius:999px}
+.sev.error{background:rgba(242,116,116,.18);color:var(--err)}
+.sev.warning{background:rgba(232,176,75,.18);color:var(--warn)}
+.code{font:12px ui-monospace,Consolas,monospace;color:var(--muted)}
+.ftitle{font-weight:600}
+.fpath{font:12px ui-monospace,Consolas,monospace;color:var(--accent);
+  word-break:break-all}
+.fmsg{margin:4px 0 0;word-break:break-word}
+.fplain{margin:4px 0 0;color:var(--muted);font-size:13px}
+summary{cursor:pointer;font-weight:600}
+details p,details li{color:var(--muted)}
+pre.cmd{background:#0b101c;border:1px solid var(--line);border-radius:8px;
+  padding:8px 10px;overflow-x:auto;
+  font:12px ui-monospace,Consolas,monospace;color:var(--muted)}
+footer{color:var(--muted);font-size:13px;margin-top:18px}
+footer span{display:block;margin-top:4px}
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <h1>IW World Checker</h1>
+    <p class="lede">Validate an Infinite Worlds export before you import it.
+      Everything runs in this browser tab — your world never leaves your
+      machine.</p>
+  </header>
+
+  <section class="panel">
+    <label for="input">Paste the model's whole reply</label>
+    <textarea id="input" spellcheck="false"
+      placeholder="Paste the full answer here. Code fences, chat text and numbered chunks (Chunk 1/3, Chunk 2/3, ...) are handled automatically."></textarea>
+    <div class="row">
+      <button id="checkBtn" disabled>Check world</button>
+      <button id="selfTestBtn" class="ghost">Self-test with the embedded template</button>
+      <button id="clearBtn" class="ghost">Clear</button>
+      <span id="engineStatus" role="status">Starting up…</span>
+    </div>
+  </section>
+
+  <section id="cleanupPanel" class="panel hidden">
+    <h2>Input cleanup</h2>
+    <ul id="cleanupList" class="notes"></ul>
+  </section>
+
+  <section id="resultsPanel" class="panel hidden" aria-live="polite">
+    <h2>Results</h2>
+    <div id="verdict"></div>
+    <p id="coverage" class="muted"></p>
+    <p id="shortcircuit" class="muted hidden">Reference and lint checks run only
+      once the structure is valid — fix the errors above and check again to see
+      everything.</p>
+    <div class="row">
+      <button id="copyReportBtn">Copy report for your AI</button>
+      <button id="copyIwBtn">Copy for IW</button>
+    </div>
+    <div id="findings"></div>
+  </section>
+
+  <section id="problemPanel" class="panel hidden">
+    <h2>Could not read a world from that paste</h2>
+    <p id="problemText"></p>
+  </section>
+
+  <details class="panel">
+    <summary>What this page does</summary>
+    <ul>
+      <li>Accepts the raw model reply: strips ``` fences, removes chat text
+        before and after the JSON, drops any trailing newline.</li>
+      <li>Assembles numbered chunks ("Chunk 1/3", "Chunk 1 of 3", "Part 2/4"
+        and similar) into one document, checking that every chunk is present
+        exactly once.</li>
+      <li>If several JSON objects are pasted at once, it validates the largest
+        one and tells you it did so.</li>
+      <li>Runs a verbatim embedded copy of the kit's validator
+        (tools/validate_iw_export.py, tools/static_checks.py and
+        tools/iw-export.schema.json) in Python-in-the-browser (Pyodide): full
+        JSON Schema structure checks when the jsonschema package loads,
+        reference and ID checks, and the static lint (unknown script roots,
+        borrowed syntax, string + concatenation, unfilled library
+        placeholders).</li>
+      <li>Nothing is executed: PawScript, expressions and templates are checked
+        as text only. A clean result does not certify import or gameplay.</li>
+      <li>"Copy report for your AI" formats the findings to paste back into the
+        chat; "Copy for IW" gives clean JSON that ends exactly at the final
+        closing brace.</li>
+    </ul>
+    <p>Self-contained and private: the validator and schema are embedded in
+      this file. The only network traffic is the one-time download of the
+      Python runtime (and the jsonschema wheel, when available) from
+      cdn.jsdelivr.net — after that, checks work even offline if the browser
+      has them cached. The world you paste is processed entirely on your
+      device, and this file can be saved and re-opened locally.</p>
+    <p>Warnings are review notes, not automatic defects — see tools/README.md
+      in the kit for each diagnostic code.</p>
+    <p>Verifying the embedded validator matches the kit: compare the hashes in
+      the footer against the package files:</p>
+    <pre class="cmd">python -c "import hashlib,pathlib
+for p in ['validate_iw_export.py','static_checks.py','iw-export.schema.json']:
+ print(p, hashlib.sha256(pathlib.Path('tools',p).read_bytes()).hexdigest()[:16])"</pre>
+  </details>
+
+  <footer>
+    <span id="profileLine">Validator: embedded copy of
+      tools/validate_iw_export.py.</span>
+    <span id="hashLine"></span>
+  </footer>
+</main>
+
+<!-- ================================================================
+     EMBEDDED KIT TOOLS — verbatim copies, kit 1.1.0 / profile 1.1.0.
+     If you update these files in tools/, replace the matching block
+     below (paste the new file contents between the script tags).
+     The footer hash lets users confirm the page matches the package.
+     ================================================================ -->
+
+<script type="text/plain" id="src-validate">
+#!/usr/bin/env python3
+"""Validate observed IW export structure, references, and evidence gaps.
+
+Usage: python validate_iw_export.py WORLD.json [--schema SCHEMA.json] [--json]
+Exit codes: 0 = no errors (warnings permitted), 1 = validation errors,
+2 = input failure. jsonschema is optional; reduced coverage is reported when absent. Never executes PawScript.
+"""
+from __future__ import annotations
+import argparse
+import json
+import re
+import sys
+from pathlib import Path
+from static_checks import lint, basic_errors, edit_diff
+try:
+    from jsonschema import Draft202012Validator
+except ImportError:
+    Draft202012Validator = None
+
+def pointer(parts):
+    return '/'+'/'.join(str(p).replace('~','~0').replace('/','~1') for p in parts) if parts else '/'
+
+def validate(doc, schema):
+    findings=[]
+    def add(level,code,path,message):
+        findings.append({'severity':level,'code':code,'path':path,'message':message})
+    if Draft202012Validator is not None:
+        Draft202012Validator.check_schema(schema)
+        for e in sorted(Draft202012Validator(schema).iter_errors(doc),key=lambda e:str(list(e.path))):
+            add('error','structure',pointer(e.path),e.message)
+    else:
+        add('warning','schema-validation-unavailable','/','jsonschema is unavailable. Full JSON Schema validation was NOT run; limited type guards, references and static lint remain available.')
+        findings.extend(basic_errors(doc,schema))
+    if not isinstance(doc,dict): return findings
+    if any(f['severity']=='error' for f in findings): return findings
+    defs=schema.get('$defs',{})
+
+    def resolved(s,value):
+        if '$ref' in s:
+            key=s['$ref'].rsplit('/',1)[-1]
+            if key=='conditionNode' and isinstance(value,dict):
+                if value.get('category')=='logic': return defs[key]['anyOf'][0]
+                if value.get('category')=='condition': return resolved(defs['conditionLeaf'],value)
+                return {}
+            return resolved(defs[key],value)
+        tag=s.get('x-discriminator')
+        if tag and isinstance(value,dict):
+            val=value.get(tag)
+            prefix='effect' if tag=='type' and s is defs.get('effect') else 'condition'
+            return defs.get(prefix+'_'+str(val),{})
+        if 'anyOf' in s:
+            matches=[x for x in s['anyOf'] if not basic_errors(value,x,schema)]
+            return resolved(matches[0],value) if matches else {}
+        return s
+
+    def audit(value,s,path):
+        s=resolved(s,value)
+        observed=s.get('x-observedValues')
+        if observed is not None and value not in observed:
+            add('warning','unobserved-value',path,'Value is outside observed vocabulary; not declared invalid: '+repr(value))
+        if isinstance(value,dict) and s.get('type')=='object':
+            props=s.get('properties',{})
+            for k,v in value.items():
+                p=path.rstrip('/')+'/'+str(k).replace('~','~0').replace('/','~1')
+                if k not in props:
+                    extra=s.get('additionalProperties')
+                    if isinstance(extra,dict): audit(v,extra,p)
+                    else: add('warning','unobserved-field',p,'Field has no characterized schema at this location.')
+                else: audit(v,props[k],p)
+        elif isinstance(value,list) and s.get('type')=='array':
+            for i,v in enumerate(value): audit(v,s.get('items',{}),path.rstrip('/')+'/'+str(i))
+    audit(doc,schema,'/')
+    if doc.get('schemaVersion') not in schema.get('x-observedSchemaVersions',[]):
+        add('warning','schema-version','/schemaVersion','Version missing or outside observed versions; profile coverage is not established.')
+
+    tables={}
+    for field,idkey in [('trackedItems','id'),('triggerEvents','id'),('possibleCharacters','characterId'),('instructionBlocks','id'),('loreBookEntries','id'),('NPCs','id')]:
+        tables[field]={}
+        for i,o in enumerate(doc.get(field,[]) if isinstance(doc.get(field,[]),list) else []):
+            if not isinstance(o,dict): continue
+            p='/'+field+'/'+str(i)+'/'+idkey
+            ident=o.get(idkey)
+            if not isinstance(ident,str) or not ident:
+                add('warning','missing-id',p,'No usable identifier; requiredness is not established, but references cannot resolve.');continue
+            if ident in tables[field]: add('error','duplicate-id',p,'Identifier is duplicated within '+field+': '+ident)
+            tables[field][ident]=o
+    def ref(ident,namespace,path,condition=False):
+        if not isinstance(ident,str): return
+        if ident in tables[namespace]: return
+        if condition and ident in schema.get('x-observedConditionExternalReferences',[]):
+            if ident=='skill_player_skill_1' and 'Player - Skill 1' not in doc.get('skills',[]):
+                add('warning','skill-binding',path,'Observed skill variable used without its sample skill name; general binding rule is unknown.')
+            return
+        if condition and ident.startswith('skill_'):
+            add('warning','unknown-skill-reference',path,'Unobserved built-in skill reference; normalization and binding not verified.');return
+        add('error','unresolved-reference',path,'No declared '+namespace+' target: '+ident)
+
+    seen_node_ids={}
+    def node_id(n,p):
+        ident=n.get('id')
+        if not isinstance(ident,str) or not ident:
+            add('warning','missing-node-id',p+'/id','Condition/effect node has no usable ID; importer requirements unknown.')
+        elif ident in seen_node_ids: add('warning','duplicate-node-id',p+'/id','Node ID is reused at '+seen_node_ids[ident])
+        else: seen_node_ids[ident]=p
+    def compare_wrapper(n,d,p):
+        for k in ('trackedItemID','inequality'):
+            if k in n and k in d and n[k]!=d[k]:
+                add('error','wrapper-payload-mismatch',p+'/'+k,'Wrapper and payload disagree; runtime precedence unknown.')
+    def conditions(nodes,p):
+        for i,n in enumerate(nodes if isinstance(nodes,list) else []):
+            q=p+'/'+str(i)
+            if not isinstance(n,dict): continue
+            node_id(n,q)
+            category=n.get('category')
+            if category=='logic':
+                if n.get('operator') not in ['and','or','none_of']: add('warning','unknown-logic',q+'/operator','Unobserved operator.')
+                if 'data' not in n: add('warning','missing-payload',q+'/data','Logic group has no child list.')
+                conditions(n.get('data',[]),q+'/data');continue
+            if category!='condition': add('warning','unclassified-condition',q+'/category','Missing or unobserved category.')
+            t=n.get('type'); d=n.get('data')
+            if t not in defs['conditionLeaf']['x-knownDiscriminators']:
+                add('warning','unknown-condition-type',q+'/type','Missing or unobserved condition type: '+repr(t));continue
+            if 'data' not in n: add('warning','missing-payload',q+'/data','No condition payload observed.');continue
+            if isinstance(d,dict): compare_wrapper(n,d,q)
+            if t=='triggerOnCharacter' and isinstance(d,list):
+                for j,x in enumerate(d): ref(x,'possibleCharacters',q+'/data/'+str(j))
+            elif t=='triggerOnTrackedItem' and isinstance(d,dict):
+                ref(d.get('trackedItemID'),'trackedItems',q+'/data/trackedItemID',condition=True)
+            elif t in ['triggerPrereqs','triggerBlockers'] and isinstance(d,dict):
+                key='prereqs' if t=='triggerPrereqs' else 'blockers'
+                for j,x in enumerate(d.get(key,[]) if isinstance(d.get(key,[]),list) else []): ref(x,'triggerEvents',q+'/data/'+key+'/'+str(j))
+            elif t=='triggerOnEvent' and isinstance(d,str) and d not in doc.get('conditions',[]):
+                add('warning','unlisted-situation',q+'/data','Situation string not in root conditions registry; whether registry membership is mandatory is unknown.')
+            elif t=='triggerOnPawScript': add('warning','unverified-expression',q+'/data','Expression is stored text; not parsed or executed.')
+    for i,t in enumerate(doc.get('triggerEvents',[]) if isinstance(doc.get('triggerEvents',[]),list) else []):
+        if not isinstance(t,dict): continue
+        p='/triggerEvents/'+str(i)
+        if t.get('triggerMidGame') and not t.get('triggerOnStartOfGame'):
+            add('warning','timing-editor-consistency',p,'Mid-game enabled without start-of-game; editor-inconsistent, runtime effect unverified.')
+        if not t.get('triggerOnStartOfGame') and not t.get('triggerConditions'):
+            add('warning','saved-inactive-trigger',p,'Valid saved trigger with no ordinary automatic firing conditions; explicit random dispatch may still call it.')
+        numeric_writes={}
+        flat_req=set();flat_block=set()
+        for n in t.get('triggerConditions',[]):
+            if isinstance(n,dict) and n.get('category')=='condition' and isinstance(n.get('data'),dict):
+                data=n['data'];scope=data.get('firedThisTurn',False)
+                if n.get('type')=='triggerPrereqs':flat_req.update((x,scope) for x in data.get('prereqs',[]))
+                if n.get('type')=='triggerBlockers':flat_block.update((x,scope) for x in data.get('blockers',[]))
+        if flat_req & flat_block:add('warning','dependency-editor-conflict',p,'Flat AND prerequisites and blockers conflict within the same scope.')
+        for e in t.get('triggerEffects',[]):
+            if isinstance(e,dict) and e.get('type')=='effectSetTrackedItemValue' and isinstance(e.get('data'),dict):
+                ident=e['data'].get('trackedItemID')
+                if tables['trackedItems'].get(ident,{}).get('dataType')=='number':numeric_writes[ident]=numeric_writes.get(ident,0)+1
+        for ident,count in numeric_writes.items():
+            if count>1:add('warning','numeric-write-overwrite',p,'Multiple numeric writes to '+ident+' can overwrite rather than accumulate within one trigger.')
+        conditions(t.get('triggerConditions',[]),p+'/triggerConditions')
+        for j,e in enumerate(t.get('triggerEffects',[]) if isinstance(t.get('triggerEffects',[]),list) else []):
+            q=p+'/triggerEffects/'+str(j)
+            if not isinstance(e,dict):continue
+            node_id(e,q); et=e.get('type');d=e.get('data')
+            if et not in defs['effect']['x-knownDiscriminators']:
+                add('warning','unknown-effect-type',q+'/type','Missing or unobserved effect type: '+repr(et));continue
+            if 'data' not in e: add('warning','missing-payload',q+'/data','No effect payload.');continue
+            if isinstance(d,dict):
+                compare_wrapper(e,d,q)
+                if et in ['effectSetTrackedItemValue','effectModifyTrackedItemDetails']:
+                    ref(d.get('trackedItemID'),'trackedItems',q+'/data/trackedItemID')
+                elif et in ['effectPresentChoice','effectRequestInput']:
+                    ref(d.get('targetTrackedItemId'),'trackedItems',q+'/data/targetTrackedItemId')
+                elif et=='effectModifyInstructionBlock': ref(d.get('id'),'instructionBlocks',q+'/data/id')
+                elif et=='effectModifyKeywordBlock': ref(d.get('id'),'loreBookEntries',q+'/data/id')
+                elif et=='effectChangePCSkill' and d.get('name') not in doc.get('skills',[]):
+                    add('error','unresolved-skill',q+'/data/name','Skill name is not declared in root skills.')
+            if et=='effectFireRandomTrigger' and isinstance(d,list):
+                for k,x in enumerate(d):
+                    if x!='nothing':ref(x,'triggerEvents',q+'/data/'+str(k))
+            if et=='effectRunScript':add('warning','unverified-script',q+'/data','Script is stored text; validity/write capabilities not checked.')
+
+    variables={}
+    for i,t in enumerate(doc.get('trackedItems',[]) if isinstance(doc.get('trackedItems',[]),list) else []):
+        if not isinstance(t,dict):continue
+        p='/trackedItems/'+str(i)
+        v=t.get('variableName')
+        if isinstance(v,str) and v:
+            if v in variables:add('warning','duplicate-variable',p+'/variableName','Repeated variable name; binding ambiguity not resolved.')
+            variables[v]=p
+        if t.get('dataType')=='number' and t.get('initialValueBasedOnPC')=='same':
+            val=t.get('initialValue')
+            if isinstance(val,str) and not re.fullmatch(r'[+-]?(?:\d+(?:\.\d*)?|\.\d+)(?:[eE][+-]?\d+)?',val.strip()):
+                add('warning','numeric-initialization',p+'/initialValue','Number tracker does not contain a plain numeric literal; expression/runtime meaning unverified.')
+    for i,c in enumerate(doc.get('possibleCharacters',[]) if isinstance(doc.get('possibleCharacters',[]),list) else []):
+        if not isinstance(c,dict):continue
+        for name in c.get('skills',{}) if isinstance(c.get('skills'),dict) else []:
+            if name not in doc.get('skills',[]):add('warning','undeclared-character-skill','/possibleCharacters/'+str(i)+'/skills/'+name,'Character skill is not in root skill list.')
+        for j,v in enumerate(c.get('initialTrackedItemValues',[]) if isinstance(c.get('initialTrackedItemValues',[]),list) else []):
+            if not isinstance(v,dict):continue
+            q='/possibleCharacters/'+str(i)+'/initialTrackedItemValues/'+str(j)
+            ref(v.get('id'),'trackedItems',q+'/id')
+            target=tables['trackedItems'].get(v.get('id'),{})
+            val=v.get('initialPCValue')
+            choices_script=v.get('initialPCValueChoicesScript')
+            if isinstance(choices_script,str) and choices_script.strip():
+                add('warning','unverified-choice-expression',q+'/initialPCValueChoicesScript','Startup choice expression is stored text; not evaluated. Empty initialPCValue is expected in the observed script mode.')
+            elif target.get('dataType')=='number' and isinstance(val,str) and not re.fullmatch(r'[+-]?(?:\d+(?:\.\d*)?|\.\d+)(?:[eE][+-]?\d+)?',val.strip()):
+                add('warning','numeric-character-initialization',q+'/initialPCValue','Number tracker has a nonnumeric per-character sample; runtime meaning unverified.')
+    findings.extend(lint(doc))
+    return findings
+
+def main():
+    p=argparse.ArgumentParser(description=__doc__)
+    p.add_argument('world',type=Path);p.add_argument('--schema',type=Path,default=Path(__file__).with_name('iw-export.schema.json'));p.add_argument('--json',action='store_true');p.add_argument('--diff',type=Path,metavar='OLD.json',help='Compare object IDs and changed fields against an earlier export.')
+    args=p.parse_args()
+    try:
+        raw=args.world.read_bytes();doc=json.loads(raw.decode('utf-8-sig')); schema=json.loads(args.schema.read_text(encoding='utf-8'));findings=validate(doc,schema)
+        if raw != raw.rstrip() and (b'\n' in raw[len(raw.rstrip()):] or b'\r' in raw[len(raw.rstrip()):]):findings.append({'severity':'warning','code':'trailing-newline','path':'/','message':'Remove the final newline before pasting into IW; the import text should end at its final brace.'})
+        diff=edit_diff(json.loads(args.diff.read_text(encoding='utf-8-sig')),doc) if args.diff else None
+    except (OSError,ValueError) as exc:
+        print(str(exc),file=sys.stderr);return 2
+    result={'file':str(args.world),'errors':sum(f['severity']=='error' for f in findings),'warnings':sum(f['severity']=='warning' for f in findings),'findings':findings,'coverage':{'fullSchema':Draft202012Validator is not None,'staticLint':True,'runtimeExecution':False}}
+    if diff is not None:result['diff']=diff
+    if args.json:print(json.dumps(result,indent=2,ensure_ascii=False))
+    else:
+        print(f"{result['errors']} errors; {result['warnings']} warnings")
+        if diff is not None:print(json.dumps({'diff':diff},indent=2,ensure_ascii=False))
+        for f in findings:print(f"{f['severity'].upper()} {f['code']} {f['path']}: {f['message']}")
+    return int(result['errors']>0)
+
+if __name__=='__main__':sys.exit(main())
+</script>
+
+<script type="text/plain" id="src-static">
+"""Conservative static diagnostics. Not a PawScript parser or JSON Schema implementation."""
+from __future__ import annotations
+import json,re,hashlib
+
+SYSTEM_ROOTS={'game','player'}
+ROOT=re.compile(r'\$([A-Za-z_][A-Za-z_0-9]*)')
+PLACEHOLDERS=re.compile(r'\[(?:LIST [A-Z _]+|DESCRIBE [A-Z _]+|Author Style|title|blurb)\]|<#\s*(?:time period|Copy in|DESCRIBE|LIST |VARIABLE BLOCK)[\s\S]*?#>',re.I)
+
+def escaped(k):return str(k).replace('~','~0').replace('/','~1')
+def walk(value,path=''):
+    if isinstance(value,dict):
+        for k,v in value.items():yield from walk(v,path+'/'+escaped(k))
+    elif isinstance(value,list):
+        for i,v in enumerate(value):yield from walk(v,path+'/'+str(i))
+    elif isinstance(value,str):yield path,value
+
+def mask_literals(code):
+    """Mask single/double quoted strings and # comments without changing line positions."""
+    return re.sub(r'"(?:\\.|[^"\\])*"|\'(?:\\.|[^\'\\])*\'|\#[^\n]*',lambda m:''.join('\n' if c=='\n' else ' ' for c in m.group()),code)
+
+def templates(text):
+    """Extract <<...>> while respecting quoted >>; unmatched delimiters are not parsed."""
+    text=re.sub(r'<#[\s\S]*?#>',lambda m:' '*len(m.group()),text)
+    pos=0
+    while True:
+        start=text.find('<<',pos)
+        if start<0:return
+        i=start+2;quote=None;escape=False
+        while i<len(text):
+            ch=text[i]
+            if quote:
+                if escape:escape=False
+                elif ch=='\\':escape=True
+                elif ch==quote:quote=None
+            elif ch in ['"',"'"]:quote=ch
+            elif text.startswith('>>',i):
+                yield text[start+2:i];pos=i+2;break
+            i+=1
+        else:return
+
+def lint(doc):
+    findings=[]
+    def add(code,path,message):findings.append(dict(severity='warning',code=code,path=path or '/',message=message))
+    declared={x.get('variableName') for x in doc.get('trackedItems',[]) if isinstance(x,dict) and isinstance(x.get('variableName'),str)}
+    snippets=[];script_paths=set()
+    def nodes(x,path=''):
+        if isinstance(x,dict):
+            typ=x.get('type')
+            if typ in ['effectRunScript','triggerOnPawScript','triggerOnRandomChance'] and isinstance(x.get('data'),str):
+                sp=path+'/data';snippets.append((sp,x['data'],typ=='effectRunScript'));script_paths.add(sp)
+            for k,v in x.items():
+                kp=path+'/'+escaped(k)
+                if k in ['initialPCValueChoicesScript','initialValueChoicesScript'] and isinstance(v,str) and v.strip():snippets.append((kp,v,False));script_paths.add(kp)
+                nodes(v,kp)
+        elif isinstance(x,list):
+            for i,v in enumerate(x):nodes(v,path+'/'+str(i))
+    nodes(doc)
+    for path,text in walk(doc):
+        if PLACEHOLDERS.search(text):add('authoring-placeholder',path,'Possible unresolved library editing slot. Review; intentional runtime notation and ordinary comments need not be removed.')
+        if path not in script_paths:
+            for expr in templates(text):snippets.append((path,expr,False))
+    for path,code,is_script in snippets:
+        clean=mask_literals(code)
+        locals_=set(re.findall(r'\b(?:set|for\s+each)\s+\$([A-Za-z_][A-Za-z_0-9]*)',clean)) if is_script else set()
+        unknown=set(ROOT.findall(clean))-declared-SYSTEM_ROOTS-locals_
+        for name in sorted(unknown):
+            if path.startswith('/videoPromptInstructions') and name in ['videoDuration','videoStyle']:
+                add('context-root-unverified',path,'Video-context $'+name+' is not a declared tracker; availability in this field is not established by this kit.')
+            else:add('unknown-script-root',path,'$'+name+' is not a declared tracker variableName, script local, or known system root. Check missing dependencies; lint is not a full language/context parser.')
+        for token in ['==','&&','||']:
+            if token in clean:add('borrowed-syntax',path,'Review '+token+'; PawScript uses =, and, or in expressions.')
+        if re.search(r'^\s*(?:if\b|else\s+if\b|else\b|for\b).*:\s*$',clean,re.M):add('borrowed-syntax',path,'Branch/loop header ends with a colon; PawScript uses indentation without a colon.')
+        if re.search(r'[{};]',clean):add('borrowed-syntax',path,'Unquoted braces or semicolon found; review for borrowed block/object syntax.')
+        # Identify quoted-string + operand without looking inside literal text.
+        lit=re.compile(r'"(?:\\.|[^"\\])*"|\'(?:\\.|[^\'\\])*\'')
+        for m in lit.finditer(code):
+            if re.match(r'\s*\+\s*(?:\$|["\'])',clean[m.end():]) or re.search(r'\$[\w.()]+\s*\+\s*$',clean[:m.start()]):
+                add('string-plus',path,'Possible string concatenation with +; use &. Review this heuristic warning.');break
+    return findings
+
+def basic_errors(value,schema,root=None,path=''):
+    """A limited type/requiredness guard used without jsonschema. Coverage is explicitly reduced."""
+    root=root or schema;out=[]
+    if not isinstance(schema,dict):return out
+    if '$ref' in schema:
+        target=root
+        for part in schema['$ref'].lstrip('#/').split('/'):target=target.get(part,{})
+        return basic_errors(value,target,root,path)
+    if schema.get('x-discriminator') and isinstance(value,dict):
+        prefix='effect' if str(value.get('type','')).startswith('effect') else 'condition'
+        target=root.get('$defs',{}).get(prefix+'_'+str(value.get('type')))
+        if target:return basic_errors(value,target,root,path)
+    if 'anyOf' in schema:
+        branches=[basic_errors(value,s,root,path) for s in schema['anyOf']]
+        if any(not x for x in branches):return []
+        return [dict(severity='error',code='basic-structure',path=path or '/',message='Value does not match the checked type alternatives (reduced validation).')]
+    if 'not' in schema and not basic_errors(value,schema['not'],root,path):
+        return [dict(severity='error',code='basic-structure',path=path or '/',message='Excluded alternative (reduced validation).')]
+    for sub in schema.get('allOf',[]):out+=basic_errors(value,sub,root,path)
+    typ=schema.get('type')
+    types={'object':isinstance(value,dict),'array':isinstance(value,list),'string':isinstance(value,str),'boolean':isinstance(value,bool),'integer':isinstance(value,int) and not isinstance(value,bool),'number':isinstance(value,(int,float)) and not isinstance(value,bool),'null':value is None}
+    def error(msg):out.append(dict(severity='error',code='basic-structure',path=path or '/',message=msg))
+    if typ and not any(types.get(t,False) for t in (typ if isinstance(typ,list) else [typ])):error('Expected '+str(typ));return out
+    if 'const'in schema and value!=schema['const']:error('Constant value mismatch.')
+    if 'enum'in schema and value not in schema['enum']:error('Value is outside the declared enum.')
+    if isinstance(value,(int,float)) and not isinstance(value,bool):
+        if 'minimum'in schema and value<schema['minimum']:error('Below minimum.')
+        if 'maximum'in schema and value>schema['maximum']:error('Above maximum.')
+    if isinstance(value,dict):
+        for k in schema.get('required',[]):
+            if k not in value:error('Missing required field '+k)
+        for k,v in value.items():
+            sub=schema.get('properties',{}).get(k,schema.get('additionalProperties',{}))
+            if isinstance(sub,dict):out+=basic_errors(v,sub,root,path+'/'+escaped(k))
+    if isinstance(value,list):
+        if len(value)<schema.get('minItems',0):error('Too few items.')
+        if 'maxItems'in schema and len(value)>schema['maxItems']:error('Too many items.')
+        for i,v in enumerate(value):out+=basic_errors(v,schema.get('items',{}),root,path+'/'+str(i))
+    return out
+
+def edit_diff(old,new):
+    changes=[]
+    def brief(v):
+        if isinstance(v,str) and len(v)>160:return {'preview':v[:160],'characters':len(v),'sha256':hashlib.sha256(v.encode('utf-8')).hexdigest()}
+        return v
+    def compare(a,b,path=''):
+        if type(a)!=type(b):changes.append({'path':path or '/','change':'type/value','before':brief(a),'after':brief(b)});return
+        if isinstance(a,dict):
+            for k in sorted(set(a)|set(b)):
+                q=path+'/'+escaped(k)
+                if k not in a:changes.append({'path':q,'change':'added','after':brief(b[k])})
+                elif k not in b:changes.append({'path':q,'change':'removed','before':brief(a[k])})
+                else:compare(a[k],b[k],q)
+        elif isinstance(a,list):
+            if a!=b:
+                for i in range(max(len(a),len(b))):
+                    q=path+'/'+str(i)
+                    if i>=len(a):changes.append({'path':q,'change':'added','after':brief(b[i])})
+                    elif i>=len(b):changes.append({'path':q,'change':'removed','before':brief(a[i])})
+                    else:compare(a[i],b[i],q)
+        elif a!=b:changes.append({'path':path,'change':'changed','before':brief(a),'after':brief(b)})
+    compare(old,new)
+    objects={}
+    for field,idkey in [('trackedItems','id'),('triggerEvents','id'),('possibleCharacters','characterId'),('instructionBlocks','id'),('loreBookEntries','id'),('NPCs','id')]:
+        def lookup(w):return {x[idkey]:x for x in w.get(field,[]) if isinstance(x,dict) and isinstance(x.get(idkey),str)} if isinstance(w,dict) and isinstance(w.get(field,[]),list) else {}
+        a,b=lookup(old),lookup(new)
+        objects[field]={'added':sorted(b.keys()-a.keys()),'removed':sorted(a.keys()-b.keys()),'changed':sorted(k for k in a.keys()&b.keys() if a[k]!=b[k]),'orderChanged':list(a)!=list(b)}
+    return {'objects':objects,'changes':changes,'note':'Reports differences, not whether they are authorized. Array indices are positional; object summaries match IDs.'}
+</script>
+
+<script type="text/plain" id="src-schema">
+{
+  "type": "object",
+  "properties": {
+    "favorite": {
+      "type": "boolean"
+    },
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "background": {
+      "type": "string"
+    },
+    "instructions": {
+      "type": "string"
+    },
+    "authorStyle": {
+      "type": "string"
+    },
+    "recommendedAIModel": {
+      "description": "Obsolete export-only field with no current editor control. Keep null; non-null legacy shape unknown.",
+      "x-observedTypes": [
+        "null"
+      ]
+    },
+    "firstInput": {
+      "type": "string"
+    },
+    "objective": {
+      "type": "string"
+    },
+    "imageModel": {
+      "type": "string"
+    },
+    "imageStyle": {
+      "type": "string",
+      "description": "Opaque image-style identifier. Observed preset and user-defined identifiers; do not enumerate all styles or infer editable text is authoritative from this field alone."
+    },
+    "illustrationStyleNonCharacterLowPriority": {
+      "type": "string",
+      "description": "Retained export field; no matching High/Low Priority control in the current image-style editor. Runtime relevance/precedence is not established."
+    },
+    "illustrationStyleNonCharacterHighPriority": {
+      "type": "string",
+      "description": "Retained export field; no matching High/Low Priority control in the current image-style editor. Runtime relevance/precedence is not established."
+    },
+    "illustrationStyleCharacterLowPriority": {
+      "type": "string",
+      "description": "Retained export field; no matching High/Low Priority control in the current image-style editor. Runtime relevance/precedence is not established."
+    },
+    "illustrationStyleCharacterHighPriority": {
+      "type": "string",
+      "description": "Retained export field; no matching High/Low Priority control in the current image-style editor. Runtime relevance/precedence is not established."
+    },
+    "imageStyleCharacterPre": {
+      "type": "string"
+    },
+    "imageStyleCharacterPost": {
+      "type": "string"
+    },
+    "imageStyleNonCharacterPre": {
+      "type": "string"
+    },
+    "imageStyleNonCharacterPost": {
+      "type": "string"
+    },
+    "mature": {
+      "type": "boolean"
+    },
+    "nsfw": {
+      "type": "boolean"
+    },
+    "contentWarnings": {
+      "type": "string"
+    },
+    "enableAISpecificInstructionBlocks": {
+      "type": "boolean"
+    },
+    "previewImage": {
+      "type": "string"
+    },
+    "fullSizePreviewImage": {
+      "type": "string"
+    },
+    "previewImageOptions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "fullSizePreviewImageOptions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "currentPreviewImageIndex": {
+      "type": "integer"
+    },
+    "imagePromptDetails": {
+      "type": "object",
+      "properties": {
+        "illustrClothes": {
+          "type": "string"
+        },
+        "illustrSetting": {
+          "type": "string"
+        },
+        "illustrSubject": {
+          "type": "string"
+        },
+        "illustrAppearance": {
+          "type": "string"
+        },
+        "illustrIsCharacter": {
+          "type": "boolean"
+        },
+        "illustrExpressionPosition": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true
+    },
+    "permissionsOnceShared": {
+      "type": "object",
+      "properties": {
+        "sharing": {
+          "type": "boolean"
+        },
+        "editing": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": true
+    },
+    "allowChangeCharacterName": {
+      "type": "boolean"
+    },
+    "allowChangeCharacterDescription": {
+      "type": "boolean"
+    },
+    "allowChangeCharacterSkills": {
+      "type": "boolean"
+    },
+    "allowChangeCharacterItemValues": {
+      "type": "boolean"
+    },
+    "allowChangeCharacterPortrait": {
+      "type": "boolean"
+    },
+    "allowChangeCharacterNewPortrait": {
+      "type": "boolean"
+    },
+    "conditions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "maxItems": 10
+    },
+    "schemaVersion": {
+      "type": "number",
+      "description": "Observed 2.4 as a JSON number; other versions are not characterized."
+    },
+    "skills": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1,
+      "description": "At least one skill is required. Custom skills replace the generic skill; they do not need to retain that literal name."
+    },
+    "possibleCharacters": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "portrait": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "x-observedTypes": [
+              "string",
+              "null"
+            ]
+          },
+          "portraitPromptDetails": {
+            "type": "object",
+            "properties": {
+              "illustrAppearance": {
+                "type": "string"
+              },
+              "illustrClothes": {
+                "type": "string"
+              },
+              "illustrExpressionPosition": {
+                "type": "string"
+              },
+              "illustrSetting": {
+                "type": "string"
+              }
+            },
+            "additionalProperties": true
+          },
+          "fullSizePortrait": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "x-observedTypes": [
+              "string",
+              "null"
+            ]
+          },
+          "portraitOptions": {
+            "type": "array",
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "x-observedTypes": [
+                "string",
+                "null"
+              ]
+            }
+          },
+          "fullSizePortraitOptions": {
+            "type": "array",
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "x-observedTypes": [
+                "string",
+                "null"
+              ]
+            }
+          },
+          "currentPortraitIndex": {
+            "type": "integer"
+          },
+          "characterId": {
+            "type": "string"
+          },
+          "skills": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 5
+            },
+            "description": "Map keyed by declared skill display name. Fixed integer skill levels from 0 through 5."
+          },
+          "initialTrackedItemValues": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "visibility": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "initialPCValue": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  ],
+                  "x-observedTypes": [
+                    "string",
+                    "array"
+                  ],
+                  "description": "Observed string for fixed value; array of strings for player single-selection from fixed options. With initialPCValueChoicesScript, observed empty string; do not coerce into a scalar."
+                },
+                "initialValueBasedOnPC": {
+                  "type": "string"
+                },
+                "initialPCValueChoicesScript": {
+                  "type": "string",
+                  "description": "Pawscript expression producing player single-selection options, evaluated at game start using initial tracked-item values including this character values and skills. Result list shape and endpoint semantics not verified."
+                }
+              },
+              "additionalProperties": true
+            }
+          }
+        },
+        "additionalProperties": true
+      }
+    },
+    "triggerEvents": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/trigger"
+      }
+    },
+    "victoryCondition": {
+      "anyOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "condition": {
+              "type": "string",
+              "description": "Natural-language ending criterion in native exports; not a mandatory PawScript expression."
+            },
+            "text": {
+              "type": "string"
+            },
+            "alreadyFired": {
+              "type": "boolean",
+              "description": "Serialized boolean; remained false after a tested native victory, continuation and another turn. Do not rely on it as live ending history."
+            }
+          },
+          "additionalProperties": true
+        }
+      ],
+      "x-observedTypes": [
+        "null",
+        "object"
+      ]
+    },
+    "defeatCondition": {
+      "anyOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "condition": {
+              "type": "string",
+              "description": "Natural-language ending criterion in native exports; not a mandatory PawScript expression."
+            },
+            "text": {
+              "type": "string"
+            },
+            "alreadyFired": {
+              "type": "boolean",
+              "description": "Serialized boolean; remained false after a tested native victory, continuation and another turn. Do not rely on it as live ending history."
+            }
+          },
+          "additionalProperties": true
+        }
+      ],
+      "x-observedTypes": [
+        "null",
+        "object"
+      ]
+    },
+    "descriptionRequest": {
+      "type": "string"
+    },
+    "evaluationRequest": {
+      "type": "string"
+    },
+    "hideSkillSystem": {
+      "type": "boolean"
+    },
+    "summaryRequest": {
+      "type": "string"
+    },
+    "videoPromptInstructions": {
+      "type": "object",
+      "properties": {
+        "videoPlan": {
+          "type": "string"
+        },
+        "videoImagePosition": {
+          "type": "string"
+        },
+        "videoPrompt": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true
+    },
+    "charSelectText": {
+      "type": "string"
+    },
+    "instructionBlocks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "content": {
+            "type": "string"
+          },
+          "selectedAIProfiles": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Opaque model profile IDs. Accept arbitrary historical IDs. Current authoring suggestions are recorded separately, not enforced as an enum. Disabling AI-specific blocks in the editor removes this field on export."
+          }
+        },
+        "additionalProperties": true
+      }
+    },
+    "loreBookEntries": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "content": {
+            "type": "string"
+          },
+          "keywords": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "additionalProperties": true
+      }
+    },
+    "trackedItems": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "positionInList": {
+            "type": "integer"
+          },
+          "dataType": {
+            "type": "string",
+            "x-observedValues": [
+              "text",
+              "number",
+              "yaml",
+              "xml"
+            ]
+          },
+          "visibility": {
+            "type": "string",
+            "x-observedValues": [
+              "everyone",
+              "ai_only_boring",
+              "player_only",
+              "hidden",
+              "ai_only",
+              "hidden_boring"
+            ]
+          },
+          "description": {
+            "type": "string"
+          },
+          "updateInstructions": {
+            "type": "string"
+          },
+          "formatExample": {
+            "type": "string"
+          },
+          "enforceFormat": {
+            "type": "boolean"
+          },
+          "formatSchema": {
+            "type": "string"
+          },
+          "initialValue": {
+            "type": "string"
+          },
+          "initialValueBasedOnPC": {
+            "type": "string",
+            "x-observedValues": [
+              "same",
+              "character",
+              "player"
+            ]
+          },
+          "autoUpdate": {
+            "type": "boolean"
+          },
+          "variableName": {
+            "type": "string"
+          },
+          "driftAcknowledgedForName": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Display name for which variable-name mismatch warning was acknowledged; null when not acknowledged. Does not change variableName or script references. May differ from a subsequently renamed display name.",
+            "x-observedTypes": [
+              "null",
+              "string"
+            ]
+          },
+          "initialValueChoices": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Player startup selection options with initialValueBasedOnPC player; initialValue supplies the stored initial/default choice."
+          }
+        },
+        "additionalProperties": true
+      }
+    },
+    "NPCs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "detail": {
+            "type": "string"
+          },
+          "one_liner": {
+            "type": "string"
+          },
+          "appearance": {
+            "type": "string"
+          },
+          "location": {
+            "type": "string"
+          },
+          "secret_info": {
+            "type": "string"
+          },
+          "names": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "img_appearance": {
+            "type": "string"
+          },
+          "img_clothing": {
+            "type": "string"
+          },
+          "positionInList": {
+            "type": "integer"
+          }
+        },
+        "additionalProperties": true
+      }
+    },
+    "autoAdvanceVersion": {
+      "type": "boolean"
+    },
+    "version": {
+      "type": "string",
+      "description": "Observed string 1.27; distinct from numeric schemaVersion."
+    },
+    "designNotes": {
+      "type": "string"
+    },
+    "showPawScriptButtons": {
+      "type": "boolean"
+    }
+  },
+  "additionalProperties": true,
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "InfiniteWorlds observed export schema — schemaVersion 2.4",
+  "description": "General Infinite Worlds export structure and explicit-reference profile. Compatibility baseline: Save/load system, Image style system and Pawscript update, announced 2026-10-08 (compatibility baseline). Not an official exhaustive importer contract. Unknown fields/discriminators remain permitted and reported. Presence observations alone do not establish importer-required fields.",
+  "x-profileVersion": "1.1.0",
+  "x-observedSchemaVersions": [
+    2.4
+  ],
+  "$defs": {
+    "effect_effectShowMessage": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "effectShowMessage"
+        },
+        "data": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true,
+      "required": [
+        "type"
+      ]
+    },
+    "effect_effectTellAIWhatToDo": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "effectTellAIWhatToDo"
+        },
+        "data": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true,
+      "required": [
+        "type"
+      ]
+    },
+    "effect_effectGiveInfo": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "effectGiveInfo"
+        },
+        "data": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true,
+      "required": [
+        "type"
+      ]
+    },
+    "effect_effectSetTrackedItemValue": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "effectSetTrackedItemValue"
+        },
+        "data": {
+          "type": "object",
+          "properties": {
+            "trackedItemID": {
+              "type": "string"
+            },
+            "action": {
+              "type": "string",
+              "x-observedValues": [
+                "set",
+                "add",
+                "subtract",
+                "replace",
+                "append",
+                "remove",
+                "adjust"
+              ]
+            },
+            "newValue": {
+              "type": "string",
+              "description": "String payload. YAML Path Set accepts YAML text with <<...>> interpolation or a whole structure injected by an expression. Append payload coercion for structured entries is not yet characterized."
+            },
+            "replaceWith": {
+              "type": "string"
+            },
+            "path": {
+              "type": "string",
+              "description": "Plain dotted path within a YAML tracker, for example wallet.coins. Empty path targets the whole tracker."
+            },
+            "updateMode": {
+              "type": "string",
+              "x-observedValues": [
+                "path",
+                "replace"
+              ]
+            },
+            "listExpression": {
+              "type": "string",
+              "description": "Retained native export field. Current editor directs complex list-wide manipulation to Run Script; no current standalone List Update UI is established."
+            },
+            "targetExpression": {
+              "type": "string",
+              "description": "Retained native export field. Current editor directs complex list-wide manipulation to Run Script; no current standalone List Update UI is established."
+            }
+          },
+          "additionalProperties": true
+        },
+        "id": {
+          "type": "string"
+        },
+        "trackedItemID": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true,
+      "required": [
+        "type"
+      ]
+    },
+    "effect_effectModifyTrackedItemDetails": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "effectModifyTrackedItemDetails"
+        },
+        "data": {
+          "type": "object",
+          "properties": {
+            "trackedItemID": {
+              "type": "string"
+            },
+            "overrideName": {
+              "type": "boolean"
+            },
+            "overrideDescription": {
+              "type": "boolean"
+            },
+            "overrideVisibility": {
+              "type": "boolean"
+            },
+            "overrideAutoUpdate": {
+              "type": "boolean"
+            },
+            "overrideUpdateInstructions": {
+              "type": "boolean"
+            },
+            "name": {
+              "type": "string"
+            },
+            "description": {
+              "type": "string"
+            },
+            "updateInstructions": {
+              "type": "string"
+            },
+            "visibility": {
+              "type": "string",
+              "x-observedValues": [
+                "everyone"
+              ]
+            },
+            "autoUpdate": {
+              "type": "boolean"
+            }
+          },
+          "additionalProperties": true
+        },
+        "id": {
+          "type": "string"
+        },
+        "trackedItemID": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true,
+      "required": [
+        "type"
+      ]
+    },
+    "effect_effectChangePCName": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "effectChangePCName"
+        },
+        "data": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true,
+      "required": [
+        "type"
+      ]
+    },
+    "effect_effectChangePCDescription": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "effectChangePCDescription"
+        },
+        "data": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true,
+      "required": [
+        "type"
+      ]
+    },
+    "effect_effectChangePCSkill": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "effectChangePCSkill"
+        },
+        "data": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "amount": {
+              "type": "integer"
+            },
+            "minmax": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 5
+            },
+            "increase": {
+              "type": "boolean"
+            }
+          },
+          "additionalProperties": true
+        },
+        "id": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true,
+      "required": [
+        "type"
+      ]
+    },
+    "effect_effectChangeObjective": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "effectChangeObjective"
+        },
+        "data": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true,
+      "required": [
+        "type"
+      ]
+    },
+    "effect_effectChangeVictoryCondition": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "effectChangeVictoryCondition"
+        },
+        "data": {
+          "type": "object",
+          "properties": {
+            "condition": {
+              "type": "string"
+            },
+            "text": {
+              "type": "string"
+            },
+            "alreadyFired": {
+              "type": "boolean"
+            }
+          },
+          "additionalProperties": true
+        },
+        "id": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true,
+      "required": [
+        "type"
+      ]
+    },
+    "effect_effectChangeDefeatCondition": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "effectChangeDefeatCondition"
+        },
+        "data": {
+          "type": "object",
+          "properties": {
+            "condition": {
+              "type": "string"
+            },
+            "text": {
+              "type": "string"
+            },
+            "alreadyFired": {
+              "type": "boolean"
+            }
+          },
+          "additionalProperties": true
+        },
+        "id": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true,
+      "required": [
+        "type"
+      ]
+    },
+    "effect_effectChangeMainInstructions": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "effectChangeMainInstructions"
+        },
+        "data": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true,
+      "required": [
+        "type"
+      ]
+    },
+    "effect_effectModifyInstructionBlock": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "effectModifyInstructionBlock"
+        },
+        "data": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "content": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": true
+        },
+        "id": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true,
+      "required": [
+        "type"
+      ]
+    },
+    "effect_effectModifyKeywordBlock": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "effectModifyKeywordBlock"
+        },
+        "data": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "keywords": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "content": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": true
+        },
+        "id": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true,
+      "required": [
+        "type"
+      ]
+    },
+    "effect_effectChangeAuthorStyle": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "effectChangeAuthorStyle"
+        },
+        "data": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true,
+      "required": [
+        "type"
+      ]
+    },
+    "effect_effectChangeDescriptionInstructions": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "effectChangeDescriptionInstructions"
+        },
+        "data": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true,
+      "required": [
+        "type"
+      ]
+    },
+    "effect_effectPresentChoice": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "effectPresentChoice"
+        },
+        "data": {
+          "type": "object",
+          "properties": {
+            "message": {
+              "type": "string"
+            },
+            "choices": {
+              "type": "string"
+            },
+            "targetTrackedItemId": {
+              "type": "string"
+            },
+            "selectionMode": {
+              "type": "string",
+              "x-observedValues": [
+                "single",
+                "multiple"
+              ]
+            },
+            "updateMode": {
+              "type": "string",
+              "x-observedValues": [
+                "replace"
+              ]
+            },
+            "minSelections": {
+              "anyOf": [
+                {
+                  "type": "null"
+                },
+                {
+                  "type": "string"
+                }
+              ],
+              "x-observedTypes": [
+                "null",
+                "string"
+              ]
+            },
+            "maxSelections": {
+              "anyOf": [
+                {
+                  "type": "null"
+                },
+                {
+                  "type": "string"
+                }
+              ],
+              "x-observedTypes": [
+                "null",
+                "string"
+              ]
+            },
+            "valueDelimiter": {
+              "type": "string",
+              "x-observedValues": [
+                "newline",
+                "comma"
+              ]
+            },
+            "path": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": true
+        },
+        "id": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true,
+      "required": [
+        "type"
+      ]
+    },
+    "effect_effectRequestInput": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "effectRequestInput"
+        },
+        "data": {
+          "type": "object",
+          "properties": {
+            "requestText": {
+              "type": "string"
+            },
+            "targetTrackedItemId": {
+              "type": "string"
+            },
+            "inputMode": {
+              "type": "string",
+              "x-observedValues": [
+                "single",
+                "multi"
+              ]
+            },
+            "requiresInput": {
+              "type": "boolean"
+            },
+            "path": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": true
+        },
+        "id": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true,
+      "required": [
+        "type"
+      ]
+    },
+    "effect_effectFireRandomTrigger": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "effectFireRandomTrigger"
+        },
+        "data": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "id": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true,
+      "required": [
+        "type"
+      ]
+    },
+    "effect_effectRunScript": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "effectRunScript"
+        },
+        "data": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true,
+      "required": [
+        "type"
+      ]
+    },
+    "effect_effectEndsGame": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "effectEndsGame"
+        },
+        "data": {
+          "type": "boolean",
+          "description": "Editor-described: Player can choose to continue the game checkbox. The effect ends the game; data=true permits optional continuation, data=false does not."
+        },
+        "id": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true,
+      "required": [
+        "type"
+      ]
+    },
+    "effect": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/effect_effectShowMessage"
+        },
+        {
+          "$ref": "#/$defs/effect_effectTellAIWhatToDo"
+        },
+        {
+          "$ref": "#/$defs/effect_effectGiveInfo"
+        },
+        {
+          "$ref": "#/$defs/effect_effectSetTrackedItemValue"
+        },
+        {
+          "$ref": "#/$defs/effect_effectModifyTrackedItemDetails"
+        },
+        {
+          "$ref": "#/$defs/effect_effectChangePCName"
+        },
+        {
+          "$ref": "#/$defs/effect_effectChangePCDescription"
+        },
+        {
+          "$ref": "#/$defs/effect_effectChangePCSkill"
+        },
+        {
+          "$ref": "#/$defs/effect_effectChangeObjective"
+        },
+        {
+          "$ref": "#/$defs/effect_effectChangeVictoryCondition"
+        },
+        {
+          "$ref": "#/$defs/effect_effectChangeDefeatCondition"
+        },
+        {
+          "$ref": "#/$defs/effect_effectChangeMainInstructions"
+        },
+        {
+          "$ref": "#/$defs/effect_effectModifyInstructionBlock"
+        },
+        {
+          "$ref": "#/$defs/effect_effectModifyKeywordBlock"
+        },
+        {
+          "$ref": "#/$defs/effect_effectChangeAuthorStyle"
+        },
+        {
+          "$ref": "#/$defs/effect_effectChangeDescriptionInstructions"
+        },
+        {
+          "$ref": "#/$defs/effect_effectPresentChoice"
+        },
+        {
+          "$ref": "#/$defs/effect_effectRequestInput"
+        },
+        {
+          "$ref": "#/$defs/effect_effectFireRandomTrigger"
+        },
+        {
+          "$ref": "#/$defs/effect_effectRunScript"
+        },
+        {
+          "$ref": "#/$defs/effect_effectEndsGame"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "not": {
+                "enum": [
+                  "effectShowMessage",
+                  "effectTellAIWhatToDo",
+                  "effectGiveInfo",
+                  "effectSetTrackedItemValue",
+                  "effectModifyTrackedItemDetails",
+                  "effectChangePCName",
+                  "effectChangePCDescription",
+                  "effectChangePCSkill",
+                  "effectChangeObjective",
+                  "effectChangeVictoryCondition",
+                  "effectChangeDefeatCondition",
+                  "effectChangeMainInstructions",
+                  "effectModifyInstructionBlock",
+                  "effectModifyKeywordBlock",
+                  "effectChangeAuthorStyle",
+                  "effectChangeDescriptionInstructions",
+                  "effectPresentChoice",
+                  "effectRequestInput",
+                  "effectFireRandomTrigger",
+                  "effectRunScript",
+                  "effectEndsGame"
+                ]
+              }
+            }
+          },
+          "required": [
+            "type"
+          ],
+          "additionalProperties": true,
+          "description": "Unobserved discriminator accepted for forward compatibility."
+        },
+        {
+          "type": "object",
+          "not": {
+            "required": [
+              "type"
+            ]
+          },
+          "additionalProperties": true,
+          "description": "Unclassified object; requiredness is not inferred from export examples."
+        }
+      ],
+      "x-knownDiscriminators": [
+        "effectShowMessage",
+        "effectTellAIWhatToDo",
+        "effectGiveInfo",
+        "effectSetTrackedItemValue",
+        "effectModifyTrackedItemDetails",
+        "effectChangePCName",
+        "effectChangePCDescription",
+        "effectChangePCSkill",
+        "effectChangeObjective",
+        "effectChangeVictoryCondition",
+        "effectChangeDefeatCondition",
+        "effectChangeMainInstructions",
+        "effectModifyInstructionBlock",
+        "effectModifyKeywordBlock",
+        "effectChangeAuthorStyle",
+        "effectChangeDescriptionInstructions",
+        "effectPresentChoice",
+        "effectRequestInput",
+        "effectFireRandomTrigger",
+        "effectRunScript",
+        "effectEndsGame"
+      ],
+      "x-discriminator": "type"
+    },
+    "condition_triggerOnEvent": {
+      "type": "object",
+      "properties": {
+        "category": {
+          "type": "string"
+        },
+        "type": {
+          "const": "triggerOnEvent"
+        },
+        "data": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true,
+      "required": [
+        "type"
+      ]
+    },
+    "condition_triggerOnRandomChance": {
+      "type": "object",
+      "properties": {
+        "category": {
+          "type": "string"
+        },
+        "type": {
+          "const": "triggerOnRandomChance"
+        },
+        "data": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true,
+      "required": [
+        "type"
+      ]
+    },
+    "condition_triggerOnCharacter": {
+      "type": "object",
+      "properties": {
+        "category": {
+          "type": "string"
+        },
+        "type": {
+          "const": "triggerOnCharacter"
+        },
+        "data": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "id": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true,
+      "required": [
+        "type"
+      ]
+    },
+    "condition_triggerOnTrackedItem": {
+      "type": "object",
+      "properties": {
+        "category": {
+          "type": "string"
+        },
+        "type": {
+          "const": "triggerOnTrackedItem"
+        },
+        "data": {
+          "type": "object",
+          "properties": {
+            "trackedItemID": {
+              "type": "string"
+            },
+            "inequality": {
+              "type": "string",
+              "x-observedValues": [
+                "is_exactly",
+                "at_least",
+                "not_equal",
+                "at_most"
+              ]
+            },
+            "requiredValue": {
+              "type": "string"
+            },
+            "textComparison": {
+              "type": "string",
+              "x-observedValues": [
+                "contains",
+                "does_not_contain"
+              ]
+            }
+          },
+          "additionalProperties": true
+        },
+        "id": {
+          "type": "string"
+        },
+        "trackedItemID": {
+          "type": "string"
+        },
+        "inequality": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true,
+      "required": [
+        "type"
+      ]
+    },
+    "condition_triggerPrereqs": {
+      "type": "object",
+      "properties": {
+        "category": {
+          "type": "string"
+        },
+        "type": {
+          "const": "triggerPrereqs"
+        },
+        "data": {
+          "type": "object",
+          "properties": {
+            "prereqs": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "firedThisTurn": {
+              "type": "boolean"
+            }
+          },
+          "additionalProperties": true
+        },
+        "id": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true,
+      "required": [
+        "type"
+      ]
+    },
+    "condition_triggerBlockers": {
+      "type": "object",
+      "properties": {
+        "category": {
+          "type": "string"
+        },
+        "type": {
+          "const": "triggerBlockers"
+        },
+        "data": {
+          "type": "object",
+          "properties": {
+            "blockers": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "firedThisTurn": {
+              "type": "boolean"
+            }
+          },
+          "additionalProperties": true
+        },
+        "id": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true,
+      "required": [
+        "type"
+      ]
+    },
+    "condition_triggerOnPawScript": {
+      "type": "object",
+      "properties": {
+        "category": {
+          "type": "string"
+        },
+        "type": {
+          "const": "triggerOnPawScript"
+        },
+        "data": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true,
+      "required": [
+        "type"
+      ]
+    },
+    "condition_triggerOnTurn": {
+      "type": "object",
+      "properties": {
+        "category": {
+          "type": "string"
+        },
+        "type": {
+          "const": "triggerOnTurn"
+        },
+        "data": {
+          "type": "integer"
+        },
+        "id": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true,
+      "required": [
+        "type"
+      ]
+    },
+    "conditionLeaf": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/condition_triggerOnEvent"
+        },
+        {
+          "$ref": "#/$defs/condition_triggerOnRandomChance"
+        },
+        {
+          "$ref": "#/$defs/condition_triggerOnCharacter"
+        },
+        {
+          "$ref": "#/$defs/condition_triggerOnTrackedItem"
+        },
+        {
+          "$ref": "#/$defs/condition_triggerPrereqs"
+        },
+        {
+          "$ref": "#/$defs/condition_triggerBlockers"
+        },
+        {
+          "$ref": "#/$defs/condition_triggerOnPawScript"
+        },
+        {
+          "$ref": "#/$defs/condition_triggerOnTurn"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "not": {
+                "enum": [
+                  "triggerOnEvent",
+                  "triggerOnRandomChance",
+                  "triggerOnCharacter",
+                  "triggerOnTrackedItem",
+                  "triggerPrereqs",
+                  "triggerBlockers",
+                  "triggerOnPawScript",
+                  "triggerOnTurn"
+                ]
+              }
+            }
+          },
+          "required": [
+            "type"
+          ],
+          "additionalProperties": true,
+          "description": "Unobserved discriminator accepted for forward compatibility."
+        },
+        {
+          "type": "object",
+          "not": {
+            "required": [
+              "type"
+            ]
+          },
+          "additionalProperties": true,
+          "description": "Unclassified object; requiredness is not inferred from export examples."
+        }
+      ],
+      "x-knownDiscriminators": [
+        "triggerOnEvent",
+        "triggerOnRandomChance",
+        "triggerOnCharacter",
+        "triggerOnTrackedItem",
+        "triggerPrereqs",
+        "triggerBlockers",
+        "triggerOnPawScript",
+        "triggerOnTurn"
+      ],
+      "x-discriminator": "type"
+    },
+    "conditionNode": {
+      "anyOf": [
+        {
+          "type": "object",
+          "properties": {
+            "category": {
+              "const": "logic"
+            },
+            "operator": {
+              "type": "string",
+              "x-observedValues": [
+                "and",
+                "or",
+                "none_of"
+              ]
+            },
+            "data": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/conditionNode"
+              }
+            },
+            "id": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "category"
+          ],
+          "additionalProperties": true
+        },
+        {
+          "allOf": [
+            {
+              "type": "object",
+              "properties": {
+                "category": {
+                  "const": "condition"
+                }
+              }
+            },
+            {
+              "$ref": "#/$defs/conditionLeaf"
+            }
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "category": {
+              "type": "string",
+              "not": {
+                "enum": [
+                  "logic",
+                  "condition"
+                ]
+              }
+            }
+          },
+          "required": [
+            "category"
+          ],
+          "additionalProperties": true
+        }
+      ]
+    },
+    "trigger": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "triggerEffects": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/effect"
+          }
+        },
+        "triggerMidGame": {
+          "type": "boolean"
+        },
+        "triggerConditions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/conditionNode"
+          }
+        },
+        "triggerOnStartOfGame": {
+          "type": "boolean"
+        },
+        "advancedLogic": {
+          "type": "boolean"
+        },
+        "canTriggerMoreThanOnce": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": true
+    }
+  },
+  "required": [
+    "skills"
+  ],
+  "x-observedConditionExternalReferences": [
+    "turn_number",
+    "player_action",
+    "skill_player_skill_1",
+    "skill_generic_skill"
+  ],
+  "x-iwCompatibility": {
+    "updateName": "Save/load system, Image style system and Pawscript update",
+    "updateDate": "2026-10-08",
+    "source": "User identification of the Discord announcement; not an application version number."
+  }
+}
+</script>
+
+<script type="text/plain" id="src-template">
+{
+  "favorite": false,
+  "title": "IW World Template",
+  "description": "",
+  "background": "",
+  "instructions": "",
+  "authorStyle": "",
+  "recommendedAIModel": null,
+  "firstInput": "",
+  "objective": "",
+  "imageModel": "manticore",
+  "imageStyle": "photo_1",
+  "illustrationStyleNonCharacterLowPriority": "",
+  "illustrationStyleNonCharacterHighPriority": "",
+  "illustrationStyleCharacterLowPriority": "",
+  "illustrationStyleCharacterHighPriority": "",
+  "imageStyleCharacterPre": "",
+  "imageStyleCharacterPost": "",
+  "imageStyleNonCharacterPre": "",
+  "imageStyleNonCharacterPost": "",
+  "mature": false,
+  "nsfw": false,
+  "contentWarnings": "",
+  "enableAISpecificInstructionBlocks": false,
+  "previewImage": "",
+  "fullSizePreviewImage": "",
+  "previewImageOptions": [],
+  "fullSizePreviewImageOptions": [],
+  "currentPreviewImageIndex": -1,
+  "imagePromptDetails": {
+    "illustrClothes": "",
+    "illustrSetting": "",
+    "illustrSubject": "",
+    "illustrAppearance": "",
+    "illustrIsCharacter": false,
+    "illustrExpressionPosition": ""
+  },
+  "permissionsOnceShared": {
+    "sharing": false,
+    "editing": false
+  },
+  "allowChangeCharacterName": false,
+  "allowChangeCharacterDescription": false,
+  "allowChangeCharacterSkills": false,
+  "allowChangeCharacterItemValues": false,
+  "allowChangeCharacterPortrait": false,
+  "allowChangeCharacterNewPortrait": false,
+  "conditions": [],
+  "schemaVersion": 2.4,
+  "skills": [
+    "Generic skill"
+  ],
+  "possibleCharacters": [
+    {
+      "name": "Player character",
+      "description": "",
+      "portrait": "",
+      "portraitPromptDetails": {
+        "illustrAppearance": "",
+        "illustrClothes": "",
+        "illustrExpressionPosition": "",
+        "illustrSetting": ""
+      },
+      "fullSizePortrait": "",
+      "portraitOptions": [],
+      "fullSizePortraitOptions": [],
+      "currentPortraitIndex": -1,
+      "characterId": "c7038c97-b50f-57be-9e33-9ce2914d80ef",
+      "skills": {
+        "Generic skill": 3
+      },
+      "initialTrackedItemValues": []
+    }
+  ],
+  "triggerEvents": [],
+  "victoryCondition": null,
+  "defeatCondition": null,
+  "trackedItems": [],
+  "hideSkillSystem": true,
+  "autoAdvanceVersion": false,
+  "version": "1.0",
+  "charSelectText": "",
+  "descriptionRequest": "",
+  "evaluationRequest": "",
+  "summaryRequest": "",
+  "instructionBlocks": [],
+  "NPCs": [],
+  "loreBookEntries": [],
+  "designNotes": ""
+}
+</script>
+
+<!-- ============ Checker application ============ -->
+<script>
+(function () {
+  "use strict";
+
+  var PYODIDE_BASE = "https://cdn.jsdelivr.net/pyodide/v0.26.4/full/";
+
+  var els = {};
+  ["input","checkBtn","selfTestBtn","clearBtn","engineStatus","cleanupPanel",
+   "cleanupList","resultsPanel","verdict","coverage","shortcircuit","findings",
+   "copyReportBtn","copyIwBtn","problemPanel","problemText","profileLine",
+   "hashLine"
+  ].forEach(function (id) { els[id] = document.getElementById(id); });
+
+  function embedded(id) {
+    return document.getElementById(id).text.replace(/^\s*\n/, "").replace(/\s+$/, "");
+  }
+
+  var pyodide = null, enginePromise = null, engineFailed = null;
+  var schemaProfile = "unknown";
+  try { schemaProfile = JSON.parse(embedded("src-schema"))["x-profileVersion"] || "unknown"; }
+  catch (e) { schemaProfile = "unknown"; }
+  var lastClean = null, lastReport = null;
+
+  // ---------- input cleanup ---------- //
+
+  function InputError(message) { this.message = message; }
+  InputError.prototype = Object.create(Error.prototype);
+
+  function normalize(raw) {
+    if (!raw || !raw.trim()) {
+      throw new InputError("The box is empty — paste the model's reply first.");
+    }
+    var notes = [];
+    var text = raw;
+    if (text.charCodeAt(0) === 0xFEFF) {
+      text = text.slice(1);
+      notes.push("Removed a byte-order mark (BOM).");
+    }
+    text = text.replace(/\r\n/g, "\n").replace(/\r/g, "\n");
+
+    // Strip code-fence marker lines. A line consisting of ```anything cannot
+    // be part of raw JSON (JSON strings cannot contain literal newlines),
+    // so this is safe.
+    var fenceCount = (text.match(/^[ \t]*```[^\n]*$/gm) || []).length;
+    if (fenceCount) {
+      text = text.replace(/^[ \t]*```[^\n]*\n?/gm, "");
+      notes.push("Removed " + fenceCount + " code-fence line" +
+        (fenceCount === 1 ? "" : "s") + ".");
+    }
+
+    // Numbered chunks: "Chunk 1/3", "chunk 2 of 3", "## Part 3/4 ----" etc.
+    var CHUNK_RE =
+      /^[ \t>|#*-]*(?:chunk|part)\s+(\d+)\s*(?:\/|\s+of\s+)\s*(\d+)\b[^\n]*$/gim;
+    var headers = [], m;
+    while ((m = CHUNK_RE.exec(text)) !== null) {
+      headers.push({ n: +m[1], total: +m[2], index: m.index, len: m[0].length });
+    }
+    var body = text;
+    if (headers.length === 1) {
+      throw new InputError("Found a marker for chunk " + headers[0].n +
+        " of " + headers[0].total + " but no other chunks. Paste all " +
+        headers[0].total + " chunks together, in one go.");
+    }
+    if (headers.length >= 2) {
+      var totals = headers.map(function (h) { return h.total; });
+      var nums = headers.map(function (h) { return h.n; });
+      var maxN = Math.max.apply(null, totals);
+      var uniqueTotals = totals.filter(function (v, i) {
+        return totals.indexOf(v) === i; });
+      var missing = [], dupes = [];
+      for (var i = 1; i <= maxN; i++) {
+        if (nums.indexOf(i) === -1) missing.push(i);
+      }
+      nums.forEach(function (n, i) {
+        if (nums.indexOf(n) !== i && dupes.indexOf(n) === -1) dupes.push(n);
+      });
+      if (uniqueTotals.length > 1 || missing.length || dupes.length) {
+        throw new InputError(
+          "Numbered chunks detected, but the set is inconsistent " +
+          "(found chunks " + nums.slice().sort(function(a,b){return a-b;}).join(", ") +
+          (missing.length ? "; missing " + missing.join(", ") : "") +
+          (dupes.length ? "; duplicated " + dupes.join(", ") : "") +
+          (uniqueTotals.length > 1 ? "; totals disagree: " +
+            uniqueTotals.join(" vs ") : "") +
+          "). Paste every chunk, in order, then check again.");
+      }
+      var sorted = headers.slice().sort(function (a, b) { return a.n - b.n; });
+      var parts = sorted.map(function (h, i) {
+        var end = i + 1 < sorted.length ? sorted[i + 1].index : body.length;
+        return body.slice(h.index + h.len, end).replace(/^\s+|\s+$/g, "");
+      });
+      body = parts.join("\n");
+      notes.push("Assembled " + sorted.length + " numbered chunks (1–" + maxN +
+        " of " + maxN + ") in order.");
+    }
+
+    // Extract complete top-level {...} objects with a string-aware scan so
+    // trailing chat containing braces cannot corrupt the slice.
+    var objects = [];
+    for (var s = 0; s < body.length; s++) {
+      if (body[s] !== "{") continue;
+      var depth = 0, inStr = false, esc = false;
+      for (var j = s; j < body.length; j++) {
+        var c = body[j];
+        if (inStr) {
+          if (esc) esc = false;
+          else if (c === "\\") esc = true;
+          else if (c === '"') inStr = false;
+        } else {
+          if (c === '"') inStr = true;
+          else if (c === "{") depth++;
+          else if (c === "}") {
+            depth--;
+            if (depth === 0) {
+              objects.push({ start: s, end: j + 1,
+                text: body.slice(s, j + 1) });
+              s = j;
+              break;
+            }
+          }
+        }
+      }
+      // Unclosed object: keep scanning after it; inner objects may parse.
+    }
+    if (!objects.length) {
+      throw new InputError(
+        "No complete JSON object found — the JSON never closes. The paste " +
+        "looks truncated (an output limit?). If the world was delivered in " +
+        "pieces, paste every numbered chunk together.");
+    }
+    var chosen = null;
+    objects.forEach(function (o) {
+      try {
+        JSON.parse(o.text);
+        if (!chosen || o.text.length > chosen.text.length) chosen = o;
+      } catch (e) { /* invalid candidate */ }
+    });
+    if (!chosen) {
+      var biggest = objects.reduce(function (a, b) {
+        return b.text.length > a.text.length ? b : a; });
+      try {
+        JSON.parse(biggest.text);
+      } catch (e) {
+        var hint = "";
+        var pm = /position (\d+)/.exec(e.message || "");
+        if (pm) {
+          var p = +pm[1];
+          hint = " Near character " + p + ": …" +
+            biggest.text.slice(Math.max(0, p - 60), p + 60) + "…";
+        }
+        throw new InputError("The cleaned text is still not valid JSON: " +
+          e.message + "." + hint +
+          " If this arrived in chunks, make sure every part is present and " +
+          "in order.");
+      }
+    }
+    if (objects.length > 1) {
+      notes.push("Found " + objects.length +
+        " JSON objects in the paste; used the largest (" +
+        chosen.text.length + " characters).");
+    }
+    var before = chosen.start;
+    var trimmedAfter = body.slice(chosen.end).replace(/\s+$/, "");
+    if (/\r?\n/.test(body.slice(chosen.end))) {
+      notes.push("Removed the trailing newline after the final }.");
+    }
+    if (before || trimmedAfter) {
+      notes.push("Removed chat text around the JSON (" + before +
+        " characters before, " + trimmedAfter.length + " after).");
+    }
+    if (!notes.length) notes.push("No cleanup needed — the paste was already clean JSON.");
+    return { jsonText: chosen.text, notes: notes };
+  }
+
+  // ---------- validator engine (Pyodide, embedded sources) ---------- //
+
+  var DRIVER = [
+    "import sys, json",
+    "from pathlib import Path",
+    'if "/iwkit" not in sys.path:',
+    '    sys.path.insert(0, "/iwkit")',
+    "",
+    "def iw_validate():",
+    "    import validate_iw_export as v",
+    '    raw = Path("/iwkit/world.json").read_bytes()',
+    '    doc = json.loads(raw.decode("utf-8-sig"))',
+    '    schema = json.loads(Path("/iwkit/iw-export.schema.json").read_text(encoding="utf-8"))',
+    "    findings = v.validate(doc, schema)",
+    "    rstripped = raw.rstrip()",
+    "    tail = raw[len(rstripped):]",
+    '    if tail and (b"\\n" in tail or b"\\r" in tail):',
+    '        findings.append({"severity": "warning", "code": "trailing-newline", "path": "/", "message": "Remove the final newline before pasting into IW; the import text should end at its final brace."})',
+    "    return json.dumps({",
+    '        "errors": sum(1 for f in findings if f["severity"] == "error"),',
+    '        "warnings": sum(1 for f in findings if f["severity"] == "warning"),',
+    '        "findings": findings,',
+    '        "coverage": {"fullSchema": v.Draft202012Validator is not None, "staticLint": True, "runtimeExecution": False},',
+    "    }, ensure_ascii=False)",
+    ""
+  ].join("\n");
+
+  function setEngine(msg) { els.engineStatus.textContent = msg; }
+
+  function ensureEngine() {
+    if (pyodide) return Promise.resolve(pyodide);
+    if (engineFailed) return Promise.reject(engineFailed);
+    if (!enginePromise) {
+      enginePromise = (async function () {
+        setEngine("Downloading the Python runtime (Pyodide, one-time ~10 MB)…");
+        var p = await loadPyodide({ indexURL: PYODIDE_BASE });
+        setEngine("Loading the embedded validator…");
+        p.FS.mkdirTree("/iwkit");
+        var enc = new TextEncoder();
+        p.FS.writeFile("/iwkit/validate_iw_export.py", enc.encode(embedded("src-validate")));
+        p.FS.writeFile("/iwkit/static_checks.py", enc.encode(embedded("src-static")));
+        p.FS.writeFile("/iwkit/iw-export.schema.json", enc.encode(embedded("src-schema")));
+        setEngine("Loading full schema checks (jsonschema)…");
+        try { await p.loadPackage("jsonschema"); } catch (e) { /* reduced mode */ }
+        p.runPython(DRIVER);
+        pyodide = p;
+        var probe = "no";
+        try {
+          probe = p.runPython(
+            "import importlib.util\n" +
+            '"yes" if importlib.util.find_spec("jsonschema") is not None else "no"');
+        } catch (e) { probe = "no"; }
+        els.profileLine.textContent =
+          "Validator: verbatim embedded copy of tools/validate_iw_export.py " +
+          "(schema profile " + schemaProfile +
+          "), running in your browser via Pyodide. Nothing is uploaded.";
+        setEngine("Engine ready — " +
+          (probe === "yes" ? "full schema checks available."
+                           : "reduced coverage (jsonschema unavailable); " +
+                             "references and lint still run."));
+        updateButtons();
+        return p;
+      })();
+      enginePromise.catch(function (e) {
+        engineFailed = e;
+        setEngine("Engine failed to load: " + (e && e.message ? e.message : e) +
+          " — first load needs network access to cdn.jsdelivr.net.");
+      });
+    }
+    return enginePromise;
+  }
+
+  // ---------- plain-language explanations ---------- //
+
+  var CODE_INFO = {
+    "structure": ["Structure problem",
+      "A value has the wrong JSON type, misses a required field, or breaks a " +
+      "schema constraint (for example a skill level outside 0–5)."],
+    "basic-structure": ["Structure problem (reduced check)",
+      "Found by the validator's limited fallback checks because full schema " +
+      "validation was not available in this run."],
+    "schema-validation-unavailable": ["Reduced coverage",
+      "Full structural checks did not run in this environment; reference " +
+      "checks and lint still ran. Not a defect in the world itself."],
+    "unobserved-value": ["Unrecognized value",
+      "Allowed, but outside the vocabulary observed in real exports — " +
+      "check spelling and capitalization."],
+    "unobserved-field": ["Unrecognized field",
+      "This field has no characterized schema entry here. IW may ignore it, " +
+      "or it may be a typo of a real field."],
+    "schema-version": ["Unverified schemaVersion",
+      "The export's version differs from what the schema profile has " +
+      "observed; coverage is not guaranteed."],
+    "missing-id": ["Missing ID",
+      "An object has no usable identifier, so conditions and effects cannot " +
+      "reference it reliably."],
+    "duplicate-id": ["Duplicate ID",
+      "Two objects share an identifier; references become ambiguous."],
+    "unresolved-reference": ["Broken reference",
+      "An effect, condition, or character entry points at an ID that does " +
+      "not exist in the target list."],
+    "skill-binding": ["Skill variable without matching skill",
+      "An observed built-in skill variable is used without its sample skill " +
+      "name being declared."],
+    "unknown-skill-reference": ["Unknown skill reference",
+      "A built-in skill reference the kit has not verified."],
+    "missing-node-id": ["Node without ID",
+      "A condition or effect node has no usable ID."],
+    "duplicate-node-id": ["Reused node ID",
+      "The same condition/effect ID appears twice."],
+    "wrapper-payload-mismatch": ["Conflicting duplicate fields",
+      "A field appears both on the wrapper and inside the payload with " +
+      "different values; runtime precedence is unknown."],
+    "unknown-logic": ["Unknown logic operator",
+      "The logic group operator is not one of and / or / none_of."],
+    "missing-payload": ["Missing payload",
+      "A condition or effect has no data payload."],
+    "unclassified-condition": ["Unclassified condition",
+      "The condition's category is missing or not one of the observed values."],
+    "unknown-condition-type": ["Unknown condition type",
+      "Not in the observed vocabulary — possibly newer than the schema " +
+      "profile."],
+    "unlisted-situation": ["Scenario not registered",
+      "A triggerOnEvent string is not in the root conditions list; whether " +
+      "membership is mandatory is unknown."],
+    "unverified-expression": ["Expression not executed",
+      "Stored as text; the checker never runs it. Review the expression " +
+      "yourself."],
+    "timing-editor-consistency": ["Unusual trigger timing",
+      "Mid-game is enabled without start-of-game; the editor normally keeps " +
+      "these consistent, so double-check intent."],
+    "saved-inactive-trigger": ["Saved / inactive trigger",
+      "No automatic firing conditions — fine if another trigger dispatches " +
+      "it explicitly; otherwise it never fires."],
+    "dependency-editor-conflict": ["Prerequisite/blocker conflict",
+      "The same trigger is listed as both prerequisite and blocker in the " +
+      "same scope."],
+    "numeric-write-overwrite": ["Numeric writes may overwrite",
+      "Several numeric effects write the same tracker in one trigger; they " +
+      "can overwrite instead of accumulate. Use one script for dependent " +
+      "arithmetic."],
+    "unknown-effect-type": ["Unknown effect type",
+      "Not in the observed vocabulary — possibly newer than the schema " +
+      "profile."],
+    "unresolved-skill": ["Undeclared skill",
+      "An effect changes a skill that is not declared in the world's skills " +
+      "list."],
+    "unverified-script": ["Script not executed",
+      "The script text is reported as-is; the checker does not parse or run " +
+      "PawScript."],
+    "duplicate-variable": ["Duplicate variable name",
+      "Two trackers share a variableName; script references become ambiguous."],
+    "numeric-initialization": ["Non-numeric starting value",
+      "A number tracker's initialValue is not a plain numeric literal; its " +
+      "runtime meaning is unverified."],
+    "undeclared-character-skill": ["Character skill not declared",
+      "A character lists a skill that is not in the root skills list."],
+    "unverified-choice-expression": ["Startup-choice script not executed",
+      "The script that generates starting choices is stored text and is not " +
+      "evaluated."],
+    "numeric-character-initialization": ["Non-numeric character start value",
+      "A per-character starting value for a number tracker is not numeric."],
+    "authoring-placeholder": ["Possible unfilled placeholder",
+      "Looks like a library editing slot ([LIST ...] or a <#...#> authoring " +
+      "note). Fill it in, or keep it only if it is intentional runtime " +
+      "notation."],
+    "unknown-script-root": ["Possible missing variable",
+      "A script or template uses a $name that is not a declared tracker " +
+      "variableName, a script local, $game or $player — or it is an engine " +
+      "variable the kit cannot verify. Investigate; do not add trackers " +
+      "blindly."],
+    "borrowed-syntax": ["Borrowed syntax",
+      "Looks like JavaScript/Python/C syntax (==, &&, ||, colons, braces, " +
+      "semicolons). PawScript uses =, and, or and indentation."],
+    "string-plus": ["String joined with +",
+      "PawScript joins strings with &, not +. Heuristic — review manually."],
+    "context-root-unverified": ["Unverified context variable",
+      "A $variable is used where the kit cannot confirm the engine provides " +
+      "it (video prompt context)."],
+    "trailing-newline": ["Trailing newline",
+      "The text ends after the final } with a newline — remove it before " +
+      "importing into IW."]
+  };
+
+  function codeInfo(code) {
+    return CODE_INFO[code] ||
+      ["Validator finding",
+       "See tools/README.md in the kit for this diagnostic code."];
+  }
+
+  // ---------- rendering ---------- //
+
+  function show(el, yes) { el.classList.toggle("hidden", !yes); }
+
+  function renderCleanup(notes) {
+    els.cleanupList.textContent = "";
+    notes.forEach(function (n) {
+      var li = document.createElement("li");
+      li.textContent = n;
+      els.cleanupList.appendChild(li);
+    });
+    show(els.cleanupPanel, true);
+  }
+
+  function render(result, notes) {
+    show(els.problemPanel, false);
+    renderCleanup(notes);
+    show(els.resultsPanel, true);
+
+    var e = result.errors, w = result.warnings;
+    var v = els.verdict;
+    v.className = "verdict " + (e ? "err" : w ? "warn" : "ok");
+    v.textContent = e
+      ? e + " error" + (e === 1 ? "" : "s") + " · " + w + " warning" +
+        (w === 1 ? "" : "s") + " — fix the errors before importing into IW."
+      : w
+        ? "0 errors · " + w + " warning" + (w === 1 ? "" : "s") +
+          " — no structural blockers; review the warnings, then import."
+        : "Clean — 0 errors, 0 warnings.";
+
+    els.coverage.textContent =
+      (result.coverage.fullSchema
+        ? "Full JSON Schema structural checks ran. "
+        : "REDUCED COVERAGE: full schema checks did not run (jsonschema " +
+          "unavailable in-browser); reference checks and lint still ran. ") +
+      "Script/expression lint is heuristic; nothing was executed, so runtime " +
+      "behavior is not certified.";
+
+    var structuralOnly = e > 0 && result.findings.every(function (f) {
+      return f.code === "structure" || f.code === "basic-structure" ||
+             f.code === "schema-validation-unavailable";
+    });
+    show(els.shortcircuit, structuralOnly);
+
+    els.findings.textContent = "";
+    var groups = [
+      ["Errors", result.findings.filter(function (f) {
+        return f.severity === "error"; })],
+      ["Warnings", result.findings.filter(function (f) {
+        return f.severity === "warning"; })]
+    ];
+    groups.forEach(function (g) {
+      if (!g[1].length) return;
+      var h = document.createElement("h3");
+      h.textContent = g[0] + " (" + g[1].length + ")";
+      els.findings.appendChild(h);
+      g[1].forEach(function (f) {
+        var info = codeInfo(f.code);
+        var card = document.createElement("div");
+        card.className = "finding " + f.severity;
+        var top = document.createElement("div");
+        top.className = "ftop";
+        var sev = document.createElement("span");
+        sev.className = "sev " + f.severity;
+        sev.textContent = f.severity.toUpperCase();
+        var title = document.createElement("span");
+        title.className = "ftitle";
+        title.textContent = info[0];
+        var code = document.createElement("span");
+        code.className = "code";
+        code.textContent = f.code;
+        top.appendChild(sev); top.appendChild(title); top.appendChild(code);
+        var path = document.createElement("div");
+        path.className = "fpath";
+        path.textContent = f.path;
+        var msg = document.createElement("p");
+        msg.className = "fmsg";
+        msg.textContent = f.message;
+        var plain = document.createElement("p");
+        plain.className = "fplain";
+        plain.textContent = info[1];
+        card.appendChild(top); card.appendChild(path);
+        card.appendChild(msg); card.appendChild(plain);
+        els.findings.appendChild(card);
+      });
+    });
+  }
+
+  function showProblem(err) {
+    show(els.resultsPanel, false);
+    show(els.cleanupPanel, false);
+    show(els.problemPanel, true);
+    els.problemText.textContent = err && err.message ? err.message : String(err);
+    lastClean = null; lastReport = null;
+    updateButtons();
+  }
+
+  // ---------- AI report ---------- //
+
+  function buildReport(result, notes) {
+    var L = [];
+    L.push("Validation report from the IW World Checker (client-side embedded " +
+      "copy of tools/validate_iw_export.py, schema profile " + schemaProfile + "):");
+    L.push("");
+    if (!result.errors && !result.warnings) {
+      L.push("Verdict: CLEAN — 0 errors, 0 warnings.");
+    } else {
+      L.push("Verdict: " + result.errors + " error(s), " + result.warnings +
+        " warning(s)." +
+        (result.errors
+          ? " Fix the errors before this world can be imported."
+          : " No errors; review the warnings below."));
+    }
+    L.push("");
+    L.push("Coverage: " + (result.coverage.fullSchema
+      ? "full JSON Schema structural checks ran. "
+      : "REDUCED — full schema checks did not run in this environment " +
+        "(jsonschema unavailable); guarded reference checks and lint ran. ") +
+      "Static lint ran. Nothing was executed: scripts, expressions and " +
+      "templates are checked as text only, so this does not certify import " +
+      "or gameplay.");
+    if (notes.length) {
+      L.push("");
+      L.push("The checker had to clean up your last reply first:");
+      notes.forEach(function (n) { L.push("- " + n); });
+    }
+    [["ERRORS", "error"], ["WARNINGS", "warning"]].forEach(function (g) {
+      var list = result.findings.filter(function (f) {
+        return f.severity === g[1]; });
+      if (!list.length) return;
+      L.push("");
+      L.push(g[0] + " (" + list.length + ")");
+      list.forEach(function (f, i) {
+        L.push((i + 1) + ". [" + f.code + "] " + f.path);
+        L.push("   " + f.message);
+      });
+    });
+    L.push("");
+    L.push("Guidance for fixing the world:");
+    L.push("- Paths are JSON Pointers into the export, starting at the root " +
+      "object's fields.");
+    L.push("- unknown-script-root can be a genuinely missing tracker OR an " +
+      "engine-provided variable the kit has not verified; investigate rather " +
+      "than adding trackers automatically.");
+    L.push("- unverified-script / unverified-expression are not defects; they " +
+      "mark text the checker cannot run. Keep intentional runtime notation.");
+    L.push("- authoring-placeholder flags a likely unfilled library slot; " +
+      "fill it unless it is intentional.");
+    L.push("- Return the COMPLETE corrected world JSON: no code fences, " +
+      "ending exactly at the final } with no trailing newline.");
+    return L.join("\n");
+  }
+
+  // ---------- actions ---------- //
+
+  function updateButtons() {
+    els.checkBtn.disabled = !pyodide || !els.input.value.trim();
+    els.copyReportBtn.disabled = !lastReport;
+    els.copyIwBtn.disabled = !lastClean;
+  }
+
+  function setBusy(busy) {
+    els.checkBtn.disabled = busy || !pyodide || !els.input.value.trim();
+    els.checkBtn.textContent = busy ? "Checking…" : "Check world";
+  }
+
+  async function runCheck() {
+    setBusy(true);
+    try {
+      var norm = normalize(els.input.value);
+      try { JSON.parse(norm.jsonText); }
+      catch (e) { throw new InputError("Could not parse the cleaned JSON: " +
+        e.message); }
+      await ensureEngine();
+      pyodide.FS.writeFile("/iwkit/world.json",
+        new TextEncoder().encode(norm.jsonText));
+      var out = JSON.parse(pyodide.runPython("iw_validate()"));
+      lastClean = norm.jsonText;
+      lastReport = buildReport(out, norm.notes);
+      render(out, norm.notes);
+    } catch (err) {
+      showProblem(err && err.constructor === InputError
+        ? err
+        : new InputError("The validator failed: " +
+            (err && err.message ? err.message : err)));
+    } finally {
+      setBusy(false);
+      updateButtons();
+    }
+  }
+
+  async function copyText(btn, text) {
+    try { await navigator.clipboard.writeText(text); }
+    catch (e) {
+      var ta = document.createElement("textarea");
+      ta.value = text;
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand("copy");
+      ta.remove();
+    }
+    var old = btn.textContent;
+    btn.textContent = "Copied ✓";
+    setTimeout(function () { btn.textContent = old; }, 1500);
+  }
+
+  async function renderHashes() {
+    try {
+      var enc = new TextEncoder();
+      var pairs = [["src-validate","validate_iw_export.py"],
+                   ["src-static","static_checks.py"],
+                   ["src-schema","iw-export.schema.json"]];
+      var parts = [];
+      for (var i = 0; i < pairs.length; i++) {
+        var buf = await crypto.subtle.digest("SHA-256",
+          enc.encode(embedded(pairs[i][0]) + "\n"));
+        var hex = Array.from(new Uint8Array(buf)).map(function (b) {
+          return b.toString(16).padStart(2, "0"); }).join("");
+        parts.push(pairs[i][1] + " " + hex.slice(0, 16));
+      }
+      els.hashLine.textContent =
+        "Embedded sources, sha256 (first 16): " + parts.join(" · ");
+    } catch (e) { /* non-secure context: hashes unavailable */ }
+  }
+
+  els.checkBtn.addEventListener("click", runCheck);
+  els.input.addEventListener("input", updateButtons);
+  els.clearBtn.addEventListener("click", function () {
+    els.input.value = "";
+    lastClean = lastReport = null;
+    show(els.resultsPanel, false);
+    show(els.cleanupPanel, false);
+    show(els.problemPanel, false);
+    updateButtons();
+  });
+  els.copyReportBtn.addEventListener("click", function () {
+    if (lastReport) copyText(els.copyReportBtn, lastReport);
+  });
+  els.copyIwBtn.addEventListener("click", function () {
+    if (lastClean) copyText(els.copyIwBtn, lastClean);
+  });
+  els.selfTestBtn.addEventListener("click", function () {
+    els.input.value = embedded("src-template");
+    updateButtons();
+    runCheck();
+  });
+
+  // Warm up the engine immediately so the first check is fast.
+  setEngine("Preparing validator engine…");
+  ensureEngine().catch(function () { /* status already shown */ });
+  renderHashes();
+  updateButtons();
+})();
+</script>
+</body>
+</html>
