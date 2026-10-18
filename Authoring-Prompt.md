@@ -38,6 +38,8 @@ The template or current export is required for construction. Files below are sel
 | Personal libraries, portable banks, bundles, PC/NPC conversion or full-content build reports | reference/Portable-Banks.md; tools/data_bank.py when execution is available |
 | Code-based validation or edit comparison | tools/validate_iw_export.py, tools/iw-export.schema.json and tools/README.md |
 
+/samples/ contains design conversations and resulting worlds. Not part of authoring prompt. Exclude from reading and searches unless user explicitly requests sample or identifies relevance. Read only selected sample and necessary companions.
+
 ## 3. Agree the experience, not implementation trivia
 
 Minimum creative brief: premise, player role, tone/content boundaries, and ending versus ongoing play. Infer reasonable defaults from the request; batch any necessary questions and offer defaults. Respect decisions already supplied. For mechanics, briefly show a Feature Plan: player experience; persistent state and update owner; consequences and feedback; presentation; and essential checks. Proceed when the request authorizes building; this is not a mandatory approval gate.
