@@ -10,13 +10,13 @@ This is an independent, unaffiliated resource by a single user. [Compatibility a
 
 ## Start here
 
-**Web-capable model:** just give it this URL: https://IW-Builder.github.io/. If it doesn't have Python, a client side validator is available: https://IW-Builder.github.io/checker/
+**Web-capable model:** just give it this URL: `https://IW-Builder.github.io/`. If it doesn't have Python, a [client side validator](https://IW-Builder.github.io/checker/) is available; validation is not required, it's just for troubleshooting.
 
 **[Full-kit workflow](full-package.zip):** upload this ZIP to an AI that can extract files. Ask it to read Authoring-Prompt.md and select the references it needs. Archive access and code execution are separate capabilities; the AI should state which it has.
 
-**Two-step workflow:** attach Authoring-Prompt.md and World-Template.json (or your current world), then describe the task. The AI outlines the features and names the exact additional files it needs. Attach those files, then it builds. You do not have to decide which technical references apply.
+**Two-step workflow:** attach Authoring-Prompt.md and World-Template.json (or your world) and describe the task. The AI outlines the features and names additional files it needs. Attach those files, then it builds. You do not have to decide which technical references apply.
 
-**[Text-only workflow](chat/):** start with [IW-Authoring-Guide.txt](chat/IW-Authoring-Guide.txt): the prompt, template and core references. Add [IW-Examples.txt](chat/IW-Examples.txt) for native payloads and complete recipes and [IW-Sample-Library.txt](chat/IW-Sample-Library.txt) for library modules. These are concatenated source files, not separate maintained guides. [IW-Tools.txt](chat/IW-Tools.txt) supplies the tool sources for an AI that can reconstruct files and run Python.
+**[Text-only workflow](chat/):** start with [IW-Authoring-Guide.txt](chat/IW-Authoring-Guide.txt): the prompt, template and core references. Add [IW-Examples.txt](chat/IW-Examples.txt) for native payloads and complete recipes and [IW-Sample-Library.txt](chat/IW-Sample-Library.txt) for library modules. Only provide if the model asks for them. [IW-Tools.txt](chat/IW-Tools.txt) supplies the tool sources for an AI that can reconstruct files and run Python.
 
 ## Ready-to-use requests
 
