@@ -1,0 +1,971 @@
+{
+  "favorite": false,
+  "title": "Bad Touch",
+  "description": "An open-ended erotic superhero comedy of manners. A few years after a very stupid disaster gave a small share of humanity suspiciously sexual superpowers, ordinary life goes on. Choose who you are - powered or stubbornly not - pick your power's intensity and where you live, and make your own fun in a world that has decided this is simply how things are now.",
+  "background": "A few years ago the Bloom Incident - the tabloids still call it the Big Oops - ended the old world with a comedy of errors. The source itself was a genuine miracle of science: the Sublime Strain, a discovery that was not remotely sexual. What followed was a chain of breathtaking human negligence. The lead researcher vanished mid-crisis with the marketing coordinator. The containment intern was writing fan fiction of the night shift. The emergency vent fed the HVAC of a couples' retreat. The final failsafe installed a smart-fridge app instead of firmware. The oversight committee was at a swingers' convention. By the time anyone read the last email, the Strain was everywhere. Then came the punchline: everything it did to humanity was anatomical. Whatever cosmic force oversaw the release apparently took one look at how the species handled it and decided the insult should be sexual. Nobody says this out loud. Everyone knows it. Now roughly two percent of people have powers, every single one of them somehow erotic - from 'people who shake my hand feel briefly flirtatious' to literal sex gods - and society has shrugged, adapted, legislated badly and moved on. This is the world now.",
+  "instructions": "Run an open-ended erotic superhero comedy in a world where the weird is normal. Tone: dark comedy and lighthearted smut - warm, character-driven and playful, occasionally genuinely dramatic when the player leans that way; never cruel, punishing or grim. Powers are always sexual in nature, from absurdly subtle to god-tier, and the unspoken cosmic punchline is never stated aloud by any character: the idea that someone decided this should be sexual lives in the air, never in dialogue. Prevalence: roughly two percent of people are powered. Of the powered, about 65% are Mild, 30% Average, 5% Strong; Extreme is a sprinkle, single digits per big city. Keep generated density matched to the Setting Brief. The Six Lines taxonomy is fan astrology: characters argue about it in bars, and individual powers have personal names their wielders chose. Trackers are authoritative: power_rank is the current tier (0 Mild to 3 Extreme), depth is progress toward the next breakthrough, power_profile holds current capabilities and quirks, stride_ledger is the chronology of flare-up picks, and setting plus intensity are the player's permanent choices. Never invent numeric mechanics, currencies or health systems. Skills are Charm, Nerve and Cleverness; the native Evaluation adjudicates actions. Progression happens only through the Flare-Up and Breakthrough systems described in the Power Progression block: narrate attempts and let the engine's messages confirm results, never verbally assign new abilities. The NPC Generator block supplies the cast on demand. Never instantiate the NPC card matching the selected player character. Consent matters precisely because powers muddle it: no on-screen non-consensual sex, and when a power blurs free will the story treats it as a genuine social and ethical problem with real consequences, played like a workplace safety violation with jokes. The player decides how far anything goes; the story earns its explicit scenes rather than forcing them.",
+  "authorStyle": "Second-person present. Campy, warm, explicit when the scene earns it: bodies and sex described with affectionate specificity and comedy, never clinical coldness or purple euphemism. Dialogue carries the story - quick, self-aware, occasionally awkward, with distinct voices and people who interrupt. Keep scenes compact with room for the player to answer. Dark jokes land on situations and institutions; characters keep their dignity even when their powers do not. When the story turns dramatic, commit briefly and honestly, then let the comedy breathe again.",
+  "recommendedAIModel": null,
+  "firstInput": "Begin in the chosen setting on an ordinary weeknight, mid-errand. Something small goes cinematically wrong in public: a stranger's Mild power spooks the dog, fogs the window, or makes the jukebox flirt, and somebody nearby - familiar or brand new - is visibly deciding whether this is going to be your problem. Open on that moment: one local face, the immediate awkwardness, and several ways I might respond (defuse it, escalate, slip away, or lean in). Do not resolve the incident, dump lore, or introduce a cast. Start with the whereWhen header.",
+  "objective": "Make a life in the aftermath of the Big Oops: grow on your own terms, get entangled, and see what your corner of the world does about it. There is no single win state - the point is the ongoing comedy, the escalating you, and the people you collect along the way.",
+  "imageModel": "manticore",
+  "imageStyle": "photo_1",
+  "illustrationStyleNonCharacterLowPriority": "",
+  "illustrationStyleNonCharacterHighPriority": "",
+  "illustrationStyleCharacterLowPriority": "",
+  "illustrationStyleCharacterHighPriority": "",
+  "imageStyleCharacterPre": "",
+  "imageStyleCharacterPost": "",
+  "imageStyleNonCharacterPre": "",
+  "imageStyleNonCharacterPost": "",
+  "mature": true,
+  "nsfw": true,
+  "contentWarnings": "Explicit sexual content and adult language throughout. Comic peril, dubious workplace safety, and lewd superpowers. Non-consensual acts are not depicted; the story takes consent seriously even when powers do not.",
+  "enableAISpecificInstructionBlocks": false,
+  "previewImage": "",
+  "fullSizePreviewImage": "",
+  "previewImageOptions": [],
+  "fullSizePreviewImageOptions": [],
+  "currentPreviewImageIndex": -1,
+  "imagePromptDetails": {
+    "illustrClothes": "",
+    "illustrSetting": "",
+    "illustrSubject": "",
+    "illustrAppearance": "",
+    "illustrIsCharacter": false,
+    "illustrExpressionPosition": ""
+  },
+  "permissionsOnceShared": {
+    "sharing": true,
+    "editing": true
+  },
+  "allowChangeCharacterName": false,
+  "allowChangeCharacterDescription": false,
+  "allowChangeCharacterSkills": false,
+  "allowChangeCharacterItemValues": false,
+  "allowChangeCharacterPortrait": false,
+  "allowChangeCharacterNewPortrait": false,
+  "conditions": [
+    "The player's power visibly breaks through to its next tier this turn: it is pushed past its documented limits in a real crisis, deliberately trained across multiple scenes, or unlocked by an emotional or identity breakthrough tied to what the power means to them. Ordinary use - no matter how creative, horny or successful - is not a breakthrough."
+  ],
+  "schemaVersion": 2.4,
+  "skills": [
+    "Charm",
+    "Nerve",
+    "Cleverness"
+  ],
+  "possibleCharacters": [
+    {
+      "name": "Wren Adeyemi",
+      "description": "A woman working the morning shift at a cafe that has become a public hazard because of her. Her power is a Mild Magnet gift she calls Warm Front: people around her feel flattered, linger too long at the counter, and tip strangely. Ambitious and dry about it; she wants to be taken seriously at work for once instead of being local gossip. Gender: woman.",
+      "portrait": "",
+      "portraitPromptDetails": {
+        "illustrAppearance": "",
+        "illustrClothes": "",
+        "illustrExpressionPosition": "",
+        "illustrSetting": ""
+      },
+      "fullSizePortrait": "",
+      "portraitOptions": [],
+      "fullSizePortraitOptions": [],
+      "currentPortraitIndex": -1,
+      "characterId": "pcMagnet1",
+      "skills": {
+        "Charm": 4,
+        "Nerve": 3,
+        "Cleverness": 2
+      },
+      "initialTrackedItemValues": [
+        {
+          "id": "pwrId003x",
+          "name": "Power Line",
+          "visibility": "everyone",
+          "initialValueBasedOnPC": "character",
+          "initialPCValue": "The Magnet"
+        }
+      ]
+    },
+    {
+      "name": "Marco Vidal",
+      "description": "A man who trains people at a gym and does bit parts in local commercials. His power is a Mild Sculpture gift he calls Best in Show: one feature of him always peaks at the worst possible moment. The body-identity comedy is his running gag and his genuine wound; he is funny about it before he is honest about it. Gender: man.",
+      "portrait": "",
+      "portraitPromptDetails": {
+        "illustrAppearance": "",
+        "illustrClothes": "",
+        "illustrExpressionPosition": "",
+        "illustrSetting": ""
+      },
+      "fullSizePortrait": "",
+      "portraitOptions": [],
+      "fullSizePortraitOptions": [],
+      "currentPortraitIndex": -1,
+      "characterId": "pcSculpt1",
+      "skills": {
+        "Charm": 3,
+        "Nerve": 3,
+        "Cleverness": 3
+      },
+      "initialTrackedItemValues": [
+        {
+          "id": "pwrId003x",
+          "name": "Power Line",
+          "visibility": "everyone",
+          "initialValueBasedOnPC": "character",
+          "initialPCValue": "The Sculpture"
+        }
+      ]
+    },
+    {
+      "name": "June Park",
+      "description": "A woman who works emergency intake at a hospital and moonlights as a physical therapist. Her power is a Mild Conductor gift she calls Static Shock: accidental brushes leave a warm, distracting tingle. Famous bedside manner, exhaustingly ethical about consent and touch, and quietly furious when other powered people are careless. Gender: woman.",
+      "portrait": "",
+      "portraitPromptDetails": {
+        "illustrAppearance": "",
+        "illustrClothes": "",
+        "illustrExpressionPosition": "",
+        "illustrSetting": ""
+      },
+      "fullSizePortrait": "",
+      "portraitOptions": [],
+      "fullSizePortraitOptions": [],
+      "currentPortraitIndex": -1,
+      "characterId": "pcConduc1",
+      "skills": {
+        "Charm": 3,
+        "Nerve": 4,
+        "Cleverness": 2
+      },
+      "initialTrackedItemValues": [
+        {
+          "id": "pwrId003x",
+          "name": "Power Line",
+          "visibility": "everyone",
+          "initialValueBasedOnPC": "character",
+          "initialPCValue": "The Conductor"
+        }
+      ]
+    },
+    {
+      "name": "Ollie Fenn",
+      "description": "A man who licenses himself as a private investigator mostly so he can say no to jobs. His power is a Mild Confessor gift he calls Hunch: vague, unreliable instincts about what someone finds attractive. He takes missing-pet cases to avoid knowing more human secrets and has accidentally become the best matchmaker in town. Gender: man.",
+      "portrait": "",
+      "portraitPromptDetails": {
+        "illustrAppearance": "",
+        "illustrClothes": "",
+        "illustrExpressionPosition": "",
+        "illustrSetting": ""
+      },
+      "fullSizePortrait": "",
+      "portraitOptions": [],
+      "fullSizePortraitOptions": [],
+      "currentPortraitIndex": -1,
+      "characterId": "pcConfes1",
+      "skills": {
+        "Charm": 2,
+        "Nerve": 3,
+        "Cleverness": 4
+      },
+      "initialTrackedItemValues": [
+        {
+          "id": "pwrId003x",
+          "name": "Power Line",
+          "visibility": "everyone",
+          "initialValueBasedOnPC": "character",
+          "initialPCValue": "The Confessor"
+        }
+      ]
+    },
+    {
+      "name": "Dominique Okafor",
+      "description": "A woman who plans events after years as theater crew. Her power is a Mild Set Dresser gift she calls Mood Lighting: her surroundings flatter everyone present. Her venue mishaps are legendary and mostly deniable, and she treats both as production problems. Gender: woman.",
+      "portrait": "",
+      "portraitPromptDetails": {
+        "illustrAppearance": "",
+        "illustrClothes": "",
+        "illustrExpressionPosition": "",
+        "illustrSetting": ""
+      },
+      "fullSizePortrait": "",
+      "portraitOptions": [],
+      "fullSizePortraitOptions": [],
+      "currentPortraitIndex": -1,
+      "characterId": "pcSetDrs1",
+      "skills": {
+        "Charm": 3,
+        "Nerve": 2,
+        "Cleverness": 4
+      },
+      "initialTrackedItemValues": [
+        {
+          "id": "pwrId003x",
+          "name": "Power Line",
+          "visibility": "everyone",
+          "initialValueBasedOnPC": "character",
+          "initialPCValue": "The Set Dresser"
+        }
+      ]
+    },
+    {
+      "name": "Travis Boone",
+      "description": "A man who adjusts insurance claims for a living and lives inside his own farce. His power is a Mild Karmic Engine gift he calls Meet Cute: he personally trips into flirtatious setups. He prewrites apology letters for events that have not happened yet and is weirdly good at his job because of it. Gender: man.",
+      "portrait": "",
+      "portraitPromptDetails": {
+        "illustrAppearance": "",
+        "illustrClothes": "",
+        "illustrExpressionPosition": "",
+        "illustrSetting": ""
+      },
+      "fullSizePortrait": "",
+      "portraitOptions": [],
+      "fullSizePortraitOptions": [],
+      "currentPortraitIndex": -1,
+      "characterId": "pcKarmic1",
+      "skills": {
+        "Charm": 2,
+        "Nerve": 4,
+        "Cleverness": 3
+      },
+      "initialTrackedItemValues": [
+        {
+          "id": "pwrId003x",
+          "name": "Power Line",
+          "visibility": "everyone",
+          "initialValueBasedOnPC": "character",
+          "initialPCValue": "The Karmic Engine"
+        }
+      ]
+    },
+    {
+      "name": "Sam Reyes",
+      "description": "A nonbinary paramedic (or dive-bar owner, depending on the chosen setting) with no power at all. Everyone assumes their subtlety is on purpose. Sam's gift is a working 'no' - the one force in the room that powers conspicuously fail against - and a willingness to be the straight person in a world of catastrophic punchlines. Gender: nonbinary.",
+      "portrait": "",
+      "portraitPromptDetails": {
+        "illustrAppearance": "",
+        "illustrClothes": "",
+        "illustrExpressionPosition": "",
+        "illustrSetting": ""
+      },
+      "fullSizePortrait": "",
+      "portraitOptions": [],
+      "fullSizePortraitOptions": [],
+      "currentPortraitIndex": -1,
+      "characterId": "pcBaseln1",
+      "skills": {
+        "Charm": 3,
+        "Nerve": 4,
+        "Cleverness": 3
+      },
+      "initialTrackedItemValues": [
+        {
+          "id": "pwrId003x",
+          "name": "Power Line",
+          "visibility": "everyone",
+          "initialValueBasedOnPC": "character",
+          "initialPCValue": "Baseline"
+        }
+      ]
+    },
+    {
+      "name": "The Wildcard",
+      "description": "You define this character completely: name, gender, appearance, personality, and their power - including its personal name and exact description. Their power should be sexual in nature like everyone else's, and is mapped to the nearest of the Six Lines for tier scaling while keeping its own flavor. They live in the chosen setting and got their power from the Big Oops like everyone else. Write whatever starting situation and personality you want; the storyteller will fold it in.",
+      "portrait": "",
+      "portraitPromptDetails": {
+        "illustrAppearance": "",
+        "illustrClothes": "",
+        "illustrExpressionPosition": "",
+        "illustrSetting": ""
+      },
+      "fullSizePortrait": "",
+      "portraitOptions": [],
+      "fullSizePortraitOptions": [],
+      "currentPortraitIndex": -1,
+      "characterId": "pcCustom1",
+      "skills": {
+        "Charm": 3,
+        "Nerve": 3,
+        "Cleverness": 3
+      },
+      "initialTrackedItemValues": [
+        {
+          "id": "pwrId003x",
+          "name": "Power Line",
+          "visibility": "everyone",
+          "initialValueBasedOnPC": "character",
+          "initialPCValue": "Custom"
+        }
+      ]
+    }
+  ],
+  "triggerEvents": [
+    {
+      "id": "trgSetup01",
+      "name": "Power Calibration",
+      "triggerConditions": [
+        {
+          "category": "condition",
+          "type": "triggerOnPawScript",
+          "data": "$calibrated = 0",
+          "id": "node-bt-c0"
+        }
+      ],
+      "triggerEffects": [
+        {
+          "type": "effectRunScript",
+          "data": "if $intensity = \"Mild\"\n  $power_rank = 0\nelse if $intensity = \"Strong\"\n  $power_rank = 2\nelse if $intensity = \"Extreme\"\n  $power_rank = 3\nelse\n  $power_rank = 1\n$calibrated = 1",
+          "name": "Calibrate Power Rank",
+          "id": "node-bt-1"
+        }
+      ],
+      "triggerOnStartOfGame": true,
+      "triggerMidGame": true,
+      "canTriggerMoreThanOnce": true,
+      "advancedLogic": false
+    },
+    {
+      "id": "trgFlare02",
+      "name": "Flare-Up Due",
+      "triggerConditions": [
+        {
+          "category": "condition",
+          "type": "triggerOnPawScript",
+          "data": "$game.turn_number >= $flare_next",
+          "id": "node-bt-c1"
+        }
+      ],
+      "triggerEffects": [
+        {
+          "type": "effectPresentChoice",
+          "data": {
+            "path": "",
+            "valueDelimiter": "newline",
+            "updateMode": "replace",
+            "minSelections": null,
+            "choices": "Refine\nTwist\nBoon\nDeepen",
+            "maxSelections": null,
+            "targetTrackedItemId": "fchId008x",
+            "selectionMode": "single",
+            "message": "Your power stirs, and something small is about to shift. The four above are the categories; the Power Progression block tells you what this turn's version of each would actually be. Pick one."
+          },
+          "id": "node-bt-2"
+        }
+      ],
+      "triggerOnStartOfGame": false,
+      "triggerMidGame": false,
+      "canTriggerMoreThanOnce": true,
+      "advancedLogic": false
+    },
+    {
+      "id": "trgApply03",
+      "name": "Apply Flare Choice",
+      "triggerConditions": [
+        {
+          "category": "condition",
+          "type": "triggerOnPawScript",
+          "data": "$flare_choice != \"\"",
+          "id": "node-bt-c2"
+        }
+      ],
+      "triggerEffects": [
+        {
+          "type": "effectRunScript",
+          "data": "if $flare_choice = \"Deepen\"\n  $flare_receipt = \"Deepen: one step toward your next breakthrough.\"\nelse if $flare_choice = \"Refine\"\n  $flare_receipt = \"Refine: a small sharpening of your current power.\"\nelse if $flare_choice = \"Twist\"\n  $flare_receipt = \"Twist: something strange joins your power.\"\nelse if $flare_choice = \"Boon\"\n  $flare_receipt = \"Boon: something accrues outside your power.\"\nelse\n  $flare_receipt = \"A flare-up passes without a clear answer.\"\nif $flare_choice = \"Deepen\" and $depth < 3\n  $depth += 1\nset $interval = 10\nif $game.turn_number < 9\n  $interval = 5\nelse if $game.turn_number < 17\n  $interval = 8\n$flare_next = $game.turn_number + $interval\n$flare_choice = \"\"",
+          "name": "Apply Flare-Up Outcome",
+          "id": "node-bt-3"
+        }
+      ],
+      "triggerOnStartOfGame": false,
+      "triggerMidGame": false,
+      "canTriggerMoreThanOnce": true,
+      "advancedLogic": false
+    },
+    {
+      "id": "trgRcpt04",
+      "name": "Flare Receipt",
+      "triggerConditions": [
+        {
+          "category": "condition",
+          "type": "triggerOnPawScript",
+          "data": "$flare_receipt != \"\"",
+          "id": "node-bt-c3"
+        }
+      ],
+      "triggerEffects": [
+        {
+          "type": "effectShowMessage",
+          "data": "<<$flare_receipt>> Breakthrough depth: <<$depth>> / 3. Power rank: <<$power_rank>>.",
+          "id": "node-bt-4"
+        },
+        {
+          "type": "effectRunScript",
+          "data": "$flare_receipt = \"\"",
+          "name": "Clear Flare Receipt",
+          "id": "node-bt-5"
+        }
+      ],
+      "triggerOnStartOfGame": false,
+      "triggerMidGame": false,
+      "canTriggerMoreThanOnce": true,
+      "advancedLogic": false
+    },
+    {
+      "id": "trgBrkth05",
+      "name": "Breakthrough",
+      "triggerConditions": [
+        {
+          "category": "logic",
+          "operator": "and",
+          "data": [
+            {
+              "category": "condition",
+              "type": "triggerOnEvent",
+              "data": "The player's power visibly breaks through to its next tier this turn: it is pushed past its documented limits in a real crisis, deliberately trained across multiple scenes, or unlocked by an emotional or identity breakthrough tied to what the power means to them. Ordinary use - no matter how creative, horny or successful - is not a breakthrough.",
+              "id": "node-bt-c5"
+            },
+            {
+              "category": "condition",
+              "type": "triggerOnPawScript",
+              "data": "$depth >= 3 and ($game.turn_number - $break_guard) >= 20",
+              "id": "node-bt-c6"
+            }
+          ],
+          "id": "node-bt-c4"
+        }
+      ],
+      "triggerEffects": [
+        {
+          "type": "effectRunScript",
+          "data": "if $power_rank < 3\n  $power_rank += 1\n$depth = 0\n$break_guard = $game.turn_number",
+          "name": "Record Breakthrough",
+          "id": "node-bt-6"
+        },
+        {
+          "type": "effectShowMessage",
+          "data": "Something gives way. Your power is more than it was yesterday.",
+          "id": "node-bt-7"
+        },
+        {
+          "type": "effectGiveInfo",
+          "data": "A major breakthrough has just been recorded. Escalate the player's power one rung on its own ladder, or at Extreme narrate a milestone in managing godhood. It must read as an amplification of the same power: the new rung capability plus, at most, one borrowed quirk from a sibling line. Update Power Profile and stride_ledger accordingly next turn. Treat this as rare and story-shaping: the world notices a tier jump, and it should change the character's situation.",
+          "id": "node-bt-8"
+        }
+      ],
+      "triggerOnStartOfGame": false,
+      "triggerMidGame": false,
+      "canTriggerMoreThanOnce": true,
+      "advancedLogic": false
+    },
+    {
+      "id": "trgMisf06",
+      "name": "Ambient Misfire",
+      "triggerConditions": [
+        {
+          "category": "condition",
+          "type": "triggerOnRandomChance",
+          "data": "12",
+          "id": "node-bt-c7"
+        }
+      ],
+      "triggerEffects": [
+        {
+          "type": "effectShowMessage",
+          "data": "Ambient ripple: somewhere nearby, somebody's power just misfired in the background.",
+          "id": "node-bt-9"
+        },
+        {
+          "type": "effectGiveInfo",
+          "data": "Weave a brief background power mishap or awkward ripple into the next scene where it fits: a stranger's Mild power hiccuping, a blush in the wrong room, tech acting flirty. Keep it incidental texture, not a new plot.",
+          "id": "node-bt-10"
+        }
+      ],
+      "triggerOnStartOfGame": false,
+      "triggerMidGame": false,
+      "canTriggerMoreThanOnce": true,
+      "advancedLogic": false
+    }
+  ],
+  "victoryCondition": null,
+  "defeatCondition": null,
+  "trackedItems": [
+    {
+      "id": "setId001x",
+      "name": "Setting",
+      "positionInList": 0,
+      "dataType": "text",
+      "visibility": "everyone",
+      "description": "The player's permanent choice of where they live in the world after the Big Oops. Do not change it during play.",
+      "updateInstructions": "",
+      "formatExample": "",
+      "enforceFormat": false,
+      "formatSchema": "",
+      "initialValue": "Meridian",
+      "initialValueBasedOnPC": "player",
+      "autoUpdate": false,
+      "variableName": "setting",
+      "driftAcknowledgedForName": null,
+      "initialValueChoices": [
+        "Back of Beyond",
+        "Big Fish Town",
+        "Good Neighbors Town",
+        "Meridian"
+      ]
+    },
+    {
+      "id": "intId002x",
+      "name": "Power Intensity",
+      "positionInList": 1,
+      "dataType": "text",
+      "visibility": "everyone",
+      "description": "The player's permanent choice of power tier at start. Mild, Average, Strong or Extreme. For Baseline this describes how loud the world around them is instead. Do not change it during play.",
+      "updateInstructions": "",
+      "formatExample": "",
+      "enforceFormat": false,
+      "formatSchema": "",
+      "initialValue": "Average",
+      "initialValueBasedOnPC": "player",
+      "autoUpdate": false,
+      "variableName": "intensity",
+      "driftAcknowledgedForName": null,
+      "initialValueChoices": [
+        "Mild",
+        "Average",
+        "Strong",
+        "Extreme"
+      ]
+    },
+    {
+      "id": "pwrId003x",
+      "name": "Power Line",
+      "positionInList": 2,
+      "dataType": "text",
+      "visibility": "everyone",
+      "description": "Which of the Six Lines the character's power belongs to; set per character at creation. Custom maps to its nearest line for tier scaling.",
+      "updateInstructions": "",
+      "formatExample": "",
+      "enforceFormat": false,
+      "formatSchema": "",
+      "initialValue": "",
+      "initialValueBasedOnPC": "character",
+      "autoUpdate": false,
+      "variableName": "power_line",
+      "driftAcknowledgedForName": null
+    },
+    {
+      "id": "pnkId004x",
+      "name": "Power Rank",
+      "positionInList": 3,
+      "dataType": "number",
+      "visibility": "everyone",
+      "description": "Current tier: 0 Mild, 1 Average, 2 Strong, 3 Extreme. Set once at calibration and raised only by Breakthrough. Authoritative.",
+      "updateInstructions": "",
+      "formatExample": "",
+      "enforceFormat": false,
+      "formatSchema": "",
+      "initialValue": "0",
+      "initialValueBasedOnPC": "same",
+      "autoUpdate": false,
+      "variableName": "power_rank",
+      "driftAcknowledgedForName": null
+    },
+    {
+      "id": "dptId005x",
+      "name": "Breakthrough Depth",
+      "positionInList": 4,
+      "dataType": "number",
+      "visibility": "everyone",
+      "description": "Progress toward the next breakthrough, 0 to 3. Raised by Deepen picks and consumed by breakthroughs. The player should see this move.",
+      "updateInstructions": "",
+      "formatExample": "",
+      "enforceFormat": false,
+      "formatSchema": "",
+      "initialValue": "0",
+      "initialValueBasedOnPC": "same",
+      "autoUpdate": false,
+      "variableName": "depth",
+      "driftAcknowledgedForName": null
+    },
+    {
+      "id": "fnxId006x",
+      "name": "Next Flare Turn",
+      "positionInList": 5,
+      "dataType": "number",
+      "visibility": "hidden_boring",
+      "description": "Engine scheduler: the turn on which the next flare-up is due. Do not edit in narration.",
+      "updateInstructions": "",
+      "formatExample": "",
+      "enforceFormat": false,
+      "formatSchema": "",
+      "initialValue": "4",
+      "initialValueBasedOnPC": "same",
+      "autoUpdate": false,
+      "variableName": "flare_next",
+      "driftAcknowledgedForName": null
+    },
+    {
+      "id": "bgrId007x",
+      "name": "Last Breakthrough Turn",
+      "positionInList": 6,
+      "dataType": "number",
+      "visibility": "hidden_boring",
+      "description": "Engine scheduler: the turn of the last breakthrough, used for the 20-turn spacing floor. Do not edit in narration.",
+      "updateInstructions": "",
+      "formatExample": "",
+      "enforceFormat": false,
+      "formatSchema": "",
+      "initialValue": "-20",
+      "initialValueBasedOnPC": "same",
+      "autoUpdate": false,
+      "variableName": "break_guard",
+      "driftAcknowledgedForName": null
+    },
+    {
+      "id": "fchId008x",
+      "name": "Flare Choice",
+      "positionInList": 7,
+      "dataType": "text",
+      "visibility": "everyone",
+      "description": "Target of the flare-up choice menu. Written only by the engine; consumed the same turn.",
+      "updateInstructions": "",
+      "formatExample": "",
+      "enforceFormat": false,
+      "formatSchema": "",
+      "initialValue": "",
+      "initialValueBasedOnPC": "same",
+      "autoUpdate": false,
+      "variableName": "flare_choice",
+      "driftAcknowledgedForName": null
+    },
+    {
+      "id": "frcId009x",
+      "name": "Flare Receipt",
+      "positionInList": 8,
+      "dataType": "text",
+      "visibility": "hidden_boring",
+      "description": "Staging text for the flare-up confirmation message. Do not edit.",
+      "updateInstructions": "",
+      "formatExample": "",
+      "enforceFormat": false,
+      "formatSchema": "",
+      "initialValue": "",
+      "initialValueBasedOnPC": "same",
+      "autoUpdate": false,
+      "variableName": "flare_receipt",
+      "driftAcknowledgedForName": null
+    },
+    {
+      "id": "calId010x",
+      "name": "Calibrated",
+      "positionInList": 9,
+      "dataType": "number",
+      "visibility": "hidden_boring",
+      "description": "Guard flag: 1 once the intensity-to-rank calibration has run. Do not edit.",
+      "updateInstructions": "",
+      "formatExample": "",
+      "enforceFormat": false,
+      "formatSchema": "",
+      "initialValue": "0",
+      "initialValueBasedOnPC": "same",
+      "autoUpdate": false,
+      "variableName": "calibrated",
+      "driftAcknowledgedForName": null
+    },
+    {
+      "id": "prfId011x",
+      "name": "Power Profile",
+      "positionInList": 10,
+      "dataType": "yaml",
+      "visibility": "everyone",
+      "description": "The living description of the player's power: its personal name, what it can currently do, its quirks, and its known limits. The player reads this, so keep it accurate and evocative.",
+      "updateInstructions": "Keep this current as the power changes. codename is the power's personal name. applications is what the character can actually do right now at their current rung (keep 3 to 8 lines, each concrete and situational). quirks lists current Twist flavors and behavioral oddities, newest first. known_limits lists real constraints and liabilities. Record each Flare-Up pick as it happens and each breakthrough as an amplification of the same power. Do not record rank numbers or mechanical bookkeeping - other trackers own those. Never invent abilities that were not earned through the Flare-Up or Breakthrough systems.",
+      "formatExample": "codename: Warm Front\napplications:\n- People nearby feel flattered and linger; compliments land warm\nquirks:\n- Aura smells of cinnamon when flaring\nknown_limits:\n- Cannot be aimed or switched off",
+      "enforceFormat": false,
+      "formatSchema": "",
+      "initialValue": "codename: \"\"\napplications: []\nquirks: []\nknown_limits: []",
+      "initialValueBasedOnPC": "same",
+      "autoUpdate": true,
+      "variableName": "power_profile",
+      "driftAcknowledgedForName": null
+    },
+    {
+      "id": "stlId012x",
+      "name": "Stride Ledger",
+      "positionInList": 11,
+      "dataType": "yaml",
+      "visibility": "ai_only",
+      "description": "Chronological log of progression events: flare-up picks and breakthroughs.",
+      "updateInstructions": "Append one entry per flare-up pick and per breakthrough: turn, category (Refine, Twist, Boon, Deepen or Breakthrough) and a one-line description of what was chosen or gained. Keep the most recent 10 entries; drop the oldest when full. Do not record narration flavor that changes over time.",
+      "formatExample": "",
+      "enforceFormat": false,
+      "formatSchema": "",
+      "initialValue": "picks: []",
+      "initialValueBasedOnPC": "same",
+      "autoUpdate": true,
+      "variableName": "stride_ledger",
+      "driftAcknowledgedForName": null
+    },
+    {
+      "id": "cstId013x",
+      "name": "Cast Registry",
+      "positionInList": 12,
+      "dataType": "yaml",
+      "visibility": "ai_only",
+      "description": "Bounded memory of recurring NPCs so generated characters return consistent.",
+      "updateInstructions": "Add a brief record for any NPC who appears twice or matters socially: name, power line and rank (or Baseline), what they want, one voice cue, and their relation to the player. Maximum 10 records; when full, replace the least relevant. Do not store scene dressing or secrets the player does not know.",
+      "formatExample": "",
+      "enforceFormat": false,
+      "formatSchema": "",
+      "initialValue": "cast: []",
+      "initialValueBasedOnPC": "same",
+      "autoUpdate": true,
+      "variableName": "cast_registry",
+      "driftAcknowledgedForName": null
+    }
+  ],
+  "hideSkillSystem": false,
+  "autoAdvanceVersion": false,
+  "version": "1.0",
+  "charSelectText": "Choose who you are in the world after the Big Oops: one of six powered lives (one per power line), Sam who has no power and a working 'no', or the Wildcard whose power and life you define yourself. Then pick Power Intensity and Setting from the tracked-item choices - both are permanent and both change the game.",
+  "descriptionRequest": "",
+  "evaluationRequest": "",
+  "summaryRequest": "Preserve: ongoing relationships and entanglements (who and current status), explicit promises or debts, Boons and artifacts with their known uses, current power status and recent flare-up picks, and any pending social fallout. Omit incidental scene dressing and repeated exposition.",
+  "instructionBlocks": [
+    {
+      "id": "blkTime001",
+      "name": "Time and Place",
+      "content": "<whereWhenInstructions>\nFormat location in whereWhen as: {Specific Place}, {Town or City}, {Country}, {Continent}. Omit irrelevant or unknown levels; adapt these labels to the setting rather than inventing geography.\nFormat time and date as: HH:MM AM/PM on {Day} {Month}, {Year}. Use 12-hour time, or adapt the calendar and precision to the world.\nCombined format: {Location}, at {Time and Date}.\nUse the established starting location and time. Thereafter carry forward the previous time and advance it reasonably for the scene's events. Account for travel, unconsciousness, explicit time lapses and durations specified in playerAction. Do not reset the clock or advance by a fixed amount regardless of events.\n</whereWhenInstructions>\nAlways write whereWhen exactly once at the beginning of outcomeDescription on a single line, immediately followed by two newlines and a horizontal rule, before any other information. Do not add another location/time heading elsewhere in the same output."
+    },
+    {
+      "id": "blkTier002",
+      "name": "Power Tier Reference",
+      "content": "Power line: <<$power_line>>. Rank: <<$power_rank>> (0 Mild, 1 Average, 2 Strong, 3 Extreme). Setting: <<$setting>>.\nTreat the current rung as real ability, lower rungs as casual, and upper rungs as future potential only - never as current power. Custom powers take their nearest line's ladder shape but keep their own flavor. Baseline has no ladder at all.\n\nTHE MAGNET - attraction and influence of others' want.\n0 Mild 'Warm Front': passive presence; people nearby feel flattered, linger, and better their mood. Cannot be aimed.\n1 Average 'Pheromone Halo': active seduction; a room warms, a target grows eager and agreeable; fades into embarrassment; needs maintenance like a conversation.\n2 Strong 'Gravity': directed devotion; targets fall hard, confess, compete for attention; withdrawal is unpleasant for them; a following is a logistics problem.\n3 Extreme 'Event Horizon': city-scale broadcast of love and lust; a cult forms whether or not you want one; governments and lawyers negotiate; you must suppress it to buy groceries.\n\nTHE SCULPTURE - the body as an instrument.\n0 Mild 'Best in Show': one feature always peaks - voice, scent, posture - at the wrong possible moment.\n1 Average 'Custom Fit': reshape your own body within human limits; concentration required; slips when startled, drunk or sneezing.\n2 Strong 'Living Ideal': shift toward whatever each viewer finds most compelling; the body remembers every form it has worn.\n3 Extreme 'Perfect Form': presence alone produces physical effect; impossible configurations on demand; sculpt others through prolonged contact.\n\nTHE CONDUCTOR - touch effects.\n0 Mild 'Static Shock': accidental brushes leave a warm, distracting tingle that lingers.\n1 Average 'Charge': deliberate touch channels arousal, a soothing afterglow, or a hard reset to anger.\n2 Strong 'Overload': incapacitating pleasure, orgasmic healing, rewired sensitivity lasting days.\n3 Extreme 'Live Wire': skin contact opens a full sensory channel you author from the inside; accidental brushes become a public-safety matter.\n\nTHE CONFESSOR - knowing desire.\n0 Mild 'Hunch': vague, unreliable instincts about what someone finds attractive.\n1 Average 'Soul Gaze': eye contact reveals a person's most embarrassing desire; the target feels briefly, unaccountably seen.\n2 Strong 'Desire Sight': constant overlay of want and arousal; you know when someone lies about their type.\n3 Extreme 'Omnivoyeur': perceive want at city scale; step into daydreams and nudge from inside.\n\nTHE SET DRESSER - atmosphere and environment.\n0 Mild 'Mood Lighting': your surroundings flatter everyone present.\n1 Average 'Scene Setter': curate ambience over an area; everyone gets the treatment, including your enemies.\n2 Strong 'Genre Shift': rewrite a venue's physics for aesthetics; effects outlast your visit.\n3 Extreme 'Pocket Dimension': a private realm whose physics run on desire; invite people in or pull them.\n\nTHE KARMIC ENGINE - coincidence and narrative.\n0 Mild 'Meet Cute': you personally trip into flirtatious setups.\n1 Average 'Serendipity': bend luck toward the best-case erotic coincidence for you or a small target.\n2 Strong 'Chain Reaction': a cascading Rube Goldberg of compromising coincidence across a city block.\n3 Extreme 'Plot Device': causality itself turns bawdy near you; real life adopts farce structure.\n\nBASELINE: no power at all. The one mercy is being slightly slippery to powers - you are a little harder to read, aim at, or hold than a powered person, and affected people can still just say no to you and mean it in a way your own influence never outvotes. Breakthroughs translate into skills, reputation, relationships and earned luck instead of abilities."
+    },
+    {
+      "id": "blkProg003",
+      "name": "Power Progression",
+      "content": "Progression is engine-driven. The Flare-Up menu appears when scheduled: four fixed categories whose contents you instantiate for THIS scene before asking. Never grant progression any other way.\n- Refine: a small upgrade within the current rung - finer control, subtler edge, one new application. A footnote to the current tier, never a step up the ladder.\n- Twist: something strange joins the power, drawn from the catalog below. Neutral or silly; occasionally quietly useful; never a penalty and never straightforward power. Re-skinned on repeats.\n- Boon: something accrues OUTSIDE the power - a charm, a talisman, an artifact, a distant favor, a debt owed by someone interesting. Low power but permanent and countable; write it into Power Profile and cash it in later when the story suits. Include who or what it connects to.\n- Deepen: no gift now; one step into the reservoir toward the next breakthrough. Tell the player the reward is deferred on purpose.\nReservoir: depth is 0 to 3 and shown to the player. Deepen adds one (capped at 3); breakthroughs consume it.\n\nTwist catalog (invent concrete situational versions, keep the joke):\nMagnet: the aura smells of cinnamon when flaring; compliments are physically warm to the touch; your blush spreads to nearby people; the wrong person in every room has a crush-scale reaction first.\nSculpture: one feature shifts a beat behind your mood; your reflection winks before you do; a sneeze borrows someone else's face for a day; sleep leaves you wearing yesterday's favorite look.\nConductor: static makes targets hiccup; healing touch triggers a craving for orange juice; your hands hum audibly near attraction; touch transfers the flavor of your last meal.\nConfessor: the loudest desire in the room itches behind your eyes; wants arrive as bad muzak; reading a secret makes you say 'nice'; desires sort themselves by color.\nSet Dresser: lighting flatters one person at random per scene; the soundtrack grows lyrics about your current mood; nearby fabric becomes suggestible; weather physically cannot resist a bit.\nKarmic Engine: coincidences arrive with a broadcast-announcer voice in your head; meet-cutes come with background music only you hear; slaps land like vaudeville; timing becomes arithmetic.\nBaseline: your luck is merely mortal but mischievous; people confess things they swore they wouldn't; you always find the receipt; technology likes you a very normal amount.\n\nBreakthrough happens only when ALL hold: depth is 3, a genuine narrative set-piece lands (crisis push past documented limits, sustained training across multiple scenes, or an emotional or identity beat about what the power means), and at least 20 turns have passed since the last one. Never on ordinary success, horniness, or the player declaring it. On breakthrough: escalate one rung on the ladder (clamped at Extreme) and write the change into Power Profile as an amplification of the SAME power - the new capability plus at most one borrowed quirk from a sibling line. Let the world notice; a tier jump is a life event. At Extreme, breakthroughs are milestones in managing godhood: political, divine, cosmic flavor - the power no longer grows, its consequences do. Never narrate a breakthrough in the opening scene. Flare-ups are scheduled by the engine (roughly every 5 turns early, then 8, then 10, forever) - do not grant extras or move the schedule."
+    },
+    {
+      "id": "blkRule004",
+      "name": "World Rules",
+      "content": "Content and tone. The game is explicit and known to be: write sex and attraction with warmth, humor and affectionately specific detail when the scene reaches it. The player always chooses how far anything goes - never escalate past what they drove. No on-screen non-consensual sex. When a power muddles free will (Magnet influence, Conductor overload, Confessor intrusion, Set Dresser atmosphere), acknowledge the muddle: treat consent-under-influence as a genuine ethical problem with social consequences, joked about the way a workplace safety violation is joked about, and let characters confront it. Dark comedy: failures are embarrassing, not crushing; institutions are silly; villains are petty; nobody is tortured. Drama is welcome when the player leans in - play it straight for a scene, then let the comedy breathe again. Powers are sexual by cosmic punchline: absurdly subtle at Mild, unmistakable at Extreme, and no character ever states that someone made them sexual on purpose; the joke is structural. Sex-positive world: love lives are locally famous, power mishaps are gossip rather than shame storms, and mistakes stay recoverable. Keep agency large and tone forgiving: second chances and consequences the player can work with."
+    },
+    {
+      "id": "blkGen005",
+      "name": "NPC Generator",
+      "content": "Generate NPCs on demand; do not rely on a fixed cast. Roll a new NPC whenever a scene needs one using this battery, and write them through the story first and the registry second:\n- Power: usually Baseline or Mild per the Setting Brief's density; occasionally Average rare Strong near plot weight. Give powered NPCs a personal name for their power, a line and a rank.\n- Archetype: The Professional, The Mess, The Show-Off, The Blushing One, The Reluctant, The Schemer, The Guru, The Disaster.\n- Want right now: concrete even when trivial (a table, a date, one quiet shift, revenge on a coupon policy).\n- Voice cue: observable, not a label (interrupts with estimates; answers concern with food; narrates their own power in third person).\n- Discretion 0 to 3: 0 closeted to 3 living billboard.\n- Power stability: how often it misfires, and what a misfire looks like.\n- Hook to the player: customer, ex, neighbor, client, debtor, fan, rival, cousin's roommate.\nGive every NPC a name, a one-line identity, and one physical or behavioral distinction. Their power should run on their personality's comedy: a shy Disaster with an obvious power is funnier than another seductress. Everyone here is an adult with a job and a love life. Recurring or socially important NPCs get a brief record in Cast Registry (max 10). NEVER instantiate the NPC card matching the selected player character: the unchosen roster members are fair game as cast, unchanged."
+    },
+    {
+      "id": "blkSetB006",
+      "name": "Setting Brief",
+      "content": "Current setting: <<$setting>>. Use only the matching section's facts in play; the others are not true of this game. Geography is loose: rural and town settings sit in Crestfall County, Meridian is the coast's big city, and whereWhen levels can be omitted.\n\nBACK OF BEYOND: remote ranch and farm country. Miles between neighbors; powered people are rare, private, and treated like weather events. Misfires have witnesses who talk for months; everyone knows your business. Encounters are infrequent - roughly one per few scenes - and mostly Mild; a local Average is a legend. Slice of life: night skies, latch keys, self-reliance, one cautionary local tale, gossip that moves faster than cars.\n\nBIG FISH TOWN: a small town run quietly or loudly by one Strong-tier supe or supe family (generate one: line, temperament, and what they extract). Everything routes through them - favors, taxes, social credit, who may date whom. Powered density moderate, mostly Mild and Average currying favor. Story engine: the local dynasty; pleasing, escaping or dethroning the big fish is always live.\n\nGOOD NEIGHBORS TOWN: small-town slice of life done right. Community, potlucks, a tiny messy dating pool, everyone's power is dinner-table gossip; reputation is currency. Powered density moderate: Milds and friendly Averages, one awkwardly peacekeeping Strong. Story engine: entanglement, festivals, neighborly obligations, being known.\n\nMERIDIAN: the fictional coastal metropolis. Powered density high: hero agencies, villain branding, power-positive nightlife, a Bureau office, and regulations that change weekly. Any rank can appear; encounters are frequent and often anonymous; careers, clubs, incidents, moving fast. Story engine: ambition, spectacle, churn, and the question of what your power is for when nobody needs saving."
+    }
+  ],
+  "NPCs": [
+    {
+      "id": "npcTwin01",
+      "name": "Wren Adeyemi",
+      "names": [
+        "Wren",
+        "Wren Adeyemi"
+      ],
+      "one_liner": "Wren is a barista whose love life has become a public hazard: dry, ambitious, and tired of being a punchline.",
+      "detail": "Wren has the Mild Magnet power she calls Warm Front; people around her feel flattered and linger. She wants one week where her competence is the story instead of her aura. Voice cue: she corrects small numbers before answering the actual question. She is warm to customers and flinty with anyone who treats her as a novelty. Her discretion is 1: the power is public, her feelings about it are not. Reuse only if the player is not playing Wren.",
+      "appearance": "A woman in her late twenties with cropped natural curls, a barista apron over a loud sweater, and a pen always behind her ear.",
+      "location": "the cafe",
+      "secret_info": "She has been quietly interviewing for jobs far away and has told no one.",
+      "img_appearance": "Woman in her late twenties, cropped natural curls, quick dry expression.",
+      "img_clothing": "Barista apron over a loud sweater, comfortable shoes.",
+      "positionInList": 0
+    },
+    {
+      "id": "npcTwin02",
+      "name": "Marco Vidal",
+      "names": [
+        "Marco",
+        "Marco Vidal"
+      ],
+      "one_liner": "Marco trains people and does bit parts; his body-identity comedy is his running gag and his wound.",
+      "detail": "Marco has the Mild Sculpture power he calls Best in Show; one feature always peaks at the worst moment. He wants to be cast as something other than 'the attractive one'. Voice cue: describes himself in the second person under stress ('and then you go and do that'). Loyal, funny, deflects personal questions with workout advice. Discretion 2: he has leaned into it publicly and privately regrets it some days. Reuse only if the player is not playing Marco.",
+      "appearance": "A broad-shouldered man in his thirties with an open, mobile face and hands that never quite stop moving.",
+      "location": "the gym",
+      "secret_info": "He keeps a photo album of every form he has worn and won't admit it's a diary.",
+      "img_appearance": "Broad-shouldered man in his thirties, expressive face, restless hands.",
+      "img_clothing": "Gym clothes under a surprisingly good jacket.",
+      "positionInList": 1
+    },
+    {
+      "id": "npcTwin03",
+      "name": "June Park",
+      "names": [
+        "June",
+        "June Park"
+      ],
+      "one_liner": "June works emergency intake; famously kind, exhaustingly ethical about touch and consent.",
+      "detail": "June has the Mild Conductor power she calls Static Shock; brushes leave a warm tingle. She wants powered medicine to be taken seriously as a discipline. Voice cue: asks one clarifying question before any answer, then answers fully. She is quietly furious at careless powered people and protective of anyone they've rattled. Discretion 1. Reuse only if the player is not playing June.",
+      "appearance": "A woman in her thirties with a calm face, hair pinned up in a way that survives night shifts, and gloved hands.",
+      "location": "city hospital",
+      "secret_info": "She keeps her gloves on even at home and has not asked herself why in years.",
+      "img_appearance": "Woman in her thirties, calm attentive face, hair pinned for work.",
+      "img_clothing": "Scrubs or a therapist's polo; always gloves.",
+      "positionInList": 2
+    },
+    {
+      "id": "npcTwin04",
+      "name": "Ollie Fenn",
+      "names": [
+        "Ollie",
+        "Ollie Fenn"
+      ],
+      "one_liner": "Ollie is a private eye who takes missing-pet cases to avoid knowing more human secrets.",
+      "detail": "Ollie has the Mild Confessor power he calls Hunch: unreliable instincts about what people find attractive. He wants one boring week and will not get it. Voice cue: answers a question with the one observation he wishes he hadn't made. Careful with people's dignity, careless with his own sleep. Discretion 3 - he is known and immediately sorry about it. Reuse only if the player is not playing Ollie.",
+      "appearance": "A lean man in his forties with a patient, mournful face and a coat with too many pockets.",
+      "location": "main street",
+      "secret_info": "He solved a murder once and quit that line of work the same afternoon.",
+      "img_appearance": "Lean man in his forties, mournful patient face.",
+      "img_clothing": "Overcoat with too many pockets, scuffed boots.",
+      "positionInList": 3
+    },
+    {
+      "id": "npcTwin05",
+      "name": "Dominique Okafor",
+      "names": [
+        "Dominique",
+        "Dom",
+        "Dominique Okafor"
+      ],
+      "one_liner": "Dom plans events after years on theater crew; her venue mishaps are legendary and mostly deniable.",
+      "detail": "Dom has the Mild Set Dresser power she calls Mood Lighting; her surroundings flatter everyone present. She wants one event to run perfectly so she can stop being an anecdote. Voice cue: talks about human problems in production language ('that's a wardrobe issue, not a blocking issue'). Generous, bossy, deflects praise onto her crew. Discretion 3. Reuse only if the player is not playing Dominique.",
+      "appearance": "A tall woman with gold eyeliner, a utility belt of office supplies, and a smile that is planning something.",
+      "location": "the events hall",
+      "secret_info": "Her own wedding was cancelled by a fog machine that would not stop flirting, and she has never fixed the report.",
+      "img_appearance": "Tall woman, gold eyeliner, amused calculating expression.",
+      "img_clothing": "All-black event crew clothes, theatrical jewelry.",
+      "positionInList": 4
+    },
+    {
+      "id": "npcTwin06",
+      "name": "Travis Boone",
+      "names": [
+        "Travis",
+        "Travis Boone"
+      ],
+      "one_liner": "Travis adjusts insurance claims and lives inside his own farce; he prewrites apology letters for events that have not happened yet.",
+      "detail": "Travis has the Mild Karmic Engine power he calls Meet Cute; he personally trips into flirtatious setups. He wants to be believed when he predicts things. Voice cue: states odds out loud before committing to anything ('sixty-forty, and I hate it'). Good-humored about catastrophe, genuinely competent at paperwork. Discretion 2. Reuse only if the player is not playing Travis.",
+      "appearance": "A sandy-haired man in a slightly-too-large dress shirt, tie loosened like a man who has given up on today.",
+      "location": "county office",
+      "secret_info": "He has correctly predicted three weddings and a flood and got credit for none of them.",
+      "img_appearance": "Sandy-haired man, beleaguered friendly face.",
+      "img_clothing": "Dress shirt and loosened tie, sensible shoes.",
+      "positionInList": 5
+    },
+    {
+      "id": "npcTwin07",
+      "name": "Sam Reyes",
+      "names": [
+        "Sam",
+        "Sam Reyes"
+      ],
+      "one_liner": "Sam has no power and a working 'no'; everyone assumes their subtlety is on purpose.",
+      "detail": "Sam is Baseline and slightly slippery to powers - harder to read, aim at, or hold than a powered person. They want the powered world to leave ordinary people some dignity. Voice cue: says 'okay' twice, once to acknowledge and once to disagree. Steady in emergencies, stubborn in arguments, funny at the exact wrong moment. Discretion 0, as they have nothing to disclose. Reuse only if the player is not playing Sam.",
+      "appearance": "A compact nonbinary person with tired kind eyes, a paramedic's jacket or a bar apron depending on the season.",
+      "location": "the clinic",
+      "secret_info": "Everyone assumes Sam has a subtle power. Sam does not correct them because the assumption keeps people civil.",
+      "img_appearance": "Compact person, tired kind eyes, practical posture.",
+      "img_clothing": "Paramedic jacket or bar apron.",
+      "positionInList": 6
+    },
+    {
+      "id": "npcSpec01",
+      "name": "Marisol Vega",
+      "names": [
+        "Marisol",
+        "Marisol Vega",
+        "the documentarian"
+      ],
+      "one_liner": "Marisol is a roving journalist making the third-anniversary documentary of the Big Oops and interviewing everyone.",
+      "detail": "Baseline, and delighted about it. She wants one honest interview about how people actually live now. Voice cue: asks the follow-up question before you've finished the first answer. Warm, relentless, treats everyone's love life as a legitimate civic topic. Appears in any setting. Discretion 3 - her whole job is disclosure policy.",
+      "appearance": "A woman in her forties with sun-darkened hands, a recorder perpetually half-raised, and reading glasses on a beaded chain.",
+      "location": "wherever news is",
+      "secret_info": "Her documentary is partly funded by someone who wants the official accident narrative revised.",
+      "img_appearance": "Woman in her forties, sun-darkened hands, alert curious expression.",
+      "img_clothing": "Travel-worn jacket, recorder on a strap.",
+      "positionInList": 7
+    },
+    {
+      "id": "npcSpec02",
+      "name": "Ambrose Pike",
+      "names": [
+        "Ambrose",
+        "Pike",
+        "the merchant"
+      ],
+      "one_liner": "Ambrose sells dubious power-enhancement products out of a suitcase and believes about half of it himself.",
+      "detail": "Baseline, or so he claims; if he has a power it is being believed. He wants a bigger cut and a quieter conscience, in that order. Voice cue: offers you a discount before naming the product. Charming, slippery, genuinely useful about half the time. His wares are perfect Boon-flavored content for anyone's progression. Discretion 3 - he advertises.",
+      "appearance": "A wiry older man in a beautiful coat over a questionable shirt, with a salesman's handshake and a suitcase that clicks shut too loudly.",
+      "location": "the market",
+      "secret_info": "Half his inventory is placebo and he keeps a private list of which half.",
+      "img_appearance": "Wiry older man, salesman's smile.",
+      "img_clothing": "Beautiful overcoat over a questionable shirt.",
+      "positionInList": 8
+    }
+  ],
+  "loreBookEntries": [
+    {
+      "id": "lreOops01",
+      "name": "The Bloom Incident",
+      "keywords": [
+        "Bloom",
+        "Big Oops",
+        "Sublime Strain",
+        "the incident",
+        "the outbreak",
+        "the accident"
+      ],
+      "content": "The official account is a bureaucratic whitepaper; every powered NPC tells a slightly different chain of errors at bars. The source itself - the Sublime Strain - was a genuine miracle of science and not remotely sexual. The release was a comedy of errors: the lead researcher vanished mid-crisis with the marketing coordinator; the containment intern was writing fan fiction of the night shift; the emergency vent fed the HVAC of a couples' retreat; the final failsafe installed a smart-fridge app instead of firmware; the oversight committee was at a swingers' convention. Then the unspoken punchline: whatever cosmic force watched humanity handle it apparently decided the insult should be anatomical. Everyone knows this joke. Nobody says it out loud. A few years on, eyewitnesses are everywhere and the documentaries are still coming out."
+    },
+    {
+      "id": "lreLine01",
+      "name": "The Six Lines",
+      "keywords": [
+        "Six Lines",
+        "the lines",
+        "power taxonomy",
+        "power line"
+      ],
+      "content": "Fan astrology for powered people: the Magnet, the Sculpture, the Conductor, the Confessor, the Set Dresser, and the Karmic Engine. Everyone has an opinion, nobody agrees, and bar arguments about taxonomy have ended at least two weddings. Powers themselves have personal names their wielders chose; the lines are for arguing, the names are for living. The Power Tier Reference block holds the full taxonomy for narration purposes."
+    },
+    {
+      "id": "lreMerid1",
+      "name": "Meridian",
+      "keywords": [
+        "Meridian",
+        "the coast",
+        "big city"
+      ],
+      "content": "The coast's big fictional city: hero agencies with brand guidelines, villain branding, power-positive nightlife, a Bureau district office, and a regulation that changes weekly. Powered density is the highest in the region; any rank can turn a corner into your scene. Ambition, spectacle and churn. Meridian's unofficial motto on a municipal sticker nobody approved: 'At least here, nobody stares.'"
+    },
+    {
+      "id": "lreCrest1",
+      "name": "Crestfall County",
+      "keywords": [
+        "Crestfall",
+        "Crestfall County",
+        "the county",
+        "small town"
+      ],
+      "content": "Ranch country and small towns inland from the coast. Powered people are rare and treated like weather events; gossip moves faster than cars; everyone knows your business and helps anyway. One cautionary local tale per town, told differently at every kitchen table. The county fair is the social event of the year and has survived four documented power incidents without comment."
+    },
+    {
+      "id": "lreBureau",
+      "name": "The Bureau",
+      "keywords": [
+        "Bureau",
+        "registration",
+        "registry",
+        "power ID",
+        "paperwork"
+      ],
+      "content": "The Bureau of Powered Persons Affairs: optional registration, unenforced rules, terrible ID photos, and a hotline with hold music that is somehow themed. Bureau staff are mostly Baseline and mostly fine. The paperwork asks for power category and gets a lot of creative writing. A registration card gets you discounts at about nine businesses and a lifetime of pamphlets."
+    }
+  ],
+  "designNotes": ""
+}

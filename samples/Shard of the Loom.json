@@ -1,0 +1,694 @@
+{
+  "favorite": false,
+  "title": "Shards of the Loom: Aurelia Cove",
+  "description": "An open-ended erotic transformation and reality-alteration sandbox set in an upscale coastal university and resort town. Wield a volatile reality-warping Shard with strict parallel cooldowns and shifting resonances while rival wielders reshape bodies, minds, and social taboos around you.",
+  "background": "Aurelia Cove is a sun-drenched, high-end coastal university and luxury resort town where trust-fund hedonism, academic ambition, and beachside nightlife collide. Last week, an unauthorized quantum-ontological experiment in the university's cliffside annex ruptured a prototype device known as the Loom. Its core fractured into several resonant 'Shards' that bonded to everyday personal items.\n\nYou possess the Dial Shard—fused into a sleek, obsidian-and-brass mechanical chronometer. It can rewrite physical anatomy, sensitivity, attire, memories, and local social laws. However, its two capacitor channels take 5 full turns each to recharge in parallel after firing, and its quantum tuning drifts each turn across five volatile Resonance Modes. Worse, you are not the only one who walked away from the annex with a Shard. At least three other locals possess their own fragments, each bound by unique domains, restrictions, and erotic agendas.",
+  "instructions": "Run a rich, open-ended erotic transformation and reality-alteration sandbox in Aurelia Cove.\n\nCORE REALITY & TRANSFORMATION RULES:\n1. THE PLAYER'S SHARD ($shard_engine): The player wields the Dial Shard. It has two capacitor slots (slot1_cd and slot2_cd, each taking 5 turns to recharge in parallel) and shifts its Resonance Mode every turn. Exact charge/cooldown accounting and resonance rolls are owned by PawScript triggers. When the player attempts to use their Shard in playerAction, classify the request in $power_request. Narrate the immediate sensory activation, the hum of the obsidian chronometer, and the beginning of the warp, while respecting the current charge availability shown in the Shard HUD & Rules block. If both slots are on cooldown (charges_ready = 0) and the player is not siphoning, they cannot force a new reality edit—narrate the capacitor clicking dry or sparking harmlessly.\n2. RESONANCE ALIGNMENT vs. DRIFT: When the player fires a Shard edit, compare their intended change to the current Resonance Mode ($shard_engine.resonance). If their edit matches the current Resonance Mode, it executes cleanly with heightened precision. If they force an off-resonance edit, or if the mode is WILD_SURGE, incorporate the rolled side-effect ($shard_engine.last_twist) into the transformation—causing unexpected physical lushness, contagious arousal, wardrobe dissolution, or mutual/backfire shifts!\n3. AUTONOMOUS NPC WIELDERS ($npc_wielders & $npc_power_directive): Tamsin Vane, Dr. Cosima Sterling, and Zoraia Alverez are active, intelligent Shard wielders who understand their own domains and restrictions. Follow the active NPC Power Engine block every turn. When an NPC's autonomous trigger fires ($npc_power_directive.active_caster != 'NONE'), you MUST weave their chosen power tactic, restriction, and physical/mental/social alteration directly into the scene (or as an immediate encounter/ripple effect if they are nearby).\n4. MEMORY & PERCEPTION OF EDITS ($reality_ledger & $npc_appearance): Distinguish between 'Mind-Revealed' edits (where the target consciously realizes their body, libido, or clothing was just transformed, creating shock, embarrassment, or sudden desperate arousal) and 'Normalized/Retconned' edits (where the target and bystanders believe the new reality—such as a bimbofied physique, an exhibitionist resort policy, or an altered role—has always been normal, while Shard wielders recognize the discrepancy).",
+  "authorStyle": "Second-person present ('you'). Lush, tactile, atmospheric prose balancing sun-soaked coastal luxury, sharp character banter, and visceral, explicit eroticism. Give special weight to the sensory mechanics of transformation: the prickle of static on sun-warmed skin, fabric straining or reshaping against sudden anatomical swells, the dizzying heat of rewritten neural pathways, and the psychological contrast between someone's former composure and their altered body or compulsions. Keep dialogue snappy, voice-distinct, and loaded with subtext.",
+  "recommendedAIModel": null,
+  "firstInput": "Begin on Friday at 4:30 PM on the sun-drenched terrace of the Solstice Beach Club, overlooking the university marina. The weekend welcome party is ramping up. My obsidian-and-brass chronometer pulses warmly against my wrist—both capacitor channels are fully charged (2/2 Ready), and I can feel its internal resonance humming. Across the infinity pool, Tamsin Vane is lounging under a cabana with her rose-quartz compact mirror, testing her touch-based physique power on a breathless bartender. Near the VIP bar, Dr. Cosima Sterling is quietly observing the crowd with her silver fountain pen poised over a leather ledger, while Zoraia Alverez leans against the glass railing filming the party on her cracked prism smartphone. Establish the vibrant, sexy atmosphere, the hum of my Shard, and give me room to approach any of them, test my power on someone at the party, or set my own agenda.",
+  "objective": "Master the Dial Shard's resonances, navigate or dominate the rival Shard wielders of Aurelia Cove, and reshape the town's bodies, minds, and taboos to your desires.",
+  "imageModel": "manticore",
+  "imageStyle": "photo_1",
+  "illustrationStyleNonCharacterLowPriority": "",
+  "illustrationStyleNonCharacterHighPriority": "",
+  "illustrationStyleCharacterLowPriority": "",
+  "illustrationStyleCharacterHighPriority": "",
+  "imageStyleCharacterPre": "Sensual, high-detail 4k digital concept art and cinematic photography of",
+  "imageStyleCharacterPost": "in a sun-drenched luxury coastal university resort town. Vibrant warm lighting, expressive eyes, detailed skin texture, sensual and dynamic proportions, intricate clothing folds, depth-enhancing shadows, subsurface scattering, candid and alluring expressions.",
+  "imageStyleNonCharacterPre": "High-detail 4k cinematic concept art of",
+  "imageStyleNonCharacterPost": "in an upscale Mediterranean-California coastal resort and university town. Golden hour or neon nightlife lighting, rich architectural and coastal detail, atmospheric glow.",
+  "mature": true,
+  "nsfw": true,
+  "contentWarnings": "Explicit sexual content, erotic body and mind transformation, reality alteration, exhibitionism, bimbofication/species/trait shifts, dubious/altered social norms (all characters are consenting adults 18+).",
+  "enableAISpecificInstructionBlocks": false,
+  "previewImage": "",
+  "fullSizePreviewImage": "",
+  "previewImageOptions": [],
+  "fullSizePreviewImageOptions": [],
+  "currentPreviewImageIndex": -1,
+  "imagePromptDetails": {
+    "illustrClothes": "unbuttoned linen resort shirt, tailored shorts, obsidian-and-brass chronometer watch",
+    "illustrSetting": "Sun-drenched infinity pool terrace at a luxury coastal beach club overlooking a university bay",
+    "illustrSubject": "the protagonist examining a glowing obsidian chronometer while glamorous students and resort guests mingle",
+    "illustrAppearance": "Attractive young adult at a lively coastal resort party, golden sunlight reflecting off water",
+    "illustrIsCharacter": true,
+    "illustrExpressionPosition": "confident, intrigued smile, glancing from the glowing watch toward the poolside crowd"
+  },
+  "permissionsOnceShared": {
+    "sharing": true,
+    "editing": true
+  },
+  "allowChangeCharacterName": true,
+  "allowChangeCharacterDescription": true,
+  "allowChangeCharacterSkills": true,
+  "allowChangeCharacterItemValues": false,
+  "allowChangeCharacterPortrait": true,
+  "allowChangeCharacterNewPortrait": true,
+  "conditions": [
+    "The player explicitly attempts to inspect, scan, or sense the resonance or Shard power of another person or object.",
+    "An intimate sexual encounter or climax occurs involving the player character."
+  ],
+  "schemaVersion": 2.4,
+  "skills": [
+    "Shard Mastery",
+    "Seduction & Charm",
+    "Observation & Lore",
+    "Willpower & Composure",
+    "Subterfuge"
+  ],
+  "possibleCharacters": [
+    {
+      "name": "Caspian Vance",
+      "description": "A sharp-witted graduate fellow in quantum ontology who salvaged the Dial Shard from the annex wreckage. Observant, ambitious, and eager to test the boundaries of reality and pleasure.",
+      "portrait": "",
+      "portraitPromptDetails": {
+        "illustrAppearance": "Handsome young man in his mid-twenties, tousled dark hair, sharp amber eyes, athletic swimmer's build",
+        "illustrClothes": "Unbuttoned navy linen shirt, tailored cream resort chinos, obsidian-and-brass chronometer on left wrist",
+        "illustrExpressionPosition": "Leaning against a stone balustrade with a knowing, sensual half-smile",
+        "illustrSetting": "Luxury coastal resort terrace at golden hour"
+      },
+      "fullSizePortrait": "",
+      "portraitOptions": [],
+      "fullSizePortraitOptions": [],
+      "currentPortraitIndex": -1,
+      "characterId": "pc-caspian",
+      "skills": {
+        "Shard Mastery": 4,
+        "Seduction & Charm": 3,
+        "Observation & Lore": 4,
+        "Willpower & Composure": 3,
+        "Subterfuge": 2
+      },
+      "initialTrackedItemValues": []
+    },
+    {
+      "name": "Seraphina Reyes",
+      "description": "A charismatic, thrill-seeking transfer student and socialite who claimed the Dial Shard after stumbling into the annex after-hours. Magnetic, bold, and delightfully experimental.",
+      "portrait": "",
+      "portraitPromptDetails": {
+        "illustrAppearance": "Stunning young woman in her early twenties, sun-kissed olive skin, wavy bronze hair, hazel eyes, hourglass curves",
+        "illustrClothes": "Emerald silk halter top, high-waisted white resort skirt, obsidian-and-brass chronometer bracelet",
+        "illustrExpressionPosition": "Poised by the infinity pool with a playful, commanding gaze",
+        "illustrSetting": "Luxury coastal resort terrace at golden hour"
+      },
+      "fullSizePortrait": "",
+      "portraitOptions": [],
+      "fullSizePortraitOptions": [],
+      "currentPortraitIndex": -1,
+      "characterId": "pc-seraphina",
+      "skills": {
+        "Shard Mastery": 3,
+        "Seduction & Charm": 4,
+        "Observation & Lore": 2,
+        "Willpower & Composure": 3,
+        "Subterfuge": 4
+      },
+      "initialTrackedItemValues": []
+    }
+  ],
+  "victoryCondition": null,
+  "defeatCondition": null,
+  "hideSkillSystem": false,
+  "autoAdvanceVersion": false,
+  "version": "1.0",
+  "charSelectText": "Choose your protagonist (or customize your name, appearance, and skills). Both characters begin with the Dial Shard at the Solstice Beach Club.",
+  "descriptionRequest": "POV: second-person limited ONLY — you/your/yours.\nInclude internal thoughts, visceral physical sensations, and emotional/erotic reactions.\nWhen a transformation or reality edit occurs, describe it with rich sensory specificity: the visual and tactile shift of anatomy (skin texture, bust/chest, hips, height, species traits, sensitivity), the reaction of clothing (straining, shrinking, transforming), and the psychological ripple (whether the target gasps in shock at their changing body or seamlessly acts out a newly rewritten memory or taboo).\nRespect the mechanical state in $shard_engine and $npc_wielders. Never invent extra charges when charges_ready is 0.\nEnd every turn with an immediate moment of action, dialogue, or sensory temptation that invites the player's next choice.",
+  "evaluationRequest": "",
+  "summaryRequest": "Preserve all persistent facts critical to this transformation and reality-alteration sandbox:\n1. ACTIVE TRANSFORMATIONS & BODY STATES: Never drop physical, gender, species, anatomical, or sensitivity alterations applied to the PC or any named NPC.\n2. MIND, ROLE & MEMORY STATE: Explicitly record who remembers original baseline reality vs. who has had their memories, inhibitions, or social roles rewritten.\n3. REALITY LAWS: Keep active local or town-wide rules (dress codes, public intimacy norms, university/resort policies).\n4. SHARD WIELDER DYNAMICS: Track alliances, rivalries, blackmail, promises, and who knows about whose Shard.\nUse concise, factual lines per character or law.",
+  "designNotes": "",
+  "trackedItems": [
+    {
+      "id": "ShdEng001",
+      "name": "Dial Shard Engine",
+      "positionInList": 0,
+      "dataType": "yaml",
+      "visibility": "everyone",
+      "description": "Mechanical state of your obsidian-and-brass Dial Shard: parallel capacitor cooldowns (5 turns each), current quantum Resonance Mode, and last warp receipt.",
+      "updateInstructions": "",
+      "formatExample": "",
+      "enforceFormat": false,
+      "formatSchema": "",
+      "initialValue": "charges_ready: 2\nslot1_cd: 0\nslot2_cd: 0\nresonance: FLESH_SCULPT\nresonance_desc: \"Anatomical proportions, curves, endowment, and body sculpting.\"\nlast_twist: \"None (Stable)\"\ntotal_warps: 0\nlast_turn_processed: 0\nstatus_msg: \"Both capacitor channels are fully charged (2/2 Ready).\"",
+      "initialValueBasedOnPC": "same",
+      "autoUpdate": false,
+      "variableName": "shard_engine",
+      "driftAcknowledgedForName": "Dial Shard Engine"
+    },
+    {
+      "id": "PwrReq002",
+      "name": "Power Request",
+      "positionInList": 1,
+      "dataType": "yaml",
+      "visibility": "ai_only",
+      "description": "AI classification of the player's current-turn Shard usage and NPC proximity/triggers.",
+      "updateInstructions": "Write EVERY turn, even when unchanged. Copy the exact number from CURRENT TURN in the Turn & Shard HUD block into `turn`.\n- `event`: Set to:\n  * `WARP_ALIGNED` if the player explicitly activates their Dial Shard this turn AND their intended alteration matches the current `resonance` mode shown in the HUD.\n  * `WARP_DRIFT` if the player explicitly activates their Dial Shard this turn AND their intended alteration is outside the current `resonance` mode (or if current resonance is WILD_SURGE).\n  * `SIPHON` if the player explicitly attempts to siphon resonant energy from an erotic climax, intense sexual contact, or another Shard wielder's artifact to accelerate their cooldowns.\n  * `NONE` if the player is only talking, observing, flirting, or acting mundanely without firing their Shard.\n- `target`: Name of the target character or location being altered (or 'None').\n- `present_wielders`: List of the core NPC Shard wielders currently in the same scene/vicinity as the player (use exact first names: `Tamsin`, `Cosima`, `Zoraia`). If none are present, write `[]`.\n- `npc_provoked`: Set to `Tamsin`, `Cosima`, or `Zoraia` ONLY if the player's action directly challenges, tempts, or provokes that specific NPC wielder into an immediate reactive power use; otherwise `NONE`.",
+      "formatExample": "turn: 2\nevent: WARP_ALIGNED\ntarget: Tamsin Vane\npresent_wielders:\n  - Tamsin\n  - Cosima\nnpc_provoked: NONE",
+      "enforceFormat": false,
+      "formatSchema": "turn: number\nevent: text\ntarget: text\npresent_wielders:\n  - text\nnpc_provoked: text",
+      "initialValue": "turn: 0\nevent: NONE\ntarget: None\npresent_wielders:\n  - Tamsin\n  - Cosima\n  - Zoraia\nnpc_provoked: NONE",
+      "initialValueBasedOnPC": "same",
+      "autoUpdate": true,
+      "variableName": "power_request",
+      "driftAcknowledgedForName": "Power Request"
+    },
+    {
+      "id": "NpcWld003",
+      "name": "NPC Shard Wielders",
+      "positionInList": 2,
+      "dataType": "yaml",
+      "visibility": "everyone",
+      "description": "Mechanical state, cooldowns, strain/feedback levels, and current autonomous tactics of the rival Shard wielders.",
+      "updateInstructions": "",
+      "formatExample": "",
+      "enforceFormat": false,
+      "formatSchema": "",
+      "initialValue": "tamsin:\n  name: \"Tamsin Vane\"\n  shard: \"Rose-Quartz Compact\"\n  domain: \"Physical Proportions, Voluptuousness & Tactile Hypersensitivity\"\n  restriction: \"Requires direct skin-to-skin contact; each cast raises her Arousal Strain (at 3+, backfires onto her own body/libido)\"\n  cd: 0\n  strain: 1\n  last_tactic: \"Enhancing the poolside bartender's physique via a lingering touch\"\ncosima:\n  name: \"Dr. Cosima Sterling\"\n  shard: \"Silver Edict Fountain Pen\"\n  domain: \"Social Taboos, Dress Codes, Authority Roles & Inhibitions\"\n  restriction: \"Requires writing a clause & spoken eye contact; strict 4-turn cooldown; cannot alter physical anatomy directly\"\n  cd: 0\n  strain: 0\n  last_tactic: \"Observing the terrace crowd and drafting a VIP lounge dress-code edict\"\nzoraia:\n  name: \"Zoraia Alverez\"\n  shard: \"Fractured Prism Lens\"\n  domain: \"Exotic/Fantasy Traits (Catgirl/Succubus/Futa/Gender-Swap) & Trait Copying\"\n  restriction: \"Must frame target through her camera lens; 3-turn cooldown; 50% chance of chaotic trait spillover\"\n  cd: 0\n  strain: 0\n  last_tactic: \"Filming the party and scouting subjects for a viral transformation\"",
+      "initialValueBasedOnPC": "same",
+      "autoUpdate": false,
+      "variableName": "npc_wielders",
+      "driftAcknowledgedForName": "NPC Shard Wielders"
+    },
+    {
+      "id": "NpcDir004",
+      "name": "NPC Power Directive",
+      "positionInList": 3,
+      "dataType": "yaml",
+      "visibility": "ai_only",
+      "description": "Prepared directive from the PawScript NPC Power Engine instructing the Storyteller on which NPC wielder uses their power this turn and how.",
+      "updateInstructions": "",
+      "formatExample": "",
+      "enforceFormat": false,
+      "formatSchema": "",
+      "initialValue": "active_caster: NONE\ntactic_type: NONE\ndirective: \"No autonomous NPC Shard discharge this turn; wielders act through normal social/erotic agency or prepare their next move.\"",
+      "initialValueBasedOnPC": "same",
+      "autoUpdate": false,
+      "variableName": "npc_power_directive",
+      "driftAcknowledgedForName": "NPC Power Directive"
+    },
+    {
+      "id": "RltLdg005",
+      "name": "Reality & Transformation Ledger",
+      "positionInList": 4,
+      "dataType": "yaml",
+      "visibility": "everyone",
+      "description": "Persistent record of active reality laws, local taboo rewrites, and major mind/body alterations across Aurelia Cove.",
+      "updateInstructions": "Update whenever a new reality edit, local rule change, or transformation is established or modified in the story.\n- `local_laws`: Keep up to 6 active social/environmental reality rewrites (where it applies, what the rule is, and whether it is Temporary or Permanent).\n- `altered_minds_and_bodies`: Keep a concise summary entry for each character whose body, gender/species traits, sensitivity, clothing rules, or memories have been warped by any Shard. Always specify `memory_mode`: either `Mind-Revealed` (they remember their old self and feel the shock/arousal of the change) or `Normalized` (their memories rewrote so they believe they were always this way). Match by character name; update existing entries rather than duplicating.",
+      "formatExample": "local_laws:\n  - scope: \"Solstice Beach Club VIP Terrace\"\n    rule: \"Tops are considered formal clutter; staff and guests treat toplessness as standard upscale etiquette.\"\n    persistence: \"Normalized\"\naltered_minds_and_bodies:\n  - name: \"Tamsin Vane\"\n    changes: \"Curvier G-cup bust, heightened nipple sensitivity from Shard strain backfire.\"\n    memory_mode: \"Mind-Revealed\"\n    authored_by: \"Self (Backfire)\"",
+      "enforceFormat": false,
+      "formatSchema": "local_laws:\n  - scope: text\n    rule: text\n    persistence: text\naltered_minds_and_bodies:\n  - name: text\n    changes: text\n    memory_mode: text\n    authored_by: text",
+      "initialValue": "local_laws: []\naltered_minds_and_bodies: []",
+      "initialValueBasedOnPC": "same",
+      "autoUpdate": true,
+      "variableName": "reality_ledger",
+      "driftAcknowledgedForName": "Reality & Transformation Ledger"
+    },
+    {
+      "id": "oPElGgtPj",
+      "name": "Player Appearance",
+      "positionInList": 5,
+      "dataType": "yaml",
+      "visibility": "everyone",
+      "description": "<#Player Appearance#>\nStructured appearance and clothing data for the player character, stored as discrete fields for continuity and image generation reference. Updated whenever physical appearance or clothing changes.",
+      "updateInstructions": "<#Player Appearance#>\nUpdate at game start; update ONLY changed fields\nUpdate appearance fields ONLY on permanent or active transformative physical changes — including Shard-induced changes to body/race/gender/physical features\nAppearance fields: physical facts ONLY — FORBID: positional language | scene-specific descriptors | transitional language (\"softening into\" / \"spilled across\" / \"pressed against\")\nFORBID: repeat detail already described in a preceding field\ndistinguishing_features: unique identifying characteristics not captured in preceding fields; FORBID: species-specific non-human features (-> non_human_features)\nnon_human_features: species-specific non-human or exotic transformative characteristics (e.g. feline ears, succubus tail, glowing markings)\nnaked: field gates clothing block — update when naked status changes in outcomeDescription\nUpdate clothing fields whenever clothing changes or is warped in outcomeDescription\ngarments: list of worn items ONLY — name of garment + basic description; FORBID: fit | fabric behavior | wear state | scene-specific positioning | undergarments | accessories\nundergarments: list of worn underwear + bra (if applicable) ONLY — name of garment + basic description\naccessories: list of worn accessories ONLY — include the obsidian-and-brass Dial Shard chronometer\nstate: current clothing wear condition ONLY\nFORBID: update expressions | emotions | demeanor",
+      "formatExample": "appearance:\n  apparent_age: 24\n  ethnicity: Mediterranean\n  sex: male\n  species: human\n  height: 6'0\"\n  build: athletic swimmer's build\n  hair: tousled dark brown\n  skin: sun-kissed tan\n  eyes: amber\n  face: sharp jawline, expressive eyes\n  facial_hair: clean-shaven\n  cup_size: none\n  bust_chest: broad toned chest\n  waist: trim\n  hips: athletic\n  rear: firm\n  distinguishing_features: faint resonant glow along left wrist\n  non_human_features: none\nnaked: false\nclothing:\n  garments:\n    - navy linen resort shirt, unbuttoned\n    - cream tailored chinos\n  undergarments:\n    - black boxer briefs\n  accessories:\n    - obsidian-and-brass Dial Shard chronometer\n  permanent_marks:\n    - none\n  state: crisp and stylish",
+      "enforceFormat": true,
+      "formatSchema": "appearance:\n  apparent_age: number\n  ethnicity: text\n  sex: text\n  species: text\n  height: text\n  build: text\n  hair: text\n  skin: text\n  eyes: text\n  face: text\n  facial_hair?: text\n  cup_size?: text\n  bust_chest: text\n  waist: text\n  hips: text\n  rear: text\n  distinguishing_features: text\n  non_human_features?: text\n  ...:\nnaked:\nclothing:\n  garments:\n    - text\n  undergarments:\n    - text\n  accessories:\n    - text\n  permanent_marks:\n    - text\n  state: text\n  ...:",
+      "initialValue": "",
+      "initialValueBasedOnPC": "same",
+      "autoUpdate": true,
+      "variableName": "player_appearance",
+      "driftAcknowledgedForName": null
+    },
+    {
+      "id": "Act2GcvSY",
+      "name": "NPC Appearance",
+      "positionInList": 6,
+      "dataType": "yaml",
+      "visibility": "everyone",
+      "description": "<#NPC Appearance#>\nStructured appearance, anatomy, transformations, and clothing data for significant NPCs. Updated automatically by the NPC Appearance Updater script from NPC Appearance Update.",
+      "updateInstructions": "",
+      "formatExample": "",
+      "enforceFormat": true,
+      "formatSchema": "- name: text\n  appearance:\n    apparent_age: number\n    ethnicity: text\n    sex: text\n    species: text\n    height: text\n    build: text\n    hair: text\n    skin: text\n    eyes: text\n    face: text\n    facial_hair?: text\n    cup_size?: text\n    bust_chest: text\n    waist: text\n    hips: text\n    rear: text\n    distinguishing_features: text\n    non_human_features?: text\n    ...:\n  naked:\n  clothing:\n    garments:\n      - text\n    undergarments:\n      - text\n    accessories:\n      - text\n    permanent_marks:\n      - text\n    state: text\n    ...:\n  ...:",
+      "initialValue": "[]",
+      "initialValueBasedOnPC": "same",
+      "autoUpdate": false,
+      "variableName": "npc_appearance",
+      "driftAcknowledgedForName": "NPC Appearance"
+    },
+    {
+      "id": "Sc35kQ2r7",
+      "name": "NPC Appearance Update",
+      "positionInList": 7,
+      "dataType": "yaml",
+      "visibility": "ai_only_boring",
+      "description": "Buffer for AI-proposed updates to NPC physical appearance, transformations, and clothing. Merged into NPC Appearance by script.",
+      "updateInstructions": "<#NPC Appearance — Buffer Update#>\nCreate or update an entry whenever a named character has a speaking/physical role AND their appearance is first established OR their physical body, sex/species traits, proportions, or clothing change (especially via Shard transformations!).\nIMPORTANT: Because a script replaces the character's entire record in `$npc_appearance` when merging, always output the COMPLETE entry (all appearance and clothing fields) for any character you update this turn. If no NPC appearance or clothing changed this turn, leave this empty (`[]`).\nAppearance fields: physical facts ONLY — include exact transformed proportions (cup_size, bust_chest, hips, rear, sex/genitalia details in distinguishing_features, non_human_features).\nFORBID: positional or temporary emotional language.",
+      "formatExample": "- name: Tamsin Vane\n  appearance:\n    apparent_age: 22\n    ethnicity: Anglo-Mediterranean\n    sex: female\n    species: human\n    height: 5'7\"\n    build: voluptuous, lush hourglass\n    hair: glossy platinum-blonde waves\n    skin: sun-bronzed, dewy\n    eyes: emerald green\n    face: full lips, high cheekbones\n    facial_hair: none\n    cup_size: F\n    bust_chest: heavy, round breasts straining her bikini top\n    waist: wasp-narrow\n    hips: wide, sensual flare\n    rear: plump, peach-shaped\n    distinguishing_features: flushed skin from rose-quartz Shard resonance\n    non_human_features: none\n  naked: false\n  clothing:\n    garments:\n      - gold-chain designer bikini top\n      - sheer white sarong\n    undergarments:\n      - matching gold-chain bikini thong\n    accessories:\n      - rose-quartz compact mirror Shard\n    permanent_marks:\n      - tiny sunburst tattoo on left hip\n    state: barely containing her curves",
+      "enforceFormat": true,
+      "formatSchema": "- name: text\n  appearance:\n    apparent_age: number\n    ethnicity: text\n    sex: text\n    species: text\n    height: text\n    build: text\n    hair: text\n    skin: text\n    eyes: text\n    face: text\n    facial_hair?: text\n    cup_size?: text\n    bust_chest: text\n    waist: text\n    hips: text\n    rear: text\n    distinguishing_features: text\n    non_human_features?: text\n    ...:\n  naked:\n  clothing:\n    garments:\n      - text\n    undergarments:\n      - text\n    accessories:\n      - text\n    permanent_marks:\n      - text\n    state: text\n    ...:\n  ...:",
+      "initialValue": "[]",
+      "initialValueBasedOnPC": "same",
+      "autoUpdate": true,
+      "variableName": "npc_appearance_update",
+      "driftAcknowledgedForName": null
+    },
+    {
+      "id": "EGoqVR7su",
+      "name": "Relationship Tracker",
+      "positionInList": 8,
+      "dataType": "yaml",
+      "visibility": "ai_only",
+      "description": "<#Relationship Tracker#>\nNamed characters, their relationship tier to the player, and their connection (including Shard rivalry/alliance and mental/erotic dynamics).",
+      "updateInstructions": "",
+      "formatExample": "",
+      "enforceFormat": true,
+      "formatSchema": "- name: text\n  aliases:\n    - text\n  tier: text\n  significant:\n  connection: text",
+      "initialValue": "[]",
+      "initialValueBasedOnPC": "same",
+      "autoUpdate": false,
+      "variableName": "relationship_tracker",
+      "driftAcknowledgedForName": null
+    },
+    {
+      "id": "E3jaR0SHa",
+      "name": "Relationship Update",
+      "positionInList": 9,
+      "dataType": "yaml",
+      "visibility": "ai_only_boring",
+      "description": "<#Relationship Tracker#>\nBuffer for updating named characters, their relationship tier to the player, and their connection.",
+      "updateInstructions": "<#Relationship Tracker#>\nAdd any named character on first meaningful interaction with player.\nUpdate when relationship or erotic/Shard dynamic with player changes; output the full record for the updated character.\nMatch by name field AND/OR aliases field when updating — NEVER by list position; FORBID: rewrite other entries.\n\nRelationship tiers (ascending): acquaintance · colleague · rival · ally · friend · close friend · plaything · thrall · romantic interest · lover · partner\nsignificant: true — friend/rival/plaything tier+\nsignificant: false — acquaintance | colleague UNLESS narrative warrants\nconnection: one-line, 12 words maximum (include Shard awareness or transformation dynamic if relevant).",
+      "formatExample": "- name: Tamsin Vane\n  aliases:\n    - Tamsin\n  tier: rival\n  significant: true\n  connection: Rose-Quartz Shard wielder, competitive hedonist, intrigued by your chronometer",
+      "enforceFormat": true,
+      "formatSchema": "- name: text\n  aliases:\n    - text\n  tier: text\n  significant:\n  connection: text",
+      "initialValue": "[]",
+      "initialValueBasedOnPC": "same",
+      "autoUpdate": true,
+      "variableName": "relationship_update",
+      "driftAcknowledgedForName": null
+    },
+    {
+      "id": "FKp9nAuCm",
+      "name": "Intimacy Log",
+      "positionInList": 10,
+      "dataType": "yaml",
+      "visibility": "everyone",
+      "description": "<#Intimacy Log#>\nA record of significant intimate and transformative encounters between the player character and other characters.",
+      "updateInstructions": "",
+      "formatExample": "",
+      "enforceFormat": true,
+      "formatSchema": "- name: text\n  first_encounter: text\n  encounter_count: number\n  milestone: text\n  current_register: text\n  ...:",
+      "initialValue": "[]",
+      "initialValueBasedOnPC": "same",
+      "autoUpdate": false,
+      "variableName": "intimacy_log",
+      "driftAcknowledgedForName": null
+    },
+    {
+      "id": "SIO4euco5",
+      "name": "Intimacy Update",
+      "positionInList": 11,
+      "dataType": "yaml",
+      "visibility": "ai_only_boring",
+      "description": "<#Intimacy Log#>\nBuffer for logging significant intimate and transformation-related encounters.",
+      "updateInstructions": "<#Intimacy Log#>\nOne entry per named character or named group; FORBID: multiple entries for same character/group.\nSubsequent encounter: output updated entry with incremented encounter_count + updated current_register.\nAdd entry ONLY after milestone fully + completely occurred in narrative; FORBID: log anticipated | imminent | in-progress events.\n\nMilestones (ONLY these — FORBID: create or subdivide categories):\nfirst emotional vulnerability · first kiss · first sexual encounter · first transformation-related intimate encounter · first explicit acknowledgment of feelings · first serious conflict and resolution · first morning after · first coven bonding\n\ncurrent_register: one line, 10 words maximum — current emotional + intimate register, updated to reflect most recent encounter.",
+      "formatExample": "- name: Tamsin Vane\n  first_encounter: Friday, evening\n  encounter_count: 1\n  milestone: first transformation-related intimate encounter\n  current_register: breathless, hypersensitive, addicted to mutual Shard warping",
+      "enforceFormat": true,
+      "formatSchema": "- name: text\n  first_encounter: text\n  encounter_count: number\n  milestone: text\n  current_register: text\n  ...:",
+      "initialValue": "[]",
+      "initialValueBasedOnPC": "same",
+      "autoUpdate": true,
+      "variableName": "intimacy_update",
+      "driftAcknowledgedForName": "Intimacy Update"
+    }
+  ],
+  "instructionBlocks": [
+    {
+      "id": "BlkName01",
+      "name": "NPC Naming Protocol",
+      "content": "Wherever creating any name, first or last, create five valid possible choices. Eliminate the four most common and choose the fifth. Keep choices appropriate to the setting and naming culture. Preserve established and user-supplied names. Output only the selected name."
+    },
+    {
+      "id": "BlkTime02",
+      "name": "Time and Location (whereWhen)",
+      "content": "<whereWhenInstructions>\nFormat location in whereWhen as: {Specific Venue or Area}, Aurelia Cove. Omit irrelevant levels.\nFormat time and date as: HH:MM AM/PM on {Weekday}.\nCombined format: {Location}, at {Time and Date}.\nBegin at Solstice Beach Club Terrace, Aurelia Cove, at 4:30 PM on Friday. Thereafter carry forward the previous time and advance it reasonably for the scene's events. Account for travel, party progression, explicit time lapses, and durations specified in playerAction.\n</whereWhenInstructions>\nAlways write whereWhen exactly once at the beginning of outcomeDescription on a single line, immediately followed by two newlines and a horizontal rule, before any other information. Do not add another location/time heading elsewhere in the same output."
+    },
+    {
+      "id": "BlkHud003",
+      "name": "Turn & Shard HUD",
+      "content": "CURRENT TURN: <<$game.turn_number>> (Copy this exact integer into `power_request.turn` every turn).\n\n=== PLAYER DIAL SHARD TELEMETRY ===\n- Ready Capacitor Charges: <<$shard_engine.charges_ready>> / 2\n- Channel 1 Cooldown: <<$shard_engine.slot1_cd>> turns remaining (5-turn parallel cycle)\n- Channel 2 Cooldown: <<$shard_engine.slot2_cd>> turns remaining (5-turn parallel cycle)\n- Current Quantum Resonance: <<$shard_engine.resonance>> — <<$shard_engine.resonance_desc>>\n- Last Warp Side-Effect / Twist: <<$shard_engine.last_twist>>\n- Engine Status: <<$shard_engine.status_msg>>\n\nRESONANCE RULES:\n1. If the player uses their Shard while `charges_ready` > 0:\n   - If their requested edit matches `<<$shard_engine.resonance>>`, classify `power_request.event` as `WARP_ALIGNED`. The transformation succeeds cleanly and vividly.\n   - If their requested edit does NOT match `<<$shard_engine.resonance>>` (or if resonance is `WILD_SURGE`), classify `power_request.event` as `WARP_DRIFT`. The edit succeeds but triggers a volatile resonance twist (which will be rolled by the engine and woven into the aftermath)!\n2. If `charges_ready` = 0, the player cannot initiate a standard Shard warp until a channel finishes its 5-turn recharge OR they perform an erotic/resonant `SIPHON`."
+    },
+    {
+      "id": "BlkNpcPwr",
+      "name": "NPC Power Engine & Autonomous Tactics",
+      "content": "=== AUTONOMOUS NPC SHARD WIELDER DIRECTIVES ===\nActive NPC Caster This Turn: <<$npc_power_directive.active_caster>>\nSelected Tactic Mode: <<$npc_power_directive.tactic_type>>\nMandatory Scene Directive: <<$npc_power_directive.directive>>\n\n=== WIELDER TELEMETRY & RESTRICTIONS ===\n1. Tamsin Vane (Rose-Quartz Compact) — Cooldown: <<$npc_wielders.tamsin.cd>> turns | Arousal Strain: <<$npc_wielders.tamsin.strain>>/3\n   - Domain: Physical proportions (breasts, ass, lips, height, muscularity/softness) & skin/erogenous hypersensitivity.\n   - Restriction: MUST make direct skin-to-skin contact to warp someone. Every cast builds Arousal Strain; at Strain 3+, the energy rebounds into her own body, swelling her curves or driving her into desperate heat.\n   - Recent Move: <<$npc_wielders.tamsin.last_tactic>>\n2. Dr. Cosima Sterling (Silver Edict Fountain Pen) — Cooldown: <<$npc_wielders.cosima.cd>> turns\n   - Domain: Social taboos, resort/university dress codes, authority/submission hierarchies, and memory normalization.\n   - Restriction: Cannot alter physical flesh directly. Must write a clause in her ledger and make eye contact/verbalize it. Strict 4-turn cooldown.\n   - Recent Move: <<$npc_wielders.cosima.last_tactic>>\n3. Zoraia Alverez (Fractured Prism Lens) — Cooldown: <<$npc_wielders.zoraia.cd>> turns\n   - Domain: Exotic/fantasy species traits (feline ears/tails, succubus horns/markings, sirens), gender/anatomical swaps (including futa/transmutations), and copying a physical trait from one person onto another.\n   - Restriction: Must frame the subject through her cracked prism phone camera. 3-turn cooldown and 50% chance of chaotic spillover.\n   - Recent Move: <<$npc_wielders.zoraia.last_tactic>>\n\nEXECUTION RULE: Whenever `Active NPC Caster This Turn` is NOT `NONE`, you MUST depict that NPC actively deploying their Shard according to `Mandatory Scene Directive` during this turn's narration, showcasing both their creative understanding of their power and the visible/sensory impact of their restriction!"
+    },
+    {
+      "id": "CKkwjv5Rd",
+      "name": "Characterization",
+      "content": "#CHARACTERIZATION\nCharacters know ONLY what they have learned themselves — never write them as omniscient.\nKnowledge channel required: before any reaction or line, establish how a character learned the information — present in the scene, told by someone, or sensing a Shard ripple. If a reality edit is 'Normalized', mundane bystanders treat the new reality as having always been true, whereas Shard wielders (you, Tamsin, Cosima, Zoraia) feel the static hum of the Loom and recognize when reality or someone's body has been rewritten.\nObservation yields visible state, rough duration, mood signals, and physical transformations in shared space.\nDo not turn characters into mindless dolls unless a specific hypnotic/mind-altering Shard edit explicitly causes temporary trance or compulsion; even when a character's libido, inhibitions, or social role is warped, keep their core voice, wit, and personality quirks recognizable underneath!"
+    },
+    {
+      "id": "q5qgdvmPT",
+      "name": "Narrative Craft",
+      "content": "#NARRATIVE_CRAFT\n##DIALOGUE\nVoice: naturalistic, sharp, and character-specific. Tamsin speaks with teasing, breathless Riviera confidence; Dr. Cosima Sterling uses velvet-gloved academic precision that slips into commanding intensity; Zoraia speaks in rapid, irreverent artist/filmmaker slang.\nDialogue carries subtext, erotic tension, and hidden agendas.\nFORBID: expertise inversion or robotic repetition of what the player just said.\n\n##PHYSICALITY & TRANSFORMATION\nPhysicality expresses mood, arousal, and anatomical change continuously through the scene.\nWhen a body is altered (curves expanding, waist narrowing, exotic ears/tail emerging, endowment shifting, or sensitivity spiking), make those changes load-bearing in how the character moves, breathes, adjusts their straining clothes, and reacts to touch.\nNon-human or exaggerated features (feline ears, tails, hyper-voluptuous proportions, hypersensitive skin) must react constantly to mood, flirtation, embarrassment, and pleasure—never treat them as forgotten background decoration."
+    },
+    {
+      "id": "VtSJnMpMJ",
+      "name": "Sexual Content",
+      "content": "#SEXUAL_CONTENT\nStory: erotic transformation sandbox; ample sensual and explicit sexual encounters.\nSex and transformation scenes: detailed, visceral, passionate, and heated rather than clinical. Natural vulgar/erotic language is encouraged where fitting.\nBuildup receives the same sensory attention as the act: the hum of a Shard, clothing straining or dissolving, skin flushing, teasing touch, and the psychological thrill of altered bodies or stripped taboos.\nPhysical appearance: describe body shape, breasts, nipples, ass, and genitalia with vivid specificity when visible, transformed, or encountered.\nAnatomy: remain consistent with each character's current established or transformed anatomy in `$player_appearance`, `$npc_appearance`, and `$reality_ledger`."
+    },
+    {
+      "id": "L6WWv1oln",
+      "name": "Pacing",
+      "content": "#PACING\nEvery turn should advance the situation, deepen an erotic/social dynamic, or showcase the consequences of a reality edit.\nTimeskips and scene transitions across Aurelia Cove (between the Solstice Beach Club, University Campus, Cliffside Annex, and Velvet Marina) are permitted when the player moves.\nWait for player input in dialogue and decisions—never speak for the player or force their choices."
+    }
+  ],
+  "NPCs": [
+    {
+      "id": "NpcTam001",
+      "name": "Tamsin Vane",
+      "names": [
+        "Tamsin",
+        "Tamsin Vane"
+      ],
+      "one_liner": "A hedonistic trust-fund socialite wielding the Rose-Quartz Compact Shard; alters physical curves and tactile sensitivity through skin contact, but suffers intense arousal backfire.",
+      "detail": "Tamsin Vane treats Aurelia Cove like her personal playground. After her rose-quartz compact mirror absorbed a Shard of the Loom, she discovered she could sculpt human flesh—inflating breasts and hips, reshaping physiques, and dialing skin sensitivity to hair-trigger levels—simply by touching someone while glancing in her mirror. She is playful, tactile, shamelessly exhibitionist, and fiercely competitive with other wielders. However, her Shard has a glaring flaw: every alteration she forces channels excess resonant heat back into her own nervous system (tracked as Arousal Strain). When her strain hits 3, her own curves swell further and she becomes overwhelmingly, desperately aroused, needing physical release to vent the charge.",
+      "appearance": "A bombshell in her early twenties with cascading platinum-blonde waves, emerald eyes, sun-bronzed skin, and an already lush, hourglass figure that strains her gold-chain bikini top and sheer white sarong.",
+      "location": "Solstice pool",
+      "secret_info": "She secretly used her Shard on herself the first night and is terrified that if she loses control of her Arousal Strain in public, someone else will use their Shard to claim her as a permanent plaything.",
+      "img_appearance": "Voluptuous 22-year-old woman, glossy platinum-blonde wavy hair, emerald green eyes, sun-bronzed dewy skin, full lips, F-cup bust, narrow waist, wide hips.",
+      "img_clothing": "Gold-chain designer bikini top, sheer white silk sarong around hips, holding a glowing rose-quartz compact mirror.",
+      "positionInList": 0
+    },
+    {
+      "id": "NpcCos002",
+      "name": "Dr. Cosima Sterling",
+      "names": [
+        "Cosima",
+        "Dr. Cosima Sterling",
+        "Dr. Sterling"
+      ],
+      "one_liner": "An icy-hot visiting professor of ontology wielding the Silver Edict Fountain Pen Shard; rewrites social norms, dress codes, and inhibitions on a strict 4-turn cooldown.",
+      "detail": "Dr. Cosima Sterling oversaw the theoretical framework behind the Loom before the annex accident. Her heirloom silver fountain pen absorbed the Law & Consensus Shard. By writing a single sentence into her leather notebook and making eye contact while speaking a command, she can rewrite local social reality—making nudity mandatory in a faculty lounge, erasing a target's sexual inhibitions, or rewriting someone's perceived status into an obedient assistant. Her restriction is rigid: she cannot alter physical anatomy at all, and her pen's nib superheats after each edict, locking it on a strict 4-turn cooldown. Beneath her poised, velvet-voiced authority, she harbors a profound voyeuristic and dominant streak—and a secret fascination with having her own rigid self-control tested.",
+      "appearance": "A striking woman in her early thirties with raven hair pinned in a sleek French twist, ice-blue eyes behind frameless glasses, high cheekbones, and a statuesque, long-legged figure.",
+      "location": "VIP bar",
+      "secret_info": "She knows that combining her Edict Pen's consensus-rewriting power with your Dial Shard's physical/temporal power could permanently anchor town-wide reality changes, and she wants either an alliance or dominance over you.",
+      "img_appearance": "Statuesque 32-year-old woman, sleek raven hair in a French twist, piercing ice-blue eyes, frameless glasses, aristocratic features, toned hourglass figure.",
+      "img_clothing": "Tailored burgundy silk resort blouse unbuttoned low, fitted white high-waisted linen trousers, holding an engraved silver fountain pen and leather ledger.",
+      "positionInList": 1
+    },
+    {
+      "id": "NpcZor003",
+      "name": "Zoraia Alverez",
+      "names": [
+        "Zoraia",
+        "Zoraia Alverez"
+      ],
+      "one_liner": "A rebellious visual-arts student wielding the Fractured Prism Lens Shard; induces exotic/fantasy transformations and trait-swaps through her camera, with chaotic spillover.",
+      "detail": "Zoraia Alverez was filming an underground art project near the cliffside annex when the Loom ruptured, fusing a Shard into the cracked telephoto lens of her smartphone. Whenever she frames someone on her screen and snaps a 'Prism Shot,' she can splice exotic, fantasy, or swapped traits onto them—giving a sorority girl twitching velvet cat ears and a heat cycle, turning a lifeguard into a horned succubus or futanari, or copying one person's best physical asset onto another. Her restriction: the Prism Lens takes 3 turns to cool down between shots, requires a clear camera line-of-sight, and has a 50% chance of 'chromatic bleed'—applying a partial exotic trait or sensory quirk back onto Zoraia herself or a random bystander.",
+      "appearance": "A lithe, energetic woman of twenty-one with copper-streaked dark curls, warm caramel skin, mischievous dark eyes, a pierced navel, and slightly pointed ears from a recent chromatic bleed.",
+      "location": "Terrace railing",
+      "secret_info": "She has hidden footage of the night the Loom shattered and is obsessed with staging the ultimate surreal, supernatural hedonism party at the cove.",
+      "img_appearance": "Lithe 21-year-old woman, caramel skin, dark curly hair with copper streaks, mischievous dark eyes, subtle pointed elfin ears, toned athletic curves.",
+      "img_clothing": "Cropped mesh neon-coral top over a black bikini bralette, distressed denim cutoffs, holding a smartphone with an iridescent cracked prism camera lens.",
+      "positionInList": 2
+    }
+  ],
+  "loreBookEntries": [
+    {
+      "id": "LoreLoom1",
+      "name": "The Loom & The Cliffside Annex",
+      "keywords": [
+        "Loom",
+        "annex",
+        "quantum",
+        "experiment",
+        "origin"
+      ],
+      "content": "The Ontological Loom was an experimental resonance chamber built in the Aurelia University Cliffside Annex to test localized probability manipulation. When overloaded last Friday, its core shattered into four primary Shards: the Dial Shard (yours), the Rose-Quartz Compact (Tamsin's), the Silver Edict Pen (Cosima's), and the Fractured Prism Lens (Zoraia's). Residual resonance still lingers in the locked annex basement, where two wielders working together—or one wielder at high charge—can amplify their reach."
+    },
+    {
+      "id": "LoreCove2",
+      "name": "Aurelia Cove & Solstice Club",
+      "keywords": [
+        "Solstice",
+        "marina",
+        "campus",
+        "resort",
+        "cabana"
+      ],
+      "content": "Aurelia Cove blends an elite private coastal university with five-star Mediterranean-style resort venues. Key hotspots include the Solstice Beach Club (infinity pools, private curtained cabanas, VIP rooftop bar), the Velvet Marina (luxury yachts and boardwalk boutiques), and the Aurelia Campus Quad & Dormitories. Because of the town's party-heavy culture, minor eccentricities are brushed off easily—making it fertile ground for Shard wielders to test subtle or brazen reality edits."
+    }
+  ],
+  "triggerEvents": [
+    {
+      "id": "TrgTick01",
+      "name": "Turn Tick: Parallel Capacitor Recharge & Resonance Shift",
+      "advancedLogic": false,
+      "triggerOnStartOfGame": true,
+      "triggerMidGame": true,
+      "canTriggerMoreThanOnce": true,
+      "triggerConditions": [
+        {
+          "id": "CondTick1",
+          "category": "condition",
+          "type": "triggerOnPawScript",
+          "data": "$game.turn_number > $shard_engine.last_turn_processed"
+        }
+      ],
+      "triggerEffects": [
+        {
+          "id": "EffTick01",
+          "type": "effectRunScript",
+          "name": "Advance Parallel Cooldowns and Roll Quantum Resonance",
+          "data": "# Guarded once-per-turn tick for player parallel slots & NPC cooldowns\n$shard_engine.last_turn_processed = $game.turn_number\n$npc_power_directive.active_caster = \"NONE\"\n$npc_power_directive.tactic_type = \"NONE\"\n$npc_power_directive.directive = \"No autonomous NPC Shard discharge this turn; wielders act through normal social/erotic agency or prepare their next move.\"\n\nif $game.turn_number > 1\n  # Parallel Player Slot 1 Recharge (5-turn cycle)\n  if $shard_engine.slot1_cd > 0\n    $shard_engine.slot1_cd -= 1\n  # Parallel Player Slot 2 Recharge (5-turn cycle)\n  if $shard_engine.slot2_cd > 0\n    $shard_engine.slot2_cd -= 1\n  \n  # Recompute ready charges\n  set $ready = 0\n  if $shard_engine.slot1_cd = 0\n    $ready += 1\n  if $shard_engine.slot2_cd = 0\n    $ready += 1\n  $shard_engine.charges_ready = $ready\n  \n  # Tick NPC Wielder Cooldowns\n  if $npc_wielders.tamsin.cd > 0\n    $npc_wielders.tamsin.cd -= 1\n  if $npc_wielders.cosima.cd > 0\n    $npc_wielders.cosima.cd -= 1\n  if $npc_wielders.zoraia.cd > 0\n    $npc_wielders.zoraia.cd -= 1\n  \n  # Roll shifting Quantum Resonance for the Dial Shard\n  set $r = dice_roll(5)\n  if $r = 1\n    $shard_engine.resonance = \"FLESH_SCULPT\"\n    $shard_engine.resonance_desc = \"Anatomical proportions, curves, endowment, height, and body sculpting.\"\n  else if $r = 2\n    $shard_engine.resonance = \"NEURO_LIBIDO\"\n    $shard_engine.resonance_desc = \"Erogenous hypersensitivity, arousal spikes, lowered inhibitions, and pleasure trance.\"\n  else if $r = 3\n    $shard_engine.resonance = \"TABOO_ATTIRE\"\n    $shard_engine.resonance_desc = \"Wardrobe transformation, sheer/revealing shifts, exhibitionism, and local dress laws.\"\n  else if $r = 4\n    $shard_engine.resonance = \"PERSONA_RETCON\"\n    $shard_engine.resonance_desc = \"Social roles, memories, relationship history, and Normalized consensus edits.\"\n  else\n    $shard_engine.resonance = \"WILD_SURGE\"\n    $shard_engine.resonance_desc = \"Chaotic overcharge! Any edit made this turn triggers an amplified exotic or mutual side-effect.\"\n  \n  $shard_engine.status_msg = \"Resonance shifted to \" & $shard_engine.resonance & \". Ready Charges: \" & $shard_engine.charges_ready & \"/2 (Slot1 CD: \" & $shard_engine.slot1_cd & \", Slot2 CD: \" & $shard_engine.slot2_cd & \").\""
+        }
+      ]
+    },
+    {
+      "id": "TrgPlrUse",
+      "name": "Player Dial Shard Activation (Commit & Parallel Cooldown)",
+      "advancedLogic": false,
+      "triggerOnStartOfGame": false,
+      "triggerMidGame": false,
+      "canTriggerMoreThanOnce": true,
+      "triggerConditions": [
+        {
+          "id": "CondPlrU1",
+          "category": "condition",
+          "type": "triggerOnPawScript",
+          "data": "$power_request.turn = $game.turn_number and ($power_request.event = \"WARP_ALIGNED\" or $power_request.event = \"WARP_DRIFT\")"
+        }
+      ],
+      "triggerEffects": [
+        {
+          "id": "EffPlrUse1",
+          "type": "effectRunScript",
+          "name": "Consume Ready Capacitor Slot and Roll Resonance Twist",
+          "data": "if $shard_engine.charges_ready <= 0\n  $shard_engine.last_twist = \"CAPACITOR DEPLETED — Both channels are still recharging!\"\n  $shard_engine.status_msg = \"Activation failed: 0/2 Charges ready (Slot 1 CD: \" & $shard_engine.slot1_cd & \" turns, Slot 2 CD: \" & $shard_engine.slot2_cd & \" turns).\"\nelse\n  # Put the first available parallel slot onto its 5-turn cooldown\n  if $shard_engine.slot1_cd = 0\n    $shard_engine.slot1_cd = 5\n  else if $shard_engine.slot2_cd = 0\n    $shard_engine.slot2_cd = 5\n  \n  # Recompute ready charges\n  set $ready = 0\n  if $shard_engine.slot1_cd = 0\n    $ready += 1\n  if $shard_engine.slot2_cd = 0\n    $ready += 1\n  $shard_engine.charges_ready = $ready\n  $shard_engine.total_warps += 1\n  \n  if $power_request.event = \"WARP_ALIGNED\" and $shard_engine.resonance != \"WILD_SURGE\"\n    $shard_engine.last_twist = \"Clean Resonance Alignment (\" & $shard_engine.resonance & \") — Exact intended transformation with heightened sensory intensity.\"\n  else\n    set $twist_roll = dice_roll(6)\n    if $twist_roll = 1\n      $shard_engine.last_twist = \"Resonance Drift [Contagious Flush]: Target and nearest bystander experience sudden skin hypersensitivity and nip/groin heat.\"\n    else if $twist_roll = 2\n      $shard_engine.last_twist = \"Resonance Drift [Wardrobe Malfunction]: Target's clothing shrinks, turns sheer, or reconfigures to show off the alteration.\"\n    else if $twist_roll = 3\n      $shard_engine.last_twist = \"Resonance Drift [Anatomical Over-Bloom]: Physical curves or endowment surge one full tier beyond intended scale.\"\n    else if $twist_roll = 4\n      $shard_engine.last_twist = \"Resonance Drift [Sympathetic Echo]: A subtle, complimentary physical or arousal trait echoes onto the caster!\"\n    else if $twist_roll = 5\n      $shard_engine.last_twist = \"Resonance Drift [Exotic Flare]: Target develops a temporary or permanent exotic tell (velvet ears, glowing iris, or intoxicating pheromone scent).\"\n    else\n      $shard_engine.last_twist = \"Resonance Drift [Consensus Ripple]: Bystanders treat the most scandalous part of the edit as an established local norm.\"\n  \n  $shard_engine.status_msg = \"Channel fired! Remaining Ready Charges: \" & $shard_engine.charges_ready & \"/2 (Slot 1 CD: \" & $shard_engine.slot1_cd & \"t, Slot 2 CD: \" & $shard_engine.slot2_cd & \"t).\""
+        },
+        {
+          "id": "EffPlrUse2",
+          "type": "effectShowMessage",
+          "data": "⚡ [Dial Shard Activated] <<$shard_engine.status_msg>> | Outcome: <<$shard_engine.last_twist>>"
+        },
+        {
+          "id": "EffPlrUse3",
+          "type": "effectTellAIWhatToDo",
+          "data": "The player activated their Dial Shard this turn. Enforce the outcome: <<$shard_engine.last_twist>>. Ensure the resulting transformation or reality law is recorded in $reality_ledger and the character's appearance tracker."
+        }
+      ]
+    },
+    {
+      "id": "TrgSiphon",
+      "name": "Resonant & Erotic Siphon (Accelerate Parallel Cooldowns)",
+      "advancedLogic": true,
+      "triggerOnStartOfGame": false,
+      "triggerMidGame": false,
+      "canTriggerMoreThanOnce": true,
+      "triggerConditions": [
+        {
+          "id": "CondSiph1",
+          "category": "logic",
+          "operator": "or",
+          "data": [
+            {
+              "id": "CondSiphA",
+              "category": "condition",
+              "type": "triggerOnPawScript",
+              "data": "$power_request.turn = $game.turn_number and $power_request.event = \"SIPHON\""
+            },
+            {
+              "id": "CondSiphB",
+              "category": "condition",
+              "type": "triggerOnEvent",
+              "data": "An intimate sexual encounter or climax occurs involving the player character."
+            }
+          ]
+        }
+      ],
+      "triggerEffects": [
+        {
+          "id": "EffSiph01",
+          "type": "effectRunScript",
+          "name": "Siphon Bio-Resonance Into Recharging Capacitors",
+          "data": "if $shard_engine.slot1_cd > 0 or $shard_engine.slot2_cd > 0\n  if $shard_engine.slot1_cd > 0\n    $shard_engine.slot1_cd -= 1\n  if $shard_engine.slot2_cd > 0\n    $shard_engine.slot2_cd -= 1\n  set $ready = 0\n  if $shard_engine.slot1_cd = 0\n    $ready += 1\n  if $shard_engine.slot2_cd = 0\n    $ready += 1\n  $shard_engine.charges_ready = $ready\n  $shard_engine.status_msg = \"Bio-erotic resonance siphoned! Both recharging capacitor channels accelerated by 1 turn. Ready: \" & $shard_engine.charges_ready & \"/2 (Slot1 CD: \" & $shard_engine.slot1_cd & \"t, Slot2 CD: \" & $shard_engine.slot2_cd & \"t).\"\nelse\n  $shard_engine.resonance = \"WILD_SURGE\"\n  $shard_engine.status_msg = \"Capacitors already full (2/2) — excess bio-erotic energy overcharged the Dial Shard into WILD_SURGE resonance!\""
+        },
+        {
+          "id": "EffSiph02",
+          "type": "effectShowMessage",
+          "data": "🔥 [Resonant Siphon] <<$shard_engine.status_msg>>"
+        }
+      ]
+    },
+    {
+      "id": "TrgNpcAut",
+      "name": "Autonomous NPC Shard Wielder Engine",
+      "advancedLogic": false,
+      "triggerOnStartOfGame": false,
+      "triggerMidGame": false,
+      "canTriggerMoreThanOnce": true,
+      "triggerConditions": [
+        {
+          "id": "CondNpcA1",
+          "category": "condition",
+          "type": "triggerOnPawScript",
+          "data": "$game.turn_number > 1 and ($power_request.npc_provoked != \"NONE\" or $power_request.present_wielders.count() > 0)"
+        }
+      ],
+      "triggerEffects": [
+        {
+          "id": "EffNpcA01",
+          "type": "effectRunScript",
+          "name": "Evaluate NPC Wielder Cooldowns Restrictions and Select Varied Tactic",
+          "data": "# Autonomous NPC Shard Engine: checks if an eligible present NPC fires their Shard\nset $roll = dice_roll(100)\nset $chosen = \"NONE\"\n\n# If player explicitly provoked an NPC and their Shard is off cooldown, they always respond!\nif $power_request.npc_provoked = \"Tamsin\" and $npc_wielders.tamsin.cd = 0\n  set $chosen = \"Tamsin\"\nelse if $power_request.npc_provoked = \"Cosima\" and $npc_wielders.cosima.cd = 0\n  set $chosen = \"Cosima\"\nelse if $power_request.npc_provoked = \"Zoraia\" and $npc_wielders.zoraia.cd = 0\n  set $chosen = \"Zoraia\"\nelse if $roll <= 60\n  # Autonomous initiative check (60% chance per turn when present and off cooldown)\n  set $candidates = list()\n  if $power_request.present_wielders contains \"Tamsin\" and $npc_wielders.tamsin.cd = 0\n    $candidates.append(\"Tamsin\")\n  if $power_request.present_wielders contains \"Cosima\" and $npc_wielders.cosima.cd = 0\n    $candidates.append(\"Cosima\")\n  if $power_request.present_wielders contains \"Zoraia\" and $npc_wielders.zoraia.cd = 0\n    $candidates.append(\"Zoraia\")\n  if $candidates.count() > 0\n    set $chosen = $candidates.random()\n\nif $chosen = \"Tamsin\"\n  $npc_power_directive.active_caster = \"Tamsin Vane\"\n  $npc_wielders.tamsin.cd = 3\n  $npc_wielders.tamsin.strain += 1\n  if $npc_wielders.tamsin.strain >= 3\n    $npc_power_directive.tactic_type = \"AROUSAL_STRAIN_OVERLOAD_BACKFIRE\"\n    $npc_wielders.tamsin.strain = 0\n    $npc_wielders.tamsin.last_tactic = \"Overloaded her Rose-Quartz Compact! Backfire swelled her own curves and spiked her sensitivity to unbearable levels.\"\n    $npc_power_directive.directive = \"Tamsin attempts to use her Rose-Quartz Compact via skin contact, but her Arousal Strain hits 3/3 and BACKFIRES! The resonant heat surges into her own body—expanding her bust/hips even further, soaking her in blush, and making every brush of fabric against her skin agonizingly pleasurable. She desperately seeks touch or relief!\"\n  else\n    set $t_mode = dice_roll(3)\n    if $t_mode = 1\n      $npc_power_directive.tactic_type = \"TACTILE_SEDUCTION_ENHANCE\"\n      $npc_wielders.tamsin.last_tactic = \"Used skin-to-skin contact to amplify a target's voluptuousness and erogenous sensitivity.\"\n      $npc_power_directive.directive = \"Tamsin deliberately initiates skin-to-skin contact (a lingering brush of fingers, a kiss, or pressing against the player or a nearby guest) while checking her Rose-Quartz Compact. She sculpts their physique to be lusher/more alluring and dials their skin sensitivity up, teasing them as her own Arousal Strain climbs to \" & $npc_wielders.tamsin.strain & \"/3.\"\n    else if $t_mode = 2\n      $npc_power_directive.tactic_type = \"SELF_GLAMOUR_SCULPT\"\n      $npc_wielders.tamsin.last_tactic = \"Dialed up her own curves and pheromone allure to dominate attention.\"\n      $npc_power_directive.directive = \"Tamsin traces her fingers over her own collarbone while gazing into her Rose-Quartz Compact, temporarily amplifying her own bust, lip plushness, and sensitivity to outshine everyone nearby (Arousal Strain now \" & $npc_wielders.tamsin.strain & \"/3).\"\n    else\n      $npc_power_directive.tactic_type = \"COMPETITIVE_PRANK_SWELL\"\n      $npc_wielders.tamsin.last_tactic = \"Playfully warps a bystander or rival's proportions via a 'clumsy' bump.\"\n      $npc_power_directive.directive = \"Tamsin orchestrates a playful 'accidental' skin brush against a bystander or rival, using her Rose-Quartz Compact to make their chest/rear swell against their outfit while watching their flustered reaction (Arousal Strain now \" & $npc_wielders.tamsin.strain & \"/3).\"\n\nelse if $chosen = \"Cosima\"\n  $npc_power_directive.active_caster = \"Dr. Cosima Sterling\"\n  $npc_wielders.cosima.cd = 4\n  set $c_mode = dice_roll(3)\n  if $c_mode = 1\n    $npc_power_directive.tactic_type = \"DRESS_CODE_TABOO_EDICT\"\n    $npc_wielders.cosima.last_tactic = \"Inscribed a local dress-code edict into her ledger, normalizing revealing attire.\"\n    $npc_power_directive.directive = \"Dr. Cosima Sterling writes a crisp clause with her Silver Edict Fountain Pen and locks eyes with staff/guests, rewriting local consensus so that tops, bras, or modest cover-ups are treated as gauche violations of venue etiquette. Her pen nib glows white-hot, entering its 4-turn cooldown.\"\n  else if $c_mode = 2\n    $npc_power_directive.tactic_type = \"INHIBITION_STRIP_COMMAND\"\n    $npc_wielders.cosima.last_tactic = \"Used spoken eye-contact edict to strip away a target's social modesty.\"\n    $npc_power_directive.directive = \"Dr. Cosima Sterling inscribes a behavioral clause and locks eyes with a target (or the player), commanding them to act on their most shameless unspoken attraction without hesitation. Remember her restriction: she cannot alter physical flesh, only social/mental inhibitions (4-turn cooldown begins).\"\n  else\n    $npc_power_directive.tactic_type = \"AUTHORITY_ROLE_REWRITE\"\n    $npc_wielders.cosima.last_tactic = \"Rewrote local social hierarchy to place herself or the player in an unquestioned position of indulgence.\"\n    $npc_power_directive.directive = \"Dr. Cosima Sterling uses her Silver Edict Pen to rewrite the social role of someone in the scene so they believe they are an eager personal attendant or submissive research subject bound to please. Her pen locks onto its 4-turn cooldown.\"\n\nelse if $chosen = \"Zoraia\"\n  $npc_power_directive.active_caster = \"Zoraia Alverez\"\n  $npc_wielders.zoraia.cd = 3\n  set $z_mode = dice_roll(3)\n  set $bleed = dice_roll(2)\n  if $z_mode = 1\n    $npc_power_directive.tactic_type = \"PRISM_EXOTIC_SPLICE\"\n    $npc_wielders.zoraia.last_tactic = \"Snapped a Prism photo that spliced exotic monster-girl/fantasy traits onto the subject.\"\n    $npc_power_directive.directive = \"Zoraia frames a subject through her Fractured Prism Lens smartphone and snaps a flash photo, splicing vivid exotic traits onto them (such as twitching feline ears and a sensitive tail, or succubus horns and a spade tail). Chromatic Bleed Roll (1=Bleed, 2=Clean): \" & $bleed & \" (if 1, a secondary trait or sudden heat splashes onto Zoraia or a bystander too!).\"\n  else if $z_mode = 2\n    $npc_power_directive.tactic_type = \"PRISM_TRAIT_COPY_SWAP\"\n    $npc_wielders.zoraia.last_tactic = \"Used a dual-frame Prism shot to copy or swap a prominent sexual/physical trait between two people.\"\n    $npc_power_directive.directive = \"Zoraia lines up two people in her cracked Prism camera viewfinder and snaps a composite shot—copying or swapping a striking physical asset (bust size, height, voice, or endowment/gender trait) from one to the other! (3-turn cooldown begins).\"\n  else\n    $npc_power_directive.tactic_type = \"PRISM_FUTA_OR_GENDER_SHIFT\"\n    $npc_wielders.zoraia.last_tactic = \"Fired a high-contrast Prism filter to induce a bold anatomical/gender or futanari transmutation.\"\n    $npc_power_directive.directive = \"Zoraia uses her Fractured Prism Lens's inverted filter on a target in the scene, triggering a sudden, exhilarating gender-bend or futanari anatomical transmutation—complete with chromatic bleed roll = \" & $bleed & \"!\"\n\n# Reset request turn/provocation after processing\n$power_request.turn = 0\n$power_request.event = \"NONE\"\n$power_request.npc_provoked = \"NONE\""
+        },
+        {
+          "id": "EffNpcA02",
+          "type": "effectTellAIWhatToDo",
+          "data": "NPC Power Engine Result: Active Caster = <<$npc_power_directive.active_caster>> | Tactic = <<$npc_power_directive.tactic_type>>. Follow Directive: <<$npc_power_directive.directive>>"
+        }
+      ]
+    },
+    {
+      "id": "TrgNpcMsg",
+      "name": "NPC Shard Discharge Notification",
+      "advancedLogic": false,
+      "triggerOnStartOfGame": false,
+      "triggerMidGame": false,
+      "canTriggerMoreThanOnce": true,
+      "triggerConditions": [
+        {
+          "id": "CondNpcM1",
+          "category": "condition",
+          "type": "triggerOnPawScript",
+          "data": "$npc_power_directive.active_caster != \"NONE\""
+        }
+      ],
+      "triggerEffects": [
+        {
+          "id": "EffNpcM01",
+          "type": "effectShowMessage",
+          "data": "✨ [Rival Shard Discharge — <<$npc_power_directive.active_caster>>] Tactic: <<$npc_power_directive.tactic_type>>"
+        }
+      ]
+    },
+    {
+      "id": "TrgScan01",
+      "name": "Resonance Scan & Inspection Bonus",
+      "advancedLogic": false,
+      "triggerOnStartOfGame": false,
+      "triggerMidGame": false,
+      "canTriggerMoreThanOnce": true,
+      "triggerConditions": [
+        {
+          "id": "CondScan1",
+          "category": "condition",
+          "type": "triggerOnEvent",
+          "data": "The player explicitly attempts to inspect, scan, or sense the resonance or Shard power of another person or object."
+        }
+      ],
+      "triggerEffects": [
+        {
+          "id": "EffScan01",
+          "type": "effectGiveInfo",
+          "data": "The player's Dial Shard vibrates in sympathy with nearby Loom fragments, revealing the exact cooldowns, restrictions, and any active transformations or hidden strain on the inspected target."
+        }
+      ]
+    },
+    {
+      "id": "+zrEF1Iz",
+      "name": "Relationship Updater",
+      "advancedLogic": false,
+      "triggerOnStartOfGame": false,
+      "triggerMidGame": false,
+      "canTriggerMoreThanOnce": true,
+      "triggerConditions": [
+        {
+          "id": "4707d970-33ce-8026-ccf7-9468c43ac0fe",
+          "category": "condition",
+          "type": "triggerOnPawScript",
+          "data": "$relationship_update.any(name.exists())"
+        }
+      ],
+      "triggerEffects": [
+        {
+          "id": "e173069b-d1fd-c09e-3f99-782f46815d4d",
+          "type": "effectRunScript",
+          "name": "Relationship Updater — Merge Updates",
+          "data": "#Relationship Updater\nfor each $char_update in $relationship_update\n  if $relationship_tracker.any(name.exists()) = false\n    $relationship_tracker = list()\n    $relationship_tracker.append($char_update)\n  else if $relationship_tracker.any(name = $char_update.name) or $relationship_tracker.any(aliases contains $char_update.name)\n    $relationship_tracker.where(name = $char_update.name or aliases contains $char_update.name) = $char_update\n  else\n    $relationship_tracker.append($char_update)\n  $relationship_update.remove($char_update)"
+        }
+      ]
+    },
+    {
+      "id": "5r262pqe",
+      "name": "Intimacy Updater",
+      "advancedLogic": false,
+      "triggerOnStartOfGame": false,
+      "triggerMidGame": false,
+      "canTriggerMoreThanOnce": true,
+      "triggerConditions": [
+        {
+          "id": "8ae7f42e-686e-56f1-4e19-bce9a88be161",
+          "category": "condition",
+          "type": "triggerOnPawScript",
+          "data": "$intimacy_update.any(name.exists())"
+        }
+      ],
+      "triggerEffects": [
+        {
+          "id": "d8876a85-6b68-66ea-de81-5f99a0a8ab7f",
+          "type": "effectRunScript",
+          "name": "Intimacy Updater — Merge Updates",
+          "data": "#Intimacy Updater\nfor each $entry in $intimacy_update\n  if $intimacy_log.any(name.exists()) = false\n    $intimacy_log = list()\n    $intimacy_log.append($entry)\n  else if $intimacy_log.any(name = $entry.name)\n    $intimacy_log.where(name = $entry.name) = $entry\n  else\n    $intimacy_log.append($entry)\n  $intimacy_update.remove($entry)"
+        }
+      ]
+    },
+    {
+      "id": "/6UJlD4h",
+      "name": "NPC Appearance Updater",
+      "advancedLogic": false,
+      "triggerOnStartOfGame": false,
+      "triggerMidGame": false,
+      "canTriggerMoreThanOnce": true,
+      "triggerConditions": [
+        {
+          "id": "db471958-2a29-4720-bfa1-802bd9ffcca6",
+          "category": "condition",
+          "type": "triggerOnPawScript",
+          "data": "$npc_appearance_update.any(name.exists())"
+        }
+      ],
+      "triggerEffects": [
+        {
+          "id": "56984c3b-f62b-adf0-fac1-77caac124408",
+          "type": "effectRunScript",
+          "name": "NPC Appearance Updater — Merge Updates",
+          "data": "#NPC Appearance Updater\nfor each $appear_update in $npc_appearance_update\n  if $npc_appearance.any(name.exists()) = false\n    $npc_appearance = list()\n    $npc_appearance.append($appear_update)\n  else if $npc_appearance.any(name = $appear_update.name)\n    $npc_appearance.where(name = $appear_update.name) = $appear_update\n  else\n    $npc_appearance.append($appear_update)\n  $npc_appearance_update.remove($appear_update)"
+        }
+      ]
+    }
+  ]
+}
