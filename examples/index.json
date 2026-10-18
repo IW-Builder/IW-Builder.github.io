@@ -287,8 +287,15 @@
     "runtimeScope": "Component behaviors are documented; this complete composition is not runtime-qualified."
   },
   {
-    "file": "narrative-last-ferry.json",
-    "purpose": "Narrative-first opening, distinct NPC voices, optional lore and bounded AI memory.",
+    "file": "narrative-vendemmia.json",
+    "purpose": "Narrative-first NPC cards with labeled sections, rules for intimate scenes, and keyword lore with sensory detail.",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Not runtime-qualified; a creative authoring example."
+  },
+  {
+    "file": "narrative-seven-nights.json",
+    "purpose": "Narrative-first fantasy built around central love interest, foil and rival. Shows world rules in block, consent built into fiction.",
     "evidence": "PATTERN",
     "structuralValidation": "Checked by tools/check_package.py; see its report.",
     "runtimeScope": "Not runtime-qualified; a creative authoring example."

@@ -8,61 +8,61 @@ For lightweight payload lookup, use [Payloads.md](Payloads.md). Full files below
 
 ### Conditions
 
-| Example | Demonstrates |
-| --- | --- |
-| [triggerOnEvent](condition-triggerOnEvent.json) | Recognize an AI-judged narrative Scenario; define it once in root conditions. |
-| [triggerOnRandomChance](condition-triggerOnRandomChance.json) | Apply a percentage chance to an otherwise eligible trigger. |
-| [triggerOnCharacter](condition-triggerOnCharacter.json) | Limit an event to selected player characters. |
-| [triggerOnTrackedItem](condition-triggerOnTrackedItem.json) | Compare a tracker with a threshold or text condition. |
-| [triggerPrereqs](condition-triggerPrereqs.json) | Require another trigger to have fired this turn or earlier in the game. |
-| [triggerBlockers](condition-triggerBlockers.json) | Suppress an event if another trigger fired this turn or earlier in the game. |
-| [triggerOnPawScript](condition-triggerOnPawScript.json) | Evaluate a deterministic state predicate. |
-| [triggerOnTurn](condition-triggerOnTurn.json) | Run at a specified turn. |
+|Example|Demonstrates|
+|-|-|
+|[triggerOnEvent](condition-triggerOnEvent.json)|Recognize an AI-judged narrative Scenario; define it once in root conditions.|
+|[triggerOnRandomChance](condition-triggerOnRandomChance.json)|Apply a percentage chance to an otherwise eligible trigger.|
+|[triggerOnCharacter](condition-triggerOnCharacter.json)|Limit an event to selected player characters.|
+|[triggerOnTrackedItem](condition-triggerOnTrackedItem.json)|Compare a tracker with a threshold or text condition.|
+|[triggerPrereqs](condition-triggerPrereqs.json)|Require another trigger to have fired this turn or earlier in the game.|
+|[triggerBlockers](condition-triggerBlockers.json)|Suppress an event if another trigger fired this turn or earlier in the game.|
+|[triggerOnPawScript](condition-triggerOnPawScript.json)|Evaluate a deterministic state predicate.|
+|[triggerOnTurn](condition-triggerOnTurn.json)|Run at a specified turn.|
 
 ### Effects
 
-| Example | Demonstrates |
-| --- | --- |
-| [effectShowMessage](effect-effectShowMessage.json) | Display an authoritative player-facing result. |
-| [effectTellAIWhatToDo](effect-effectTellAIWhatToDo.json) | Guide subsequent narration. |
-| [effectGiveInfo](effect-effectGiveInfo.json) | Supply background information to the AI. |
-| [effectSetTrackedItemValue](effect-effectSetTrackedItemValue.json) | Set or modify a tracked value with a native operation. |
-| [effectModifyTrackedItemDetails](effect-effectModifyTrackedItemDetails.json) | Change selected tracker settings through explicit override flags. |
-| [effectChangePCName](effect-effectChangePCName.json) | Change the active player character name. |
-| [effectChangePCDescription](effect-effectChangePCDescription.json) | Change the active player character description. |
-| [effectChangePCSkill](effect-effectChangePCSkill.json) | Increase/decrease a named skill with a level boundary. |
-| [effectChangeObjective](effect-effectChangeObjective.json) | Replace the current story objective. |
-| [effectChangeVictoryCondition](effect-effectChangeVictoryCondition.json) | Replace the native victory criterion/message. |
-| [effectChangeDefeatCondition](effect-effectChangeDefeatCondition.json) | Replace the native defeat criterion/message. |
-| [effectChangeMainInstructions](effect-effectChangeMainInstructions.json) | Replace main storyteller instructions. |
-| [effectModifyInstructionBlock](effect-effectModifyInstructionBlock.json) | Install, replace or clear a named instruction block. |
-| [effectModifyKeywordBlock](effect-effectModifyKeywordBlock.json) | Change a keyword block and its activation keywords. |
-| [effectChangeAuthorStyle](effect-effectChangeAuthorStyle.json) | Change the requested prose style. |
-| [effectChangeDescriptionInstructions](effect-effectChangeDescriptionInstructions.json) | Change Description specialist instructions. |
-| [effectPresentChoice](effect-effectPresentChoice.json) | Ask the player to select from defined options and store the result. |
-| [effectRequestInput](effect-effectRequestInput.json) | Request text and store it in a tracker. |
-| [effectFireRandomTrigger](effect-effectFireRandomTrigger.json) | Dispatch a random listed trigger or the nothing sentinel; extra dispatch semantics are bounded. |
-| [effectRunScript](effect-effectRunScript.json) | Execute sequential tracker updates in PawScript. |
-| [effectEndsGame](effect-effectEndsGame.json) | End the game; boolean data controls whether continuing is allowed. |
+|Example|Demonstrates|
+|-|-|
+|[effectShowMessage](effect-effectShowMessage.json)|Display an authoritative player-facing result.|
+|[effectTellAIWhatToDo](effect-effectTellAIWhatToDo.json)|Guide subsequent narration.|
+|[effectGiveInfo](effect-effectGiveInfo.json)|Supply background information to the AI.|
+|[effectSetTrackedItemValue](effect-effectSetTrackedItemValue.json)|Set or modify a tracked value with a native operation.|
+|[effectModifyTrackedItemDetails](effect-effectModifyTrackedItemDetails.json)|Change selected tracker settings through explicit override flags.|
+|[effectChangePCName](effect-effectChangePCName.json)|Change the active player character name.|
+|[effectChangePCDescription](effect-effectChangePCDescription.json)|Change the active player character description.|
+|[effectChangePCSkill](effect-effectChangePCSkill.json)|Increase/decrease a named skill with a level boundary.|
+|[effectChangeObjective](effect-effectChangeObjective.json)|Replace the current story objective.|
+|[effectChangeVictoryCondition](effect-effectChangeVictoryCondition.json)|Replace the native victory criterion/message.|
+|[effectChangeDefeatCondition](effect-effectChangeDefeatCondition.json)|Replace the native defeat criterion/message.|
+|[effectChangeMainInstructions](effect-effectChangeMainInstructions.json)|Replace main storyteller instructions.|
+|[effectModifyInstructionBlock](effect-effectModifyInstructionBlock.json)|Install, replace or clear a named instruction block.|
+|[effectModifyKeywordBlock](effect-effectModifyKeywordBlock.json)|Change a keyword block and its activation keywords.|
+|[effectChangeAuthorStyle](effect-effectChangeAuthorStyle.json)|Change the requested prose style.|
+|[effectChangeDescriptionInstructions](effect-effectChangeDescriptionInstructions.json)|Change Description specialist instructions.|
+|[effectPresentChoice](effect-effectPresentChoice.json)|Ask the player to select from defined options and store the result.|
+|[effectRequestInput](effect-effectRequestInput.json)|Request text and store it in a tracker.|
+|[effectFireRandomTrigger](effect-effectFireRandomTrigger.json)|Dispatch a random listed trigger or the nothing sentinel; extra dispatch semantics are bounded.|
+|[effectRunScript](effect-effectRunScript.json)|Execute sequential tracker updates in PawScript.|
+|[effectEndsGame](effect-effectEndsGame.json)|End the game; boolean data controls whether continuing is allowed.|
 
 ## Combined recipes and other fixtures
 
-- [logic-groups](logic-groups.json): Nested logic nodes with native shape.
-- [native-text-operations](native-text-operations.json): Append, remove all matches and replace text.
-- [character-starting-values](character-starting-values.json): Fixed, fixed-choice and script-choice per-PC values.
-- [npc-keyword-portrait-ending](npc-keyword-portrait-ending.json): NPC, keyword, portrait descriptors and natural-language endings.
-- [recipe-request-commit](recipe-request-commit.json): Optional precise transaction using a fresh AI request and script receipt.
-- [recipe-choice-followup](recipe-choice-followup.json): Answer-dependent objective using a later ordered trigger.
-- [recipe-threshold-unlock](recipe-threshold-unlock.json): State threshold grants access and modifies content once.
-- [probe-skills](probe-skills.json): Editor-baseline Evaluation installed explicitly; capped skill effects and runtime readout.
-- [probe-template-timing](probe-template-timing.json): Compare live block interpolation with effect-installed interpolation.
-- [showcase-glass-ledger](showcase-glass-ledger.json): Integrated cast, alternate PCs, planning choice, precise transactions, countdown, optional prose, Scenario and script-triggered endings.
+* [logic-groups](logic-groups.json): Nested logic nodes with native shape.
+* [native-text-operations](native-text-operations.json): Append, remove all matches and replace text.
+* [character-starting-values](character-starting-values.json): Fixed, fixed-choice and script-choice per-PC values.
+* [npc-keyword-portrait-ending](npc-keyword-portrait-ending.json): NPC, keyword, portrait descriptors and natural-language endings.
+* [recipe-request-commit](recipe-request-commit.json): Optional precise transaction using a fresh AI request and script receipt.
+* [recipe-choice-followup](recipe-choice-followup.json): Answer-dependent objective using a later ordered trigger.
+* [recipe-threshold-unlock](recipe-threshold-unlock.json): State threshold grants access and modifies content once.
+* [probe-skills](probe-skills.json): Editor-baseline Evaluation installed explicitly; capped skill effects and runtime readout.
+* [probe-template-timing](probe-template-timing.json): Compare live block interpolation with effect-installed interpolation.
+* [showcase-glass-ledger](showcase-glass-ledger.json): Integrated cast, alternate PCs, planning choice, precise transactions, countdown, optional prose, Scenario and script-triggered endings.
 
-## Request -> deterministic commit [PATTERN]
+## Request -> deterministic commit \[PATTERN]
 
 Use `recipe-request-commit.json` when an AI-interpreted purchase needs exact state accounting. The example offers one guild ticket for 5 coins; its intentionally small event catalog is not a requirement for other worlds.
 
-1. AI writes Request every turn: `turn` copies CURRENT TURN from the permanent Turn Context block and `event` is BUY_TICKET or NONE. Instructions classify the current request, not narrated success.
+1. AI writes Request every turn: `turn` copies CURRENT TURN from the permanent Turn Context block and `event` is BUY\_TICKET or NONE. Instructions classify the current request, not narrated success.
 2. The first ordered trigger resets the receipt for the current turn. It does **not** erase the AI request before consumption.
 3. A following trigger requires the fresh turn stamp and purchase event. One script checks ownership/funds, deducts coins and grants the ticket together, or writes the rejection reason.
 4. A later conditional effect displays the receipt and totals only for a fresh non-NONE request, then clears the request. A persistent receipt supplies next-turn continuity.
@@ -89,12 +89,16 @@ It intentionally excludes unrelated demonstrations such as renaming the PC mid-g
 The cookbook is supplied to the authoring AI as examples. You do not need to play every world. index.json records the examples' purpose and verification scope. ../reference/Known-Limits.md identifies behavior that needs checking only when a design depends on it. Structural validation and a successful runtime check are separate claims.
 
 
+
 For reference integrity and importing, see ../reference/Import-Integrity.md.
 
 ## YAML path operations
 
 [yaml-path-operations.json](yaml-path-operations.json) demonstrates set, remove, append and adjust on separate turns. Its paths match the declared YAML structure. This composition is structurally validated; its full runtime sequence is not certified.
 
-## Narrative-first example
+## Narrative-first examples
 
-[narrative-last-ferry.json](narrative-last-ferry.json) demonstrates a focused opening, distinct NPC voices, optional lore and bounded AI memory without a custom action engine. [PATTERN]: structurally checked, not a runtime-qualified benchmark.
+Use these for character-driven, romance or adult worlds. Read the one closest to the requested shape. Borrow structure, never names, premises or signature details. Neither uses scripts or triggers; all state is held in AI-updated trackers. See ../reference/Craft.md for the principles they illustrate.
+
+* [narrative-vendemmia.json](narrative-vendemmia.json): Contemporary story with three love interests during a vineyard harvest. Shows NPC cards with labeled sections (Wants, Voice, Tells, Toward you, Desire, In intimacy, Afterward, Friction), each love interest needing something different before they open up, and stakes that each character experiences differently. It also has a fixed-ladder relationship tracker that records agreed and declined boundaries, a clothing-continuity tracker, a block giving rules for intimate scenes, and keyword lore with sensory detail.
+* [narrative-seven-nights.json](narrative-seven-nights.json): Fantasy built around one central love interest, a foil and a rival who arrives late. Shows world rules in a block, with consent built into the fiction: a debt that cannot compel the body, and desire that must be offered in exact words. It also has non-human characters whose physical tells reveal their feelings, a player-visible ledger of debts and promises, the same relationship ladder applied to a different cast, and a minimal card for a minor character.
