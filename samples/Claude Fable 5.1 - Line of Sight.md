@@ -1,3 +1,7 @@
+---
+title: "Claude Fable 5.1 - Line of Sight"
+permalink: /samples/line-of-sight/
+---
 Total cost: $8.4822
 
 # Player:
