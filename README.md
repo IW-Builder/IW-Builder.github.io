@@ -12,13 +12,11 @@ This is an independent, unaffiliated resource by a single user. [Compatibility a
 
 **Web-capable model:** just give it this URL: https://IW-Builder.github.io/. If it doesn't have Python, a client side validator is available: https://IW-Builder.github.io/checker/
 
-**[Full-kit workflow](full-package.zip):** upload this ZIP to an AI that can extract files, or make the repository available to an agent with file access. Ask it to read Authoring-Prompt.md and select the references it needs. Archive access and code execution are separate capabilities; the AI should state which it has.
+**[Full-kit workflow](full-package.zip):** upload this ZIP to an AI that can extract files. Ask it to read Authoring-Prompt.md and select the references it needs. Archive access and code execution are separate capabilities; the AI should state which it has.
 
 **Two-step workflow:** attach Authoring-Prompt.md and World-Template.json (or your current world), then describe the task. The AI outlines the features and names the exact additional files it needs. Attach those files, then it builds. You do not have to decide which technical references apply.
 
-**[Text-only workflow](chat/):** use the generated files in chat/. Start with [IW-Authoring-Guide.txt](chat/IW-Authoring-Guide.txt), which includes the prompt, template and core references. Add [IW-Examples.txt](chat/IW-Examples.txt) for compact native payloads and selected complete recipes and [IW-Sample-Library.txt](chat/IW-Sample-Library.txt) for library modules. These are concatenated source files with explicit boundaries, not separate maintained guides. [IW-Tools.txt](chat/IW-Tools.txt) supplies the tool sources for an AI that can reconstruct files and run Python; otherwise use the public checker below. Do not attach both editions of the same content unnecessarily.
-
-For repeated use, a Project/GPT/Gem or similar workspace can keep the kit available if the interface supports persistent files. Put the core workflow in its instructions or explicitly ask it to follow Authoring-Prompt.md. A stored file is not a guarantee the model has read every section. No product-specific setup is required.
+**[Text-only workflow](chat/):** start with [IW-Authoring-Guide.txt](chat/IW-Authoring-Guide.txt): the prompt, template and core references. Add [IW-Examples.txt](chat/IW-Examples.txt) for native payloads and complete recipes and [IW-Sample-Library.txt](chat/IW-Sample-Library.txt) for library modules. These are concatenated source files, not separate maintained guides. [IW-Tools.txt](chat/IW-Tools.txt) supplies the tool sources for an AI that can reconstruct files and run Python.
 
 ## Ready-to-use requests
 
