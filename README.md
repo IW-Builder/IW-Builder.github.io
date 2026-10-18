@@ -73,6 +73,7 @@ These are reading selections, not mandatory extra downloads. The AI can request 
 | library/ | Adaptable narrative modules and dependencies |
 | tools/ | Validator, portable data-bank tools, maintainer checks and chat-edition generator |
 | chat/ | Generated text edition for upload-oriented interfaces |
+| samples/ | Design conversations, resulting worlds. Human analysis; not required for authoring |
 
 Use [examples/README.md](examples/README.md) to find a feature. See [reference/Import-Integrity.md](reference/Import-Integrity.md) for identifiers, path checks and live-world limitations.
 
