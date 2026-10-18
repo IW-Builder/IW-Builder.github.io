@@ -1,3 +1,7 @@
+---
+title: "MiMo 2.6 Pro - Bad Touch"
+permalink: /samples/bad-touch/
+---
 Total cost: $0.00
 
 # Player:
