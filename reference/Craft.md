@@ -1,7 +1,5 @@
 # Narrative craft
 
-Evidence labels and compatibility: [Evidence.md](Evidence.md).
-
 The storyteller performs from what the world gives it, and it mirrors the specificity and register of that material. Label-style cards ("kind but guarded") produce generic narration; a card with a concrete want, a sample line and a physical tell produces scenes. Write what the storyteller performs from (NPC cards, firstInput, authorStyle, lore) as specific prose. Write rules (instructions, blocks, tracker updates) as short, plain statements.
 
 When effort is limited, spend it here first, in this order: NPC one_liners; one voice line and one tell per recurring NPC; each NPC's stance toward the player and what changes it; firstInput; authorStyle.
