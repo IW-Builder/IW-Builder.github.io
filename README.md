@@ -1,3 +1,7 @@
+---
+title: "Infinite Worlds Authoring Kit"
+permalink: /guide/
+---
 # Infinite Worlds Authoring Kit
 
 Create an IW story or game from an idea. The authoring AI selects suitable features; you do not need to understand IW mechanics first. Experienced authors can also edit, review, debug or discuss mechanics.
