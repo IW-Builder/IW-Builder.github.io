@@ -22,7 +22,7 @@ This is an independent, unaffiliated resource by a single user. [Compatibility a
 
 **Build**
 
-> Use this IW kit to build a complete world. Premise: [idea]. Player role: [role]. Tone and content boundaries: [preferences]. Important activities/features: [features]. Ending or ongoing: [choice]. Read the core prompt, outline the features, and name any missing reference files you need before generating unfamiliar mechanics. Use the default sharing/editing permissions unless I specify otherwise.
+> Use this IW kit to build a complete world. Premise: [idea]. Player role: [role]. Tone and content boundaries: [preferences]. Important activities/features: [features]. Ending or ongoing: [choice]. Read the core prompt, outline the features, and name any missing reference files you need before generating unfamiliar mechanics.
 
 **Edit**
 
