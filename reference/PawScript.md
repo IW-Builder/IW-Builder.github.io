@@ -1,133 +1,271 @@
 # PawScript working reference
 
-## PawScript practical guide
+PawScript reads game data, computes values and updates trackers. It is its own language, not JavaScript or Python. Start with sections 1-3 when learning; use the later tables for lookup. Examples use declared tracker variable names, not display names or IDs.
 
-PawScript is not JavaScript, Python, SQL or the unrelated languages with the same name online. Use the supported subset below and the official references for anything additional. The examples use a small working subset.
+## 1. Where PawScript runs
 
-Three contexts:
+| Context | Example | Purpose |
+| --- | --- | --- |
+| Template in supported text field | `Coins: <<$coins>>` | Insert result into text; no mutation |
+| PawScript trigger condition | `$coins >= 5` | Return true/false; no mutation |
+| Run Script trigger effect | `$coins -= 5` | Execute statements, save changes |
 
-```text
-Template text:  You hold <<$coins>> coins.
-Condition data: $coins >= 5 and $state.ticket = 0
-Script data:
-$coins -= 5
-$state.ticket = 1
+An **expression** returns a value. A **statement** performs work, such as assignment or a loop. Script conditions are still expressions: the test after `if` decides whether its indented statements run. Use bare code in trigger conditions and Run Script, without `<<...>>` or Markdown fences.
+
+PawScript cannot write arbitrary world fields, including background or instruction-block content, or invoke native trigger effects. Calculate or assemble content in trackers, then use native effects to install it or display messages. Templates do not expand write permissions. `$player` and `$game` are read-only; do not infer writability from a field being readable.
+
+A script changes state only when it executes. It does not automatically enforce what the storyteller narrates. Trigger timing and template installation timing are described in [Triggers.md](Triggers.md) and [Capabilities.md](Capabilities.md).
+
+## 2. Values, trackers and scope
+
+Create a tracker before referencing it. Its `variableName` supplies the root: a tracker named Party with variable name `party` is `$party`. A script assignment does not create a missing tracker.
+
+| Value shape | Example | Access |
+| --- | --- | --- |
+| Number | `12` | `$coins` |
+| Text | `"Open"` | `$status` |
+| Boolean | `true` or `false` | `$state.ready` |
+| List | `list("red", "blue")` | `$colors.item(1)` |
+| Record (named fields) | YAML below | `$hero.name` |
+
+List positions are **1-based**. A record uses keys, not positions. A list of records represents several objects; a record containing lists represents one object with collections.
+
+For example, this YAML initializes one record:
+
+```yaml
+name: Mira
+hp: 4
+tags:
+  - scout
+  - injured
 ```
 
-Template expressions read values. triggerOnPawScript and effectRunScript contain bare code, not template delimiters or Markdown fences. Native `$game.turn_number` starts at 1 in opening-turn documentation/tests. `$player` and `$game` are read-only system roots; custom roots must bind to declared tracker variableName values. A top-level assignment to an undeclared root is not how you create a tracker.
+Stored in tracker `hero`, it provides `$hero.name`, `$hero.hp` and `$hero.tags`. YAML indentation defines nesting; `[]` initializes an empty list and `{}` an empty record. Quote numeric-looking identifiers such as `"001"` to preserve leading zeros. Use YAML `|` for multiline text. In an export, `initialValue` is a JSON string containing this YAML, not a JSON object. `formatSchema` is a separate shape description; see [Trackers.md](Trackers.md).
 
-Core syntax:
+Persistent roots use direct assignments: `$coins = 12`. Temporary locals use `set $price = 5` and last only for that script run. Do not give a local the name of an existing tracker. Inside collection predicates, bare field names refer to the current member; `$...` refers to a tracker/system root or script local. For a list of plain values, `value()` denotes the current value.
 
-| Operation | Syntax |
+## 3. A complete small example
+
+Create a YAML tracker named Party with variable name `party`, initial value below, and automatic AI updates disabled for this mechanically managed example:
+
+```yaml
+- name: Mira
+  hp: 4
+  max_hp: 8
+- name: Oren
+  hp: 8
+  max_hp: 8
+```
+
+**Read:** put `Injured members: <<$party.where(hp < max_hp).count()>>` in a supported template field.
+
+The chain reads left to right:
+
+1. `$party` is the whole list.
+2. `.where(hp < max_hp)` selects injured members. Each comparison uses that member's fields.
+3. `.count()` returns the selection size. This reads data; it does not heal anyone.
+
+**Test:** a PawScript trigger condition can use `$party.any(hp < max_hp)` to decide whether healing is needed.
+
+**Change:** a Run Script effect can restore every member:
+
+```text
+for each $member in $party
+  $member.hp = $member.max_hp
+```
+
+The loop variable refers to each original member, so assignments persist in the tracker. After execution, both members have full health and the injury condition is false. Inspect tracker data to verify this; no visible story output is required. Add a native message effect if the player should receive confirmation.
+
+Use the expression/script Sandbox to try the read and change separately. For an in-game trigger, also configure timing and repeat behavior; see [Triggers.md](Triggers.md). To practice, change the condition to detect a member at zero health, then predict the result before running it.
+
+## 4. Expressions and decisions
+
+| Operation | Syntax / meaning |
 | --- | --- |
-| Read a YAML field | `$state.inventory.apple` |
-| Write a field | `$state.inventory.apple = 1` |
-| Temporary local | `set $price = 5` (not a persistent tracker) |
-| Arithmetic/update | `+ - * / %`, and assignments such as `+=`, `-=` |
-| Equality/comparisons | `=`, `!=`, `<`, `<=`, `>`, `>=` |
+| Arithmetic | `+ - * / % ^`; `%` is remainder, `^` is exponentiation |
+| Comparison | `= != < <= > >=` |
 | Logic | `and`, `or`, `not`; parenthesize mixed tests |
-| Text composition | `"Cash " & $coins`; append with `$ledger &= "..."` |
-| Branches | `if`, `else if`, `else`, with indented bodies and no colon |
-| Bounded iteration | `for each $entry in $list`, indented statements |
-| Dynamic record lookup | `$rooms.item($destination)` |
-| Safe permission lookup | `$flags.item($key, 0)` |
-| Missing-key guards | `$rooms.contains($destination)`, `.requires.exists()` |
-| Filtering | `$characters.where(significant = true)` |
-| Count / first result | `$characters.count()`, `$characters.first()`; guard empty results before field access |
-| Project a field from a list | `$classes.all().name` (the PC-choice editor supplies this idiom) |
-| Replace text | `$label.replace("_", " ")` |
-| All permissions | `$requirements.every($flags.item(value(), 0) = 1)` |
-| Field mapping | `choose($code, "A", "Alpha", "B", "Beta", "Unknown")` |
-| Clamp | `$coins = $coins.constrain(0, 250)` |
-| Random draw | `set $roll = dice_roll(6)`; store/reuse rather than rerolling in every condition |
+| Text concatenation | `"Coins: " & $coins`; numbers become text |
+| Conditional value | `if($coins >= 5, "Affordable", "Too expensive")` |
+| Value mapping | `choose($status, "open", "Enter", "locked", "Find a key", "Inspect")` |
+| Missing/blank fallback | `first_available($hero.nickname, $hero.name, "Stranger")` |
+| Error fallback | `try($total / $count, 0)`; do not use it to conceal broken essential state |
+| Existence | `$hero.nickname.exists()`; distinct from being nonempty or nonzero |
+| Numeric bounds | `$hp.constrain(0, $max_hp)` |
+| Rounding | `round_down($cost)`, `round_up($cost)`, `$cost.round()` |
+| Text normalization | `$label.replace("_", " ")` |
 
-Example conditional script (declare credits and purchases trackers first):
+`=` compares within an expression and assigns in an assignment statement. In the following script, the first `=` tests; the second writes:
 
 ```text
-if $credits >= 5
-  $credits -= 5
+if $status = "locked"
+  $status = "open"
+```
+
+`and` and `or` short-circuit. A left-hand guard can prevent an unsafe right-hand read. Functions require parentheses: `.count()` calls a function; `.count` reads a field named count.
+
+A statement-level branch changes data, unlike expression-level `if(...)`, which returns a selected value:
+
+```text
+if $coins >= 5
+  $coins -= 5
   $purchases.total += 1
+else
+  $message = "Not enough coins."
 ```
 
-Example dynamic record lookup, without assuming a particular game layout:
+Declare `coins`, `purchases` (including `total`) and `message` first. Use `else if` for additional branches, at the same indentation as `if`. `#` starts a script comment; instruction-text comments use `<#...#>` instead.
 
-```text
-$results.found = 0
-if $catalog.entries.contains($selection)
-  $results.label = $catalog.entries.item($selection).label
-  $results.found = 1
-```
+## 5. Collections: select, calculate, change
 
-An advanced predicate checks whether every required named flag is granted:
-`$requirements.every($flags.item(value(), 0) = 1)`.
-Initialize requirements as a list; explicitly distinguish an empty list from a missing field. This is a language capability useful for many rule systems, not a mandatory access-control design.
+### Read and select
 
-Do not add semicolons/braces, `==`, `&&`, `||`, `+=` inside a read-only expression, Python dict literals, `.map(x => ...)`, or arbitrary host-language libraries. Do not assume string concatenation uses `+`. List access is not assumed zero-based. List construction and library operations are covered below. The external language reference covers optional extensions beyond this kit.
-
-PawScript can modify declared trackers and explicitly supported writable built-in values. It cannot write arbitrary world fields, including instruction-block content, or invoke trigger effects. For those operations, calculate or assemble in a tracker, then apply using a native effect. Templates read values; they do not expand script write permissions.
-Keep dependent calculations in one sequential script where appropriate. A script failure rolls back that script's changes, not preceding effects or the entire turn. Use meaningful script names and inspect tracker results in World Debug; “Ran successfully, with no output” is normal for assignments.
-
-For a structured party, a documented script loop such as `for each $member in $party` can update `$member.hp` inside the original tracker. List mutations use script methods such as `.append(...)` and `.remove(...)`; do not silently substitute native text add/remove effects for list operations. Use a separate sandbox/probe for new complex selection/mutation compositions rather than assuming every chain is writable. Prefer 1-based documented `.item(1)` access over host-language indexing.
-
-Escaping matters at THREE layers: JSON string, PawScript string literal, eventual rendered text/YAML. Serialize code with a JSON library instead of hand-counting escapes. The physical newline between script statements is a newline inside effectRunScript.data after JSON parsing. A newline intended INSIDE a PawScript message literal must remain an escape at that layer. Inspect decoded values and expected output. Include explicit spaces around concatenated numbers: `"Cost " & $price`, not `"Cost" & $price`.
-
-
-## Inline random values
-
-Use PawScript to supply a random value in an active instruction block instead of asking the storyteller to invent a roll:
-
-```text
-Encounter roll: <<dice_roll(6)>>.
-Interpret 1-2 as quiet, 3-4 as a complication, and 5-6 as an opportunity.
-```
-
-`dice_roll(sides, count)` rolls and sums dice; `dice_roll(6)` is one six-sided die and `dice_roll(6, 3)` is three. Both arguments are optional, defaulting to six sides and one die. See the [official function reference](https://infiniteworlds.app/pawscript-reference).
-
-Each evaluation can reroll. Store a shared result in a tracker when several checks, outputs or turns must agree. Active block templates are evaluated for context, while templates in native block-modification effects can be fixed when installed; see [Capabilities.md](Capabilities.md). A mechanically generated number does not enforce the storyteller's interpretation. Use scripts/conditions for exact consequences when required.
-
-## Operations used by the supplied library
-
-These snippets illustrate the existing library notation. Declare and initialize the trackers they reference before using them.
-
-| Syntax | Meaning / use |
+| Need | Expression |
 | --- | --- |
-| `# explanation` | Script comment; distinct from instruction-text `<#...#>` comments |
-| `list()` / `list("red", "blue")` | Empty list / explicit list construction |
-| `$entries.any(name = "Mara")` | Whether at least one entry matches |
-| `$entry.name.exists()` | Whether a path exists; existence is not the same as nonempty text |
-| `$entries.where(aliases contains "Mara")` | Filter using `contains` inside a predicate |
-| `$entries.where(name = $update.name) = $update` | Replace each matched entry; not a field-preserving merge |
-| `$entries.append($update)` | Append an entry |
-| `$updates.remove($update)` | Remove matching update entries |
-| `list("rain", "fog").random()` | Select a random list member; distinct from top-level numeric random() |
-| `$entries.all().name` | Project names from all entries |
+| Construct a list / empty record | `list("red", "blue")`, `list()`, `record()` |
+| First item / first few | `$party.first()`, `$party.first(3)` |
+| Last item / recent subset | `$history.last()`, `$history.last(3)` |
+| Dynamic record lookup | `$catalog.item($selection)` |
+| Lookup with read fallback | `$reputation.item($faction, 0)` |
+| Record keys / values | `$catalog.keys()`, `$catalog.values()` |
+| Key or value membership | `$catalog.contains($selection)` tests a record key; `$tags.contains("scout")` tests a list value |
+| Matching records | `$party.where(hp < max_hp)` |
+| Matching plain values | `$tags.where(value() != "retired")` |
+| Any / every / none | `$party.any(hp > 0)`, `$party.every(hp > 0)`, `$party.none(hp > 0)` |
+| Project fields | `$party.all().name`, `$party.where(hp > 0).name` |
+| Total a field | `$party.sum(hp)` |
+| Largest field value | `$party.max(hp)` |
+| Member with largest value | `$party.max_by(hp)`; append `.name` to read its name |
+| Sort by a field | `$party.sort_by(hp, desc).all().name` |
+| Remove duplicate values | `$tags.unique()` |
 
-If multiple entries share the match key, selection/replacement can affect multiple entries. Use stable unique identities. A replacement record must include every field to retain. Library buffer examples mutate their update collection while iterating; retain that known composition only when appropriate and test any materially different mutation loop. A clearer alternative for a new merge is to iterate updates, write the destination, then clear the buffer after the loop, rather than deleting entries during iteration.
+A selection can contain several members even when you expect one. Use stable unique keys when identifying an object. Guard empty selections before requesting a member. `every(...)` is true for an empty list; add a count check when your rule requires at least one member.
 
-The official script guide also documents bounded `range(n)` iteration and `log("diagnostic")` for the PawScript Log. Log output is diagnostic, not player narration. See https://infiniteworlds.app/pawscript-script-guide.
+Within filters, `name contains "fire"` tests the current member's field; `id in $unlocked` checks membership in an outer list. Bare `in` is filter syntax, not a general replacement for `.contains(...)`. For example:
 
-## Readable data
+```text
+$abilities.where(id in $unlocked).all().name
+```
 
-YAML initial values are JSON strings containing YAML. Indentation defines structure; `- ` creates list members; `[]` is an empty list. Quote numeric-looking identifiers to retain leading zeros. Use `|` when a YAML text value should retain line breaks. The library's formatSchema notation is a separate shape description, not the same thing as a starting YAML value. See https://infiniteworlds.app/yaml-guide.
+An advanced predicate can check named requirements:
 
-## Skills and context roots
+```text
+$requirements.every($flags.item(value(), 0) = 1)
+```
 
-Read Skills with `$player.skills.<slug>` and display them with `$player.skills_and_levels`. `$game.skill_map` maps slugs to display names. Native skill effects change levels; scripts do not write `$player`. Other documented roots include `$player.name`, `$game.turn_number` and `$game.ai_model`. Runtime narration fields and video-only placeholders are separate concepts; do not create imaginary global variables from their names.
+Initialize `requirements` as a list and `flags` as a record. An empty requirement list passes; a missing flag uses zero and fails. Missing structure and empty structure are different cases.
 
-This quick reference covers the language used by the included recipes and sample modules. It is not a bundled copy of every PawScript function. Advanced extensions can use the official references; a no-browsing author should stay within this documented subset or request the relevant reference text.
+### Write and mutate (scripts only)
 
-## Common mistakes
+| Need | Statement |
+| --- | --- |
+| Assign a field | `$hero.hp = $hero.max_hp` |
+| Update a dynamic key | `$reputation.item($faction) = $reputation.item($faction, 0) + 1` |
+| Append an entry | `$entries.append($new_entry)` |
+| Remove a record key | `$catalog.remove($selection)` |
+| Remove every equal list value | `$tags.remove("retired")` |
+| Remove selected members | `$party.where(hp <= 0).remove()` |
+| Replace matched records | `$entries.where(id = $update.id) = $update` |
+| Persist a transformed list | `$tags = $tags.unique()` |
 
-The meaning of = depends on context: it compares in an expression/condition and assigns in an assignment statement. An if condition remains an expression even inside a script.
+A read such as `$tags.unique()` does not change stored tags by itself. Assignment persists its result. Appending a list appends its members; it does not wrap them as a nested list. Replacement of matched records is not a field-preserving merge: include every field to retain. Native text add/remove effects are not substitutes for structured list mutation.
 
-| Mistake | Correct form |
+To construct an entry, create a local record, fill its fields and append it:
+
+```text
+set $entry = record()
+$entry.id = "supply-cache"
+$entry.name = "Supply Cache"
+$entries.append($entry)
+```
+
+Initialize `entries` to `[]`. Repeating this script adds another entry; add an identity check if duplicates are unwanted.
+
+Loops can iterate lists or records; `range(n)` supplies a bounded repetition list. Keep mutations straightforward. Library buffer examples remove processed entries while iterating; do not assume every different mutation loop is equally safe. For new update-buffer designs, iterating updates and clearing the buffer afterward is easier to reason about. Test new complex selection/mutation chains in Sandbox.
+
+## 6. Randomness and formatted output
+
+| Need | Expression |
+| --- | --- |
+| Numeric random value | `random()` |
+| Inclusive integer range | `random_between(1, 6)` |
+| Dice sum | `dice_roll(6, 3)` or `3d6` |
+| One random list member | `$encounters.random()` |
+| Several without repeats | `$encounters.random(3)` |
+| Shuffle | `$encounters.shuffle()` |
+| Text with expressions | `format_text("Coins: {$coins}")` |
+| Join list values | `$names.join(", ")` |
+| Format each record | `$party.format_each("{name}: {hp}/{max_hp}").join("\n")` |
+| Numbered / bulleted output | `$names.numbered_list()`, `$names.bulleted_list()` |
+
+`dice_roll(sides, count)` defaults to six sides and one die. Every random evaluation can produce a new result. Store a shared roll once when several checks or outputs must agree:
+
+```text
+$roll = dice_roll(6)
+if $roll >= 4
+  $result = "Success"
+else
+  $result = "Failure"
+```
+
+Declare `roll` and `result` first. An inline block can instead say `Encounter roll: <<dice_roll(6)>>`, but that only supplies a number; instructions or deterministic effects must define its consequences. Permanent block templates and templates installed through block effects can evaluate at different times; see [Capabilities.md](Capabilities.md).
+
+Inside `format_each`, `{name}` reads the current member's field, `{$coins}` reads an outer tracker, and `{value()}` reads a plain list member. `index()` supplies a 1-based position. These braces belong to formatting functions; they are not a replacement for outer `<<...>>` template delimiters.
+
+Additional presentation helpers include `.bold()`, `.italic()`, `.code()` and `.format_date(...)`. Formatting produces display content, not styling guarantees in every UI field. `now_utc()` and `now_local()` report real-world time, not the story's clock. Consult the official reference for date tokens and less common numeric/string functions.
+
+## 7. Execution and debugging
+
+1. Declare trackers and initialize every required structure. Give mechanically managed values one update owner or an explicit AI/script handoff.
+2. Test a read-only expression first. Confirm the selected records and values before mutating them.
+3. Run the script against known starting data in Sandbox; inspect the resulting trackers.
+4. Test it in its trigger. Confirm timing, condition eligibility and order, not only script syntax.
+5. Check repeat execution and boundary cases: no matches, insufficient resources, missing optional fields and already-completed work.
+
+Statements in one script execute sequentially. Later triggers see earlier committed writes. Multiple native numeric effects in one trigger can overwrite rather than accumulate; they do not share script statement semantics. A script failure rolls back that script's changes, not preceding effects or the entire turn.
+
+Use `log("Coins: {$coins}")` for diagnostics in the PawScript Log. Logs are not player narration; messages logged before a failure remain useful for locating the problem. "Ran successfully, with no output" is normal for assignments. A model saying PASS is not runtime verification.
+
+Enable Menu > Settings > Storyteller Mode, then open the bug icon beside tracked items. Inspect tracker state, evaluated conditions and script errors; use Open in Sandbox to isolate a script. See [Capabilities.md](Capabilities.md) for wider debug coverage.
+
+The validator's lint is heuristic, not a PawScript interpreter. It checks likely mistakes, roots and locals with limited static analysis; passing it does not prove runtime behavior. When teaching or reporting tests, distinguish documented syntax from compositions actually run in IW.
+
+## 8. System roots, escaping and common mistakes
+
+Read Skills with `$player.skills.<slug>` and display them with `$player.skills_and_levels`. `$game.skill_map` maps slugs to display names. Other roots include `$player.name`, `$game.turn_number` (opening turn is 1), `$game.ai_model`, `$game.skill_list` and `$game.difficulty_list`. Native skill effects change levels; scripts do not write `$player`. Runtime narration fields and video placeholders are separate concepts, not automatically script roots.
+
+| Mistake | Use instead |
 | --- | --- |
 | `$coins == 5` | `$coins = 5` in a condition |
 | `a && b` / `a || b` | `a and b` / `a or b` |
-| `if $coins > 0:` | `if $coins > 0` followed by an indented body |
-| `"Cash " + $coins` | `"Cash " & $coins` |
-| `$new_tracker = 1` without a declaration | Declare a tracker first; use `set $local = 1` only for a temporary local |
-| `<<$coins -= 1>>` | Put mutation in Run Script; templates read values |
-| Writing `$player` or `$game` | Use supported native effects; system roots are read-only |
+| `if $coins > 0:` | No colon; indent the following statements |
+| `"Coins: " + $coins` | `"Coins: " & $coins` |
+| `$new_tracker = 1` without declaration | Declare the tracker; `set $local = 1` is temporary only |
+| `<<$coins -= 1>>` | Mutation belongs in Run Script |
+| `.count` to count members | `.count()` |
+| Host-language object literals or arrow functions | `record()`, field assignments and supported collection methods |
+| Writing background, blocks or system roots | Use the supported native effect |
 
-The validator's lint is heuristic, not a PawScript parser. It ignores quoted literals and comments when checking code operators; warnings identify review points, not proof of a runtime failure. Script locals are checked in a lexical approximation, not full control-flow analysis. Documented engine placeholders without a dollar sign are not custom tracker roots.
+Escaping has three layers: JSON serialization, PawScript string literals, and rendered text/YAML. Use a JSON serializer. A physical newline separates script statements; the two-character `\n` inside a script string represents an intended text newline. For example, the decoded script:
+
+```text
+$message = "Ready\nProceed"
+```
+
+has this JSON string representation:
+
+```json
+"$message = \"Ready\\nProceed\""
+```
+
+Inspect decoded code when debugging escapes. Include spaces explicitly when composing text with numbers. Do not add host-language semicolons, statement braces, arbitrary libraries or external IO.
+
+## Official references
+
+This guide covers common authoring and teaching needs, not every function. Use the official pages for advanced signatures and additional behavior; do not invent syntax when a reference is unavailable.
+
+- [Expression and function reference](https://infiniteworlds.app/pawscript-reference)
+- [Writing scripts](https://infiniteworlds.app/pawscript-script-guide)
+- [YAML guide](https://infiniteworlds.app/yaml-guide)
+
+The language tables include officially documented operations beyond the kit's runtime-tested examples. A new composition still needs appropriate testing; see [Known-Limits.md](Known-Limits.md).
