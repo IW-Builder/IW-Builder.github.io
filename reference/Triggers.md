@@ -1,21 +1,36 @@
 # Triggers and effects
 
+A trigger combines eligibility rules with effects. Conditions checked in a processing pass; if they pass and its repeat/prerequisite rules, its effects run. Ordinary triggers are processed in triggerEvents array order. Enabling repeat allows the trigger to fire again whenever eligible; condition not required to become false between firings.
+
+That last distinction matters: “HP below 5” with repeat enabled can fire every turn while HP remains low, not a “just crossed below 5” event.
+
 ## Composition and sequencing
 
 Each trigger has id, name, triggerConditions, triggerEffects, and explicit timing/repeat flags. Conditions are a list of nodes; the normal list is AND. A leaf uses `category: "condition"`, `type` and `data`. A logic node uses `category: "logic"`, operator and a data ARRAY of child nodes. Known operators: and, or, none_of. A logic group is not a leaf with type "or".
 
-Prefer one combined PawScript expression and one multiline Run Script effect for a coherent mechanical transaction. Keep separate triggers for actual phase boundaries or cross-effect dependencies. Give each Run Script effect a meaningful name describing its effect; avoid generic names such as "Update State." The owning trigger's name is useful when it also describes the effect. Clear script names make error reports easier to locate.
+Use a combined PawScript condition and sequential script when they make calculation or transaction clearer. Simple native conditions and effects remain appropriate. Keep separate triggers for phase boundaries or cross-effect dependencies. Give Scripts meaningful names describing effect; avoid generic "Update State." The owning trigger's name is useful when it describes effect. Clear script names make error reports easier.
+
+A one-time reward can require quest_complete = 1 AND reward_claimed = 0. Its effects grant the reward and set reward_claimed = 1. An OR group could instead accept either of two qualifying quests. none_of passes when none of its child conditions pass. A state guard prevents repeated grants even if the trigger is repeatable; a one-shot trigger additionally records that it has already fired.
 
 Exact payloads and native comparison vocabulary are in Schema.md and ../examples/Payloads.md.
 
 ### Timing guidance:
 
-- Start-only, with no other conditions: opening setup. Additional conditions restrict firing.
-- Start + Mid Game permits opening and later eligibility. Multiple triggering must also be enabled for repeated execution; otherwise a once-fired trigger stays consumed.
-- Start + Mid Game + multiple, no other conditions: every-turn behavior.
-- Ordinary conditional triggers can run later with Start unchecked. Do not rely on undocumented first-turn timing; explicitly enable opening execution when required and test it.
-- Mid Game true without Start true is editor-inconsistent; avoid emitting it. Both false can be intentional for ordinary conditional or saved content.
-- No conditions + Start unchecked is valid saved/inactive content, not an ordinary automatic trigger. Do not "repair" intentionally disabled content into firing every turn.
+| Intent | Start | Mid Game | Repeat | Conditions |
+| --- | --- | --- | --- | --- |
+| One-time setup before opening | true | false | false | None, or a setup predicate |
+| Setup and every ordinary turn | true | true | true | None, or predicates checked on each pass |
+| Fire once when eligible, including setup | true | true | false | Required predicates |
+| Fire once when eligible after opening | false | false | false | Required predicates |
+| Fire repeatedly when eligible after opening | false | false | true | Required predicates; add state guards where needed |
+| Saved/inactive trigger | false | false | As intended | None; explicit dispatch is separate |
+
+Start enables pre-opening evaluation; additional conditions still apply except for the incompatible condition types noted below. Mid Game extends a Start-enabled trigger to ordinary turns. With Start disabled, ordinary conditional triggers do not require Mid Game.
+
+Repeat permits subsequent firings; it does not require conditions to become false between firings. Start + Mid Game + Repeat can execute before the opening and again during turn 1, so guard counters and other effects that should run only once per turn.
+
+Do not emit Mid Game true with Start false. A trigger with no conditions and Start false does not fire automatically, but can remain available for explicit dispatch.
+
 - Prerequisites/blockers with firedThisTurn true are ordered this-turn checks, resetting on subsequent turns; false uses game history. Order matters. The editor disallows requiring and blocking the same trigger; do not generate that conflict.
 - Defaults are not a contract: always serialize canTriggerMoreThanOnce and the timing flags intentionally. Use repeatable commit triggers with idempotent state guards where appropriate, and true one-shot events when required.
 - Restriction: Do not combine Start of Game with Scenario or minimum-turn conditions. The editor warns that these conditions are ignored; minimum-turn bypass is confirmed during both startup and mid-game execution. Use a separate startup trigger and leave Start off on the conditional trigger. Scenario runtime behavior remains unverified.
