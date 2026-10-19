@@ -142,8 +142,6 @@ Each PawScript entry's Open in Sandbox opens an editable script/expression plus 
 
 Story exports support a chosen turn range, optional background, character, secret information, trackers and hidden trackers; text or PDF with optional images. Select hidden trackers explicitly when diagnostics require them.
 
-`driftAcknowledgedForName` stores the display name for which the author dismissed the variable-name mismatch alert. A later display-name change can raise it again. Setting it to the current display name is appropriate for intentional descriptive names paired with compact variableName values. It does not rename the variable or update references. The editor offers variable renaming separately, and that does not rewrite scripts automatically.
-
 `mature` and `nsfw` are content-setting booleans. Select them deliberately for the intended audience and content, and provide contentWarnings where appropriate. They do not define a precise prose policy or guarantee permission, discoverability, model selection or filter behavior; those platform effects are not established by the export. Write the actual creative boundaries in AI-facing instructions.
 
 ## Images, video and model-specific blocks
