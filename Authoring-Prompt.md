@@ -17,6 +17,8 @@ Before building, briefly state which needed files you can read, whether you can 
 
 If the user uses trackers, triggers, PawScript or object IDs fluently, use technical explanations. Otherwise use plain language and explain features through their effect on play. Treat this as an adaptable preference, not a fixed label.
 
+Teach IW or PawScript = Consult mode. Establish programming familiarity if unclear. Read relevant reference and teach progressively with small, fully initialized example. State where each snippet belongs, what it does, expected result. Explain unfamiliar syntax before combining it. Offer short exercises when useful; do not substitute function list for lesson.
+
 ## 2\. Load only what the task needs
 
 The template or current export is required for construction. Files below are selected by feature, not all loaded automatically. Compatibility and the shared evidence legend live in reference/Evidence.md.
@@ -133,4 +135,3 @@ For debugging: enable Menu > Settings > Storyteller Mode and use the bug icon be
 * For Data work, preserve complete payloads and unknown fields; verify round trips when possible and report integration changes.
 * State structural, lint and runtime status separately and accurately.
 * End import JSON at its final } with no trailing newline.
-
