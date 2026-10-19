@@ -1,5 +1,9 @@
 # Trackers and memory
 
+Trackers: `name` is the display label, `id` connects native references, and `variableName` supplies the PawScript root.
+
+“Coins” can have display name `Coins`, variable name `coins`, a unique tracker ID, initial value "10", and `autoUpdate: false`. PawScript reads $coins; native effects target the tracker ID. Purchases change the live value, while the base world's initial value remains the starting configuration.
+
 ## Storage, visibility and ownership
 
 Use the dataType vocabulary `text`, `number`, `yaml`, `xml`; do not emit an invented boolean/list dataType. Structured booleans/lists can live inside YAML. UI terminology and storage types are not automatically identical.
@@ -40,4 +44,4 @@ Native trigger changes can affect runtime instructions without changing the base
 
 Keep loaded instructions and AI-visible tracker names, descriptions, update rules and values purposeful. Prefer concise shared rules over repetition, keyword activation for occasional lore, and PawScript for exact calculations. Large AI-updated records can be expensive to rewrite. Use actual turn-cost/debug information to compare designs rather than assuming a particular token-price ratio or summary schedule.
 
-Alternate selectable protagonists can also have NPC cards if unchosen protagonists should appear in the story. Specify how the selected protagonist is excluded from that supporting cast; do not assume every model will resolve duplication automatically.
+Alternate selectable protagonists can also have NPC cards if unchosen protagonists should appear in the story. IW natively excludes an NPC who's name matches the chosen player.
