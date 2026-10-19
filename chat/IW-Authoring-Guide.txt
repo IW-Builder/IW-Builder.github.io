@@ -477,6 +477,8 @@ Starting values:
 - player: the tracker itself defines a player-chosen startup value. ../examples/optional-block.json exports initialValueBasedOnPC: "player", initialValue: "On", and initialValueChoices: ["On", "Off"]. These are tracker-level fields, independent of per-character initialTrackedItemValues. Use this for an offered startup preference; autoUpdate false prevents AI rewriting it. The user can edit the live preference later. For unconstrained player input or an unusual type, do not assume the choice-list example establishes every corresponding UI control; obtain a representative export only for that additional variant.
 - Never combine arbitrary fixed/list/script modes and guess precedence. Do not assume formatSchema is JSON Schema or enforces semantic intent; its exact enforcement language is not established by our sample fields.
 
+Intentional name differences: When creating a tracked item, if variableName differs from name, set driftAcknowledgedForName to the exact current name. This acknowledges the intentional difference and suppresses the editor's mismatch indicator; it does not rename the variable or change script references. When editing an existing tracker, preserve its acknowledgement unless the user authorizes a change. If an unacknowledged mismatch is noticed, explain it and offer to acknowledge it; do not silently rename the variable or suppress the indicator.
+
 ## Memory, continuity and context cost
 
 Recent story text, summaries, active instructions and tracker values serve different roles. Summaries compress history; they can omit incidental details or distort elapsed time. Use summaryRequest to preserve categories important to this particular world, and trackers for persistent facts that need a stable home. Avoid duplicating the whole story in a growing tracker. Set useful bounds on journals and cast records.
@@ -512,6 +514,7 @@ Timing guidance:
 - No conditions + Start unchecked is valid saved/inactive content, not an ordinary automatic trigger. Do not "repair" intentionally disabled content into firing every turn.
 - Prerequisites/blockers with firedThisTurn true are ordered this-turn checks, resetting on subsequent turns; false uses game history. Order matters. The editor disallows requiring and blocking the same trigger; do not generate that conflict.
 - Defaults are not a contract: always serialize canTriggerMoreThanOnce and the timing flags intentionally. Use repeatable commit triggers with idempotent state guards where appropriate, and true one-shot events when required.
+- Restriction: Do not combine Start of Game with Scenario or minimum-turn conditions. The editor warns that these conditions are ignored; minimum-turn bypass is confirmed during both startup and mid-game execution. Use a separate startup trigger and leave Start off on the conditional trigger. Scenario runtime behavior remains unverified.
 
 See Schema.md for native effect payloads and input options. Scripts change trackers; native effects change instructions, objectives and other system properties.
 
@@ -916,14 +919,14 @@ NPC field/activation guidance is [DOCUMENTED]; the stated plain-word keyword mat
 | one_liner | Compact identity/role summary; put essential identity here |
 | detail | Fuller personality, motives, history, behavior and relationships |
 | appearance | Narrative appearance description |
-| location | Starting/usual location information; not a movement lock |
+| location | Optional start location, activation cue; not required if named in instructions. Not movement lock |
 | secret_info | Hidden character facts; instructions still govern who knows them |
 | img_appearance / img_clothing | Visual identity and clothing guidance for image handling |
 | positionInList | Ordering metadata; preserve existing values; use sequential integers for new lists |
 
 IW supports a character appearing both among player choices and in the NPC pool under the same canonical name. No extra "use this NPC only if not selected as the PC" prose is needed. PC/NPC conversion is available in Data mode: preserve the source and map relevant fields into the destination type, rather than relabeling the native object.
 
-Only Name is required in the NPC editor. Storytelling and image information have independent optional sections; do not infer their serialized enable flags from the UI alone. The storytelling help states that the brief summary is the only character information available to the storyteller until the turn after the character or their location is first mentioned. Put essential information in one_liner and repeat it in detail. Location is a short starting location (editor asks for no more than two words). Full list of names accepts comma-separated variants in the editor; preserve the export's names representation. Image appearance/clothing guide the image AI and can be inspected using the wrench under a character image. Mentioning footwear can encourage full-body framing, per editor help.
+Only Name is required in the NPC editor. Storytelling and image information have independent optional sections; do not infer their serialized enable flags from the UI alone. The storytelling help states that the brief summary is the only character information available to the storyteller until the turn after the character or their location is first mentioned. Characters can activate by name with no location. Put essential information in one_liner and repeat it in detail. Location is a short starting location (editor asks for no more than two words). Full list of names accepts comma-separated variants in the editor; preserve the export's names representation. Image appearance/clothing guide the image AI and can be inspected using the wrench under a character image. Mentioning footwear can encourage full-body framing, per editor help.
 
 NPC activation and static character context are not exposed in World Debug. The editor help supplies the activation guidance above; debug cannot verify a card's activation window. Secret fields are not a guaranteed protection against narrative leaks.
 
@@ -992,8 +995,6 @@ Enable Storyteller mode through Menu > Settings > Storyteller Mode. It is requir
 Each PawScript entry's Open in Sandbox opens an editable script/expression plus complete tracker data for that turn for local test runs. A sandbox result tests the supplied state/code, not the entire narrative pipeline. The active-block view includes post-trigger updates, so it is not necessarily an exact capture of the context used by the already-generated narration.
 
 Story exports support a chosen turn range, optional background, character, secret information, trackers and hidden trackers; text or PDF with optional images. Select hidden trackers explicitly when diagnostics require them.
-
-`driftAcknowledgedForName` stores the display name for which the author dismissed the variable-name mismatch alert. A later display-name change can raise it again. Setting it to the current display name is appropriate for intentional descriptive names paired with compact variableName values. It does not rename the variable or update references. The editor offers variable renaming separately, and that does not rewrite scripts automatically.
 
 `mature` and `nsfw` are content-setting booleans. Select them deliberately for the intended audience and content, and provide contentWarnings where appropriate. They do not define a precise prose policy or guarantee permission, discoverability, model selection or filter behavior; those platform effects are not established by the export. Write the actual creative boundaries in AI-facing instructions.
 
@@ -1149,6 +1150,7 @@ That's all you need to do for the evaluation, which should be returned in the 'e
   "purpose": "Authoring suggestions, not a validator allowlist",
   "ids": [
     "dolphin",
+    "puma",
     "smilodon",
     "lynx",
     "massivecat",
@@ -1167,4 +1169,5 @@ That's all you need to do for the evaluation, which should be returned in the 'e
   ],
   "guidance": "IDs identify profiles, not capability rankings. Ask which profile the user plays on before adding profile-specific guidance; use only documented or user-reported quirks, and preserve unknown historical IDs."
 }
+
 ===== END FILE: reference/Current-AI-Profiles.json =====

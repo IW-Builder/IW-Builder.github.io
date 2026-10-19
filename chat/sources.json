@@ -17,7 +17,7 @@
       "reference/Default-Evaluation.txt",
       "reference/Current-AI-Profiles.json"
     ],
-    "sha256": "e50c60b81f7f1fe3d45d40bc2bde93708d8ef00bc6a2c9aacba02768b4f011a8"
+    "sha256": "e3b88cdfa26bcf78e002f28211d4ed6b3b5bda9090433c52284c31ee08ba5845"
   },
   "IW-Examples.txt": {
     "sourceFiles": [
@@ -32,7 +32,7 @@
       "examples/showcase-glass-ledger.json",
       "examples/character-starting-values.json"
     ],
-    "sha256": "cbd5081c960a1e5e0b2c7d82a942dcc8078a311ee8517dd906d5e8af8234c1fe"
+    "sha256": "855beeb11c542852bdf4134cdad2641694b8ae725ca2098865f80caa7a51f142"
   },
   "IW-Sample-Library.txt": {
     "sourceFiles": [
@@ -46,6 +46,7 @@
       "tools/README.md",
       "tools/Validation-Report.json",
       "tools/build_chat_edition.py",
+      "tools/build_prompt_page.py",
       "tools/check_package.py",
       "tools/data_bank.py",
       "tools/iw-export.schema.json",
@@ -54,6 +55,6 @@
       "tools/test_validator.py",
       "tools/validate_iw_export.py"
     ],
-    "sha256": "0242ff4caba47df7260fe07995b1b465a4dde9942855cbfbeb1fabdbe2963d67"
+    "sha256": "33fc41f6948f99f169bd068f66482d535f59133b80f78711b1c22e83559c335b"
   }
 }
