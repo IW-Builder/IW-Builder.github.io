@@ -8,7 +8,7 @@ Prefer one combined PawScript expression and one multiline Run Script effect for
 
 Exact payloads and native comparison vocabulary are in Schema.md and ../examples/Payloads.md.
 
-Timing guidance:
+### Timing guidance:
 
 - Start-only, with no other conditions: opening setup. Additional conditions restrict firing.
 - Start + Mid Game permits opening and later eligibility. Multiple triggering must also be enabled for repeated execution; otherwise a once-fired trigger stays consumed.
@@ -22,7 +22,7 @@ Timing guidance:
 
 See Schema.md for native effect payloads and input options. Scripts change trackers; native effects change instructions, objectives and other system properties.
 
-Execution order and effect semantics:
+### Execution order and effect semantics:
 
 1. Later triggers see earlier committed writes. AI-updated request trackers were available to that turn's trigger checks. Correctly bound Present Choice/Request Input results are available to subsequent triggers in the same turn. This does not describe every internal generation stage.
 2. Native numeric Set/Add effects within ONE trigger do not accumulate normally: starting at 0, add 2 then add 3 ended at 3; starting at 1, set 5 then add 2 ended at 3. Reads can nevertheless see changed values. Do not "explain" this with a universal snapshot rule; internals are unproven.
@@ -30,3 +30,12 @@ Execution order and effect semantics:
 4. For dependent operations prefer one script. Otherwise put preparation in one trigger and consumption in a following trigger. Do not assume a later native effect's expression sees an earlier native write merely because it appears lower in the same trigger.
 5. Native text additions stacked; removal removed all matches and literal quotes are retained. Do not apply numeric overwrite behavior to text or script statements.
 6. First guidance appeared to dominate in limited narrative-only tests. Generate one coherent, mutually exclusive guidance outcome rather than contradictory directives whose priority you hope to control.
+
+## Choosing Implementation:
+
+| Approach | Best suited to | Main trade-off |
+|---|---|---|
+| Instructions and AI-updated trackers | Narrative judgment, descriptive state and flexible interactions | Outcomes depend on model interpretation; unsuitable for guaranteed arithmetic or enforcement |
+| Native conditions and effects | Simple rules, editor-friendly customization and platform operations | Repeated cases can require many entries; native effect sequencing needs care |
+| PawScript | Exact calculations, structured state, collection operations and repeated logic | Requires code maintenance; only supported writable values can be changed |
+| Hybrid | Calculated outcomes combined with messages, block updates, opening changes or other native operations | Requires explicit ordering between calculation and application |
