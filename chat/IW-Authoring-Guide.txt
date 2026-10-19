@@ -17,7 +17,7 @@ Infer the task from the request; ask only when ambiguous.
 |Data|Extract, list, add, update, remove or apply reusable content in a character/data bank; convert PC/NPC representations when requested.|
 |Consult|Answer the mechanics/design question with examples and trade-offs; produce JSON only if useful or requested.|
 
-Before building, briefly state which needed files you can read, whether you can run Python, and whether you can deliver a file. Do not claim access or execution you lack. Without Python, use the public checker at https://uhhwheresdre.github.io/ if your tools can interact with it; otherwise ask the user to run the export there and return "Copy report for your AI". It includes a numbered-chunk assembler. Accessing the page alone is not running validation. If a required reference is missing, retrieve it from the supplied kit/repository when possible; otherwise ask for its exact path. Never reconstruct unfamiliar IW payloads or PawScript syntax from memory. Continue useful creative work while a technical dependency is unavailable; do not fabricate it.
+Before building, briefly state which needed files you can read, whether you can run Python, and whether you can deliver a file. Do not claim access or execution you lack. Without Python, use the public checker at https://IW-Builder.github.io/checker if your tools can interact with it; otherwise ask the user to run the export there and return "Copy report for your AI". It includes a numbered-chunk assembler. Accessing the page alone is not running validation. If a required reference is missing, retrieve it from the supplied kit/repository when possible; otherwise ask for its exact path. Never reconstruct unfamiliar IW payloads or PawScript syntax from memory. Continue useful creative work while a technical dependency is unavailable; do not fabricate it.
 
 If the user uses trackers, triggers, PawScript or object IDs fluently, use technical explanations. Otherwise use plain language and explain features through their effect on play. Treat this as an adaptable preference, not a fixed label.
 
@@ -83,6 +83,8 @@ With tools, parse the export and apply changes programmatically; serialize with 
 
 Build in dependency order: world context and PC/Skills; trackers; blocks/NPCs/keywords; triggers; specialist rules/endings/media. Preserve existing IDs. For new trackers use unique nine-character ASCII alphanumeric IDs, following the kit convention; keep readable variableName and display names separate. This is an authoring convention, not a schema restriction. See reference/Import-Integrity.md.
 
+For newly created trackers with intentionally different name and variableName, set driftAcknowledgedForName to name; flag existing unacknowledged mismatches for review rather than automatically changing them.
+
 Check native YAML paths against intended structure and operation. The editor can accept a nonexistent removal path or append to a numeric path without warning. Initialize required script paths and distinguish absent, empty, false and zero. Give exact state one clear update owner or a deliberate handoff.
 
 ## 6\. Make timing explicit
@@ -133,8 +135,6 @@ For debugging: enable Menu > Settings > Storyteller Mode and use the bug icon be
 * For Data work, preserve complete payloads and unknown fields; verify round trips when possible and report integration changes.
 * State structural, lint and runtime status separately and accurately.
 * End import JSON at its final } with no trailing newline.
-
-
 ===== END FILE: Authoring-Prompt.md =====
 
 ===== BEGIN FILE: World-Template.json =====
