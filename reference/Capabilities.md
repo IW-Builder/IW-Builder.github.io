@@ -65,14 +65,14 @@ NPC field/activation guidance is [DOCUMENTED]; the stated plain-word keyword mat
 | one_liner | Compact identity/role summary; put essential identity here |
 | detail | Fuller personality, motives, history, behavior and relationships |
 | appearance | Narrative appearance description |
-| location | Starting/usual location information; not a movement lock |
+| location | Optional start location, activation cue; not required if named in instructions. Not movement lock |
 | secret_info | Hidden character facts; instructions still govern who knows them |
 | img_appearance / img_clothing | Visual identity and clothing guidance for image handling |
 | positionInList | Ordering metadata; preserve existing values; use sequential integers for new lists |
 
 IW supports a character appearing both among player choices and in the NPC pool under the same canonical name. No extra "use this NPC only if not selected as the PC" prose is needed. PC/NPC conversion is available in Data mode: preserve the source and map relevant fields into the destination type, rather than relabeling the native object.
 
-Only Name is required in the NPC editor. Storytelling and image information have independent optional sections; do not infer their serialized enable flags from the UI alone. The storytelling help states that the brief summary is the only character information available to the storyteller until the turn after the character or their location is first mentioned. Put essential information in one_liner and repeat it in detail. Location is a short starting location (editor asks for no more than two words). Full list of names accepts comma-separated variants in the editor; preserve the export's names representation. Image appearance/clothing guide the image AI and can be inspected using the wrench under a character image. Mentioning footwear can encourage full-body framing, per editor help.
+Only Name is required in the NPC editor. Storytelling and image information have independent optional sections; do not infer their serialized enable flags from the UI alone. The storytelling help states that the brief summary is the only character information available to the storyteller until the turn after the character or their location is first mentioned. Characters can activate by name with no location. Put essential information in one_liner and repeat it in detail. Location is a short starting location (editor asks for no more than two words). Full list of names accepts comma-separated variants in the editor; preserve the export's names representation. Image appearance/clothing guide the image AI and can be inspected using the wrench under a character image. Mentioning footwear can encourage full-body framing, per editor help.
 
 NPC activation and static character context are not exposed in World Debug. The editor help supplies the activation guidance above; debug cannot verify a card's activation window. Secret fields are not a guaranteed protection against narrative leaks.
 
