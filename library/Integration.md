@@ -22,35 +22,28 @@
 
 Discuss Storymaster's benefits, supporting instructions and approximate costs before selection. whereWhen remains a soft default; other modules are offered according to the brief. Removing an unused module from one world does not remove it from a personal library. Library maintenance and dependency-aware bundles use Data mode; see [Portable-Banks.md](../reference/Portable-Banks.md).
 
-## Approximate instruction costs
+## Choosing Narrative Direction: Lightweight vs. Storymaster Suite
 
-These are source-text reference estimates: decoded characters divided by four, rounded upward to ten tokens. Tokenizers, native comment handling and customization change the result; punctuation-heavy text may differ substantially. Figures exclude dynamic tracker contents, generated planning/output and platform instructions. IW credit costs need not vary directly with tokens. Share the relevant estimates and this caveat when offering modules.
+For new worlds, explain the trade-off between **Lightweight Direction** (in `Sample-Blocks.json`) and the **Storymaster Suite** (in `Storymaster-Suite.json`):
 
-| Instruction block | Approximate tokens |
-| --- | ---: |
-| Characterization | 250 |
-| Pacing | 160 |
-| Sexual Content | 260 |
-| Period Knowledge | 210 |
-| SecretInfo + Storymaster | 1,640 |
-| Narrative Craft | 790 |
-| Leopard Bugfixes | 140 |
-| Caracal Bugfixes | 380 |
-| Dolphin Bugfixes | 260 |
-| Cover Image script | 480 |
-| Time and Location (whereWhen) | 250 |
+| Approach | Source File | Approximate Overhead | How It Works |
+| --- | --- | ---: | --- |
+| **Lightweight Direction** | `library/Sample-Blocks.json` | ~290 tokens (`Direction & Pacing [Lightweight]`) + optional ~250 tokens (`descriptionRequest` + `summaryRequest`) | Guides scene momentum, time-jump options in `optionN_text`, strict player agency, character knowledge channels, and concise 1–3 sentence `secretInfo` notes. Leaves `evaluationRequest` blank so IW uses `Default-Evaluation.txt` automatically. |
+| **Full Storymaster Suite** | `library/Storymaster-Suite.json` | ~5,200+ tokens across `instructions`, `SecretInfo + Storymaster`, 17-step `evaluationRequest`, `descriptionRequest`, `summaryRequest`, `[MODE]` craft blocks, plus generated `secretInfo` planning | Implements a user-created dual-mode persona (`[MODE: SIMULATION ENGINE]` / `[MODE: NARRATIVE AUTHOR]`) with per-turn `[npcAction]`, `[worldAction]`, `[smPlan]`, and optional `Reader Profile` / `Story Metadata` calibration. |
 
-The Cover Image script is an authoring aid, not a default recurring story block. The Storymaster block alone is not the cost of its configuration. Supporting fields below can enter different requests; do not add them up and advertise a guaranteed per-turn cost. Trackers can also grow and planning adds generated tokens.
+### Rules for Storymaster Setups
+- Populate Genres, Core Appeals of Genres, Appeals of this Specific Narrative, Element of Novelty, Tone, Themes, Conflicts and Pacing. Pacing includes ongoing versus bounded length and appropriate scene estimates. These are creative inputs; derive them from the user description or ask targeted questions. The pacing line can include specialized scenes only when relevant.
+- The source's `[npcAction]`, `[worldAction]`, `[smPlan]` and other output labels are intentional runtime notation. They are not the same as `[LIST GENRES]`, `[DESCRIBE TONE]`, `[Author Style]` or `[title]` editing slots. Resolve nested pacing brackets thoughtfully instead of deleting everything between square brackets.
+- `<#...#>` are native IW comment delimiters. Resolve sample editing slots into world-specific text or ordinary headings; genuine comments may remain. Execute instructions such as selecting an appearance variant and copying its instructions to the buffer tracker; do not leave those comments for the live storyteller to interpret.
 
-| Supporting text | Approximate tokens |
-| --- | ---: |
-| instructions | 330 |
-| authorStyle | 10 |
-| evaluationRequest | 2,180 |
-| descriptionRequest | 290 |
-| summaryRequest | 790 |
+### Rules for Non-Storymaster Setups
+- **Leave `evaluationRequest` empty (`""`)** unless the world has a custom mechanical reason to override `reference/Default-Evaluation.txt`. The built-in default already evaluates feasibility, selects a relevant skill and difficulty, and returns `DENIED`, `SUCCESS`, `FAILURE`, or `PARTIAL_SUCCESS`.
+- **Use `Direction & Pacing [Lightweight]` (`DirPace01`)** as a self-contained drop-in block to prevent scenes from stagnating, ensure `option1_text`–`option3_text` include clear scene-transition choices when a beat finishes, enforce knowledge boundaries, and direct the AI to use `secretInfo` for brief present-turn motives rather than sprawling essays.
+- **Never mix `[MODE: NARRATIVE AUTHOR]` or `[MODE: SIMULATION ENGINE]` blocks** from `Storymaster-Suite.json` into a world that does not define those modes in root `instructions`, and never reference `smPlan`, `npcAction`, `worldAction`, `reader_profile`, or `story_metadata` unless their corresponding blocks and trackers are installed.
 
-Tracker estimates below cover updateInstructions only; descriptions, schemas, state values and update output are additional. Small/large-cast variants and direct/buffered approaches are alternatives, not one required combined configuration.
+## Tracker block costs
+
+Tracker estimates below cover updateInstructions only; descriptions, schemas, state values and update output are additional. Small/large-cast variants and direct/buffered approaches are alternatives, not one required combined configuration. It is MORE important to consider the contents - large or frequently updated trackers cost more than the update instructions themselves.
 
 | Tracker update instructions | Approximate tokens |
 | --- | ---: |
@@ -64,16 +57,6 @@ Tracker estimates below cover updateInstructions only; descriptions, schemas, st
 | Intimacy Update | 250 |
 | Reader Profile | 240 |
 | Story Metadata | 180 |
-
-## Storymaster variable content
-
-Populate Genres, Core Appeals of Genres, Appeals of this Specific Narrative, Element of Novelty, Tone, Themes, Conflicts and Pacing. Pacing includes ongoing versus bounded length and appropriate scene estimates. These are creative inputs; derive them from the user description or ask targeted questions. The pacing line can include specialized scenes only when relevant.
-
-The source's `[npcAction]`, `[worldAction]`, `[smPlan]` and other output labels are intentional runtime notation. They are not the same as `[LIST GENRES]`, `[DESCRIBE TONE]`, `[Author Style]` or `[title]` editing slots. Resolve nested pacing brackets thoughtfully instead of deleting everything between square brackets.
-
-`<#...#>` are native IW comment delimiters. Resolve sample editing slots into world-specific text or ordinary headings; genuine comments may remain. Execute instructions such as selecting an appearance variant and copying its instructions to the buffer tracker; do not leave those comments for the live storyteller to interpret.
-
-If Storymaster is not selected, rewrite or replace all dependent main/style/specialist text. Do not leave instructions to consult an absent director, tracker, mode or secretInfo section. If it is player-optional, its off configuration needs a consistent fallback for the whole selected family, not just one blank block.
 
 ## Structured updater dependencies
 
