@@ -50,11 +50,11 @@ page = """<!doctype html>
     <p>Give this prompt to your AI along with your world idea.
        The supporting kit supplies its templates and references.</p>
     <nav aria-label="Resources">
-      <a href="prompt.txt">Plain-text prompt</a>
-      <a href="prompt.txt" download>Download prompt</a>
-      <a href="checker/">World checker</a>
-      <a href="https://github.com/UhhWheresDre/IW-Builder">
-        Supporting kit and references
+      <a href="chat/">Plain-text prompt</a>
+      <a href="full-package.zip">Download ZIP package</a>
+      <a href="checker/">Validator</a>
+      <a href="https://github.com/IW-Builder/IW-Builder.github.io/tree/main">
+        README and browse files
       </a>
     </nav>
   </header>
