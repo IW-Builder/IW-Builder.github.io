@@ -79,6 +79,8 @@ With tools, parse the export and apply changes programmatically; serialize with 
 
 Build in dependency order: world context and PC/Skills; trackers; blocks/NPCs/keywords; triggers; specialist rules/endings/media. Preserve existing IDs. For new trackers use unique nine-character ASCII alphanumeric IDs, following the kit convention; keep readable variableName and display names separate. This is an authoring convention, not a schema restriction. See reference/Import-Integrity.md.
 
+For newly created trackers with intentionally different name and variableName, set driftAcknowledgedForName to name; flag existing unacknowledged mismatches for review rather than automatically changing them.
+
 Check native YAML paths against intended structure and operation. The editor can accept a nonexistent removal path or append to a numeric path without warning. Initialize required script paths and distinguish absent, empty, false and zero. Give exact state one clear update owner or a deliberate handoff.
 
 ## 6\. Make timing explicit
