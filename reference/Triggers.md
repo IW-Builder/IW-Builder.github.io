@@ -18,6 +18,7 @@ Timing guidance:
 - No conditions + Start unchecked is valid saved/inactive content, not an ordinary automatic trigger. Do not "repair" intentionally disabled content into firing every turn.
 - Prerequisites/blockers with firedThisTurn true are ordered this-turn checks, resetting on subsequent turns; false uses game history. Order matters. The editor disallows requiring and blocking the same trigger; do not generate that conflict.
 - Defaults are not a contract: always serialize canTriggerMoreThanOnce and the timing flags intentionally. Use repeatable commit triggers with idempotent state guards where appropriate, and true one-shot events when required.
+- Restriction: Do not combine Start of Game with Scenario or minimum-turn conditions. The editor warns that these conditions are ignored; minimum-turn bypass is confirmed during both startup and mid-game execution. Use a separate startup trigger and leave Start off on the conditional trigger. Scenario runtime behavior remains unverified.
 
 See Schema.md for native effect payloads and input options. Scripts change trackers; native effects change instructions, objectives and other system properties.
 
