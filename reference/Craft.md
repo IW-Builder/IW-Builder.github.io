@@ -50,7 +50,10 @@ Apply this section only when the brief includes romance or sexual content.
 
 - Attraction is individual. State each romantic NPC's orientation and what attracts them. Not everyone wants the player, or at the same time, or in the same way; universal instant attraction makes desire meaningless.
 - Flirting is not wanting. Some characters flirt with everyone; others never flirt and must be asked. Say which.
-- Stance is state. Keep an AI-updated tracker per romantic NPC: a stage from a fixed ladder (for example wary, curious, warm, drawn, wanting, involved, strained), a one-sentence concrete cause, and short lists of boundaries agreed and declined in play. Each card describes how that character shows the stages. Limit movement to one step per scene except after dramatic events.
+- Stance is state. Keep an AI-updated tracker per romantic NPC: a stage from a fixed ladder and a one-sentence concrete cause. Each card describes how that character shows the stages.
+- Match the tracker to the premise's heat. A courtship ladder (`wary -> curious -> warm -> drawn -> wanting -> involved`, moving one step per scene) fits slow-burn romance where intimacy is slow earned.
+- For erotica-first, kink, or power-exchange worlds, do not time-gate sex: instead track **escalation and dynamic** (for example `heat` from 1 to 5, `control` as `dominant / even / yielding / undone`, active rules/forfeits, and boundaries pushed so far).
+- Pace explicit scenes across turns. In high-heat worlds, tell the storyteller never to start and finish a sexual encounter in the same turn: let undressing, foreplay, the act, and the aftermath unfold across turns, and allow explicit scenes to expand in paragraph count so physical detail and position changes are not rushed.
 - Gates differ. Vary what each love interest needs: respect earned through competence; easy physical intimacy but slow emotional intimacy; never initiates but answers a plain question honestly; desire that can only be offered, never taken. Different gates make different stories.
 - Personality persists. Desire changes a character's tempo, not who they are. Describe how each one is in intimacy (talkative, commanding, giggly, silent, precise) and what they want but will not ask for. Without this, every intimate scene converges on the same generic partner.
 - Afterward is a scene. Say how each behaves the morning after and in front of others. Aftermath is where relationships change.
@@ -111,6 +114,7 @@ Choose names from the setting's language, era and class. Avoid names language mo
 | --- | --- | --- |
 | ../examples/narrative-vendemmia.json | Contemporary ensemble, three love interests | Different attraction gates; stance ladder with agreements; wardrobe continuity; stakes each NPC experiences differently; sensory keyword lore |
 | ../examples/narrative-seven-nights.json | Fantasy: central partner, foil, late rival | World-rules block; consent built into the fiction; non-human tells; player-visible promise ledger; minimal card for a minor character |
+| ../examples/narrative-velvet-wager.json | High-heat erotica & power-exchange trio | Immediate heat from turn 1; escalation & control tracker instead of courtship gates; multi-turn sex pacing; kinetic body descriptions; light state triggers |
 
 For character-driven or adult worlds, read the example closest to the requested shape. Borrow structure, never content: do not reuse example names, premises or signature details. Both are authoring patterns, not runtime-qualified benchmarks.
 
