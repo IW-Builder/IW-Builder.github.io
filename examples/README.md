@@ -84,21 +84,16 @@ Correctly bound single-answer forms update their target immediately, and a later
 
 It intentionally excludes unrelated demonstrations such as renaming the PC mid-game, switching all specialist rules, and dispatching random inactive triggers. Those have their own isolated examples. Video is not made a required dependency before its context variables are characterized. The showcase composition is structurally validated; runtime verification of an adapted world should focus on its actual feature dependencies.
 
-## Optional verification
-
-The cookbook is supplied to the authoring AI as examples. You do not need to play every world. index.json records the examples' purpose and verification scope. ../reference/Known-Limits.md identifies behavior that needs checking only when a design depends on it. Structural validation and a successful runtime check are separate claims.
-
-
-
-For reference integrity and importing, see ../reference/Import-Integrity.md.
-
-## YAML path operations
-
-[yaml-path-operations.json](yaml-path-operations.json) demonstrates set, remove, append and adjust on separate turns. Its paths match the declared YAML structure. This composition is structurally validated; its full runtime sequence is not certified.
-
 ## Narrative-first examples
 
 Use these for character-driven, romance or adult worlds. Read the one closest to the requested shape. Borrow structure, never names, premises or signature details. Neither uses scripts or triggers; all state is held in AI-updated trackers. See ../reference/Craft.md for the principles they illustrate.
 
 * [narrative-vendemmia.json](narrative-vendemmia.json): Contemporary story with three love interests during a vineyard harvest. Shows NPC cards with labeled sections (Wants, Voice, Tells, Toward you, Desire, In intimacy, Afterward, Friction), each love interest needing something different before they open up, and stakes that each character experiences differently. It also has a fixed-ladder relationship tracker that records agreed and declined boundaries, a clothing-continuity tracker, a block giving rules for intimate scenes, and keyword lore with sensory detail.
 * [narrative-seven-nights.json](narrative-seven-nights.json): Fantasy built around one central love interest, a foil and a rival who arrives late. Shows world rules in a block, with consent built into the fiction: a debt that cannot compel the body, and desire that must be offered in exact words. It also has non-human characters whose physical tells reveal their feelings, a player-visible ledger of debts and promises, the same relationship ladder applied to a different cast, and a minimal card for a minor character.
+* [narrative-velvet-wager.json](narrative-velvet-wager.json): High-heat contemporary erotic drama and power-exchange game for three characters snowed-in at a lakeside villa. Demonstrates how to structure an erotica-first premise where desire is active from turn 1 rather than ladder-gated: uses `Dynamics` tracker (`heat` 1–5, `control` state, active forfeits, boundaries pushed), multi-turn explicit sex pacing block, kinetic body and fabric descriptions, three-way scene awareness, and two light triggers that react to tracker/scene milestones.
+
+## YAML path operations
+
+[yaml-path-operations.json](yaml-path-operations.json) demonstrates set, remove, append and adjust on separate turns. Its paths match the declared YAML structure. This composition is structurally validated; its full runtime sequence is not certified.
+
+For reference integrity and importing, see ../reference/Import-Integrity.md.
