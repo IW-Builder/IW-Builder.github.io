@@ -22,33 +22,29 @@ This is an independent, user developed, unaffiliated resource. [Compatibility an
 
 **Build**
 
-> Use this IW kit to build a complete world. Premise: [idea]. Player role: [role]. Tone and content boundaries: [preferences]. Important activities/features: [features]. Ending or ongoing: [choice]. Read the core prompt, outline the features, and name any missing reference files you need before generating unfamiliar mechanics.
+> BUILD complete world. Premise: [idea]. Player role: [role]. Tone and content boundaries: [preferences]. Important activities/features: [features]. Ending or ongoing: [choice]. Read the core prompt, outline the features, and name any missing reference files you need before generating unfamiliar mechanics.
 
 **Edit**
 
-> Use this kit to edit the attached current world. Change [specific behavior]. Preserve everything else, including existing IDs. If you can execute code, apply changes programmatically and compare the exports. Return the full JSON, relevant changed IDs/paths and a short verification plan.
+> EDIT attached world. Change [specific behavior]. Preserve everything else, including existing IDs. If you can execute code, apply changes programmatically and compare the exports. Return the full JSON, relevant changed IDs/paths and a short verification plan.
 
 **Review**
 
-> Review this world using the kit. Prioritize import problems, broken references, timing/state errors, unused or conflicting instructions and unnecessary complexity. Give findings with IDs/paths, impact and suggested fixes. Do not modify it yet.
+> REVIEW attached world. Prioritize import problems, broken references, timing/state errors, unused or conflicting instructions and unnecessary complexity. Give findings with IDs/paths, impact and suggested fixes. Do not modify it yet.
 
 **Debug**
 
-> Expected: [behavior]. Actual: [behavior and turn]. Attached: current world and [tracker values / Evaluation / active blocks / script logs]. Trace the likely cause, distinguish evidence from inference, and ask only for missing data that would distinguish the causes. Propose the smallest appropriate fix.
+> DEBUG attached world. Expected: [behavior]. Actual: [behavior and turn]. Attached: [tracker values / Evaluation / active blocks / script logs]. Trace the likely cause, distinguish evidence from inference, and ask only for missing data that would distinguish the causes. Propose the smallest appropriate fix.
 
 **Consult**
 
-> Using the kit, explain how to implement [feature] and compare suitable approaches. I am comfortable with [plain-language design / IW mechanics / PawScript]. Do not generate a full world unless needed. Identify any uncertain platform behavior the design would rely on.
+> CONSULT attached world. Explain how to implement [feature] and compare suitable approaches. I am comfortable with [plain-language design / IW mechanics / PawScript]. Do not generate a full world unless needed. Identify any uncertain platform behavior the design would rely on.
 
 **Data / personal bank**
 
-> Extract [characters or mechanics] from this world into my character/data bank. Preserve existing entries and all original fields. Suggest useful bundles and identify external dependencies. Tags: [none / my specified tags / suggest tags following my existing vocabulary].
+> EXTRACT [characters or mechanics] from this world into my character/data bank. Preserve existing entries and all original fields. Suggest useful bundles and identify external dependencies. Tags: [none / my specified tags / suggest tags following my existing vocabulary].
 
-> Apply [entries or bundle] from this bank to my world, adapting [requested details]. Convert characters to PC or NPC form where requested; preserve the bank source and report integration changes.
-
-**Repository link**
-
-> Read [release-tagged prompt URL] and retrieve the required template and relevant references from the same release. If access fails, name the files I should upload rather than guessing. My task is: [task].
+> APPLY [entries or bundle] from this bank to my world, adapting [requested details]. Convert characters to PC or NPC form where requested; preserve the bank source and report integration changes.
 
 ## Personal libraries and build reports
 
