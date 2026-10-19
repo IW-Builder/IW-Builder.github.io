@@ -182,6 +182,47 @@
       "id": "3365e6ca-6a36-55e9-8529-73a0411cf950",
       "name": "Time and Location (whereWhen)",
       "content": "<whereWhenInstructions>\nFormat location in whereWhen as: {Specific Place}, {Town or City}, {Country}, {Continent}. Omit irrelevant or unknown levels; adapt these labels to the setting rather than inventing geography.\nFormat time and date as: HH:MM AM/PM on {Day} {Month}, {Year}. Use 12-hour time, or adapt the calendar and precision to the world.\nCombined format: {Location}, at {Time and Date}.\nUse the established starting location and time. Thereafter carry forward the previous time and advance it reasonably for the scene's events. Account for travel, unconsciousness, explicit time lapses and durations specified in playerAction. Do not reset the clock or advance by a fixed amount regardless of events.\n</whereWhenInstructions>\nAlways write whereWhen exactly once at the beginning of outcomeDescription on a single line, immediately followed by two newlines and a horizontal rule, before any other information. Do not add another location/time heading elsewhere in the same output."
+    },
+    {
+      "id": "dw7jn2qvl",
+      "name": "Lion Bugfixes",
+      "content": "#AI BUGFIXES <#Lynx/Smilodon/MC#>\nThe secret information section should not be used for secrets, conspiracies or secret plots. It should instead be used for world building, character backgrounds and motivations.\nSecret information will not outline conspiracies that could distract or detract from the current story or setting\nCharacter motivations may be discussed in secretInfo but may only be considered to be potential thoughts or desires and not secrets or suspicions\nDo not use psychobabble and technobabble, instead, use only words normal people would use. Exception: if a character has specialty knowledge due to their career, they may use jargon specific to their field.\nNever describe links or bonds between characters that are not entirely mundane, unless such bonds are explicitly established by the game's mechanics or world-building instructions.\nUnless the player explicitly signals they want to dwell, assume one strong emotional beat per scene is sufficient — establish it, land it, move. Foreplay and sex scenes follow Sexual Content rules. All other scenes: keep moving.\nTime passage should reflect narrative time, not turn count. If 100 turns have passed, the story has progressed days or weeks — relationship development, reputation shifts, and world events should reflect that elapsed time, not treat each turn as if it were minutes.\nFollow instructions literally. Do not interpret, soften, or selectively apply rules based on judgment about what seems appropriate. If an instruction conflicts with another, apply the more specific one. If genuinely ambiguous, apply the more restrictive one.",
+      "selectedAIProfiles": [
+        "smilodon",
+        "lynx",
+        "massivecat",
+        "smilodon-thinking",
+        "massivecat-thinking",
+        "lynx-thinking",
+        "smilodon-2-experimental",
+        "smilodon-2-experimental-thinking",
+        "galaxycat-experimental"
+      ]
+    },
+    {
+      "id": "JBqTYsrDo",
+      "name": "Leopard Bugfixes",
+      "content": "#AI_BUGFIXES <#Leopard#>\n\nDifficulty >medium: pause + reassess — initial assessment != correct -> reduce by one level\nALWAYS provide middle road option\n\nCharacters: capable of compartmentalizing trauma + psychological/emotional anguish\nFORBID: overcome by events | psychotic/manic/depressive breaks or episodes\nFORBID: intense/extreme/melodramatic language describing social interactions\nFORBID: conflict powercreep when player might win -> allow player to win + move on",
+      "selectedAIProfiles": [
+        "leopard",
+        "leopard-2"
+      ]
+    },
+    {
+      "id": "A104ljbIC",
+      "name": "Caracal Bugfixes",
+      "content": "#AI_BUGFIXES <#Caracal#>\n\noutcomeDescription: 700 words MIN (HARD) — 1400 words MAX (HARD) != count secretInfo\nMIN maintained during fast-forwards -> expand: environment detail | physical sensation | 2 dialogue exchanges | non-verbal NPC reaction | internal thought — repeat until >700; richness != padding\nAppend [Word count: X] in secretInfo ONLY\nOptions: 3 ALWAYS — continue scene | depart new | engage relationship/internal state — != 3 variations same action; first-person player voice\n\nPivot immediately on player direction change\nConcluded threads -> [CONCLUDED] in secretInfo ¶1; abandoned -> [ABANDONED]; FORBID: resurrect EXCEPT player explicitly returns\n\nThinking template — skeleton ONLY, field names + decisions, no prose; fill then END THINKING:\nevaluation: [verdict]\nwhereWhen: [time/location]\noutcomeDescription: [beats as noun phrases — 700-1400 words]\nelapsedTime: [time passed]\nwhereWhenAfter: [updated time/location]\nsecretInfo: [paragraph labels + key points only]\nillustrSubject: [subject ids]\nillustrIsCharacter: [true/false]\nillustrAppearance: [copy to output]\nillustrClothes: [copy to output]\nillustrExpressionPosition: [action/orientation/gaze per subject]\nillustrSetting: [background/midground/foreground]\noption1_text: [direction]\noption2_text: [direction]\noption3_text: [direction]\nstateVariablesUpdates: [changed item names only — full data in output]\n\nFORBID: prose in thinking | field written twice; template filled -> STOP",
+      "selectedAIProfiles": [
+        "caracal"
+      ]
+    },
+    {
+      "id": "e1ad08kgM",
+      "name": "Dolphin Bugfixes",
+      "content": "#AI_BUGFIXES <#Dolphin#>\n\nScene: continues EXCEPT player action explicitly resolves it -> offer interaction options before advancing\nEmotional development | relationship beats | significant decisions: min 2-3 player interaction points before resolution\nSlow burn = correct; FORBID: accelerate relationship development beyond turn count + elapsed narrative time\nStoryteller Mode Guidance Text: planning context ONLY != incorporated into outcomeDescription EXCEPT player explicitly states as action\nPlayer musings + analysis + forward planning: FORBID: appear in narrative output -> treat as secretInfo-level planning != player action\nAvoid letter <<list(\"a\",\"b\",\"c\",\"d\",\"e\",\"f\",\"g\",\"h\",\"i\",\"j\",\"k\",\"l\",\"m\",\"n\",\"o\",\"p\",\"q\",\"r\",\"s\",\"t\",\"u\",\"v\",\"w\",\"x\",\"y\",\"z\").random()>> where possible; FORBID: backtrack to correct uses already made; permitted when unavoidable — proper nouns | technical terms | no available synonym\n\nCustom EIB instructions: supersede IW defaults ALWAYS in ALL cases",
+      "selectedAIProfiles": [
+        "dolphin"
+      ]
     }
   ],
   "trackedItems": [
