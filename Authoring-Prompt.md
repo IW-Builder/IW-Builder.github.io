@@ -23,7 +23,7 @@ The template or current export is required for construction. Files below are sel
 
 |Task needs|Read|
 |-|-|
-|New world|World-Template.json; reference/Craft.md for narrative design|
+|New world|[World-Template.json](https://iw-builder.github.io/World-Template.json); [reference/Craft.md](https://iw-builder.github.io/reference/Craft.md) for narrative design|
 |Character-driven or adult worlds|examples/narrative-\*.json|
 |Tracker ownership, visibility, memory or initialization|reference/Trackers.md|
 |Trigger timing, sequencing and effects|reference/Triggers.md|
