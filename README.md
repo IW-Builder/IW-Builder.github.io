@@ -4,7 +4,7 @@ permalink: /guide/
 ---
 # Infinite Worlds Authoring Kit
 
-Create an IW story or game from an idea. The authoring AI selects suitable features; you do not need to understand IW mechanics first. Experienced authors can also edit, review, debug or discuss mechanics. [Browse all files](https://github.com/IW-Builder/IW-Builder.github.io)
+Create an IW story or game from an idea. The authoring AI selects suitable features; you do not need to understand IW mechanics first. Experienced authors can also edit, review, debug or discuss mechanics. [Browse all files](https://github.com/IW-Builder/IW-Builder.github.io).
 
 This is an independent, unaffiliated resource by a single user. [Compatibility and evidence note](reference/Evidence.md). The kit describes supported authoring workflows and makes remaining boundaries explicit; it is not an official exhaustive engine specification.
 
@@ -72,12 +72,12 @@ These are reading selections, not mandatory extra downloads. The AI can request 
 | --- | --- |
 | Authoring-Prompt.md | Core workflow and file-routing table |
 | World-Template.json | Neutral import envelope; sharing/editing default to true |
-| reference/ | Selective guidance, shared evidence legend and known limits |
-| examples/ | Compact payload cookbook, complete worlds and scope index |
-| library/ | Adaptable narrative modules and dependencies |
-| tools/ | Validator, portable data-bank tools, maintainer checks and chat-edition generator |
-| chat/ | Generated text edition for upload-oriented interfaces |
-| samples/ | Design conversations, resulting worlds. Human analysis; not required for authoring |
+| [reference/](https://github.com/IW-Builder/IW-Builder.github.io/tree/main/reference) | Selective guidance, shared evidence legend and known limits |
+| [examples/](https://github.com/IW-Builder/IW-Builder.github.io/tree/main/examples) | Compact payload cookbook, complete worlds and scope index |
+| [library/](https://github.com/IW-Builder/IW-Builder.github.io/tree/main/library) | Adaptable narrative modules and dependencies |
+| [tools/](https://github.com/IW-Builder/IW-Builder.github.io/tree/main/tools) | Validator, portable data-bank tools, maintainer checks and chat-edition generator |
+| [chat/](https://github.com/IW-Builder/IW-Builder.github.io/tree/main/chat) | Generated text edition for upload-oriented interfaces |
+| [samples/](https://github.com/IW-Builder/IW-Builder.github.io/tree/main/samples) | Design conversations, resulting worlds. Human analysis; not required for authoring |
 
 Use [examples/README.md](examples/README.md) to find a feature. See [reference/Import-Integrity.md](reference/Import-Integrity.md) for identifiers, path checks and live-world limitations.
 
@@ -93,7 +93,7 @@ Starting play creates a separate live copy. Editing the base does not update exi
 
 ## Validate your world
 
-No Python needed: use the [public checker](https://uhhwheresdre.github.io/), including its numbered-chunk assembler. Copy its report back to your AI for corrections. A model may use the site directly if it has suitable interaction tools; simply reading the site does not run a check.
+No Python needed: use the [local checker](https://iw-builder.github.io/checker/), including its numbered-chunk assembler. Copy its report back to your AI for corrections. A model may use the site directly if it has suitable interaction tools; simply reading the site does not run a check.
 
 From the package root:
 
