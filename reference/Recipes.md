@@ -38,3 +38,7 @@ Use ordinary Markdown formatting where appropriate. Tests showed raw span HTML r
 
 ## Dynamic content
 Native block-modification effects substitute templates when the content is installed. For live values, use a separate permanent block or reinstall content when the relevant values change. See Capabilities.md for the interpolation table.
+
+**Player-selected layered openings.** Combine independent choices into meaningful variations using ordered text replacements, then install the result as background. This avoids authoring every full combination; keep fragments compatible and add combination-specific handling where needed. See [layered opening](../examples/recipe-layered-opening.json) and its [Cookbook notes](../examples/README.md#player-selected-layered-opening).
+
+**On-demand generation with retained results.** Install a substantial generation brief only when needed, store a compact result, and clear the brief after a matching completed request. Do not clear merely because a turn elapsed. Prefer infrequent event-driven requests; retained tracker context and AI updates can outweigh the omitted instructions. See [on-demand generation](../examples/recipe-on-demand-generation.json) and its [cost and runtime notes](../examples/README.md#on-demand-generation-with-retained-results).
