@@ -106,7 +106,7 @@ def validate(doc, schema):
         for k in ('trackedItemID','inequality'):
             if k in n and k in d and n[k]!=d[k]:
                 add('error','wrapper-payload-mismatch',p+'/'+k,'Wrapper and payload disagree; runtime precedence unknown.')
-    def conditions(nodes,p):
+    def conditions(nodes,p,start_enabled=False):
         for i,n in enumerate(nodes if isinstance(nodes,list) else []):
             q=p+'/'+str(i)
             if not isinstance(n,dict): continue
@@ -115,9 +115,17 @@ def validate(doc, schema):
             if category=='logic':
                 if n.get('operator') not in ['and','or','none_of']: add('warning','unknown-logic',q+'/operator','Unobserved operator.')
                 if 'data' not in n: add('warning','missing-payload',q+'/data','Logic group has no child list.')
-                conditions(n.get('data',[]),q+'/data');continue
+                conditions(n.get('data',[]), q+'/data', start_enabled);continue
             if category!='condition': add('warning','unclassified-condition',q+'/category','Missing or unobserved category.')
             t=n.get('type'); d=n.get('data')
+            if start_enabled and t in ('triggerOnTurn', 'triggerOnEvent'):
+                label = (
+                    'Minimum-turn' if t == 'triggerOnTurn'
+                    else 'Scenario'
+                )
+                add('warning', 'start-incompatible-condition', q, label + 
+                    ' condition combined with Start of Game. Condition ignored; does not gate execution. Use separate startup trigger and leave Start off here.'
+                )
             if t not in defs['conditionLeaf']['x-knownDiscriminators']:
                 add('warning','unknown-condition-type',q+'/type','Missing or unobserved condition type: '+repr(t));continue
             if 'data' not in n: add('warning','missing-payload',q+'/data','No condition payload observed.');continue
@@ -153,7 +161,7 @@ def validate(doc, schema):
                 if tables['trackedItems'].get(ident,{}).get('dataType')=='number':numeric_writes[ident]=numeric_writes.get(ident,0)+1
         for ident,count in numeric_writes.items():
             if count>1:add('warning','numeric-write-overwrite',p,'Multiple numeric writes to '+ident+' can overwrite rather than accumulate within one trigger.')
-        conditions(t.get('triggerConditions',[]),p+'/triggerConditions')
+        conditions(t.get('triggerConditions',[]),p+'/triggerConditions',start_enabled=bool(t.get('triggerOnStartOfGame')))
         for j,e in enumerate(t.get('triggerEffects',[]) if isinstance(t.get('triggerEffects',[]),list) else []):
             q=p+'/triggerEffects/'+str(j)
             if not isinstance(e,dict):continue
