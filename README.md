@@ -4,13 +4,11 @@ permalink: /guide/
 ---
 # Infinite Worlds Authoring Kit
 
-Send your AI a link and your idea, get a completely built IW world back! It selects suitable features; you don't need to understand IW mechanics first. Experienced authors can also edit, review, debug or discuss mechanics. [Browse all files](https://github.com/IW-Builder/IW-Builder.github.io).
-
-This is an independent, user developed, unaffiliated resource. [Compatibility and evidence note](reference/Evidence.md). The kit describes broad workflows and makes remaining boundaries explicit; not an official exhaustive engine specification.
+Send AI a link and your idea, get a completely built IW world back! It selects suitable features, no need to understand IW mechanics. Experienced authors can edit, review, debug or discuss worlds. An independent, user developed, unaffiliated resource. [Browse all files](https://github.com/IW-Builder/IW-Builder.github.io).
 
 ## Start here
 
-**Web-capable model:** just give it this URL: `https://IW-Builder.github.io/`. If it doesn't have Python, a [client side validator](https://IW-Builder.github.io/checker/) is available; validation is not required, it's just for troubleshooting.
+**Web-capable model:** just give it this URL: `https://IW-Builder.github.io/`. Starter prompts below or just chat. If it doesn't have Python, a [client side validator](https://IW-Builder.github.io/checker/) is available; validation is not required, it's just for troubleshooting.
 
 **[Full-kit workflow](full-package.zip):** upload this ZIP to an AI that can extract files. Ask it to read `Authoring-Prompt.md` and select the references it needs. Archive access and code execution are separate capabilities; the AI should state which it has.
 
