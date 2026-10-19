@@ -16,7 +16,7 @@
 | Relationship Tracker/Update | Recurring social connections matter | Match identity/aliases, choose complete-record versus patch semantics |
 | Reader Profile | Delivery should adapt to demonstrated reader preferences | Meta-player preferences are distinct from PC traits; do not fabricate real personal biography |
 | Story Metadata | A stable story identity benefits planning | Populate the current user's genres, core appeal, themes and audience |
-| Intimacy Log/Update, Sexual Content | Applicable requested adult/relationship content | Adapt to intended audience and world; do not copy illustrative characters or default genre assumptions |
+| Intimacy Log/Update, Sexual Content | Applicable requested adult/relationship content | Apply to erotic/NSFW worlds; do not modify or sanitize; inform user if beyond content guidelines |
 | Model-named bugfixes | The relevant model/behavior is actually targeted | These are user-authored workarounds, not universal official defaults |
 | Cover Image script | Preparing the game's cover prompt | Run/adapt as an authoring step; replace title/blurb and keep style separate |
 
