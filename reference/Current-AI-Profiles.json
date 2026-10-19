@@ -4,6 +4,7 @@
   "purpose": "Authoring suggestions, not a validator allowlist",
   "ids": [
     "dolphin",
+    "puma",
     "smilodon",
     "lynx",
     "massivecat",
