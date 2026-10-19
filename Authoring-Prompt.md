@@ -24,20 +24,20 @@ The template or current export is required for construction. Files below are sel
 |Task needs|Read|
 |-|-|
 |New world|[World-Template.json](https://iw-builder.github.io/World-Template.json); [reference/Craft.md](https://iw-builder.github.io/reference/Craft.md) for narrative design|
-|Character-driven or adult worlds|examples/narrative-\*.json|
-|Tracker ownership, visibility, memory or initialization|reference/Trackers.md|
-|Trigger timing, sequencing and effects|reference/Triggers.md|
-|Exact native payloads|reference/Schema.md and matching snippets in examples/Payloads.md; load a complete example only when useful|
-|Any PawScript expression or script|reference/PawScript.md|
-|Lifecycle, Skills, NPC/keyword activation, templates, images or runtime fields|reference/Capabilities.md|
-|Combined mechanics, optional blocks or request/commit|reference/Recipes.md and the relevant example in examples/README.md|
-|Library modules or Storymaster|library/Integration.md, then only relevant portions of library/Sample-Blocks.json|
-|Custom Evaluation|reference/Default-Evaluation.txt and the Skills section of reference/Capabilities.md|
-|Model-specific blocks|reference/Current-AI-Profiles.json and the model-block section of reference/Capabilities.md; ask which runtime profile is used if needed|
-|Editing, combining or importing|reference/Import-Integrity.md|
-|Uncertain platform behavior|reference/Known-Limits.md; do not turn uncertainty into an invented rule|
-|Personal libraries, portable banks, bundles, PC/NPC conversion or full-content build reports|reference/Portable-Banks.md; tools/data\_bank.py when execution is available|
-|Code-based validation or edit comparison|tools/validate\_iw\_export.py, tools/iw-export.schema.json and tools/README.md|
+|Character-driven or adult worlds|[examples/narrative-\*.json](https://iw-builder.github.io/examples)|
+|Tracker ownership, visibility, memory or initialization|[reference/Trackers.md](https://iw-builder.github.io/reference/Trackers.md)|
+|Trigger timing, sequencing and effects|[reference/Triggers.md](https://iw-builder.github.io/reference/Triggers.md)|
+|Exact native payloads|[reference/Schema.md](https://iw-builder.github.io/reference/Schema.md) and matching snippets in [examples/Payloads.md](https://iw-builder.github.io/examples/Payloads.md); load a complete example only when useful|
+|Any PawScript expression or script|[reference/PawScript.md](https://iw-builder.github.io/reference/PawScript.md)|
+|Lifecycle, Skills, NPC/keyword activation, templates, images or runtime fields|[reference/Capabilities.md](https://iw-builder.github.io/reference/Capabilities.md)|
+  |Combined mechanics, optional blocks or request/commit|[reference/Recipes.md](https://iw-builder.github.io/reference/Recipes.md) and the relevant example in [examples/README.md](examples/README.md)|
+|Library modules or Storymaster|[library/Integration.md](https://iw-builder.github.io/library/Integration.md), then only relevant portions of [library/*.json](https://iw-builder.github.io/library/)|
+|Custom Evaluation|reference/[Default-Evaluation.txt](https://iw-builder.github.io/Default-Evaluation.txt) and the Skills section of [reference/Capabilities.md](https://iw-builder.github.io/reference/Capabilities.md)|
+|Model-specific blocks|[reference/Current-AI-Profiles.json](reference/Current-AI-Profiles.json) and the model-block section of [reference/Capabilities.md](https://iw-builder.github.io/reference/Capabilities.md); ask which model(s) are common if needed|
+|Editing, combining or importing|[reference/Import-Integrity.md](https://iw-builder.github.io/reference/Import-Integrity.md)|
+|Uncertain platform behavior|[reference/Known-Limits.md](https://iw-builder.github.io/reference/Known-Limits.md); do not turn uncertainty into an invented rule|
+|Personal libraries, portable banks, bundles, PC/NPC conversion or full-content build reports|[reference/Portable-Banks.md](https://iw-builder.github.io/reference/Portable-Banks.md); [tools/data\_bank.py](https://iw-builder.github.io/tools/data\_bank.py) when execution is available|
+|Code-based validation or edit comparison|[tools/validate\_iw\_export.py](https://iw-builder.github.io/tools/validate\_iw\_export.py), [tools/iw-export.schema.json](https://iw-builder.github.io/tools/iw-export.schema.json) and [tools/README.md](https://iw-builder.github.io/tools/README.md)|
 
 ## 3\. Agree the experience, not implementation trivia
 
