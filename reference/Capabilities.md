@@ -162,3 +162,6 @@ Disabling this editor option removes selectedAIProfiles from exported blocks and
 
 ## Current-game editing and debug boundaries
 The active-world editor explicitly warns that changes to player characters or Other Characters do not affect the current playthrough. Already-fired trigger effects are not rewritten retroactively. Save as new world makes the edited world available for future games. Debug shows keyword-block active/inactive state and its keywords, but not the matched keyword, activation turn or remaining retention. It does not expose NPC activation or static character information. Do not attribute this difference to an unverified internal implementation. A live-world JSON export can retain the tracker's initialValue despite a successful runtime change; inspect current tracker data for current values.
+
+
+For temporary instruction-block installation with a retained result, see [on-demand generation](../examples/README.md#on-demand-generation-with-retained-results). Generation happens after installation; cleanup checks the request identity and completion rather than assuming the next turn succeeded. This pattern is useful only when omitted instruction context justifies result-storage and update costs.
