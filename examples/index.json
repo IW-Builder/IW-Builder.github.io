@@ -299,5 +299,26 @@
     "evidence": "PATTERN",
     "structuralValidation": "Checked by tools/check_package.py; see its report.",
     "runtimeScope": "Not runtime-qualified; a creative authoring example."
+  },
+  {
+    "file": "narrative-velvet-wager.json",
+    "purpose": "Immediate heat from turn 1; escalation & control tracker instead of courtship gates; multi-turn sex pacing; kinetic body descriptions; light state triggers.",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Not runtime-qualified; a creative authoring example."
+  },
+  {
+    "file": "recipe-layered-opening.json",
+    "purpose": "Player-selected dimensions assembled into a varied opening using native text replacements and background installation.",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked with tools/validate_iw_export.py.",
+    "runtimeScope": "Composition not yet runtime-tested in IW; see examples/README.md for checks."
+  },
+  {
+    "file": "recipe-on-demand-generation.json",
+    "purpose": "Event-driven temporary generation brief, persistent compact results and request-matched cleanup.",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked with tools/validate_iw_export.py.",
+    "runtimeScope": "Composition not yet runtime-tested in IW; see examples/README.md for checks."
   }
 ]

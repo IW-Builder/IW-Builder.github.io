@@ -1,99 +1,75 @@
-# Cookbook: complete, independent exports
+# Examples to explore
 
-Every linked JSON is a whole world with declared targets, not a fragment to paste into a random array. The purpose is to make native shapes copyable. Structural/reference checks do not prove execution. This is an authoring reference. index.json records example scope and verification status; ../reference/Known-Limits.md describes remaining platform boundaries. Rename/remap IDs when combining examples. Sample-library modules remain separate because they require creative and dependency adaptation.
+Want to see what a feature can do before adding it to your world? These small worlds show individual features and combinations you can try in IW or ask your AI to adapt.
 
-For lightweight payload lookup, use [Payloads.md](Payloads.md). Full files below remain standalone imports.
+Each JSON file is a complete world. Import it into a separate world to explore it without replacing your own work. Some are demonstrations rather than finished adventures, and not every example has been tested through a full playthrough.
 
-## Native conditions and effects
+## Start with a story
 
-### Conditions
+- [Vendemmia](narrative-vendemmia.json): A vineyard story with three potential love interests and different relationships to explore.
+- [Seven Nights](narrative-seven-nights.json): A fantasy relationship story built around promises, character motives and a small cast.
+- [Velvet Wager](narrative-velvet-wager.json): An adult villa setting focused on intimate character dynamics.
+- [The Glass Ledger](showcase-glass-ledger.json): A more involved example combining a crew, choices, purchases, a countdown and endings.
 
-|Example|Demonstrates|
-|-|-|
-|[triggerOnEvent](condition-triggerOnEvent.json)|Recognize an AI-judged narrative Scenario; define it once in root conditions.|
-|[triggerOnRandomChance](condition-triggerOnRandomChance.json)|Apply a percentage chance to an otherwise eligible trigger.|
-|[triggerOnCharacter](condition-triggerOnCharacter.json)|Limit an event to selected player characters.|
-|[triggerOnTrackedItem](condition-triggerOnTrackedItem.json)|Compare a tracker with a threshold or text condition.|
-|[triggerPrereqs](condition-triggerPrereqs.json)|Require another trigger to have fired this turn or earlier in the game.|
-|[triggerBlockers](condition-triggerBlockers.json)|Suppress an event if another trigger fired this turn or earlier in the game.|
-|[triggerOnPawScript](condition-triggerOnPawScript.json)|Evaluate a deterministic state predicate.|
-|[triggerOnTurn](condition-triggerOnTurn.json)|Run at a specified turn.|
+The relationship-focused examples include mature material. Pick one close to the kind of experience you want, rather than treating any of them as a required template.
 
-### Effects
+## Try a useful combination
 
-|Example|Demonstrates|
-|-|-|
-|[effectShowMessage](effect-effectShowMessage.json)|Display an authoritative player-facing result.|
-|[effectTellAIWhatToDo](effect-effectTellAIWhatToDo.json)|Guide subsequent narration.|
-|[effectGiveInfo](effect-effectGiveInfo.json)|Supply background information to the AI.|
-|[effectSetTrackedItemValue](effect-effectSetTrackedItemValue.json)|Set or modify a tracked value with a native operation.|
-|[effectModifyTrackedItemDetails](effect-effectModifyTrackedItemDetails.json)|Change selected tracker settings through explicit override flags.|
-|[effectChangePCName](effect-effectChangePCName.json)|Change the active player character name.|
-|[effectChangePCDescription](effect-effectChangePCDescription.json)|Change the active player character description.|
-|[effectChangePCSkill](effect-effectChangePCSkill.json)|Increase/decrease a named skill with a level boundary.|
-|[effectChangeObjective](effect-effectChangeObjective.json)|Replace the current story objective.|
-|[effectChangeVictoryCondition](effect-effectChangeVictoryCondition.json)|Replace the native victory criterion/message.|
-|[effectChangeDefeatCondition](effect-effectChangeDefeatCondition.json)|Replace the native defeat criterion/message.|
-|[effectChangeMainInstructions](effect-effectChangeMainInstructions.json)|Replace main storyteller instructions.|
-|[effectModifyInstructionBlock](effect-effectModifyInstructionBlock.json)|Install, replace or clear a named instruction block.|
-|[effectModifyKeywordBlock](effect-effectModifyKeywordBlock.json)|Change a keyword block and its activation keywords.|
-|[effectChangeAuthorStyle](effect-effectChangeAuthorStyle.json)|Change the requested prose style.|
-|[effectChangeDescriptionInstructions](effect-effectChangeDescriptionInstructions.json)|Change Description specialist instructions.|
-|[effectPresentChoice](effect-effectPresentChoice.json)|Ask the player to select from defined options and store the result.|
-|[effectRequestInput](effect-effectRequestInput.json)|Request text and store it in a tracker.|
-|[effectFireRandomTrigger](effect-effectFireRandomTrigger.json)|Dispatch a random listed trigger or the nothing sentinel; extra dispatch semantics are bounded.|
-|[effectRunScript](effect-effectRunScript.json)|Execute sequential tracker updates in PawScript.|
-|[effectEndsGame](effect-effectEndsGame.json)|End the game; boolean data controls whether continuing is allowed.|
+| Example | What to explore |
+| --- | --- |
+| [A purchase with a receipt](recipe-request-commit.json) | Check funds, make a purchase and report what changed. |
+| [A choice that changes the goal](recipe-choice-followup.json) | Let the player's answer guide what comes next. |
+| [Unlock something through progress](recipe-threshold-unlock.json) | Open up new content when a tracked value reaches a threshold. |
+| [An optional story setting](optional-block.json) | Let the player switch an extra feature on or off. |
+| [Different character starting values](character-starting-values.json) | Give characters fixed values or a choice of starting options. |
+| [Characters, lore, portraits and endings](npc-keyword-portrait-ending.json) | See several familiar world-building features together. |
+| [Combining conditions](logic-groups.json) | Make an event depend on several requirements or alternatives. |
+| [Changing text](native-text-operations.json) | Add, remove or replace parts of a text tracker. |
+| [Changing structured data](yaml-path-operations.json) | Update individual parts of a YAML tracker. |
+| [Skills demonstration](probe-skills.json) | Inspect skill changes and their limits. |
+| [When values appear in text](probe-template-timing.json) | Compare changing values with text saved at a particular moment. |
 
-## Combined recipes and other fixtures
+## Explore one feature at a time
 
-* [logic-groups](logic-groups.json): Nested logic nodes with native shape.
-* [native-text-operations](native-text-operations.json): Append, remove all matches and replace text.
-* [character-starting-values](character-starting-values.json): Fixed, fixed-choice and script-choice per-PC values.
-* [npc-keyword-portrait-ending](npc-keyword-portrait-ending.json): NPC, keyword, portrait descriptors and natural-language endings.
-* [recipe-request-commit](recipe-request-commit.json): Optional precise transaction using a fresh AI request and script receipt.
-* [recipe-choice-followup](recipe-choice-followup.json): Answer-dependent objective using a later ordered trigger.
-* [recipe-threshold-unlock](recipe-threshold-unlock.json): State threshold grants access and modifies content once.
-* [probe-skills](probe-skills.json): Editor-baseline Evaluation installed explicitly; capped skill effects and runtime readout.
-* [probe-template-timing](probe-template-timing.json): Compare live block interpolation with effect-installed interpolation.
-* [showcase-glass-ledger](showcase-glass-ledger.json): Integrated cast, alternate PCs, planning choice, precise transactions, countdown, optional prose, Scenario and script-triggered endings.
+These examples are useful when you know what you want to happen but are unsure which IW feature handles it.
 
-## Request -> deterministic commit \[PATTERN]
+### When should something happen?
 
-Use `recipe-request-commit.json` when an AI-interpreted purchase needs exact state accounting. The example offers one guild ticket for 5 coins; its intentionally small event catalog is not a requirement for other worlds.
+- [React to a story situation](condition-triggerOnEvent.json)
+- [Let chance decide](condition-triggerOnRandomChance.json)
+- [Vary events by player character](condition-triggerOnCharacter.json)
+- [React to a tracked value](condition-triggerOnTrackedItem.json)
+- [Wait for an earlier event](condition-triggerPrereqs.json)
+- [Prevent conflicting events](condition-triggerBlockers.json)
+- [Check a scripted rule](condition-triggerOnPawScript.json)
+- [Wait until a turn](condition-triggerOnTurn.json)
 
-1. AI writes Request every turn: `turn` copies CURRENT TURN from the permanent Turn Context block and `event` is BUY\_TICKET or NONE. Instructions classify the current request, not narrated success.
-2. The first ordered trigger resets the receipt for the current turn. It does **not** erase the AI request before consumption.
-3. A following trigger requires the fresh turn stamp and purchase event. One script checks ownership/funds, deducts coins and grants the ticket together, or writes the rejection reason.
-4. A later conditional effect displays the receipt and totals only for a fresh non-NONE request, then clears the request. A persistent receipt supplies next-turn continuity.
-5. Narration describes a purchase attempt until the receipt is available. It then continues from the authoritative result next turn.
+### What should happen?
 
-The turn stamp protects against reuse, not misclassification. A model can still classify a vague input incorrectly or invent prose; this is not a perfect parser. Correctly bound native menus provide constrained answers that subsequent triggers can consume in the same turn. Native thresholds and timed effects need no AI request layer at all.
+- [Show a message](effect-effectShowMessage.json)
+- [Guide the next scene](effect-effectTellAIWhatToDo.json)
+- [Give the storyteller background information](effect-effectGiveInfo.json)
+- [Change a tracked value](effect-effectSetTrackedItemValue.json)
+- [Change tracker settings](effect-effectModifyTrackedItemDetails.json)
+- [Rename the player character](effect-effectChangePCName.json)
+- [Change the player description](effect-effectChangePCDescription.json)
+- [Adjust a skill](effect-effectChangePCSkill.json)
+- [Change the goal](effect-effectChangeObjective.json)
+- [Change the victory conditions](effect-effectChangeVictoryCondition.json)
+- [Change the defeat conditions](effect-effectChangeDefeatCondition.json)
+- [Change story instructions](effect-effectChangeMainInstructions.json)
+- [Switch an instruction block](effect-effectModifyInstructionBlock.json)
+- [Change keyword-triggered lore](effect-effectModifyKeywordBlock.json)
+- [Change the writing style](effect-effectChangeAuthorStyle.json)
+- [Change scene-description guidance](effect-effectChangeDescriptionInstructions.json)
+- [Offer a choice](effect-effectPresentChoice.json)
+- [Ask for a written answer](effect-effectRequestInput.json)
+- [Choose a random event](effect-effectFireRandomTrigger.json)
+- [Run a script](effect-effectRunScript.json)
+- [End the game](effect-effectEndsGame.json)
 
-## Choice → follow-up
+## Look under the hood
 
-Correctly bound single-answer forms update their target immediately, and a later trigger can update the objective or show a receipt in the same turn. Use consistent target IDs. The single-choice example supports a fresh import without retargeting; ../reference/Import-Integrity.md explains reference checks for composed worlds.
+The [feature recipes](../reference/Recipes.md) explain how these approaches work and when to use them. [Payloads.md](Payloads.md) contains smaller technical snippets, and [index.json](index.json) records the scope and testing status of the examples.
 
-## Threshold unlock
-
-`recipe-threshold-unlock.json` establishes a reputation threshold, records a persistent flag and installs an instruction block. The flag makes the operation idempotent even though the trigger is repeatable. It does not require region switching, an action catalog or any particular movement system.
-
-## Showcase scope
-
-`showcase-glass-ledger.json` combines two player characters, Skills, a crew, keyword lore, a player-selected startup plan, an exact purchase/recovery sequence, a countdown, a player-optional prose block, a Scenario and endings. It is an integration example, not an action-engine requirement for other worlds. The showcase selects its approach through a player-controlled startup tracker.
-
-It intentionally excludes unrelated demonstrations such as renaming the PC mid-game, switching all specialist rules, and dispatching random inactive triggers. Those have their own isolated examples. Video is not made a required dependency before its context variables are characterized. The showcase composition is structurally validated; runtime verification of an adapted world should focus on its actual feature dependencies.
-
-## Narrative-first examples
-
-Use these for character-driven, romance or adult worlds. Read the one closest to the requested shape. Borrow structure, never names, premises or signature details. Neither uses scripts or triggers; all state is held in AI-updated trackers. See ../reference/Craft.md for the principles they illustrate.
-
-* [narrative-vendemmia.json](narrative-vendemmia.json): Contemporary story with three love interests during a vineyard harvest. Shows NPC cards with labeled sections (Wants, Voice, Tells, Toward you, Desire, In intimacy, Afterward, Friction), each love interest needing something different before they open up, and stakes that each character experiences differently. It also has a fixed-ladder relationship tracker that records agreed and declined boundaries, a clothing-continuity tracker, a block giving rules for intimate scenes, and keyword lore with sensory detail.
-* [narrative-seven-nights.json](narrative-seven-nights.json): Fantasy built around one central love interest, a foil and a rival who arrives late. Shows world rules in a block, with consent built into the fiction: a debt that cannot compel the body, and desire that must be offered in exact words. It also has non-human characters whose physical tells reveal their feelings, a player-visible ledger of debts and promises, the same relationship ladder applied to a different cast, and a minimal card for a minor character.
-* [narrative-velvet-wager.json](narrative-velvet-wager.json): High-heat contemporary erotic drama and power-exchange game for three characters snowed-in at a lakeside villa. Demonstrates how to structure an erotica-first premise where desire is active from turn 1 rather than ladder-gated: uses `Dynamics` tracker (`heat` 1–5, `control` state, active forfeits, boundaries pushed), multi-turn explicit sex pacing block, kinetic body and fabric descriptions, three-way scene awareness, and two light triggers that react to tracker/scene milestones.
-
-## YAML path operations
-
-[yaml-path-operations.json](yaml-path-operations.json) demonstrates set, remove, append and adjust on separate turns. Its paths match the declared YAML structure. This composition is structurally validated; its full runtime sequence is not certified.
-
-For reference integrity and importing, see ../reference/Import-Integrity.md.
+[Back to the main guide](https://iw-builder.github.io/guide/)
