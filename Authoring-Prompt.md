@@ -21,6 +21,8 @@ Teach IW or PawScript = Consult mode. Establish programming familiarity if uncle
 
 ## 2\. Load only what the task needs
 
+README files are browsing guides for people, not required authoring references. Use the technical files below. Design conversations in `samples/` are optional, project-specific material; load them only when requested or directly relevant, never as authoritative platform documentation.
+
 The template or current export is required for construction. Files below are selected by feature, not all loaded automatically. Compatibility and the shared evidence legend live in reference/Evidence.md.
 
 |Task needs|Read|
@@ -32,14 +34,14 @@ The template or current export is required for construction. Files below are sel
 |Exact native payloads|[reference/Schema.md](https://iw-builder.github.io/reference/Schema.md) and matching snippets in [examples/Payloads.md](https://iw-builder.github.io/examples/Payloads.md); load a complete example only when useful|
 |Any PawScript expression or script|[reference/PawScript.md](https://iw-builder.github.io/reference/PawScript.md)|
 |Lifecycle, Skills, NPC/keyword activation, templates, images or runtime fields|[reference/Capabilities.md](https://iw-builder.github.io/reference/Capabilities.md)|
-  |Combined mechanics, optional blocks or request/commit|[reference/Recipes.md](https://iw-builder.github.io/reference/Recipes.md) and the relevant example in [examples/README.md](examples/README.md)|
+  |Combined mechanics, optional blocks or request/commit|[reference/Recipes.md](https://iw-builder.github.io/reference/Recipes.md) and the relevant example in [examples/index.json](https://iw-builder.github.io/examples/index.json)|
 |Library modules or Storymaster|[library/Integration.md](https://iw-builder.github.io/library/Integration.md), then only relevant portions of [library/*.json](https://iw-builder.github.io/library/)|
 |Custom Evaluation|[reference/Default-Evaluation.txt](https://iw-builder.github.io/reference/Default-Evaluation.txt) and the Skills section of [reference/Capabilities.md](https://iw-builder.github.io/reference/Capabilities.md)|
 |Model-specific blocks|[reference/Current-AI-Profiles.json](reference/Current-AI-Profiles.json) and the model-block section of [reference/Capabilities.md](https://iw-builder.github.io/reference/Capabilities.md); ask which model(s) are common if needed|
 |Editing, combining or importing|[reference/Import-Integrity.md](https://iw-builder.github.io/reference/Import-Integrity.md)|
 |Uncertain platform behavior|[reference/Known-Limits.md](https://iw-builder.github.io/reference/Known-Limits.md); do not turn uncertainty into an invented rule|
 |Personal libraries, portable banks, bundles, PC/NPC conversion or full-content build reports|[reference/Portable-Banks.md](https://iw-builder.github.io/reference/Portable-Banks.md); [tools/data\_bank.py](https://iw-builder.github.io/tools/data\_bank.py) when execution is available|
-|Code-based validation or edit comparison|[tools/validate\_iw\_export.py](https://iw-builder.github.io/tools/validate\_iw\_export.py), [tools/iw-export.schema.json](https://iw-builder.github.io/tools/iw-export.schema.json) and [tools/README.md](https://iw-builder.github.io/tools/README.md)|
+|Code-based validation or edit comparison|[tools/validate\_iw\_export.py](https://iw-builder.github.io/tools/validate\_iw\_export.py), [tools/iw-export.schema.json](https://iw-builder.github.io/tools/iw-export.schema.json) and [tools/Usage.md](https://iw-builder.github.io/tools/Usage.md)|
 
 ## 3\. Agree the experience, not implementation trivia
 
@@ -104,7 +106,7 @@ Order dependencies in triggerEvents. Later triggers see earlier committed writes
 
 ## 7\. Validate and deliver for this audience
 
-Run `python tools/validate\_iw\_export.py WORLD.json --json` when possible. For edits add `--diff ORIGINAL.json`. With jsonschema installed, structural validation runs; without it, the tool reports reduced coverage and still runs guarded reference/static checks. Resolve errors and review warnings, including unknown roots, placeholders and borrowed syntax. Lint is heuristic and does not execute IW or PawScript. See tools/README.md.
+Run `python tools/validate\_iw\_export.py WORLD.json --json` when possible. For edits add `--diff ORIGINAL.json`. With jsonschema installed, structural validation runs; without it, the tool reports reduced coverage and still runs guarded reference/static checks. Resolve errors and review warnings, including unknown roots, placeholders and borrowed syntax. Lint is heuristic and does not execute IW or PawScript. See tools/Usage.md.
 
 Without tools, route validation through the public checker and its chunk-piecer when useful. Until a result is actually available, explicitly say "manually checked; validator not run." Review IDs, types, declarations, paths, timing and escaping. JSON strings use \\n, " and \\; a literal script-level \\n becomes \\n inside JSON. Use the decoded script to reason about behavior.
 
