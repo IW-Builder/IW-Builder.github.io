@@ -1,13 +1,18 @@
-# Text Packages
+# Bring the kit into your chat
 
-Combined text files for using IW Builder in chat interfaces that accept uploads or pasted text.
+These text files let you use IW Builder with an AI that accepts attachments, even if it cannot browse the website or open a ZIP.
 
-Start with **IW-Authoring-Guide.txt** and describe what you want to build, edit or learn. Your AI should request additional packages only when needed:
+Start by uploading [IW-Authoring-Guide.txt](IW-Authoring-Guide.txt) and telling the AI what you want to make. You can describe an idea, attach a world you want changed, or ask how something works. Let it ask for the other files when it needs them.
 
-- **IW-Sample-Library.txt** — Optional instruction blocks and reusable components.
-- **IW-Examples.txt** — Example worlds, triggers and scripts.
-- **IW-Tools.txt** — Validator and supporting code; requires an AI environment capable of executing Python.
+| File | What's inside |
+| --- | --- |
+| [Authoring Guide](IW-Authoring-Guide.txt) | The main prompt, starting template and guides to creating worlds. Start here. |
+| [Sample Library](IW-Sample-Library.txt) | Ready-made building blocks for storytelling, continuity and other optional features. |
+| [Examples](IW-Examples.txt) | Worked examples showing how world features fit together. |
+| [Tools](IW-Tools.txt) | Code the AI can use to check worlds and handle reusable content, if it can run Python. |
 
-Without code execution, use the [web checker](https://iw-builder.github.io/checker/) and paste its report back into your chat.
+You do not need to upload everything at once. If your AI cannot run the checks, you can use the [web checker](https://iw-builder.github.io/checker/) yourself and paste the results back into the conversation.
 
-[Main guide](https://iw-builder.github.io/guide/)
+`sources.json` records which files went into each package; you can ignore it during normal use.
+
+[Back to the main guide](https://iw-builder.github.io/guide/)

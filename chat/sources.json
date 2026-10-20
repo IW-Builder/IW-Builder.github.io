@@ -17,14 +17,13 @@
       "reference/Default-Evaluation.txt",
       "reference/Current-AI-Profiles.json"
     ],
-    "sha256": "e3b88cdfa26bcf78e002f28211d4ed6b3b5bda9090433c52284c31ee08ba5845"
+    "sha256": "5ee3614ec0015563d5f3e8d583e28b1fbc7ee772b97eed4977c0fe3dcfae9aa0"
   },
   "IW-Examples.txt": {
     "sourceFiles": [
-      "examples/README.md",
       "examples/Payloads.md",
       "examples/index.json",
-      "examples/narrative-last-ferry.json",
+      "examples/narrative-vendemmia.json",
       "examples/recipe-request-commit.json",
       "examples/recipe-choice-followup.json",
       "examples/recipe-threshold-unlock.json",
@@ -32,18 +31,19 @@
       "examples/showcase-glass-ledger.json",
       "examples/character-starting-values.json"
     ],
-    "sha256": "855beeb11c542852bdf4134cdad2641694b8ae725ca2098865f80caa7a51f142"
+    "sha256": "c2ad655c411020c623f00fb7589fe41a1f75fc3b3fa747cc197654c4bd8ec5cc"
   },
   "IW-Sample-Library.txt": {
     "sourceFiles": [
       "library/Integration.md",
-      "library/Sample-Blocks.json"
+      "library/Sample-Blocks.json",
+      "library/Storymaster-Suite.json"
     ],
-    "sha256": "3765b46eedaf30f716e186670a4fff29aabc0f4aa64db80a747083b43527b87e"
+    "sha256": "996b10d861c3484810cc7f56728ae66eacd68859f6da4d92b5f1bf194a3043b6"
   },
   "IW-Tools.txt": {
     "sourceFiles": [
-      "tools/README.md",
+      "tools/Usage.md",
       "tools/Validation-Report.json",
       "tools/build_chat_edition.py",
       "tools/build_prompt_page.py",
@@ -55,6 +55,6 @@
       "tools/test_validator.py",
       "tools/validate_iw_export.py"
     ],
-    "sha256": "33fc41f6948f99f169bd068f66482d535f59133b80f78711b1c22e83559c335b"
+    "sha256": "7c4c02c0d3766c14cd5310b19140961592a285d608aafc6fb519155f67ee3037"
   }
 }

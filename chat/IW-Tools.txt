@@ -1,8 +1,8 @@
-Infinite Worlds Authoring Kit: combined tools text edition. Each BEGIN FILE / END FILE section contains one tool source, documentation or data file, identified by its package-relative path. This upload is not a single executable script or an IW world. To run a tool, recreate the needed files at their indicated paths, excluding the boundary lines and separator newlines. Preserve indentation and string escaping. Follow tools/README.md for dependencies, commands and coverage limits. This bundle includes the validator, schema, static checks, tests, maintainer utilities and any packaged reports; a report describes its stated inputs, not a newly authored world. Some maintainer tools require examples and other kit files outside this bundle. Reading these sources is not running them; claim validation only after actual execution and report the coverage returned by the validator.
+Infinite Worlds Authoring Kit: combined tools text edition. Each BEGIN FILE / END FILE section contains one tool source, documentation or data file, identified by its package-relative path. This upload is not a single executable script or an IW world. To run a tool, recreate the needed files at their indicated paths, excluding the boundary lines and separator newlines. Preserve indentation and string escaping. Follow tools/Usage.md for dependencies, commands and coverage limits. This bundle includes the validator, schema, static checks, tests, maintainer utilities and any packaged reports; a report describes its stated inputs, not a newly authored world. Some maintainer tools require examples and other kit files outside this bundle. Reading these sources is not running them; claim validation only after actual execution and report the coverage returned by the validator.
 
 
-===== BEGIN FILE: tools/README.md =====
-# Validator and maintainer tools
+===== BEGIN FILE: tools/Usage.md =====
+# Tool usage and validation reference
 
 Run commands from the package root. Python reads and writes package files explicitly as UTF-8.
 
@@ -59,7 +59,14 @@ The validator regression tests exercise static diagnostics, reduced-coverage ope
 
 The chat-edition generator also emits IW-Tools.txt, including tool source, schema, documentation and packaged reports. It does not execute validation.
 
-===== END FILE: tools/README.md =====
+
+## Homepage generation
+
+Run `python tools/build_prompt_page.py` to regenerate the root `index.html` from `Authoring-Prompt.md`. The script resolves the package root from its own location, so no path arguments are needed. Review the generated page before publishing.
+
+Human-facing README files are not inputs to the combined technical packages. The Examples package uses `examples/Payloads.md` and `examples/index.json`; recipe guidance remains in `reference/Recipes.md` in the Authoring Guide. The Tools package uses this usage guide. The sample-library package includes the separate Storymaster suite as well as Sample Blocks.
+
+===== END FILE: tools/Usage.md =====
 
 ===== BEGIN FILE: tools/Validation-Report.json =====
 {
@@ -297,8 +304,8 @@ OUT=ROOT/'chat'
 GUIDE=['Authoring-Prompt.md','World-Template.json','reference/Evidence.md','reference/Craft.md','reference/Portable-Banks.md','reference/Trackers.md','reference/Triggers.md','reference/Schema.md','reference/PawScript.md','reference/Capabilities.md','reference/Recipes.md','reference/Import-Integrity.md','reference/Known-Limits.md','reference/Default-Evaluation.txt','reference/Current-AI-Profiles.json']
 GROUPS={
  'IW-Authoring-Guide.txt':GUIDE,
- 'IW-Examples.txt':['examples/README.md','examples/Payloads.md','examples/index.json','examples/narrative-last-ferry.json','examples/recipe-request-commit.json','examples/recipe-choice-followup.json','examples/recipe-threshold-unlock.json','examples/optional-block.json','examples/showcase-glass-ledger.json','examples/character-starting-values.json'],
- 'IW-Sample-Library.txt':['library/Integration.md','library/Sample-Blocks.json']}
+ 'IW-Examples.txt':['examples/Payloads.md','examples/index.json','examples/narrative-vendemmia.json','examples/recipe-request-commit.json','examples/recipe-choice-followup.json','examples/recipe-threshold-unlock.json','examples/optional-block.json','examples/showcase-glass-ledger.json','examples/character-starting-values.json'],
+ 'IW-Sample-Library.txt':['library/Integration.md','library/Sample-Blocks.json','library/Storymaster-Suite.json']}
 
 def tool_sources():
  """Include tool source, documentation and data; omit caches and binary files."""
@@ -307,9 +314,10 @@ def tool_sources():
  for path in (ROOT/'tools').rglob('*'):
   relative=path.relative_to(ROOT)
   if (path.is_file() and path.suffix.lower() in suffixes
+      and path.name.lower() != 'readme.md'
       and not any(part.startswith('.') or part=='__pycache__' for part in relative.parts)):
    files.append(relative.as_posix())
- return sorted(files, key=lambda path: (path!='tools/README.md',path))
+ return sorted(files, key=lambda path: (path!='tools/Usage.md',path))
 
 def build():
  OUT.mkdir(exist_ok=True);manifest={}
@@ -317,7 +325,7 @@ def build():
  for name,files in groups.items():
   intro='Infinite Worlds Authoring Kit: generated text edition. Source paths below identify sections within this upload. This is reference material, not one JSON world to import. The Examples edition includes all native payload snippets plus selected complete recipes; other complete worlds remain in the full kit and can be requested by path. Follow Authoring-Prompt.md for the authoring task. Load referenced material selectively; ask for a missing companion when required. Do not claim the Python validator ran unless actual execution tools and the full tools folder are available.\n\n'
   if name=='IW-Tools.txt':
-   intro='Infinite Worlds Authoring Kit: combined tools text edition. Each BEGIN FILE / END FILE section contains one tool source, documentation or data file, identified by its package-relative path. This upload is not a single executable script or an IW world. To run a tool, recreate the needed files at their indicated paths, excluding the boundary lines and separator newlines. Preserve indentation and string escaping. Follow tools/README.md for dependencies, commands and coverage limits. This bundle includes the validator, schema, static checks, tests, maintainer utilities and any packaged reports; a report describes its stated inputs, not a newly authored world. Some maintainer tools require examples and other kit files outside this bundle. Reading these sources is not running them; claim validation only after actual execution and report the coverage returned by the validator.\n\n'
+   intro='Infinite Worlds Authoring Kit: combined tools text edition. Each BEGIN FILE / END FILE section contains one tool source, documentation or data file, identified by its package-relative path. This upload is not a single executable script or an IW world. To run a tool, recreate the needed files at their indicated paths, excluding the boundary lines and separator newlines. Preserve indentation and string escaping. Follow tools/Usage.md for dependencies, commands and coverage limits. This bundle includes the validator, schema, static checks, tests, maintainer utilities and any packaged reports; a report describes its stated inputs, not a newly authored world. Some maintainer tools require examples and other kit files outside this bundle. Reading these sources is not running them; claim validation only after actual execution and report the coverage returned by the validator.\n\n'
   parts=[intro]
   for path in files:
    content=(ROOT/path).read_text(encoding='utf-8')
@@ -383,9 +391,9 @@ page = """<!doctype html>
     <p>Give this prompt to your AI along with your world idea.
        The supporting kit supplies its templates and references.</p>
     <nav aria-label="Resources">
-      <a href="prompt.txt">Plain-text prompt</a>
+      <a href="chat/">Plain-text prompt</a>
       <a href="full-package.zip">Download ZIP package</a>
-      <a href="checker/">World checker</a>
+      <a href="checker/">Validator</a>
       <a href="https://github.com/IW-Builder/IW-Builder.github.io/tree/main">
         README and browse files
       </a>
@@ -1290,7 +1298,7 @@ if __name__=='__main__': sys.exit(main())
   },
   "additionalProperties": true,
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "InfiniteWorlds observed export schema — schemaVersion 2.4",
+  "title": "InfiniteWorlds observed export schema \u2014 schemaVersion 2.4",
   "description": "General Infinite Worlds export structure and explicit-reference profile. Compatibility baseline: Save/load system, Image style system and Pawscript update, announced 2026-10-08 (compatibility baseline). Not an official exhaustive importer contract. Unknown fields/discriminators remain permitted and reported. Presence observations alone do not establish importer-required fields.",
   "x-profileVersion": "1.1.0",
   "x-observedSchemaVersions": [
@@ -1924,6 +1932,9 @@ if __name__=='__main__': sys.exit(main())
     "effect": {
       "anyOf": [
         {
+          "$ref": "#/$defs/effect_effectChangeBackground"
+        },
+        {
           "$ref": "#/$defs/effect_effectShowMessage"
         },
         {
@@ -2013,7 +2024,8 @@ if __name__=='__main__': sys.exit(main())
                   "effectRequestInput",
                   "effectFireRandomTrigger",
                   "effectRunScript",
-                  "effectEndsGame"
+                  "effectEndsGame",
+                  "effectChangeBackground"
                 ]
               }
             }
@@ -2056,7 +2068,8 @@ if __name__=='__main__': sys.exit(main())
         "effectRequestInput",
         "effectFireRandomTrigger",
         "effectRunScript",
-        "effectEndsGame"
+        "effectEndsGame",
+        "effectChangeBackground"
       ],
       "x-discriminator": "type"
     },
@@ -2461,6 +2474,24 @@ if __name__=='__main__': sys.exit(main())
         }
       },
       "additionalProperties": true
+    },
+    "effect_effectChangeBackground": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "effectChangeBackground"
+        },
+        "data": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true,
+      "required": [
+        "type"
+      ]
     }
   },
   "required": [
@@ -2478,6 +2509,7 @@ if __name__=='__main__': sys.exit(main())
     "source": "User identification of the Discord announcement; not an application version number."
   }
 }
+
 ===== END FILE: tools/iw-export.schema.json =====
 
 ===== BEGIN FILE: tools/static_checks.py =====
@@ -2897,7 +2929,7 @@ def validate(doc, schema):
         for k in ('trackedItemID','inequality'):
             if k in n and k in d and n[k]!=d[k]:
                 add('error','wrapper-payload-mismatch',p+'/'+k,'Wrapper and payload disagree; runtime precedence unknown.')
-    def conditions(nodes,p):
+    def conditions(nodes,p,start_enabled=False):
         for i,n in enumerate(nodes if isinstance(nodes,list) else []):
             q=p+'/'+str(i)
             if not isinstance(n,dict): continue
@@ -2906,9 +2938,17 @@ def validate(doc, schema):
             if category=='logic':
                 if n.get('operator') not in ['and','or','none_of']: add('warning','unknown-logic',q+'/operator','Unobserved operator.')
                 if 'data' not in n: add('warning','missing-payload',q+'/data','Logic group has no child list.')
-                conditions(n.get('data',[]),q+'/data');continue
+                conditions(n.get('data',[]), q+'/data', start_enabled);continue
             if category!='condition': add('warning','unclassified-condition',q+'/category','Missing or unobserved category.')
             t=n.get('type'); d=n.get('data')
+            if start_enabled and t in ('triggerOnTurn', 'triggerOnEvent'):
+                label = (
+                    'Minimum-turn' if t == 'triggerOnTurn'
+                    else 'Scenario'
+                )
+                add('warning', 'start-incompatible-condition', q, label + 
+                    ' condition combined with Start of Game. Condition ignored; does not gate execution. Use separate startup trigger and leave Start off here.'
+                )
             if t not in defs['conditionLeaf']['x-knownDiscriminators']:
                 add('warning','unknown-condition-type',q+'/type','Missing or unobserved condition type: '+repr(t));continue
             if 'data' not in n: add('warning','missing-payload',q+'/data','No condition payload observed.');continue
@@ -2944,7 +2984,7 @@ def validate(doc, schema):
                 if tables['trackedItems'].get(ident,{}).get('dataType')=='number':numeric_writes[ident]=numeric_writes.get(ident,0)+1
         for ident,count in numeric_writes.items():
             if count>1:add('warning','numeric-write-overwrite',p,'Multiple numeric writes to '+ident+' can overwrite rather than accumulate within one trigger.')
-        conditions(t.get('triggerConditions',[]),p+'/triggerConditions')
+        conditions(t.get('triggerConditions',[]),p+'/triggerConditions',start_enabled=bool(t.get('triggerOnStartOfGame')))
         for j,e in enumerate(t.get('triggerEffects',[]) if isinstance(t.get('triggerEffects',[]),list) else []):
             q=p+'/triggerEffects/'+str(j)
             if not isinstance(e,dict):continue
