@@ -615,7 +615,7 @@
   },
   "additionalProperties": true,
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "InfiniteWorlds observed export schema — schemaVersion 2.4",
+  "title": "InfiniteWorlds observed export schema \u2014 schemaVersion 2.4",
   "description": "General Infinite Worlds export structure and explicit-reference profile. Compatibility baseline: Save/load system, Image style system and Pawscript update, announced 2026-10-08 (compatibility baseline). Not an official exhaustive importer contract. Unknown fields/discriminators remain permitted and reported. Presence observations alone do not establish importer-required fields.",
   "x-profileVersion": "1.1.0",
   "x-observedSchemaVersions": [
@@ -1249,6 +1249,9 @@
     "effect": {
       "anyOf": [
         {
+          "$ref": "#/$defs/effect_effectChangeBackground"
+        },
+        {
           "$ref": "#/$defs/effect_effectShowMessage"
         },
         {
@@ -1338,7 +1341,8 @@
                   "effectRequestInput",
                   "effectFireRandomTrigger",
                   "effectRunScript",
-                  "effectEndsGame"
+                  "effectEndsGame",
+                  "effectChangeBackground"
                 ]
               }
             }
@@ -1381,7 +1385,8 @@
         "effectRequestInput",
         "effectFireRandomTrigger",
         "effectRunScript",
-        "effectEndsGame"
+        "effectEndsGame",
+        "effectChangeBackground"
       ],
       "x-discriminator": "type"
     },
@@ -1786,6 +1791,24 @@
         }
       },
       "additionalProperties": true
+    },
+    "effect_effectChangeBackground": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "effectChangeBackground"
+        },
+        "data": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true,
+      "required": [
+        "type"
+      ]
     }
   },
   "required": [
