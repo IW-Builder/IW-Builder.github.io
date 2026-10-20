@@ -1,0 +1,246 @@
+{
+  "favorite": false,
+  "title": "Wayfarer: Local Rumors",
+  "description": "Explore a settlement using a compact set of persistent rumors. Change the Destination preference to request a new local set.",
+  "background": "You arrive at a quiet travelers lodge. A host offers directions while local gossip is gathered.",
+  "instructions": "Destination is a player-controlled settlement preference. Treat changing it as travel to that settlement; do not move to another settlement solely because narration suggested one. Use only a Rumor Batch whose settlement matches Destination. Reports are hearsay, not established truth. Preserve their identities while they remain relevant. While no matching batch is ready, ordinary conversation and exploration remain possible. Do not narrate generation bookkeeping or invent a replacement rumor list.",
+  "authorStyle": "Grounded travel adventure. Brief scenes, distinctive voices, meaningful choices.",
+  "recommendedAIModel": null,
+  "firstInput": "I greet the host and ask what travelers can do nearby.",
+  "objective": "Follow local leads and decide which reports deserve investigation.",
+  "imageModel": "manticore",
+  "imageStyle": "photo_1",
+  "illustrationStyleNonCharacterLowPriority": "",
+  "illustrationStyleNonCharacterHighPriority": "",
+  "illustrationStyleCharacterLowPriority": "",
+  "illustrationStyleCharacterHighPriority": "",
+  "imageStyleCharacterPre": "",
+  "imageStyleCharacterPost": "",
+  "imageStyleNonCharacterPre": "",
+  "imageStyleNonCharacterPost": "",
+  "mature": false,
+  "nsfw": false,
+  "contentWarnings": "",
+  "enableAISpecificInstructionBlocks": false,
+  "previewImage": "",
+  "fullSizePreviewImage": "",
+  "previewImageOptions": [],
+  "fullSizePreviewImageOptions": [],
+  "currentPreviewImageIndex": -1,
+  "imagePromptDetails": {
+    "illustrClothes": "",
+    "illustrSetting": "",
+    "illustrSubject": "",
+    "illustrAppearance": "",
+    "illustrIsCharacter": false,
+    "illustrExpressionPosition": ""
+  },
+  "permissionsOnceShared": {
+    "sharing": true,
+    "editing": true
+  },
+  "allowChangeCharacterName": false,
+  "allowChangeCharacterDescription": false,
+  "allowChangeCharacterSkills": false,
+  "allowChangeCharacterItemValues": true,
+  "allowChangeCharacterPortrait": false,
+  "allowChangeCharacterNewPortrait": false,
+  "conditions": [],
+  "schemaVersion": 2.4,
+  "skills": [
+    "Generic skill"
+  ],
+  "possibleCharacters": [
+    {
+      "name": "Traveler",
+      "description": "An adult traveler with curiosity and practical judgment.",
+      "portrait": "",
+      "portraitPromptDetails": {
+        "illustrAppearance": "",
+        "illustrClothes": "",
+        "illustrExpressionPosition": "",
+        "illustrSetting": ""
+      },
+      "fullSizePortrait": "",
+      "portraitOptions": [],
+      "fullSizePortraitOptions": [],
+      "currentPortraitIndex": -1,
+      "characterId": "c7038c97-b50f-57be-9e33-9ce2914d80ef",
+      "skills": {
+        "Generic skill": 3
+      },
+      "initialTrackedItemValues": []
+    }
+  ],
+  "triggerEvents": [
+    {
+      "id": "d90fc495a",
+      "name": "Rumors: Prepare Request",
+      "advancedLogic": false,
+      "triggerOnStartOfGame": false,
+      "triggerMidGame": false,
+      "canTriggerMoreThanOnce": true,
+      "triggerConditions": [
+        {
+          "id": "3d8c26c95",
+          "category": "condition",
+          "type": "triggerOnPawScript",
+          "data": "$destination != $generation.settlement"
+        }
+      ],
+      "triggerEffects": [
+        {
+          "id": "930f0cb8e",
+          "type": "effectRunScript",
+          "data": "$generation.request_id += 1\n$generation.settlement = $destination\n$generation.installed_turn = $game.turn_number\n$generation.pending = 1",
+          "name": "Prepare Rumor Request"
+        }
+      ]
+    },
+    {
+      "id": "c8577610c",
+      "name": "Rumors: Install Generation Brief",
+      "advancedLogic": false,
+      "triggerOnStartOfGame": false,
+      "triggerMidGame": false,
+      "canTriggerMoreThanOnce": true,
+      "triggerConditions": [
+        {
+          "id": "85a168c23",
+          "category": "condition",
+          "type": "triggerPrereqs",
+          "data": {
+            "prereqs": [
+              "d90fc495a"
+            ],
+            "firedThisTurn": true
+          }
+        }
+      ],
+      "triggerEffects": [
+        {
+          "id": "04b4649d9",
+          "type": "effectModifyInstructionBlock",
+          "data": {
+            "id": "b34ff1473",
+            "content": "Generate one local rumor batch for <<$generation.settlement>> with request_id <<$generation.request_id>>. Write Rumor Batch as YAML with exactly request_id, settlement and rumors; rumors is a list of exactly three short text entries. Each entry is one sentence, at most 25 words. Replace the previous batch, never append.\nDesign one practical opportunity, one social mystery and one uncertain warning. Anchor each to a distinct local person, place or institution. Give a concrete lead a traveler could pursue, not a full quest synopsis. Vary the stakes and speakers; avoid three missing-person or missing-object plots. Treat allegations as reports whose truth has not been established. Keep ordinary locals fallible rather than secretly omniscient. Do not introduce an unavoidable disaster, mandatory countdown or world-spanning conspiracy. Fit existing geography and established facts, retaining continuity with anything the player has already learned. A new settlement needs new leads, not merely renamed copies of the old entries. Avoid copying the instructions into the result. Record only compact rumors, not planning commentary, evidence tables or proposed solutions. Do not claim the player investigated or accepted any lead. Write the request identifier and settlement only alongside the completed three-entry list. During the scene, the host may share one matching rumor naturally; the whole list need not be repeated in narration."
+          }
+        }
+      ]
+    },
+    {
+      "id": "2f7d0ad05",
+      "name": "Rumors: Accept Completed Batch",
+      "advancedLogic": false,
+      "triggerOnStartOfGame": false,
+      "triggerMidGame": false,
+      "canTriggerMoreThanOnce": true,
+      "triggerConditions": [
+        {
+          "id": "499aee316",
+          "category": "condition",
+          "type": "triggerOnPawScript",
+          "data": "$generation.pending = 1 and $game.turn_number > $generation.installed_turn and $rumor_batch.request_id = $generation.request_id and $rumor_batch.settlement = $generation.settlement and $rumor_batch.rumors.count() = 3"
+        }
+      ],
+      "triggerEffects": [
+        {
+          "id": "d42f8d3ad",
+          "type": "effectModifyInstructionBlock",
+          "data": {
+            "id": "b34ff1473",
+            "content": ""
+          }
+        },
+        {
+          "id": "946f77517",
+          "type": "effectRunScript",
+          "data": "$generation.pending = 0",
+          "name": "Finish Rumor Request"
+        },
+        {
+          "id": "cc3fd365e",
+          "type": "effectShowMessage",
+          "data": "Local leads for <<$rumor_batch.settlement>> are ready."
+        }
+      ]
+    }
+  ],
+  "victoryCondition": null,
+  "defeatCondition": null,
+  "trackedItems": [
+    {
+      "id": "26588fc96",
+      "name": "Destination",
+      "variableName": "destination",
+      "positionInList": 0,
+      "dataType": "text",
+      "visibility": "everyone",
+      "description": "",
+      "updateInstructions": "",
+      "formatExample": "",
+      "enforceFormat": false,
+      "formatSchema": "",
+      "initialValue": "Harbor",
+      "initialValueBasedOnPC": "player",
+      "autoUpdate": false,
+      "driftAcknowledgedForName": "Destination",
+      "initialValueChoices": [
+        "Harbor",
+        "Hillmarket",
+        "Glassford"
+      ]
+    },
+    {
+      "id": "c51383518",
+      "name": "Generation Control",
+      "variableName": "generation",
+      "positionInList": 1,
+      "dataType": "yaml",
+      "visibility": "hidden",
+      "description": "",
+      "updateInstructions": "",
+      "formatExample": "",
+      "enforceFormat": false,
+      "formatSchema": "",
+      "initialValue": "request_id: 0\nsettlement: \"\"\ninstalled_turn: 0\npending: 0",
+      "initialValueBasedOnPC": "same",
+      "autoUpdate": false,
+      "driftAcknowledgedForName": "Generation Control"
+    },
+    {
+      "id": "b7097bd3f",
+      "name": "Rumor Batch",
+      "variableName": "rumor_batch",
+      "positionInList": 2,
+      "dataType": "yaml",
+      "visibility": "everyone",
+      "description": "Compact local hearsay retained between generation requests.",
+      "updateInstructions": "Retain this entire value unchanged unless Temporary Rumor Generation explicitly requests a new batch. Follow that block when present; write its request_id and settlement with the completed list.",
+      "formatExample": "",
+      "enforceFormat": false,
+      "formatSchema": "",
+      "initialValue": "request_id: 0\nsettlement: \"\"\nrumors: []",
+      "initialValueBasedOnPC": "same",
+      "autoUpdate": true,
+      "driftAcknowledgedForName": "Rumor Batch"
+    }
+  ],
+  "hideSkillSystem": true,
+  "autoAdvanceVersion": false,
+  "version": "1.0",
+  "charSelectText": "Choose an initial settlement. Later, edit Destination to request a fresh batch for another settlement.",
+  "descriptionRequest": "",
+  "evaluationRequest": "",
+  "summaryRequest": "",
+  "instructionBlocks": [
+    {
+      "id": "b34ff1473",
+      "name": "Temporary Rumor Generation",
+      "content": ""
+    }
+  ],
+  "NPCs": [],
+  "loreBookEntries": [],
+  "designNotes": ""
+}
