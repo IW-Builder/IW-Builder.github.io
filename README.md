@@ -10,7 +10,7 @@ Send AI a link and your idea, get a completely built IW world back! It selects s
 
 **Web-capable model:** just give it this URL: `https://IW-Builder.github.io/`. Starter prompts below or just chat. If it doesn't have Python, a [client side validator](https://IW-Builder.github.io/checker/) is available; validation is not required, it's just for troubleshooting.
 
-**[Full-kit workflow](full-package.zip):** upload this ZIP to an AI that can extract files. Ask it to read `Authoring-Prompt.md` and select the references it needs. Archive access and code execution are separate capabilities; the AI should state which it has.
+**[Full-kit workflow](full-package.zip):** upload this ZIP to an AI that can extract files. Ask it to read `Authoring-Prompt.md` and select the references it needs. The AI can tell you whether it can open the ZIP and run the included checks.
 
 **Two-step workflow:** unzip the archive and attach `Authoring-Prompt.md` and `World-Template.json` (or your world) and describe the task. The AI outlines the features and names additional files it needs. Attach those files, then it builds. You do not have to decide which technical references apply.
 
@@ -64,14 +64,14 @@ These are reading selections, not mandatory extra downloads. The AI can request 
 
 | Location | Purpose |
 | --- | --- |
-| Authoring-Prompt.md | Core workflow and file-routing table |
-| World-Template.json | Neutral import envelope; sharing/editing default to true |
-| [reference/](https://github.com/IW-Builder/IW-Builder.github.io/tree/main/reference) | Selective guidance, shared evidence legend and known limits |
-| [examples/](https://github.com/IW-Builder/IW-Builder.github.io/tree/main/examples) | Compact payload cookbook, complete worlds and scope index |
-| [library/](https://github.com/IW-Builder/IW-Builder.github.io/tree/main/library) | Adaptable narrative modules and dependencies |
-| [tools/](https://github.com/IW-Builder/IW-Builder.github.io/tree/main/tools) | Validator, portable data-bank tools, maintainer checks and chat-edition generator |
-| [chat/](https://github.com/IW-Builder/IW-Builder.github.io/tree/main/chat) | Generated text edition for upload-oriented interfaces |
-| [samples/](https://github.com/IW-Builder/IW-Builder.github.io/tree/main/samples) | Design conversations, resulting worlds. Human analysis; not required for authoring |
+| Authoring-Prompt.md | The instructions you give your AI |
+| World-Template.json | A starting world file |
+| [reference/](https://github.com/IW-Builder/IW-Builder.github.io/tree/main/reference) | Guides to features, storytelling and troubleshooting |
+| [examples/](https://github.com/IW-Builder/IW-Builder.github.io/tree/main/examples) | Small worlds and worked examples to explore |
+| [library/](https://github.com/IW-Builder/IW-Builder.github.io/tree/main/library) | Optional additions for storytelling and continuity |
+| [tools/](https://github.com/IW-Builder/IW-Builder.github.io/tree/main/tools) | World checks, reusable-content tools and kit-building scripts |
+| [chat/](https://github.com/IW-Builder/IW-Builder.github.io/tree/main/chat) | Combined text files to attach to your chat |
+| [samples/](https://github.com/IW-Builder/IW-Builder.github.io/tree/main/samples) | Finished worlds and the conversations that created them |
 
 Use [examples/README.md](examples/README.md) to find a feature. See [reference/Import-Integrity.md](reference/Import-Integrity.md) for identifiers, path checks and live-world limitations.
 
@@ -95,4 +95,4 @@ From the package root:
 python tools/validate_iw_export.py WORLD.json --json
 ```
 
-Install jsonschema for full schema checks (`python -m pip install jsonschema`). Without it, the validator reports reduced coverage and still performs guarded reference/static checks. To review an edit, add `--diff ORIGINAL.json`. The tool never executes IW or PawScript; consult [tools/README.md](tools/README.md) for diagnostics and limitations. Maintainer package checks are separate from the normal user workflow.
+Install jsonschema for full schema checks (`python -m pip install jsonschema`). Without it, the validator reports reduced coverage and still performs guarded reference/static checks. To review an edit, add `--diff ORIGINAL.json`. The tool never executes IW or PawScript; consult [the tool usage guide](tools/Usage.md) for diagnostics and limitations. Maintainer package checks are separate from the normal user workflow.
