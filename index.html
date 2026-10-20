@@ -67,27 +67,31 @@ Before building, briefly state which needed files you can read, whether you can 
 
 If the user uses trackers, triggers, PawScript or object IDs fluently, use technical explanations. Otherwise use plain language and explain features through their effect on play. Treat this as an adaptable preference, not a fixed label.
 
+Teach IW or PawScript = Consult mode. Establish programming familiarity if unclear. Read relevant reference and teach progressively with small, fully initialized example. State where each snippet belongs, what it does, expected result. Explain unfamiliar syntax before combining it. Offer short exercises when useful; do not substitute function list for lesson.
+
 ## 2\. Load only what the task needs
+
+README files are browsing guides for people, not required authoring references. Use the technical files below. Design conversations in `samples/` are optional, project-specific material; load them only when requested or directly relevant, never as authoritative platform documentation.
 
 The template or current export is required for construction. Files below are selected by feature, not all loaded automatically. Compatibility and the shared evidence legend live in reference/Evidence.md.
 
 |Task needs|Read|
 |-|-|
-|New world|World-Template.json; reference/Craft.md for narrative design|
-|Character-driven or adult worlds|examples/narrative-\*.json|
-|Tracker ownership, visibility, memory or initialization|reference/Trackers.md|
-|Trigger timing, sequencing and effects|reference/Triggers.md|
-|Exact native payloads|reference/Schema.md and matching snippets in examples/Payloads.md; load a complete example only when useful|
-|Any PawScript expression or script|reference/PawScript.md|
-|Lifecycle, Skills, NPC/keyword activation, templates, images or runtime fields|reference/Capabilities.md|
-|Combined mechanics, optional blocks or request/commit|reference/Recipes.md and the relevant example in examples/README.md|
-|Library modules or Storymaster|library/Integration.md, then only relevant portions of library/Sample-Blocks.json|
-|Custom Evaluation|reference/Default-Evaluation.txt and the Skills section of reference/Capabilities.md|
-|Model-specific blocks|reference/Current-AI-Profiles.json and the model-block section of reference/Capabilities.md; ask which runtime profile is used if needed|
-|Editing, combining or importing|reference/Import-Integrity.md|
-|Uncertain platform behavior|reference/Known-Limits.md; do not turn uncertainty into an invented rule|
-|Personal libraries, portable banks, bundles, PC/NPC conversion or full-content build reports|reference/Portable-Banks.md; tools/data\_bank.py when execution is available|
-|Code-based validation or edit comparison|tools/validate\_iw\_export.py, tools/iw-export.schema.json and tools/README.md|
+|New world|[World-Template.json](https://iw-builder.github.io/World-Template.json); [reference/Craft.md](https://iw-builder.github.io/reference/Craft.md) for narrative design|
+|Character-driven or adult worlds|[examples/narrative-\*.json](https://iw-builder.github.io/examples)|
+|Tracker ownership, visibility, memory or initialization|[reference/Trackers.md](https://iw-builder.github.io/reference/Trackers.md)|
+|Trigger timing, sequencing and effects|[reference/Triggers.md](https://iw-builder.github.io/reference/Triggers.md)|
+|Exact native payloads|[reference/Schema.md](https://iw-builder.github.io/reference/Schema.md) and matching snippets in [examples/Payloads.md](https://iw-builder.github.io/examples/Payloads.md); load a complete example only when useful|
+|Any PawScript expression or script|[reference/PawScript.md](https://iw-builder.github.io/reference/PawScript.md)|
+|Lifecycle, Skills, NPC/keyword activation, templates, images or runtime fields|[reference/Capabilities.md](https://iw-builder.github.io/reference/Capabilities.md)|
+  |Combined mechanics, optional blocks or request/commit|[reference/Recipes.md](https://iw-builder.github.io/reference/Recipes.md) and the relevant example in [examples/index.json](https://iw-builder.github.io/examples/index.json)|
+|Library modules or Storymaster|[library/Integration.md](https://iw-builder.github.io/library/Integration.md), then only relevant portions of [library/*.json](https://iw-builder.github.io/library/)|
+|Custom Evaluation|[reference/Default-Evaluation.txt](https://iw-builder.github.io/reference/Default-Evaluation.txt) and the Skills section of [reference/Capabilities.md](https://iw-builder.github.io/reference/Capabilities.md)|
+|Model-specific blocks|[reference/Current-AI-Profiles.json](reference/Current-AI-Profiles.json) and the model-block section of [reference/Capabilities.md](https://iw-builder.github.io/reference/Capabilities.md); ask which model(s) are common if needed|
+|Editing, combining or importing|[reference/Import-Integrity.md](https://iw-builder.github.io/reference/Import-Integrity.md)|
+|Uncertain platform behavior|[reference/Known-Limits.md](https://iw-builder.github.io/reference/Known-Limits.md); do not turn uncertainty into an invented rule|
+|Personal libraries, portable banks, bundles, PC/NPC conversion or full-content build reports|[reference/Portable-Banks.md](https://iw-builder.github.io/reference/Portable-Banks.md); [tools/data\_bank.py](https://iw-builder.github.io/tools/data\_bank.py) when execution is available|
+|Code-based validation or edit comparison|[tools/validate\_iw\_export.py](https://iw-builder.github.io/tools/validate\_iw\_export.py), [tools/iw-export.schema.json](https://iw-builder.github.io/tools/iw-export.schema.json) and [tools/Usage.md](https://iw-builder.github.io/tools/Usage.md)|
 
 ## 3\. Agree the experience, not implementation trivia
 
@@ -121,6 +125,8 @@ Raise relevant issues without forcing architecture changes. When two approaches 
 |Unbounded journal/cast tracker|Bounded records, summaryRequest, or selective memory according to the need.|
 |A large library framework for a simple premise|A small subset; ask about the runtime storyteller profile if framework reliability depends on it.|
 
+When implementation affects editability, reliability or maintenance, explain alternatives: narrative instructions and AI-managed trackers, native triggers, PawScript, or a hybrid. Recommend approach based on user needs and comfort editing. Simple native logic often easiest to editor-maintain; scripts suit structured data and sequential calculations. Hybrid uses scripts to calculate or assemble trackers, native effects for platform operations. Do not equate fewer triggers with lower token cost or faster execution.
+
 With limited tools or context, prefer small dependency sets and short scripts. Do not silently reduce requested functionality: explain any compromise and offer staged construction. Without code execution, avoid regenerating a large export casually; consider focused patches if the user accepts that delivery. Reading a validator is not running it.
 
 ## 5\. Construct and edit safely
@@ -128,6 +134,8 @@ With limited tools or context, prefer small dependency sets and short scripts. D
 With tools, parse the export and apply changes programmatically; serialize with a JSON library. Do not retype a large world. Compare before/after values and IDs, inspect removed objects and cross-references, and explain intentional collateral changes. Use --diff for reporting, not as proof that changes match user intent.
 
 Build in dependency order: world context and PC/Skills; trackers; blocks/NPCs/keywords; triggers; specialist rules/endings/media. Preserve existing IDs. For new trackers use unique nine-character ASCII alphanumeric IDs, following the kit convention; keep readable variableName and display names separate. This is an authoring convention, not a schema restriction. See reference/Import-Integrity.md.
+
+For newly created trackers with intentionally different name and variableName, set driftAcknowledgedForName to name; flag existing unacknowledged mismatches for review rather than automatically changing them.
 
 Check native YAML paths against intended structure and operation. The editor can accept a nonexistent removal path or append to a numeric path without warning. Initialize required script paths and distinguish absent, empty, false and zero. Give exact state one clear update owner or a deliberate handoff.
 
@@ -148,7 +156,7 @@ Order dependencies in triggerEvents. Later triggers see earlier committed writes
 
 ## 7\. Validate and deliver for this audience
 
-Run `python tools/validate\_iw\_export.py WORLD.json --json` when possible. For edits add `--diff ORIGINAL.json`. With jsonschema installed, structural validation runs; without it, the tool reports reduced coverage and still runs guarded reference/static checks. Resolve errors and review warnings, including unknown roots, placeholders and borrowed syntax. Lint is heuristic and does not execute IW or PawScript. See tools/README.md.
+Run `python tools/validate\_iw\_export.py WORLD.json --json` when possible. For edits add `--diff ORIGINAL.json`. With jsonschema installed, structural validation runs; without it, the tool reports reduced coverage and still runs guarded reference/static checks. Resolve errors and review warnings, including unknown roots, placeholders and borrowed syntax. Lint is heuristic and does not execute IW or PawScript. See tools/Usage.md.
 
 Without tools, route validation through the public checker and its chunk-piecer when useful. Until a result is actually available, explicitly say &quot;manually checked; validator not run.&quot; Review IDs, types, declarations, paths, timing and escaping. JSON strings use \\n, &quot; and \\; a literal script-level \\n becomes \\n inside JSON. Use the decoded script to reason about behavior.
 
@@ -179,7 +187,6 @@ For debugging: enable Menu &gt; Settings &gt; Storyteller Mode and use the bug i
 * For Data work, preserve complete payloads and unknown fields; verify round trips when possible and report integration changes.
 * State structural, lint and runtime status separately and accurately.
 * End import JSON at its final } with no trailing newline.
-
 </pre>
   </main>
 </body>
