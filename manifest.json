@@ -1,6 +1,6 @@
 {
   "algorithm": "sha256",
-  "generatedAt": "2026-10-20T22:58:09+00:00",
+  "generatedAt": "2026-10-23T17:12:33+00:00",
   "files": [
     {
       "path": "Authoring-Prompt.md",
@@ -19,13 +19,13 @@
     },
     {
       "path": "World-Template.json",
-      "bytes": 2416,
-      "sha256": "925416baace46ec6534f40d58777e73356705c5624b3d681041dc09e51e20e46"
+      "bytes": 2417,
+      "sha256": "040a6fb723e9122e96540e3ca24ecf57dca11499f729ce1c37d79fb1018b2181"
     },
     {
       "path": "chat/IW-Authoring-Guide.txt",
-      "bytes": 137909,
-      "sha256": "df80d5224110cac16b45dfb1d229c6b6fbeecdd0ae668c6ce7c99ac054c20cbd"
+      "bytes": 137910,
+      "sha256": "c5d4753ec03afbd2cb8df999a101b7e5eeb8cd83c6ab74cb6e52baaf65b0d613"
     },
     {
       "path": "chat/IW-Examples.txt",
@@ -34,8 +34,8 @@
     },
     {
       "path": "chat/IW-Sample-Library.txt",
-      "bytes": 105739,
-      "sha256": "961886717d1216b99fffb55ab2b4c95fd09c7fde26113a60c2c6530f8e246071"
+      "bytes": 105672,
+      "sha256": "4721092eb87d17a7ffaee1ddf22e13d1af751993b56c79ae17062f5836de9ec5"
     },
     {
       "path": "chat/IW-Tools.txt",
@@ -48,14 +48,9 @@
       "sha256": "ee97f08637987a15dcaa2ec559dabd27f5c7c7d71d1b534521a9c0b8e58beb3a"
     },
     {
-      "path": "chat/index.html",
-      "bytes": 501,
-      "sha256": "b655b8c76b9e39bef298a99ed2dcf4b5991626ff76e7f18c3f77350ca428cf57"
-    },
-    {
       "path": "chat/sources.json",
       "bytes": 1697,
-      "sha256": "836fb5276a8c62aaf1ee3ac889a0c988eeb5707698f9660384a1d89dacdd8d3e"
+      "sha256": "d31469905ddedb8d2646075924ea01fbbde4fb60f3a41c516e6f5cebf26e22f4"
     },
     {
       "path": "checker/index.html",
@@ -329,8 +324,8 @@
     },
     {
       "path": "library/Sample-Blocks.json",
-      "bytes": 57744,
-      "sha256": "4c806f9b87774ff61263679c97aff8b22efe6269c105bace72cd6a39fc2d375b"
+      "bytes": 57677,
+      "sha256": "69b2ddbaf9108467af3fa003524d8d08b9dc41725424cf9af78ad3d945d432c5"
     },
     {
       "path": "library/Storymaster-Suite.json",
