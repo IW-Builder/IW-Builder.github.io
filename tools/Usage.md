@@ -42,22 +42,28 @@ A diff proves what changed, not whether those changes are authorized or correct.
 
 ## Maintainer commands
 
-These are not steps a world author must run:
+These are repository maintenance tasks, not requirements for authoring worlds:
 
 ```sh
 python tools/test_validator.py
 python tools/test_data_bank.py
+python tools/test_distribution.py
 python tools/check_package.py
-python tools/build_chat_edition.py
+python tools/build_distribution.py
 ```
 
-The validator regression tests exercise static diagnostics, reduced-coverage operation and diff reporting. They are not an IW or model qualification suite. The package checker validates distributed world files and links and writes Validation-Report.json. build_chat_edition.py assembles the source files without independent edits; rerun it after changing source documents or examples.
+`build_distribution.py` uses its own location in `/tools` to find the repository, so it needs no arguments and works from any working directory. It uses only Python's standard library. Run validation before building when publishing changed worlds or tools.
 
-The chat-edition generator also emits IW-Tools.txt, including tool source, schema, documentation and packaged reports. It does not execute validation.
+The builder updates visible EOF markers in AI-facing Markdown documents, generates `index.html` from `Authoring-Prompt.md`, synchronizes the checker's embedded validator/schema, writes the combined chat TXT files and `chat/sources.json`, then hashes the finished files into root `manifest.json`. It does not produce a separate `prompt.txt`, run validation or rebuild ZIP archives. Repackage `full-package.zip` after the build when distributing a new archive.
 
+Required sources are checked before output begins; a missing source or checker embedding stops the build with an error. Repeated builds with unchanged inputs preserve output bytes and the manifest timestamp. A write failure can leave partial outputs; fix it and rerun before publishing.
 
-## Homepage generation
+`IW-Tools.txt` has an explicit authoring-tool list: this usage guide, validator, static checks, JSON schema and data-bank utility. Builders, regression tests and package reports remain in the repository but are omitted from that model-facing bundle. Human READMEs are also omitted from combined technical packages. No model needs the distribution builder to author a world.
 
-Run `python tools/build_prompt_page.py` to regenerate the root `index.html` from `Authoring-Prompt.md`. The script resolves the package root from its own location, so no path arguments are needed. Review the generated page before publishing.
+The root manifest records repository-relative paths, byte lengths and SHA-256 hashes. It covers the authoring sources and supported files under reference, library, examples, tools, chat and checker, plus the homepage and root guide/template/license. It excludes itself, ZIP archives, sample histories, hidden files and caches. It is separate from the files it hashes to avoid circular dependencies. Hash original bytes, never a browser's rendered/extracted text. A mismatch may mean the manifest is stale; investigate apparent missing content without treating every mismatch as damage. A match establishes the recorded bytes, not freshness or runtime correctness.
 
-Human-facing README files are not inputs to the combined technical packages. The Examples package uses `examples/Payloads.md` and `examples/index.json`; recipe guidance remains in `reference/Recipes.md` in the Authoring Guide. The Tools package uses this usage guide. The sample-library package includes the separate Storymaster suite as well as Sample Blocks.
+EOF markers are added only to AI-facing Markdown and the generated chat documents. They are not added to JSON, scripts, the native default Evaluation text or other directly reusable content. They are documentation boundaries, not world instructions to copy into a story.
+
+---
+
+END OF DOCUMENT: tools/Usage.md

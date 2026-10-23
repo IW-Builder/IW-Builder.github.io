@@ -8,10 +8,9 @@ The files here provide the same kinds of checks locally, along with tools for sa
 | --- | --- |
 | `validate_iw_export.py` | Check a world for formatting problems, broken references and likely mistakes; compare an edited world with the original. |
 | `data_bank.py` | Save characters or other world content in a portable text bank, or create a full-content report. |
-| `build_chat_edition.py` | Rebuild the combined text packages after changing your local kit. |
-| `build_prompt_page.py` | Rebuild the homepage from the authoring prompt. |
+| `build_distribution.py` | Rebuild the homepage, combined text packages, checker tools and file-integrity manifest in one step. |
 | `check_package.py` | Check the kit's example files and links. Primarily for maintaining the kit itself. |
-| `test_validator.py` and `test_data_bank.py` | Run checks on the tools themselves. |
+| `test_validator.py`, `test_data_bank.py` and `test_distribution.py` | Run checks on the tools themselves. |
 
 For commands, setup and detailed explanations of the results, see [Usage.md](Usage.md). For character banks and reusable bundles, see the [data-bank guide](../reference/Portable-Banks.md).
 

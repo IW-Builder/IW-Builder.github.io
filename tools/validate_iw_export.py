@@ -143,8 +143,6 @@ def validate(doc, schema):
     for i,t in enumerate(doc.get('triggerEvents',[]) if isinstance(doc.get('triggerEvents',[]),list) else []):
         if not isinstance(t,dict): continue
         p='/triggerEvents/'+str(i)
-        if t.get('triggerMidGame') and not t.get('triggerOnStartOfGame'):
-            add('warning','timing-editor-consistency',p,'Mid-game enabled without start-of-game; editor-inconsistent, runtime effect unverified.')
         if not t.get('triggerOnStartOfGame') and not t.get('triggerConditions'):
             add('warning','saved-inactive-trigger',p,'Valid saved trigger with no ordinary automatic firing conditions; explicit random dispatch may still call it.')
         numeric_writes={}
@@ -166,6 +164,8 @@ def validate(doc, schema):
             q=p+'/triggerEffects/'+str(j)
             if not isinstance(e,dict):continue
             node_id(e,q); et=e.get('type');d=e.get('data')
+            if t.get('triggerOnStartOfGame') and et == 'effectGiveInfo':
+                add('warning','start-incompatible-effect',q,'Give Information to AI is incompatible with Start of Game; the effect was ignored in a runtime test. Use background or an instruction block for opening context, or a separate ordinary-play trigger. Later-turn behavior with Start and Mid Game enabled remains unverified.')
             if et not in defs['effect']['x-knownDiscriminators']:
                 add('warning','unknown-effect-type',q+'/type','Missing or unobserved effect type: '+repr(et));continue
             if 'data' not in e: add('warning','missing-payload',q+'/data','No effect payload.');continue

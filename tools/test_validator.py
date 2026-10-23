@@ -12,6 +12,20 @@ def code_world(code):
  w=copy.deepcopy(BASE);w['triggerEvents']=[{'id':'test','triggerConditions':[],'triggerEffects':[{'id':'effect','type':'effectRunScript','data':code,'name':'Test'}]}];return w
 
 class ValidatorTests(unittest.TestCase):
+ def test_start_give_info(self):
+  for start in (False, True):
+   for mid in (False, True):
+    for effect in ('effectGiveInfo', 'effectTellAIWhatToDo', 'effectShowMessage'):
+     with self.subTest(start=start, mid=mid, effect=effect):
+      w=copy.deepcopy(BASE)
+      w['triggerEvents']=[{'id':'check-start','name':'Timing check','triggerOnStartOfGame':start,'triggerMidGame':mid,'canTriggerMoreThanOnce':True,'triggerConditions':[],'triggerEffects':[{'id':'check-effect','type':effect,'data':'Context.'}]}]
+      findings=v.validate(w,SCHEMA)
+      hits=[f for f in findings if f['code']=='start-incompatible-effect']
+      self.assertEqual(bool(hits), start and effect=='effectGiveInfo')
+      if hits:
+       self.assertEqual(hits[0]['severity'],'warning')
+       self.assertEqual(hits[0]['path'],'/triggerEvents/0/triggerEffects/0')
+      self.assertNotIn('timing-editor-consistency',{f['code'] for f in findings})
  def test_root_typo(self):self.assertIn('unknown-script-root',codes(code_world('$missing += 1')))
  def test_locals_system_and_strings(self):self.assertNotIn('unknown-script-root',codes(code_world('set $local = $game.turn_number\nfor each $entry in $player.skills\n  log($entry)\nlog("$not_a_root; == &&")\n# $ignored')))
  def test_template_any_field(self):
