@@ -12,3 +12,7 @@ Use four evidence labels when a distinction matters. Ordinary reference sentence
 | [UNKNOWN] | A concrete behavior remains unresolved; avoid depending on it without a focused check. |
 
 Structural validation is a separate status, not a fifth evidence label. It checks export structure and explicit references. Static lint reports likely mistakes; neither executes PawScript or certifies a story. The example index records structural and runtime scope separately. Known-Limits.md lists open boundaries without development history. Do not present generated prose as evidence of tracker state.
+
+---
+
+END OF DOCUMENT: reference/Evidence.md
