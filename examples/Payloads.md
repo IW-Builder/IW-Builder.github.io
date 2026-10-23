@@ -469,3 +469,6 @@ Guide subsequent narration. Full world: [effect-effectTellAIWhatToDo.json](effec
 }
 ```
 
+---
+
+END OF DOCUMENT: examples/Payloads.md
