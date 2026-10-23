@@ -269,3 +269,7 @@ This guide covers common authoring and teaching needs, not every function. Use t
 - [YAML guide](https://infiniteworlds.app/yaml-guide)
 
 The language tables include officially documented operations beyond the kit's runtime-tested examples. A new composition still needs appropriate testing; see [Known-Limits.md](Known-Limits.md).
+
+---
+
+END OF DOCUMENT: reference/PawScript.md
