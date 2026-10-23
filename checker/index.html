@@ -275,7 +275,7 @@ def validate(doc, schema):
         for k in ('trackedItemID','inequality'):
             if k in n and k in d and n[k]!=d[k]:
                 add('error','wrapper-payload-mismatch',p+'/'+k,'Wrapper and payload disagree; runtime precedence unknown.')
-    def conditions(nodes,p):
+    def conditions(nodes,p,start_enabled=False):
         for i,n in enumerate(nodes if isinstance(nodes,list) else []):
             q=p+'/'+str(i)
             if not isinstance(n,dict): continue
@@ -284,9 +284,17 @@ def validate(doc, schema):
             if category=='logic':
                 if n.get('operator') not in ['and','or','none_of']: add('warning','unknown-logic',q+'/operator','Unobserved operator.')
                 if 'data' not in n: add('warning','missing-payload',q+'/data','Logic group has no child list.')
-                conditions(n.get('data',[]),q+'/data');continue
+                conditions(n.get('data',[]), q+'/data', start_enabled);continue
             if category!='condition': add('warning','unclassified-condition',q+'/category','Missing or unobserved category.')
             t=n.get('type'); d=n.get('data')
+            if start_enabled and t in ('triggerOnTurn', 'triggerOnEvent'):
+                label = (
+                    'Minimum-turn' if t == 'triggerOnTurn'
+                    else 'Scenario'
+                )
+                add('warning', 'start-incompatible-condition', q, label + 
+                    ' condition combined with Start of Game. Condition ignored; does not gate execution. Use separate startup trigger and leave Start off here.'
+                )
             if t not in defs['conditionLeaf']['x-knownDiscriminators']:
                 add('warning','unknown-condition-type',q+'/type','Missing or unobserved condition type: '+repr(t));continue
             if 'data' not in n: add('warning','missing-payload',q+'/data','No condition payload observed.');continue
@@ -304,8 +312,6 @@ def validate(doc, schema):
     for i,t in enumerate(doc.get('triggerEvents',[]) if isinstance(doc.get('triggerEvents',[]),list) else []):
         if not isinstance(t,dict): continue
         p='/triggerEvents/'+str(i)
-        if t.get('triggerMidGame') and not t.get('triggerOnStartOfGame'):
-            add('warning','timing-editor-consistency',p,'Mid-game enabled without start-of-game; editor-inconsistent, runtime effect unverified.')
         if not t.get('triggerOnStartOfGame') and not t.get('triggerConditions'):
             add('warning','saved-inactive-trigger',p,'Valid saved trigger with no ordinary automatic firing conditions; explicit random dispatch may still call it.')
         numeric_writes={}
@@ -322,11 +328,13 @@ def validate(doc, schema):
                 if tables['trackedItems'].get(ident,{}).get('dataType')=='number':numeric_writes[ident]=numeric_writes.get(ident,0)+1
         for ident,count in numeric_writes.items():
             if count>1:add('warning','numeric-write-overwrite',p,'Multiple numeric writes to '+ident+' can overwrite rather than accumulate within one trigger.')
-        conditions(t.get('triggerConditions',[]),p+'/triggerConditions')
+        conditions(t.get('triggerConditions',[]),p+'/triggerConditions',start_enabled=bool(t.get('triggerOnStartOfGame')))
         for j,e in enumerate(t.get('triggerEffects',[]) if isinstance(t.get('triggerEffects',[]),list) else []):
             q=p+'/triggerEffects/'+str(j)
             if not isinstance(e,dict):continue
             node_id(e,q); et=e.get('type');d=e.get('data')
+            if t.get('triggerOnStartOfGame') and et == 'effectGiveInfo':
+                add('warning','start-incompatible-effect',q,'Give Information to AI is incompatible with Start of Game; the effect was ignored in a runtime test. Use background or an instruction block for opening context, or a separate ordinary-play trigger. Later-turn behavior with Start and Mid Game enabled remains unverified.')
             if et not in defs['effect']['x-knownDiscriminators']:
                 add('warning','unknown-effect-type',q+'/type','Missing or unobserved effect type: '+repr(et));continue
             if 'data' not in e: add('warning','missing-payload',q+'/data','No effect payload.');continue
@@ -456,6 +464,8 @@ def lint(doc):
             for i,v in enumerate(x):nodes(v,path+'/'+str(i))
     nodes(doc)
     for path,text in walk(doc):
+        markers=sorted(set(re.findall(r'<#\s*(?:END_)?(REPLACE\d+)\b[\s\S]*?#>',text)))
+        if markers:add('content-substitution',path,'Intentional content substitution marker(s): '+', '.join(markers)+'. Review the separate Authoring report and intended behavior; these are not import errors.')
         if PLACEHOLDERS.search(text):add('authoring-placeholder',path,'Possible unresolved library editing slot. Review; intentional runtime notation and ordinary comments need not be removed.')
         if path not in script_paths:
             for expr in templates(text):snippets.append((path,expr,False))
@@ -1166,7 +1176,7 @@ def edit_diff(old,new):
   },
   "additionalProperties": true,
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "InfiniteWorlds observed export schema — schemaVersion 2.4",
+  "title": "InfiniteWorlds observed export schema \u2014 schemaVersion 2.4",
   "description": "General Infinite Worlds export structure and explicit-reference profile. Compatibility baseline: Save/load system, Image style system and Pawscript update, announced 2026-10-08 (compatibility baseline). Not an official exhaustive importer contract. Unknown fields/discriminators remain permitted and reported. Presence observations alone do not establish importer-required fields.",
   "x-profileVersion": "1.1.0",
   "x-observedSchemaVersions": [
@@ -1800,6 +1810,9 @@ def edit_diff(old,new):
     "effect": {
       "anyOf": [
         {
+          "$ref": "#/$defs/effect_effectChangeBackground"
+        },
+        {
           "$ref": "#/$defs/effect_effectShowMessage"
         },
         {
@@ -1889,7 +1902,8 @@ def edit_diff(old,new):
                   "effectRequestInput",
                   "effectFireRandomTrigger",
                   "effectRunScript",
-                  "effectEndsGame"
+                  "effectEndsGame",
+                  "effectChangeBackground"
                 ]
               }
             }
@@ -1932,7 +1946,8 @@ def edit_diff(old,new):
         "effectRequestInput",
         "effectFireRandomTrigger",
         "effectRunScript",
-        "effectEndsGame"
+        "effectEndsGame",
+        "effectChangeBackground"
       ],
       "x-discriminator": "type"
     },
@@ -2337,6 +2352,24 @@ def edit_diff(old,new):
         }
       },
       "additionalProperties": true
+    },
+    "effect_effectChangeBackground": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "effectChangeBackground"
+        },
+        "data": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true,
+      "required": [
+        "type"
+      ]
     }
   },
   "required": [
