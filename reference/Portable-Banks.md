@@ -68,3 +68,7 @@ Output paths must be new; the tool refuses silent overwrite. Check the updated b
 The helper rejects duplicate JSON keys, checks bank structure and included-entry targets, and verifies hashes for text banks. It preserves arbitrary-precision integers and decimal numbers without float rounding. Its hash check does not validate IW payload schemas, semantic dependencies, tags or prose summaries; use the world validator after integration. Unknown bank metadata is preserved.
 
 Without code execution, use the same `.txt` format with `SHA256: UNVERIFIED`, or return the authoritative `.json` bank source with readable discussion separately. Never fabricate a hash or claim round-trip verification. The helper accepts either form, explicitly distinguishes an absent hash from verified integrity, and computes a hash when packing. Large edits should preserve untouched payloads and be checked with tools before claiming losslessness. An upload does not guarantee persistent storage: keep the latest returned bank for future sessions.
+
+---
+
+END OF DOCUMENT: reference/Portable-Banks.md
