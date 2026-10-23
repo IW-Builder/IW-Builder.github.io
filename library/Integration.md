@@ -28,8 +28,8 @@ For new worlds, explain the trade-off between **Lightweight Direction** (in `Sam
 
 | Approach | Source File | Approximate Overhead | How It Works |
 | --- | --- | ---: | --- |
-| **Lightweight Direction** | `library/Sample-Blocks.json` | ~290 tokens (`Direction & Pacing [Lightweight]`) + optional ~250 tokens (`descriptionRequest` + `summaryRequest`) | Guides scene momentum, time-jump options in `optionN_text`, strict player agency, character knowledge channels, and concise 1–3 sentence `secretInfo` notes. Leaves `evaluationRequest` blank so IW uses `Default-Evaluation.txt` automatically. |
-| **Full Storymaster Suite** | `library/Storymaster-Suite.json` | ~5,200+ tokens across `instructions`, `SecretInfo + Storymaster`, 17-step `evaluationRequest`, `descriptionRequest`, `summaryRequest`, `[MODE]` craft blocks, plus generated `secretInfo` planning | Implements a user-created dual-mode persona (`[MODE: SIMULATION ENGINE]` / `[MODE: NARRATIVE AUTHOR]`) with per-turn `[npcAction]`, `[worldAction]`, `[smPlan]`, and optional `Reader Profile` / `Story Metadata` calibration. |
+| **Lightweight Direction** | [Sample-Blocks.json](https://iw-builder.github.io/library/Sample-Blocks.json) | ~290 tokens (`Direction & Pacing [Lightweight]`) + optional ~250 tokens (`descriptionRequest` + `summaryRequest`) | Guides scene momentum, time-jump options in `optionN_text`, strict player agency, character knowledge channels, and concise 1–3 sentence `secretInfo` notes. Leaves `evaluationRequest` blank so IW uses `Default-Evaluation.txt` automatically. |
+| **Full Storymaster Suite** | [Storymaster-Suite.json](https://iw-builder.github.io/library/Storymaster-Suite.json) | ~5,200+ tokens across `instructions`, `SecretInfo + Storymaster`, 17-step `evaluationRequest`, `descriptionRequest`, `summaryRequest`, `[MODE]` craft blocks, plus generated `secretInfo` planning | Implements a user-created dual-mode persona (`[MODE: SIMULATION ENGINE]` / `[MODE: NARRATIVE AUTHOR]`) with per-turn `[npcAction]`, `[worldAction]`, `[smPlan]`, and optional `Reader Profile` / `Story Metadata` calibration. |
 
 ### Rules for Storymaster Setups
 - Populate Genres, Core Appeals of Genres, Appeals of this Specific Narrative, Element of Novelty, Tone, Themes, Conflicts and Pacing. Pacing includes ongoing versus bounded length and appropriate scene estimates. These are creative inputs; derive them from the user description or ask targeted questions. The pacing line can include specialized scenes only when relevant.
@@ -101,3 +101,7 @@ When using the Storymaster VARIABLE BLOCK, supply ALL of:
 
 Obtain these from the description or ask targeted creative questions where needed. Keep them coherent with authorStyle, story_metadata and any reader-profile instructions. Do not remove the variable section merely because it contains placeholders.
 For template substitution timing, see ../reference/Capabilities.md. For generic optional-block composition, see ../reference/Recipes.md.
+
+---
+
+END OF DOCUMENT: library/Integration.md
