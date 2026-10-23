@@ -26,3 +26,9 @@ The kit combines native exports, editor help, runtime checks and PawScript docum
 | IDs | The supplied single-choice import is verified; no universal ID-format or remapping rule is claimed. |
 
 Use a focused check only when a world depends on an uncertain behavior. A narrative response is not proof of a tracker write or block activation: inspect current values and debug. For keyword checks, an OOC marker can avoid repeating the word in narration; verify that it actually does so, because repeated mentions may refresh activation.
+
+- `effectGiveInfo` with Start of Game: ignored in a runtime test. Whether it also remains suppressed on later turns with Start and Mid Game both enabled is an open test.
+
+---
+
+END OF DOCUMENT: reference/Known-Limits.md
