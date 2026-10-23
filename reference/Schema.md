@@ -183,3 +183,7 @@ Correct target binding is required. Preserve IDs and verify that targetTrackedIt
 ### Background replacement
 
 `effectChangeBackground` uses string `data` payload including template e.g. `<<$opening\_assembly>>`. Represented in [layered opening](../examples/recipe-layered-opening.json) for startup assembly. Changes background through native effect; not script-writable. Mid-game history behavior not established.
+
+---
+
+END OF DOCUMENT: reference/Schema.md
