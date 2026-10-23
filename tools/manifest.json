@@ -1,0 +1,486 @@
+{
+  "algorithm": "sha256",
+  "generatedAt": "2026-10-20T22:58:09+00:00",
+  "files": [
+    {
+      "path": "Authoring-Prompt.md",
+      "bytes": 19456,
+      "sha256": "edcd8ba7361a4e68f18a69325de79a7102e893192ff8c3304c775372ae7ae5d3"
+    },
+    {
+      "path": "LICENSE",
+      "bytes": 1067,
+      "sha256": "55d515e22a7c83996d173e32b4aeb065c471aacc4cf352d4068996fc72ba4316"
+    },
+    {
+      "path": "README.md",
+      "bytes": 8365,
+      "sha256": "58d58cd1697e3cd08ea850d5b60346ae1d388c97b6a7fb947307e5cbfbfbde54"
+    },
+    {
+      "path": "World-Template.json",
+      "bytes": 2416,
+      "sha256": "925416baace46ec6534f40d58777e73356705c5624b3d681041dc09e51e20e46"
+    },
+    {
+      "path": "chat/IW-Authoring-Guide.txt",
+      "bytes": 137909,
+      "sha256": "df80d5224110cac16b45dfb1d229c6b6fbeecdd0ae668c6ce7c99ac054c20cbd"
+    },
+    {
+      "path": "chat/IW-Examples.txt",
+      "bytes": 124373,
+      "sha256": "87bb3972aec81d027c483d9c79814c66623489e7d43dd723895126fc231c0cd9"
+    },
+    {
+      "path": "chat/IW-Sample-Library.txt",
+      "bytes": 105739,
+      "sha256": "961886717d1216b99fffb55ab2b4c95fd09c7fde26113a60c2c6530f8e246071"
+    },
+    {
+      "path": "chat/IW-Tools.txt",
+      "bytes": 90907,
+      "sha256": "303e07819bc2f9deaefe65cc61e882c0742f8c6c935555ec07522160193df1ec"
+    },
+    {
+      "path": "chat/README.md",
+      "bytes": 1282,
+      "sha256": "ee97f08637987a15dcaa2ec559dabd27f5c7c7d71d1b534521a9c0b8e58beb3a"
+    },
+    {
+      "path": "chat/index.html",
+      "bytes": 501,
+      "sha256": "b655b8c76b9e39bef298a99ed2dcf4b5991626ff76e7f18c3f77350ca428cf57"
+    },
+    {
+      "path": "chat/sources.json",
+      "bytes": 1697,
+      "sha256": "836fb5276a8c62aaf1ee3ac889a0c988eeb5707698f9660384a1d89dacdd8d3e"
+    },
+    {
+      "path": "checker/index.html",
+      "bytes": 109098,
+      "sha256": "1a641d954c092cf2e772950b691051d12ba42397dffa930420e0c3ee868766b3"
+    },
+    {
+      "path": "examples/Payloads.md",
+      "bytes": 12513,
+      "sha256": "cb058792e5aa7c64de5ded53ff8705e959dc8677a08c21274968c7124ff9b5e6"
+    },
+    {
+      "path": "examples/README.md",
+      "bytes": 4880,
+      "sha256": "2a7268185c926121610dddd0f2551c0e58fa10bf55d7a008a0ded90e74f794bf"
+    },
+    {
+      "path": "examples/character-starting-values.json",
+      "bytes": 7929,
+      "sha256": "62627379b0a581769f58dc043701084762883e35751688d1a54811636592ff99"
+    },
+    {
+      "path": "examples/condition-triggerBlockers.json",
+      "bytes": 7162,
+      "sha256": "e7ddeafa92b4fc3b2f4bb707a8700c0716772dce9189e24a49a743cd67fe05b6"
+    },
+    {
+      "path": "examples/condition-triggerOnCharacter.json",
+      "bytes": 6520,
+      "sha256": "270a56b14fd7d20c1cea83e75b1cd533a8b7390c2bb43bf1288a2cca6ab0d5e0"
+    },
+    {
+      "path": "examples/condition-triggerOnEvent.json",
+      "bytes": 6576,
+      "sha256": "161a04085763868da341995ac1978ec5a72aa21c8a22b00f1d607e4a9b54b877"
+    },
+    {
+      "path": "examples/condition-triggerOnPawScript.json",
+      "bytes": 6496,
+      "sha256": "540a0bed85f1bc4c94a20aa01873f5e8e911c9dc048b7cab7ce76ab71421170c"
+    },
+    {
+      "path": "examples/condition-triggerOnRandomChance.json",
+      "bytes": 6500,
+      "sha256": "63a3cabb990a65c5c37b16c8f54625672d4d0798391652ed81ad8afe85695bb8"
+    },
+    {
+      "path": "examples/condition-triggerOnTrackedItem.json",
+      "bytes": 6661,
+      "sha256": "d9e7d7571a0f14abc5c2047707d295a51f9fdb3c91019695d5a71913249f7201"
+    },
+    {
+      "path": "examples/condition-triggerOnTurn.json",
+      "bytes": 6460,
+      "sha256": "8a53ecd58dfce31e349f496ca77bf3697bd6851298022c956ab8a5355a230cb9"
+    },
+    {
+      "path": "examples/condition-triggerPrereqs.json",
+      "bytes": 7155,
+      "sha256": "0fd9b07b2e3cc3b8fc9254e159633418c85fb89004efaffce5acd738406185be"
+    },
+    {
+      "path": "examples/effect-effectChangeAuthorStyle.json",
+      "bytes": 6504,
+      "sha256": "d3e10ae6135948b5396610cc8d41d7f0016eea89767a6848689c1554ff1fad1e"
+    },
+    {
+      "path": "examples/effect-effectChangeDefeatCondition.json",
+      "bytes": 6658,
+      "sha256": "5bba29432dd2f76155c936fd1d63ef6cb5ef03545c6cf480d7c357116fa6dbb4"
+    },
+    {
+      "path": "examples/effect-effectChangeDescriptionInstructions.json",
+      "bytes": 6606,
+      "sha256": "b35416aab8fb5ccc6e4b4efcb4e67a10f5873638bbb3b94de9939e93e0b36564"
+    },
+    {
+      "path": "examples/effect-effectChangeMainInstructions.json",
+      "bytes": 6595,
+      "sha256": "954fb397bdf74d85b9da1b3d9c35e963340552102812360ab06d5fadc8430238"
+    },
+    {
+      "path": "examples/effect-effectChangeObjective.json",
+      "bytes": 6485,
+      "sha256": "6ec98dbd6b97522daea07675b32351241b6d9ba041a1cee01a9c13eea9ccbc78"
+    },
+    {
+      "path": "examples/effect-effectChangePCDescription.json",
+      "bytes": 6518,
+      "sha256": "6d0ba2b384d78b726ee59b219c8feaffeee5b37e66f7e1b562f84934d2b163c5"
+    },
+    {
+      "path": "examples/effect-effectChangePCName.json",
+      "bytes": 6446,
+      "sha256": "27fb51ce485e59070e80e75d891fe94384dbf6eee607178f12e025951fbc9c46"
+    },
+    {
+      "path": "examples/effect-effectChangePCSkill.json",
+      "bytes": 6565,
+      "sha256": "aeb26f2e2ca945950b8bfef6782c4e4897c666bb034a2410695f696559611ed0"
+    },
+    {
+      "path": "examples/effect-effectChangeVictoryCondition.json",
+      "bytes": 6664,
+      "sha256": "b982ca63f1a5b5f64a6e45e76127afb64b4d0743cf0b4bb165ea23b7ad6673cb"
+    },
+    {
+      "path": "examples/effect-effectEndsGame.json",
+      "bytes": 6588,
+      "sha256": "b5a106df957fb1a7b407fbc50e590bb7f1830122a5255155e129bf9b16b7ac2f"
+    },
+    {
+      "path": "examples/effect-effectFireRandomTrigger.json",
+      "bytes": 7340,
+      "sha256": "f30ca04753a15c020e5f9def10ea32483eed6053472143c09afda364932ebc24"
+    },
+    {
+      "path": "examples/effect-effectGiveInfo.json",
+      "bytes": 6474,
+      "sha256": "382a8ef42de72c66f244b7dce1751d47d2cc7d09f6f61779ef8ff021bfe9dede"
+    },
+    {
+      "path": "examples/effect-effectModifyInstructionBlock.json",
+      "bytes": 6586,
+      "sha256": "30b0e2854a180ae95b47989ee70bbadf4eb059ed3237f53d0f33983d1e8d08d7"
+    },
+    {
+      "path": "examples/effect-effectModifyKeywordBlock.json",
+      "bytes": 6695,
+      "sha256": "3e5f3ba05381733e9be28d23ebeccfb75d03846b5695e198e384ff0fb54f9226"
+    },
+    {
+      "path": "examples/effect-effectModifyTrackedItemDetails.json",
+      "bytes": 6961,
+      "sha256": "d81ca864cf9424d9c029fcff02b13cbe84d216dd1e19e34cd89bcbe94a536642"
+    },
+    {
+      "path": "examples/effect-effectPresentChoice.json",
+      "bytes": 6516,
+      "sha256": "3f7bdef8add5a1b4f4a973ffe388d89c3d291e8c45505ebd131ec522758b7d36"
+    },
+    {
+      "path": "examples/effect-effectRequestInput.json",
+      "bytes": 6358,
+      "sha256": "d686ebb36bdd7a74fc12396c4d5da473432ee1589115bbeee76492c8da82877e"
+    },
+    {
+      "path": "examples/effect-effectRunScript.json",
+      "bytes": 6493,
+      "sha256": "31b6556aca4a1aa7fae5036d81833126535172990f38d48c85db202690493707"
+    },
+    {
+      "path": "examples/effect-effectSetTrackedItemValue.json",
+      "bytes": 6733,
+      "sha256": "5936fc54267f24df6df9f3d09b8f18105286fc4882c64f33db9080a337fbe110"
+    },
+    {
+      "path": "examples/effect-effectShowMessage.json",
+      "bytes": 6466,
+      "sha256": "4177b3865624b948454f7ab5fcc3329c48e52c069a69ad30cbcb063ba53fc37a"
+    },
+    {
+      "path": "examples/effect-effectTellAIWhatToDo.json",
+      "bytes": 6515,
+      "sha256": "14bfe5c4401de9989a90ee17b06803dc8f2196429764b3008eb6b873f49a7aa0"
+    },
+    {
+      "path": "examples/index.html",
+      "bytes": 493,
+      "sha256": "df5cc838cb1c84465ca03cc717fb25fee3ef6563059039462d984b1b2356856d"
+    },
+    {
+      "path": "examples/index.json",
+      "bytes": 15146,
+      "sha256": "195dbd7debef605867ef45aa4b2b04e8ee169b516cc4fb7ae1a3e06183e3dea7"
+    },
+    {
+      "path": "examples/logic-groups.json",
+      "bytes": 7009,
+      "sha256": "c970ba3b5101d0fb73b64ae3f683990914acd61de3b2303caf33ad15839feb0a"
+    },
+    {
+      "path": "examples/narrative-seven-nights.json",
+      "bytes": 26023,
+      "sha256": "528c1d487e092672c2702b461247e2311731d4e1f610f1fdf3f7b661fdc3fc31"
+    },
+    {
+      "path": "examples/narrative-velvet-wager.json",
+      "bytes": 24682,
+      "sha256": "95491320dda5588cdbdf252b7ccd7b0950f5153390c0c475ffa41262baeb7e1d"
+    },
+    {
+      "path": "examples/narrative-vendemmia.json",
+      "bytes": 28206,
+      "sha256": "708f14cb55ac8c208af5cb7fc1d3aeaecc0351e33a88fa5ce20b801c990a6c66"
+    },
+    {
+      "path": "examples/native-text-operations.json",
+      "bytes": 8885,
+      "sha256": "338feb365abc5a46db6e2351e780be563200d2ed774dc5b8ddb2f93dfb3024c3"
+    },
+    {
+      "path": "examples/npc-keyword-portrait-ending.json",
+      "bytes": 6378,
+      "sha256": "613c5566b3a9e02645e53ed33819b7da125d5326fce400675074b3cf4c36c5ef"
+    },
+    {
+      "path": "examples/optional-block.json",
+      "bytes": 7568,
+      "sha256": "e8fec2f8959cc4a152a506adf56e11f9f44fb258b48dd86da46772b64b5abcd1"
+    },
+    {
+      "path": "examples/probe-skills.json",
+      "bytes": 11485,
+      "sha256": "ce52dff7de951c1c6c8c8eef3ca28affe7432117c12fcc2e651c45324505f207"
+    },
+    {
+      "path": "examples/probe-template-timing.json",
+      "bytes": 7499,
+      "sha256": "a59ae0b0c6367abe2f80c117d3f2525ed0dcd5fc02be887a5c56a6234d28ee82"
+    },
+    {
+      "path": "examples/recipe-choice-followup.json",
+      "bytes": 7407,
+      "sha256": "7879cdfa387d808a550ff3432ec02560ff83e7b3b6ee0f91e7dcaa7dee2567b7"
+    },
+    {
+      "path": "examples/recipe-layered-opening.json",
+      "bytes": 13430,
+      "sha256": "fa28a1b3e0d2730f1d87d3adb1cbd8d43aac91463fb522dbc50d48f819b28a4a"
+    },
+    {
+      "path": "examples/recipe-on-demand-generation.json",
+      "bytes": 9598,
+      "sha256": "0bcaa593f043201df8336d3188c74e493dc89658087c6d76fb35c70466fce766"
+    },
+    {
+      "path": "examples/recipe-request-commit.json",
+      "bytes": 10601,
+      "sha256": "ad41f1c26a7a03da9eee446ea38d6b7b019ae9694ec5565c050a35f2c533818e"
+    },
+    {
+      "path": "examples/recipe-threshold-unlock.json",
+      "bytes": 8279,
+      "sha256": "5a80ba4b0ae898f0c7bae6f6c84bbc96fbf4e3fb69e70faf7a427af863f10e59"
+    },
+    {
+      "path": "examples/showcase-glass-ledger.json",
+      "bytes": 25539,
+      "sha256": "873e27d9637e534b6082d2357e31a5a8f5dcef1fbb849a7ad9fdd8e4616e9c36"
+    },
+    {
+      "path": "examples/yaml-path-operations.json",
+      "bytes": 7188,
+      "sha256": "2b691e7edfe2eb2fdf1706335c7bcaf72d14dbd1d37d9412ee82bd5bee2d184f"
+    },
+    {
+      "path": "index.html",
+      "bytes": 20942,
+      "sha256": "1ffe6d2bf6ef41cba28c57aba9faf3eedf961d63b979aed3549295ba57533809"
+    },
+    {
+      "path": "library/Integration.md",
+      "bytes": 12257,
+      "sha256": "1cb2bb9e04a31589b303c21946b185cce0968016b8277eaecd304b4f8cd1c149"
+    },
+    {
+      "path": "library/README.md",
+      "bytes": 1382,
+      "sha256": "cb7766a67fca0b54ddb273edd1d4deda9df6204f33f9c6a14be4be58b0cf6e6c"
+    },
+    {
+      "path": "library/Sample-Blocks.json",
+      "bytes": 57744,
+      "sha256": "4c806f9b87774ff61263679c97aff8b22efe6269c105bace72cd6a39fc2d375b"
+    },
+    {
+      "path": "library/Storymaster-Suite.json",
+      "bytes": 35033,
+      "sha256": "3eb3afa03958d2093f92a2fbb39670d2d0935f34e84fea88c9e5529fc1b87b53"
+    },
+    {
+      "path": "library/index.html",
+      "bytes": 488,
+      "sha256": "e8eaca9d88206b683a6e6c26f5af66ac95463b0ee2da48027b366e1004c123ee"
+    },
+    {
+      "path": "reference/Capabilities.md",
+      "bytes": 21663,
+      "sha256": "20027f2655efdbfe01a68869bfb0115fa207f3dd8063e04c2e9719a80998b670"
+    },
+    {
+      "path": "reference/Craft.md",
+      "bytes": 12780,
+      "sha256": "984f910fc6ce845fe4390fb5c0472605a767bc5d7c20f05b2ec5206662b0d10e"
+    },
+    {
+      "path": "reference/Current-AI-Profiles.json",
+      "bytes": 707,
+      "sha256": "2587af5b1e234829c9ad62e42cf9a61f50b71acfb83097c764854a749516f4b7"
+    },
+    {
+      "path": "reference/Default-Evaluation.txt",
+      "bytes": 2589,
+      "sha256": "d71fa7fcccbf6d4bce2a18d431a436225d5e4dd3a5a486ad413c52b30762340f"
+    },
+    {
+      "path": "reference/Evidence.md",
+      "bytes": 1609,
+      "sha256": "ef04d42358af62b74520311c5c614f345a4aaf32300c2e61276186a8658577a8"
+    },
+    {
+      "path": "reference/Import-Integrity.md",
+      "bytes": 3147,
+      "sha256": "36f6b568ff79cda5759abdaa8c88006328628c3ed7b07d9809851498e1af51ed"
+    },
+    {
+      "path": "reference/Known-Limits.md",
+      "bytes": 3238,
+      "sha256": "51e3422613524aebbcec6ba5aade37e02d840081083005a75bd7559271bf0123"
+    },
+    {
+      "path": "reference/PawScript.md",
+      "bytes": 16102,
+      "sha256": "43e98c9d4760a89a81212c8018e8be655c7e874ad558807de1c58e36294003eb"
+    },
+    {
+      "path": "reference/Portable-Banks.md",
+      "bytes": 8121,
+      "sha256": "8d7bee6674890b12d984e0306235c3c6740e531360785c5c09cd2bc04f11a521"
+    },
+    {
+      "path": "reference/README.md",
+      "bytes": 1666,
+      "sha256": "c08ee8fb5b4d6fd5f912d6c50918ff726f63c7ee04b80c0d9adc00a5e2342453"
+    },
+    {
+      "path": "reference/Recipes.md",
+      "bytes": 9628,
+      "sha256": "c64b9c4347cb976743f9477e96e2f530f95acc436200e2eddc1a4d13474c0aa8"
+    },
+    {
+      "path": "reference/Schema.md",
+      "bytes": 20228,
+      "sha256": "49e4ebe8d82589a3f2232410d5a8b936044073542071bd5d42305b4b619655d9"
+    },
+    {
+      "path": "reference/Trackers.md",
+      "bytes": 6494,
+      "sha256": "9b8a5ac45f6c532c33c89acce88257aefbf7db848a4f5881c0c7207b36a22f6d"
+    },
+    {
+      "path": "reference/Triggers.md",
+      "bytes": 7877,
+      "sha256": "f2e3d01b8f80792fad1807e0362dd182f5cd18218ee4c167b022781195051b53"
+    },
+    {
+      "path": "reference/index.html",
+      "bytes": 498,
+      "sha256": "dfce0e92ff23ac0eacdd897a32c7ed79f2acfd2c462717126c5aa841f8881790"
+    },
+    {
+      "path": "tools/README.md",
+      "bytes": 1735,
+      "sha256": "aa11ca6b7433a43c4e9f993531fb5397a50f1e95998144d008263d5aa5225208"
+    },
+    {
+      "path": "tools/Usage.md",
+      "bytes": 6284,
+      "sha256": "18321fa26fa9cdfa66c3e16648f1826675a10878f9d7c032aeb2451c0a8649ce"
+    },
+    {
+      "path": "tools/Validation-Report.json",
+      "bytes": 5425,
+      "sha256": "e76756d52fe5386b8e9aaf1d0ac2ae3a812284c34d6ff71471844bc2c0ec46aa"
+    },
+    {
+      "path": "tools/build_distribution.py",
+      "bytes": 9940,
+      "sha256": "0f64e125332d552a56486338ccbc8c77e457995132b4cde7dc0ef64c191842ca"
+    },
+    {
+      "path": "tools/check_package.py",
+      "bytes": 3168,
+      "sha256": "1604407a2ba35a29ff26df045de3d8c9e64f20b57a2906ce415766ce76bb304d"
+    },
+    {
+      "path": "tools/data_bank.py",
+      "bytes": 11625,
+      "sha256": "9ba393a62a573b7038639073608e1bf32321eb7381865313a032c1b4a413d698"
+    },
+    {
+      "path": "tools/index.html",
+      "bytes": 478,
+      "sha256": "22bb6095587b4352ddf81f0574a492cef5c595875df29b7b18cd4a7e40264371"
+    },
+    {
+      "path": "tools/iw-export.schema.json",
+      "bytes": 45368,
+      "sha256": "cafa27183329cd385541d115cee5e57f314b6ac32f6d4fb21481bd86426a76ba"
+    },
+    {
+      "path": "tools/static_checks.py",
+      "bytes": 9999,
+      "sha256": "974c4242e13415beb1a5e96a5f33721f8b842845798cd41a863382f4027da485"
+    },
+    {
+      "path": "tools/test_data_bank.py",
+      "bytes": 4979,
+      "sha256": "e16fcf65bcc094a1cb1980543a56030de45092ce585576cc4462d369c39135f8"
+    },
+    {
+      "path": "tools/test_distribution.py",
+      "bytes": 3984,
+      "sha256": "7c3f6325ca9a6a5b0a85cace8f8ff376c6375466c0231c244bf2c64dab9a91b8"
+    },
+    {
+      "path": "tools/test_validator.py",
+      "bytes": 4979,
+      "sha256": "b7d69df2e813bc62e6cf749a63934605980bac0be40d534cbfbb7ed9c2195e40"
+    },
+    {
+      "path": "tools/validate_iw_export.py",
+      "bytes": 16684,
+      "sha256": "8ccd93debe39ed5ac3ac733c6d378b0b45321125cd8b00d9006928614d6f34cc"
+    }
+  ]
+}
