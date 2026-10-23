@@ -45,3 +45,7 @@ Native trigger changes can affect runtime instructions without changing the base
 Keep loaded instructions and AI-visible tracker names, descriptions, update rules and values purposeful. Prefer concise shared rules over repetition, keyword activation for occasional lore, and PawScript for exact calculations. Large AI-updated records can be expensive to rewrite. Use actual turn-cost/debug information to compare designs rather than assuming a particular token-price ratio or summary schedule.
 
 Alternate selectable protagonists can also have NPC cards if unchosen protagonists should appear in the story. IW natively excludes an NPC who's name matches the chosen player.
+
+---
+
+END OF DOCUMENT: reference/Trackers.md
