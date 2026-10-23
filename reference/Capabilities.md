@@ -165,3 +165,7 @@ The active-world editor explicitly warns that changes to player characters or Ot
 
 
 For temporary instruction-block installation with a retained result, see [on-demand generation](Recipes.md#dynamic-content). Generation happens after installation; cleanup checks the request identity and completion rather than assuming the next turn succeeded. This pattern is useful only when omitted instruction context justifies result-storage and update costs.
+
+---
+
+END OF DOCUMENT: reference/Capabilities.md
