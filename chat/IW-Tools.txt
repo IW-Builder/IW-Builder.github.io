@@ -1,5 +1,4 @@
-Infinite Worlds Authoring Kit: combined tools text edition. Each BEGIN FILE / END FILE section contains one tool source, documentation or data file, identified by its package-relative path. This upload is not a single executable script or an IW world. To run a tool, recreate the needed files at their indicated paths, excluding the boundary lines and separator newlines. Preserve indentation and string escaping. Follow tools/Usage.md for dependencies, commands and coverage limits. This bundle includes the validator, schema, static checks, tests, maintainer utilities and any packaged reports; a report describes its stated inputs, not a newly authored world. Some maintainer tools require examples and other kit files outside this bundle. Reading these sources is not running them; claim validation only after actual execution and report the coverage returned by the validator.
-
+Infinite Worlds Authoring Kit: authoring tools. Recreate files at their BEGIN FILE paths, excluding boundary lines and separator newlines. Preserve code indentation and escaping. See tools/Usage.md for dependencies and commands. Includes validator, schema, static lint and data-bank utility. Distribution builders and maintainer tests are intentionally omitted. Reading these sources is not running them; report validation only after execution.
 
 ===== BEGIN FILE: tools/Usage.md =====
 # Tool usage and validation reference
@@ -46,639 +45,427 @@ A diff proves what changed, not whether those changes are authorized or correct.
 
 ## Maintainer commands
 
-These are not steps a world author must run:
+These are repository maintenance tasks, not requirements for authoring worlds:
 
 ```sh
 python tools/test_validator.py
 python tools/test_data_bank.py
+python tools/test_distribution.py
 python tools/check_package.py
-python tools/build_chat_edition.py
+python tools/build_distribution.py
 ```
 
-The validator regression tests exercise static diagnostics, reduced-coverage operation and diff reporting. They are not an IW or model qualification suite. The package checker validates distributed world files and links and writes Validation-Report.json. build_chat_edition.py assembles the source files without independent edits; rerun it after changing source documents or examples.
+`build_distribution.py` uses its own location in `/tools` to find the repository, so it needs no arguments and works from any working directory. It uses only Python's standard library. Run validation before building when publishing changed worlds or tools.
 
-The chat-edition generator also emits IW-Tools.txt, including tool source, schema, documentation and packaged reports. It does not execute validation.
+The builder updates visible EOF markers in AI-facing Markdown documents, generates `index.html` from `Authoring-Prompt.md`, synchronizes the checker's embedded validator/schema, writes the combined chat TXT files and `chat/sources.json`, then hashes the finished files into root `manifest.json`. It does not produce a separate `prompt.txt`, run validation or rebuild ZIP archives. Repackage `full-package.zip` after the build when distributing a new archive.
 
+Required sources are checked before output begins; a missing source or checker embedding stops the build with an error. Repeated builds with unchanged inputs preserve output bytes and the manifest timestamp. A write failure can leave partial outputs; fix it and rerun before publishing.
 
-## Homepage generation
+`IW-Tools.txt` has an explicit authoring-tool list: this usage guide, validator, static checks, JSON schema and data-bank utility. Builders, regression tests and package reports remain in the repository but are omitted from that model-facing bundle. Human READMEs are also omitted from combined technical packages. No model needs the distribution builder to author a world.
 
-Run `python tools/build_prompt_page.py` to regenerate the root `index.html` from `Authoring-Prompt.md`. The script resolves the package root from its own location, so no path arguments are needed. Review the generated page before publishing.
+The root manifest records repository-relative paths, byte lengths and SHA-256 hashes. It covers the authoring sources and supported files under reference, library, examples, tools, chat and checker, plus the homepage and root guide/template/license. It excludes itself, ZIP archives, sample histories, hidden files and caches. It is separate from the files it hashes to avoid circular dependencies. Hash original bytes, never a browser's rendered/extracted text. A mismatch may mean the manifest is stale; investigate apparent missing content without treating every mismatch as damage. A match establishes the recorded bytes, not freshness or runtime correctness.
 
-Human-facing README files are not inputs to the combined technical packages. The Examples package uses `examples/Payloads.md` and `examples/index.json`; recipe guidance remains in `reference/Recipes.md` in the Authoring Guide. The Tools package uses this usage guide. The sample-library package includes the separate Storymaster suite as well as Sample Blocks.
+EOF markers are added only to AI-facing Markdown and the generated chat documents. They are not added to JSON, scripts, the native default Evaluation text or other directly reusable content. They are documentation boundaries, not world instructions to copy into a story.
+
+---
+
+END OF DOCUMENT: tools/Usage.md
 
 ===== END FILE: tools/Usage.md =====
 
-===== BEGIN FILE: tools/Validation-Report.json =====
-{
-  "kitVersion": "1.2.0",
-  "schemaProfileVersion": "1.1.0",
-  "structuralValidation": {
-    "World-Template.json": {
-      "errors": 0,
-      "warnings": {}
-    },
-    "library/Sample-Blocks.json": {
-      "errors": 0,
-      "warnings": {
-        "unverified-expression": 3,
-        "unverified-script": 3,
-        "authoring-placeholder": 5,
-        "unknown-script-root": 1,
-        "context-root-unverified": 8
-      }
-    },
-    "examples/character-starting-values.json": {
-      "errors": 0,
-      "warnings": {
-        "unverified-choice-expression": 2
-      }
-    },
-    "examples/condition-triggerBlockers.json": {
-      "errors": 0,
-      "warnings": {}
-    },
-    "examples/condition-triggerOnCharacter.json": {
-      "errors": 0,
-      "warnings": {}
-    },
-    "examples/condition-triggerOnEvent.json": {
-      "errors": 0,
-      "warnings": {}
-    },
-    "examples/condition-triggerOnPawScript.json": {
-      "errors": 0,
-      "warnings": {
-        "unverified-expression": 1
-      }
-    },
-    "examples/condition-triggerOnRandomChance.json": {
-      "errors": 0,
-      "warnings": {}
-    },
-    "examples/condition-triggerOnTrackedItem.json": {
-      "errors": 0,
-      "warnings": {}
-    },
-    "examples/condition-triggerOnTurn.json": {
-      "errors": 0,
-      "warnings": {}
-    },
-    "examples/condition-triggerPrereqs.json": {
-      "errors": 0,
-      "warnings": {}
-    },
-    "examples/effect-effectChangeAuthorStyle.json": {
-      "errors": 0,
-      "warnings": {}
-    },
-    "examples/effect-effectChangeDefeatCondition.json": {
-      "errors": 0,
-      "warnings": {}
-    },
-    "examples/effect-effectChangeDescriptionInstructions.json": {
-      "errors": 0,
-      "warnings": {}
-    },
-    "examples/effect-effectChangeMainInstructions.json": {
-      "errors": 0,
-      "warnings": {}
-    },
-    "examples/effect-effectChangeObjective.json": {
-      "errors": 0,
-      "warnings": {}
-    },
-    "examples/effect-effectChangePCDescription.json": {
-      "errors": 0,
-      "warnings": {}
-    },
-    "examples/effect-effectChangePCName.json": {
-      "errors": 0,
-      "warnings": {}
-    },
-    "examples/effect-effectChangePCSkill.json": {
-      "errors": 0,
-      "warnings": {}
-    },
-    "examples/effect-effectChangeVictoryCondition.json": {
-      "errors": 0,
-      "warnings": {}
-    },
-    "examples/effect-effectEndsGame.json": {
-      "errors": 0,
-      "warnings": {}
-    },
-    "examples/effect-effectFireRandomTrigger.json": {
-      "errors": 0,
-      "warnings": {
-        "saved-inactive-trigger": 2
-      }
-    },
-    "examples/effect-effectGiveInfo.json": {
-      "errors": 0,
-      "warnings": {}
-    },
-    "examples/effect-effectModifyInstructionBlock.json": {
-      "errors": 0,
-      "warnings": {}
-    },
-    "examples/effect-effectModifyKeywordBlock.json": {
-      "errors": 0,
-      "warnings": {}
-    },
-    "examples/effect-effectModifyTrackedItemDetails.json": {
-      "errors": 0,
-      "warnings": {}
-    },
-    "examples/effect-effectPresentChoice.json": {
-      "errors": 0,
-      "warnings": {
-        "unverified-expression": 1
-      }
-    },
-    "examples/effect-effectRequestInput.json": {
-      "errors": 0,
-      "warnings": {
-        "unverified-expression": 1
-      }
-    },
-    "examples/effect-effectRunScript.json": {
-      "errors": 0,
-      "warnings": {
-        "unverified-script": 1
-      }
-    },
-    "examples/effect-effectSetTrackedItemValue.json": {
-      "errors": 0,
-      "warnings": {}
-    },
-    "examples/effect-effectShowMessage.json": {
-      "errors": 0,
-      "warnings": {}
-    },
-    "examples/effect-effectTellAIWhatToDo.json": {
-      "errors": 0,
-      "warnings": {}
-    },
-    "examples/logic-groups.json": {
-      "errors": 0,
-      "warnings": {
-        "unverified-expression": 2
-      }
-    },
-    "examples/narrative-last-ferry.json": {
-      "errors": 0,
-      "warnings": {}
-    },
-    "examples/native-text-operations.json": {
-      "errors": 0,
-      "warnings": {}
-    },
-    "examples/npc-keyword-portrait-ending.json": {
-      "errors": 0,
-      "warnings": {}
-    },
-    "examples/optional-block.json": {
-      "errors": 0,
-      "warnings": {}
-    },
-    "examples/probe-skills.json": {
-      "errors": 0,
-      "warnings": {}
-    },
-    "examples/probe-template-timing.json": {
-      "errors": 0,
-      "warnings": {
-        "unverified-script": 1
-      }
-    },
-    "examples/recipe-choice-followup.json": {
-      "errors": 0,
-      "warnings": {
-        "unverified-expression": 1
-      }
-    },
-    "examples/recipe-request-commit.json": {
-      "errors": 0,
-      "warnings": {
-        "unverified-script": 3,
-        "unverified-expression": 2
-      }
-    },
-    "examples/recipe-threshold-unlock.json": {
-      "errors": 0,
-      "warnings": {
-        "unverified-expression": 1,
-        "unverified-script": 1
-      }
-    },
-    "examples/showcase-glass-ledger.json": {
-      "errors": 0,
-      "warnings": {
-        "unverified-expression": 8,
-        "unverified-script": 6
-      }
-    },
-    "examples/yaml-path-operations.json": {
-      "errors": 0,
-      "warnings": {}
-    }
-  },
-  "negativeChecks": [
-    "Out-of-range skill -1",
-    "Out-of-range skill 6",
-    "Missing input tracker target"
-  ],
-  "localMarkdownLinks": "passed",
-  "nativeRuntimeExecutedByChecker": false,
-  "scope": "Structural and explicit-reference validation; runtime status is listed separately in examples/index.json."
-}
+===== BEGIN FILE: tools/validate_iw_export.py =====
+#!/usr/bin/env python3
+"""Validate observed IW export structure, references, and evidence gaps.
 
-===== END FILE: tools/Validation-Report.json =====
-
-===== BEGIN FILE: tools/build_chat_edition.py =====
-"""Generate upload-oriented text files from the modular sources; no independent edits."""
-from pathlib import Path
-import hashlib,json
-ROOT=Path(__file__).resolve().parent.parent
-OUT=ROOT/'chat'
-GUIDE=['Authoring-Prompt.md','World-Template.json','reference/Evidence.md','reference/Craft.md','reference/Portable-Banks.md','reference/Trackers.md','reference/Triggers.md','reference/Schema.md','reference/PawScript.md','reference/Capabilities.md','reference/Recipes.md','reference/Import-Integrity.md','reference/Known-Limits.md','reference/Default-Evaluation.txt','reference/Current-AI-Profiles.json']
-GROUPS={
- 'IW-Authoring-Guide.txt':GUIDE,
- 'IW-Examples.txt':['examples/Payloads.md','examples/index.json','examples/narrative-vendemmia.json','examples/recipe-request-commit.json','examples/recipe-choice-followup.json','examples/recipe-threshold-unlock.json','examples/optional-block.json','examples/showcase-glass-ledger.json','examples/character-starting-values.json'],
- 'IW-Sample-Library.txt':['library/Integration.md','library/Sample-Blocks.json','library/Storymaster-Suite.json']}
-
-def tool_sources():
- """Include tool source, documentation and data; omit caches and binary files."""
- suffixes={'.py','.json','.md','.txt','.js','.mjs','.toml','.yaml','.yml','.sh','.bat','.ps1'}
- files=[]
- for path in (ROOT/'tools').rglob('*'):
-  relative=path.relative_to(ROOT)
-  if (path.is_file() and path.suffix.lower() in suffixes
-      and path.name.lower() != 'readme.md'
-      and not any(part.startswith('.') or part=='__pycache__' for part in relative.parts)):
-   files.append(relative.as_posix())
- return sorted(files, key=lambda path: (path!='tools/Usage.md',path))
-
-def build():
- OUT.mkdir(exist_ok=True);manifest={}
- groups={**GROUPS,'IW-Tools.txt':tool_sources()}
- for name,files in groups.items():
-  intro='Infinite Worlds Authoring Kit: generated text edition. Source paths below identify sections within this upload. This is reference material, not one JSON world to import. The Examples edition includes all native payload snippets plus selected complete recipes; other complete worlds remain in the full kit and can be requested by path. Follow Authoring-Prompt.md for the authoring task. Load referenced material selectively; ask for a missing companion when required. Do not claim the Python validator ran unless actual execution tools and the full tools folder are available.\n\n'
-  if name=='IW-Tools.txt':
-   intro='Infinite Worlds Authoring Kit: combined tools text edition. Each BEGIN FILE / END FILE section contains one tool source, documentation or data file, identified by its package-relative path. This upload is not a single executable script or an IW world. To run a tool, recreate the needed files at their indicated paths, excluding the boundary lines and separator newlines. Preserve indentation and string escaping. Follow tools/Usage.md for dependencies, commands and coverage limits. This bundle includes the validator, schema, static checks, tests, maintainer utilities and any packaged reports; a report describes its stated inputs, not a newly authored world. Some maintainer tools require examples and other kit files outside this bundle. Reading these sources is not running them; claim validation only after actual execution and report the coverage returned by the validator.\n\n'
-  parts=[intro]
-  for path in files:
-   content=(ROOT/path).read_text(encoding='utf-8')
-   parts.extend(['\n===== BEGIN FILE: '+path+' =====\n',content,'\n===== END FILE: '+path+' =====\n'])
-  text=''.join(parts);(OUT/name).write_text(text,encoding='utf-8')
-  manifest[name]={'sourceFiles':files,'sha256':hashlib.sha256(text.encode('utf-8')).hexdigest()}
- (OUT/'sources.json').write_text(json.dumps(manifest,indent=2),encoding='utf-8')
- print('Generated '+', '.join(groups))
-if __name__=='__main__':build()
-
-===== END FILE: tools/build_chat_edition.py =====
-
-===== BEGIN FILE: tools/build_prompt_page.py =====
-"""Generate the public prompt page from Authoring-Prompt.md."""
-from pathlib import Path
-import html
-
-ROOT = Path(__file__).resolve().parent.parent
-SOURCE = ROOT / "Authoring-Prompt.md"
-OUT = ROOT  # Change to ROOT / "docs" if desired.
-
-prompt = SOURCE.read_text(encoding="utf-8")
-OUT.mkdir(parents=True, exist_ok=True)
-
-page = """<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description"
-        content="The Infinite Worlds authoring prompt and supporting tools.">
-  <title>Infinite Worlds Authoring Prompt</title>
-  <style>
-    body {
-      max-width: 960px;
-      margin: 40px auto;
-      padding: 0 24px;
-      color: #202820;
-      background: #fafbf7;
-      font: 16px/1.6 system-ui, sans-serif;
-    }
-    nav {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 18px;
-      margin-bottom: 28px;
-    }
-    a { color: #235e4b; }
-    pre {
-      white-space: pre-wrap;
-      overflow-wrap: anywhere;
-      padding: 24px;
-      border: 1px solid #dce2d8;
-      border-radius: 10px;
-      background: white;
-      font: 14px/1.7 ui-monospace, Consolas, monospace;
-    }
-  </style>
-</head>
-<body>
-  <header>
-    <h1>Infinite Worlds Authoring Prompt</h1>
-    <p>Give this prompt to your AI along with your world idea.
-       The supporting kit supplies its templates and references.</p>
-    <nav aria-label="Resources">
-      <a href="chat/">Plain-text prompt</a>
-      <a href="full-package.zip">Download ZIP package</a>
-      <a href="checker/">Validator</a>
-      <a href="https://github.com/IW-Builder/IW-Builder.github.io/tree/main">
-        README and browse files
-      </a>
-    </nav>
-  </header>
-  <main>
-    <pre>__PROMPT_CONTENT__</pre>
-  </main>
-</body>
-</html>
+Usage: python validate_iw_export.py WORLD.json [--schema SCHEMA.json] [--json]
+Exit codes: 0 = no errors (warnings permitted), 1 = validation errors,
+2 = input failure. jsonschema is optional; reduced coverage is reported when absent. Never executes PawScript.
 """
-
-page = page.replace("__PROMPT_CONTENT__", html.escape(prompt))
-
-for filename, content in [
-    ("index.html", page),
-    ("prompt.txt", prompt),
-]:
-    destination = OUT / filename
-    with destination.open("w", encoding="utf-8", newline="") as output:
-        output.write(content)
-    print(f"Wrote {destination}")
-===== END FILE: tools/build_prompt_page.py =====
-
-===== BEGIN FILE: tools/check_package.py =====
-"""Validate distributed worlds, references and documentation links. Does not execute IW."""
-from pathlib import Path
-import json,re,copy,collections
-from validate_iw_export import validate, Draft202012Validator
-ROOT=Path(__file__).resolve().parent.parent
-assert Draft202012Validator is not None, 'Maintainer package checks require jsonschema; user validation supports reduced coverage.'
-schema=json.loads((ROOT/'tools/iw-export.schema.json').read_text(encoding='utf-8'))
-worlds=[ROOT/'World-Template.json',ROOT/'library/Sample-Blocks.json',*sorted((ROOT/'examples').glob('*.json'))]
-worlds=[p for p in worlds if p.name!='index.json']
-results={}
-for path in worlds:
- doc=json.loads(path.read_text(encoding='utf-8'));findings=validate(doc,schema)
- assert not [f for f in findings if f['severity']=='error'],(path,findings)
- assert path.read_bytes().endswith(b'}'),path
- if path.parent.name=='examples':
-  assert not [f for f in findings if f['code'] in ['unknown-script-root','borrowed-syntax','string-plus','authoring-placeholder']],(path,findings)
- results[str(path.relative_to(ROOT))]={'errors':0,'warnings':dict(collections.Counter(f['code'] for f in findings))}
-for doc in ROOT.rglob('*.md'):
- for link in re.findall(r'\]\(([^)]+)\)',doc.read_text(encoding='utf-8')):
-  if '://' not in link and not link.startswith('#'):
-   assert (doc.parent/link.split('#')[0]).exists(),(doc,link)
-for item in json.loads((ROOT/'examples/index.json').read_text(encoding='utf-8')):assert (ROOT/'examples'/item['file']).exists()
-base=json.loads((ROOT/'World-Template.json').read_text(encoding='utf-8'));assert not base['trackedItems'] and not base['triggerEvents']
-skill=next(iter(base['possibleCharacters'][0]['skills']))
-negative=[]
-for level in [-1,6]:
- bad=copy.deepcopy(base);bad['possibleCharacters'][0]['skills'][skill]=level
- assert any(f['severity']=='error' for f in validate(bad,schema));negative.append('Out-of-range skill '+str(level))
-choice=json.loads((ROOT/'examples/effect-effectPresentChoice.json').read_text(encoding='utf-8'))
-for t in choice['triggerEvents']:
- for e in t['triggerEffects']:
-  if e['type']=='effectPresentChoice':e['data']['targetTrackedItemId']='missing-tracker'
-assert any(f['severity']=='error' for f in validate(choice,schema));negative.append('Missing input tracker target')
-sample=json.loads((ROOT/'library/Sample-Blocks.json').read_text(encoding='utf-8'))
-def no_previews(x):
- if isinstance(x,dict):
-  for k,v in x.items():
-   if k=='previewImageOptions':assert v==[]
-   no_previews(v)
- elif isinstance(x,list):
-  for v in x:no_previews(v)
-no_previews(sample)
-report={'kitVersion':'1.2.0','schemaProfileVersion':schema['x-profileVersion'],'structuralValidation':results,'negativeChecks':negative,'localMarkdownLinks':'passed','nativeRuntimeExecutedByChecker':False,'scope':'Structural and explicit-reference validation; runtime status is listed separately in examples/index.json.'}
-(ROOT/'tools/Validation-Report.json').write_text(json.dumps(report,indent=2)+'\n',encoding='utf-8')
-print(json.dumps({'worldFilesChecked':len(results),'structuralErrors':0,'localLinks':'passed','negativeChecks':len(negative),'nativeRuntimeExecuted':False}))
-
-===== END FILE: tools/check_package.py =====
-
-===== BEGIN FILE: tools/data_bank.py =====
-"""Portable IW Data banks: readable TXT with an authoritative JSON payload.
-
-No dependencies. Does not execute IW/PawScript or automatically integrate worlds.
-"""
-from pathlib import Path
-from decimal import Decimal
+from __future__ import annotations
 import argparse
-import hashlib
 import json
 import re
 import sys
-import uuid
+from pathlib import Path
+from static_checks import lint, basic_errors, edit_diff
+try:
+    from jsonschema import Draft202012Validator
+except ImportError:
+    Draft202012Validator = None
 
-FORMAT = 'iw-data-bank'
-BEGIN = '<!-- BEGIN IW DATA BANK -->'
-END = '<!-- END IW DATA BANK -->'
-COLLECTIONS = {'NPCs':'npc', 'possibleCharacters':'pc', 'trackedItems':'tracker',
-               'triggerEvents':'trigger', 'instructionBlocks':'block', 'loreBookEntries':'keyword'}
+def pointer(parts):
+    return '/'+'/'.join(str(p).replace('~','~0').replace('/','~1') for p in parts) if parts else '/'
 
-def pairs(items):
-    result = {}
-    for k,v in items:
-        if k in result: raise ValueError('Duplicate JSON key: '+k)
-        result[k] = v
-    return result
-
-def invalid_number(value): raise ValueError('Not a finite JSON number: '+value)
-
-def loads(text):
-    return json.loads(text, object_pairs_hook=pairs, parse_float=Decimal,
-                      parse_constant=invalid_number)
-
-def dumps(value, depth=0, canonical=False):
-    """Preserve decimal precision and JSON value types without a float conversion."""
-    if isinstance(value, Decimal):
-        if not value.is_finite(): raise ValueError('Non-finite number')
-        text = str(value)
-        return text if any(c in text for c in '.eE') else text+'.0'
-    if isinstance(value, (dict,list)):
-        is_dict = isinstance(value,dict)
-        opening,closing = ('{','}') if is_dict else ('[',']')
-        if not value: return opening+closing
-        if is_dict:
-            if not all(isinstance(k,str) for k in value): raise ValueError('JSON keys must be strings')
-            keys = sorted(value) if canonical else value
-            parts = [json.dumps(k,ensure_ascii=True)+(': ' if not canonical else ':')+dumps(value[k],depth+1,canonical) for k in keys]
-        else: parts = [dumps(v,depth+1,canonical) for v in value]
-        if canonical: return opening+','.join(parts)+closing
-        return opening+'\n'+'  '*(depth+1)+(',\n'+'  '*(depth+1)).join(parts)+'\n'+'  '*depth+closing
-    return json.dumps(value,ensure_ascii=True,allow_nan=False)
-
-def digest(value): return hashlib.sha256(dumps(value,canonical=True).encode('utf-8')).hexdigest()
-def escape(key): return key.replace('~','~0').replace('/','~1')
-
-def tokens(pointer):
-    if not pointer.startswith('/'): raise ValueError('Use a JSON Pointer beginning with /')
-    if re.search(r'~(?![01])',pointer): raise ValueError('Invalid JSON Pointer escape')
-    return [s.replace('~1','/').replace('~0','~') for s in pointer[1:].split('/')]
-
-def get(doc,pointer):
-    value = doc
-    for token in tokens(pointer):
-        if isinstance(value,list):
-            if not re.fullmatch(r'0|[1-9][0-9]*',token): raise ValueError('Invalid list index in '+pointer)
-            value=value[int(token)]
-        elif isinstance(value,dict): value=value[token]
-        else: raise ValueError('Path traverses a scalar: '+pointer)
-    return value
-
-def validate(bank):
-    if not isinstance(bank,dict) or bank.get('format')!=FORMAT or type(bank.get('version')) is not int or bank['version']!=1:
-        raise ValueError('Expected an iw-data-bank version 1 object')
-    if not isinstance(bank.get('entries'),list): raise ValueError('entries must be a list')
-    ids=set()
-    for e in bank['entries']:
-        if not isinstance(e,dict): raise ValueError('Each entry must be an object')
-        for key in ['id','title','kind','summary']:
-            if not isinstance(e.get(key),str) or (key!='summary' and not e[key]): raise ValueError('Entry needs text '+key)
-        if e['id'] in ids: raise ValueError('Duplicate entry ID: '+e['id'])
-        ids.add(e['id'])
-        if 'tags' in e and (not isinstance(e['tags'],list) or not all(isinstance(t,str) and t and '\n' not in t and '\r' not in t for t in e['tags'])):
-            raise ValueError('tags must be a list of nonempty single-line strings')
-        deps=e.get('dependencies')
-        if not isinstance(deps,dict) or not all(isinstance(deps.get(k),list) and all(isinstance(x,str) for x in deps[k]) for k in ['included','external','unresolved']):
-            raise ValueError('dependencies needs included, external and unresolved string lists')
-        if not isinstance(e.get('components'),list) or not e['components']: raise ValueError('Entry needs components')
-        for c in e['components']:
-            if not isinstance(c,dict) or 'payload' not in c or not isinstance(c.get('kind'),str): raise ValueError('Component needs kind and payload')
-            if 'sourcePath' in c: tokens(c['sourcePath'])
-    for e in bank['entries']:
-        missing=set(e['dependencies']['included'])-ids
-        if missing: raise ValueError('Missing included entry dependency: '+', '.join(sorted(missing)))
-    return bank
-
-def line(value): return str(value).replace('\n',' ').replace('\r',' ')
-
-def render(bank):
-    validate(bank)
-    parts=['# IW Data Bank\n\nReadable index only; the JSON section is authoritative. Edit through unpack/pack to update the integrity hash.\n']
-    for e in bank['entries']:
-        parts.append('\n## '+line(e['title'])+'\nID: '+line(e['id'])+' | Kind: '+line(e['kind'])+'\n')
-        if e.get('tags'): parts.append('Tags: '+' '.join('['+line(t)+']' for t in e['tags'])+'\n')
-        if e['summary']: parts.append(line(e['summary'])+'\n')
-        parts.append('Components: '+str(len(e['components']))+'\n')
-    parts.extend(['\n',BEGIN,'\n```json\n',dumps(bank),'\n```\n',END,'\nSHA256: ',digest(bank),'\n'])
-    return ''.join(parts)
-
-def read_bank(path):
-    text=Path(path).read_text(encoding='utf-8-sig')
-    if text.lstrip().startswith('{'): return validate(loads(text))
-    pattern=re.compile(r'^'+re.escape(BEGIN)+r'\r?\n```json\r?\n([\s\S]*?)\r?\n```\r?\n'+re.escape(END)+r'\r?\nSHA256: ([a-f0-9]{64}|UNVERIFIED)\s*\Z',re.M)
-    matches=list(pattern.finditer(text))
-    if len(matches)!=1 or len(re.findall(r'^'+re.escape(BEGIN)+r'\s*$',text,re.M))!=1:
-        raise ValueError('Expected one complete Data bank section and SHA256 line')
-    bank=validate(loads(matches[0][1]))
-    if matches[0][2]!='UNVERIFIED' and digest(bank)!=matches[0][2]: raise ValueError('Integrity hash mismatch. Use the last intact copy or review the edit before repacking the authoritative JSON.')
-    return bank
-
-def export(doc,select=None,tags=None,bundle=None):
-    if not isinstance(doc,dict): raise ValueError('World must be a JSON object')
-    paths=[];layout=[]
-    if select:
-        if len(select)!=len(set(select)): raise ValueError('Selection repeats a path')
-        decoded=[tokens(p) for p in select]
-        for i,a in enumerate(decoded):
-            for b in decoded[i+1:]:
-                if a==b[:len(a)] or b==a[:len(b)]: raise ValueError('Selections overlap; choose parent or child, not both')
-        paths=list(select)
+def validate(doc, schema):
+    findings=[]
+    def add(level,code,path,message):
+        findings.append({'severity':level,'code':code,'path':path,'message':message})
+    if Draft202012Validator is not None:
+        Draft202012Validator.check_schema(schema)
+        for e in sorted(Draft202012Validator(schema).iter_errors(doc),key=lambda e:str(list(e.path))):
+            add('error','structure',pointer(e.path),e.message)
     else:
-        for k,v in doc.items():
-            separate=k in COLLECTIONS and isinstance(v,list) and bool(v)
-            layout.append({'key':k,'items':len(v) if separate else None})
-            paths.extend('/'+escape(k)+'/'+str(i) for i in range(len(v))) if separate else paths.append('/'+escape(k))
-    entries=[]
-    for p in paths:
-        payload=get(doc,p);key=tokens(p)[0]
-        kind=COLLECTIONS.get(key,'world-field') if len(tokens(p))==2 else 'world-field'
-        title=(payload.get('name') or payload.get('title') or payload.get('characterName')) if isinstance(payload,dict) else None
-        entry={'id':'entry-'+uuid.uuid4().hex[:12],'title':str(title or p),'kind':kind,'summary':'',
-               'dependencies':{'included':[],'external':[],'unresolved':['Dependency review required before reuse; extraction does not infer prose or dynamic references.']},
-               'components':[{'kind':kind,'sourcePath':p,'payload':payload}]}
-        if tags: entry['tags']=list(tags)
-        entries.append(entry)
-    if bundle and entries:
-        first=entries[0];first['title']=bundle;first['kind']='bundle'
-        first['components']=[c for e in entries for c in e['components']];entries=[first]
-    bank={'format':FORMAT,'version':1,'source':{'title':str(doc.get('title','')),'sha256':digest(doc)},'entries':entries}
-    if not select: bank['completeWorld']={'layout':layout}
-    return validate(bank)
+        add('warning','schema-validation-unavailable','/','jsonschema is unavailable. Full JSON Schema validation was NOT run; limited type guards, references and static lint remain available.')
+        findings.extend(basic_errors(doc,schema))
+    if not isinstance(doc,dict): return findings
+    if any(f['severity']=='error' for f in findings): return findings
+    defs=schema.get('$defs',{})
 
-def restore(bank):
-    validate(bank)
-    layout=bank.get('completeWorld',{}).get('layout')
-    if not isinstance(layout,list): raise ValueError('Only a complete-world report can be restored; selected entries require deliberate integration')
-    components={}
-    for e in bank['entries']:
-        for c in e['components']:
-            p=c.get('sourcePath')
-            if p is None or p in components: raise ValueError('Missing or duplicate sourcePath')
-            components[p]=c['payload']
-    doc={};used=set()
-    for item in layout:
-        key=item['key'];n=item['items'];p='/'+escape(key)
-        if key in doc: raise ValueError('Duplicate layout key')
-        if n is None: doc[key]=components[p];used.add(p)
-        else:
-            if type(n) is not int or not 0<=n<=len(components): raise ValueError('Invalid layout length')
-            paths=[p+'/'+str(i) for i in range(n)]
-            doc[key]=[components[x] for x in paths];used.update(paths)
-    if used!=set(components): raise ValueError('Extra components not described by the complete-world layout')
-    if digest(doc)!=bank.get('source',{}).get('sha256'): raise ValueError('Restored world differs from the source fingerprint; review and integrate changed data deliberately')
-    return doc
+    def resolved(s,value):
+        if '$ref' in s:
+            key=s['$ref'].rsplit('/',1)[-1]
+            if key=='conditionNode' and isinstance(value,dict):
+                if value.get('category')=='logic': return defs[key]['anyOf'][0]
+                if value.get('category')=='condition': return resolved(defs['conditionLeaf'],value)
+                return {}
+            return resolved(defs[key],value)
+        tag=s.get('x-discriminator')
+        if tag and isinstance(value,dict):
+            val=value.get(tag)
+            prefix='effect' if tag=='type' and s is defs.get('effect') else 'condition'
+            return defs.get(prefix+'_'+str(val),{})
+        if 'anyOf' in s:
+            matches=[x for x in s['anyOf'] if not basic_errors(value,x,schema)]
+            return resolved(matches[0],value) if matches else {}
+        return s
 
-def write(path,text):
-    # Never silently overwrite an existing bank/world.
-    with Path(path).open('x',encoding='utf-8',newline='') as f: f.write(text)
+    def audit(value,s,path):
+        s=resolved(s,value)
+        observed=s.get('x-observedValues')
+        if observed is not None and value not in observed:
+            add('warning','unobserved-value',path,'Value is outside observed vocabulary; not declared invalid: '+repr(value))
+        if isinstance(value,dict) and s.get('type')=='object':
+            props=s.get('properties',{})
+            for k,v in value.items():
+                p=path.rstrip('/')+'/'+str(k).replace('~','~0').replace('/','~1')
+                if k not in props:
+                    extra=s.get('additionalProperties')
+                    if isinstance(extra,dict): audit(v,extra,p)
+                    else: add('warning','unobserved-field',p,'Field has no characterized schema at this location.')
+                else: audit(v,props[k],p)
+        elif isinstance(value,list) and s.get('type')=='array':
+            for i,v in enumerate(value): audit(v,s.get('items',{}),path.rstrip('/')+'/'+str(i))
+    audit(doc,schema,'/')
+    if doc.get('schemaVersion') not in schema.get('x-observedSchemaVersions',[]):
+        add('warning','schema-version','/schemaVersion','Version missing or outside observed versions; profile coverage is not established.')
+
+    tables={}
+    for field,idkey in [('trackedItems','id'),('triggerEvents','id'),('possibleCharacters','characterId'),('instructionBlocks','id'),('loreBookEntries','id'),('NPCs','id')]:
+        tables[field]={}
+        for i,o in enumerate(doc.get(field,[]) if isinstance(doc.get(field,[]),list) else []):
+            if not isinstance(o,dict): continue
+            p='/'+field+'/'+str(i)+'/'+idkey
+            ident=o.get(idkey)
+            if not isinstance(ident,str) or not ident:
+                add('warning','missing-id',p,'No usable identifier; requiredness is not established, but references cannot resolve.');continue
+            if ident in tables[field]: add('error','duplicate-id',p,'Identifier is duplicated within '+field+': '+ident)
+            tables[field][ident]=o
+    def ref(ident,namespace,path,condition=False):
+        if not isinstance(ident,str): return
+        if ident in tables[namespace]: return
+        if condition and ident in schema.get('x-observedConditionExternalReferences',[]):
+            if ident=='skill_player_skill_1' and 'Player - Skill 1' not in doc.get('skills',[]):
+                add('warning','skill-binding',path,'Observed skill variable used without its sample skill name; general binding rule is unknown.')
+            return
+        if condition and ident.startswith('skill_'):
+            add('warning','unknown-skill-reference',path,'Unobserved built-in skill reference; normalization and binding not verified.');return
+        add('error','unresolved-reference',path,'No declared '+namespace+' target: '+ident)
+
+    seen_node_ids={}
+    def node_id(n,p):
+        ident=n.get('id')
+        if not isinstance(ident,str) or not ident:
+            add('warning','missing-node-id',p+'/id','Condition/effect node has no usable ID; importer requirements unknown.')
+        elif ident in seen_node_ids: add('warning','duplicate-node-id',p+'/id','Node ID is reused at '+seen_node_ids[ident])
+        else: seen_node_ids[ident]=p
+    def compare_wrapper(n,d,p):
+        for k in ('trackedItemID','inequality'):
+            if k in n and k in d and n[k]!=d[k]:
+                add('error','wrapper-payload-mismatch',p+'/'+k,'Wrapper and payload disagree; runtime precedence unknown.')
+    def conditions(nodes,p,start_enabled=False):
+        for i,n in enumerate(nodes if isinstance(nodes,list) else []):
+            q=p+'/'+str(i)
+            if not isinstance(n,dict): continue
+            node_id(n,q)
+            category=n.get('category')
+            if category=='logic':
+                if n.get('operator') not in ['and','or','none_of']: add('warning','unknown-logic',q+'/operator','Unobserved operator.')
+                if 'data' not in n: add('warning','missing-payload',q+'/data','Logic group has no child list.')
+                conditions(n.get('data',[]), q+'/data', start_enabled);continue
+            if category!='condition': add('warning','unclassified-condition',q+'/category','Missing or unobserved category.')
+            t=n.get('type'); d=n.get('data')
+            if start_enabled and t in ('triggerOnTurn', 'triggerOnEvent'):
+                label = (
+                    'Minimum-turn' if t == 'triggerOnTurn'
+                    else 'Scenario'
+                )
+                add('warning', 'start-incompatible-condition', q, label + 
+                    ' condition combined with Start of Game. Condition ignored; does not gate execution. Use separate startup trigger and leave Start off here.'
+                )
+            if t not in defs['conditionLeaf']['x-knownDiscriminators']:
+                add('warning','unknown-condition-type',q+'/type','Missing or unobserved condition type: '+repr(t));continue
+            if 'data' not in n: add('warning','missing-payload',q+'/data','No condition payload observed.');continue
+            if isinstance(d,dict): compare_wrapper(n,d,q)
+            if t=='triggerOnCharacter' and isinstance(d,list):
+                for j,x in enumerate(d): ref(x,'possibleCharacters',q+'/data/'+str(j))
+            elif t=='triggerOnTrackedItem' and isinstance(d,dict):
+                ref(d.get('trackedItemID'),'trackedItems',q+'/data/trackedItemID',condition=True)
+            elif t in ['triggerPrereqs','triggerBlockers'] and isinstance(d,dict):
+                key='prereqs' if t=='triggerPrereqs' else 'blockers'
+                for j,x in enumerate(d.get(key,[]) if isinstance(d.get(key,[]),list) else []): ref(x,'triggerEvents',q+'/data/'+key+'/'+str(j))
+            elif t=='triggerOnEvent' and isinstance(d,str) and d not in doc.get('conditions',[]):
+                add('warning','unlisted-situation',q+'/data','Situation string not in root conditions registry; whether registry membership is mandatory is unknown.')
+            elif t=='triggerOnPawScript': add('warning','unverified-expression',q+'/data','Expression is stored text; not parsed or executed.')
+    for i,t in enumerate(doc.get('triggerEvents',[]) if isinstance(doc.get('triggerEvents',[]),list) else []):
+        if not isinstance(t,dict): continue
+        p='/triggerEvents/'+str(i)
+        if not t.get('triggerOnStartOfGame') and not t.get('triggerConditions'):
+            add('warning','saved-inactive-trigger',p,'Valid saved trigger with no ordinary automatic firing conditions; explicit random dispatch may still call it.')
+        numeric_writes={}
+        flat_req=set();flat_block=set()
+        for n in t.get('triggerConditions',[]):
+            if isinstance(n,dict) and n.get('category')=='condition' and isinstance(n.get('data'),dict):
+                data=n['data'];scope=data.get('firedThisTurn',False)
+                if n.get('type')=='triggerPrereqs':flat_req.update((x,scope) for x in data.get('prereqs',[]))
+                if n.get('type')=='triggerBlockers':flat_block.update((x,scope) for x in data.get('blockers',[]))
+        if flat_req & flat_block:add('warning','dependency-editor-conflict',p,'Flat AND prerequisites and blockers conflict within the same scope.')
+        for e in t.get('triggerEffects',[]):
+            if isinstance(e,dict) and e.get('type')=='effectSetTrackedItemValue' and isinstance(e.get('data'),dict):
+                ident=e['data'].get('trackedItemID')
+                if tables['trackedItems'].get(ident,{}).get('dataType')=='number':numeric_writes[ident]=numeric_writes.get(ident,0)+1
+        for ident,count in numeric_writes.items():
+            if count>1:add('warning','numeric-write-overwrite',p,'Multiple numeric writes to '+ident+' can overwrite rather than accumulate within one trigger.')
+        conditions(t.get('triggerConditions',[]),p+'/triggerConditions',start_enabled=bool(t.get('triggerOnStartOfGame')))
+        for j,e in enumerate(t.get('triggerEffects',[]) if isinstance(t.get('triggerEffects',[]),list) else []):
+            q=p+'/triggerEffects/'+str(j)
+            if not isinstance(e,dict):continue
+            node_id(e,q); et=e.get('type');d=e.get('data')
+            if t.get('triggerOnStartOfGame') and et == 'effectGiveInfo':
+                add('warning','start-incompatible-effect',q,'Give Information to AI is incompatible with Start of Game; the effect was ignored in a runtime test. Use background or an instruction block for opening context, or a separate ordinary-play trigger. Later-turn behavior with Start and Mid Game enabled remains unverified.')
+            if et not in defs['effect']['x-knownDiscriminators']:
+                add('warning','unknown-effect-type',q+'/type','Missing or unobserved effect type: '+repr(et));continue
+            if 'data' not in e: add('warning','missing-payload',q+'/data','No effect payload.');continue
+            if isinstance(d,dict):
+                compare_wrapper(e,d,q)
+                if et in ['effectSetTrackedItemValue','effectModifyTrackedItemDetails']:
+                    ref(d.get('trackedItemID'),'trackedItems',q+'/data/trackedItemID')
+                elif et in ['effectPresentChoice','effectRequestInput']:
+                    ref(d.get('targetTrackedItemId'),'trackedItems',q+'/data/targetTrackedItemId')
+                elif et=='effectModifyInstructionBlock': ref(d.get('id'),'instructionBlocks',q+'/data/id')
+                elif et=='effectModifyKeywordBlock': ref(d.get('id'),'loreBookEntries',q+'/data/id')
+                elif et=='effectChangePCSkill' and d.get('name') not in doc.get('skills',[]):
+                    add('error','unresolved-skill',q+'/data/name','Skill name is not declared in root skills.')
+            if et=='effectFireRandomTrigger' and isinstance(d,list):
+                for k,x in enumerate(d):
+                    if x!='nothing':ref(x,'triggerEvents',q+'/data/'+str(k))
+            if et=='effectRunScript':add('warning','unverified-script',q+'/data','Script is stored text; validity/write capabilities not checked.')
+
+    variables={}
+    for i,t in enumerate(doc.get('trackedItems',[]) if isinstance(doc.get('trackedItems',[]),list) else []):
+        if not isinstance(t,dict):continue
+        p='/trackedItems/'+str(i)
+        v=t.get('variableName')
+        if isinstance(v,str) and v:
+            if v in variables:add('warning','duplicate-variable',p+'/variableName','Repeated variable name; binding ambiguity not resolved.')
+            variables[v]=p
+        if t.get('dataType')=='number' and t.get('initialValueBasedOnPC')=='same':
+            val=t.get('initialValue')
+            if isinstance(val,str) and not re.fullmatch(r'[+-]?(?:\d+(?:\.\d*)?|\.\d+)(?:[eE][+-]?\d+)?',val.strip()):
+                add('warning','numeric-initialization',p+'/initialValue','Number tracker does not contain a plain numeric literal; expression/runtime meaning unverified.')
+    for i,c in enumerate(doc.get('possibleCharacters',[]) if isinstance(doc.get('possibleCharacters',[]),list) else []):
+        if not isinstance(c,dict):continue
+        for name in c.get('skills',{}) if isinstance(c.get('skills'),dict) else []:
+            if name not in doc.get('skills',[]):add('warning','undeclared-character-skill','/possibleCharacters/'+str(i)+'/skills/'+name,'Character skill is not in root skill list.')
+        for j,v in enumerate(c.get('initialTrackedItemValues',[]) if isinstance(c.get('initialTrackedItemValues',[]),list) else []):
+            if not isinstance(v,dict):continue
+            q='/possibleCharacters/'+str(i)+'/initialTrackedItemValues/'+str(j)
+            ref(v.get('id'),'trackedItems',q+'/id')
+            target=tables['trackedItems'].get(v.get('id'),{})
+            val=v.get('initialPCValue')
+            choices_script=v.get('initialPCValueChoicesScript')
+            if isinstance(choices_script,str) and choices_script.strip():
+                add('warning','unverified-choice-expression',q+'/initialPCValueChoicesScript','Startup choice expression is stored text; not evaluated. Empty initialPCValue is expected in the observed script mode.')
+            elif target.get('dataType')=='number' and isinstance(val,str) and not re.fullmatch(r'[+-]?(?:\d+(?:\.\d*)?|\.\d+)(?:[eE][+-]?\d+)?',val.strip()):
+                add('warning','numeric-character-initialization',q+'/initialPCValue','Number tracker has a nonnumeric per-character sample; runtime meaning unverified.')
+    findings.extend(lint(doc))
+    return findings
 
 def main():
-    parser=argparse.ArgumentParser(description=__doc__)
-    sub=parser.add_subparsers(dest='command',required=True)
-    p=sub.add_parser('export');p.add_argument('input');p.add_argument('--out',required=True)
-    p.add_argument('--select',action='append');p.add_argument('--tag',action='append');p.add_argument('--bundle')
-    for name in ['pack','unpack','restore']:
-        p=sub.add_parser(name);p.add_argument('input');p.add_argument('--out',required=True)
-    p=sub.add_parser('check');p.add_argument('input')
-    args=parser.parse_args()
+    p=argparse.ArgumentParser(description=__doc__)
+    p.add_argument('world',type=Path);p.add_argument('--schema',type=Path,default=Path(__file__).with_name('iw-export.schema.json'));p.add_argument('--json',action='store_true');p.add_argument('--diff',type=Path,metavar='OLD.json',help='Compare object IDs and changed fields against an earlier export.')
+    args=p.parse_args()
     try:
-        if args.command=='export':
-            bank=export(loads(Path(args.input).read_text(encoding='utf-8-sig')),args.select,args.tag,args.bundle)
-            text=render(bank)
-        else:
-            bank=read_bank(args.input)
-            if args.command=='check':
-                source=Path(args.input).read_text(encoding='utf-8-sig').strip()
-                integrity='not supplied' if source.startswith('{') or source.endswith('SHA256: UNVERIFIED') else 'verified'
-                print('Bank structure checked. Integrity hash: '+integrity+'. Entries: '+str(len(bank['entries']))+'. Dependencies and IW runtime not verified.');return 0
-            text=render(bank) if args.command=='pack' else dumps(restore(bank) if args.command=='restore' else bank)
-        write(args.out,text)
-        # A real parse-back check, not a model's visual inspection.
-        if args.command in ('export','pack'):
-            if digest(read_bank(args.out))!=digest(bank): raise ValueError('Round-trip verification failed')
-        elif args.command=='restore':
-            if digest(loads(Path(args.out).read_text()))!=bank['source']['sha256']: raise ValueError('Restore verification failed')
-        print('Wrote '+args.out)
-        return 0
-    except (ValueError,KeyError,IndexError,TypeError,OSError,RecursionError) as exc:
-        print('Data bank error: '+str(exc),file=sys.stderr);return 1
+        raw=args.world.read_bytes();doc=json.loads(raw.decode('utf-8-sig')); schema=json.loads(args.schema.read_text(encoding='utf-8'));findings=validate(doc,schema)
+        if raw != raw.rstrip() and (b'\n' in raw[len(raw.rstrip()):] or b'\r' in raw[len(raw.rstrip()):]):findings.append({'severity':'warning','code':'trailing-newline','path':'/','message':'Remove the final newline before pasting into IW; the import text should end at its final brace.'})
+        diff=edit_diff(json.loads(args.diff.read_text(encoding='utf-8-sig')),doc) if args.diff else None
+    except (OSError,ValueError) as exc:
+        print(str(exc),file=sys.stderr);return 2
+    result={'file':str(args.world),'errors':sum(f['severity']=='error' for f in findings),'warnings':sum(f['severity']=='warning' for f in findings),'findings':findings,'coverage':{'fullSchema':Draft202012Validator is not None,'staticLint':True,'runtimeExecution':False}}
+    if diff is not None:result['diff']=diff
+    if args.json:print(json.dumps(result,indent=2,ensure_ascii=False))
+    else:
+        print(f"{result['errors']} errors; {result['warnings']} warnings")
+        if diff is not None:print(json.dumps({'diff':diff},indent=2,ensure_ascii=False))
+        for f in findings:print(f"{f['severity'].upper()} {f['code']} {f['path']}: {f['message']}")
+    return int(result['errors']>0)
 
-if __name__=='__main__': sys.exit(main())
+if __name__=='__main__':sys.exit(main())
 
-===== END FILE: tools/data_bank.py =====
+===== END FILE: tools/validate_iw_export.py =====
+
+===== BEGIN FILE: tools/static_checks.py =====
+"""Conservative static diagnostics. Not a PawScript parser or JSON Schema implementation."""
+from __future__ import annotations
+import json,re,hashlib
+
+SYSTEM_ROOTS={'game','player'}
+ROOT=re.compile(r'\$([A-Za-z_][A-Za-z_0-9]*)')
+PLACEHOLDERS=re.compile(r'\[(?:LIST [A-Z _]+|DESCRIBE [A-Z _]+|Author Style|title|blurb)\]|<#\s*(?:time period|Copy in|DESCRIBE|LIST |VARIABLE BLOCK)[\s\S]*?#>',re.I)
+
+def escaped(k):return str(k).replace('~','~0').replace('/','~1')
+def walk(value,path=''):
+    if isinstance(value,dict):
+        for k,v in value.items():yield from walk(v,path+'/'+escaped(k))
+    elif isinstance(value,list):
+        for i,v in enumerate(value):yield from walk(v,path+'/'+str(i))
+    elif isinstance(value,str):yield path,value
+
+def mask_literals(code):
+    """Mask single/double quoted strings and # comments without changing line positions."""
+    return re.sub(r'"(?:\\.|[^"\\])*"|\'(?:\\.|[^\'\\])*\'|\#[^\n]*',lambda m:''.join('\n' if c=='\n' else ' ' for c in m.group()),code)
+
+def templates(text):
+    """Extract <<...>> while respecting quoted >>; unmatched delimiters are not parsed."""
+    text=re.sub(r'<#[\s\S]*?#>',lambda m:' '*len(m.group()),text)
+    pos=0
+    while True:
+        start=text.find('<<',pos)
+        if start<0:return
+        i=start+2;quote=None;escape=False
+        while i<len(text):
+            ch=text[i]
+            if quote:
+                if escape:escape=False
+                elif ch=='\\':escape=True
+                elif ch==quote:quote=None
+            elif ch in ['"',"'"]:quote=ch
+            elif text.startswith('>>',i):
+                yield text[start+2:i];pos=i+2;break
+            i+=1
+        else:return
+
+def lint(doc):
+    findings=[]
+    def add(code,path,message):findings.append(dict(severity='warning',code=code,path=path or '/',message=message))
+    declared={x.get('variableName') for x in doc.get('trackedItems',[]) if isinstance(x,dict) and isinstance(x.get('variableName'),str)}
+    snippets=[];script_paths=set()
+    def nodes(x,path=''):
+        if isinstance(x,dict):
+            typ=x.get('type')
+            if typ in ['effectRunScript','triggerOnPawScript','triggerOnRandomChance'] and isinstance(x.get('data'),str):
+                sp=path+'/data';snippets.append((sp,x['data'],typ=='effectRunScript'));script_paths.add(sp)
+            for k,v in x.items():
+                kp=path+'/'+escaped(k)
+                if k in ['initialPCValueChoicesScript','initialValueChoicesScript'] and isinstance(v,str) and v.strip():snippets.append((kp,v,False));script_paths.add(kp)
+                nodes(v,kp)
+        elif isinstance(x,list):
+            for i,v in enumerate(x):nodes(v,path+'/'+str(i))
+    nodes(doc)
+    for path,text in walk(doc):
+        markers=sorted(set(re.findall(r'<#\s*(?:END_)?(REPLACE\d+)\b[\s\S]*?#>',text)))
+        if markers:add('content-substitution',path,'Intentional content substitution marker(s): '+', '.join(markers)+'. Review the separate Authoring report and intended behavior; these are not import errors.')
+        if PLACEHOLDERS.search(text):add('authoring-placeholder',path,'Possible unresolved library editing slot. Review; intentional runtime notation and ordinary comments need not be removed.')
+        if path not in script_paths:
+            for expr in templates(text):snippets.append((path,expr,False))
+    for path,code,is_script in snippets:
+        clean=mask_literals(code)
+        locals_=set(re.findall(r'\b(?:set|for\s+each)\s+\$([A-Za-z_][A-Za-z_0-9]*)',clean)) if is_script else set()
+        unknown=set(ROOT.findall(clean))-declared-SYSTEM_ROOTS-locals_
+        for name in sorted(unknown):
+            if path.startswith('/videoPromptInstructions') and name in ['videoDuration','videoStyle']:
+                add('context-root-unverified',path,'Video-context $'+name+' is not a declared tracker; availability in this field is not established by this kit.')
+            else:add('unknown-script-root',path,'$'+name+' is not a declared tracker variableName, script local, or known system root. Check missing dependencies; lint is not a full language/context parser.')
+        for token in ['==','&&','||']:
+            if token in clean:add('borrowed-syntax',path,'Review '+token+'; PawScript uses =, and, or in expressions.')
+        if re.search(r'^\s*(?:if\b|else\s+if\b|else\b|for\b).*:\s*$',clean,re.M):add('borrowed-syntax',path,'Branch/loop header ends with a colon; PawScript uses indentation without a colon.')
+        if re.search(r'[{};]',clean):add('borrowed-syntax',path,'Unquoted braces or semicolon found; review for borrowed block/object syntax.')
+        # Identify quoted-string + operand without looking inside literal text.
+        lit=re.compile(r'"(?:\\.|[^"\\])*"|\'(?:\\.|[^\'\\])*\'')
+        for m in lit.finditer(code):
+            if re.match(r'\s*\+\s*(?:\$|["\'])',clean[m.end():]) or re.search(r'\$[\w.()]+\s*\+\s*$',clean[:m.start()]):
+                add('string-plus',path,'Possible string concatenation with +; use &. Review this heuristic warning.');break
+    return findings
+
+def basic_errors(value,schema,root=None,path=''):
+    """A limited type/requiredness guard used without jsonschema. Coverage is explicitly reduced."""
+    root=root or schema;out=[]
+    if not isinstance(schema,dict):return out
+    if '$ref' in schema:
+        target=root
+        for part in schema['$ref'].lstrip('#/').split('/'):target=target.get(part,{})
+        return basic_errors(value,target,root,path)
+    if schema.get('x-discriminator') and isinstance(value,dict):
+        prefix='effect' if str(value.get('type','')).startswith('effect') else 'condition'
+        target=root.get('$defs',{}).get(prefix+'_'+str(value.get('type')))
+        if target:return basic_errors(value,target,root,path)
+    if 'anyOf' in schema:
+        branches=[basic_errors(value,s,root,path) for s in schema['anyOf']]
+        if any(not x for x in branches):return []
+        return [dict(severity='error',code='basic-structure',path=path or '/',message='Value does not match the checked type alternatives (reduced validation).')]
+    if 'not' in schema and not basic_errors(value,schema['not'],root,path):
+        return [dict(severity='error',code='basic-structure',path=path or '/',message='Excluded alternative (reduced validation).')]
+    for sub in schema.get('allOf',[]):out+=basic_errors(value,sub,root,path)
+    typ=schema.get('type')
+    types={'object':isinstance(value,dict),'array':isinstance(value,list),'string':isinstance(value,str),'boolean':isinstance(value,bool),'integer':isinstance(value,int) and not isinstance(value,bool),'number':isinstance(value,(int,float)) and not isinstance(value,bool),'null':value is None}
+    def error(msg):out.append(dict(severity='error',code='basic-structure',path=path or '/',message=msg))
+    if typ and not any(types.get(t,False) for t in (typ if isinstance(typ,list) else [typ])):error('Expected '+str(typ));return out
+    if 'const'in schema and value!=schema['const']:error('Constant value mismatch.')
+    if 'enum'in schema and value not in schema['enum']:error('Value is outside the declared enum.')
+    if isinstance(value,(int,float)) and not isinstance(value,bool):
+        if 'minimum'in schema and value<schema['minimum']:error('Below minimum.')
+        if 'maximum'in schema and value>schema['maximum']:error('Above maximum.')
+    if isinstance(value,dict):
+        for k in schema.get('required',[]):
+            if k not in value:error('Missing required field '+k)
+        for k,v in value.items():
+            sub=schema.get('properties',{}).get(k,schema.get('additionalProperties',{}))
+            if isinstance(sub,dict):out+=basic_errors(v,sub,root,path+'/'+escaped(k))
+    if isinstance(value,list):
+        if len(value)<schema.get('minItems',0):error('Too few items.')
+        if 'maxItems'in schema and len(value)>schema['maxItems']:error('Too many items.')
+        for i,v in enumerate(value):out+=basic_errors(v,schema.get('items',{}),root,path+'/'+str(i))
+    return out
+
+def edit_diff(old,new):
+    changes=[]
+    def brief(v):
+        if isinstance(v,str) and len(v)>160:return {'preview':v[:160],'characters':len(v),'sha256':hashlib.sha256(v.encode('utf-8')).hexdigest()}
+        return v
+    def compare(a,b,path=''):
+        if type(a)!=type(b):changes.append({'path':path or '/','change':'type/value','before':brief(a),'after':brief(b)});return
+        if isinstance(a,dict):
+            for k in sorted(set(a)|set(b)):
+                q=path+'/'+escaped(k)
+                if k not in a:changes.append({'path':q,'change':'added','after':brief(b[k])})
+                elif k not in b:changes.append({'path':q,'change':'removed','before':brief(a[k])})
+                else:compare(a[k],b[k],q)
+        elif isinstance(a,list):
+            if a!=b:
+                for i in range(max(len(a),len(b))):
+                    q=path+'/'+str(i)
+                    if i>=len(a):changes.append({'path':q,'change':'added','after':brief(b[i])})
+                    elif i>=len(b):changes.append({'path':q,'change':'removed','before':brief(a[i])})
+                    else:compare(a[i],b[i],q)
+        elif a!=b:changes.append({'path':path,'change':'changed','before':brief(a),'after':brief(b)})
+    compare(old,new)
+    objects={}
+    for field,idkey in [('trackedItems','id'),('triggerEvents','id'),('possibleCharacters','characterId'),('instructionBlocks','id'),('loreBookEntries','id'),('NPCs','id')]:
+        def lookup(w):return {x[idkey]:x for x in w.get(field,[]) if isinstance(x,dict) and isinstance(x.get(idkey),str)} if isinstance(w,dict) and isinstance(w.get(field,[]),list) else {}
+        a,b=lookup(old),lookup(new)
+        objects[field]={'added':sorted(b.keys()-a.keys()),'removed':sorted(a.keys()-b.keys()),'changed':sorted(k for k in a.keys()&b.keys() if a[k]!=b[k]),'orderChanged':list(a)!=list(b)}
+    return {'objects':objects,'changes':changes,'note':'Reports differences, not whether they are authorized. Array indices are positional; object summaries match IDs.'}
+
+===== END FILE: tools/static_checks.py =====
 
 ===== BEGIN FILE: tools/iw-export.schema.json =====
 {
@@ -2512,550 +2299,217 @@ if __name__=='__main__': sys.exit(main())
 
 ===== END FILE: tools/iw-export.schema.json =====
 
-===== BEGIN FILE: tools/static_checks.py =====
-"""Conservative static diagnostics. Not a PawScript parser or JSON Schema implementation."""
-from __future__ import annotations
-import json,re,hashlib
+===== BEGIN FILE: tools/data_bank.py =====
+"""Portable IW Data banks: readable TXT with an authoritative JSON payload.
 
-SYSTEM_ROOTS={'game','player'}
-ROOT=re.compile(r'\$([A-Za-z_][A-Za-z_0-9]*)')
-PLACEHOLDERS=re.compile(r'\[(?:LIST [A-Z _]+|DESCRIBE [A-Z _]+|Author Style|title|blurb)\]|<#\s*(?:time period|Copy in|DESCRIBE|LIST |VARIABLE BLOCK)[\s\S]*?#>',re.I)
-
-def escaped(k):return str(k).replace('~','~0').replace('/','~1')
-def walk(value,path=''):
-    if isinstance(value,dict):
-        for k,v in value.items():yield from walk(v,path+'/'+escaped(k))
-    elif isinstance(value,list):
-        for i,v in enumerate(value):yield from walk(v,path+'/'+str(i))
-    elif isinstance(value,str):yield path,value
-
-def mask_literals(code):
-    """Mask single/double quoted strings and # comments without changing line positions."""
-    return re.sub(r'"(?:\\.|[^"\\])*"|\'(?:\\.|[^\'\\])*\'|\#[^\n]*',lambda m:''.join('\n' if c=='\n' else ' ' for c in m.group()),code)
-
-def templates(text):
-    """Extract <<...>> while respecting quoted >>; unmatched delimiters are not parsed."""
-    text=re.sub(r'<#[\s\S]*?#>',lambda m:' '*len(m.group()),text)
-    pos=0
-    while True:
-        start=text.find('<<',pos)
-        if start<0:return
-        i=start+2;quote=None;escape=False
-        while i<len(text):
-            ch=text[i]
-            if quote:
-                if escape:escape=False
-                elif ch=='\\':escape=True
-                elif ch==quote:quote=None
-            elif ch in ['"',"'"]:quote=ch
-            elif text.startswith('>>',i):
-                yield text[start+2:i];pos=i+2;break
-            i+=1
-        else:return
-
-def lint(doc):
-    findings=[]
-    def add(code,path,message):findings.append(dict(severity='warning',code=code,path=path or '/',message=message))
-    declared={x.get('variableName') for x in doc.get('trackedItems',[]) if isinstance(x,dict) and isinstance(x.get('variableName'),str)}
-    snippets=[];script_paths=set()
-    def nodes(x,path=''):
-        if isinstance(x,dict):
-            typ=x.get('type')
-            if typ in ['effectRunScript','triggerOnPawScript','triggerOnRandomChance'] and isinstance(x.get('data'),str):
-                sp=path+'/data';snippets.append((sp,x['data'],typ=='effectRunScript'));script_paths.add(sp)
-            for k,v in x.items():
-                kp=path+'/'+escaped(k)
-                if k in ['initialPCValueChoicesScript','initialValueChoicesScript'] and isinstance(v,str) and v.strip():snippets.append((kp,v,False));script_paths.add(kp)
-                nodes(v,kp)
-        elif isinstance(x,list):
-            for i,v in enumerate(x):nodes(v,path+'/'+str(i))
-    nodes(doc)
-    for path,text in walk(doc):
-        markers=sorted(set(re.findall(r'<#\s*(?:END_)?(REPLACE\d+)\b[\s\S]*?#>',text)))
-        if markers:add('content-substitution',path,'Intentional content substitution marker(s): '+', '.join(markers)+'. Review the separate Authoring report and intended behavior; these are not import errors.')
-        if PLACEHOLDERS.search(text):add('authoring-placeholder',path,'Possible unresolved library editing slot. Review; intentional runtime notation and ordinary comments need not be removed.')
-        if path not in script_paths:
-            for expr in templates(text):snippets.append((path,expr,False))
-    for path,code,is_script in snippets:
-        clean=mask_literals(code)
-        locals_=set(re.findall(r'\b(?:set|for\s+each)\s+\$([A-Za-z_][A-Za-z_0-9]*)',clean)) if is_script else set()
-        unknown=set(ROOT.findall(clean))-declared-SYSTEM_ROOTS-locals_
-        for name in sorted(unknown):
-            if path.startswith('/videoPromptInstructions') and name in ['videoDuration','videoStyle']:
-                add('context-root-unverified',path,'Video-context $'+name+' is not a declared tracker; availability in this field is not established by this kit.')
-            else:add('unknown-script-root',path,'$'+name+' is not a declared tracker variableName, script local, or known system root. Check missing dependencies; lint is not a full language/context parser.')
-        for token in ['==','&&','||']:
-            if token in clean:add('borrowed-syntax',path,'Review '+token+'; PawScript uses =, and, or in expressions.')
-        if re.search(r'^\s*(?:if\b|else\s+if\b|else\b|for\b).*:\s*$',clean,re.M):add('borrowed-syntax',path,'Branch/loop header ends with a colon; PawScript uses indentation without a colon.')
-        if re.search(r'[{};]',clean):add('borrowed-syntax',path,'Unquoted braces or semicolon found; review for borrowed block/object syntax.')
-        # Identify quoted-string + operand without looking inside literal text.
-        lit=re.compile(r'"(?:\\.|[^"\\])*"|\'(?:\\.|[^\'\\])*\'')
-        for m in lit.finditer(code):
-            if re.match(r'\s*\+\s*(?:\$|["\'])',clean[m.end():]) or re.search(r'\$[\w.()]+\s*\+\s*$',clean[:m.start()]):
-                add('string-plus',path,'Possible string concatenation with +; use &. Review this heuristic warning.');break
-    return findings
-
-def basic_errors(value,schema,root=None,path=''):
-    """A limited type/requiredness guard used without jsonschema. Coverage is explicitly reduced."""
-    root=root or schema;out=[]
-    if not isinstance(schema,dict):return out
-    if '$ref' in schema:
-        target=root
-        for part in schema['$ref'].lstrip('#/').split('/'):target=target.get(part,{})
-        return basic_errors(value,target,root,path)
-    if schema.get('x-discriminator') and isinstance(value,dict):
-        prefix='effect' if str(value.get('type','')).startswith('effect') else 'condition'
-        target=root.get('$defs',{}).get(prefix+'_'+str(value.get('type')))
-        if target:return basic_errors(value,target,root,path)
-    if 'anyOf' in schema:
-        branches=[basic_errors(value,s,root,path) for s in schema['anyOf']]
-        if any(not x for x in branches):return []
-        return [dict(severity='error',code='basic-structure',path=path or '/',message='Value does not match the checked type alternatives (reduced validation).')]
-    if 'not' in schema and not basic_errors(value,schema['not'],root,path):
-        return [dict(severity='error',code='basic-structure',path=path or '/',message='Excluded alternative (reduced validation).')]
-    for sub in schema.get('allOf',[]):out+=basic_errors(value,sub,root,path)
-    typ=schema.get('type')
-    types={'object':isinstance(value,dict),'array':isinstance(value,list),'string':isinstance(value,str),'boolean':isinstance(value,bool),'integer':isinstance(value,int) and not isinstance(value,bool),'number':isinstance(value,(int,float)) and not isinstance(value,bool),'null':value is None}
-    def error(msg):out.append(dict(severity='error',code='basic-structure',path=path or '/',message=msg))
-    if typ and not any(types.get(t,False) for t in (typ if isinstance(typ,list) else [typ])):error('Expected '+str(typ));return out
-    if 'const'in schema and value!=schema['const']:error('Constant value mismatch.')
-    if 'enum'in schema and value not in schema['enum']:error('Value is outside the declared enum.')
-    if isinstance(value,(int,float)) and not isinstance(value,bool):
-        if 'minimum'in schema and value<schema['minimum']:error('Below minimum.')
-        if 'maximum'in schema and value>schema['maximum']:error('Above maximum.')
-    if isinstance(value,dict):
-        for k in schema.get('required',[]):
-            if k not in value:error('Missing required field '+k)
-        for k,v in value.items():
-            sub=schema.get('properties',{}).get(k,schema.get('additionalProperties',{}))
-            if isinstance(sub,dict):out+=basic_errors(v,sub,root,path+'/'+escaped(k))
-    if isinstance(value,list):
-        if len(value)<schema.get('minItems',0):error('Too few items.')
-        if 'maxItems'in schema and len(value)>schema['maxItems']:error('Too many items.')
-        for i,v in enumerate(value):out+=basic_errors(v,schema.get('items',{}),root,path+'/'+str(i))
-    return out
-
-def edit_diff(old,new):
-    changes=[]
-    def brief(v):
-        if isinstance(v,str) and len(v)>160:return {'preview':v[:160],'characters':len(v),'sha256':hashlib.sha256(v.encode('utf-8')).hexdigest()}
-        return v
-    def compare(a,b,path=''):
-        if type(a)!=type(b):changes.append({'path':path or '/','change':'type/value','before':brief(a),'after':brief(b)});return
-        if isinstance(a,dict):
-            for k in sorted(set(a)|set(b)):
-                q=path+'/'+escaped(k)
-                if k not in a:changes.append({'path':q,'change':'added','after':brief(b[k])})
-                elif k not in b:changes.append({'path':q,'change':'removed','before':brief(a[k])})
-                else:compare(a[k],b[k],q)
-        elif isinstance(a,list):
-            if a!=b:
-                for i in range(max(len(a),len(b))):
-                    q=path+'/'+str(i)
-                    if i>=len(a):changes.append({'path':q,'change':'added','after':brief(b[i])})
-                    elif i>=len(b):changes.append({'path':q,'change':'removed','before':brief(a[i])})
-                    else:compare(a[i],b[i],q)
-        elif a!=b:changes.append({'path':path,'change':'changed','before':brief(a),'after':brief(b)})
-    compare(old,new)
-    objects={}
-    for field,idkey in [('trackedItems','id'),('triggerEvents','id'),('possibleCharacters','characterId'),('instructionBlocks','id'),('loreBookEntries','id'),('NPCs','id')]:
-        def lookup(w):return {x[idkey]:x for x in w.get(field,[]) if isinstance(x,dict) and isinstance(x.get(idkey),str)} if isinstance(w,dict) and isinstance(w.get(field,[]),list) else {}
-        a,b=lookup(old),lookup(new)
-        objects[field]={'added':sorted(b.keys()-a.keys()),'removed':sorted(a.keys()-b.keys()),'changed':sorted(k for k in a.keys()&b.keys() if a[k]!=b[k]),'orderChanged':list(a)!=list(b)}
-    return {'objects':objects,'changes':changes,'note':'Reports differences, not whether they are authorized. Array indices are positional; object summaries match IDs.'}
-
-===== END FILE: tools/static_checks.py =====
-
-===== BEGIN FILE: tools/test_data_bank.py =====
-"""Data bank transport checks; no IW runtime execution."""
-import copy
-from decimal import Decimal
-from pathlib import Path
-import tempfile
-import unittest
-import data_bank as db
-from static_checks import lint
-
-ROOT=Path(__file__).resolve().parent.parent
-
-class DataTests(unittest.TestCase):
-    def sample(self):
-        return db.loads('{"title":"Demo","NPCs":[{"name":"Mara","unknown":{"future":true},"detail":"Text\\nwith \\\"quotes\\\" and \\\\ escapes"}],"trackedItems":[],"unknownRoot":{"huge":90071992547409931234567890,"precise":0.12345678901234567890123456789,"wholeDecimal":1.0,"null":null},"skills":["Generic"],"empty":{},"x/y~z":"unicode \\u00e9"}')
-
-    def parse_rendered(self,bank):
-        with tempfile.TemporaryDirectory() as tmp:
-            p=Path(tmp)/'Bank.txt';p.write_text(db.render(bank),encoding='utf-8')
-            return db.read_bank(p)
-
-    def test_all_worlds_round_trip(self):
-        paths=[ROOT/'World-Template.json',ROOT/'library/Sample-Blocks.json',*sorted((ROOT/'examples').glob('*.json'))]
-        for p in paths:
-            if p.name=='index.json': continue
-            with self.subTest(world=p.name):
-                doc=db.loads(p.read_text(encoding='utf-8'))
-                restored=db.restore(self.parse_rendered(db.export(doc)))
-                self.assertEqual(db.digest(doc),db.digest(restored))
-                self.assertEqual(list(doc),list(restored))
-
-    def test_precision_types_and_unknowns(self):
-        original=self.sample();bank=db.export(original)
-        bank['futureMetadata']={'retain':'yes'}
-        rebuilt=self.parse_rendered(bank)
-        self.assertEqual(rebuilt['futureMetadata'],bank['futureMetadata'])
-        restored=db.restore(rebuilt)
-        self.assertEqual(db.dumps(restored),db.dumps(original))
-        self.assertIsInstance(restored['unknownRoot']['wholeDecimal'],Decimal)
-
-    def test_selected_bundle_and_tags(self):
-        bank=db.export(self.sample(),['/NPCs/0','/trackedItems'],['fantasy','cast'],'Cast bundle')
-        self.assertEqual(len(bank['entries']),1)
-        entry=bank['entries'][0]
-        self.assertEqual(entry['kind'],'bundle');self.assertEqual(len(entry['components']),2)
-        self.assertIn('[fantasy] [cast]',db.render(bank))
-        with self.assertRaises(ValueError): db.restore(bank)
-
-    def test_pointer_escaping(self):
-        bank=db.export(self.sample(),['/x~1y~0z'])
-        self.assertEqual(bank['entries'][0]['components'][0]['payload'],'unicode é')
-
-    def test_duplicate_and_overlap(self):
-        with self.assertRaises(ValueError):db.loads('{"x":1,"x":2}')
-        for paths in [['/NPCs','/NPCs/0'],['/title','/title']]:
-            with self.assertRaises(ValueError):db.export(self.sample(),paths)
-
-    def test_tampered_hash(self):
-        bank=db.export(self.sample())
-        with tempfile.TemporaryDirectory() as tmp:
-            p=Path(tmp)/'bank.txt';p.write_text(db.render(bank).replace('"Demo"','"Changed"'),encoding='utf-8')
-            with self.assertRaisesRegex(ValueError,'hash mismatch'):db.read_bank(p)
-
-    def test_unverified_chat_bank(self):
-        bank=db.export(self.sample())
-        with tempfile.TemporaryDirectory() as tmp:
-            p=Path(tmp)/'bank.txt';p.write_text(db.render(bank).replace(db.digest(bank),'UNVERIFIED'))
-            self.assertEqual(db.digest(db.read_bank(p)),db.digest(bank))
-
-    def test_dependencies_and_duplicate_ids(self):
-        bank=db.export(self.sample());bank['entries'][0]['dependencies']['included']=['absent']
-        with self.assertRaises(ValueError):db.validate(bank)
-        bank['entries'][0]['dependencies']['included']=[bank['entries'][1]['id']]
-        db.validate(bank)
-        bank['entries'][1]['id']=bank['entries'][0]['id']
-        with self.assertRaises(ValueError):db.validate(bank)
-
-    def test_restore_missing_extra_and_changed(self):
-        for mode in ['missing','extra','changed']:
-            bank=db.export(self.sample())
-            if mode=='missing':bank['entries'].pop()
-            if mode=='extra':bank['entries'][0]['components'].append({'kind':'world-field','sourcePath':'/extra','payload':True})
-            if mode=='changed':bank['entries'][0]['components'][0]['payload']='Changed'
-            with self.assertRaises((ValueError,KeyError)):db.restore(bank)
-
-    def test_overwrite_refused(self):
-        with tempfile.TemporaryDirectory() as tmp:
-            p=Path(tmp)/'out';db.write(p,'original')
-            with self.assertRaises(FileExistsError):db.write(p,'replacement')
-            self.assertEqual(p.read_text(),'original')
-
-    def test_substitution_lint(self):
-        findings=lint({'instructions':'<#REPLACE01#>Safe replacement.<#END_REPLACE01#>'})
-        matches=[f for f in findings if f['code']=='content-substitution']
-        self.assertEqual(len(matches),1);self.assertEqual(matches[0]['severity'],'warning')
-        self.assertFalse(any(f['code']=='authoring-placeholder' for f in findings))
-
-if __name__=='__main__':unittest.main()
-
-===== END FILE: tools/test_data_bank.py =====
-
-===== BEGIN FILE: tools/test_validator.py =====
-"""Local validator regression tests, not an IW/model qualification suite."""
-import copy,json,subprocess,sys,tempfile,unittest
-from pathlib import Path
-import validate_iw_export as v
-from static_checks import lint,edit_diff,templates
-ROOT=Path(__file__).resolve().parent.parent
-SCHEMA=json.loads((ROOT/'tools/iw-export.schema.json').read_text(encoding='utf-8'))
-BASE=json.loads((ROOT/'examples/effect-effectPresentChoice.json').read_text(encoding='utf-8'))
-
-def codes(w):return {x['code'] for x in lint(w)}
-def code_world(code):
- w=copy.deepcopy(BASE);w['triggerEvents']=[{'id':'test','triggerConditions':[],'triggerEffects':[{'id':'effect','type':'effectRunScript','data':code,'name':'Test'}]}];return w
-
-class ValidatorTests(unittest.TestCase):
- def test_root_typo(self):self.assertIn('unknown-script-root',codes(code_world('$missing += 1')))
- def test_locals_system_and_strings(self):self.assertNotIn('unknown-script-root',codes(code_world('set $local = $game.turn_number\nfor each $entry in $player.skills\n  log($entry)\nlog("$not_a_root; == &&")\n# $ignored')))
- def test_template_any_field(self):
-  w=copy.deepcopy(BASE);w['firstInput']='Coins <<$missing>>.';self.assertIn('unknown-script-root',codes(w))
- def test_template_quoted_delimiter(self):self.assertEqual(list(templates('A <<choose($answer, ">>", "ok")>> B')),['choose($answer, ">>", "ok")'])
- def test_comment_template(self):self.assertEqual(list(templates('<# <<$ignored>> #>')),[])
- def test_startup_expression(self):
-  w=copy.deepcopy(BASE);w['trackedItems'][0]['initialValueChoicesScript']='$missing.all().name';self.assertIn('unknown-script-root',codes(w))
- def test_borrowed_syntax(self):self.assertIn('borrowed-syntax',codes(code_world('if $answer == "A" && $coins > 0:\n  $coins -= 1;')))
- def test_string_plus(self):self.assertIn('string-plus',codes(code_world('$answer = "Coins " + $coins')))
- def test_literals_not_syntax(self):self.assertNotIn('borrowed-syntax',codes(code_world('$answer = "Text == && ; {}"\n# if a:')))
- def test_placeholder(self):
-  w=copy.deepcopy(BASE);w['instructions']='[LIST GENRES] <#time period#>';self.assertIn('authoring-placeholder',codes(w))
- def test_runtime_tokens_not_placeholders(self):
-  w=copy.deepcopy(BASE);w['instructions']='[npcAction] [worldAction] <# explanatory comment #>';self.assertNotIn('authoring-placeholder',codes(w))
- def test_input_reference(self):
-  w=copy.deepcopy(BASE);w['triggerEvents'][0]['triggerEffects'][0]['data']['targetTrackedItemId']='absent';self.assertIn('unresolved-reference',{x['code'] for x in v.validate(w,SCHEMA)})
- def test_no_schema_dependency(self):
-  saved=v.Draft202012Validator
-  try:
-   v.Draft202012Validator=None;w=copy.deepcopy(BASE);w['triggerEvents'][0]['triggerEffects'][0]['data']['targetTrackedItemId']='absent';out=v.validate(w,SCHEMA);self.assertIn('schema-validation-unavailable',{x['code']for x in out});self.assertIn('unresolved-reference',{x['code']for x in out})
-  finally:v.Draft202012Validator=saved
- def test_no_schema_bad_container(self):
-  saved=v.Draft202012Validator
-  try:
-   v.Draft202012Validator=None;w=copy.deepcopy(BASE);w['triggerEvents']='bad';self.assertTrue(any(x['severity']=='error'for x in v.validate(w,SCHEMA)))
-  finally:v.Draft202012Validator=saved
- def test_diff(self):
-  a=copy.deepcopy(BASE);b=copy.deepcopy(a);removed=b['trackedItems'].pop()['id'];b['title']='Changed';d=edit_diff(a,b);self.assertIn(removed,d['objects']['trackedItems']['removed']);self.assertTrue(any(x['path']=='/title' for x in d['changes']))
- def test_cli_newline_and_utf8(self):
-  with tempfile.TemporaryDirectory() as tmp:
-   f=Path(tmp)/'world.json';w=copy.deepcopy(BASE);w['title']='Caf\u00e9';f.write_text(json.dumps(w,ensure_ascii=False)+'\n',encoding='utf-8')
-   r=subprocess.run([sys.executable,str(ROOT/'tools/validate_iw_export.py'),str(f),'--json'],capture_output=True,text=True,encoding='utf-8');self.assertEqual(r.returncode,0,r.stderr);out=json.loads(r.stdout);self.assertIn('trailing-newline',{x['code']for x in out['findings']})
-
-if __name__=='__main__':unittest.main()
-
-===== END FILE: tools/test_validator.py =====
-
-===== BEGIN FILE: tools/validate_iw_export.py =====
-#!/usr/bin/env python3
-"""Validate observed IW export structure, references, and evidence gaps.
-
-Usage: python validate_iw_export.py WORLD.json [--schema SCHEMA.json] [--json]
-Exit codes: 0 = no errors (warnings permitted), 1 = validation errors,
-2 = input failure. jsonschema is optional; reduced coverage is reported when absent. Never executes PawScript.
+No dependencies. Does not execute IW/PawScript or automatically integrate worlds.
 """
-from __future__ import annotations
+from pathlib import Path
+from decimal import Decimal
 import argparse
+import hashlib
 import json
 import re
 import sys
-from pathlib import Path
-from static_checks import lint, basic_errors, edit_diff
-try:
-    from jsonschema import Draft202012Validator
-except ImportError:
-    Draft202012Validator = None
+import uuid
 
-def pointer(parts):
-    return '/'+'/'.join(str(p).replace('~','~0').replace('/','~1') for p in parts) if parts else '/'
+FORMAT = 'iw-data-bank'
+BEGIN = '<!-- BEGIN IW DATA BANK -->'
+END = '<!-- END IW DATA BANK -->'
+COLLECTIONS = {'NPCs':'npc', 'possibleCharacters':'pc', 'trackedItems':'tracker',
+               'triggerEvents':'trigger', 'instructionBlocks':'block', 'loreBookEntries':'keyword'}
 
-def validate(doc, schema):
-    findings=[]
-    def add(level,code,path,message):
-        findings.append({'severity':level,'code':code,'path':path,'message':message})
-    if Draft202012Validator is not None:
-        Draft202012Validator.check_schema(schema)
-        for e in sorted(Draft202012Validator(schema).iter_errors(doc),key=lambda e:str(list(e.path))):
-            add('error','structure',pointer(e.path),e.message)
+def pairs(items):
+    result = {}
+    for k,v in items:
+        if k in result: raise ValueError('Duplicate JSON key: '+k)
+        result[k] = v
+    return result
+
+def invalid_number(value): raise ValueError('Not a finite JSON number: '+value)
+
+def loads(text):
+    return json.loads(text, object_pairs_hook=pairs, parse_float=Decimal,
+                      parse_constant=invalid_number)
+
+def dumps(value, depth=0, canonical=False):
+    """Preserve decimal precision and JSON value types without a float conversion."""
+    if isinstance(value, Decimal):
+        if not value.is_finite(): raise ValueError('Non-finite number')
+        text = str(value)
+        return text if any(c in text for c in '.eE') else text+'.0'
+    if isinstance(value, (dict,list)):
+        is_dict = isinstance(value,dict)
+        opening,closing = ('{','}') if is_dict else ('[',']')
+        if not value: return opening+closing
+        if is_dict:
+            if not all(isinstance(k,str) for k in value): raise ValueError('JSON keys must be strings')
+            keys = sorted(value) if canonical else value
+            parts = [json.dumps(k,ensure_ascii=True)+(': ' if not canonical else ':')+dumps(value[k],depth+1,canonical) for k in keys]
+        else: parts = [dumps(v,depth+1,canonical) for v in value]
+        if canonical: return opening+','.join(parts)+closing
+        return opening+'\n'+'  '*(depth+1)+(',\n'+'  '*(depth+1)).join(parts)+'\n'+'  '*depth+closing
+    return json.dumps(value,ensure_ascii=True,allow_nan=False)
+
+def digest(value): return hashlib.sha256(dumps(value,canonical=True).encode('utf-8')).hexdigest()
+def escape(key): return key.replace('~','~0').replace('/','~1')
+
+def tokens(pointer):
+    if not pointer.startswith('/'): raise ValueError('Use a JSON Pointer beginning with /')
+    if re.search(r'~(?![01])',pointer): raise ValueError('Invalid JSON Pointer escape')
+    return [s.replace('~1','/').replace('~0','~') for s in pointer[1:].split('/')]
+
+def get(doc,pointer):
+    value = doc
+    for token in tokens(pointer):
+        if isinstance(value,list):
+            if not re.fullmatch(r'0|[1-9][0-9]*',token): raise ValueError('Invalid list index in '+pointer)
+            value=value[int(token)]
+        elif isinstance(value,dict): value=value[token]
+        else: raise ValueError('Path traverses a scalar: '+pointer)
+    return value
+
+def validate(bank):
+    if not isinstance(bank,dict) or bank.get('format')!=FORMAT or type(bank.get('version')) is not int or bank['version']!=1:
+        raise ValueError('Expected an iw-data-bank version 1 object')
+    if not isinstance(bank.get('entries'),list): raise ValueError('entries must be a list')
+    ids=set()
+    for e in bank['entries']:
+        if not isinstance(e,dict): raise ValueError('Each entry must be an object')
+        for key in ['id','title','kind','summary']:
+            if not isinstance(e.get(key),str) or (key!='summary' and not e[key]): raise ValueError('Entry needs text '+key)
+        if e['id'] in ids: raise ValueError('Duplicate entry ID: '+e['id'])
+        ids.add(e['id'])
+        if 'tags' in e and (not isinstance(e['tags'],list) or not all(isinstance(t,str) and t and '\n' not in t and '\r' not in t for t in e['tags'])):
+            raise ValueError('tags must be a list of nonempty single-line strings')
+        deps=e.get('dependencies')
+        if not isinstance(deps,dict) or not all(isinstance(deps.get(k),list) and all(isinstance(x,str) for x in deps[k]) for k in ['included','external','unresolved']):
+            raise ValueError('dependencies needs included, external and unresolved string lists')
+        if not isinstance(e.get('components'),list) or not e['components']: raise ValueError('Entry needs components')
+        for c in e['components']:
+            if not isinstance(c,dict) or 'payload' not in c or not isinstance(c.get('kind'),str): raise ValueError('Component needs kind and payload')
+            if 'sourcePath' in c: tokens(c['sourcePath'])
+    for e in bank['entries']:
+        missing=set(e['dependencies']['included'])-ids
+        if missing: raise ValueError('Missing included entry dependency: '+', '.join(sorted(missing)))
+    return bank
+
+def line(value): return str(value).replace('\n',' ').replace('\r',' ')
+
+def render(bank):
+    validate(bank)
+    parts=['# IW Data Bank\n\nReadable index only; the JSON section is authoritative. Edit through unpack/pack to update the integrity hash.\n']
+    for e in bank['entries']:
+        parts.append('\n## '+line(e['title'])+'\nID: '+line(e['id'])+' | Kind: '+line(e['kind'])+'\n')
+        if e.get('tags'): parts.append('Tags: '+' '.join('['+line(t)+']' for t in e['tags'])+'\n')
+        if e['summary']: parts.append(line(e['summary'])+'\n')
+        parts.append('Components: '+str(len(e['components']))+'\n')
+    parts.extend(['\n',BEGIN,'\n```json\n',dumps(bank),'\n```\n',END,'\nSHA256: ',digest(bank),'\n'])
+    return ''.join(parts)
+
+def read_bank(path):
+    text=Path(path).read_text(encoding='utf-8-sig')
+    if text.lstrip().startswith('{'): return validate(loads(text))
+    pattern=re.compile(r'^'+re.escape(BEGIN)+r'\r?\n```json\r?\n([\s\S]*?)\r?\n```\r?\n'+re.escape(END)+r'\r?\nSHA256: ([a-f0-9]{64}|UNVERIFIED)\s*\Z',re.M)
+    matches=list(pattern.finditer(text))
+    if len(matches)!=1 or len(re.findall(r'^'+re.escape(BEGIN)+r'\s*$',text,re.M))!=1:
+        raise ValueError('Expected one complete Data bank section and SHA256 line')
+    bank=validate(loads(matches[0][1]))
+    if matches[0][2]!='UNVERIFIED' and digest(bank)!=matches[0][2]: raise ValueError('Integrity hash mismatch. Use the last intact copy or review the edit before repacking the authoritative JSON.')
+    return bank
+
+def export(doc,select=None,tags=None,bundle=None):
+    if not isinstance(doc,dict): raise ValueError('World must be a JSON object')
+    paths=[];layout=[]
+    if select:
+        if len(select)!=len(set(select)): raise ValueError('Selection repeats a path')
+        decoded=[tokens(p) for p in select]
+        for i,a in enumerate(decoded):
+            for b in decoded[i+1:]:
+                if a==b[:len(a)] or b==a[:len(b)]: raise ValueError('Selections overlap; choose parent or child, not both')
+        paths=list(select)
     else:
-        add('warning','schema-validation-unavailable','/','jsonschema is unavailable. Full JSON Schema validation was NOT run; limited type guards, references and static lint remain available.')
-        findings.extend(basic_errors(doc,schema))
-    if not isinstance(doc,dict): return findings
-    if any(f['severity']=='error' for f in findings): return findings
-    defs=schema.get('$defs',{})
+        for k,v in doc.items():
+            separate=k in COLLECTIONS and isinstance(v,list) and bool(v)
+            layout.append({'key':k,'items':len(v) if separate else None})
+            paths.extend('/'+escape(k)+'/'+str(i) for i in range(len(v))) if separate else paths.append('/'+escape(k))
+    entries=[]
+    for p in paths:
+        payload=get(doc,p);key=tokens(p)[0]
+        kind=COLLECTIONS.get(key,'world-field') if len(tokens(p))==2 else 'world-field'
+        title=(payload.get('name') or payload.get('title') or payload.get('characterName')) if isinstance(payload,dict) else None
+        entry={'id':'entry-'+uuid.uuid4().hex[:12],'title':str(title or p),'kind':kind,'summary':'',
+               'dependencies':{'included':[],'external':[],'unresolved':['Dependency review required before reuse; extraction does not infer prose or dynamic references.']},
+               'components':[{'kind':kind,'sourcePath':p,'payload':payload}]}
+        if tags: entry['tags']=list(tags)
+        entries.append(entry)
+    if bundle and entries:
+        first=entries[0];first['title']=bundle;first['kind']='bundle'
+        first['components']=[c for e in entries for c in e['components']];entries=[first]
+    bank={'format':FORMAT,'version':1,'source':{'title':str(doc.get('title','')),'sha256':digest(doc)},'entries':entries}
+    if not select: bank['completeWorld']={'layout':layout}
+    return validate(bank)
 
-    def resolved(s,value):
-        if '$ref' in s:
-            key=s['$ref'].rsplit('/',1)[-1]
-            if key=='conditionNode' and isinstance(value,dict):
-                if value.get('category')=='logic': return defs[key]['anyOf'][0]
-                if value.get('category')=='condition': return resolved(defs['conditionLeaf'],value)
-                return {}
-            return resolved(defs[key],value)
-        tag=s.get('x-discriminator')
-        if tag and isinstance(value,dict):
-            val=value.get(tag)
-            prefix='effect' if tag=='type' and s is defs.get('effect') else 'condition'
-            return defs.get(prefix+'_'+str(val),{})
-        if 'anyOf' in s:
-            matches=[x for x in s['anyOf'] if not basic_errors(value,x,schema)]
-            return resolved(matches[0],value) if matches else {}
-        return s
+def restore(bank):
+    validate(bank)
+    layout=bank.get('completeWorld',{}).get('layout')
+    if not isinstance(layout,list): raise ValueError('Only a complete-world report can be restored; selected entries require deliberate integration')
+    components={}
+    for e in bank['entries']:
+        for c in e['components']:
+            p=c.get('sourcePath')
+            if p is None or p in components: raise ValueError('Missing or duplicate sourcePath')
+            components[p]=c['payload']
+    doc={};used=set()
+    for item in layout:
+        key=item['key'];n=item['items'];p='/'+escape(key)
+        if key in doc: raise ValueError('Duplicate layout key')
+        if n is None: doc[key]=components[p];used.add(p)
+        else:
+            if type(n) is not int or not 0<=n<=len(components): raise ValueError('Invalid layout length')
+            paths=[p+'/'+str(i) for i in range(n)]
+            doc[key]=[components[x] for x in paths];used.update(paths)
+    if used!=set(components): raise ValueError('Extra components not described by the complete-world layout')
+    if digest(doc)!=bank.get('source',{}).get('sha256'): raise ValueError('Restored world differs from the source fingerprint; review and integrate changed data deliberately')
+    return doc
 
-    def audit(value,s,path):
-        s=resolved(s,value)
-        observed=s.get('x-observedValues')
-        if observed is not None and value not in observed:
-            add('warning','unobserved-value',path,'Value is outside observed vocabulary; not declared invalid: '+repr(value))
-        if isinstance(value,dict) and s.get('type')=='object':
-            props=s.get('properties',{})
-            for k,v in value.items():
-                p=path.rstrip('/')+'/'+str(k).replace('~','~0').replace('/','~1')
-                if k not in props:
-                    extra=s.get('additionalProperties')
-                    if isinstance(extra,dict): audit(v,extra,p)
-                    else: add('warning','unobserved-field',p,'Field has no characterized schema at this location.')
-                else: audit(v,props[k],p)
-        elif isinstance(value,list) and s.get('type')=='array':
-            for i,v in enumerate(value): audit(v,s.get('items',{}),path.rstrip('/')+'/'+str(i))
-    audit(doc,schema,'/')
-    if doc.get('schemaVersion') not in schema.get('x-observedSchemaVersions',[]):
-        add('warning','schema-version','/schemaVersion','Version missing or outside observed versions; profile coverage is not established.')
-
-    tables={}
-    for field,idkey in [('trackedItems','id'),('triggerEvents','id'),('possibleCharacters','characterId'),('instructionBlocks','id'),('loreBookEntries','id'),('NPCs','id')]:
-        tables[field]={}
-        for i,o in enumerate(doc.get(field,[]) if isinstance(doc.get(field,[]),list) else []):
-            if not isinstance(o,dict): continue
-            p='/'+field+'/'+str(i)+'/'+idkey
-            ident=o.get(idkey)
-            if not isinstance(ident,str) or not ident:
-                add('warning','missing-id',p,'No usable identifier; requiredness is not established, but references cannot resolve.');continue
-            if ident in tables[field]: add('error','duplicate-id',p,'Identifier is duplicated within '+field+': '+ident)
-            tables[field][ident]=o
-    def ref(ident,namespace,path,condition=False):
-        if not isinstance(ident,str): return
-        if ident in tables[namespace]: return
-        if condition and ident in schema.get('x-observedConditionExternalReferences',[]):
-            if ident=='skill_player_skill_1' and 'Player - Skill 1' not in doc.get('skills',[]):
-                add('warning','skill-binding',path,'Observed skill variable used without its sample skill name; general binding rule is unknown.')
-            return
-        if condition and ident.startswith('skill_'):
-            add('warning','unknown-skill-reference',path,'Unobserved built-in skill reference; normalization and binding not verified.');return
-        add('error','unresolved-reference',path,'No declared '+namespace+' target: '+ident)
-
-    seen_node_ids={}
-    def node_id(n,p):
-        ident=n.get('id')
-        if not isinstance(ident,str) or not ident:
-            add('warning','missing-node-id',p+'/id','Condition/effect node has no usable ID; importer requirements unknown.')
-        elif ident in seen_node_ids: add('warning','duplicate-node-id',p+'/id','Node ID is reused at '+seen_node_ids[ident])
-        else: seen_node_ids[ident]=p
-    def compare_wrapper(n,d,p):
-        for k in ('trackedItemID','inequality'):
-            if k in n and k in d and n[k]!=d[k]:
-                add('error','wrapper-payload-mismatch',p+'/'+k,'Wrapper and payload disagree; runtime precedence unknown.')
-    def conditions(nodes,p,start_enabled=False):
-        for i,n in enumerate(nodes if isinstance(nodes,list) else []):
-            q=p+'/'+str(i)
-            if not isinstance(n,dict): continue
-            node_id(n,q)
-            category=n.get('category')
-            if category=='logic':
-                if n.get('operator') not in ['and','or','none_of']: add('warning','unknown-logic',q+'/operator','Unobserved operator.')
-                if 'data' not in n: add('warning','missing-payload',q+'/data','Logic group has no child list.')
-                conditions(n.get('data',[]), q+'/data', start_enabled);continue
-            if category!='condition': add('warning','unclassified-condition',q+'/category','Missing or unobserved category.')
-            t=n.get('type'); d=n.get('data')
-            if start_enabled and t in ('triggerOnTurn', 'triggerOnEvent'):
-                label = (
-                    'Minimum-turn' if t == 'triggerOnTurn'
-                    else 'Scenario'
-                )
-                add('warning', 'start-incompatible-condition', q, label + 
-                    ' condition combined with Start of Game. Condition ignored; does not gate execution. Use separate startup trigger and leave Start off here.'
-                )
-            if t not in defs['conditionLeaf']['x-knownDiscriminators']:
-                add('warning','unknown-condition-type',q+'/type','Missing or unobserved condition type: '+repr(t));continue
-            if 'data' not in n: add('warning','missing-payload',q+'/data','No condition payload observed.');continue
-            if isinstance(d,dict): compare_wrapper(n,d,q)
-            if t=='triggerOnCharacter' and isinstance(d,list):
-                for j,x in enumerate(d): ref(x,'possibleCharacters',q+'/data/'+str(j))
-            elif t=='triggerOnTrackedItem' and isinstance(d,dict):
-                ref(d.get('trackedItemID'),'trackedItems',q+'/data/trackedItemID',condition=True)
-            elif t in ['triggerPrereqs','triggerBlockers'] and isinstance(d,dict):
-                key='prereqs' if t=='triggerPrereqs' else 'blockers'
-                for j,x in enumerate(d.get(key,[]) if isinstance(d.get(key,[]),list) else []): ref(x,'triggerEvents',q+'/data/'+key+'/'+str(j))
-            elif t=='triggerOnEvent' and isinstance(d,str) and d not in doc.get('conditions',[]):
-                add('warning','unlisted-situation',q+'/data','Situation string not in root conditions registry; whether registry membership is mandatory is unknown.')
-            elif t=='triggerOnPawScript': add('warning','unverified-expression',q+'/data','Expression is stored text; not parsed or executed.')
-    for i,t in enumerate(doc.get('triggerEvents',[]) if isinstance(doc.get('triggerEvents',[]),list) else []):
-        if not isinstance(t,dict): continue
-        p='/triggerEvents/'+str(i)
-        if t.get('triggerMidGame') and not t.get('triggerOnStartOfGame'):
-            add('warning','timing-editor-consistency',p,'Mid-game enabled without start-of-game; editor-inconsistent, runtime effect unverified.')
-        if not t.get('triggerOnStartOfGame') and not t.get('triggerConditions'):
-            add('warning','saved-inactive-trigger',p,'Valid saved trigger with no ordinary automatic firing conditions; explicit random dispatch may still call it.')
-        numeric_writes={}
-        flat_req=set();flat_block=set()
-        for n in t.get('triggerConditions',[]):
-            if isinstance(n,dict) and n.get('category')=='condition' and isinstance(n.get('data'),dict):
-                data=n['data'];scope=data.get('firedThisTurn',False)
-                if n.get('type')=='triggerPrereqs':flat_req.update((x,scope) for x in data.get('prereqs',[]))
-                if n.get('type')=='triggerBlockers':flat_block.update((x,scope) for x in data.get('blockers',[]))
-        if flat_req & flat_block:add('warning','dependency-editor-conflict',p,'Flat AND prerequisites and blockers conflict within the same scope.')
-        for e in t.get('triggerEffects',[]):
-            if isinstance(e,dict) and e.get('type')=='effectSetTrackedItemValue' and isinstance(e.get('data'),dict):
-                ident=e['data'].get('trackedItemID')
-                if tables['trackedItems'].get(ident,{}).get('dataType')=='number':numeric_writes[ident]=numeric_writes.get(ident,0)+1
-        for ident,count in numeric_writes.items():
-            if count>1:add('warning','numeric-write-overwrite',p,'Multiple numeric writes to '+ident+' can overwrite rather than accumulate within one trigger.')
-        conditions(t.get('triggerConditions',[]),p+'/triggerConditions',start_enabled=bool(t.get('triggerOnStartOfGame')))
-        for j,e in enumerate(t.get('triggerEffects',[]) if isinstance(t.get('triggerEffects',[]),list) else []):
-            q=p+'/triggerEffects/'+str(j)
-            if not isinstance(e,dict):continue
-            node_id(e,q); et=e.get('type');d=e.get('data')
-            if et not in defs['effect']['x-knownDiscriminators']:
-                add('warning','unknown-effect-type',q+'/type','Missing or unobserved effect type: '+repr(et));continue
-            if 'data' not in e: add('warning','missing-payload',q+'/data','No effect payload.');continue
-            if isinstance(d,dict):
-                compare_wrapper(e,d,q)
-                if et in ['effectSetTrackedItemValue','effectModifyTrackedItemDetails']:
-                    ref(d.get('trackedItemID'),'trackedItems',q+'/data/trackedItemID')
-                elif et in ['effectPresentChoice','effectRequestInput']:
-                    ref(d.get('targetTrackedItemId'),'trackedItems',q+'/data/targetTrackedItemId')
-                elif et=='effectModifyInstructionBlock': ref(d.get('id'),'instructionBlocks',q+'/data/id')
-                elif et=='effectModifyKeywordBlock': ref(d.get('id'),'loreBookEntries',q+'/data/id')
-                elif et=='effectChangePCSkill' and d.get('name') not in doc.get('skills',[]):
-                    add('error','unresolved-skill',q+'/data/name','Skill name is not declared in root skills.')
-            if et=='effectFireRandomTrigger' and isinstance(d,list):
-                for k,x in enumerate(d):
-                    if x!='nothing':ref(x,'triggerEvents',q+'/data/'+str(k))
-            if et=='effectRunScript':add('warning','unverified-script',q+'/data','Script is stored text; validity/write capabilities not checked.')
-
-    variables={}
-    for i,t in enumerate(doc.get('trackedItems',[]) if isinstance(doc.get('trackedItems',[]),list) else []):
-        if not isinstance(t,dict):continue
-        p='/trackedItems/'+str(i)
-        v=t.get('variableName')
-        if isinstance(v,str) and v:
-            if v in variables:add('warning','duplicate-variable',p+'/variableName','Repeated variable name; binding ambiguity not resolved.')
-            variables[v]=p
-        if t.get('dataType')=='number' and t.get('initialValueBasedOnPC')=='same':
-            val=t.get('initialValue')
-            if isinstance(val,str) and not re.fullmatch(r'[+-]?(?:\d+(?:\.\d*)?|\.\d+)(?:[eE][+-]?\d+)?',val.strip()):
-                add('warning','numeric-initialization',p+'/initialValue','Number tracker does not contain a plain numeric literal; expression/runtime meaning unverified.')
-    for i,c in enumerate(doc.get('possibleCharacters',[]) if isinstance(doc.get('possibleCharacters',[]),list) else []):
-        if not isinstance(c,dict):continue
-        for name in c.get('skills',{}) if isinstance(c.get('skills'),dict) else []:
-            if name not in doc.get('skills',[]):add('warning','undeclared-character-skill','/possibleCharacters/'+str(i)+'/skills/'+name,'Character skill is not in root skill list.')
-        for j,v in enumerate(c.get('initialTrackedItemValues',[]) if isinstance(c.get('initialTrackedItemValues',[]),list) else []):
-            if not isinstance(v,dict):continue
-            q='/possibleCharacters/'+str(i)+'/initialTrackedItemValues/'+str(j)
-            ref(v.get('id'),'trackedItems',q+'/id')
-            target=tables['trackedItems'].get(v.get('id'),{})
-            val=v.get('initialPCValue')
-            choices_script=v.get('initialPCValueChoicesScript')
-            if isinstance(choices_script,str) and choices_script.strip():
-                add('warning','unverified-choice-expression',q+'/initialPCValueChoicesScript','Startup choice expression is stored text; not evaluated. Empty initialPCValue is expected in the observed script mode.')
-            elif target.get('dataType')=='number' and isinstance(val,str) and not re.fullmatch(r'[+-]?(?:\d+(?:\.\d*)?|\.\d+)(?:[eE][+-]?\d+)?',val.strip()):
-                add('warning','numeric-character-initialization',q+'/initialPCValue','Number tracker has a nonnumeric per-character sample; runtime meaning unverified.')
-    findings.extend(lint(doc))
-    return findings
+def write(path,text):
+    # Never silently overwrite an existing bank/world.
+    with Path(path).open('x',encoding='utf-8',newline='') as f: f.write(text)
 
 def main():
-    p=argparse.ArgumentParser(description=__doc__)
-    p.add_argument('world',type=Path);p.add_argument('--schema',type=Path,default=Path(__file__).with_name('iw-export.schema.json'));p.add_argument('--json',action='store_true');p.add_argument('--diff',type=Path,metavar='OLD.json',help='Compare object IDs and changed fields against an earlier export.')
-    args=p.parse_args()
+    parser=argparse.ArgumentParser(description=__doc__)
+    sub=parser.add_subparsers(dest='command',required=True)
+    p=sub.add_parser('export');p.add_argument('input');p.add_argument('--out',required=True)
+    p.add_argument('--select',action='append');p.add_argument('--tag',action='append');p.add_argument('--bundle')
+    for name in ['pack','unpack','restore']:
+        p=sub.add_parser(name);p.add_argument('input');p.add_argument('--out',required=True)
+    p=sub.add_parser('check');p.add_argument('input')
+    args=parser.parse_args()
     try:
-        raw=args.world.read_bytes();doc=json.loads(raw.decode('utf-8-sig')); schema=json.loads(args.schema.read_text(encoding='utf-8'));findings=validate(doc,schema)
-        if raw != raw.rstrip() and (b'\n' in raw[len(raw.rstrip()):] or b'\r' in raw[len(raw.rstrip()):]):findings.append({'severity':'warning','code':'trailing-newline','path':'/','message':'Remove the final newline before pasting into IW; the import text should end at its final brace.'})
-        diff=edit_diff(json.loads(args.diff.read_text(encoding='utf-8-sig')),doc) if args.diff else None
-    except (OSError,ValueError) as exc:
-        print(str(exc),file=sys.stderr);return 2
-    result={'file':str(args.world),'errors':sum(f['severity']=='error' for f in findings),'warnings':sum(f['severity']=='warning' for f in findings),'findings':findings,'coverage':{'fullSchema':Draft202012Validator is not None,'staticLint':True,'runtimeExecution':False}}
-    if diff is not None:result['diff']=diff
-    if args.json:print(json.dumps(result,indent=2,ensure_ascii=False))
-    else:
-        print(f"{result['errors']} errors; {result['warnings']} warnings")
-        if diff is not None:print(json.dumps({'diff':diff},indent=2,ensure_ascii=False))
-        for f in findings:print(f"{f['severity'].upper()} {f['code']} {f['path']}: {f['message']}")
-    return int(result['errors']>0)
+        if args.command=='export':
+            bank=export(loads(Path(args.input).read_text(encoding='utf-8-sig')),args.select,args.tag,args.bundle)
+            text=render(bank)
+        else:
+            bank=read_bank(args.input)
+            if args.command=='check':
+                source=Path(args.input).read_text(encoding='utf-8-sig').strip()
+                integrity='not supplied' if source.startswith('{') or source.endswith('SHA256: UNVERIFIED') else 'verified'
+                print('Bank structure checked. Integrity hash: '+integrity+'. Entries: '+str(len(bank['entries']))+'. Dependencies and IW runtime not verified.');return 0
+            text=render(bank) if args.command=='pack' else dumps(restore(bank) if args.command=='restore' else bank)
+        write(args.out,text)
+        # A real parse-back check, not a model's visual inspection.
+        if args.command in ('export','pack'):
+            if digest(read_bank(args.out))!=digest(bank): raise ValueError('Round-trip verification failed')
+        elif args.command=='restore':
+            if digest(loads(Path(args.out).read_text()))!=bank['source']['sha256']: raise ValueError('Restore verification failed')
+        print('Wrote '+args.out)
+        return 0
+    except (ValueError,KeyError,IndexError,TypeError,OSError,RecursionError) as exc:
+        print('Data bank error: '+str(exc),file=sys.stderr);return 1
 
-if __name__=='__main__':sys.exit(main())
+if __name__=='__main__': sys.exit(main())
 
-===== END FILE: tools/validate_iw_export.py =====
+===== END FILE: tools/data_bank.py =====
+
+END OF DOCUMENT: chat/IW-Tools.txt

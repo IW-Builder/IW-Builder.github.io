@@ -1,5 +1,4 @@
-Infinite Worlds Authoring Kit: generated text edition. Source paths below identify sections within this upload. This is reference material, not one JSON world to import. The Examples edition includes all native payload snippets plus selected complete recipes; other complete worlds remain in the full kit and can be requested by path. Follow Authoring-Prompt.md for the authoring task. Load referenced material selectively; ask for a missing companion when required. Do not claim the Python validator ran unless actual execution tools and the full tools folder are available.
-
+Infinite Worlds Authoring Kit: generated text edition. BEGIN FILE / END FILE sections identify package-relative sources. This upload is reference material, not one IW world. Follow Authoring-Prompt.md; load companion material only as needed. The Examples edition contains selected complete worlds; additional examples remain available in the repository.
 
 ===== BEGIN FILE: examples/Payloads.md =====
 # Compact native payload cookbook
@@ -473,21 +472,9 @@ Guide subsequent narration. Full world: [effect-effectTellAIWhatToDo.json](effec
 }
 ```
 
+---
 
-
-## Startup background replacement
-
-Native effect used by [layered opening](recipe-layered-opening.json); its string payload may interpolate an existing tracker. Keep installation after assembly.
-
-```json
-{
-  "id": "install-opening",
-  "type": "effectChangeBackground",
-  "data": "<<$opening_assembly>>"
-}
-```
-
-The tracker must be declared. This payload is sourced from an exported world; the new opening recipe is not yet runtime-certified.
+END OF DOCUMENT: examples/Payloads.md
 
 ===== END FILE: examples/Payloads.md =====
 
@@ -3086,3 +3073,5 @@ The tracker must be declared. This payload is sourced from an exported world; th
   "designNotes": "Authoring example. See the example index for scope and verification status."
 }
 ===== END FILE: examples/character-starting-values.json =====
+
+END OF DOCUMENT: chat/IW-Examples.txt

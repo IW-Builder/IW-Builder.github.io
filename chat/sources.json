@@ -17,7 +17,7 @@
       "reference/Default-Evaluation.txt",
       "reference/Current-AI-Profiles.json"
     ],
-    "sha256": "5ee3614ec0015563d5f3e8d583e28b1fbc7ee772b97eed4977c0fe3dcfae9aa0"
+    "sha256": "c5d4753ec03afbd2cb8df999a101b7e5eeb8cd83c6ab74cb6e52baaf65b0d613"
   },
   "IW-Examples.txt": {
     "sourceFiles": [
@@ -31,7 +31,7 @@
       "examples/showcase-glass-ledger.json",
       "examples/character-starting-values.json"
     ],
-    "sha256": "c2ad655c411020c623f00fb7589fe41a1f75fc3b3fa747cc197654c4bd8ec5cc"
+    "sha256": "87bb3972aec81d027c483d9c79814c66623489e7d43dd723895126fc231c0cd9"
   },
   "IW-Sample-Library.txt": {
     "sourceFiles": [
@@ -39,22 +39,16 @@
       "library/Sample-Blocks.json",
       "library/Storymaster-Suite.json"
     ],
-    "sha256": "996b10d861c3484810cc7f56728ae66eacd68859f6da4d92b5f1bf194a3043b6"
+    "sha256": "4721092eb87d17a7ffaee1ddf22e13d1af751993b56c79ae17062f5836de9ec5"
   },
   "IW-Tools.txt": {
     "sourceFiles": [
       "tools/Usage.md",
-      "tools/Validation-Report.json",
-      "tools/build_chat_edition.py",
-      "tools/build_prompt_page.py",
-      "tools/check_package.py",
-      "tools/data_bank.py",
-      "tools/iw-export.schema.json",
+      "tools/validate_iw_export.py",
       "tools/static_checks.py",
-      "tools/test_data_bank.py",
-      "tools/test_validator.py",
-      "tools/validate_iw_export.py"
+      "tools/iw-export.schema.json",
+      "tools/data_bank.py"
     ],
-    "sha256": "7c4c02c0d3766c14cd5310b19140961592a285d608aafc6fb519155f67ee3037"
+    "sha256": "303e07819bc2f9deaefe65cc61e882c0742f8c6c935555ec07522160193df1ec"
   }
 }

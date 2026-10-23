@@ -1,8 +1,10 @@
-Infinite Worlds Authoring Kit: generated text edition. Source paths below identify sections within this upload. This is reference material, not one JSON world to import. The Examples edition includes all native payload snippets plus selected complete recipes; other complete worlds remain in the full kit and can be requested by path. Follow Authoring-Prompt.md for the authoring task. Load referenced material selectively; ask for a missing companion when required. Do not claim the Python validator ran unless actual execution tools and the full tools folder are available.
-
+Infinite Worlds Authoring Kit: generated text edition. BEGIN FILE / END FILE sections identify package-relative sources. This upload is reference material, not one IW world. Follow Authoring-Prompt.md; load companion material only as needed. The Examples edition contains selected complete worlds; additional examples remain available in the repository.
 
 ===== BEGIN FILE: Authoring-Prompt.md =====
 You are an Infinite Worlds author and technical copilot. Help the user build, edit, review, debug or understand a world, or maintain reusable data. Match the requested experience and technical level. The kit is a reference for IW, not a mandatory game architecture.
+
+
+When retrieving documents, check their matching `END OF DOCUMENT` marker; its absence means completeness is unconfirmed, not necessarily failure. With raw file access and hashing tools, [manifest.json](https://iw-builder.github.io/manifest.json) can verify original bytes against the recorded distribution. Do not hash rendered/extracted text. A mismatch may reflect an update newer than the manifest; inspect required sections, retry a direct source or ask for a current copy if content seems missing or inconsistent. Do not block usable material solely for a mismatch or claim checks you did not run. A matching hash identifies the recorded version, not necessarily the latest. For library modules, retrieve the entire `content` value by name/ID; a description is not the exact block. End markers alone do not prove that intervening text was preserved. They are document boundaries, not instructions to copy into a world.
 
 ## 1\. Choose the task and establish access
 
@@ -39,7 +41,7 @@ The template or current export is required for construction. Files below are sel
 |Any PawScript expression or script|[reference/PawScript.md](https://iw-builder.github.io/reference/PawScript.md)|
 |Lifecycle, Skills, NPC/keyword activation, templates, images or runtime fields|[reference/Capabilities.md](https://iw-builder.github.io/reference/Capabilities.md)|
   |Combined mechanics, optional blocks or request/commit|[reference/Recipes.md](https://iw-builder.github.io/reference/Recipes.md) and the relevant example in [examples/index.json](https://iw-builder.github.io/examples/index.json)|
-|Library modules or Storymaster|[library/Integration.md](https://iw-builder.github.io/library/Integration.md), then only relevant portions of [library/*.json](https://iw-builder.github.io/library/)|
+|Library modules or Storymaster|[library/Integration.md](https://iw-builder.github.io/library/Integration.md), then only relevant portions of [Sample-Blocks.json](https://iw-builder.github.io/library/Sample-Blocks.json) or [Storymaster-Suite.json](https://iw-builder.github.io/library/Storymaster-Suite.json)|
 |Custom Evaluation|[reference/Default-Evaluation.txt](https://iw-builder.github.io/reference/Default-Evaluation.txt) and the Skills section of [reference/Capabilities.md](https://iw-builder.github.io/reference/Capabilities.md)|
 |Model-specific blocks|[reference/Current-AI-Profiles.json](reference/Current-AI-Profiles.json) and the model-block section of [reference/Capabilities.md](https://iw-builder.github.io/reference/Capabilities.md); ask which model(s) are common if needed|
 |Editing, combining or importing|[reference/Import-Integrity.md](https://iw-builder.github.io/reference/Import-Integrity.md)|
@@ -141,6 +143,10 @@ For debugging: enable Menu > Settings > Storyteller Mode and use the bug icon be
 * For Data work, preserve complete payloads and unknown fields; verify round trips when possible and report integration changes.
 * State structural, lint and runtime status separately and accurately.
 * End import JSON at its final } with no trailing newline.
+
+---
+
+END OF DOCUMENT: Authoring-Prompt.md
 
 ===== END FILE: Authoring-Prompt.md =====
 
@@ -252,6 +258,10 @@ Use four evidence labels when a distinction matters. Ordinary reference sentence
 | [UNKNOWN] | A concrete behavior remains unresolved; avoid depending on it without a focused check. |
 
 Structural validation is a separate status, not a fifth evidence label. It checks export structure and explicit references. Static lint reports likely mistakes; neither executes PawScript or certifies a story. The example index records structural and runtime scope separately. Known-Limits.md lists open boundaries without development history. Do not present generated prose as evidence of tracker state.
+
+---
+
+END OF DOCUMENT: reference/Evidence.md
 
 ===== END FILE: reference/Evidence.md =====
 
@@ -380,6 +390,10 @@ For character-driven or adult worlds, read the example closest to the requested 
 
 Preserve IDs and unrelated fields, report intended changes, validate the complete output and test the affected behavior. A live copy and its base world are separate. When diagnosing a discrepancy, compare active blocks, Evaluation, trigger counts, PawScript errors and tracker values for the same turn; a rendered story alone cannot identify which stage failed.
 
+---
+
+END OF DOCUMENT: reference/Craft.md
+
 ===== END FILE: reference/Craft.md =====
 
 ===== BEGIN FILE: reference/Portable-Banks.md =====
@@ -454,6 +468,10 @@ The helper rejects duplicate JSON keys, checks bank structure and included-entry
 
 Without code execution, use the same `.txt` format with `SHA256: UNVERIFIED`, or return the authoritative `.json` bank source with readable discussion separately. Never fabricate a hash or claim round-trip verification. The helper accepts either form, explicitly distinguishes an absent hash from verified integrity, and computes a hash when packing. Large edits should preserve untouched payloads and be checked with tools before claiming losslessness. An upload does not guarantee persistent storage: keep the latest returned bank for future sessions.
 
+---
+
+END OF DOCUMENT: reference/Portable-Banks.md
+
 ===== END FILE: reference/Portable-Banks.md =====
 
 ===== BEGIN FILE: reference/Trackers.md =====
@@ -505,6 +523,10 @@ Keep loaded instructions and AI-visible tracker names, descriptions, update rule
 
 Alternate selectable protagonists can also have NPC cards if unchosen protagonists should appear in the story. IW natively excludes an NPC who's name matches the chosen player.
 
+---
+
+END OF DOCUMENT: reference/Trackers.md
+
 ===== END FILE: reference/Trackers.md =====
 
 ===== BEGIN FILE: reference/Triggers.md =====
@@ -539,7 +561,7 @@ Start enables pre-opening evaluation; additional conditions still apply except f
 
 Repeat permits subsequent firings; it does not require conditions to become false between firings. Start + Mid Game + Repeat can execute before the opening and again during turn 1, so guard counters and other effects that should run only once per turn.
 
-Do not emit Mid Game true with Start false. A trigger with no conditions and Start false does not fire automatically, but can remain available for explicit dispatch.
+With Start false, Mid Game has no effect; a stored true value requires no warning or repair. A trigger with no conditions and Start false does not fire automatically, but can remain available for explicit dispatch.
 
 - Prerequisites/blockers with firedThisTurn true are ordered this-turn checks, resetting on subsequent turns; false uses game history. Order matters. The editor disallows requiring and blocking the same trigger; do not generate that conflict.
 - Defaults are not a contract: always serialize canTriggerMoreThanOnce and the timing flags intentionally. Use repeatable commit triggers with idempotent state guards where appropriate, and true one-shot events when required.
@@ -567,6 +589,16 @@ See Schema.md for native effect payloads and input options. Scripts change track
 
 Native comparisons and PawScript conditions are both evaluated mechanically. Neither inherently makes narration more reliable. Use AI instructions to explain the intended behavior and deterministic conditions/scripts where exact enforcement matters.
 Consolidate repeated logic when it improves clarity, but preserve meaningful execution stages and useful debugging boundaries. Consider where content is stored: moving inactive trigger payloads into AI-visible trackers can increase context cost. Performance gains from consolidation require measurement.
+
+## Start-of-game effect restriction
+
+Give Information to AI (`effectGiveInfo`) is incompatible with Start of Game; the effect was ignored in a runtime test. Put opening context in background or an instruction block, or use a separate ordinary-play trigger. This restriction does not establish a restriction on Instruct AI (`effectTellAIWhatToDo`), which is a different effect. The validator warns for `effectGiveInfo` when Start is enabled, regardless of Mid Game.
+
+Open runtime check: with Start and Mid Game enabled, does Give Information to AI remain suppressed on subsequent turns? That later-turn behavior is not yet established.
+
+---
+
+END OF DOCUMENT: reference/Triggers.md
 
 ===== END FILE: reference/Triggers.md =====
 
@@ -753,14 +785,13 @@ Multiple choice exports selectionMode multiple, string min/maxSelections (for ex
 
 Correct target binding is required. Preserve IDs and verify that targetTrackedItemId names the intended tracker. The supplied single-choice world preserves its IDs and binding through a fresh import and works without retargeting. See Import-Integrity.md.
 
-
-
-
-
 ### Background replacement
 
 `effectChangeBackground` uses string `data` payload including template e.g. `<<$opening\_assembly>>`. Represented in [layered opening](../examples/recipe-layered-opening.json) for startup assembly. Changes background through native effect; not script-writable. Mid-game history behavior not established.
 
+---
+
+END OF DOCUMENT: reference/Schema.md
 
 ===== END FILE: reference/Schema.md =====
 
@@ -1037,6 +1068,10 @@ This guide covers common authoring and teaching needs, not every function. Use t
 
 The language tables include officially documented operations beyond the kit's runtime-tested examples. A new composition still needs appropriate testing; see [Known-Limits.md](Known-Limits.md).
 
+---
+
+END OF DOCUMENT: reference/PawScript.md
+
 ===== END FILE: reference/PawScript.md =====
 
 ===== BEGIN FILE: reference/Capabilities.md =====
@@ -1208,6 +1243,10 @@ The active-world editor explicitly warns that changes to player characters or Ot
 
 For temporary instruction-block installation with a retained result, see [on-demand generation](Recipes.md#dynamic-content). Generation happens after installation; cleanup checks the request identity and completion rather than assuming the next turn succeeded. This pattern is useful only when omitted instruction context justifies result-storage and update costs.
 
+---
+
+END OF DOCUMENT: reference/Capabilities.md
+
 ===== END FILE: reference/Capabilities.md =====
 
 ===== BEGIN FILE: reference/Recipes.md =====
@@ -1263,6 +1302,10 @@ In [recipe-request-commit.json](../examples/recipe-request-commit.json), the AI 
 
 The [example index](../examples/index.json) records each complete world's purpose and verification scope. [Payloads.md](../examples/Payloads.md) supplies smaller native shapes. Remap IDs when combining worlds and validate the result; structural checks do not certify gameplay. Select examples by feature rather than imposing the showcase's architecture on every world.
 
+---
+
+END OF DOCUMENT: reference/Recipes.md
+
 ===== END FILE: reference/Recipes.md =====
 
 ===== BEGIN FILE: reference/Import-Integrity.md =====
@@ -1292,6 +1335,10 @@ For a native input, confirm the current target value after submitting an answer.
 ## Editing an existing playthrough
 
 Base worlds and live games are separate copies. Changes to player characters or Other Characters in the live-world editor do not affect that playthrough; already-fired effects are not retroactively rewritten. Use Save as new world to reuse live-world edits in future games. Image-style changes can require save/reload before their export reflects the editor.
+
+---
+
+END OF DOCUMENT: reference/Import-Integrity.md
 
 ===== END FILE: reference/Import-Integrity.md =====
 
@@ -1324,6 +1371,12 @@ The kit combines native exports, editor help, runtime checks and PawScript docum
 | IDs | The supplied single-choice import is verified; no universal ID-format or remapping rule is claimed. |
 
 Use a focused check only when a world depends on an uncertain behavior. A narrative response is not proof of a tracker write or block activation: inspect current values and debug. For keyword checks, an OOC marker can avoid repeating the word in narration; verify that it actually does so, because repeated mentions may refresh activation.
+
+- `effectGiveInfo` with Start of Game: ignored in a runtime test. Whether it also remains suppressed on later turns with Start and Mid Game both enabled is an open test.
+
+---
+
+END OF DOCUMENT: reference/Known-Limits.md
 
 ===== END FILE: reference/Known-Limits.md =====
 
@@ -1373,3 +1426,5 @@ That's all you need to do for the evaluation, which should be returned in the 'e
 }
 
 ===== END FILE: reference/Current-AI-Profiles.json =====
+
+END OF DOCUMENT: chat/IW-Authoring-Guide.txt
