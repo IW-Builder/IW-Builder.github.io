@@ -29,7 +29,7 @@ Start enables pre-opening evaluation; additional conditions still apply except f
 
 Repeat permits subsequent firings; it does not require conditions to become false between firings. Start + Mid Game + Repeat can execute before the opening and again during turn 1, so guard counters and other effects that should run only once per turn.
 
-Do not emit Mid Game true with Start false. A trigger with no conditions and Start false does not fire automatically, but can remain available for explicit dispatch.
+With Start false, Mid Game has no effect; a stored true value requires no warning or repair. A trigger with no conditions and Start false does not fire automatically, but can remain available for explicit dispatch.
 
 - Prerequisites/blockers with firedThisTurn true are ordered this-turn checks, resetting on subsequent turns; false uses game history. Order matters. The editor disallows requiring and blocking the same trigger; do not generate that conflict.
 - Defaults are not a contract: always serialize canTriggerMoreThanOnce and the timing flags intentionally. Use repeatable commit triggers with idempotent state guards where appropriate, and true one-shot events when required.
@@ -57,3 +57,13 @@ See Schema.md for native effect payloads and input options. Scripts change track
 
 Native comparisons and PawScript conditions are both evaluated mechanically. Neither inherently makes narration more reliable. Use AI instructions to explain the intended behavior and deterministic conditions/scripts where exact enforcement matters.
 Consolidate repeated logic when it improves clarity, but preserve meaningful execution stages and useful debugging boundaries. Consider where content is stored: moving inactive trigger payloads into AI-visible trackers can increase context cost. Performance gains from consolidation require measurement.
+
+## Start-of-game effect restriction
+
+Give Information to AI (`effectGiveInfo`) is incompatible with Start of Game; the effect was ignored in a runtime test. Put opening context in background or an instruction block, or use a separate ordinary-play trigger. This restriction does not establish a restriction on Instruct AI (`effectTellAIWhatToDo`), which is a different effect. The validator warns for `effectGiveInfo` when Start is enabled, regardless of Mid Game.
+
+Open runtime check: with Start and Mid Game enabled, does Give Information to AI remain suppressed on subsequent turns? That later-turn behavior is not yet established.
+
+---
+
+END OF DOCUMENT: reference/Triggers.md
