@@ -121,3 +121,7 @@ For character-driven or adult worlds, read the example closest to the requested 
 ## Existing worlds
 
 Preserve IDs and unrelated fields, report intended changes, validate the complete output and test the affected behavior. A live copy and its base world are separate. When diagnosing a discrepancy, compare active blocks, Evaluation, trigger counts, PawScript errors and tracker values for the same turn; a rendered story alone cannot identify which stage failed.
+
+---
+
+END OF DOCUMENT: reference/Craft.md
