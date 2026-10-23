@@ -49,3 +49,7 @@ Native block-modification effects substitute templates when the content is insta
 In [recipe-request-commit.json](../examples/recipe-request-commit.json), the AI records the current requested event and turn stamp. The first trigger resets the receipt, not the unconsumed request. A later trigger checks freshness, then checks funds/ownership and commits a purchase or rejection. A following effect displays the receipt and clears the request; the receipt remains for next-turn continuity. Narration describes an attempt until the committed result is available. A freshness stamp prevents stale reuse, not incorrect classification. This pattern is optional: native choices, thresholds and timed effects do not need an AI request layer.
 
 The [example index](../examples/index.json) records each complete world's purpose and verification scope. [Payloads.md](../examples/Payloads.md) supplies smaller native shapes. Remap IDs when combining worlds and validate the result; structural checks do not certify gameplay. Select examples by feature rather than imposing the showcase's architecture on every world.
+
+---
+
+END OF DOCUMENT: reference/Recipes.md
