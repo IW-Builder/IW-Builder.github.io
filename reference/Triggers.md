@@ -62,7 +62,16 @@ Consolidate repeated logic when it improves clarity, but preserve meaningful exe
 
 Give Information to AI (`effectGiveInfo`) is incompatible with Start of Game; the effect was ignored in a runtime test. Put opening context in background or an instruction block, or use a separate ordinary-play trigger. This restriction does not establish a restriction on Instruct AI (`effectTellAIWhatToDo`), which is a different effect. The validator warns for `effectGiveInfo` when Start is enabled, regardless of Mid Game.
 
-Open runtime check: with Start and Mid Game enabled, does Give Information to AI remain suppressed on subsequent turns? That later-turn behavior is not yet established.
+[RUNTIME] Give Information to AI also remained suppressed on subsequent ordinary activations with Start and Mid Game enabled. Full prompt delivery is still not inspectable.
+
+
+## Capability discovery and reliable gating
+
+Read [Trigger-Catalog](Trigger-Catalog.md) for the complete identified condition/effect overview. **Modify tracked item details** can change Name, description, visibility, automatic updating and update instructions through matching override flags. It changes definitions, unlike Set tracked item value.
+
+Eligible no-effect triggers record firing. Random dispatch bypasses target conditions but not a consumed one-shot. A failing script can still consume its containing one-shot and satisfy prerequisites; explicit successful-completion flags are therefore distinct from firing history. Native And/Or groups and PawScript expressions short-circuit in order. See [consolidated behavior](Verified-Behavior.md) for supported boundaries.
+
+Use literal Scenarios with exact registry strings and explicit state gates. Dynamic multi-slot/cyclic/parallel arrangements are unreliable, and blank slot text is not dependable deactivation. The editor's ten-entry creation cap is not a universal runtime limit.
 
 ---
 

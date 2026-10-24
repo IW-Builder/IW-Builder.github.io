@@ -1,33 +1,27 @@
-# Verification scope and platform boundaries
+# Unresolved boundaries
 
-The kit combines native exports, editor help, runtime checks and PawScript documentation. Its schema checks structure and explicit references; it does not execute IW, PawScript, AI generation or image/video models. A structurally valid world can still contain incorrect paths, unsupported assumptions or inconsistent story instructions.
+Current through 2026-10-23. Verified conclusions are in [Consolidated behavior](Verified-Behavior.md); workflows are in [Editor and UI](Editor-UI.md). Partial research groups contain useful verified findings alongside specific unresolved boundaries.
 
-## Established behavior
+| Area | Established result | Remaining boundary |
+| --- | --- | --- |
+| Prompt construction | Active instructions renders live templates and updates | Full historical storyteller/specialist prompts, hidden wrappers and exact inclusion/timing need authoritative prompt visibility |
+| Scenarios | Exact literal binding works; larger imported registries can persist | Dynamic multi-slot/cyclic/parallel failures need actual evaluation inputs or a supported corrected mechanism; no universal runtime maximum established |
+| NPCs and knowledge | Authored facts can be retrieved; dedicated image fields have observable effects | Live character records, identity merging, mutation and retrieval routing are not exposed; Secret Info is not the database |
+| Import normalization | ID reminting, field omission and scope normalization observed | Internal failure stages and universal ID rules across entities remain unknown |
+| Visibility | Extra-hidden values remain inspectable; AI-only automatic updates work | UI visibility does not establish full prompt inclusion or exclusion |
+| Interpolation | Direct rendering, installed snapshots and deferred references differ | Other destination-specific timing and complete specialist inputs remain hidden |
+| Randomness and selectors | Independent evaluations can differ; cached choices agree | Exact hidden evaluation counts and unselected-library exclusion need full prompts |
+| AI tracker dependencies | Same-turn dependent values can be available | Hidden generation architecture is not inferable; explicit staging is needed for prior-state semantics |
+| Format and YAML | Manual/script writes can bypass expectations; coercions occur | Complete grammar, XML mutation, strict type semantics and hidden AI repair are not fully established |
+| Legacy list context | current() is rejected in Run Script | A supported List Update Target/Value context is unavailable in the current editor |
+| Memory | Compression cadence from turn eight is user-confirmed; later recall occurs | Exact summary contents and contribution versus persistent context require summarizer visibility |
+| Length | Strong override wording does not reliably achieve longer narration | No guaranteed length recipe, verified hidden maximum or validated reduction version |
+| Images and video | Current wrappers and dedicated image fields affect results | Full image prompt/cache, universal precedence, internal macros and video runtime remain unverified |
+| Limits and permissions | Large text retention and separate startup customization established | No inferred maximum field/loop/trigger limits or exhaustive account-role permission matrix |
+| Recovery | Interrupted generation can leave a turn unretained | Server-side cause and standalone authenticated runner recovery require additional diagnostics/environment |
+| Tooling | External parsing and merge defects identified | Reviewed-boundary parser/merge and a local browser capture/export harness are supplied; authenticated capture/export is verified, while gameplay recovery and server persistence remain unverified |
 
-- Native single-answer choice/input updates and downstream trigger reads occur in the same turn with valid targets. The single-choice fixture also preserves its binding through a fresh import.
-- Keyword matching is case-insensitive and whole-word for the tested plain-word inputs. A block remains active for three additional turns after a match. Debug shows active/inactive blocks and keyword lists, but not the matching term or remaining timer.
-- Numeric skill levels and capped skill effects work independently of potentially inaccurate generated labels.
-- Original block templates reevaluate; native trigger-installed text snapshots template substitutions at installation.
-- Native operations and script statements have distinct sequencing semantics, as documented in Triggers.md.
-- NPC editor help defines brief-summary visibility until the turn after first character/location mention. NPC activation cannot be directly inspected in debug.
-
-## Boundaries to consider when relevant
-
-| Area | Boundary |
-| --- | --- |
-| Keywords | Exact punctuation/multiword matching and the complete set of scanned fields are not established by the plain-word tests. |
-| Native input variants | Multiple selection, newline/comma storage, optional/multiline text and YAML paths have editor/export shapes; precise delimiter spacing, blank-submission and nested-write behavior require runtime checking before depending on them. |
-| Structured append | Appending a record versus a one-element list may differ; coercion and flattening are not established. |
-| Templates | Evaluation timing is not established for every string field; do not generalize block timing to all surfaces. |
-| Format enforcement | The complete formatSchema grammar and XML-specific behavior are not exhaustively characterized. |
-| Video | The sample video template's context variables and runtime availability are not fully characterized. |
-| Endings | alreadyFired is not reliable exported firing history; native ending repeat/timing behavior should not be inferred from it. |
-| Engine limits | Maximum field sizes, loop bounds, trigger counts and summary scheduling are not specified by this kit. |
-| IDs | The supplied single-choice import is verified; no universal ID-format or remapping rule is claimed. |
-
-Use a focused check only when a world depends on an uncertain behavior. A narrative response is not proof of a tracker write or block activation: inspect current values and debug. For keyword checks, an OOC marker can avoid repeating the word in narration; verify that it actually does so, because repeated mentions may refresh activation.
-
-- `effectGiveInfo` with Start of Game: ignored in a runtime test. Whether it also remains suppressed on later turns with Start and Mid Game both enabled is an open test.
+The schema/validator is a partial compatibility profile. Native string turn thresholds and observed startup effect shapes are now represented. This still does not establish complete platform coverage or runtime correctness. [Roadmap](Roadmap.md) lists pending engineering.
 
 ---
 

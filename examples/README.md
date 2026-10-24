@@ -73,3 +73,5 @@ These examples are useful when you know what you want to happen but are unsure w
 The [feature recipes](../reference/Recipes.md) explain how these approaches work and when to use them. [Payloads.md](Payloads.md) contains smaller technical snippets, and [index.json](index.json) records the scope and testing status of the examples.
 
 [Back to the main guide](https://iw-builder.github.io/guide/)
+
+The [guarded state recipes](../reference/Recipes.md) include completion awards, candidate acceptance, archive/reactivation, cached randomness, consumed timers, choice-domain checks and a compiled prerequisite graph. Their exact compositions are structurally checked patterns, not newly live-certified worlds.

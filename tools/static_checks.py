@@ -2,7 +2,7 @@
 from __future__ import annotations
 import json,re,hashlib
 
-SYSTEM_ROOTS={'game','player'}
+SYSTEM_ROOTS={'game','player','turn_number'}
 ROOT=re.compile(r'\$([A-Za-z_][A-Za-z_0-9]*)')
 PLACEHOLDERS=re.compile(r'\[(?:LIST [A-Z _]+|DESCRIBE [A-Z _]+|Author Style|title|blurb)\]|<#\s*(?:time period|Copy in|DESCRIBE|LIST |VARIABLE BLOCK)[\s\S]*?#>',re.I)
 
@@ -78,6 +78,7 @@ def lint(doc):
         for m in lit.finditer(code):
             if re.match(r'\s*\+\s*(?:\$|["\'])',clean[m.end():]) or re.search(r'\$[\w.()]+\s*\+\s*$',clean[:m.start()]):
                 add('string-plus',path,'Possible string concatenation with +; use &. Review this heuristic warning.');break
+    findings.extend(pattern_advisories(doc))
     return findings
 
 def basic_errors(value,schema,root=None,path=''):
@@ -148,3 +149,37 @@ def edit_diff(old,new):
         a,b=lookup(old),lookup(new)
         objects[field]={'added':sorted(b.keys()-a.keys()),'removed':sorted(a.keys()-b.keys()),'changed':sorted(k for k in a.keys()&b.keys() if a[k]!=b[k]),'orderChanged':list(a)!=list(b)}
     return {'objects':objects,'changes':changes,'note':'Reports differences, not whether they are authorized. Array indices are positional; object summaries match IDs.'}
+
+
+def pattern_advisories(doc):
+    """Narrow review prompts, never proof of a missing guard or invalid runtime behavior."""
+    out=[]
+    def add(code,path,message):out.append(dict(severity='warning',code=code,path=path,message=message))
+    triggers=doc.get('triggerEvents',[])
+    if not isinstance(triggers,list):return out
+    for i,t in enumerate(triggers):
+        if not isinstance(t,dict):continue
+        effects=t.get('triggerEffects',[])
+        if not isinstance(effects,list):continue
+        for j,e in enumerate(effects):
+            if not isinstance(e,dict):continue
+            typ=e.get('type');d=e.get('data');path=f'/triggerEvents/{i}/triggerEffects/{j}/data'
+            if typ=='effectRunScript' and isinstance(d,str):
+                clean=mask_literals(d)
+                if t.get('canTriggerMoreThanOnce') and re.search(r'^\s*\$[\w.]+\s*\+=',clean,re.M):
+                    add('review-repeat-accumulation',path,'Repeatable script accumulates a value. Review its completion/consumption guard if this is a one-time reward; recurring counters are valid. No missing guard is inferred.')
+                if any(isinstance(x,dict) and x.get('type')=='effectRunScript' for x in effects[:j]):
+                    add('review-script-boundary',path,'Earlier Run Script effects have separate locals and rollback. Keep an accepted-state commit and its completion flag together if they must succeed together.')
+            if typ=='effectPresentChoice' and isinstance(d,dict):
+                if d.get('selectionMode')=='multiple':
+                    add('review-choice-storage',path,'Multiple selections can be newline-delimited text. Validate the intended domain and representation before treating this value as a YAML list.')
+                if isinstance(d.get('choices'),str) and '<<' in d['choices']:
+                    add('review-choice-domain',path,'Choices are computed. Review blank/duplicate values, fallback and membership checks at the point where the answer is consumed; display choices alone do not validate all write paths.')
+    draws=[]
+    for path,text in walk(doc):
+        if not any(k in path for k in ('/content','/instructions','/descriptionRequest')):continue
+        for expr in templates(text):
+            if re.search(r'\b(?:random|random_between|dice_roll)\s*\(',mask_literals(expr)):draws.append(path)
+    if len(draws)>1:
+        add('review-independent-random',draws[0],'Several rendered expressions draw independently. Cache a single choice in a tracker when these consumers must agree; independent draws are otherwise valid.')
+    return out

@@ -42,9 +42,18 @@ If a bad turn establishes a false fact, adding an instruction may leave conflict
 
 Native trigger changes can affect runtime instructions without changing the base editor definition. Inspect active instruction contents and trigger/debug results when troubleshooting; a base-world export alone does not show everything the model received. Base and live worlds are separate copies.
 
-Keep loaded instructions and AI-visible tracker names, descriptions, update rules and values purposeful. Prefer concise shared rules over repetition, keyword activation for occasional lore, and PawScript for exact calculations. Large AI-updated records can be expensive to rewrite. Use actual turn-cost/debug information to compare designs rather than assuming a particular token-price ratio or summary schedule.
+Keep loaded instructions and AI-visible tracker names, descriptions, update rules and values purposeful. Prefer concise shared rules over repetition, keyword activation for occasional lore, and PawScript for exact calculations. Large AI-updated records can be expensive to rewrite. Inspect actual state and rendered instructions rather than assuming hidden prompt contents. Summary compression follows a six-turn cadence beginning at turn eight, as confirmed by the user; exact summary contents remain unavailable.
 
-Alternate selectable protagonists can also have NPC cards if unchosen protagonists should appear in the story. IW natively excludes an NPC who's name matches the chosen player.
+Alternate selectable protagonists can also have NPC cards if unchosen protagonists should appear in the story. A selected player sharing an Other Character name can use information from that entry. Internal identity merging or exclusion is not visible; do not promise automatic same-name NPC exclusion.
+
+
+## Current visibility, updates and validation
+
+[RUNTIME] Extra-hidden values remain visible in the Storyteller tracker editor even when Include Extra-hidden is off. Import normalizes automatic updating off for hidden, hidden_boring and player_only; everyone, ai_only and ai_only_boring can retain automatic updates. Full AI prompt inclusion is a separate unresolved boundary.
+
+Enforce format does not prevent all malformed manual/script writes. Use explicit shape and semantic checks before accepting generated state. Native path adjustment and script assignment have different missing-path behavior; do not generalize one write mechanism to all others. Independent random expressions can disagree; cache shared choices.
+
+A trigger can change future automatic updating through Modify tracked item details with overrideAutoUpdate and autoUpdate. Initial values remain configuration, not current state. See [Editor-UI](Editor-UI.md) for current-value editing and [Verified-Behavior](Verified-Behavior.md) for forms, initialization and retention results.
 
 ---
 

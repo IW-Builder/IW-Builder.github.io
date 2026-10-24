@@ -61,14 +61,14 @@ The script-choice editor description says choices are evaluated at game start fr
 
 ## Conditions and effects
 
-Conditions use category condition with a type/data leaf, or category logic with operator and a data child array. Normal condition lists are AND. Logic operators include and, or, none\_of. Effects use type and data. IDs are opaque; punctuation is valid in IDs. Field case matters: trackedItemID, targetTrackedItemId and characterId are different native spellings.
+Conditions use category condition with a type/data leaf, or category logic with operator and a data child array. Normal condition lists are AND. Logic operators include and, or, none\_of. Effects use type and data. IDs are opaque but importer preservation is entity-specific. Some punctuation/non-ASCII tracker IDs are regenerated without remapping references; use ASCII alphanumeric IDs for new trackers. Field case matters: trackedItemID, targetTrackedItemId and characterId are different native spellings.
 
 |Condition|Payload|
 |-|-|
-|triggerOnEvent|Scenario string evaluated by AI; root conditions lists at most 10 defined Scenarios, each reusable by multiple triggers|
+|triggerOnEvent|Scenario string evaluated by AI; root conditions lists Scenarios reusable by multiple triggers; the editor creation cap is ten, not a verified runtime maximum|
 |triggerOnPawScript|Bare expression string|
 |triggerOnRandomChance|Success percentage string: numeric literal, variable or PawScript expression; "50" means 50%|
-|triggerOnTurn|Integer|
+|triggerOnTurn|Native string threshold or numeric threshold|
 |triggerOnCharacter|Array of PC IDs|
 |triggerOnTrackedItem|Tracker target/comparison object|
 |triggerPrereqs / triggerBlockers|Trigger-ID arrays in prereqs/blockers plus firedThisTurn boolean|
@@ -86,9 +86,9 @@ Condition payload quick reference (all nodes still need category/type/id):
 |type|data shape and intent|
 |-|-|
 |triggerOnPawScript|Bare expression STRING, without `<< >>`; deterministic check of current state|
-|triggerOnEvent|Scenario STRING interpreted by AI; flexible but subject to false positives/negatives; include it in root conditions registry. At most 10 Scenarios may be defined per world; multiple triggers can reuse each Scenario|
+|triggerOnEvent|Scenario STRING interpreted by AI; flexible but subject to false positives/negatives; include it in root conditions registry. The editor stops adding at ten entries; larger imported registries can persist and execute. Multiple triggers can reuse each Scenario|
 |triggerOnTrackedItem|Object: trackedItemID, inequality, requiredValue, textComparison; target uses tracker ID, not variable name|
-|triggerOnTurn|Integer turn value|
+|triggerOnTurn|Native string or numeric turn threshold|
 |triggerOnCharacter|Array of possibleCharacters characterId references|
 |triggerPrereqs|Object: prereqs array of trigger IDs, firedThisTurn boolean|
 |triggerBlockers|Object: blockers array of trigger IDs, firedThisTurn boolean|
@@ -105,18 +105,18 @@ Effects by purpose:
 |effectTellAIWhatToDo|Guidance STRING influencing subsequent narration; not a state mutation or guaranteed repair|
 |effectGiveInfo|AI background-information STRING; distinct from player output|
 |effectSetTrackedItemValue|Object includes trackedItemID, action, newValue, replaceWith, path, updateMode, listExpression, targetExpression; use exact schema shape, not invented targeting modes|
-|effectModifyTrackedItemDetails|Changes definitions; override booleans control which fields change|
+|effectModifyTrackedItemDetails|Changes Name, description, visibility, automatic updating (autoUpdate), and update instructions; matching override booleans select changes|
 |effectModifyInstructionBlock|`{id: instruction-block-ID, content: text}`|
 |effectModifyKeywordBlock|`{id: keyword-block-ID, keywords: string-array, content: text}`|
 |effectPresentChoice|Native inline choice form; correctly bound single-answer persistence is verified; choices is a STRING, targetTrackedItemId is a tracker ID; single/multiple modes and string limits as schema describes|
 |effectRequestInput|Native input request; requestText, targetTrackedItemId, inputMode, requiresInput, path; do not assume it is equivalent to ordinary next-turn input|
-|effectFireRandomTrigger|Array of trigger IDs; literal nothing is a sentinel. Do not rely on duplicate IDs as weighting or guess target-condition bypass semantics without testing.|
+|effectFireRandomTrigger|Array of trigger IDs; literal nothing is a sentinel. Target conditions are bypassed but consumed one-shot eligibility remains enforced. Duplicate weighting is unresolved.|
 |effectChangePCSkill|Declared skill display name, integer amount and minmax, increase boolean. Levels and minmax are 0–5; minmax is the upper/lower boundary according to increase. See Capabilities.md for outcomes|
 |effectEndsGame|Boolean data is "player may continue": true allows continuation, false does not. It is not an enabled flag.|
 
 Other schema-defined effects change PC name/description, objective, main instructions, author style, Description instructions and victory/defeat definitions. Consult their exact payloads. A Run Script cannot directly edit those system properties; stage tracker text and use the appropriate native effect. Do not invent change-evaluation/summary/image effects because a similar Description effect exists.
 
-In the native choice payload, choices is newline-separated text (`"Take road\\nTake ferry"`), single selection uses selectionMode single with null limits, and multiple selection uses string limits such as "1" and "3" with valueDelimiter newline. Those are export examples, not proof of every modal timing or selection-storage detail. Use real target tracker IDs, an empty path for whole-value targeting where appropriate, and a live check if nested-path or multi-select behavior matters. Native forms constrain answers and correctly bound single-answer targets update immediately; later triggers can react in the same turn.
+In the native choice payload, choices is newline-separated text (`"Take road\\nTake ferry"`), single selection uses selectionMode single with null limits, and multiple selection uses string limits such as "1" and "3" with valueDelimiter newline. Those are export examples, not proof of every modal timing or selection-storage detail. Use real target tracker IDs and an empty path for whole-value targeting where appropriate. Nested-path writes and newline-delimited multi-selection text are supported within the observed scope. Native forms constrain answers and correctly bound single-answer targets update immediately; later triggers can react in the same turn.
 
 ## Comparator fields
 
@@ -126,7 +126,7 @@ For Number trackers, inequality selects is\_exactly, at\_least, not\_equal or at
 
 Do not invent image URLs, data-URI support or preset identifiers. Image style fields can require editor save/reload before their export reflects changes. Preview strings can persist with no attached image; empty settings can auto-populate. Preserve intentional whitespace rather than inventing universal default strings. Nonempty portrait metadata has characterized string fields for appearance, clothes, expression/position and setting.
 
-Editor workflow: enable Show optional feature, expand Misc advanced features (optional), enable Show raw JSON, copy the full box to export. To import, overwrite the full box, avoid an extra trailing newline, click Import JSON to world and save. The trailing-newline issue is an importer quirk, not invalid JSON syntax.
+Editor workflow: enable Show optional feature, expand Misc advanced features (optional), enable Show raw JSON, copy the full box to export. To import, overwrite the full box, avoid an extra trailing newline, and click Import JSON to world. Acknowledge the dialogs and wait for the editor rebuild before reopening raw JSON and refreshing. Import may persist independently of a later Discard changes action. The trailing-newline issue is an importer quirk, not invalid JSON syntax.
 
 Playing creates an independent live world copy. Base edits/deletion do not affect existing games; live edits do not change the base. Save as new world or export live JSON and import it over the intended base to preserve/reuse changes. schemaVersion can be inspected in raw JSON; it is not a visible application release number.
 
@@ -170,19 +170,24 @@ for each $member in $test\_party
   $member.hp = $member.max\_hp
 ```
 
-For structured append payloads, a leading `-` describes a list, while `name: Frank` with sibling fields describes one record. Native structured-append flattening, nesting and text coercion are not established. Prefer an unambiguous scalar append or a script-created record until that is characterized. Use Run Script for list-wide transformations.
+For structured append payloads, a leading `-` describes a list, while `name: Frank` with sibling fields describes one record. Flow-style YAML record append stores structured data and permits duplicates. Arbitrary list flattening/nesting and coercion remain unresolved; do not infer automatic deduplication. Use Run Script for list-wide transformations.
 
 Modify Tracked Item Details uses override flags. A value only changes when its matching override flag is enabled. This can reveal a tracker or hand future updates between AI and scripts. Changing autoUpdate after generation cannot undo a write already made this turn. Include an explicit handoff point and inspect the next turn.
 
 Present Choice includes message, newline-separated choices, targetTrackedItemId, selectionMode, updateMode, limits, delimiter and path. Request Input uses requestText, targetTrackedItemId, inputMode, requiresInput and path. Correctly bound single-answer forms work: narration streams, the inline form waits for submission, the answer tracker updates immediately, and following triggers can fire in the same turn. The tested follow-up message is rendered ABOVE the question/answer receipt, followed by normal story options. Rendered placement does not imply execution before submission. The tested required forms offer no cancellation or forced focus.
 
-Multiple choice exports selectionMode multiple, string min/maxSelections (for example "1" and "2"), and valueDelimiter newline or comma. Text input exports inputMode single or multi and requiresInput true or false. YAML Request Input exposes a dotted path. These additional settings are editor/export-confirmed; delimiter spacing, optional blank submission, and nested-write runtime behavior are not established by the configuration export alone.
+Multiple choice exports selectionMode multiple, string min/maxSelections (for example "1" and "2"), and valueDelimiter newline or comma. Text input exports inputMode single or multi and requiresInput true or false. YAML Request Input exposes a dotted path. [RUNTIME] Multiple-choice bounds constrain selection; newline-delimited answers store text, not an automatic YAML list. Optional blank input clears its destination while preserving sibling keys. Required blank input is rejected, and multiline/nested-path writes preserve submitted line breaks. Arbitrary delimiter variants remain outside this result.
 
 Correct target binding is required. Preserve IDs and verify that targetTrackedItemId names the intended tracker. The supplied single-choice world preserves its IDs and binding through a fresh import and works without retargeting. See Import-Integrity.md.
 
 ### Background replacement
 
 `effectChangeBackground` uses string `data` payload including template e.g. `<<$opening\_assembly>>`. Represented in [layered opening](../examples/recipe-layered-opening.json) for startup assembly. Changes background through native effect; not script-writable. Mid-game history behavior not established.
+
+
+## First-pass capability overview
+
+[Trigger-Catalog](Trigger-Catalog.md) lists every currently identified condition/effect without requiring examples. It includes editor-recognized Change first action and Change other characters, now represented in the schema; character-database mutation remains unverified. Use the catalog to discover capabilities and obtain current native payloads before implementing beyond this profile. The roadmap tracks tooling alignment separately from verified runtime conclusions.
 
 ---
 

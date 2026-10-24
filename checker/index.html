@@ -303,11 +303,16 @@ def validate(doc, schema):
                 for j,x in enumerate(d): ref(x,'possibleCharacters',q+'/data/'+str(j))
             elif t=='triggerOnTrackedItem' and isinstance(d,dict):
                 ref(d.get('trackedItemID'),'trackedItems',q+'/data/trackedItemID',condition=True)
+                if not isinstance(d.get('textComparison'),str) or not d['textComparison'].strip():
+                    add('warning','missing-native-comparator',q+'/data/textComparison','Native tracker comparisons retain textComparison even for numeric targets. Missing/blank values can be omitted or inactive on import; preserve the native nonempty field.')
             elif t in ['triggerPrereqs','triggerBlockers'] and isinstance(d,dict):
                 key='prereqs' if t=='triggerPrereqs' else 'blockers'
                 for j,x in enumerate(d.get(key,[]) if isinstance(d.get(key,[]),list) else []): ref(x,'triggerEvents',q+'/data/'+key+'/'+str(j))
             elif t=='triggerOnEvent' and isinstance(d,str) and d not in doc.get('conditions',[]):
-                add('warning','unlisted-situation',q+'/data','Situation string not in root conditions registry; whether registry membership is mandatory is unknown.')
+                if 'conditions' not in doc:
+                    add('warning','missing-scenario-registry',q+'/data','No explicit Scenario registry. Legacy imports can populate one; inspect the native re-export and selected binding before use.')
+                else:
+                    add('error','unlisted-situation',q+'/data','Scenario has no exact registry binding; case, spacing and punctuation must match a declared Scenario.')
             elif t=='triggerOnPawScript': add('warning','unverified-expression',q+'/data','Expression is stored text; not parsed or executed.')
     for i,t in enumerate(doc.get('triggerEvents',[]) if isinstance(doc.get('triggerEvents',[]),list) else []):
         if not isinstance(t,dict): continue
@@ -327,14 +332,18 @@ def validate(doc, schema):
                 ident=e['data'].get('trackedItemID')
                 if tables['trackedItems'].get(ident,{}).get('dataType')=='number':numeric_writes[ident]=numeric_writes.get(ident,0)+1
         for ident,count in numeric_writes.items():
-            if count>1:add('warning','numeric-write-overwrite',p,'Multiple numeric writes to '+ident+' can overwrite rather than accumulate within one trigger.')
+            if count>1:add('warning','numeric-write-overwrite',p,'Multiple numeric writes to '+repr(tables['trackedItems'][ident].get('name','Unnamed tracker'))+' can overwrite rather than accumulate within one trigger.')
         conditions(t.get('triggerConditions',[]),p+'/triggerConditions',start_enabled=bool(t.get('triggerOnStartOfGame')))
         for j,e in enumerate(t.get('triggerEffects',[]) if isinstance(t.get('triggerEffects',[]),list) else []):
             q=p+'/triggerEffects/'+str(j)
             if not isinstance(e,dict):continue
             node_id(e,q); et=e.get('type');d=e.get('data')
+            if et=='effectChangeOtherCharacters':
+                add('warning','runtime-unverified-effect',q,'Change other characters has a native editor payload, but authoritative live character mutation is not observable; structural acceptance is not runtime certification.')
+            if t.get('triggerOnStartOfGame') and et=='effectFireRandomTrigger':
+                add('warning','start-incompatible-effect',q,'Fire random trigger did not dispatch with Start enabled; use an ordinary-play dispatcher.')
             if t.get('triggerOnStartOfGame') and et == 'effectGiveInfo':
-                add('warning','start-incompatible-effect',q,'Give Information to AI is incompatible with Start of Game; the effect was ignored in a runtime test. Use background or an instruction block for opening context, or a separate ordinary-play trigger. Later-turn behavior with Start and Mid Game enabled remains unverified.')
+                add('warning','start-incompatible-effect',q,'Give Information to AI is incompatible with Start of Game; the effect was ignored in a runtime test. Use background or an instruction block for opening context, or a separate ordinary-play trigger. It also remains ignored during later Start+Mid activations.')
             if et not in defs['effect']['x-knownDiscriminators']:
                 add('warning','unknown-effect-type',q+'/type','Missing or unobserved effect type: '+repr(et));continue
             if 'data' not in e: add('warning','missing-payload',q+'/data','No effect payload.');continue
@@ -357,6 +366,9 @@ def validate(doc, schema):
     for i,t in enumerate(doc.get('trackedItems',[]) if isinstance(doc.get('trackedItems',[]),list) else []):
         if not isinstance(t,dict):continue
         p='/trackedItems/'+str(i)
+        ident=t.get('id')
+        if isinstance(ident,str) and ident and not re.fullmatch(r'[A-Za-z0-9]+',ident):
+            add('warning','tracker-id-import-risk',p+'/id','Tracker '+repr(t.get('name','Unnamed tracker'))+' has a non-ASCII-alphanumeric ID. Import may regenerate it without remapping references; inspect the imported targets. This is advisory, not a universal ID validity rule.')
         v=t.get('variableName')
         if isinstance(v,str) and v:
             if v in variables:add('warning','duplicate-variable',p+'/variableName','Repeated variable name; binding ambiguity not resolved.')
@@ -381,6 +393,13 @@ def validate(doc, schema):
             elif target.get('dataType')=='number' and isinstance(val,str) and not re.fullmatch(r'[+-]?(?:\d+(?:\.\d*)?|\.\d+)(?:[eE][+-]?\d+)?',val.strip()):
                 add('warning','numeric-character-initialization',q+'/initialPCValue','Number tracker has a nonnumeric per-character sample; runtime meaning unverified.')
     findings.extend(lint(doc))
+    for f in findings:
+        parts=f['path'].split('/')
+        if len(parts)>2 and parts[1] in ('trackedItems','triggerEvents','possibleCharacters') and parts[2].isdigit():
+            items=doc.get(parts[1],[]); index=int(parts[2])
+            if index<len(items) and isinstance(items[index],dict):
+                name=items[index].get('name')
+                if isinstance(name,str) and name: f['objectName']=name
     return findings
 
 def main():
@@ -410,7 +429,7 @@ if __name__=='__main__':sys.exit(main())
 from __future__ import annotations
 import json,re,hashlib
 
-SYSTEM_ROOTS={'game','player'}
+SYSTEM_ROOTS={'game','player','turn_number'}
 ROOT=re.compile(r'\$([A-Za-z_][A-Za-z_0-9]*)')
 PLACEHOLDERS=re.compile(r'\[(?:LIST [A-Z _]+|DESCRIBE [A-Z _]+|Author Style|title|blurb)\]|<#\s*(?:time period|Copy in|DESCRIBE|LIST |VARIABLE BLOCK)[\s\S]*?#>',re.I)
 
@@ -486,6 +505,7 @@ def lint(doc):
         for m in lit.finditer(code):
             if re.match(r'\s*\+\s*(?:\$|["\'])',clean[m.end():]) or re.search(r'\$[\w.()]+\s*\+\s*$',clean[:m.start()]):
                 add('string-plus',path,'Possible string concatenation with +; use &. Review this heuristic warning.');break
+    findings.extend(pattern_advisories(doc))
     return findings
 
 def basic_errors(value,schema,root=None,path=''):
@@ -556,6 +576,40 @@ def edit_diff(old,new):
         a,b=lookup(old),lookup(new)
         objects[field]={'added':sorted(b.keys()-a.keys()),'removed':sorted(a.keys()-b.keys()),'changed':sorted(k for k in a.keys()&b.keys() if a[k]!=b[k]),'orderChanged':list(a)!=list(b)}
     return {'objects':objects,'changes':changes,'note':'Reports differences, not whether they are authorized. Array indices are positional; object summaries match IDs.'}
+
+
+def pattern_advisories(doc):
+    """Narrow review prompts, never proof of a missing guard or invalid runtime behavior."""
+    out=[]
+    def add(code,path,message):out.append(dict(severity='warning',code=code,path=path,message=message))
+    triggers=doc.get('triggerEvents',[])
+    if not isinstance(triggers,list):return out
+    for i,t in enumerate(triggers):
+        if not isinstance(t,dict):continue
+        effects=t.get('triggerEffects',[])
+        if not isinstance(effects,list):continue
+        for j,e in enumerate(effects):
+            if not isinstance(e,dict):continue
+            typ=e.get('type');d=e.get('data');path=f'/triggerEvents/{i}/triggerEffects/{j}/data'
+            if typ=='effectRunScript' and isinstance(d,str):
+                clean=mask_literals(d)
+                if t.get('canTriggerMoreThanOnce') and re.search(r'^\s*\$[\w.]+\s*\+=',clean,re.M):
+                    add('review-repeat-accumulation',path,'Repeatable script accumulates a value. Review its completion/consumption guard if this is a one-time reward; recurring counters are valid. No missing guard is inferred.')
+                if any(isinstance(x,dict) and x.get('type')=='effectRunScript' for x in effects[:j]):
+                    add('review-script-boundary',path,'Earlier Run Script effects have separate locals and rollback. Keep an accepted-state commit and its completion flag together if they must succeed together.')
+            if typ=='effectPresentChoice' and isinstance(d,dict):
+                if d.get('selectionMode')=='multiple':
+                    add('review-choice-storage',path,'Multiple selections can be newline-delimited text. Validate the intended domain and representation before treating this value as a YAML list.')
+                if isinstance(d.get('choices'),str) and '<<' in d['choices']:
+                    add('review-choice-domain',path,'Choices are computed. Review blank/duplicate values, fallback and membership checks at the point where the answer is consumed; display choices alone do not validate all write paths.')
+    draws=[]
+    for path,text in walk(doc):
+        if not any(k in path for k in ('/content','/instructions','/descriptionRequest')):continue
+        for expr in templates(text):
+            if re.search(r'\b(?:random|random_between|dice_roll)\s*\(',mask_literals(expr)):draws.append(path)
+    if len(draws)>1:
+        add('review-independent-random',draws[0],'Several rendered expressions draw independently. Cache a single choice in a tracker when these consumers must agree; independent draws are otherwise valid.')
+    return out
 </script>
 
 <script type="text/plain" id="src-schema">
@@ -719,7 +773,7 @@ def edit_diff(old,new):
       "items": {
         "type": "string"
       },
-      "maxItems": 10
+      "description": "Scenario registry. The editor creation cap is not a runtime/import maximum; exact references are checked separately."
     },
     "schemaVersion": {
       "type": "number",
@@ -1178,7 +1232,7 @@ def edit_diff(old,new):
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "InfiniteWorlds observed export schema \u2014 schemaVersion 2.4",
   "description": "General Infinite Worlds export structure and explicit-reference profile. Compatibility baseline: Save/load system, Image style system and Pawscript update, announced 2026-10-08 (compatibility baseline). Not an official exhaustive importer contract. Unknown fields/discriminators remain permitted and reported. Presence observations alone do not establish importer-required fields.",
-  "x-profileVersion": "1.1.0",
+  "x-profileVersion": "1.2.0",
   "x-observedSchemaVersions": [
     2.4
   ],
@@ -1810,6 +1864,12 @@ def edit_diff(old,new):
     "effect": {
       "anyOf": [
         {
+          "$ref": "#/$defs/effect_effectChangeOtherCharacters"
+        },
+        {
+          "$ref": "#/$defs/effect_effectChangeFirstAction"
+        },
+        {
           "$ref": "#/$defs/effect_effectChangeBackground"
         },
         {
@@ -1903,7 +1963,9 @@ def edit_diff(old,new):
                   "effectFireRandomTrigger",
                   "effectRunScript",
                   "effectEndsGame",
-                  "effectChangeBackground"
+                  "effectChangeBackground",
+                  "effectChangeFirstAction",
+                  "effectChangeOtherCharacters"
                 ]
               }
             }
@@ -1947,7 +2009,9 @@ def edit_diff(old,new):
         "effectFireRandomTrigger",
         "effectRunScript",
         "effectEndsGame",
-        "effectChangeBackground"
+        "effectChangeBackground",
+        "effectChangeFirstAction",
+        "effectChangeOtherCharacters"
       ],
       "x-discriminator": "type"
     },
@@ -2166,7 +2230,11 @@ def edit_diff(old,new):
           "const": "triggerOnTurn"
         },
         "data": {
-          "type": "integer"
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Native exports use a string threshold; numeric thresholds also supported. Expressions are not executed by validation."
         },
         "id": {
           "type": "string"
@@ -2361,6 +2429,103 @@ def edit_diff(old,new):
         },
         "data": {
           "type": "string"
+        },
+        "id": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true,
+      "required": [
+        "type"
+      ]
+    },
+    "effect_effectChangeFirstAction": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "effectChangeFirstAction"
+        },
+        "data": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true,
+      "required": [
+        "type"
+      ]
+    },
+    "effect_effectChangeOtherCharacters": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "effectChangeOtherCharacters"
+        },
+        "data": {
+          "type": "object",
+          "properties": {
+            "action": {
+              "type": "string",
+              "x-observedValues": [
+                "add",
+                "modify",
+                "delete"
+              ]
+            },
+            "character": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "description": "Native character Name selector, not an NPC ID reference."
+            },
+            "npc": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "detail": {
+                  "type": "string"
+                },
+                "one_liner": {
+                  "type": "string"
+                },
+                "appearance": {
+                  "type": "string"
+                },
+                "location": {
+                  "type": "string"
+                },
+                "secret_info": {
+                  "type": "string"
+                },
+                "names": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "img_appearance": {
+                  "type": "string"
+                },
+                "img_clothing": {
+                  "type": "string"
+                },
+                "positionInList": {
+                  "type": "integer"
+                }
+              },
+              "additionalProperties": true
+            }
+          },
+          "additionalProperties": true,
+          "description": "Native editor shape only; live character database mutation is not verified."
         },
         "id": {
           "type": "string"
@@ -2780,8 +2945,8 @@ def edit_diff(old,new):
       "Not in the observed vocabulary — possibly newer than the schema " +
       "profile."],
     "unlisted-situation": ["Scenario not registered",
-      "A triggerOnEvent string is not in the root conditions list; whether " +
-      "membership is mandatory is unknown."],
+      "The Scenario name does not exactly match the declared Scenario registry. " +
+      "Match case, spacing and punctuation to restore the binding."],
     "unverified-expression": ["Expression not executed",
       "Stored as text; the checker never runs it. Review the expression " +
       "yourself."],
@@ -2921,7 +3086,7 @@ def edit_diff(old,new):
         top.appendChild(sev); top.appendChild(title); top.appendChild(code);
         var path = document.createElement("div");
         path.className = "fpath";
-        path.textContent = f.path;
+        path.textContent = (f.objectName ? f.objectName + " - " : "") + f.path;
         var msg = document.createElement("p");
         msg.className = "fmsg";
         msg.textContent = f.message;
@@ -2980,7 +3145,7 @@ def edit_diff(old,new):
       L.push("");
       L.push(g[0] + " (" + list.length + ")");
       list.forEach(function (f, i) {
-        L.push((i + 1) + ". [" + f.code + "] " + f.path);
+        L.push((i + 1) + ". [" + f.code + "] " + (f.objectName ? f.objectName + " - " : "") + f.path);
         L.push("   " + f.message);
       });
     });

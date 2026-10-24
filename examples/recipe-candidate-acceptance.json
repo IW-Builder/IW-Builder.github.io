@@ -1,0 +1,143 @@
+{
+  "favorite": false,
+  "title": "Candidate acceptance",
+  "description": "Optional authoring pattern; structurally checked, not a newly certified runtime composition.",
+  "background": "An adult courier waits at a guild desk.",
+  "instructions": "Respect the authored tracker state. Describe attempts without inventing mechanical rewards.",
+  "authorStyle": "",
+  "recommendedAIModel": null,
+  "firstInput": "Introduce the guild desk.",
+  "objective": "",
+  "imageModel": "manticore",
+  "imageStyle": "photo_1",
+  "illustrationStyleNonCharacterLowPriority": "",
+  "illustrationStyleNonCharacterHighPriority": "",
+  "illustrationStyleCharacterLowPriority": "",
+  "illustrationStyleCharacterHighPriority": "",
+  "imageStyleCharacterPre": "",
+  "imageStyleCharacterPost": "",
+  "imageStyleNonCharacterPre": "",
+  "imageStyleNonCharacterPost": "",
+  "mature": false,
+  "nsfw": false,
+  "contentWarnings": "",
+  "enableAISpecificInstructionBlocks": false,
+  "previewImage": "",
+  "fullSizePreviewImage": "",
+  "previewImageOptions": [],
+  "fullSizePreviewImageOptions": [],
+  "currentPreviewImageIndex": -1,
+  "imagePromptDetails": {
+    "illustrClothes": "",
+    "illustrSetting": "",
+    "illustrSubject": "",
+    "illustrAppearance": "",
+    "illustrIsCharacter": false,
+    "illustrExpressionPosition": ""
+  },
+  "permissionsOnceShared": {
+    "sharing": true,
+    "editing": true
+  },
+  "allowChangeCharacterName": false,
+  "allowChangeCharacterDescription": false,
+  "allowChangeCharacterSkills": false,
+  "allowChangeCharacterItemValues": false,
+  "allowChangeCharacterPortrait": false,
+  "allowChangeCharacterNewPortrait": false,
+  "conditions": [],
+  "schemaVersion": 2.4,
+  "skills": [
+    "Generic skill"
+  ],
+  "possibleCharacters": [
+    {
+      "name": "Player character",
+      "description": "",
+      "portrait": "",
+      "portraitPromptDetails": {
+        "illustrAppearance": "",
+        "illustrClothes": "",
+        "illustrExpressionPosition": "",
+        "illustrSetting": ""
+      },
+      "fullSizePortrait": "",
+      "portraitOptions": [],
+      "fullSizePortraitOptions": [],
+      "currentPortraitIndex": -1,
+      "characterId": "c7038c97-b50f-57be-9e33-9ce2914d80ef",
+      "skills": {
+        "Generic skill": 3
+      },
+      "initialTrackedItemValues": []
+    }
+  ],
+  "triggerEvents": [
+    {
+      "id": "889df3b68cd4c85183",
+      "name": "Accept bounded candidate",
+      "advancedLogic": false,
+      "triggerOnStartOfGame": false,
+      "triggerMidGame": false,
+      "canTriggerMoreThanOnce": true,
+      "triggerConditions": [
+        {
+          "id": "8697487d8a3bebcde6",
+          "category": "condition",
+          "type": "triggerOnPawScript",
+          "data": "$accepted.locked = 0 and $candidate.submitted = 1"
+        }
+      ],
+      "triggerEffects": [
+        {
+          "id": "d165cdd0aaee84c40f",
+          "type": "effectRunScript",
+          "data": "if $candidate.id.exists() and $candidate.qty.exists()\n    if $candidate.id = \"draft01\" and $candidate.qty >= 1 and $candidate.qty <= 9\n        $accepted.id = $candidate.id\n        $accepted.qty = $candidate.qty\n        $accepted.locked = 1"
+        }
+      ]
+    }
+  ],
+  "victoryCondition": null,
+  "defeatCondition": null,
+  "trackedItems": [
+    {
+      "id": "2b344a26c40d199e46",
+      "name": "Candidate",
+      "variableName": "candidate",
+      "positionInList": 0,
+      "dataType": "yaml",
+      "visibility": "everyone",
+      "description": "Authored example state; script-owned.",
+      "initialValue": "id: draft01\nqty: 1\nsubmitted: 0",
+      "initialValueBasedOnPC": "same",
+      "autoUpdate": false,
+      "updateInstructions": "",
+      "enforceFormat": false
+    },
+    {
+      "id": "106bfcdeff3035f31f",
+      "name": "Accepted",
+      "variableName": "accepted",
+      "positionInList": 1,
+      "dataType": "yaml",
+      "visibility": "everyone",
+      "description": "Authored example state; script-owned.",
+      "initialValue": "id: \"\"\nqty: 0\nlocked: 0",
+      "initialValueBasedOnPC": "same",
+      "autoUpdate": false,
+      "updateInstructions": "",
+      "enforceFormat": false
+    }
+  ],
+  "hideSkillSystem": true,
+  "autoAdvanceVersion": false,
+  "version": "1.0",
+  "charSelectText": "",
+  "descriptionRequest": "",
+  "evaluationRequest": "",
+  "summaryRequest": "",
+  "instructionBlocks": [],
+  "NPCs": [],
+  "loreBookEntries": [],
+  "designNotes": ""
+}

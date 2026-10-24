@@ -25,6 +25,10 @@ For a native input, confirm the current target value after submitting an answer.
 
 Base worlds and live games are separate copies. Changes to player characters or Other Characters in the live-world editor do not affect that playthrough; already-fired effects are not retroactively rewritten. Use Save as new world to reuse live-world edits in future games. Image-style changes can require save/reload before their export reflects the editor.
 
+## Read-only source/import comparison
+
+[import_audit.py](../tools/import_audit.py) compares original and native-exported worlds, preserves hashes and reports possible tracker identity changes plus references to removed targets. It never repairs or remaps automatically. See [Story tools](Story-Tools.md) for usage.
+
 ---
 
 END OF DOCUMENT: reference/Import-Integrity.md

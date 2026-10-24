@@ -1,0 +1,166 @@
+{
+  "favorite": false,
+  "title": "Archive and reactivate",
+  "description": "Optional authoring pattern; structurally checked, not a newly certified runtime composition.",
+  "background": "An adult courier waits at a guild desk.",
+  "instructions": "Respect the authored tracker state. Describe attempts without inventing mechanical rewards.",
+  "authorStyle": "",
+  "recommendedAIModel": null,
+  "firstInput": "Introduce the guild desk.",
+  "objective": "",
+  "imageModel": "manticore",
+  "imageStyle": "photo_1",
+  "illustrationStyleNonCharacterLowPriority": "",
+  "illustrationStyleNonCharacterHighPriority": "",
+  "illustrationStyleCharacterLowPriority": "",
+  "illustrationStyleCharacterHighPriority": "",
+  "imageStyleCharacterPre": "",
+  "imageStyleCharacterPost": "",
+  "imageStyleNonCharacterPre": "",
+  "imageStyleNonCharacterPost": "",
+  "mature": false,
+  "nsfw": false,
+  "contentWarnings": "",
+  "enableAISpecificInstructionBlocks": false,
+  "previewImage": "",
+  "fullSizePreviewImage": "",
+  "previewImageOptions": [],
+  "fullSizePreviewImageOptions": [],
+  "currentPreviewImageIndex": -1,
+  "imagePromptDetails": {
+    "illustrClothes": "",
+    "illustrSetting": "",
+    "illustrSubject": "",
+    "illustrAppearance": "",
+    "illustrIsCharacter": false,
+    "illustrExpressionPosition": ""
+  },
+  "permissionsOnceShared": {
+    "sharing": true,
+    "editing": true
+  },
+  "allowChangeCharacterName": false,
+  "allowChangeCharacterDescription": false,
+  "allowChangeCharacterSkills": false,
+  "allowChangeCharacterItemValues": false,
+  "allowChangeCharacterPortrait": false,
+  "allowChangeCharacterNewPortrait": false,
+  "conditions": [],
+  "schemaVersion": 2.4,
+  "skills": [
+    "Generic skill"
+  ],
+  "possibleCharacters": [
+    {
+      "name": "Player character",
+      "description": "",
+      "portrait": "",
+      "portraitPromptDetails": {
+        "illustrAppearance": "",
+        "illustrClothes": "",
+        "illustrExpressionPosition": "",
+        "illustrSetting": ""
+      },
+      "fullSizePortrait": "",
+      "portraitOptions": [],
+      "fullSizePortraitOptions": [],
+      "currentPortraitIndex": -1,
+      "characterId": "c7038c97-b50f-57be-9e33-9ce2914d80ef",
+      "skills": {
+        "Generic skill": 3
+      },
+      "initialTrackedItemValues": []
+    }
+  ],
+  "triggerEvents": [
+    {
+      "id": "289ef888f70423fa5c",
+      "name": "Archive record",
+      "advancedLogic": false,
+      "triggerOnStartOfGame": false,
+      "triggerMidGame": false,
+      "canTriggerMoreThanOnce": true,
+      "triggerConditions": [
+        {
+          "id": "ba9ee44050b18b232e",
+          "category": "condition",
+          "type": "triggerOnPawScript",
+          "data": "$active.request = \"archive\" and $active.enabled = 1"
+        }
+      ],
+      "triggerEffects": [
+        {
+          "id": "1c2a1c4f46f31e7368",
+          "type": "effectRunScript",
+          "data": "if $active.enabled = 1\n    $archive.id = $active.id\n    $archive.value = $active.value\n    $archive.present = 1\n    $active.enabled = 0\n    $active.request = \"none\""
+        }
+      ]
+    },
+    {
+      "id": "831fdc6142a7520ae5",
+      "name": "Restore record",
+      "advancedLogic": false,
+      "triggerOnStartOfGame": false,
+      "triggerMidGame": false,
+      "canTriggerMoreThanOnce": true,
+      "triggerConditions": [
+        {
+          "id": "b901406dddaa9e60e0",
+          "category": "condition",
+          "type": "triggerOnPawScript",
+          "data": "$active.request = \"restore\" and $active.enabled = 0 and $archive.present = 1"
+        }
+      ],
+      "triggerEffects": [
+        {
+          "id": "80852903b06f2d3882",
+          "type": "effectRunScript",
+          "data": "if $archive.present = 1\n    $active.id = $archive.id\n    $active.value = $archive.value\n    $active.enabled = 1\n    $archive.present = 0\n    $active.request = \"none\""
+        }
+      ]
+    }
+  ],
+  "victoryCondition": null,
+  "defeatCondition": null,
+  "trackedItems": [
+    {
+      "id": "162bcd8c82289f6ab5",
+      "name": "Active record",
+      "variableName": "active",
+      "positionInList": 0,
+      "dataType": "yaml",
+      "visibility": "everyone",
+      "description": "Authored example state; script-owned.",
+      "initialValue": "id: entry01\nvalue: 7\nenabled: 1\nrequest: none",
+      "initialValueBasedOnPC": "same",
+      "autoUpdate": false,
+      "updateInstructions": "",
+      "enforceFormat": false
+    },
+    {
+      "id": "95208e7532ea431f70",
+      "name": "Archive",
+      "variableName": "archive",
+      "positionInList": 1,
+      "dataType": "yaml",
+      "visibility": "everyone",
+      "description": "Authored example state; script-owned.",
+      "initialValue": "id: \"\"\nvalue: 0\npresent: 0",
+      "initialValueBasedOnPC": "same",
+      "autoUpdate": false,
+      "updateInstructions": "",
+      "enforceFormat": false
+    }
+  ],
+  "hideSkillSystem": true,
+  "autoAdvanceVersion": false,
+  "version": "1.0",
+  "charSelectText": "",
+  "descriptionRequest": "",
+  "evaluationRequest": "",
+  "summaryRequest": "",
+  "instructionBlocks": [],
+  "NPCs": [],
+  "loreBookEntries": [],
+  "designNotes": ""
+}

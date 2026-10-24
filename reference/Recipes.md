@@ -50,6 +50,22 @@ In [recipe-request-commit.json](../examples/recipe-request-commit.json), the AI 
 
 The [example index](../examples/index.json) records each complete world's purpose and verification scope. [Payloads.md](../examples/Payloads.md) supplies smaller native shapes. Remap IDs when combining worlds and validate the result; structural checks do not certify gameplay. Select examples by feature rather than imposing the showcase's architecture on every world.
 
+## Guarded state patterns
+
+These optional complete worlds compose known primitives; their exact compositions have not been live-certified. Do not replace a world's design with them automatically.
+
+| Example | Intent and boundary |
+| --- | --- |
+| [Completion and award](../examples/recipe-completion-award.json) | Set Award state's ready field to 1 through an authored action. Commit the score and completed flag together; trigger firing alone is not successful completion. |
+| [Candidate acceptance](../examples/recipe-candidate-acceptance.json) | Keep candidate and accepted records separate. Set submitted to 1 to request acceptance. Checks identity, required field existence and quantity bounds before locking. This is a small semantic gate, not a general YAML type validator; coercion remains possible. |
+| [Archive and restore](../examples/recipe-archive-reactivate.json) | Set Active record's request to archive or restore. Copy selected fields explicitly and consume the request. This preserves the record while marking it inactive; it does not prove exclusion from every AI context. |
+| [Cached random](../examples/recipe-cached-random.json) | One trigger samples once and both blocks read the stored roll. Before that trigger runs the initial value is 0; reset ready to 0 only when a new draw is intended. This is not a guarantee of same-turn narrative visibility. |
+| [Consumed milestone](../examples/recipe-consumed-timer.json) | Increment turn time before checking ticks >= 3; consume the crossing once. This counts ordinary eligible trigger cycles, not elapsed story time. Resetting only the consumed flag permits another award. |
+| [Choice domain](../examples/recipe-choice-domain.json) | Accept only Courier or Archivist at consumption. Blank offers the form again; unexpected manual/script values do not commit. Multiple selections need their own delimiter/representation validation. |
+| [Compiled plot](../examples/recipe-compiled-plot.json) | Literal Scenarios with ordered prerequisites and guarded awards. See [compiler contract](Engineering-Tools.md). |
+
+The validator's new review advisories cover repeat accumulation, separate script transaction boundaries, computed choice domains, multiple-choice storage and independently evaluated random expressions. They are prompts to inspect intent, never hard prohibitions or proof that a guard is missing. Existing guards can legitimately trigger a review notice. Choice menus and Enforce format do not validate all manual/script write paths.
+
 ---
 
 END OF DOCUMENT: reference/Recipes.md

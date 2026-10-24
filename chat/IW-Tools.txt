@@ -1,4 +1,4 @@
-Infinite Worlds Authoring Kit: authoring tools. Recreate files at their BEGIN FILE paths, excluding boundary lines and separator newlines. Preserve code indentation and escaping. See tools/Usage.md for dependencies and commands. Includes validator, schema, static lint and data-bank utility. Distribution builders and maintainer tests are intentionally omitted. Reading these sources is not running them; report validation only after execution.
+Infinite Worlds Authoring Kit: authoring tools. Recreate files at their BEGIN FILE paths, excluding boundary lines and separator newlines. Preserve code indentation and escaping. See tools/Usage.md for dependencies and commands. Includes validator, schema, static lint, data-bank utility, import audit and story export. Distribution builders and maintainer tests are intentionally omitted. Reading these sources is not running them; report validation only after execution.
 
 ===== BEGIN FILE: tools/Usage.md =====
 # Tool usage and validation reference
@@ -61,11 +61,23 @@ The builder updates visible EOF markers in AI-facing Markdown documents, generat
 
 Required sources are checked before output begins; a missing source or checker embedding stops the build with an error. Repeated builds with unchanged inputs preserve output bytes and the manifest timestamp. A write failure can leave partial outputs; fix it and rerun before publishing.
 
-`IW-Tools.txt` has an explicit authoring-tool list: this usage guide, validator, static checks, JSON schema and data-bank utility. Builders, regression tests and package reports remain in the repository but are omitted from that model-facing bundle. Human READMEs are also omitted from combined technical packages. No model needs the distribution builder to author a world.
+`IW-Tools.txt` has an explicit authoring-tool list: this usage guide, validator, static checks, JSON schema, data-bank utility, import audit and story-export tool. Builders, regression tests and package reports remain in the repository but are omitted from that model-facing bundle. Human READMEs are also omitted from combined technical packages. No model needs the distribution builder to author a world.
 
 The root manifest records repository-relative paths, byte lengths and SHA-256 hashes. It covers the authoring sources and supported files under reference, library, examples, tools, chat and checker, plus the homepage and root guide/template/license. It excludes itself, ZIP archives, sample histories, hidden files and caches. It is separate from the files it hashes to avoid circular dependencies. Hash original bytes, never a browser's rendered/extracted text. A mismatch may mean the manifest is stale; investigate apparent missing content without treating every mismatch as damage. A match establishes the recorded bytes, not freshness or runtime correctness.
 
 EOF markers are added only to AI-facing Markdown and the generated chat documents. They are not added to JSON, scripts, the native default Evaluation text or other directly reusable content. They are documentation boundaries, not world instructions to copy into a story.
+
+## Import audit and story exports
+
+Use `python tools/import_audit.py source.json imported.json` for possible tracker reminting, stale references and a loss-aware structural diff. It never rewrites the worlds. Full schema coverage depends on jsonschema; source hashes and comparison do not.
+
+Use `python tools/story_export.py plan story.txt --world world.json --session NAME --branch NAME` to propose a layout. After source review, `build plan.json --output NEW_DIRECTORY` extracts/merges it; `verify NEW_DIRECTORY` checks manifest hashes. These subcommands follow `python tools/story_export.py`. It requires a new output directory and explicit reviewed boundaries/session/branch declarations. It preserves raw source and tracker strings, rejects conflicts/gaps, and never selects by timestamps. See [Story tools](../reference/Story-Tools.md) for partial histories and ambiguous delimiters.
+
+Run all maintained regression checks with `python -m unittest discover -s tools -p "test_*.py"`. These are local tool checks, not IW execution.
+
+## Browser and plot tools
+
+See [Engineering tools](../reference/Engineering-Tools.md) for `iw_browser.py` setup, capture/export/recovery contracts and `plot_compile.py` plan syntax. Browser support is optional and uses `requirements-browser.txt`. No tool here submits a game turn, imports a world or publishes content. Authenticated standalone capture and refresh-verified editor export are verified; gameplay recovery and server persistence remain outside that result.
 
 ---
 
@@ -210,11 +222,16 @@ def validate(doc, schema):
                 for j,x in enumerate(d): ref(x,'possibleCharacters',q+'/data/'+str(j))
             elif t=='triggerOnTrackedItem' and isinstance(d,dict):
                 ref(d.get('trackedItemID'),'trackedItems',q+'/data/trackedItemID',condition=True)
+                if not isinstance(d.get('textComparison'),str) or not d['textComparison'].strip():
+                    add('warning','missing-native-comparator',q+'/data/textComparison','Native tracker comparisons retain textComparison even for numeric targets. Missing/blank values can be omitted or inactive on import; preserve the native nonempty field.')
             elif t in ['triggerPrereqs','triggerBlockers'] and isinstance(d,dict):
                 key='prereqs' if t=='triggerPrereqs' else 'blockers'
                 for j,x in enumerate(d.get(key,[]) if isinstance(d.get(key,[]),list) else []): ref(x,'triggerEvents',q+'/data/'+key+'/'+str(j))
             elif t=='triggerOnEvent' and isinstance(d,str) and d not in doc.get('conditions',[]):
-                add('warning','unlisted-situation',q+'/data','Situation string not in root conditions registry; whether registry membership is mandatory is unknown.')
+                if 'conditions' not in doc:
+                    add('warning','missing-scenario-registry',q+'/data','No explicit Scenario registry. Legacy imports can populate one; inspect the native re-export and selected binding before use.')
+                else:
+                    add('error','unlisted-situation',q+'/data','Scenario has no exact registry binding; case, spacing and punctuation must match a declared Scenario.')
             elif t=='triggerOnPawScript': add('warning','unverified-expression',q+'/data','Expression is stored text; not parsed or executed.')
     for i,t in enumerate(doc.get('triggerEvents',[]) if isinstance(doc.get('triggerEvents',[]),list) else []):
         if not isinstance(t,dict): continue
@@ -234,14 +251,18 @@ def validate(doc, schema):
                 ident=e['data'].get('trackedItemID')
                 if tables['trackedItems'].get(ident,{}).get('dataType')=='number':numeric_writes[ident]=numeric_writes.get(ident,0)+1
         for ident,count in numeric_writes.items():
-            if count>1:add('warning','numeric-write-overwrite',p,'Multiple numeric writes to '+ident+' can overwrite rather than accumulate within one trigger.')
+            if count>1:add('warning','numeric-write-overwrite',p,'Multiple numeric writes to '+repr(tables['trackedItems'][ident].get('name','Unnamed tracker'))+' can overwrite rather than accumulate within one trigger.')
         conditions(t.get('triggerConditions',[]),p+'/triggerConditions',start_enabled=bool(t.get('triggerOnStartOfGame')))
         for j,e in enumerate(t.get('triggerEffects',[]) if isinstance(t.get('triggerEffects',[]),list) else []):
             q=p+'/triggerEffects/'+str(j)
             if not isinstance(e,dict):continue
             node_id(e,q); et=e.get('type');d=e.get('data')
+            if et=='effectChangeOtherCharacters':
+                add('warning','runtime-unverified-effect',q,'Change other characters has a native editor payload, but authoritative live character mutation is not observable; structural acceptance is not runtime certification.')
+            if t.get('triggerOnStartOfGame') and et=='effectFireRandomTrigger':
+                add('warning','start-incompatible-effect',q,'Fire random trigger did not dispatch with Start enabled; use an ordinary-play dispatcher.')
             if t.get('triggerOnStartOfGame') and et == 'effectGiveInfo':
-                add('warning','start-incompatible-effect',q,'Give Information to AI is incompatible with Start of Game; the effect was ignored in a runtime test. Use background or an instruction block for opening context, or a separate ordinary-play trigger. Later-turn behavior with Start and Mid Game enabled remains unverified.')
+                add('warning','start-incompatible-effect',q,'Give Information to AI is incompatible with Start of Game; the effect was ignored in a runtime test. Use background or an instruction block for opening context, or a separate ordinary-play trigger. It also remains ignored during later Start+Mid activations.')
             if et not in defs['effect']['x-knownDiscriminators']:
                 add('warning','unknown-effect-type',q+'/type','Missing or unobserved effect type: '+repr(et));continue
             if 'data' not in e: add('warning','missing-payload',q+'/data','No effect payload.');continue
@@ -264,6 +285,9 @@ def validate(doc, schema):
     for i,t in enumerate(doc.get('trackedItems',[]) if isinstance(doc.get('trackedItems',[]),list) else []):
         if not isinstance(t,dict):continue
         p='/trackedItems/'+str(i)
+        ident=t.get('id')
+        if isinstance(ident,str) and ident and not re.fullmatch(r'[A-Za-z0-9]+',ident):
+            add('warning','tracker-id-import-risk',p+'/id','Tracker '+repr(t.get('name','Unnamed tracker'))+' has a non-ASCII-alphanumeric ID. Import may regenerate it without remapping references; inspect the imported targets. This is advisory, not a universal ID validity rule.')
         v=t.get('variableName')
         if isinstance(v,str) and v:
             if v in variables:add('warning','duplicate-variable',p+'/variableName','Repeated variable name; binding ambiguity not resolved.')
@@ -288,6 +312,13 @@ def validate(doc, schema):
             elif target.get('dataType')=='number' and isinstance(val,str) and not re.fullmatch(r'[+-]?(?:\d+(?:\.\d*)?|\.\d+)(?:[eE][+-]?\d+)?',val.strip()):
                 add('warning','numeric-character-initialization',q+'/initialPCValue','Number tracker has a nonnumeric per-character sample; runtime meaning unverified.')
     findings.extend(lint(doc))
+    for f in findings:
+        parts=f['path'].split('/')
+        if len(parts)>2 and parts[1] in ('trackedItems','triggerEvents','possibleCharacters') and parts[2].isdigit():
+            items=doc.get(parts[1],[]); index=int(parts[2])
+            if index<len(items) and isinstance(items[index],dict):
+                name=items[index].get('name')
+                if isinstance(name,str) and name: f['objectName']=name
     return findings
 
 def main():
@@ -318,7 +349,7 @@ if __name__=='__main__':sys.exit(main())
 from __future__ import annotations
 import json,re,hashlib
 
-SYSTEM_ROOTS={'game','player'}
+SYSTEM_ROOTS={'game','player','turn_number'}
 ROOT=re.compile(r'\$([A-Za-z_][A-Za-z_0-9]*)')
 PLACEHOLDERS=re.compile(r'\[(?:LIST [A-Z _]+|DESCRIBE [A-Z _]+|Author Style|title|blurb)\]|<#\s*(?:time period|Copy in|DESCRIBE|LIST |VARIABLE BLOCK)[\s\S]*?#>',re.I)
 
@@ -394,6 +425,7 @@ def lint(doc):
         for m in lit.finditer(code):
             if re.match(r'\s*\+\s*(?:\$|["\'])',clean[m.end():]) or re.search(r'\$[\w.()]+\s*\+\s*$',clean[:m.start()]):
                 add('string-plus',path,'Possible string concatenation with +; use &. Review this heuristic warning.');break
+    findings.extend(pattern_advisories(doc))
     return findings
 
 def basic_errors(value,schema,root=None,path=''):
@@ -464,6 +496,40 @@ def edit_diff(old,new):
         a,b=lookup(old),lookup(new)
         objects[field]={'added':sorted(b.keys()-a.keys()),'removed':sorted(a.keys()-b.keys()),'changed':sorted(k for k in a.keys()&b.keys() if a[k]!=b[k]),'orderChanged':list(a)!=list(b)}
     return {'objects':objects,'changes':changes,'note':'Reports differences, not whether they are authorized. Array indices are positional; object summaries match IDs.'}
+
+
+def pattern_advisories(doc):
+    """Narrow review prompts, never proof of a missing guard or invalid runtime behavior."""
+    out=[]
+    def add(code,path,message):out.append(dict(severity='warning',code=code,path=path,message=message))
+    triggers=doc.get('triggerEvents',[])
+    if not isinstance(triggers,list):return out
+    for i,t in enumerate(triggers):
+        if not isinstance(t,dict):continue
+        effects=t.get('triggerEffects',[])
+        if not isinstance(effects,list):continue
+        for j,e in enumerate(effects):
+            if not isinstance(e,dict):continue
+            typ=e.get('type');d=e.get('data');path=f'/triggerEvents/{i}/triggerEffects/{j}/data'
+            if typ=='effectRunScript' and isinstance(d,str):
+                clean=mask_literals(d)
+                if t.get('canTriggerMoreThanOnce') and re.search(r'^\s*\$[\w.]+\s*\+=',clean,re.M):
+                    add('review-repeat-accumulation',path,'Repeatable script accumulates a value. Review its completion/consumption guard if this is a one-time reward; recurring counters are valid. No missing guard is inferred.')
+                if any(isinstance(x,dict) and x.get('type')=='effectRunScript' for x in effects[:j]):
+                    add('review-script-boundary',path,'Earlier Run Script effects have separate locals and rollback. Keep an accepted-state commit and its completion flag together if they must succeed together.')
+            if typ=='effectPresentChoice' and isinstance(d,dict):
+                if d.get('selectionMode')=='multiple':
+                    add('review-choice-storage',path,'Multiple selections can be newline-delimited text. Validate the intended domain and representation before treating this value as a YAML list.')
+                if isinstance(d.get('choices'),str) and '<<' in d['choices']:
+                    add('review-choice-domain',path,'Choices are computed. Review blank/duplicate values, fallback and membership checks at the point where the answer is consumed; display choices alone do not validate all write paths.')
+    draws=[]
+    for path,text in walk(doc):
+        if not any(k in path for k in ('/content','/instructions','/descriptionRequest')):continue
+        for expr in templates(text):
+            if re.search(r'\b(?:random|random_between|dice_roll)\s*\(',mask_literals(expr)):draws.append(path)
+    if len(draws)>1:
+        add('review-independent-random',draws[0],'Several rendered expressions draw independently. Cache a single choice in a tracker when these consumers must agree; independent draws are otherwise valid.')
+    return out
 
 ===== END FILE: tools/static_checks.py =====
 
@@ -628,7 +694,7 @@ def edit_diff(old,new):
       "items": {
         "type": "string"
       },
-      "maxItems": 10
+      "description": "Scenario registry. The editor creation cap is not a runtime/import maximum; exact references are checked separately."
     },
     "schemaVersion": {
       "type": "number",
@@ -1087,7 +1153,7 @@ def edit_diff(old,new):
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "InfiniteWorlds observed export schema \u2014 schemaVersion 2.4",
   "description": "General Infinite Worlds export structure and explicit-reference profile. Compatibility baseline: Save/load system, Image style system and Pawscript update, announced 2026-10-08 (compatibility baseline). Not an official exhaustive importer contract. Unknown fields/discriminators remain permitted and reported. Presence observations alone do not establish importer-required fields.",
-  "x-profileVersion": "1.1.0",
+  "x-profileVersion": "1.2.0",
   "x-observedSchemaVersions": [
     2.4
   ],
@@ -1719,6 +1785,12 @@ def edit_diff(old,new):
     "effect": {
       "anyOf": [
         {
+          "$ref": "#/$defs/effect_effectChangeOtherCharacters"
+        },
+        {
+          "$ref": "#/$defs/effect_effectChangeFirstAction"
+        },
+        {
           "$ref": "#/$defs/effect_effectChangeBackground"
         },
         {
@@ -1812,7 +1884,9 @@ def edit_diff(old,new):
                   "effectFireRandomTrigger",
                   "effectRunScript",
                   "effectEndsGame",
-                  "effectChangeBackground"
+                  "effectChangeBackground",
+                  "effectChangeFirstAction",
+                  "effectChangeOtherCharacters"
                 ]
               }
             }
@@ -1856,7 +1930,9 @@ def edit_diff(old,new):
         "effectFireRandomTrigger",
         "effectRunScript",
         "effectEndsGame",
-        "effectChangeBackground"
+        "effectChangeBackground",
+        "effectChangeFirstAction",
+        "effectChangeOtherCharacters"
       ],
       "x-discriminator": "type"
     },
@@ -2075,7 +2151,11 @@ def edit_diff(old,new):
           "const": "triggerOnTurn"
         },
         "data": {
-          "type": "integer"
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Native exports use a string threshold; numeric thresholds also supported. Expressions are not executed by validation."
         },
         "id": {
           "type": "string"
@@ -2270,6 +2350,103 @@ def edit_diff(old,new):
         },
         "data": {
           "type": "string"
+        },
+        "id": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true,
+      "required": [
+        "type"
+      ]
+    },
+    "effect_effectChangeFirstAction": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "effectChangeFirstAction"
+        },
+        "data": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true,
+      "required": [
+        "type"
+      ]
+    },
+    "effect_effectChangeOtherCharacters": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "effectChangeOtherCharacters"
+        },
+        "data": {
+          "type": "object",
+          "properties": {
+            "action": {
+              "type": "string",
+              "x-observedValues": [
+                "add",
+                "modify",
+                "delete"
+              ]
+            },
+            "character": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "description": "Native character Name selector, not an NPC ID reference."
+            },
+            "npc": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "detail": {
+                  "type": "string"
+                },
+                "one_liner": {
+                  "type": "string"
+                },
+                "appearance": {
+                  "type": "string"
+                },
+                "location": {
+                  "type": "string"
+                },
+                "secret_info": {
+                  "type": "string"
+                },
+                "names": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "img_appearance": {
+                  "type": "string"
+                },
+                "img_clothing": {
+                  "type": "string"
+                },
+                "positionInList": {
+                  "type": "integer"
+                }
+              },
+              "additionalProperties": true
+            }
+          },
+          "additionalProperties": true,
+          "description": "Native editor shape only; live character database mutation is not verified."
         },
         "id": {
           "type": "string"
@@ -2511,5 +2688,540 @@ def main():
 if __name__=='__main__': sys.exit(main())
 
 ===== END FILE: tools/data_bank.py =====
+
+===== BEGIN FILE: tools/import_audit.py =====
+"""Loss-aware read-only comparison of source and native re-exported worlds.
+Usage: python tools/import_audit.py SOURCE.json IMPORTED.json
+Reports differences and possible reminting, never rewrites either input.
+"""
+from pathlib import Path
+import argparse, hashlib, json
+from static_checks import edit_diff
+from validate_iw_export import validate, Draft202012Validator
+
+def audit_import(before, after):
+    def rows(w): return [x for x in w.get('trackedItems',[]) if isinstance(x,dict)]
+    old,new=rows(before),rows(after)
+    old_ids={x.get('id') for x in old if isinstance(x.get('id'),str)}
+    new_ids={x.get('id') for x in new if isinstance(x.get('id'),str)}
+    changes=[]
+    for x in old:
+        if x.get('id') in new_ids: continue
+        candidates=[y for y in new if isinstance(x.get('name'),str) and x['name'] and isinstance(x.get('variableName'),str) and x['variableName'] and y.get('id') not in old_ids and y.get('name')==x.get('name') and y.get('variableName')==x.get('variableName')]
+        changes.append({'objectName':x.get('name'),'variableName':x.get('variableName'),'oldId':x.get('id'),'status':'possible-remint' if len(candidates)==1 else 'removed-or-ambiguous','candidateIds':[y.get('id') for y in candidates]})
+    dangling=[]
+    def scan(value,path=''):
+        if isinstance(value,dict):
+            for k,v in value.items():
+                q=path+'/'+str(k).replace('~','~0').replace('/','~1')
+                is_pc=k=='id' and '/initialTrackedItemValues/' in q
+                if (k in ('trackedItemID','targetTrackedItemId') or is_pc) and isinstance(v,str) and v in old_ids-new_ids:
+                    names=[x.get('name') for x in old if x.get('id')==v]
+                    dangling.append({'path':q,'targetNames':names,'oldId':v})
+                scan(v,q)
+        elif isinstance(value,list):
+            for i,v in enumerate(value):scan(v,path+'/'+str(i))
+    scan(after)
+    return {'trackerIdentityChanges':changes,'referencesToRemovedTrackers':dangling,'diff':edit_diff(before,after),'note':'Possible reminting is a name/handle-based candidate, not an automatic identity decision. Positional changes and omissions are preserved in diff; no repair performed.'}
+
+def main():
+    p=argparse.ArgumentParser(description=__doc__);p.add_argument('source',type=Path);p.add_argument('imported',type=Path);a=p.parse_args()
+    try:
+        raw=[p.read_bytes() for p in (a.source,a.imported)]; docs=[json.loads(b.decode('utf-8-sig')) for b in raw]
+        if not all(isinstance(d,dict) for d in docs):raise ValueError('World roots must be objects')
+        schema=json.loads(Path(__file__).with_name('iw-export.schema.json').read_text())
+        out=audit_import(*docs);out['sourceHashes']=[hashlib.sha256(b).hexdigest() for b in raw]
+        out['importFindings']=validate(docs[1],schema);out['fullSchema']=Draft202012Validator is not None
+    except (OSError,ValueError) as e:p.exit(2,str(e)+'\n')
+    print(json.dumps(out,indent=2,ensure_ascii=False))
+    return int(bool(out['referencesToRemovedTrackers']) or any(f['severity']=='error' for f in out['importFindings']))
+if __name__=='__main__':raise SystemExit(main())
+
+===== END FILE: tools/import_audit.py =====
+
+===== BEGIN FILE: tools/story_export.py =====
+"""Lossless, review-gated IW story extraction and same-branch merge (standard library).
+
+plan SOURCE --world WORLD --session NAME --branch NAME > plan.json
+build PLAN... --output NEW_DIRECTORY [--partial]
+
+Plans propose line boundaries; mark reviewed=true only after reviewing them.
+Native text has unescaped delimiters, so inferred boundaries are not authoritative.
+Build validates hashes and explicit spans, rejects conflicts, and writes a fresh
+atomic output directory. It never overwrites a prior extraction or source file.
+"""
+from pathlib import Path
+import argparse,hashlib,json,os,re,shutil,tempfile
+
+HEADINGS={'Action':'action','Outcome':'outcome','Secret Information':'secretInfo','Tracked Items':'trackedItems','Hidden Tracked Items':'hiddenTrackedItems'}
+ORDER={v:i for i,v in enumerate(HEADINGS.values())}
+MARKER=re.compile(r'^-- Turn ([1-9][0-9]*) --$')
+
+def digest(data):return hashlib.sha256(data).hexdigest()
+def load_source(path):
+    raw=Path(path).read_bytes()
+    text=raw.decode('utf-8-sig')
+    lines=text.replace('\r\n','\n').replace('\r','\n').split('\n')
+    if lines and lines[-1]=='':lines.pop()
+    return raw,lines
+def text_span(lines,start,end):return '\n'.join(lines[start-1:end])
+def check_span(start,end,low,high):
+    if type(start)!=int or type(end)!=int or not low<=start<=end<=high:
+        raise ValueError('Invalid or out-of-range line span')
+
+def propose(path,names,session,branch):
+    if not session or not branch:raise ValueError('Explicit session and branch are required')
+    if len(set(names))!=len(names):raise ValueError('Duplicate tracker Names require manually resolved boundaries')
+    raw,lines=load_source(path)
+    markers=[(i+1,int(m[1])) for i,line in enumerate(lines) if (m:=MARKER.fullmatch(line))]
+    if not markers:raise ValueError('No turn markers found')
+    turns=[];issues=[]
+    for idx,(start,number) in enumerate(markers):
+        end=markers[idx+1][0]-1 if idx+1<len(markers) else len(lines)
+        hits=[(i+1,HEADINGS[lines[i]]) for i in range(start,end-1) if lines[i] in HEADINGS and re.fullmatch('-{4,}',lines[i+1])]
+        sections=[]
+        for j,(header,kind) in enumerate(hits):
+            stop=hits[j+1][0]-1 if j+1<len(hits) else end
+            sec={'kind':kind,'headerLine':header,'endLine':stop}
+            if kind in ('trackedItems','hiddenTrackedItems'):
+                found=[(k+1,lines[k][:-1]) for k in range(header+1,stop) if lines[k].endswith(':') and lines[k][:-1] in names]
+                sec['trackers']=[{'name':name,'startLine':pos,'endLine':found[n+1][0]-1 if n+1<len(found) else stop} for n,(pos,name) in enumerate(found)]
+                if len({name for _,name in found})!=len(found):issues.append('Duplicate possible tracker header at turn '+str(number))
+                if not found and any(x.strip() for x in lines[header+1:stop]):issues.append('Unresolved tracker section at turn '+str(number))
+            sections.append(sec)
+        kinds=[s['kind'] for s in sections]
+        if kinds!=sorted(set(kinds),key=lambda k:ORDER[k]) or 'outcome' not in kinds:issues.append('Ambiguous/missing section boundaries at turn '+str(number))
+        turns.append({'number':number,'startLine':start,'endLine':end,'sections':sections})
+    nums=[t['number'] for t in turns]
+    if nums!=list(range(nums[0],nums[0]+len(nums))):issues.append('Nonconsecutive or duplicate proposed turn markers')
+    return {'version':1,'session':session,'branch':branch,'reviewed':False,'path':str(Path(path).resolve()),'sha256':digest(raw),'trackerNames':list(names),'turns':turns,'reviewIssues':issues,'boundaryNotice':'Unescaped text can imitate turn, section or tracker headings. Review and correct spans; reviewed=true is an operator assertion, not inferred certainty.'}
+
+def extract(plan):
+    if plan.get('reviewed') is not True:raise ValueError('Review line boundaries and set reviewed=true before extraction')
+    if not isinstance(plan.get('session'),str) or not plan['session'].strip() or not isinstance(plan.get('branch'),str) or not plan['branch'].strip():raise ValueError('Explicit nonempty session and branch required')
+    if plan.get('reviewIssues'):raise ValueError('Resolve reviewIssues and clear them after reviewing the layout')
+    raw,lines=load_source(plan['path'])
+    if digest(raw)!=plan.get('sha256'):raise ValueError('Source SHA256 mismatch; regenerate/review plan')
+    turns=plan.get('turns',[])
+    if not isinstance(turns,list) or not turns:raise ValueError('Plan needs explicit turn spans')
+    parsed=[];last_end=None;last_num=None
+    names=plan.get('trackerNames',[])
+    if not isinstance(names,list) or not all(isinstance(n,str) and n for n in names) or len(names)!=len(set(names)):raise ValueError('Tracker Names must be unique nonempty strings')
+    for turn in turns:
+        n=turn['number'];start=turn['startLine'];end=turn['endLine']
+        check_span(start,end,1,len(lines))
+        if type(n)!=int or n<1 or lines[start-1]!=f'-- Turn {n} --':raise ValueError('Turn marker does not match approved span')
+        if last_end is not None and (start!=last_end+1 or n!=last_num+1):raise ValueError('Turn spans must be contiguous and sequential within a source')
+        last_end,last_num=end,n
+        sections=turn['sections'];kinds=[s['kind'] for s in sections]
+        if 'outcome' not in kinds or any(k not in ORDER for k in kinds) or kinds!=sorted(set(kinds),key=lambda k:ORDER[k]):raise ValueError('Invalid/duplicate section sequence')
+        data={'number':n,'sections':{},'trackedItems':{},'hiddenTrackedItems':{}}
+        prev=start
+        for idx,sec in enumerate(sections):
+            h,e=sec['headerLine'],sec['endLine'];check_span(h,e,start+1,end)
+            expected_end=sections[idx+1]['headerLine']-1 if idx+1<len(sections) else end
+            if h<=prev or e!=expected_end:raise ValueError('Overlapping or incomplete section spans')
+            if idx==0 and any(x.strip() for x in lines[start:h-1]):raise ValueError('Unclassified text before first section')
+            label=next(k for k,v in HEADINGS.items() if v==sec['kind'])
+            if lines[h-1]!=label or h>=e or not re.fullmatch('-{4,}',lines[h]):raise ValueError('Section header does not match approved span')
+            prev=e
+            body=text_span(lines,h+2,e) if h+2<=e else ''
+            data['sections'][sec['kind']]=body
+            if sec['kind'] in ('trackedItems','hiddenTrackedItems'):
+                ts=sec.get('trackers',[]);previous=h+1
+                for j,item in enumerate(ts):
+                    a,b=item['startLine'],item['endLine'];name=item['name'];check_span(a,b,h+2,e)
+                    boundary=ts[j+1]['startLine']-1 if j+1<len(ts) else e
+                    if a<=previous or b!=boundary or name not in names or lines[a-1]!=name+':' or name in data[sec['kind']]:raise ValueError('Invalid/duplicate tracker boundary')
+                    if j==0 and any(x.strip() for x in lines[h+1:a-1]):raise ValueError('Unclassified tracker text before first Name')
+                    data[sec['kind']][name]=text_span(lines,a+1,b) if a<b else ''
+                    previous=b
+                if not ts and body.strip():raise ValueError('Unresolved tracker section; provide reviewed Name boundaries')
+        if set(data['trackedItems']) & set(data['hiddenTrackedItems']):raise ValueError('Same tracker Name in visible and hidden sections is ambiguous')
+        data['content']=text_span(lines,start,end).rstrip('\n')
+        data['contentSha256']=digest(data['content'].encode('utf8'))
+        data['provenance']=[{'sourceSha256':digest(raw),'path':str(Path(plan['path']).resolve()),'lineRange':[start,end]}]
+        parsed.append(data)
+    if last_end!=len(lines):raise ValueError('Unclassified text after final turn span')
+    return parsed
+
+def merge(plans,partial=False):
+    if not plans:raise ValueError('No sources')
+    identity={(p.get('session'),p.get('branch')) for p in plans}
+    if len(identity)!=1:raise ValueError('Different sessions/branches cannot be merged; select a branch explicitly')
+    merged={}
+    for plan in plans:
+        for turn in extract(plan):
+            n=turn['number']
+            if n in merged:
+                old=merged[n]
+                # Identical text is insufficient if operators approved different parsing.
+                if any(old[k]!=turn[k] for k in ('content','sections','trackedItems','hiddenTrackedItems')):raise ValueError(f'Conflicting turn {n}; choose/reconcile a branch before merging. No timestamp winner.')
+                old['provenance'].extend(turn['provenance'])
+            else:merged[n]=turn
+    nums=sorted(merged)
+    if nums!=list(range(nums[0],nums[-1]+1)) or (not partial and nums[0]!=1):raise ValueError('History has gaps or missing initial turns; partial only permits a contiguous later range')
+    for t in merged.values():t['provenance']=sorted({json.dumps(p,sort_keys=True):p for p in t['provenance']}.values(),key=lambda p:(p['sourceSha256'],p['lineRange'],p['path']))
+    session,branch=next(iter(identity))
+    return {'session':session,'branch':branch,'partial':bool(partial),'boundaryAssurance':'operator-reviewed; text format is unescaped','turns':[merged[n] for n in nums]}
+
+def publish(plans,destination,partial=False):
+    dest=Path(destination).resolve()
+    if dest.exists():raise ValueError('Output must be a new directory; existing extractions are never overwritten')
+    result=merge(plans,partial)
+    if not dest.parent.is_dir():raise ValueError('Output parent must exist')
+    stage=Path(tempfile.mkdtemp(prefix='.iw-story-',dir=dest.parent))
+    # The only cleanup target is this tool-created sibling staging directory.
+    assert stage.parent==dest.parent and stage.name.startswith('.iw-story-')
+    try:
+        src=stage/'sources';src.mkdir();records=[]
+        for p in sorted(plans,key=lambda p:(p['sha256'],p['path'])):
+            raw=Path(p['path']).read_bytes()
+            if digest(raw)!=p['sha256']:raise ValueError('Source changed during publication')
+            name='sources/'+p['sha256']+'.txt';(stage/name).write_bytes(raw)
+        (stage/'reviewed-plans.json').write_text(json.dumps(plans,indent=2,ensure_ascii=False)+'\n',encoding='utf8')
+        (stage/'story.json').write_text(json.dumps(result,indent=2,ensure_ascii=False)+'\n',encoding='utf8')
+        for p in sorted(stage.rglob('*')):
+            if p.is_file():records.append({'path':p.relative_to(stage).as_posix(),'sha256':digest(p.read_bytes())})
+        manifest={'version':1,'session':result['session'],'branch':result['branch'],'partial':result['partial'],'files':records}
+        (stage/'manifest.json').write_text(json.dumps(manifest,indent=2)+'\n',encoding='utf8')
+        for rec in records:
+            if digest((stage/rec['path']).read_bytes())!=rec['sha256']:raise ValueError('Staging integrity failure')
+        # Same-volume rename publishes the complete directory; it cannot replace a nonempty prior extraction.
+        if dest.exists():raise ValueError('Output appeared during publication')
+        stage.rename(dest)
+    finally:
+        if stage.exists():shutil.rmtree(stage)
+    return manifest
+
+def verify_archive(directory):
+    root=Path(directory).resolve()
+    manifest=json.loads((root/'manifest.json').read_text(encoding='utf8'))
+    seen=set()
+    for entry in manifest['files']:
+        name=entry['path']
+        if not isinstance(name,str) or name in seen:raise ValueError('Duplicate or invalid manifest path')
+        path=(root/name).resolve()
+        if Path(name).is_absolute() or not path.is_relative_to(root) or path==root:raise ValueError('Unsafe manifest path')
+        if digest(path.read_bytes())!=entry['sha256']:raise ValueError('Archive hash mismatch: '+name)
+        seen.add(name)
+    if not {'story.json','reviewed-plans.json'}<=seen:raise ValueError('Missing required archive entries')
+    story=json.loads((root/'story.json').read_text(encoding='utf8'))
+    if any(story.get(k)!=manifest.get(k) for k in ('session','branch','partial')):raise ValueError('Archive identity mismatch')
+    return {'session':story['session'],'branch':story['branch'],'partial':story['partial'],'turns':len(story['turns']),'verifiedFiles':len(seen),'note':'Only manifest-listed files were read; unlisted directory contents are not extraction output.'}
+
+def main():
+    parser=argparse.ArgumentParser(description=__doc__);sub=parser.add_subparsers(dest='command',required=True)
+    p=sub.add_parser('plan');p.add_argument('source',type=Path);p.add_argument('--world',type=Path,required=True);p.add_argument('--session',required=True);p.add_argument('--branch',required=True)
+    b=sub.add_parser('build');b.add_argument('plans',nargs='+',type=Path);b.add_argument('--output',required=True,type=Path);b.add_argument('--partial',action='store_true')
+    v=sub.add_parser('verify');v.add_argument('directory',type=Path)
+    a=parser.parse_args()
+    try:
+        if a.command=='plan':
+            w=json.loads(a.world.read_text(encoding='utf-8-sig'));out=propose(a.source,[t['name'] for t in w.get('trackedItems',[])],a.session,a.branch)
+        elif a.command=='build':out=publish([json.loads(p.read_text(encoding='utf-8-sig')) for p in a.plans],a.output,a.partial)
+        else:out=verify_archive(a.directory)
+    except (ValueError,KeyError,TypeError,OSError) as e:parser.exit(2,str(e)+'\n')
+    print(json.dumps(out,indent=2,ensure_ascii=False))
+if __name__=='__main__':main()
+
+===== END FILE: tools/story_export.py =====
+
+===== BEGIN FILE: tools/iw_browser.py =====
+"""IW browser capture, refresh-verified export and recovery inspection. No import or play commands."""
+from __future__ import annotations
+
+import argparse
+import json
+import hashlib
+import uuid
+import tempfile
+import shutil
+from datetime import datetime, timezone
+from pathlib import Path
+from urllib.parse import urlparse
+
+
+def selected_page(browser, index):
+    pages = [p for c in browser.contexts for p in c.pages
+             if urlparse(p.url).hostname in {"infiniteworlds.app", "www.infiniteworlds.app"}]
+    if index is None:
+        if len(pages) != 1:
+            raise ValueError(f"Found {len(pages)} IW tabs. Run status, then supply --tab INDEX.")
+        return pages[0]
+    if index < 0 or index >= len(pages):
+        raise ValueError("Tab index is outside the IW tab list; run status again.")
+    return pages[index]
+
+
+def fresh_dir(path):
+    path = path.resolve()
+    path.mkdir(parents=True, exist_ok=False)
+    return path
+
+
+def capture(page, out):
+    """Publish complete evidence in a fresh directory; preserve previous captures."""
+    out = out.resolve()
+    if out.exists(): raise ValueError('Capture destination already exists')
+    out.parent.mkdir(parents=True, exist_ok=True)
+    stage = Path(tempfile.mkdtemp(prefix='.iw-capture-', dir=out.parent))
+    try:
+        (stage / 'page.txt').write_text(page.locator('body').inner_text(), encoding='utf8')
+        (stage / 'accessibility.yaml').write_text(page.locator('body').aria_snapshot(), encoding='utf8')
+        metadata = {'capturedAt': datetime.now(timezone.utc).isoformat(), 'url': page.url,
+                    'title': page.title(), 'scope': 'Rendered panels only; neither saved-turn proof nor a full prompt/character database.'}
+        (stage / 'capture.json').write_text(json.dumps(metadata, indent=2), encoding='utf8')
+        records = [{'path': p.name, 'sha256': hashlib.sha256(p.read_bytes()).hexdigest()} for p in sorted(stage.iterdir())]
+        (stage / 'manifest.json').write_text(json.dumps({'files': records}, indent=2), encoding='utf8')
+        if out.exists(): raise ValueError('Capture destination appeared during capture')
+        stage.rename(out)
+    finally:
+        # stage is allocated directly under the resolved output parent, never user input.
+        if stage.exists():
+            if stage.resolve().parent != out.parent or not stage.name.startswith('.iw-capture-'):
+                raise ValueError('Refusing cleanup outside staging directory')
+            shutil.rmtree(stage)
+    return out
+
+
+def world_boxes(page):
+    found = []
+    for box in page.locator('textarea').all():
+        if not box.is_visible(): continue
+        try:
+            text = box.input_value(); value = json.loads(text)
+        except (ValueError, TypeError): continue
+        if isinstance(value, dict) and isinstance(value.get('title'), str) and 'schemaVersion' in value:
+            found.append((box, text, value))
+    return found
+
+
+def export_current(page, out, expected_title, attempts=80):
+    """Back up raw text, invalidate only that buffer, then require regenerated JSON.
+
+    No import/save calls. The original buffer survives on disk even if disconnected.
+    Close/reopen/import operations must have finished before using this command.
+    """
+    out = out.resolve(); backup = out.with_name(out.name + '.before.json')
+    receipt = out.with_name(out.name + '.receipt.json')
+    if any(p.exists() for p in (out, backup, receipt)): raise ValueError('Output, backup or receipt already exists')
+    button = page.get_by_role('button', name='Refresh raw JSON', exact=True)
+    if button.count()!=1 or not button.is_visible(): raise ValueError('Open the intended raw JSON panel first')
+    found = world_boxes(page)
+    if len(found)!=1: raise ValueError('Expected exactly one visible world JSON buffer')
+    box, original, before = found[0]
+    if before['title']!=expected_title: raise ValueError('Raw world title does not match --expected-title')
+    out.parent.mkdir(parents=True, exist_ok=True)
+    with backup.open('x', encoding='utf8', newline='') as f: f.write(original)
+    sentinel = 'IW_REFRESH_PENDING_' + uuid.uuid4().hex
+    changed = False
+    try:
+        box.fill(sentinel); changed = True
+        if box.input_value()!=sentinel: raise ValueError('Could not establish refresh marker')
+        button.click()
+        for _ in range(attempts):
+            page.wait_for_timeout(250)
+            text = box.input_value()
+            if text == sentinel: continue
+            try: value = json.loads(text)
+            except (ValueError, TypeError): continue
+            if not isinstance(value,dict) or value.get('title')!=expected_title or 'schemaVersion' not in value:
+                raise ValueError('Refreshed data does not match the intended world')
+            found = world_boxes(page)
+            if len(found)!=1 or found[0][1]!=text: raise ValueError('Ambiguous refreshed raw buffers')
+            # Same content as original is legitimate: observing the marker replaced is the freshness evidence.
+            with out.open('x',encoding='utf8',newline='') as f: f.write(text)
+            with receipt.open('x',encoding='utf8') as f:
+                json.dump({'capturedAt':datetime.now(timezone.utc).isoformat(),'title':expected_title,
+                           'sha256':hashlib.sha256(out.read_bytes()).hexdigest(),
+                           'freshness':'Observed replacement of a unique marker after Refresh raw JSON.',
+                           'scope':'Editor regeneration only; not server persistence or live-state proof.',
+                           'backup':backup.name},f,indent=2)
+            return out
+        raise ValueError('Refresh did not replace the marker within the deadline; no export published')
+    finally:
+        # Restore only our marker. Never overwrite a newer UI value or retry after disconnection.
+        if changed:
+            try:
+                if box.input_value()==sentinel: box.fill(original)
+            except Exception:
+                pass  # The on-disk .before.json is the recovery source if detached/disconnected.
+
+
+def inspect_capture(directory):
+    root = directory.resolve()
+    m=json.loads((root/'manifest.json').read_text(encoding='utf8')); seen=set()
+    for entry in m['files']:
+        name=entry['path'];path=(root/name).resolve()
+        if not isinstance(name,str) or name in seen or Path(name).is_absolute() or not path.is_relative_to(root):
+            raise ValueError('Unsafe/duplicate capture path')
+        if hashlib.sha256(path.read_bytes()).hexdigest()!=entry['sha256']: raise ValueError('Capture hash mismatch')
+        seen.add(name)
+    if not {'page.txt','accessibility.yaml','capture.json'}<=seen:raise ValueError('Incomplete capture')
+    return {'verifiedFiles':len(seen),'capture':json.loads((root/'capture.json').read_text(encoding='utf8')),
+            'recovery':'Compare retained history and controls with the previous capture. Do not infer saved turns from streamed prose. This tool never resubmits, imports or reloads.'}
+
+
+def main():
+    ap = argparse.ArgumentParser(description=__doc__)
+    ap.add_argument("--port", type=int, default=9222)
+    commands = ap.add_subparsers(dest="command", required=True)
+    launch = commands.add_parser("launch", help="Open dedicated persistent Chromium; log in yourself")
+    launch.add_argument("--profile", type=Path, default=Path.home() / ".iw-builder-browser")
+    launch.add_argument("--offline", action="store_true", help="Open about:blank for local smoke testing")
+    launch.add_argument("--headless", action="store_true", help="For offline verification only")
+    inspect = commands.add_parser("inspect", help="Verify an earlier capture offline; no browser actions")
+    inspect.add_argument("directory", type=Path)
+    commands.add_parser("status", help="List IW tabs; does not navigate or submit anything")
+    for name in ("capture", "export-current"):
+        cmd = commands.add_parser(name)
+        cmd.add_argument("output", type=Path)
+        cmd.add_argument("--tab", type=int)
+        if name == "export-current": cmd.add_argument("--expected-title", required=True)
+    args = ap.parse_args()
+    if not 1024 <= args.port <= 65535:
+        ap.error("Use a local port between 1024 and 65535")
+    if args.command == "inspect":
+        try: print(json.dumps(inspect_capture(args.directory), indent=2)); return
+        except (ValueError, OSError, KeyError, TypeError) as exc: ap.exit(1, str(exc)+"\n")
+    try:
+        from playwright.sync_api import sync_playwright
+    except ImportError:
+        ap.exit(2, "Install dependencies first: python -m pip install -r requirements.txt\n")
+    try:
+        with sync_playwright() as pw:
+            if args.command == "launch":
+                if args.headless and not args.offline:
+                    ap.error("Headless launch is only supported with --offline")
+                # A fresh dedicated profile avoids disturbing the everyday browser.
+                context = pw.chromium.launch_persistent_context(
+                    str(args.profile.resolve()), headless=args.headless,
+                    args=[f"--remote-debugging-port={args.port}", "--remote-debugging-address=127.0.0.1"],
+                )
+                page = context.pages[0] if context.pages else context.new_page()
+                page.goto("about:blank" if args.offline else "https://infiniteworlds.app/",
+                          wait_until="domcontentloaded")
+                print(f"Browser ready at http://127.0.0.1:{args.port}", flush=True)
+                print("Keep this terminal open. Log in directly in the browser. Press Enter here to close.", flush=True)
+                try:
+                    input()
+                finally:
+                    context.close()
+                return
+            browser = pw.chromium.connect_over_cdp(f"http://127.0.0.1:{args.port}", timeout=10000)
+            if args.command == "status":
+                pages = [p for c in browser.contexts for p in c.pages
+                         if urlparse(p.url).hostname in {"infiniteworlds.app", "www.infiniteworlds.app"}]
+                for i, page in enumerate(pages):
+                    print(f"[{i}] {page.title()} — {page.url}")
+                if not pages:
+                    print("Connected; no IW tab is open.")
+                return
+            page = selected_page(browser, args.tab)
+            if args.command == "capture":
+                print(capture(page, args.output))
+            else:
+                print(export_current(page, args.output, args.expected_title))
+            # Stopping this client disconnects; do not close the persistent browser.
+    except Exception as exc:
+        ap.exit(1, f"{type(exc).__name__}: {exc}\nRun launch in another terminal; verify the selected panel and capture it if a selector failed.\n")
+
+
+if __name__ == "__main__":
+    main()
+
+===== END FILE: tools/iw_browser.py =====
+
+===== BEGIN FILE: tools/plot_compile.py =====
+"""Compile a literal-Scenario prerequisite DAG into a new IW world. No runtime inference."""
+from __future__ import annotations
+import argparse,copy,hashlib,json,re
+from pathlib import Path
+
+
+def analyze(plan):
+    if not isinstance(plan,dict) or not isinstance(plan.get('nodes'),list) or not plan['nodes']:
+        raise ValueError('Plan needs a nonempty nodes list')
+    if set(plan)-{'title','nodes'}:raise ValueError('Unknown plan field')
+    if not isinstance(plan.get('title'),str) or not plan['title'].strip():raise ValueError('Plan needs a title')
+    nodes=plan['nodes']; by={}
+    for n in nodes:
+        if not isinstance(n,dict) or set(n)-{'id','name','scenario','requires','award'}:raise ValueError('Unknown node field or invalid node')
+        key=n.get('id')
+        if not isinstance(key,str) or not re.fullmatch('[a-z][a-z0-9_]*',key):raise ValueError('Node id must be a lowercase identifier')
+        if key == 'score':raise ValueError('score is reserved')
+        if key in by:raise ValueError('Duplicate node id: '+key)
+        if any(not isinstance(n.get(k),str) or not n[k].strip() for k in ('name','scenario')):raise ValueError('Each node needs Name and literal Scenario')
+        if any(x in n['scenario'] for x in ('<<','<=','<#')):raise ValueError('Dynamic Scenarios are outside this compiler contract')
+        deps=n.get('requires',[])
+        if not isinstance(deps,list) or any(not isinstance(d,str) for d in deps) or len(set(deps))!=len(deps):raise ValueError('requires must contain unique node ids')
+        award=n.get('award',0)
+        if type(award)!=int or award<0:raise ValueError('award must be a nonnegative integer')
+        by[key]=n
+    for key,n in by.items():
+        for d in n.get('requires',[]):
+            if d not in by:raise ValueError('Unknown prerequisite '+d+' on '+key)
+    pending=list(by);order=[]
+    while pending:
+        ready=[k for k in pending if all(d in order for d in by[k].get('requires',[]))]
+        if not ready:raise ValueError('Cyclic prerequisites: '+', '.join(pending))
+        order.extend(ready);pending=[k for k in pending if k not in ready]
+    groups={}
+    for n in nodes:groups.setdefault(n['scenario'],[]).append(n['name'])
+    return {'order':order,'structurallyReachable':order,'roots':[k for k in order if not by[k].get('requires')],
+            'sharedScenarios':{s:n for s,n in groups.items() if len(n)>1},
+            'scope':'All-of prerequisite connectivity only. Scenario recognition, timing, character knowledge and narrative satisfiability are not proved. Shared Scenarios may complete several nodes in the same turn.'}
+
+
+def identity(kind,key):return hashlib.sha256((kind+':'+key).encode()).hexdigest()[:18]
+
+
+def compile_world(plan,template):
+    report=analyze(plan);w=copy.deepcopy(template)
+    # Always a fresh scaffold, never merge over an existing authored world.
+    if template.get('trackedItems') or template.get('triggerEvents'):raise ValueError('Template must have no trackers or triggers')
+    w.update(title=plan['title'],description='A literal-Scenario prerequisite graph.',background='A courier works through the objectives below.',
+             instructions='Follow the declared objectives. Treat Plot progress as authoritative; do not invent rewards.',
+             firstInput='Describe the opening situation and the available objectives.',mature=False,nsfw=False,
+             conditions=list(dict.fromkeys(n['scenario'] for n in plan['nodes'])),trackedItems=[],triggerEvents=[])
+    nodes={n['id']:n for n in plan['nodes']}
+    initial='score: 0\n'+'\n'.join(k+': 0' for k in report['order'])
+    # Reserve the score key so completion cannot alias the award total.
+    if 'score' in nodes:raise ValueError('score is reserved')
+    w['trackedItems']=[dict(id=identity('tracker','plot'),name='Plot progress',variableName='plot',positionInList=0,
+         dataType='yaml',visibility='everyone',description='Completion flags and awarded score. Script-owned.',
+         initialValue=initial,initialValueBasedOnPC='same',autoUpdate=False,updateInstructions='',enforceFormat=False)]
+    for k in report['order']:
+        n=nodes[k];guard=' and '.join(['$plot.'+k+' = 0']+['$plot.'+d+' = 1' for d in n.get('requires',[])])
+        script='if '+guard+'\n    $plot.score += '+str(n.get('award',0))+'\n    $plot.'+k+' = 1'
+        w['triggerEvents'].append(dict(id=identity('trigger',k),name=n['name'],advancedLogic=False,
+            triggerOnStartOfGame=False,triggerMidGame=False,canTriggerMoreThanOnce=True,
+            triggerConditions=[dict(id=identity('event',k),category='condition',type='triggerOnEvent',data=n['scenario']),
+                               dict(id=identity('guard',k),category='condition',type='triggerOnPawScript',data=guard)],
+            triggerEffects=[dict(id=identity('commit',k),type='effectRunScript',data=script)]))
+    report['triggerOrder']=[nodes[k]['name'] for k in report['order']]
+    return w,report
+
+
+def main():
+    p=argparse.ArgumentParser(description=__doc__);p.add_argument('plan',type=Path);p.add_argument('--output',type=Path)
+    a=p.parse_args()
+    try:
+        plan=json.loads(a.plan.read_text(encoding='utf-8-sig'))
+        template=json.loads((Path(__file__).resolve().parent.parent/'World-Template.json').read_text(encoding='utf8'))
+        w,r=compile_world(plan,template)
+        if a.output:
+            from validate_iw_export import validate
+            schema=json.loads(Path(__file__).with_name('iw-export.schema.json').read_text(encoding='utf8'))
+            findings=validate(w,schema)
+            if any(f['severity']=='error' for f in findings):raise ValueError(json.dumps(findings))
+            with a.output.open('x',encoding='utf8') as f:json.dump(w,f,ensure_ascii=False,indent=2)
+            r['validation']=findings
+        print(json.dumps(r,indent=2,ensure_ascii=False))
+    except (ValueError,OSError,KeyError,TypeError) as e:p.exit(2,str(e)+'\n')
+if __name__=='__main__':main()
+
+===== END FILE: tools/plot_compile.py =====
 
 END OF DOCUMENT: chat/IW-Tools.txt

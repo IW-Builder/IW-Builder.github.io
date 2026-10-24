@@ -1,0 +1,140 @@
+{
+  "favorite": false,
+  "title": "Cached random choice",
+  "description": "Optional authoring pattern; structurally checked, not a newly certified runtime composition.",
+  "background": "An adult courier waits at a guild desk.",
+  "instructions": "Respect the authored tracker state. Describe attempts without inventing mechanical rewards.",
+  "authorStyle": "",
+  "recommendedAIModel": null,
+  "firstInput": "Introduce the guild desk.",
+  "objective": "",
+  "imageModel": "manticore",
+  "imageStyle": "photo_1",
+  "illustrationStyleNonCharacterLowPriority": "",
+  "illustrationStyleNonCharacterHighPriority": "",
+  "illustrationStyleCharacterLowPriority": "",
+  "illustrationStyleCharacterHighPriority": "",
+  "imageStyleCharacterPre": "",
+  "imageStyleCharacterPost": "",
+  "imageStyleNonCharacterPre": "",
+  "imageStyleNonCharacterPost": "",
+  "mature": false,
+  "nsfw": false,
+  "contentWarnings": "",
+  "enableAISpecificInstructionBlocks": false,
+  "previewImage": "",
+  "fullSizePreviewImage": "",
+  "previewImageOptions": [],
+  "fullSizePreviewImageOptions": [],
+  "currentPreviewImageIndex": -1,
+  "imagePromptDetails": {
+    "illustrClothes": "",
+    "illustrSetting": "",
+    "illustrSubject": "",
+    "illustrAppearance": "",
+    "illustrIsCharacter": false,
+    "illustrExpressionPosition": ""
+  },
+  "permissionsOnceShared": {
+    "sharing": true,
+    "editing": true
+  },
+  "allowChangeCharacterName": false,
+  "allowChangeCharacterDescription": false,
+  "allowChangeCharacterSkills": false,
+  "allowChangeCharacterItemValues": false,
+  "allowChangeCharacterPortrait": false,
+  "allowChangeCharacterNewPortrait": false,
+  "conditions": [],
+  "schemaVersion": 2.4,
+  "skills": [
+    "Generic skill"
+  ],
+  "possibleCharacters": [
+    {
+      "name": "Player character",
+      "description": "",
+      "portrait": "",
+      "portraitPromptDetails": {
+        "illustrAppearance": "",
+        "illustrClothes": "",
+        "illustrExpressionPosition": "",
+        "illustrSetting": ""
+      },
+      "fullSizePortrait": "",
+      "portraitOptions": [],
+      "fullSizePortraitOptions": [],
+      "currentPortraitIndex": -1,
+      "characterId": "c7038c97-b50f-57be-9e33-9ce2914d80ef",
+      "skills": {
+        "Generic skill": 3
+      },
+      "initialTrackedItemValues": []
+    }
+  ],
+  "triggerEvents": [
+    {
+      "id": "f01b29d857c0eb4c39",
+      "name": "Draw once",
+      "advancedLogic": false,
+      "triggerOnStartOfGame": false,
+      "triggerMidGame": false,
+      "canTriggerMoreThanOnce": true,
+      "triggerConditions": [
+        {
+          "id": "67c1f7a95ac9a76531",
+          "category": "condition",
+          "type": "triggerOnPawScript",
+          "data": "$cached.ready = 0"
+        }
+      ],
+      "triggerEffects": [
+        {
+          "id": "7a84ca4cb5dffa528d",
+          "type": "effectRunScript",
+          "data": "if $cached.ready = 0\n    $cached.roll = random_between(1, 6)\n    $cached.ready = 1"
+        }
+      ]
+    }
+  ],
+  "victoryCondition": null,
+  "defeatCondition": null,
+  "trackedItems": [
+    {
+      "id": "8193c1780e5bc2c801",
+      "name": "Cached choice",
+      "variableName": "cached",
+      "positionInList": 0,
+      "dataType": "yaml",
+      "visibility": "everyone",
+      "description": "Authored example state; script-owned.",
+      "initialValue": "roll: 0\nready: 0",
+      "initialValueBasedOnPC": "same",
+      "autoUpdate": false,
+      "updateInstructions": "",
+      "enforceFormat": false
+    }
+  ],
+  "hideSkillSystem": true,
+  "autoAdvanceVersion": false,
+  "version": "1.0",
+  "charSelectText": "",
+  "descriptionRequest": "",
+  "evaluationRequest": "",
+  "summaryRequest": "",
+  "instructionBlocks": [
+    {
+      "id": "cachedConsumerA",
+      "name": "First consumer",
+      "content": "Cached roll: <<$cached.roll>>"
+    },
+    {
+      "id": "cachedConsumerB",
+      "name": "Second consumer",
+      "content": "Use the same cached roll: <<$cached.roll>>"
+    }
+  ],
+  "NPCs": [],
+  "loreBookEntries": [],
+  "designNotes": ""
+}

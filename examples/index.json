@@ -320,5 +320,54 @@
     "evidence": "PATTERN",
     "structuralValidation": "Checked with tools/validate_iw_export.py.",
     "runtimeScope": "Composition not yet runtime-tested in IW; see examples/README.md for checks."
+  },
+  {
+    "file": "recipe-completion-award.json",
+    "purpose": "Completion and award guard",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Optional composition of documented/observed primitives. This complete example has not been live-tested."
+  },
+  {
+    "file": "recipe-candidate-acceptance.json",
+    "purpose": "Candidate acceptance",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Optional composition of documented/observed primitives. This complete example has not been live-tested."
+  },
+  {
+    "file": "recipe-archive-reactivate.json",
+    "purpose": "Archive and reactivate",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Optional composition of documented/observed primitives. This complete example has not been live-tested."
+  },
+  {
+    "file": "recipe-cached-random.json",
+    "purpose": "Cached random choice",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Optional composition of documented/observed primitives. This complete example has not been live-tested."
+  },
+  {
+    "file": "recipe-consumed-timer.json",
+    "purpose": "Consumed turn milestone",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Optional composition of documented/observed primitives. This complete example has not been live-tested."
+  },
+  {
+    "file": "recipe-choice-domain.json",
+    "purpose": "Choice domain guard",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Optional composition of documented/observed primitives. This complete example has not been live-tested."
+  },
+  {
+    "file": "recipe-compiled-plot.json",
+    "purpose": "Guild prerequisite graph",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Optional composition of documented/observed primitives. This complete example has not been live-tested."
   }
 ]

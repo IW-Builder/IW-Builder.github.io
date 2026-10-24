@@ -270,6 +270,13 @@ This guide covers common authoring and teaching needs, not every function. Use t
 
 The language tables include officially documented operations beyond the kit's runtime-tested examples. A new composition still needs appropriate testing; see [Known-Limits.md](Known-Limits.md).
 
+
+## Verified guards and scope boundaries
+
+Native And/Or groups and PawScript boolean expressions short-circuit in order. Existence guards should precede dependent reads; supported fallback/try operations handle missing values but do not permit expressions in invalid contexts. current() is rejected in Run Script and lacks a supported positive List Update context in the current editor.
+
+Locals do not cross Run Script effect boundaries. Executed branch locals and the last nonempty-loop binding can remain available later in the same script. Plain nested assignment can create paths while incompatible scalar parents fail; compound reads/writes can fail on missing paths. Boolean-expression results can serialize as quoted text, so rendered output is not strict type introspection. No measured speedup follows merely from short-circuit support. See [Verified-Behavior](Verified-Behavior.md).
+
 ---
 
 END OF DOCUMENT: reference/PawScript.md

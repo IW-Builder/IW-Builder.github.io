@@ -25,3 +25,12 @@ You do not need to read these guides before making a world. They are here when y
 - [AI profile IDs](Current-AI-Profiles.json): Look up the identifiers used for model-specific instructions.
 
 [Back to the main guide](https://iw-builder.github.io/guide/)
+
+## Current results and UI help
+
+- [Editor and UI reference](Editor-UI.md): Labels, menus, visibility, import and troubleshooting.
+- [Trigger capability catalog](Trigger-Catalog.md): All currently identified conditions and effects without opening examples.
+- [Consolidated behavior](Verified-Behavior.md): Runtime conclusions and limits.
+- [Roadmap](Roadmap.md): Research coverage and engineering backlog.
+
+- [Story tools](Story-Tools.md): Read-only import comparison, source-preserving extraction and explicit same-branch merge.

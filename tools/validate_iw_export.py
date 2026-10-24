@@ -134,11 +134,16 @@ def validate(doc, schema):
                 for j,x in enumerate(d): ref(x,'possibleCharacters',q+'/data/'+str(j))
             elif t=='triggerOnTrackedItem' and isinstance(d,dict):
                 ref(d.get('trackedItemID'),'trackedItems',q+'/data/trackedItemID',condition=True)
+                if not isinstance(d.get('textComparison'),str) or not d['textComparison'].strip():
+                    add('warning','missing-native-comparator',q+'/data/textComparison','Native tracker comparisons retain textComparison even for numeric targets. Missing/blank values can be omitted or inactive on import; preserve the native nonempty field.')
             elif t in ['triggerPrereqs','triggerBlockers'] and isinstance(d,dict):
                 key='prereqs' if t=='triggerPrereqs' else 'blockers'
                 for j,x in enumerate(d.get(key,[]) if isinstance(d.get(key,[]),list) else []): ref(x,'triggerEvents',q+'/data/'+key+'/'+str(j))
             elif t=='triggerOnEvent' and isinstance(d,str) and d not in doc.get('conditions',[]):
-                add('warning','unlisted-situation',q+'/data','Situation string not in root conditions registry; whether registry membership is mandatory is unknown.')
+                if 'conditions' not in doc:
+                    add('warning','missing-scenario-registry',q+'/data','No explicit Scenario registry. Legacy imports can populate one; inspect the native re-export and selected binding before use.')
+                else:
+                    add('error','unlisted-situation',q+'/data','Scenario has no exact registry binding; case, spacing and punctuation must match a declared Scenario.')
             elif t=='triggerOnPawScript': add('warning','unverified-expression',q+'/data','Expression is stored text; not parsed or executed.')
     for i,t in enumerate(doc.get('triggerEvents',[]) if isinstance(doc.get('triggerEvents',[]),list) else []):
         if not isinstance(t,dict): continue
@@ -158,14 +163,18 @@ def validate(doc, schema):
                 ident=e['data'].get('trackedItemID')
                 if tables['trackedItems'].get(ident,{}).get('dataType')=='number':numeric_writes[ident]=numeric_writes.get(ident,0)+1
         for ident,count in numeric_writes.items():
-            if count>1:add('warning','numeric-write-overwrite',p,'Multiple numeric writes to '+ident+' can overwrite rather than accumulate within one trigger.')
+            if count>1:add('warning','numeric-write-overwrite',p,'Multiple numeric writes to '+repr(tables['trackedItems'][ident].get('name','Unnamed tracker'))+' can overwrite rather than accumulate within one trigger.')
         conditions(t.get('triggerConditions',[]),p+'/triggerConditions',start_enabled=bool(t.get('triggerOnStartOfGame')))
         for j,e in enumerate(t.get('triggerEffects',[]) if isinstance(t.get('triggerEffects',[]),list) else []):
             q=p+'/triggerEffects/'+str(j)
             if not isinstance(e,dict):continue
             node_id(e,q); et=e.get('type');d=e.get('data')
+            if et=='effectChangeOtherCharacters':
+                add('warning','runtime-unverified-effect',q,'Change other characters has a native editor payload, but authoritative live character mutation is not observable; structural acceptance is not runtime certification.')
+            if t.get('triggerOnStartOfGame') and et=='effectFireRandomTrigger':
+                add('warning','start-incompatible-effect',q,'Fire random trigger did not dispatch with Start enabled; use an ordinary-play dispatcher.')
             if t.get('triggerOnStartOfGame') and et == 'effectGiveInfo':
-                add('warning','start-incompatible-effect',q,'Give Information to AI is incompatible with Start of Game; the effect was ignored in a runtime test. Use background or an instruction block for opening context, or a separate ordinary-play trigger. Later-turn behavior with Start and Mid Game enabled remains unverified.')
+                add('warning','start-incompatible-effect',q,'Give Information to AI is incompatible with Start of Game; the effect was ignored in a runtime test. Use background or an instruction block for opening context, or a separate ordinary-play trigger. It also remains ignored during later Start+Mid activations.')
             if et not in defs['effect']['x-knownDiscriminators']:
                 add('warning','unknown-effect-type',q+'/type','Missing or unobserved effect type: '+repr(et));continue
             if 'data' not in e: add('warning','missing-payload',q+'/data','No effect payload.');continue
@@ -188,6 +197,9 @@ def validate(doc, schema):
     for i,t in enumerate(doc.get('trackedItems',[]) if isinstance(doc.get('trackedItems',[]),list) else []):
         if not isinstance(t,dict):continue
         p='/trackedItems/'+str(i)
+        ident=t.get('id')
+        if isinstance(ident,str) and ident and not re.fullmatch(r'[A-Za-z0-9]+',ident):
+            add('warning','tracker-id-import-risk',p+'/id','Tracker '+repr(t.get('name','Unnamed tracker'))+' has a non-ASCII-alphanumeric ID. Import may regenerate it without remapping references; inspect the imported targets. This is advisory, not a universal ID validity rule.')
         v=t.get('variableName')
         if isinstance(v,str) and v:
             if v in variables:add('warning','duplicate-variable',p+'/variableName','Repeated variable name; binding ambiguity not resolved.')
@@ -212,6 +224,13 @@ def validate(doc, schema):
             elif target.get('dataType')=='number' and isinstance(val,str) and not re.fullmatch(r'[+-]?(?:\d+(?:\.\d*)?|\.\d+)(?:[eE][+-]?\d+)?',val.strip()):
                 add('warning','numeric-character-initialization',q+'/initialPCValue','Number tracker has a nonnumeric per-character sample; runtime meaning unverified.')
     findings.extend(lint(doc))
+    for f in findings:
+        parts=f['path'].split('/')
+        if len(parts)>2 and parts[1] in ('trackedItems','triggerEvents','possibleCharacters') and parts[2].isdigit():
+            items=doc.get(parts[1],[]); index=int(parts[2])
+            if index<len(items) and isinstance(items[index],dict):
+                name=items[index].get('name')
+                if isinstance(name,str) and name: f['objectName']=name
     return findings
 
 def main():
