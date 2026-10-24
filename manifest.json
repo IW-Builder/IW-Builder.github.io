@@ -1,11 +1,11 @@
 {
   "algorithm": "sha256",
-  "generatedAt": "2026-10-24T03:26:18+00:00",
+  "generatedAt": "2026-10-24T03:54:21+00:00",
   "files": [
     {
       "path": "Authoring-Prompt.md",
-      "bytes": 20706,
-      "sha256": "12775549b31c9e708fb9d7b09ee8e14c436d787478f4c521158c0937b1de9df5"
+      "bytes": 20705,
+      "sha256": "b662d246a95da3df9045892b0fa876b15d5be92ca2899ad6e6ab7535a9a59506"
     },
     {
       "path": "LICENSE",
@@ -349,8 +349,8 @@
     },
     {
       "path": "index.html",
-      "bytes": 22192,
-      "sha256": "de14088059c7e222104811f98d40530499001e16b1e5b305b1188b36ea0cc8d5"
+      "bytes": 22190,
+      "sha256": "a3ae0914573cd13dfa2c9e2e766fd5f7cd523055bb022c40b64d515c2fd9570f"
     },
     {
       "path": "library/Integration.md",
