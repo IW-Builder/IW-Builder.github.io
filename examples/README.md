@@ -6,12 +6,14 @@ Each JSON file is a complete world. Import it into a separate world to explore i
 
 ## Start with a story
 
+- [The Road That Must Be Asked](narrative-listening-road.json): A non-romantic high-fantasy expedition with distinctive peoples, capable companions and several ways to resolve a living crossing's failure.
+- [The Address After Midnight](narrative-address-after-midnight.json): A civic radio station horror story with copied voices, checkable clues and a threat whose reach depends on actual choices.
 - [Vendemmia](narrative-vendemmia.json): A vineyard story with three potential love interests and different relationships to explore.
 - [Seven Nights](narrative-seven-nights.json): A fantasy relationship story built around promises, character motives and a small cast.
 - [Velvet Wager](narrative-velvet-wager.json): An adult villa setting focused on intimate character dynamics.
 - [The Glass Ledger](showcase-glass-ledger.json): A more involved example combining a crew, choices, purchases, a countdown and endings.
 
-The relationship-focused examples include mature material. Pick one close to the kind of experience you want, rather than treating any of them as a required template.
+The relationship-focused examples include mature material; the expedition and horror examples are non-sexual. The two new examples are structurally validated, not live-playthrough certified. Pick one close to the kind of experience you want, rather than treating any of them as a required template.
 
 ## Try a useful combination
 

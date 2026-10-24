@@ -369,5 +369,19 @@
     "evidence": "PATTERN",
     "structuralValidation": "Checked by tools/check_package.py; see its report.",
     "runtimeScope": "Optional composition of documented/observed primitives. This complete example has not been live-tested."
+  },
+  {
+    "file": "narrative-listening-road.json",
+    "purpose": "Non-romantic high-fantasy expedition: distinct peoples, platonic companions, fixed facts and several viable resolutions.",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Structurally validated; no live playthrough performed. AI-managed narrative rules and memory are not deterministic enforcement."
+  },
+  {
+    "file": "narrative-address-after-midnight.json",
+    "purpose": "Contained supernatural horror: bounded voice imitation, reliable evidence, conditional escalation and valid early containment.",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Structurally validated; no live playthrough performed. AI-managed narrative rules and memory are not deterministic enforcement."
   }
 ]

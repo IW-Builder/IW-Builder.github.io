@@ -30,7 +30,7 @@ The template or current export is required for construction. Files below are sel
 |Task needs|Read|
 |-|-|
 |New world|[World-Template.json](https://iw-builder.github.io/World-Template.json); [reference/Craft.md](https://iw-builder.github.io/reference/Craft.md) for narrative design|
-|Character-driven or adult worlds|[examples/narrative-\*.json](https://iw-builder.github.io/examples)|
+|Narrative examples|Choose only the relevant pattern: [platonic fantasy expedition](https://iw-builder.github.io/examples/narrative-listening-road.json), [contained horror](https://iw-builder.github.io/examples/narrative-address-after-midnight.json), or [ensemble romance](https://iw-builder.github.io/examples/narrative-vendemmia.json). See the example table in Craft.md for other relationship structures.|
 |Tracker ownership, visibility, memory or initialization|[reference/Trackers.md](https://iw-builder.github.io/reference/Trackers.md)|
 |Trigger timing, sequencing and effects|[reference/Trigger-Catalog.md](https://iw-builder.github.io/reference/Trigger-Catalog.md) for the capability overview; [reference/Triggers.md](https://iw-builder.github.io/reference/Triggers.md)|
 |Exact native payloads|[reference/Schema.md](https://iw-builder.github.io/reference/Schema.md) and matching snippets in [examples/Payloads.md](https://iw-builder.github.io/examples/Payloads.md); load a complete example only when useful|

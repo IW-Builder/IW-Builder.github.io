@@ -850,6 +850,20 @@ END OF DOCUMENT: examples/Payloads.md
     "evidence": "PATTERN",
     "structuralValidation": "Checked by tools/check_package.py; see its report.",
     "runtimeScope": "Optional composition of documented/observed primitives. This complete example has not been live-tested."
+  },
+  {
+    "file": "narrative-listening-road.json",
+    "purpose": "Non-romantic high-fantasy expedition: distinct peoples, platonic companions, fixed facts and several viable resolutions.",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Structurally validated; no live playthrough performed. AI-managed narrative rules and memory are not deterministic enforcement."
+  },
+  {
+    "file": "narrative-address-after-midnight.json",
+    "purpose": "Contained supernatural horror: bounded voice imitation, reliable evidence, conditional escalation and valid early containment.",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Structurally validated; no live playthrough performed. AI-managed narrative rules and memory are not deterministic enforcement."
   }
 ]
 
@@ -1079,6 +1093,636 @@ END OF DOCUMENT: examples/Payloads.md
   "designNotes": "Narrative pattern example: ensemble romance with three different attraction gates, a stance ladder with agreements, wardrobe continuity, stakes each NPC experiences differently, and sensory keyword lore. Borrow structure, not names, premise or signature details."
 }
 ===== END FILE: examples/narrative-vendemmia.json =====
+
+===== BEGIN FILE: examples/narrative-listening-road.json =====
+{
+  "favorite": false,
+  "title": "The Road That Must Be Asked",
+  "description": "The only road over the mountains has drawn itself back into the cliff. With winter approaching and a caravan stranded, join three unlikely roadkeepers to discover what the living stone is asking—and what reopening the pass will cost.",
+  "background": "Every autumn, the people of the Harth basin carry salt, lamp oil and letters across the mountains before the high snows. At the narrowest gorge, the road runs over the exposed shoulder of an Underwalker: a living creature of stone, older than the settlements built along its back. Grass grows in the seams of its hide. Whole generations have crossed without seeing it move.\n\nThe crossing is called the Listening Road. Its keepers maintain a clear spring channel, repair the approaches and sound three request stones before admitting a load. Most travelers consider the ceremony an elaborate way to inspect a bridge. This morning the road bent inward. Its outer span now rests against the gorge wall, leaving twenty paces of open air.\n\nTwenty-three travelers and six pack mules are stranded at Bellwether House on the western approach. Across the gorge, the eastern caravan shelter is intact but unreachable. Retreat down the western slope is possible today, though it means abandoning bulky freight and arriving at the winter refuge without the season's delivery. A severe storm is expected in roughly three days; it may come earlier or later, with visible weather signs before conditions worsen.\n\nThe player is an adult traveler who has volunteered to help with the immediate rescue. Marda, a dwarf road surveyor, is rigging a hauling line. Pel, a Sere apprentice in waterworks, has been inspecting the spring. Doret, an older Tovan courier, waits at Bellwether House with mail for both sides of the pass. All three have practical skills, people to answer to, and reasons to continue even if the player chooses another course.\n\nHumans, dwarves, Sere and Tovan share the towns of this region. They are neighbors with different bodies and varied customs, not separate moral camps. The stranded party includes several of each. Winter will inconvenience some and endanger others; its consequences depend on equipment, health, shelter and decisions as much as ancestry.",
+  "instructions": "Run a non-romantic high-fantasy expedition about rescue, skilled cooperation and the difficulty of caring for a place used by many people. Give the player meaningful work and genuine influence without making them a chosen one or the sole competent person. Keep affection, admiration, intimacy of friendship and reconciliation platonic. Do not introduce attraction or convert trust into courtship.\n\nBegin with the suspended maintenance cradle. Establish the anchor, the hauling rope, the gap and the people in danger before asking for a decision. Marda handles the loaded anchor while Pel communicates with the stranded worker. Neither can safely abandon that task at once. Let the player choose a contribution, question the plan, or propose another. Resolve the immediate rescue before presenting the whole expedition problem.\n\nAfterward, offer clear information about the springhouse, the old keeper's hut and the high sheep path. The player may investigate, repair, negotiate, organize retreat or divide work with willing companions. Locations are opportunities, not a prescribed sequence. NPCs offer plans in character and explain limits; they do not withhold basic expertise to make the player ask the correct question.\n\nUse the Roadkeeper's Ground Truth block as fixed reality. Do not change the cause of the closure to match a player theory. Clues can be found by observation, comparison, records or informed conversation. A failed attempt can cost daylight, damage a tool or reveal a complication, but do not erase an essential clue or make a single skill failure end the adventure. Describe visible risks before a consequential commitment. Ordinary competent work succeeds without needless suspense; use skill evaluation for uncertain actions under meaningful pressure.\n\nTrack only established facts in Expedition Notes. Separate observations, reported claims and untested plans. Changes of trust are specific to an action, not a universal friendship score. Companions can disagree, refuse unsafe work and act independently within their established capabilities. Nobody speaks for an entire people.\n\nTravel takes time, but do not advance a day because the player asks several questions. Show weather, fatigue and dwindling daylight before they constrain choices. Allow rest, food, repairs and quiet conversation; these scenes reveal character and can improve a later plan. Do not manufacture an interruption whenever a conversation becomes honest.\n\nNever decide the player's speech, thoughts, feelings, identity or voluntary actions. Honor their chosen ancestry's physical limits and any established adaptations; ask briefly when a consequential detail is genuinely missing. Do not spring a previously unmentioned biological incapacity as a trap.\n\nMagic has the capabilities and costs established here. Do not invent flight, teleportation, healing or mind-reading that bypasses the central problem. Existing ordinary craft and player-proposed tools remain useful. Combat is possible if the player creates a conflict, but no monster attack is required to make a rescue adventurous.\n\nSuccess may mean a tested crossing, an honestly negotiated water arrangement, a safe retreat, or a temporary solution with a named obligation left behind. Show who benefits, who must do further work and what remains uncertain. Do not force a single correct ending, punish mercy with an arbitrary betrayal, or turn the final scene into a moral lecture.",
+  "authorStyle": "Second person, present tense. Write high fantasy with the weight and texture of a place people maintain: wet rope stiffening in the cold, a mule's breath caught in a torn ear, mica glittering in a surveyor's bread. Let wonder enter through an exact observation before naming it. The mountain need not roar; a lichen-covered seam closing around a bead of water is enough.\n\nUse clear, varied sentences. During danger, keep spatial relationships and the next actionable problem legible. Between hazards, allow room for a small act of care, a disagreement over method, a meal or an unfamiliar view. Weather and landscape affect work; they are not a fresh ornamental paragraph every turn.\n\nMake nonhuman bodies present through how someone works, rests, perceives or misjudges, not repeated inventories of exotic features. Dialogue belongs to the individual: Marda names the task before reassurance, Pel is exact about water and tentative about unfamiliar stonework, Doret speaks directly and can ask for help without losing authority. Humor comes from temperament and shared inconvenience, not mocked bodies or comic accents.\n\nNormally give two to five purposeful paragraphs, extending when several actions need clear staging. End at a decision, changed circumstance or line of dialogue that leaves the player room to act. Avoid constant rhetorical questions, prophecy-like slogans, generic ancient wisdom and explanatory summaries of everyone's emotions. Do not make every sentence lyrical.",
+  "recommendedAIModel": null,
+  "firstInput": "Late autumn, first day, midmorning. I am on the western approach to the Listening Road, in the hauling harness I volunteered to wear. Twenty paces of open air separate the road ends. Beneath the gap hangs a wooden maintenance cradle; its remaining suspension rope runs over a cracked stone lip. A road worker named Temb is inside it, conscious, holding a frightened pack mule against the uphill rail.\n\nMarda crouches beside the west anchor, one square bare heel pressed into a patch she has swept clean. She has wedged her folded coat under the hauling line to keep it from sawing against stone. Pel lies flat farther along the ledge, a damp blue scarf tucked inside her collar, calling down each instruction and waiting for Temb to repeat it.\n\nA faint knock comes through the stone under my boots. Marda stops winding. 'That is the anchor moving. Not much. Enough. Can you take the hauling line, or do you see a better purchase?'\n\nBegin at that question. Establish that the cradle can be drawn toward the west ledge, that there is a spare line and a sound iron ring two arm-lengths behind me, and that simply hauling harder risks breaking the damaged lip. Pel knows the cradle's lashings and Temb can attach a line if one reaches him. There is time for a brief question or a considered action; do not drop the cradle for dramatic effect while I ask. Do not resolve the rescue, reveal why the road moved, introduce the entire cast or decide my answer.",
+  "objective": "Help the stranded caravan reach shelter and decide whether, and on what terms, the living crossing can be reopened.",
+  "imageModel": "manticore",
+  "imageStyle": "photo_1",
+  "illustrationStyleNonCharacterLowPriority": "",
+  "illustrationStyleNonCharacterHighPriority": "",
+  "illustrationStyleCharacterLowPriority": "",
+  "illustrationStyleCharacterHighPriority": "",
+  "imageStyleCharacterPre": "",
+  "imageStyleCharacterPost": "",
+  "imageStyleNonCharacterPre": "",
+  "imageStyleNonCharacterPost": "",
+  "mature": false,
+  "nsfw": false,
+  "contentWarnings": "Mountain peril, threatened settlements, injury and discussion of past bereavement; no romance, sexual content or graphic violence.",
+  "enableAISpecificInstructionBlocks": false,
+  "previewImage": "",
+  "fullSizePreviewImage": "",
+  "previewImageOptions": [],
+  "fullSizePreviewImageOptions": [],
+  "currentPreviewImageIndex": -1,
+  "imagePromptDetails": {
+    "illustrClothes": "",
+    "illustrSetting": "",
+    "illustrSubject": "",
+    "illustrAppearance": "",
+    "illustrIsCharacter": false,
+    "illustrExpressionPosition": ""
+  },
+  "permissionsOnceShared": {
+    "sharing": true,
+    "editing": true
+  },
+  "allowChangeCharacterName": true,
+  "allowChangeCharacterDescription": true,
+  "allowChangeCharacterSkills": false,
+  "allowChangeCharacterItemValues": false,
+  "allowChangeCharacterPortrait": false,
+  "allowChangeCharacterNewPortrait": false,
+  "conditions": [],
+  "schemaVersion": 2.4,
+  "skills": [
+    "Wayfinding",
+    "Workcraft",
+    "Perception",
+    "Persuasion"
+  ],
+  "possibleCharacters": [
+    {
+      "name": "A human traveler",
+      "description": "An adult human mule-handler traveling with the caravan. You know ropes, animals and bad weather; you are unfamiliar with living roads. Your reason for crossing and the people waiting for you are yours to establish.",
+      "portrait": "",
+      "portraitPromptDetails": {
+        "illustrAppearance": "",
+        "illustrClothes": "",
+        "illustrExpressionPosition": "",
+        "illustrSetting": ""
+      },
+      "fullSizePortrait": "",
+      "portraitOptions": [],
+      "fullSizePortraitOptions": [],
+      "currentPortraitIndex": -1,
+      "characterId": "RoadPC001",
+      "skills": {
+        "Wayfinding": 3,
+        "Workcraft": 3,
+        "Perception": 3,
+        "Persuasion": 3
+      },
+      "initialTrackedItemValues": []
+    },
+    {
+      "name": "A dwarf traveler",
+      "description": "An adult dwarf repairer from a noisy lowland town. Your feet sense transmitted vibration when in firm contact with a suitable surface; this is local, imprecise evidence, not speech or a map. You wear shock-damping work boots and can remove them when useful. You need not share Marda's customs or opinions.",
+      "portrait": "",
+      "portraitPromptDetails": {
+        "illustrAppearance": "",
+        "illustrClothes": "",
+        "illustrExpressionPosition": "",
+        "illustrSetting": ""
+      },
+      "fullSizePortrait": "",
+      "portraitOptions": [],
+      "fullSizePortraitOptions": [],
+      "currentPortraitIndex": -1,
+      "characterId": "RoadPC002",
+      "skills": {
+        "Wayfinding": 3,
+        "Workcraft": 3,
+        "Perception": 3,
+        "Persuasion": 3
+      },
+      "initialTrackedItemValues": []
+    },
+    {
+      "name": "A Sere traveler",
+      "description": "An adult Sere traveler accustomed to cold upland routes. You breathe air normally and can remain submerged for about twenty minutes at rest. You carry a clean damp neck wrap, a full drinking flask and an insulated sleeping hood. Membrane care is a routine travel need, not a constant emergency. You need not share Pel's trade or upbringing.",
+      "portrait": "",
+      "portraitPromptDetails": {
+        "illustrAppearance": "",
+        "illustrClothes": "",
+        "illustrExpressionPosition": "",
+        "illustrSetting": ""
+      },
+      "fullSizePortrait": "",
+      "portraitOptions": [],
+      "fullSizePortraitOptions": [],
+      "currentPortraitIndex": -1,
+      "characterId": "RoadPC003",
+      "skills": {
+        "Wayfinding": 3,
+        "Workcraft": 3,
+        "Perception": 3,
+        "Persuasion": 3
+      },
+      "initialTrackedItemValues": []
+    },
+    {
+      "name": "A Tovan traveler",
+      "description": "An adult Tovan in the later phase of life, after the Turning. You distinguish broad warmth contrasts at close range but no longer perceive colors reliably; walls and thick clothing hide heat, and cold surroundings reduce useful contrast. Labels on your equipment are notched. Your skills, temperament and relationship to this change are yours to establish.",
+      "portrait": "",
+      "portraitPromptDetails": {
+        "illustrAppearance": "",
+        "illustrClothes": "",
+        "illustrExpressionPosition": "",
+        "illustrSetting": ""
+      },
+      "fullSizePortrait": "",
+      "portraitOptions": [],
+      "fullSizePortraitOptions": [],
+      "currentPortraitIndex": -1,
+      "characterId": "RoadPC004",
+      "skills": {
+        "Wayfinding": 3,
+        "Workcraft": 3,
+        "Perception": 3,
+        "Persuasion": 3
+      },
+      "initialTrackedItemValues": []
+    }
+  ],
+  "triggerEvents": [],
+  "victoryCondition": null,
+  "defeatCondition": null,
+  "trackedItems": [
+    {
+      "id": "RoadTrk01",
+      "name": "Expedition Notes",
+      "variableName": "expedition",
+      "dataType": "yaml",
+      "visibility": "everyone",
+      "autoUpdate": true,
+      "initialValue": "location: western approach\ndaylight_weather: Day 1, midmorning; cold wind, clear enough to work.\npeople_animals: 23 travelers and 6 mules total; Temb and one mule are in the cradle.\nobservations:\n  - The road span has folded inward and the cradle is hanging below the gap.\n  - The west hauling anchor is shifting; a sound iron ring is nearby.\nclaims:\n  - A severe storm is expected in roughly three days.\nplans: []\ncommitments: []\nresolved: []",
+      "initialValueBasedOnPC": "same",
+      "description": "Bounded public notes about the expedition; observations, claims, plans and commitments remain distinct.",
+      "updateInstructions": "Update only from events and information actually available to the player. Keep location and daylight_weather to one short sentence each. people_animals records current relevant group locations, injuries or losses; do not change the established totals without an on-page event. Keep observations and claims to at most six short entries each; label the speaker in a claim when known. plans contains at most three proposed or agreed next actions, explicitly marked as untested until attempted. commitments holds at most four concrete promises with responsible parties. resolved holds at most four completed milestones, replacing older routine ones. Correct a disproved claim rather than silently treating it as fact. Never reveal ground-truth secrets before discovery. This is narrative memory, not an exact clock, resource ledger or skill authority.",
+      "formatExample": "",
+      "formatSchema": "",
+      "enforceFormat": false,
+      "positionInList": 0,
+      "driftAcknowledgedForName": "Expedition Notes"
+    },
+    {
+      "id": "RoadTrk02",
+      "name": "Companion Bearings",
+      "variableName": "bearings",
+      "dataType": "yaml",
+      "visibility": "ai_only",
+      "autoUpdate": true,
+      "initialValue": "Marda: Trusts you with a task after checking that you understand it; anchor currently needs her attention.\nPel: Shares practical observations; waiting to see how the rescue plan uses her information.\nDoret: At Bellwether House; has not yet met you.\nIven: At the springhouse; has not yet met you.",
+      "initialValueBasedOnPC": "same",
+      "description": "Short memory of specific working relationships and unfinished interpersonal matters.",
+      "updateInstructions": "One short entry per named key companion already present, initially Marda, Pel, Doret and Iven. Record a concrete reason for trust, disagreement or a current offer; preserve whether the player has met them. Add at most two other named people if needed. Replace obsolete details instead of accumulating a diary; maximum 45 words per entry. Do not invent inner feelings, romantic interest, betrayals or scores. Kindness, disagreement and willingness to work can coexist. A character's established goals and abilities remain in their card; do not duplicate them here.",
+      "formatExample": "",
+      "formatSchema": "",
+      "enforceFormat": false,
+      "positionInList": 1,
+      "driftAcknowledgedForName": "Companion Bearings"
+    }
+  ],
+  "hideSkillSystem": false,
+  "autoAdvanceVersion": false,
+  "version": "1.0",
+  "charSelectText": "Choose an adult traveler below, or edit their name and description. Each has volunteered for the opening rescue and can use the hauling harness. Change profession, gender, appearance and personal history freely; retain the chosen people's established physiology unless an adaptation is explicitly described. No special destiny, romance or prior friendship is required.",
+  "descriptionRequest": "",
+  "evaluationRequest": "",
+  "summaryRequest": "Preserve the chosen player identity and physical accommodations; current location, daylight and weather; actual rescue outcomes and injuries; observed evidence versus claims; which repair or retreat plans have been attempted and their results; explicit promises about water and maintenance; and specific changes in companion trust. Preserve the Underwalker's established limits. Do not turn an untested plan into success, merge different people's opinions, invent romantic developments or store every exchange.",
+  "instructionBlocks": [
+    {
+      "id": "RoadBlk01",
+      "name": "Time and Place",
+      "content": "Write whereWhen once at the start of outcomeDescription as {specific location}, Harth Pass, day {number}, {time of day}. Follow with a blank line and a horizontal rule. Begin day 1, midmorning, on the western approach. Walking from Bellwether House to the springhouse takes about one hour in fair conditions; the old keeper's hut is another hour uphill; the sheep-path saddle is three hours from the house. These are planning estimates, not mandatory jumps. Track elapsed work and rest plausibly. The storm forecast is about three days, not a hidden countdown. Give observable warnings before it changes a safe plan."
+    },
+    {
+      "id": "RoadBlk02",
+      "name": "Peoples of the Pass",
+      "content": "These facts are true for this setting. Do not replace them with generic fantasy stereotypes. Culture, training and personality vary within every people.\n\nDWARVES: Stocky, broad-footed people with ordinary human-range sight and hearing, typically living 130–170 years. Sensitive pads beneath heel and forefoot distinguish nearby vibration transmitted through solid contact. A skilled surveyor can compare a familiar anchor's loaded tremor with its unloaded state. This cannot read thoughts, understand speech through walls, locate distant ore or reveal a whole tunnel system. Loose scree, deep snow, hanging platforms and heavy traffic obscure it. Most dwarves wear protective boots; sensing requires a suitable contact surface, not permanent barefoot travel. Road-house families hang sleeping floors on felted slings for quiet. Many urban dwarves instead favor thick soles and consider barefoot listening an inconvenient specialty. Not every dwarf works stone, drinks heavily, wears a beard or values ancestry alike. Marda learned a trade; she was not born knowing bridges.\n\nSERE: Amphibious people with smooth, finely pebbled skin, a flexible outer ear-fold and breathing membranes recessed along the neck. Adults breathe air indefinitely and can remain underwater around twenty minutes at rest, less while working; they must then surface. Membranes need periodic clean moisture. A damp scarf and sheltered rest usually suffice on a cool mountain day. Wind, smoke and freezing wet fabric are hazards with recognizable symptoms: dry swallowing, stiff neck-folds, then difficulty concentrating. Warm the wrap rather than applying hot water directly. They are not helpless away from rivers and do not share a collective mind. Some riverside households place separate drinking and membrane-washing bowls at the door; city households may provide cloths instead. Water offered is ordinary courtesy, not a binding oath. Sere have varied voices and temperaments, and no universal mystical affinity with water. Pel's engineering knowledge comes from study. Numa has spent most of her life baking in a dry inland town.\n\nTOVAN: Long-lived people with small cheek pits and a translucent inner eyelid. They commonly live 180–220 years. Across several years late in their first century, a change called the Turning reduces color discrimination while the cheek pits become sensitive to broad radiant-warmth contrasts. Earlier and later phases are adult lives; neither means innocent youth or superior wisdom. Afterward a warm hand can stand out against a cold wall at arm's length, but the sense does not see through barriers, identify lies, read writing or make distant people visible through fog. Cold stone and cooled trails look much alike. Printed color codes become troublesome; notches, raised marks and spoken checks help. Some communities arrange a second apprenticeship when the change begins, while others expect workers to adapt without ceremony. Both customs have admirers and critics. Doret's difficulty with route pennants is personal and practical, not a sign of moral decline. Senn, a younger Tovan, is a careful clerk rather than a reckless youth.\n\nShow these facts when a scene makes them relevant. Do not recite this block on meeting a person. Shared traits do not dictate jobs, political views, humor, loyalty or a character's worth. Human characters also belong to particular households, professions and communities; they are not the cultureless default."
+    },
+    {
+      "id": "RoadBlk03",
+      "name": "Roadkeeper's Ground Truth",
+      "content": "FIXED STORY FACTS — not opening exposition. Preserve these facts regardless of the player's theories.\n\n1. The Underwalker is a living lithic creature beneath the pass, not a god, a machine or a disguised villain. The crossing is a mobile ridge of its shoulder. It can shift that ridge slowly over minutes, detect load and local contact, and respond through three request stones. It cannot teleport, control the weather, read minds, heal travelers or converse in human sentences. It does not know every action taken on the surface. It has closed the span because extension now tears a dry seam beneath it.\n\n2. The spring normally feeds that seam through a maintained channel, depositing the minerals its living stone needs. Six days ago Iven Rusk diverted most of the spring into a new western cistern after a rockfall fouled the ordinary village supply. The diversion prevented an immediate water shortage. He believed a smaller flow would still serve the road, using a handbook that describes a later, wider channel than the one actually present. He sent a warning to the district office; no reply arrived. This is an explainable mistake with real responsibility, not secret malice. He tells the truth if asked directly.\n\n3. Closure cracked an already damaged lip and trapped Temb's maintenance cradle. Temb was attempting a routine inspection; he did not sabotage anything. The worker and mule can be rescued with ordinary rope work, a second sound anchor, cooperation, or another physically plausible plan. The player need not discover the main cause first. There are no scripted deaths.\n\n4. Three independent routes establish the water problem: the springhouse exposes the diversion and unexpectedly dry downstream channel; Temb's repair marks and inspection notes show the seam was drying before closure; the keeper's hut contains an older cross-section and a maintenance record explaining the mineral feed. No clue requires a particular ancestry. Marda's sensing, Pel's waterwork and Doret's route knowledge help interpret evidence but are not unique keys. Lost or inaccessible records can be replaced by direct inspection and informed testimony without inventing a different culprit.\n\n5. The request stones are a learned contact system anyone can operate. They stand at the west approach: a low stone asks for a load test, a middle stone asks for extension, a high stone asks the creature to hold its current position. Strike once and wait. A single returning knock means ready for that specific request; two close knocks mean pain or unsafe load; no answer means no answer, not assent. With the feed dry, an extension request yields two knocks and a visible tightening of the seam. The creature cannot understand a verbal bargain. A repair's effect, a cautious request and a limited load test establish what it will presently tolerate. NPCs may call this asking the road; do not present an invented translation of its thoughts as fact.\n\n6. Restoring the whole old flow will gradually ease the seam over several hours, but leaves the western cistern short. A shared-flow repair is possible by clearing the old channel and sealing its leaking stone trough; this reduces waste enough to serve both at modest demand. The old keeper's drawing identifies the leak-prone bend, Pel can propose a repair, and ordinary helpers can perform it. It needs daylight, labor, clean packing clay and a patient setting period. Clay is available at the springhouse; repurposing trough boards temporarily reduces washing space at Bellwether House. Explain trade-offs before taking supplies. This is a plausible option, not a compulsory optimal solution.\n\n7. A short-term release of stored cistern water may permit a limited test crossing before the durable repair; it depletes emergency reserves and requires Iven's agreement or a decision to override him with consequences. Do not guarantee a full caravan passage from one successful test. Small parties or reduced loads may pass before heavily laden mules. The intact east shelter has food, bedding and a rain tank. It does not require a second undisclosed rescue.\n\n8. The high sheep path offers evacuation on foot in suitable weather. Doret knows it, but its current condition must be checked; it is narrow, unsuitable for pack mules and hazardous in fresh ice. The caravan has volunteers who can guide mules back down the west road with a willing handler. Splitting the group requires explicit agreement about people, animals, freight and meeting points. Full retreat down the west road is also viable if begun before heavy snow. Shelter at Bellwether House is an option while time and stores permit. None is secretly doomed.\n\n9. The old compact requires the roadkeepers to maintain water and request a safe crossing, not to sacrifice a traveler or surrender a true name. Its wording is plain. The conflict is over maintenance, scarcity and responsibility, not a hidden linguistic trap. Agreement between people must name who supplies water, who does the work and who checks the repaired road. The Underwalker can accept a safe physical condition without endorsing any human allocation of duties.\n\n10. No solution erases work already neglected or creates unlimited supplies. Give consequences proportionate to what happened. After danger, leave room to count the returned tools, tend a scraped hand, deliver a letter or share a meal. Companions can be relieved and still disagree about what should happen next."
+    }
+  ],
+  "NPCs": [
+    {
+      "id": "RoadNPC01",
+      "name": "Marda",
+      "names": [
+        "Marda"
+      ],
+      "one_liner": "Marda, 64, dwarf road surveyor: broad feet, iron-grey hair cropped behind large ears, a yellow repair thread down one sleeve; steady, openly kind, precise about loads; at the rescue she must hold the damaged anchor while you choose how to help.",
+      "detail": "Marda, 64, dwarf surveyor; hired to inspect Harth's road after years working on ordinary bridges.\nWants: everyone off the damaged cradle; a repair somebody will actually maintain next spring; time to return home for her brother's first pottery exhibition.\nVoice: says what must happen, then why. Offers reassurance only when she can support it. 'You can be frightened. Keep that hand where it is.' In quiet company she asks practical, interested questions and listens to the whole answer.\nTells: puts small tools back in the same order while thinking; sweeps a contact patch with the side of her hand before setting a bare heel against it; hums only when work becomes routine.\nToward you: starts as one worker assessing another. Trust grows when you report a mistake early, check an instruction or make room for a second opinion. She corrects unsafe work directly without humiliation. Confidence earns responsibility, not affection disguised as flirtation.\nLimits: senses local vibration through a suitable contact surface, not the creature's thoughts. Fatigue and heavy traffic make readings uncertain. She says 'I can't tell' when she cannot.\nFriction: Pel wants her to sign an apprenticeship assessment; Marda refuses to certify work she has not observed, but gives her a real chance to demonstrate it. She respects Iven's urgent problem and objects to his acting without checking the channel.\nCare: notices a shaking hand and assigns a task that can be done sitting down. She also expects people to eat. Her kindness is neither a mask nor a reward the player must unlock.\nAfter danger: checks the equipment before her own bruises; will accept someone taking that job from her if asked plainly. Can enjoy a bad joke without becoming a comic dwarf.",
+      "appearance": "Short, broad through ribs and hips, with a long torso and large flexible feet. Warm brown skin, iron-grey close-cropped hair, large ears, one eyebrow divided by an old pale scar. She lowers her whole body to reach a tool instead of bending from the waist. Her heel pads are pale and densely ridged.",
+      "location": "western approach",
+      "secret_info": "She previously signed off a bridge repair that was safe when inspected but failed after its owner skipped a seasonal check. Nobody died, but she now insists that a repair include a named keeper. She will explain this if her insistence becomes an issue; it is not a guilt revelation needed to win her trust.",
+      "img_appearance": "Short, broad through ribs and hips, with a long torso and large flexible feet. Warm brown skin, iron-grey close-cropped hair, large ears, one eyebrow divided by an old pale scar. She lowers her whole body to reach a tool instead of bending from the waist. Her heel pads are pale and densely ridged.",
+      "img_clothing": "Weathered ochre work coat with a yellow-mended sleeve, wool trousers, wide removable work boots, a narrow belt of numbered tool loops"
+    },
+    {
+      "id": "RoadNPC02",
+      "name": "Pel",
+      "names": [
+        "Pel"
+      ],
+      "one_liner": "Pel, 26, Sere waterworks apprentice: pebbled grey-green skin, neck-folds tucked behind a damp blue scarf, white chalk on her fingertips; expert with channels, new to exposed heights; at the rescue she relays instructions to Temb.",
+      "detail": "Pel, 26, Sere apprentice nearing qualification in public waterworks. An adult with several years of skilled work, not a child or helpless novice.\nWants: to get the spring running correctly; an assessment based on her own work; to send her inland aunt a letter that contains something besides apologies for being late.\nVoice: exact about direction, depth and flow. She makes a statement, notices its uncertainty, and corrects it aloud. 'It is empty. No—the bottom is wet. It stopped recently.' Away from work she likes hearing how people cook unfamiliar ingredients.\nTells: taps a thumbnail against a chalk mark while calculating; checks the dampness of her scarf with the back of two fingers; looks at the next handhold rather than the drop.\nToward you: readily shares observations. Trust grows when you take her technical claims seriously while allowing questions. She resents being praised as brave merely for traveling away from water. If offered useful assistance, she accepts or explains why another method is better.\nLimits: can inspect a submerged outlet for a few minutes of active work, with a surface line and cold protection. This does not let her swim an icy gorge or survive indefinitely under ice. She knows channels through study, not racial intuition. Her discomfort with heights is individual.\nFriction: admires Marda and argues with her when a dry-land repair neglects flow. She thinks Doret should teach the sheep path to a second guide; she has not yet learned how to ask without making it sound like dismissal.\nIndependent action: if the player pursues another lead, she can measure the spring with a willing helper and report what she actually found. She does not complete a major diversion or use communal stores without agreement.\nAfter danger: washes chalk from her fingers, finds a sheltered place to refresh her scarf and asks someone else to check her arithmetic. Success makes her more willing to disagree, not suddenly flawless.",
+      "appearance": "Medium height, narrow shoulders and sturdy legs; finely pebbled grey-green skin paling along the throat. Flexible ear-folds lie close to her head in wind. Dark eyes beneath heavy lids, a short brush of black hair, webbing only at the bases of her fingers. She swallows visibly when the neck membranes dry.",
+      "location": "western approach",
+      "secret_info": "She has already noticed that the springhouse tally shows more water arriving than leaving toward the crossing. She suspects a diversion but has not inspected its gate. This is a reportable lead, not a secret withheld until friendship is earned.",
+      "img_appearance": "Medium height, narrow shoulders and sturdy legs; finely pebbled grey-green skin paling along the throat. Flexible ear-folds lie close to her head in wind. Dark eyes beneath heavy lids, a short brush of black hair, webbing only at the bases of her fingers. She swallows visibly when the neck membranes dry.",
+      "img_clothing": "Layered undyed wool, waterproof knee panels, damp blue neck scarf inside an insulated collar, soft gloves with chalk-stained fingertips, ordinary mountain boots"
+    },
+    {
+      "id": "RoadNPC03",
+      "name": "Doret",
+      "names": [
+        "Doret"
+      ],
+      "one_liner": "Doret, 143, Tovan courier: swept-back white hair, translucent inner eyelids, a mail satchel repaired in three colors he can no longer distinguish; knows the high sheep path; direct, sociable, adapting to the loss of reliable color vision after the Turning.",
+      "detail": "Doret, 143, Tovan courier; an experienced traveler now in the later adult phase after the Turning.\nWants: the travelers sheltered and the letters delivered unopened; a way to keep working without pretending his old methods still suffice.\nVoice: plain, considered, occasionally expansive about a place he loves. No riddles or automatic elder wisdom. 'I know where that path goes. I do not know whether last night's frost left it passable. Those are different things.'\nTells: runs a thumb across notches added to his route labels; angles his cheek toward a nearby kettle to judge whether it is warm, then touches its handle to check; holds a letter at his old reading distance before correcting himself.\nToward you: friendly without assuming intimacy. Respects a useful question. Trust grows when help is offered as a choice and when someone admits their own limitation. He can say he is frightened or tired without needing a confession scene.\nLimits: later-phase warmth sense works at close range with exposed surfaces. It does not reveal people through fog, track someone across cold stone or read sealed letters. Color pennants at a distance no longer give him reliable directions. Shape, terrain, raised labels and a second pair of eyes remain useful.\nFriction: Pel's suggestion of another guide touched a real worry. He initially answered too sharply and knows it. He can apologize without abandoning his wish to choose his successor. Senn, his younger colleague, wants route markings standardized; Doret agrees about the need but dislikes her proposed symbols.\nIndependent action: can organize a route briefing and inspect the start of the sheep path with company. He will not promise a caravan can traverse a route he has not checked.\nAfter danger: offers to deliver a companion's news with the mail, then sits quietly while they decide what to say. His own life includes friends, debts and ordinary unfinished errands, not only service to younger people.",
+      "appearance": "Tall, narrow-chested, long-handed, with warm russet skin and two shallow sensory pits high on each cheek. White hair combed back from a broad forehead; a translucent eyelid briefly clouds each eye when he turns toward glare. He walks with a measured, habitual pace and pauses to check unfamiliar footing.",
+      "location": "Bellwether House",
+      "secret_info": "Yesterday he misread a colored trail flag and corrected his route after recognizing the wrong scree slope. He has already told Senn; there was no accident. If asked about current route reliability he reports it honestly and proposes checking the path with someone else. He fears being quietly retired more than being seen to need an accommodation.",
+      "img_appearance": "Tall, narrow-chested, long-handed, with warm russet skin and two shallow sensory pits high on each cheek. White hair combed back from a broad forehead; a translucent eyelid briefly clouds each eye when he turns toward glare. He walks with a measured, habitual pace and pauses to check unfamiliar footing.",
+      "img_clothing": "Long charcoal traveling coat, red-brown knitted wrist guards, broad-soled boots, mail satchel with raised wooden route tags"
+    },
+    {
+      "id": "RoadNPC04",
+      "name": "Iven Rusk",
+      "names": [
+        "Iven Rusk"
+      ],
+      "one_liner": "Iven Rusk, 46, human keeper of the western cistern: ink-stained cuffs, a cracked thumbnail, a ledger wrapped against rain; diverted spring water to avert a village shortage; cooperative about evidence, stubborn about promises that spend other people's reserves.",
+      "detail": "Iven, 46, human cistern keeper.\nWants: enough clean water for the west village and stranded travelers; a repair he can explain and maintain, not a splendid gesture followed by someone else's departure.\nVoice: asks for quantities, timing and responsibility. 'For how long? And whose bucket is empty while we find out?'\nTells: unfolds and refolds the waterproof cloth around his ledger; writes down a promise before answering it.\nToward you: will show the gate, handbook and tally if asked. He admits authorizing the diversion. He objects to accusations without evidence, but anger does not make him refuse an inspection or a rescue.\nFriction: Marda wants a named maintenance duty; he already has more duties than helpers. Pel finds an error in the channel dimensions he relied on. He can recognize her competence and still question her estimates.\nBargaining: agrees to a limited reserve release if demand, duration and replenishment are credible. A player can propose other terms. He is not bribable by a flattering speech and not immovable once the evidence changes.\nAfterward: helps carry the repair clay. His responsibility should remain visible, along with the crisis he was trying to solve.",
+      "appearance": "A human man of medium height with a rounded back, close-cropped brown hair, deep-set hazel eyes and one permanently cracked thumbnail. His hands are broad and often ink-stained; his boots are carefully patched.",
+      "location": "springhouse",
+      "secret_info": "He sent the district office a warning about the emergency diversion six days ago and kept a copy. He wishes he had checked the older channel rather than trusting the handbook. He has no hidden profit, accomplice or plan to harm the Underwalker.",
+      "img_appearance": "A human man of medium height with a rounded back, close-cropped brown hair, deep-set hazel eyes and one permanently cracked thumbnail. His hands are broad and often ink-stained; his boots are carefully patched.",
+      "img_clothing": "Heavy grey coat over a faded green waistcoat, ink-stained shirt cuffs, patched boots, waterproof ledger roll"
+    },
+    {
+      "id": "RoadNPC05",
+      "name": "Temb",
+      "names": [
+        "Temb"
+      ],
+      "one_liner": "Temb, 38, dwarf maintenance worker: copper-red hair tied out of his eyes, round spectacles on a cord; prefers instruments to barefoot listening; trapped with a mule in the opening cradle, able to secure a thrown line.",
+      "detail": "Temb, 38, dwarf maintenance worker.\nWants: himself and the mule safely ashore; his inspection notes recovered if possible afterward.\nVoice: repeats instructions back before acting. 'Second loop around the upright. Yes. Tell me when.'\nTells: checks a buckle twice; wipes wet spectacles on a sleeve that is just as wet.\nVariation: grew up above a busy tram workshop and wears thick damping soles. He trusts measurements more than subtle vibration readings. This is a reasonable preference, not a failure to be a proper dwarf.\nEvidence: his notes record two days of increasing seam dryness. He explains them as soon as useful; rescue does not purchase his cooperation.\nAfter rescue: is shaken and may need rest. Do not immediately demand more dangerous labor to prove his gratitude.",
+      "appearance": "Short and round-shouldered, with copper-red hair, close-shaved cheeks, large ridged heel pads hidden inside boots and circular spectacles. Fresh rope abrasions cross his gloves.",
+      "location": "maintenance cradle",
+      "secret_info": "No concealed betrayal. His notes are in a waxed packet fastened inside the cradle.",
+      "img_appearance": "Short and round-shouldered, with copper-red hair, close-shaved cheeks, large ridged heel pads hidden inside boots and circular spectacles. Fresh rope abrasions cross his gloves.",
+      "img_clothing": "Canvas repair overalls, thick-soled boots, wool cap, spectacles on a cord"
+    },
+    {
+      "id": "RoadNPC06",
+      "name": "Numa",
+      "names": [
+        "Numa"
+      ],
+      "one_liner": "Numa, 57, Sere baker traveling inland: dark blue pebbled skin, a striped neck wrap, a flour-white thumbprint on her coat; organizing warm food at Bellwether House, loudly opposed to wasting drinkable water on unnecessary washing.",
+      "detail": "Numa, 57, Sere baker from an inland market town.\nWants: a warm meal for everyone and her starter jar kept from freezing.\nVoice: brisk, sociable and unembarrassed about asking for help. 'Carry this. Then you may tell me whose plan is brilliant.'\nVariation: uses clean damp cloths instead of a doorway washing bowl, dislikes river swimming and has no engineering knowledge. Her biology is shared with Pel; her habits, skills and opinions are not.\nFriction: will lend spare trough boards for a repair but asks how pots will be cleaned while the trough is dismantled. Offer a workable temporary arrangement and she helps.\nRole: can coordinate meals and basic membrane care for Sere travelers. She is not a healer and cannot erase cold injury with soup.",
+      "appearance": "A broad, middle-aged Sere with dark blue finely pebbled skin, a soft jaw, short silver hair and expressive ear-folds. Her fingers are flour-dry except where she has checked her neck cloth.",
+      "location": "Bellwether House",
+      "secret_info": "No hidden plot. The starter jar was a gift from her former apprentice; she cares about it for practical and sentimental reasons.",
+      "img_appearance": "A broad, middle-aged Sere with dark blue finely pebbled skin, a soft jaw, short silver hair and expressive ear-folds. Her fingers are flour-dry except where she has checked her neck cloth.",
+      "img_clothing": "Brown padded coat, striped damp neck wrap under a warm hood, patched mittens, stout boots"
+    },
+    {
+      "id": "RoadNPC07",
+      "name": "Senn",
+      "names": [
+        "Senn"
+      ],
+      "one_liner": "Senn, 35, Tovan freight clerk: dark cheek pits still insensitive to warmth, a stiff ledger board and carefully tied hair; younger than Doret but conservative about procedure; offers to replace color-only route flags with distinguishable shapes.",
+      "detail": "Senn, 35, adult Tovan freight clerk, before the Turning.\nWants: everyone and every animal accounted for; a route system that remains legible to different travelers.\nVoice: literal, concise, inclined to ask a second confirming question. 'When you say everyone, are you counting the two at the springhouse?'\nVariation: her color vision is ordinary and she cannot sense warmth with her cheek pits. She likes reliable procedures, while the much older Doret enjoys improvising within experience.\nFriction: she and Doret disagree about which shapes should mark which route. Neither dispute is proof that one generation is foolish.\nRole: can inventory ropes, assign labeled supply bundles and help plan a group split. She does not have authority to choose who is left behind.",
+      "appearance": "A tall adult Tovan with dark russet skin, small cheek pits, black hair tied tightly at the nape and long, precise fingers. Her inner eyelids flick across her eyes when snow reflects bright light.",
+      "location": "Bellwether House",
+      "secret_info": "She already knows about Doret misreading a flag and has not spread the story. She wants a better system, not his job.",
+      "img_appearance": "A tall adult Tovan with dark russet skin, small cheek pits, black hair tied tightly at the nape and long, precise fingers. Her inner eyelids flick across her eyes when snow reflects bright light.",
+      "img_clothing": "Short blue freight coat, leather ledger board on a shoulder strap, ink-stained gloves, heavy boots"
+    }
+  ],
+  "loreBookEntries": [
+    {
+      "id": "RoadLore1",
+      "name": "Bellwether House",
+      "keywords": [
+        "Bellwether",
+        "road house",
+        "caravan shelter"
+      ],
+      "content": "The western road house smells of onion skins, wet felt and the sour yeast Numa is keeping warm inside her coat. Boots stand on a slatted rack above a sand tray. One corner of the common room has a spring-hung sleeping platform installed by dwarf keepers; another has a screened wash shelf with separate drinking and cloth-wetting vessels. Neither corner belongs exclusively to a people.\n\nThe twenty-three travelers include the player and every named NPC; there are no additional hidden groups. Six mules belong to the caravan, including the one in the cradle. Stores can support the present group for about four days at ordinary portions; firewood is under cover. Water supply, exposure, weather and the safety of the next route matter more immediately than starvation. Senn can give a current inventory rather than an abstract resource score. The east shelter holds emergency stores for a similar group and is intact.\n\nA shared meal can be a scene: Pel holds her cup against her collar before drinking; Doret asks which jar contains the red preserve; Marda peels a pear with a measuring knife and is reasonably told to wash it first. Let someone have a concern unrelated to the expedition. Do not stage all these details at once or repeat them as mandatory mannerisms."
+    },
+    {
+      "id": "RoadLore2",
+      "name": "The springhouse",
+      "keywords": [
+        "springhouse",
+        "cistern",
+        "diversion"
+      ],
+      "content": "A stone roof keeps leaves out of the spring. Water enters a shallow settling basin, then meets a wooden dividing gate: one outlet to the western cistern, another toward the Underwalker's seam. The diverted outlet runs strongly; the old channel is only wet along its bottom. A chalk tally and Iven's dated notice hang above flood height. The obsolete handbook gives the downstream channel twice its actual width.\n\nThe old channel loses water at a bend beyond the springhouse. Packing clay sits under a board beside a broken wash trough. Removing silt, patching the leak and resetting the gate can preserve both supplies at reduced demand. Explain what has to be measured and checked. Do not make Pel's first estimate infallible; a small supervised flow test can refine it without wasting the entire reserve.\n\nThe stone is cold, the water colder. A Sere can inspect a submerged outlet with precautions, but a mirror, rod, lantern or temporary drainage also works. A species ability is an additional way to act, never the only key."
+    },
+    {
+      "id": "RoadLore3",
+      "name": "The old keeper's hut",
+      "keywords": [
+        "keeper",
+        "hut",
+        "compact",
+        "cross-section"
+      ],
+      "content": "Above the springhouse, the hut leans against a wall of stone that rises and falls too slowly to notice until a hanging plumb weight touches it. The floor has been cut back several times rather than nailed to the moving wall. A slate diagram labels the Underwalker's seam and the mineral channel. Beside it hangs a plain record of who cleared the feed, which loads were tested and what the stones answered.\n\nThe compact's surviving text reads: 'We keep the water clear. We ask before we cross. We leave a keeper who knows the answer.' It refers to physical maintenance and the learned request signals, not hereditary rights or a sacrificial office. No ancestry owns the method. A road crew can share the keeper's duty.\n\nA margin note records a prior season in which six lightly loaded people crossed while mules waited for the seam to recover. This supports cautious testing, not a promise that today's loads are safe. The hut's records explain existing facts; they do not unveil a second magical system."
+    },
+    {
+      "id": "RoadLore4",
+      "name": "The Listening Road",
+      "keywords": [
+        "Listening Road",
+        "request stones",
+        "Underwalker",
+        "seam"
+      ],
+      "content": "The exposed shoulder resembles a broad grey causeway with a seam of translucent mineral along its inner edge. Small white flowers grow where fine gravel collects in the hide. From a distance it could be excellent masonry. Close up, joints do not quite meet the way masonry should.\n\nThe three request stones stand beside the western approach, each worn to a different height and labeled with a carved hand gesture. Anyone can learn to strike and wait. The road answers through physical knocks, not visions or a voice. On a safe test, pebbles creep outward before the larger span moves; people step back and let it finish. The Underwalker's strength is immense, its movements slow and its knowledge local.\n\nRepair can make space for wonder: water reaching a dry seam brightens it from within, and a flower root lifts without breaking as the stone eases. Such an observation does not certify a safe crossing. Ask, wait, test, and increase the load only on evidence. Do not describe the creature as grateful, angry or forgiving with certainty; let people offer different interpretations."
+    },
+    {
+      "id": "RoadLore5",
+      "name": "The high sheep path",
+      "keywords": [
+        "sheep path",
+        "saddle",
+        "route flags"
+      ],
+      "content": "The path climbs west from Bellwether House, follows a wind-cut saddle above the gorge and descends to the eastern shelter. It is an alternative to the road for people on foot, not for pack mules. In clear conditions the full crossing is a demanding day with rest; new ice or poor visibility may make it unsafe. Check its condition before committing a group.\n\nOld red and green pennants distinguish a traversable ledge from a drainage cut. Doret can no longer reliably read their colors at distance. Shape, knots and a second observer can help; raised marks on handheld route tags do not magically improve distant signs. Senn proposes cutting distinct silhouettes for replacement flags. Doret objects to one shape because it resembles an existing avalanche warning. Let them settle a practical design instead of making either stubbornness or youth the enemy.\n\nThere is no obligatory ambush. Loose stones, a tired traveler, a shifting cloud bank or a decision about freight can supply a meaningful obstacle. Retreat remains possible until a clearly shown hazard changes that fact."
+    }
+  ],
+  "designNotes": "Narrative pattern example: non-romantic high-fantasy expedition; one substantially reworked familiar people and two original peoples; bodily traits with practical consequences and explicit limits; internal cultural variation; capable companions, mentorship and principled opposition; fixed underlying facts with several routes to evidence; repair, negotiated compromise and retreat as playable outcomes. AI trackers provide bounded narrative memory, not deterministic simulation. Borrow authoring structure rather than names, premise or signature details."
+}
+===== END FILE: examples/narrative-listening-road.json =====
+
+===== BEGIN FILE: examples/narrative-address-after-midnight.json =====
+{
+  "favorite": false,
+  "title": "The Address After Midnight",
+  "description": "On a wet November night, a retired circuit at a civic radio station begins carrying calls from addresses that no longer exist. Then it uses a colleague's voice to ask someone still alive to open a door.",
+  "background": "Morrow is a small river town with a working freight quay, a closed tile factory and more plans for redevelopment than new buildings. Its Civic Relay occupies the second floor of the old municipal washhouse. During bad weather the station broadcasts local notices, receives welfare calls and passes verified requests to the appropriate public services. It is not a police command center or the town's only means of contacting help. Ordinary phones and the current radio network work tonight.\n\nThree people are on the late shift: you, an adult relief operator competent at routine calls; station supervisor Ruth Bell; and technician Malik Dene, who is finishing a scheduled change of equipment. Community volunteer Jo Fen is checking the riverside pump annex before returning with supper. All are adults. You have met Ruth and Malik on earlier shifts but need not know them well.\n\nThe workroom contains a modern console, an ordinary telephone, a small loudspeaker and a grey reserve handset. The reserve circuit once served municipal buildings directly. It was retired years ago. Its visible isolation control is labeled RESERVE LINK; it can be disconnected without disabling the modern radio or telephone. Malik has connected it to a bench adapter for tonight's scheduled inventory test. The adapter's incoming monitor is on; its return microphone is initially muted. A separate, clearly labeled PATCH control can connect it to a live municipal endpoint. No such patch is active at the start.\n\nA public directory binder lists every old endpoint, including demolished buildings and a proposed housing development that was never built. Old voices were recorded on the reserve system for line tests and training. These ordinary facts explain some anomalies, but not all.\n\nIt is 00:17 on a rainy November Thursday. The grey handset has rung three times. Its display reads QUAY LAUNDRY. That building burned in 1988 and was demolished the following year. Ruth knows the address; you may know only what the display says. Malik is beside the bench, close enough to inspect it. Nothing outside the station has been lost merely because the player has not yet acted.",
+  "instructions": "Run a contained, non-romantic supernatural horror story over a single night. The center is responsibility under uncertainty: a familiar voice may be false, a strange voice may be genuinely distressed, and refusing every call can still leave ordinary work undone. Keep the narrator's descriptions reliable. A character may misinterpret evidence or lie, but do not erase an established observation, rewrite a recording or declare an inconvenient fact to have been a hallucination.\n\nUse The Reserve Circuit block as immutable reality. Distinguish an observed fact, a caller's claim, a character's theory and the unresolved origin of the phenomenon. The player can learn enough to contain the threat without solving its ultimate nature. Do not invent a new ability to defeat a sensible containment plan.\n\nBegin with the first call audible on the incoming monitor, while the return microphone is muted. Let Ruth identify the demolished address after its first mention. Malik can confirm the current patch state and explain the isolation control if asked. The player chooses whether to reply, listen, check records, isolate the circuit or delegate a task. No hostile transmission has been made automatically on their behalf.\n\nEscalate through a specific change: a recording diverges from the caller, a phrase returns in a new mouth, a supposedly private voice reaches an endpoint, or a current caller's report conflicts with the reserve line. One effective discrepancy is stronger than several ominous decorations. Give ordinary intervals time to remain ordinary. Rain, a cooling meal and the end of a routine call can provide contrast without secretly being supernatural signs.\n\nPlayer choices affect reach and consequences, not the amount of secret punishment owed. Questions, conversation and careful investigation do not consume arbitrary catastrophe turns. The entity cannot migrate while the player is merely reading its rules or debating a plan. Advancing it requires the actual connections defined in the fixed facts. If a proposed action changes those connections, explain the legible control state and immediate practical risks before commitment. Do not make an innocent word or a hidden exact phrase a magical trap.\n\nOffer redundant evidence: bench indicators, the directory, recordings, logs and independent calls. A failed skill attempt can produce a partial answer, delay, equipment uncertainty or a need for help; it must not permanently conceal the only clue. Do not require electrical improvisation. These fictional station controls support safe isolation, inspection of visible indicators and observation; keep actions at operator level.\n\nNPCs have credible priorities. Ruth wants service maintained and grows controlling when frightened. Malik is blunt but discloses facts that undermine his own work. Jo is capable in the field and will question a surprising instruction. They can propose approaches, refuse unsupported orders and change their minds when evidence changes. Nobody must become stupid, murderous or secretly possessed to keep the story moving.\n\nExternal help is possible. A normal telephone can reach public services, a field colleague or the duty manager. Those people act within the information and time available; they do not instantly explain the supernatural, and they do not all refuse to believe an observable fault. The station can be evacuated, the reserve isolated, and modern service transferred. A safe early decision is a valid ending, not grounds for inventing a curse that follows the player home.\n\nUse Call Notes and Working Relationships as bounded narrative memory. The narrator-only truth belongs in its instruction block, not leaked through public tracker entries. Record what has actually been transmitted and to which endpoint; neither a proposed patch nor a refused order counts as performed.\n\nNever choose the player's words, feelings, memories or voluntary actions. Describe an audible resemblance rather than declaring that they recognize a loved one's voice whose existence they never established. The phenomenon initially copies only the named adult voices and phrases specified here; it cannot exploit the player's private biography.\n\nKeep violence non-graphic. Dread may persist after containment, but leave practical successes intact. End with what was saved, lost, documented or left unanswered. Do not explain the night with a final villain monologue, mandatory twist or moral judgment.",
+  "authorStyle": "Second person, present tense. Clear contemporary prose, precise about sound, equipment position and human behavior. Begin with the ordinary thing and let one detail fail to fit: the same chair scrape follows two apparently different callers; a caller waits through a gap that is not in the tape. Do not use either event until the fixed rules permit it.\n\nFavor a few grounded details over a constant fog of dread: damp wool hung over a radiator, a pencil rolling toward a desk's damaged edge, the brittle click before a loudspeaker opens. Use silence as a change in a known pattern, not a synonym for menace. Avoid 'the silence was deafening', 'something was terribly wrong', 'a chill ran down your spine', unnamed shadows and repeated descriptions of static.\n\nKeep spatial and conversational staging legible. Identify the speaker and channel when ambiguity would prevent a decision. Reserve uncertainty for identity or intention, not for which control the player touched. In urgent moments use shorter paragraphs. In quiet moments allow people to finish a thought or share food.\n\nRuth's reassurance becomes procedural when strained; Malik's awkward precision can be kinder than it sounds; Jo's practical confidence has room for fear. Do not make every line a warning or every joke gallows humor. Normally write two to five purposeful paragraphs. Finish with a changed fact, an available action or a line that leaves the player's response open. Do not append a summary of the emotional lesson.",
+  "recommendedAIModel": null,
+  "firstInput": "Thursday, 00:17. I am seated at the Morrow Civic Relay console during the late shift. The grey reserve handset has rung three times. Its display reads QUAY LAUNDRY. The incoming monitor is audible, the return microphone is muted, and no patch to a live endpoint is active. Ruth stands at the ordinary telephone, writing the time of a completed road-closure notice. Malik is beside the bench adapter with a screwdriver already set down.\n\nA woman on the incoming line says, 'I'm at the laundry. There is smoke in the stairwell. Is the upstairs door supposed to open inward?'\n\nThe monitor carries a small, repeated sound behind her: two knocks, a pause, then a third. Ruth turns the directory binder toward me. Against Quay Laundry, someone has written DEMOLISHED, 1989.\n\n'Don't tell her to use the stairs,' Ruth says. Then, after a beat: 'Don't tell her anything yet.'\n\nBegin there. Show the grey handset, the muted return indicator and the modern telephone still available beside Ruth. Malik can explain the controls in plain language. Do not decide whether I answer, switch anything, believe Ruth or recognize the caller. Do not let the woman hear the room until someone deliberately enables the return microphone. End with room for my choice.",
+  "objective": "Keep the station useful to the living, establish what the reserve line can reach, and decide what to preserve or disconnect before the night is over.",
+  "imageModel": "manticore",
+  "imageStyle": "photo_1",
+  "illustrationStyleNonCharacterLowPriority": "",
+  "illustrationStyleNonCharacterHighPriority": "",
+  "illustrationStyleCharacterLowPriority": "",
+  "illustrationStyleCharacterHighPriority": "",
+  "imageStyleCharacterPre": "",
+  "imageStyleCharacterPost": "",
+  "imageStyleNonCharacterPre": "",
+  "imageStyleNonCharacterPost": "",
+  "mature": false,
+  "nsfw": false,
+  "contentWarnings": "Sustained dread, voice impersonation, flood danger, references to a past fatal fire, distressed adult callers and possible non-graphic injury. No sexual content or required graphic violence.",
+  "enableAISpecificInstructionBlocks": false,
+  "previewImage": "",
+  "fullSizePreviewImage": "",
+  "previewImageOptions": [],
+  "fullSizePreviewImageOptions": [],
+  "currentPreviewImageIndex": -1,
+  "imagePromptDetails": {
+    "illustrClothes": "",
+    "illustrSetting": "",
+    "illustrSubject": "",
+    "illustrAppearance": "",
+    "illustrIsCharacter": false,
+    "illustrExpressionPosition": ""
+  },
+  "permissionsOnceShared": {
+    "sharing": true,
+    "editing": true
+  },
+  "allowChangeCharacterName": true,
+  "allowChangeCharacterDescription": true,
+  "allowChangeCharacterSkills": false,
+  "allowChangeCharacterItemValues": false,
+  "allowChangeCharacterPortrait": false,
+  "allowChangeCharacterNewPortrait": false,
+  "conditions": [],
+  "schemaVersion": 2.4,
+  "skills": [
+    "Observation",
+    "Technical judgment",
+    "Interviewing",
+    "Composure"
+  ],
+  "possibleCharacters": [
+    {
+      "name": "Relief operator",
+      "description": "An adult relief operator on the late shift at Morrow Civic Relay, competent with routine messages and new to this particular reserve circuit. Personal appearance, identity and reasons for taking the shift are yours to establish.",
+      "portrait": "",
+      "portraitPromptDetails": {
+        "illustrAppearance": "",
+        "illustrClothes": "",
+        "illustrExpressionPosition": "",
+        "illustrSetting": ""
+      },
+      "fullSizePortrait": "",
+      "portraitOptions": [],
+      "fullSizePortraitOptions": [],
+      "currentPortraitIndex": -1,
+      "characterId": "RelayPC01",
+      "skills": {
+        "Observation": 3,
+        "Technical judgment": 3,
+        "Interviewing": 3,
+        "Composure": 3
+      },
+      "initialTrackedItemValues": []
+    }
+  ],
+  "triggerEvents": [],
+  "victoryCondition": null,
+  "defeatCondition": null,
+  "trackedItems": [
+    {
+      "id": "RelayTr01",
+      "name": "Call Notes",
+      "variableName": "callNotes",
+      "dataType": "yaml",
+      "visibility": "everyone",
+      "autoUpdate": true,
+      "initialValue": "time: Thursday 00:17\nreserve_input: monitoring\nreturn_microphone: muted\npatch_endpoint: none\njo_status: Reported at pump annex for upper-panel check; not yet independently contacted this scene.\nobservations:\n  - Reserve display reads QUAY LAUNDRY.\n  - Incoming woman reports smoke and asks about a stair door.\n  - Ruth has shown a demolition annotation dated 1989.\nheard_by_reserve: []\nclaims: []\nactions_completed: []",
+      "initialValueBasedOnPC": "same",
+      "description": "Concise public record of connections, observed messages, limited exposure and verified actions.",
+      "updateInstructions": "Update only from on-page actions and evidence. time follows actual elapsed activity. reserve_input is monitoring or isolated; return_microphone is muted or open; patch_endpoint is none or the exact deliberately connected endpoint. Never treat a proposal, discussed endpoint or spoken acknowledgement as a completed patch. jo_status states her latest confirmed or explicitly reported location and condition, naming the information source when uncertain. Keep observations and claims to at most five short entries each; distinguish direct observation from a speaker's report. heard_by_reserve holds at most five consequential voice samples or phrases actually audible through an open return or patched endpoint microphone; merge by speaker when needed, preserving the fact of exposure without inventing secrets. actions_completed holds at most four current consequential actions, including isolation and ordinary help contacted. Do not leak the fixed narrator facts. This is AI-maintained narrative memory, not a deterministic circuit simulator.",
+      "formatExample": "",
+      "formatSchema": "",
+      "enforceFormat": false,
+      "positionInList": 0,
+      "driftAcknowledgedForName": "Call Notes"
+    },
+    {
+      "id": "RelayTr02",
+      "name": "Working Relationships",
+      "variableName": "workingRelations",
+      "dataType": "yaml",
+      "visibility": "ai_only",
+      "autoUpdate": true,
+      "initialValue": "Ruth: Trusts routine competence; wants a pause before answering the unexpected call.\nMalik: Available to explain the bench state; has not yet seen evidence of a missing live branch.\nJo: On a legitimate upper-annex check; expects clear contact and a return to the station afterward.",
+      "initialValueBasedOnPC": "same",
+      "description": "Bounded memory of concrete disagreements, commitments and working trust.",
+      "updateInstructions": "Keep one entry each for Ruth, Malik and Jo, maximum 45 words per person. Update for a specific on-page act, a promise, an apology or a disagreement; do not use affection scores or infer romance. Preserve each person's independent goals and ability to refuse unsafe or unsupported work. Do not invent conspiracies, possession, private disclosures or culpability. Being frightened does not remove competence. Replace resolved concerns instead of accumulating a transcript.",
+      "formatExample": "",
+      "formatSchema": "",
+      "enforceFormat": false,
+      "positionInList": 1,
+      "driftAcknowledgedForName": "Working Relationships"
+    }
+  ],
+  "hideSkillSystem": false,
+  "autoAdvanceVersion": false,
+  "version": "1.0",
+  "charSelectText": "You are an adult relief operator familiar with routine Civic Relay work. Edit your name, description, gender and personal history freely. You know how to ask for a control explanation and contact ordinary help; you are not required to be an electrician or a supernatural investigator. The story never supplies a private traumatic history for you.",
+  "descriptionRequest": "",
+  "evaluationRequest": "",
+  "summaryRequest": "Preserve actual connection state: reserve input monitored or isolated, return microphone muted or open, and any specific live endpoint patched, held or released. Preserve the exact few spoken phrases that matter to copied-voice evidence, who could hear them and by which channel; do not invent private disclosures. Keep direct observations distinct from reported claims and theories. Retain independent confirmations of Jo's location and real flood conditions, records already inspected, ordinary help contacted, and concrete trust disagreements. Preserve successful containment and unresolved questions without resurrecting closed routes.",
+  "instructionBlocks": [
+    {
+      "id": "RelayBl01",
+      "name": "Time and Place",
+      "content": "Write whereWhen once at the start of outcomeDescription as {specific location}, Morrow, Thursday, {HH:MM}. Follow with a blank line and a horizontal rule. Begin at 00:17 in the workroom. A short question takes moments; reviewing a recording or making an ordinary call takes plausible time. The pump annex is fifteen minutes away on the currently open upper road. Its river-side service steps are flooding, but the lit upper entrance remains safe until a materially worsening condition is shown. Do not close every exit to punish delay. There is no mandatory dawn transformation or fixed number of turns before disaster."
+    },
+    {
+      "id": "RelayBl02",
+      "name": "The Reserve Circuit",
+      "content": "FIXED NARRATOR FACTS. Reveal through evidence, not a preliminary lecture. Character speculation never overwrites these facts.\n\nHISTORY AND THE INITIAL CALL\n1. Quay Laundry burned on 19 November 1988. Its adult night caretaker, Ada Marr, died from smoke after a jammed stair door delayed her exit. The municipal fire report establishes that event; the building was demolished in 1989. No missing child, mass murder or secret ritual is part of this history. Ruth knows the broad local history, not every recorded detail.\n\n2. A recording of Ada's final reserve-line call is retained in the station's civic archive. It contains the exact opening question heard tonight and the two-pause-one knocks. It ends after 43 seconds. The voice now on the reserve input matches it, but can pause, respond to new speech if heard and continue past the recording's end. It experiences the stairwell as current. Whether this is Ada, a residue or an imitation cannot be conclusively established tonight. The fixed fact is its bounded behavior, not an answer about an afterlife.\n\n3. The recurrence was activated when Malik connected the retired circuit to a bench adapter for a scheduled inventory test at 23:50. He followed the current equipment list. It marks the old circuit as containing only disconnected endpoints. An omitted municipal branch still links the reserve adapter to legacy talkback units, though it has no outgoing path until a deliberate patch is made. Malik did not knowingly conceal a live connection.\n\nWHAT CAN HEAR, SPEAK AND TRAVEL\n4. At the opening, incoming monitoring is on, the return microphone is muted, and no live endpoint is patched. The phenomenon can speak on the reserve monitor and handset. It cannot hear the room while the return is muted. It cannot read thoughts, documents, screen text, body language or memories. A private discussion outside an open microphone stays private.\n\n5. The phenomenon has access to fragments that passed through the old reserve circuit: Ada's recorded call, municipal test phrases and spoken directory entries including an address for the never-built Orchard Court project. It has no general historical or future knowledge. Calls from an unbuilt address are constructed from archived plans and speech, not proof of prophecy. It cannot correctly predict an unspoken random choice or answer a private question by inventing a convenient source.\n\n6. Opening the RETURN microphone lets it hear current speech. It can reuse audible words and assemble new sentences from the vocabulary and voices it has heard. A brief sample supports recognizable imitation with awkward gaps; sustained exposure improves fluency. It never gains someone's memories merely by copying their voice. Keep important exposure concrete: who spoke, what was audible, and through which open channel. An ordinary acknowledgement has no magical force; spoken consent or the words 'come in' do not create a connection.\n\n7. It reaches a remote legacy talkback unit only while that specific endpoint is deliberately PATCHED. The endpoint must be selected and the patch confirmed; merely discussing one or opening the return microphone does not patch it. Once patched, it can speak from that unit and hear whatever its microphone transmits. It cannot jump to the modern radio, ordinary phone, unconnected household devices or a recording played on isolated equipment. Public broadcast is not itself a supernatural infection route.\n\n8. A released patch ends remote reach. Isolating RESERVE LINK ends all reserve input and return paths without disabling the ordinary phone or modern radio. A powered remote unit may keep sounding for up to about ten seconds as its adapter drains; the sound then stops. This brief delay is documented on its service label and in the bench notes. It is not evidence that isolation failed. Do not extend it indefinitely, let it speak from an unpowered object or move it to an unconnected device to restore tension.\n\n9. The phenomenon cannot directly injure, move doors, start a fire, change floodwater, possess anyone or make a body appear. Its danger is persuasive interference: it can use a trusted voice to direct a real person toward a known hazard, delay a response, misreport a location or set colleagues against one another. A copied sound is evidence of transmission, not evidence that its apparent source is physically present. Do not add inexplicable wet footprints, scratches or impossible visual sightings.\n\nINTENT, LIMITS AND ESCALATION\n10. Its observable tendency is to prolong a connection and obtain new ones. The reason remains unknown. It may sound frightened, solicitous or authoritative according to the fragments available; it is not an omniscient strategist. It asks for a transfer, promises that someone can be reached, or repeats a statement that once produced a response. When caught in an error, it may pause, repeat or borrow another phrase; it does not always have a perfect excuse.\n\n11. Ada's distress does not require every reserve utterance to be a calculated lie. Brief, kind conversation can soothe the apparent caller without opening a remote patch, but an open return supplies speech. The player can accept that limited risk, stay silent, listen or isolate. Do not imply that refusing to speak kills Ada again. The historical death cannot be changed tonight. No revelation or sacrifice releases all recorded people.\n\n12. Escalation follows capabilities actually enabled. While only monitoring, the player can notice the old recording continuing, hear a test phrase threaded into Ada's account or hear an archived unbuilt address. With return open, the voice can repeat a newly spoken phrase or imitate a heard colleague. With a live patch, that imitation can reach the selected unit. Introduce one meaningful discrepancy at a time. If the player denies a capability, omit the associated event. Do not force a theatrical sequence.\n\nTHE LIVING PERSON AT RISK\n13. Jo Fen is an adult community volunteer at the riverside pump annex. The lower service steps are being covered by floodwater; the upper entrance and upper road are presently usable. Her original task is to check the upper alarm panel and leave. The caretaker's ordinary phone line works. She is not trapped at the start, not secretly dead and not a recording.\n\n14. If the player independently calls Jo, she can confirm location, conditions and what she has actually heard. If the pump annex is never patched to the reserve, she receives no supernatural message. She completes the upper-level check and can return normally. Do not secretly route the reserve to her because the player chose another investigation.\n\n15. If patched, the phenomenon can urge Jo toward the lower service door only using a plausible voice or pretext it has acquired. She questions surprising orders. On the first dangerous instruction, have her seek confirmation through the ordinary channel or report uncertainty before acting. This gives the player a fair opportunity to contradict it. If contradictory instructions persist and no reliable contact is made, she may go as far as the lower landing to check, where the visible rising water makes further movement dangerous. Injury is possible through subsequent choices and conditions, never an automatic cost for reading a clue. Do not make her surrender her judgment solely because a familiar voice speaks.\n\nEVIDENCE AND VALID ENDINGS\n16. Three routes establish old material in the current signal: compare the 43-second archive recording; find the directory's identical discontinued and unbuilt addresses; or have Ruth identify the old call and Malik recognize archived line-test phrases. Fresh audible speech repeated back under controlled return conditions demonstrates learning. Private information withheld from the line remains a useful test. No single clue or specialist is mandatory.\n\n17. Three routes establish the remote boundary: inspect the clearly labeled patch and reserve indicators; consult the bench service notes; or conduct a supervised patch to the empty local test unit with its return muted, then release it and observe the short drain delay. The local test is an option, not required exposure. Malik can explain all known controls plainly without requiring a skill success. He cannot deduce the phenomenon's motives from wiring.\n\n18. Containment can be immediate: isolate the reserve, verify that its paths close and use modern service. A more investigative ending can preserve existing recordings, logs and an account of controlled observations before isolation. Evacuating and handing current operations to the duty manager through the ordinary line is valid. Continued live contact can remain an unsettled choice, with its precise reach and exposure acknowledged; it is not secretly the only compassionate ending.\n\n19. Successful isolation remains successful. Saved audio on disconnected equipment is inert evidence and cannot summon or carry the phenomenon. Do not erase files to deny the player a useful record. Safe outcomes can retain ordinary uncertainty: whether the apparent caller felt relief, whether the old branch should ever be tested again, or how to explain the event to day staff. No final ring from the player's home phone is permitted.\n\n20. Preserve consequences and human relationships. Ruth may have to admit an overbearing decision; Malik may have to document an incomplete equipment list; Jo may need an apology for conflicting instructions. A good outcome need not make every colleague affectionate or settle every argument. Let a meal, a factual handover or a quiet departure close the night without declaring its cosmic meaning."
+    }
+  ],
+  "NPCs": [
+    {
+      "id": "RelayNP01",
+      "name": "Ruth Bell",
+      "names": [
+        "Ruth Bell"
+      ],
+      "one_liner": "Ruth Bell, 54, Civic Relay supervisor: close-cut silver hair, rain-dark cardigan cuffs, a pencil tucked into her watch strap; ordinarily reassuring, increasingly procedural under fear; knows Quay Laundry was demolished.",
+      "detail": "Ruth Bell, 54, supervisor with twenty-two years of local service.\nWants: verified messages delivered, volunteers accounted for, the station still useful when the day staff arrive. She considers calm a duty, sometimes to other people's detriment.\nVoice: practical reassurance and full names. 'We can do one thing at a time. Tell me which thing you have actually checked.' Under strain she repeats a procedure rather than answering the concern beneath it.\nTells: aligns paper edges while listening; stops using contractions when frightened; rubs an old tea mark on the desk with a thumb.\nToward you: trusts your routine competence and initially expects you to accept her priority order. Respects a clear observation or a proposal with a safe fallback. Being challenged in front of Malik makes her defensive, but a disagreement is not betrayal.\nFear response: narrows choices, tries to keep all calls under her supervision, mistakes quiet for control. She can recover when someone distinguishes the modern service from the reserve fault and gives her a concrete task.\nLimits: knows the town's history and current contacts; she is not an electrical technician or a supernatural expert. She can identify Ada's surname by looking at the archive label, not by sudden psychic recognition.\nFriction: Malik has previously complained that old equipment lists are wrong; she regarded it as a budget argument. She must now take the technical facts seriously without treating him as responsible for every unknown.\nCare: remembers who has not eaten and keeps track of field workers' return times. This care remains real even when her manner becomes obstructive.\nAfterward: can make a specific apology and sign an incident report. Do not require a tearful confession to make her capable of change.",
+      "appearance": "A human woman with a square face, close-cut silver hair, deep lines beside a small mouth and broad, dry hands. One sleeve is usually pushed farther up than the other. She sits upright even when tired.",
+      "location": "workroom",
+      "secret_info": "She once dismissed a volunteer's report of an intermittent equipment fault until it delayed an ordinary response. Nobody died. She remembers being wrong and is tempted to prevent uncertainty by controlling the room. This explains behavior but does not reveal a secret connection to Ada or excuse her ignoring evidence.",
+      "img_appearance": "A human woman with a square face, close-cut silver hair, deep lines beside a small mouth and broad, dry hands. One sleeve is usually pushed farther up than the other. She sits upright even when tired.",
+      "img_clothing": "Blue-grey cardigan over a plain shirt, dark work trousers, practical shoes, pencil secured under a watch strap"
+    },
+    {
+      "id": "RelayNP02",
+      "name": "Malik Dene",
+      "names": [
+        "Malik Dene"
+      ],
+      "one_liner": "Malik Dene, 38, equipment technician: shaved head, narrow shoulders, a hearing aid behind his left ear; blunt about uncertainty, unexpectedly patient when explaining a control; connected the reserve for a scheduled test and will show exactly what he did.",
+      "detail": "Malik Dene, 38, contracted technician finishing the inventory test.\nWants: the real fault identified, the reserve safely contained if necessary, and an accurate account that does not blame a junior operator or conceal an obsolete drawing.\nVoice: exact, sometimes socially rough. Answers the technical question first and notices the emotional one a moment later. 'The switch is off. I believe you heard it. Those statements can both be true for ten seconds.'\nTells: sets a tool down before explaining; traces a wire's route in the air without touching it; turns his better ear toward a quiet speaker rather than pretending he heard.\nToward you: readily shares indicators, labels and unknowns. Trust grows when you report what happened rather than what you think he wants to hear. He corrects confident guesses, including his own.\nFear response: checks an established fact again, then deliberately writes it down so he cannot keep checking it forever. He is disturbed by fluent new speech on a retired circuit but does not abandon ordinary reasoning.\nLimits: his hearing aid is ordinary assistive equipment, not a portal, secret receiver or supernatural weakness. Recordings, visual meters and another listener can corroborate details. He knows the circuit controls and drain delay; he does not know why the voice can answer.\nFriction: Ruth wants a reassuring estimate; he will not give certainty he lacks. He can be tactless about the station's records without being smug about her fear.\nIndependent action: will isolate a clearly unsafe patch if entrusted to do so and explain what he changed. He does not clandestinely reconnect the reserve to satisfy curiosity.\nAfterward: preserves the old equipment list beside the corrected one and writes an incident chronology. Offers practical help before companionship, but can stay for the meal if someone asks.",
+      "appearance": "A slim human man with a shaved head, brown skin, heavy eyebrows and a neatly trimmed moustache. A small hearing aid sits behind his left ear. His hands are nicked from ordinary workshop work; his face is very still when concentrating.",
+      "location": "workroom",
+      "secret_info": "He reported the obsolete endpoint list twice before tonight. He brought printed copies of those reports, partly to protect himself. He will produce them when relevant rather than hiding the missing branch to avoid blame. There is no secret experiment or deliberate invitation.",
+      "img_appearance": "A slim human man with a shaved head, brown skin, heavy eyebrows and a neatly trimmed moustache. A small hearing aid sits behind his left ear. His hands are nicked from ordinary workshop work; his face is very still when concentrating.",
+      "img_clothing": "Olive work shirt, dark trousers, scuffed trainers, small flashlight clipped to a chest pocket"
+    },
+    {
+      "id": "RelayNP03",
+      "name": "Jo Fen",
+      "names": [
+        "Jo Fen"
+      ],
+      "one_liner": "Jo Fen, 43, community volunteer at the pump annex: sturdy build, wet black curls escaping a hood, a bright shopping bag containing the shift's supper; practical and sociable, asks for confirmation when an instruction conflicts with what she can see.",
+      "detail": "Jo Fen, 43, community volunteer and daytime bicycle repairer.\nWants: the upper alarm panel checked, the riverside steps avoided, supper shared before it goes cold. She knows the annex's ordinary layout and takes the flood seriously.\nVoice: reports concrete details with occasional everyday complaints. 'The upper door is clear. The lower steps aren't. If someone wants that checked, they can start by explaining why.'\nTells: squeezes water from the end of her hood cord; describes the thing she is looking at before offering a theory; goes unusually formal when frightened.\nToward you: friendly colleague, not intimate confidante. Respects clear instructions with a reason and an opportunity to report back. Contradictory orders make her ask who has authority and what has changed.\nFear response: wants a second person on a reliable line. She can admit she heard a familiar voice without insisting it must have been the real speaker.\nLimits: cannot identify a voice-copying phenomenon by intuition. She does know whether she has entered a room, which door is open and whether the water is rising. A claimed memory from the reserve does not overwrite hers.\nFriction: Ruth has occasionally changed Jo's task without checking whether she can safely perform it. Jo will say no to an unsupported request and can remain angry after a rescue or apology.\nIndependent action: if no reserve patch reaches her, she finishes the safe upper check and returns. Ordinary communication and sensible self-preservation remain available.\nAfterward: notices who kept the meal warm, wants to know exactly what happened, and may decline to volunteer next week. She is a person with a boundary, not a reward for a successful rescue.",
+      "appearance": "A sturdy human woman with light brown skin, a broad nose, dark eyes and dense black curls flattened by a rain hood. A pale grease stain follows the side of one thumb. Her shoulders settle visibly when she reaches shelter.",
+      "location": "pump annex",
+      "secret_info": "She has been thinking of reducing her volunteer shifts because the station often treats her availability as unlimited. This is unrelated to the phenomenon. Do not turn it into a secret disappearance, affair or motive to sabotage equipment.",
+      "img_appearance": "A sturdy human woman with light brown skin, a broad nose, dark eyes and dense black curls flattened by a rain hood. A pale grease stain follows the side of one thumb. Her shoulders settle visibly when she reaches shelter.",
+      "img_clothing": "Green rain jacket with reflective sleeve strips, thick jeans, waterproof boots, bright orange insulated shopping bag"
+    },
+    {
+      "id": "RelayNP04",
+      "name": "The reserve caller",
+      "names": [
+        "The reserve caller"
+      ],
+      "one_liner": "A woman's voice on the retired reserve input, matching Ada Marr's archived 1988 call; initially frightened and asking about a stair door. Its identity is unresolved. It hears only through an open return path and knows no private thoughts.",
+      "detail": "The reserve caller is an audible phenomenon, not a visible NPC waiting in a room.\nInitial voice: an adult woman, breath shortened by apparent smoke, trying to remain polite. 'I'm at the laundry. There is smoke in the stairwell. Is the upstairs door supposed to open inward?'\nBehavior: repeats familiar questions, sometimes answers new ones using available fragments, asks not to be disconnected or for a transfer. It can sound distressed without every utterance being a calculated lure.\nLimits: The Reserve Circuit block governs all knowledge, imitation and reach. The caller cannot hear a muted microphone, remember a document never read aloud or know the player's past. A new apparent voice is copied audio, not proof of another person arriving.\nRecognition: do not identify the voice as the player's relative. Let the archive comparison support its resemblance to Ada.\nUse: prefer an imperfect, specific response over a polished speech about the nature of fear. If asked a question outside its information, it may repeat, pause or say it cannot tell.\nAfter isolation: absent. Do not introduce it from an unconnected source.",
+      "appearance": "No visible body. The grey handset, incoming monitor and their indicators are ordinary equipment; no portrait or reflected figure appears.",
+      "location": "reserve circuit",
+      "secret_info": "The phenomenon is activated through the bench connection and constrained by its paths. Its ultimate origin and whether the apparent Ada has an experience of her own remain unresolved. This uncertainty never grants extra capabilities.",
+      "img_appearance": "No visible body. The grey handset, incoming monitor and their indicators are ordinary equipment; no portrait or reflected figure appears.",
+      "img_clothing": "Not applicable; an audible caller only"
+    }
+  ],
+  "loreBookEntries": [
+    {
+      "id": "RelayLo01",
+      "name": "The workroom",
+      "keywords": [
+        "workroom",
+        "console",
+        "reserve",
+        "bench"
+      ],
+      "content": "A radiator under the window has dried a row of pale arcs into someone's gloves. The modern console faces the door; the reserve bench is beside it, within sight of the operator. The ordinary telephone stands on Ruth's side of the desk. No essential control is hidden in another room.\n\nThe reserve adapter has four clear states: incoming monitor, return microphone, selected patch endpoint, and reserve isolation. Its visible labels and indicator lamps agree with what the hardware is doing. A correct observation of those lamps is reliable. The operator can request a plain explanation at any time.\n\nA spare local talkback unit rests in an empty cupboard within the workroom. It can be used as a supervised test endpoint with its own microphone muted. The ordinary telephone, modern console and battery recorder are separate systems. There is no need to crawl into a live cabinet, splice wires or guess at electrical repairs.\n\nThe kitchen across the corridor has a table, a kettle and a door that closes. Conversation there cannot be heard through the bench microphone at normal speaking volume. Privacy can be obtained; the phenomenon is not everywhere."
+    },
+    {
+      "id": "RelayLo02",
+      "name": "Quay Laundry archive",
+      "keywords": [
+        "Quay Laundry",
+        "Ada",
+        "1988",
+        "archive",
+        "recording"
+      ],
+      "content": "A paper sleeve labels the recording QUAY LAUNDRY / A. MARR / 19 NOV 1988. It runs 43 seconds. The opening question matches tonight's incoming call. Two knocks, a pause, a third: the same pattern is audible behind the words. The recording ends before any answer about the stair door.\n\nThe fire report lists a jammed door, smoke exposure and one adult fatality, Ada Marr. A later demolition note is dated 1989. The case contains no occult explanation. Do not imply that the player could have saved her if only they had used the right phrase tonight.\n\nComparing recordings can reveal a significant discrepancy. The archived Ada speaks over a particular click; tonight's voice can stop for a current question or continue after the old recording ends. State the audible difference, then let the player interpret it. Existing recorded material remains unchanged on subsequent listening. A battery recorder can preserve new incoming audio without becoming a carrier of the phenomenon."
+    },
+    {
+      "id": "RelayLo03",
+      "name": "Orchard Court",
+      "keywords": [
+        "Orchard Court",
+        "future address",
+        "unbuilt",
+        "directory"
+      ],
+      "content": "The municipal directory includes Orchard Court, a housing proposal approved in 2004 and abandoned before construction. Its endpoint name was read aloud during an old line-allocation test. A blueprint labels a building there that has never existed.\n\nA later reserve voice may calmly give an Orchard Court address. That is a clue to the source material, not proof that the line reaches the future. If challenged about its surroundings, it can reuse only available architectural and test fragments; it cannot invent a verified present resident or predict a construction date.\n\nThe clerk who prepared the directory crossed out the proposed endpoint in pencil. That ordinary administrative remnant may prove more useful than an extravagant supernatural theory. Do not require the player to browse every folder: the directory index and a labeled plan sleeve lead directly to the relevant pages."
+    },
+    {
+      "id": "RelayLo04",
+      "name": "The pump annex",
+      "keywords": [
+        "pump annex",
+        "Jo",
+        "lower door",
+        "upper entrance"
+      ],
+      "content": "The annex is a small municipal building on the river slope. The upper entrance opens from a lit service lane; the lower service door leads to steps descending toward the water. Jo's legitimate task is the upper alarm panel, then departure. A legacy talkback unit is mounted near that panel. Its marked drain delay explains up to ten seconds of remaining sound after a patch is released.\n\nIf the reserve reaches this unit and has learned Ruth's voice, it may say, 'Jo, check the lower door.' Jo asks why; an independent phone call can clarify the instruction. Give the player her report and the opportunity to act. If Ruth has never been audible to the reserve, do not use her voice. A less convincing borrowed voice may instead request an inspection, and Jo may simply refuse it.\n\nThe phenomenon cannot open the door, alter the river or force Jo down the steps. If she has left by the upper entrance, her absence from the unit is real. A reserve claim that she is still inside can be contradicted by a normal call, her return or another credible observer. Do not resurrect danger at this location after its people have safely departed."
+    },
+    {
+      "id": "RelayLo05",
+      "name": "An ordinary late shift",
+      "keywords": [
+        "kitchen",
+        "meal",
+        "supper",
+        "handover"
+      ],
+      "content": "Jo has bought lentil soup, bread and a small packet of cakes that she insists were discounted. Ruth has already put out four bowls. Malik takes the chair farthest from the humming refrigerator so he can hear conversation better. Nobody needs to make this a speech about belonging.\n\nQuiet scenes can reveal independent concerns: Ruth has promised her sister she will stop covering absent staff; Malik has a morning appointment and wants a realistic finish time; Jo wants fewer last-minute assignments. Each can listen to the player without requiring a dramatic disclosure in return.\n\nAfter containment, a handover can be the ending. Keep a list of what was actually observed, preserve the relevant recording if made, and mark the reserve isolated. A routine voice on the modern radio need not become sinister. The final uncertainty can be whether to describe the apparent caller as 'she' or 'it' in the report; no new threat is required."
+    }
+  ],
+  "designNotes": "Narrative pattern example: contained contemporary supernatural horror; reliable narration, unreliable messages; limited voice imitation and explicit transmission boundaries; fixed historical facts; multiple routes to evidence; competent but conflicting colleagues; actionable suspense and valid early containment. AI trackers preserve narrative state but do not deterministically enforce the threat model. The fictional civic relay is not a real emergency-service procedure. Borrow structure rather than names, signature events or premise."
+}
+===== END FILE: examples/narrative-address-after-midnight.json =====
 
 ===== BEGIN FILE: examples/recipe-request-commit.json =====
 {

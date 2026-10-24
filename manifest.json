@@ -1,11 +1,11 @@
 {
   "algorithm": "sha256",
-  "generatedAt": "2026-10-24T04:06:42+00:00",
+  "generatedAt": "2026-10-24T05:48:20+00:00",
   "files": [
     {
       "path": "Authoring-Prompt.md",
-      "bytes": 20686,
-      "sha256": "dab5cee19748c0a96ecfabbf176d304506cf669c5a45dbfc1e5db24d35456baf"
+      "bytes": 20991,
+      "sha256": "313c58a90bf1298f059fa2f71267923190fc3f923e2feb7b50f6c959cfa33cad"
     },
     {
       "path": "LICENSE",
@@ -24,13 +24,13 @@
     },
     {
       "path": "chat/IW-Authoring-Guide.txt",
-      "bytes": 196395,
-      "sha256": "a254428007eb90e082a029e171e1be046e2fb800697c0eb57c9ca303f2eb3691"
+      "bytes": 198887,
+      "sha256": "9358dc07354f66a0bc22adf24185bc32a118d9324f0d64ff8baa85fad530b60a"
     },
     {
       "path": "chat/IW-Examples.txt",
-      "bytes": 159352,
-      "sha256": "6c279fc1f2c06e0d4927dce079e913157da465843be562441ddcbb742d5a357d"
+      "bytes": 260274,
+      "sha256": "6dde8489c460ac05fea8718abe4bb1a23efb1f46589ede4472472f59cce05983"
     },
     {
       "path": "chat/IW-Sample-Library.txt",
@@ -44,18 +44,18 @@
     },
     {
       "path": "chat/README.md",
-      "bytes": 1434,
-      "sha256": "1042d8730f091ca87e1286fb45f000a2b42d7a94e2daf762b88d4e219dd89342"
+      "bytes": 1520,
+      "sha256": "6769ea34e5e15342d47fa85bece9b9b96bb00a0db3cd6b66f70396ed75c4ef0d"
     },
     {
       "path": "chat/index.html",
-      "bytes": 200503,
-      "sha256": "64e9d511ae43b0005ade4daf6ef58d33c8afb8ee9f1b152df729084eb84d0f82"
+      "bytes": 203000,
+      "sha256": "aa955cf0e1f0c3b7674aee11018af3e5bca58fa8832d6129271a07be620d3973"
     },
     {
       "path": "chat/sources.json",
-      "bytes": 2357,
-      "sha256": "26e6dc162969af1dc893b1d4be0a8354aa7e46193c772777ee73500a42d5015a"
+      "bytes": 2461,
+      "sha256": "d2a22b0782c7a8b67b1fd87d955288e4f87aa86bc7f90522e5dc8b63937b7de4"
     },
     {
       "path": "checker/index.html",
@@ -69,8 +69,8 @@
     },
     {
       "path": "examples/README.md",
-      "bytes": 5267,
-      "sha256": "ee0f2f87720a6bba487ca6c3b9d11b22fd37dfac1489b9f304f25a11ae342a97"
+      "bytes": 5800,
+      "sha256": "30212477a1de9e4b917187a390a9c8b80c7e93bb7f942dfd5d71753c4a54292a"
     },
     {
       "path": "examples/character-starting-values.json",
@@ -229,13 +229,23 @@
     },
     {
       "path": "examples/index.json",
-      "bytes": 17817,
-      "sha256": "2dbca18854ba7b37d8253f768641e8014730eb828f6d7bad8e4ac96556edf084"
+      "bytes": 18749,
+      "sha256": "d853ca7f08a09962dea64a8c74bbf912e2556b9ead5ec116d51cee6980e6b7b6"
     },
     {
       "path": "examples/logic-groups.json",
       "bytes": 7245,
       "sha256": "6608f0218fe24d191a2583203832d6fd54165310d4a8b7c5313439c9ee49b69d"
+    },
+    {
+      "path": "examples/narrative-address-after-midnight.json",
+      "bytes": 46077,
+      "sha256": "18c47cc814da6f4187befb698544f0d460746eac87875f4381f723030e2f04c5"
+    },
+    {
+      "path": "examples/narrative-listening-road.json",
+      "bytes": 54281,
+      "sha256": "95acfeea63a5f3ffad9f52529a7bed85c34f46b0ee3dbcf259ab7cde76e56da1"
     },
     {
       "path": "examples/narrative-seven-nights.json",
@@ -349,8 +359,8 @@
     },
     {
       "path": "index.html",
-      "bytes": 22172,
-      "sha256": "7901621f4017728f260c3a37c852e6a4c3a7fd8db271fcffd28372447a935e2a"
+      "bytes": 22477,
+      "sha256": "623f3565eec90b7b0dfa9afaa2ef248381485d8290012dd15d8079f9d1f18d65"
     },
     {
       "path": "library/Integration.md",
@@ -384,8 +394,8 @@
     },
     {
       "path": "reference/Craft.md",
-      "bytes": 12780,
-      "sha256": "984f910fc6ce845fe4390fb5c0472605a767bc5d7c20f05b2ec5206662b0d10e"
+      "bytes": 14967,
+      "sha256": "2a9db28f5e7607198cdebbb489304f4d8536e497a2c6bffa32dae8393a75f238"
     },
     {
       "path": "reference/Current-AI-Profiles.json",
@@ -494,13 +504,13 @@
     },
     {
       "path": "tools/Validation-Report.json",
-      "bytes": 7657,
-      "sha256": "f5003ca53dec4b00dc82bf275e8cb8bb883aa0e7c3a8decdb2fbb82502ce74c0"
+      "bytes": 7865,
+      "sha256": "c92cb4391291bc11e7c6000604f13a2c782d1c757b4a01d30a80401732c8d312"
     },
     {
       "path": "tools/build_distribution.py",
-      "bytes": 11882,
-      "sha256": "955d46ff8d1c0fb6a60270ba3888b02bb61f936633bb88a1420ad41a491fa142"
+      "bytes": 12299,
+      "sha256": "7a7cf9f38194e8f98ab87503e5718ff2c231479c11a589926c69b713a6f2ec52"
     },
     {
       "path": "tools/check_package.py",

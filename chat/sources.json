@@ -23,13 +23,15 @@
       "reference/Default-Evaluation.txt",
       "reference/Current-AI-Profiles.json"
     ],
-    "sha256": "a254428007eb90e082a029e171e1be046e2fb800697c0eb57c9ca303f2eb3691"
+    "sha256": "9358dc07354f66a0bc22adf24185bc32a118d9324f0d64ff8baa85fad530b60a"
   },
   "IW-Examples.txt": {
     "sourceFiles": [
       "examples/Payloads.md",
       "examples/index.json",
       "examples/narrative-vendemmia.json",
+      "examples/narrative-listening-road.json",
+      "examples/narrative-address-after-midnight.json",
       "examples/recipe-request-commit.json",
       "examples/recipe-completion-award.json",
       "examples/recipe-candidate-acceptance.json",
@@ -44,7 +46,7 @@
       "examples/showcase-glass-ledger.json",
       "examples/character-starting-values.json"
     ],
-    "sha256": "6c279fc1f2c06e0d4927dce079e913157da465843be562441ddcbb742d5a357d"
+    "sha256": "6dde8489c460ac05fea8718abe4bb1a23efb1f46589ede4472472f59cce05983"
   },
   "IW-Sample-Library.txt": {
     "sourceFiles": [

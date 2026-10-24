@@ -155,6 +155,14 @@
         "unverified-expression": 2
       }
     },
+    "examples\\narrative-address-after-midnight.json": {
+      "errors": 0,
+      "warnings": {}
+    },
+    "examples\\narrative-listening-road.json": {
+      "errors": 0,
+      "warnings": {}
+    },
     "examples\\narrative-seven-nights.json": {
       "errors": 0,
       "warnings": {}
