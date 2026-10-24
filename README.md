@@ -24,11 +24,11 @@ Send AI a link and your idea, get a completely built IW world back! It selects s
 
 **Edit**
 
-> EDIT attached world. Change [specific behavior]. Preserve everything else, including existing IDs. If you can execute code, apply changes programmatically and compare the exports. Return the full JSON, relevant changed IDs/paths and a short verification plan.
+> EDIT attached world. Change [specific behavior]. Preserve everything else, including existing IDs. If you can execute code, apply changes programmatically and compare the exports. Return the full JSON, relevant changed Names and fields (IDs only if requested) and a short verification plan.
 
 **Review**
 
-> REVIEW attached world. Prioritize import problems, broken references, timing/state errors, unused or conflicting instructions and unnecessary complexity. Give findings with IDs/paths, impact and suggested fixes. Do not modify it yet.
+> REVIEW attached world. Prioritize import problems, broken references, timing/state errors, unused or conflicting instructions and unnecessary complexity. Give findings with Names, relevant fields, impact and suggested fixes; IDs only if requested. Do not modify it yet.
 
 **Debug**
 
@@ -81,7 +81,7 @@ The unaffiliated [Script Library world](https://infiniteworlds.app/shared/Dxb2ko
 
 ## Import and export
 
-Create or open a world in the IW editor. Enable Show optional feature, expand Misc advanced features (optional), and enable Show raw JSON. Copy the full box to export. Importing replaces the whole world definition: keep an export of content you want to retain, replace the entire box, remove any blank line after the final closing brace, click Import JSON to world, and save. Do not paste Markdown fences.
+Create or open a world in the IW editor. Enable Show optional feature, expand Misc advanced features (optional), and enable Show raw JSON. After finishing editor changes, click Refresh raw JSON and copy the full box to export. Importing replaces the whole world definition: keep an export of content you want to retain, replace the entire box, remove any blank line after the final closing brace, click Import JSON to world, acknowledge the success dialog, and wait for the editor to rebuild. Import can persist before a separate Save action. Reopen the raw panel and refresh only after rebuilding if you need to re-export. Do not paste Markdown fences.
 
 Starting play creates a separate live copy. Editing the base does not update existing playthroughs. Save as new world preserves live-world edits for future games. Player/Other Character edits do not affect an existing playthrough, and fired effects are not rewritten retroactively. Image changes can need save/reload before export reflects them.
 
@@ -96,3 +96,9 @@ python tools/validate_iw_export.py WORLD.json --json
 ```
 
 Install jsonschema for full schema checks (`python -m pip install jsonschema`). Without it, the validator reports reduced coverage and still performs guarded reference/static checks. To review an edit, add `--diff ORIGINAL.json`. The tool never executes IW or PawScript; consult [the tool usage guide](tools/Usage.md) for diagnostics and limitations. Maintainer package checks are separate from the normal user workflow.
+
+## Current behavior and editor help
+
+Use the [editor/UI reference](reference/Editor-UI.md) for workflows and terminology, the [trigger capability catalog](reference/Trigger-Catalog.md) to discover operations, and [consolidated behavior](reference/Verified-Behavior.md) for current results. The [roadmap](reference/Roadmap.md) separates completed research, unresolved boundaries and engineering backlog.
+
+Local [engineering tools](reference/Engineering-Tools.md) provide guarded state patterns, literal-Scenario plot compilation and browser capture/export support. See the [roadmap](reference/Roadmap.md) for delivery scopes and remaining environment limitations.
