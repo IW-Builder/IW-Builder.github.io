@@ -1,11 +1,11 @@
 {
   "algorithm": "sha256",
-  "generatedAt": "2026-10-24T03:59:07+00:00",
+  "generatedAt": "2026-10-24T04:06:42+00:00",
   "files": [
     {
       "path": "Authoring-Prompt.md",
-      "bytes": 20705,
-      "sha256": "b662d246a95da3df9045892b0fa876b15d5be92ca2899ad6e6ab7535a9a59506"
+      "bytes": 20686,
+      "sha256": "dab5cee19748c0a96ecfabbf176d304506cf669c5a45dbfc1e5db24d35456baf"
     },
     {
       "path": "LICENSE",
@@ -24,8 +24,8 @@
     },
     {
       "path": "chat/IW-Authoring-Guide.txt",
-      "bytes": 196414,
-      "sha256": "fc78ea23a9e360fc6083884450f3369e240ce1d1fb3f1df452753b515741e679"
+      "bytes": 196395,
+      "sha256": "a254428007eb90e082a029e171e1be046e2fb800697c0eb57c9ca303f2eb3691"
     },
     {
       "path": "chat/IW-Examples.txt",
@@ -44,18 +44,18 @@
     },
     {
       "path": "chat/README.md",
-      "bytes": 1300,
-      "sha256": "a89a7b38cb9c32264b318d80df388fbd1bceb406a6f25d077ee7922c9ac8b4c0"
+      "bytes": 1434,
+      "sha256": "1042d8730f091ca87e1286fb45f000a2b42d7a94e2daf762b88d4e219dd89342"
     },
     {
       "path": "chat/index.html",
-      "bytes": 517,
-      "sha256": "aa3ed311b18f4c0a602493b4a6fa20209bbaa27b2a58e311f4324dc9bde62c78"
+      "bytes": 200503,
+      "sha256": "64e9d511ae43b0005ade4daf6ef58d33c8afb8ee9f1b152df729084eb84d0f82"
     },
     {
       "path": "chat/sources.json",
       "bytes": 2357,
-      "sha256": "bbee8a14010e9ea7ce243c6d5ee4e1296413c8725811fbd06ff75664438cfc63"
+      "sha256": "26e6dc162969af1dc893b1d4be0a8354aa7e46193c772777ee73500a42d5015a"
     },
     {
       "path": "checker/index.html",
@@ -349,8 +349,8 @@
     },
     {
       "path": "index.html",
-      "bytes": 22190,
-      "sha256": "a3ae0914573cd13dfa2c9e2e766fd5f7cd523055bb022c40b64d515c2fd9570f"
+      "bytes": 22172,
+      "sha256": "7901621f4017728f260c3a37c852e6a4c3a7fd8db271fcffd28372447a935e2a"
     },
     {
       "path": "library/Integration.md",
@@ -499,8 +499,8 @@
     },
     {
       "path": "tools/build_distribution.py",
-      "bytes": 11243,
-      "sha256": "48606b5a9f590795f3af18480f02a02cac01250a475396097bddbc88510bfd5f"
+      "bytes": 11882,
+      "sha256": "955d46ff8d1c0fb6a60270ba3888b02bb61f936633bb88a1420ad41a491fa142"
     },
     {
       "path": "tools/check_package.py",

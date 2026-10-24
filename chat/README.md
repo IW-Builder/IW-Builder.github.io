@@ -2,7 +2,9 @@
 
 These text files let you use IW Builder with an AI that accepts attachments, even if it cannot browse the website or open a ZIP.
 
-Start by uploading [IW-Authoring-Guide.txt](IW-Authoring-Guide.txt) and telling the AI what you want to make. You can describe an idea, attach a world you want changed, or ask how something works. Let it ask for the other files when it needs them.
+For web retrieval, [open the complete authoring guide directly](https://iw-builder.github.io/chat/); no directory browsing is needed.
+
+For attachments, start by uploading [IW-Authoring-Guide.txt](IW-Authoring-Guide.txt) and telling the AI what you want to make. You can describe an idea, attach a world you want changed, or ask how something works. Let it ask for the other files when it needs them.
 
 | File | What's inside |
 | --- | --- |

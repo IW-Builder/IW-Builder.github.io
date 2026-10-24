@@ -203,6 +203,27 @@ def build_chat():
         source_manifest[name] = {'sourceFiles': paths,
                                 'sha256': hashlib.sha256(text.encode('utf-8')).hexdigest()}
     write('chat/sources.json', json.dumps(source_manifest, indent=2) + '\n')
+    guide = read('chat/IW-Authoring-Guide.txt')
+    page = """<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>IW Builder Authoring Guide</title>
+  <style>body { max-width: 960px; margin: 40px auto; padding: 0 24px; font: 16px/1.6 system-ui, sans-serif; } pre { white-space: pre-wrap; overflow-wrap: anywhere; font: inherit; }</style>
+</head>
+<body>
+  <h1>IW Builder Authoring Guide</h1>
+  <p>Start here. This page includes the prompt, template and core references. Retrieve companion editions only when needed:
+    <a href="IW-Examples.txt">Examples</a>,
+    <a href="IW-Sample-Library.txt">Sample Library</a>,
+    <a href="IW-Tools.txt">Tools</a>.</p>
+  <main><pre>__GUIDE_CONTENT__</pre></main>
+</body>
+</html>
+"""
+    write('chat/index.html', page.replace('__GUIDE_CONTENT__', html.escape(guide)))
+
 
 def manifest_paths():
     # Explicit publication scope excludes samples, Git internals, caches and archives.

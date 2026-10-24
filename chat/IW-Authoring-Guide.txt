@@ -26,7 +26,7 @@ Teach IW or PawScript = Consult mode. Establish programming familiarity if uncle
 
 ## 2\. Load only what the task needs
 
-README files are browsing guides for people, not required authoring references. Use the technical files below. Design conversations in `samples/` are optional, project-specific material; load them only when requested or directly relevant, never as authoritative platform documentation.
+Start with the supplied document; skip README/index pages, duplicate editions, unrelated references and routine manifest retrieval. Fetch only missing material needed for the task. Design conversations in `samples/` are optional examples, not platform documentation.
 
 The template or current export is required for construction. Files below are selected by feature, not all loaded automatically. Compatibility and the shared evidence legend live in reference/Evidence.md.
 
