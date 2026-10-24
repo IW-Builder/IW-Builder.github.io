@@ -1,6 +1,6 @@
 # IW-Builder roadmap
 
-Updated 2026-10-23 for kit 1.4.0. This public roadmap describes delivered capabilities and useful future work. It is not a promise of platform coverage or a release schedule.
+Updated 2026-10-24 for kit 1.4.0. This public roadmap describes delivered capabilities and useful future work. It is not a promise of platform coverage or a release schedule.
 
 ## Available now
 
@@ -8,7 +8,7 @@ Updated 2026-10-23 for kit 1.4.0. This public roadmap describes delivered capabi
 - **Validation and import diagnostics:** native export compatibility checks, named reference diagnostics, conservative static advisories, and read-only source/import comparison.
 - **Story tools:** source-preserving extraction with reviewed boundaries, explicit branch identity, conflict rejection and integrity manifests.
 - **Browser harness:** dedicated-browser connection, rendered-page capture, refresh-verified editor export, backups and offline integrity inspection. Authenticated capture/export is verified; automatic gameplay and server persistence are not implied.
-- **Reusable examples:** completion and award guards, candidate acceptance, archive/reactivation, cached randomness, consumed timers and choice-domain checks. Exact compositions are structurally checked patterns, not individually certified gameplay.
+- **Reusable examples:** completion and award guards, candidate acceptance, archive/reactivation, cached randomness, consumed timers and choice-domain checks. Native startup payload examples also cover background, first action and Other Character Add/Modify/Delete, with explicit runtime limits. Exact compositions are structurally checked patterns, not individually certified gameplay.
 - **Plot compiler:** literal-Scenario prerequisite graphs with dependency ordering, guarded awards and structural reachability. Connectivity does not prove narrative satisfiability.
 - **Distribution:** browser checker, individual references, combined text editions and a hashed downloadable package built from shared sources.
 

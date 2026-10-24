@@ -469,6 +469,129 @@ Guide subsequent narration. Full world: [effect-effectTellAIWhatToDo.json](effec
 }
 ```
 
+## Change background (effectChangeBackground)
+
+Native payload verified. Start-only background replacement is runtime-observed; ordinary and Start+Mid modes are not equivalent. This adapted example has structural validation, not a separate live-playthrough certification. Full world: [effect-effectChangeBackground.json](effect-effectChangeBackground.json).
+
+```json
+{
+  "id": "NativeEffect01",
+  "type": "effectChangeBackground",
+  "data": "You are visiting the guild office after a storm. A fallen oak blocks its courtyard gate, and the clerk is arranging a repair crew."
+}
+```
+
+No tracker dependencies. Runs at startup.
+
+## Change first action (effectChangeFirstAction)
+
+Native editor payload and startup picker availability verified. Ordinary use does not rewrite the opening; successful startup replacement is not separately certified here. This is a payload example, not a guarantee of narration or timing behavior. Full world: [effect-effectChangeFirstAction.json](effect-effectChangeFirstAction.json).
+
+```json
+{
+  "id": "NativeEffect01",
+  "type": "effectChangeFirstAction",
+  "data": "I ask the guild clerk whether anyone needs help clearing the courtyard gate."
+}
+```
+
+No tracker dependencies. Runs at startup.
+
+## Add Other Character (effectChangeOtherCharacters)
+
+Native editor payload verified; runtime character-record mutation unresolved. Startup picker availability is documented. Trigger firing, narration and the live-design NPC list do not establish that the live character record was added, modified or deleted. This adapted world is structurally validated only. Full world: [effect-effectChangeOtherCharacters-add.json](effect-effectChangeOtherCharacters-add.json).
+
+```json
+{
+  "type": "effectChangeOtherCharacters",
+  "data": {
+    "action": "add",
+    "character": null,
+    "npc": {
+      "id": "GuildPorter01",
+      "name": "Tavin",
+      "detail": "Tavin checks each crate against the delivery ledger and asks the clerk about missing entries.",
+      "one_liner": "Tavin is the guild porter, responsible for incoming deliveries.",
+      "appearance": "An adult man with a canvas apron and a weathered cap.",
+      "location": "Guild storeroom",
+      "secret_info": "",
+      "names": [
+        "guild porter"
+      ],
+      "img_appearance": "",
+      "img_clothing": ""
+    }
+  },
+  "id": "NativeEffect01"
+}
+```
+
+For Add, character is null and npc contains a new character record with its own ID.
+
+## Modify Other Character (effectChangeOtherCharacters)
+
+Native editor payload verified; runtime character-record mutation unresolved. Startup picker availability is documented. Trigger firing, narration and the live-design NPC list do not establish that the live character record was added, modified or deleted. This adapted world is structurally validated only. Full world: [effect-effectChangeOtherCharacters-modify.json](effect-effectChangeOtherCharacters-modify.json).
+
+```json
+{
+  "type": "effectChangeOtherCharacters",
+  "data": {
+    "action": "modify",
+    "character": "Mara",
+    "npc": {
+      "id": "GuildClerk01",
+      "name": "Mara",
+      "detail": "Mara now coordinates repair crews and supplies. She prioritizes clearing the courtyard gate before accepting routine appointments.",
+      "one_liner": "Mara is the acting guild quartermaster, organizing storm repairs.",
+      "appearance": "A middle-aged woman with cropped black hair and ink-stained fingers.",
+      "location": "Guild office",
+      "secret_info": "",
+      "names": [
+        "guild clerk"
+      ],
+      "img_appearance": "",
+      "img_clothing": "",
+      "positionInList": 0
+    }
+  },
+  "id": "NativeEffect01"
+}
+```
+
+character targets the existing Other Character Name (Mara), not its ID. Preserve the full npc record, including the existing ID, as in the native export; do not reduce Delete to a name-only payload or assume Modify is a sparse patch.
+
+## Delete Other Character (effectChangeOtherCharacters)
+
+Native editor payload verified; runtime character-record mutation unresolved. Startup picker availability is documented. Trigger firing, narration and the live-design NPC list do not establish that the live character record was added, modified or deleted. This adapted world is structurally validated only. Full world: [effect-effectChangeOtherCharacters-delete.json](effect-effectChangeOtherCharacters-delete.json).
+
+```json
+{
+  "type": "effectChangeOtherCharacters",
+  "data": {
+    "action": "delete",
+    "character": "Mara",
+    "npc": {
+      "id": "GuildClerk01",
+      "name": "Mara",
+      "detail": "Mara handles appointments at the guild office. She asks visitors for a clear account of their needs.",
+      "one_liner": "Mara is the practical guild clerk.",
+      "appearance": "A middle-aged woman with cropped black hair and ink-stained fingers.",
+      "location": "Guild office",
+      "secret_info": "",
+      "names": [
+        "guild clerk"
+      ],
+      "img_appearance": "",
+      "img_clothing": "",
+      "positionInList": 0
+    }
+  },
+  "id": "NativeEffect01"
+}
+```
+
+character targets the existing Other Character Name (Mara), not its ID. Preserve the full npc record, including the existing ID, as in the native export; do not reduce Delete to a name-only payload or assume Modify is a sparse patch.
+
 ---
 
 END OF DOCUMENT: examples/Payloads.md

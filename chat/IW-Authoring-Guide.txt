@@ -329,6 +329,8 @@ Start of game, Or mid-game, repeat eligibility and advanced logic are trigger se
 | Change other characters | `effectChangeOtherCharacters` | Editor-recognized Add/Modify/Delete Character. Startup picker availability documented; authoritative runtime mutation unresolved. Represented structurally in the schema. |
 | Ends game | `effectEndsGame` | End ordinary play; data true allows optional continuation, false does not. |
 
+Native startup payload examples: [background](../examples/effect-effectChangeBackground.json), [first action](../examples/effect-effectChangeFirstAction.json), and Other Character [Add](../examples/effect-effectChangeOtherCharacters-add.json), [Modify](../examples/effect-effectChangeOtherCharacters-modify.json), [Delete](../examples/effect-effectChangeOtherCharacters-delete.json). Their verification limits are stated in each example; the [payload cookbook](../examples/Payloads.md) includes the complete effect nodes.
+
 ## Changing automatic updating
 
 **Modify tracked item details** can turn automatic updating on or off. Set `overrideAutoUpdate: true` and the desired `autoUpdate` value. Equivalent override flags select changes to Name, description, visibility and update instructions. Changing a field without its matching override does not apply it. This changes future update behavior; it does not undo an earlier write in the current turn. Visibility restrictions still matter. With `overrideVisibility: true`, the observed visibility values are everyone, player_only, ai_only, hidden, ai_only_boring and hidden_boring. They survive editor import; live effects apply the expected player-visible/hidden grouping. This does not establish complete AI prompt inclusion.
@@ -564,7 +566,7 @@ END OF DOCUMENT: reference/Verified-Behavior.md
 ===== BEGIN FILE: reference/Roadmap.md =====
 # IW-Builder roadmap
 
-Updated 2026-10-23 for kit 1.4.0. This public roadmap describes delivered capabilities and useful future work. It is not a promise of platform coverage or a release schedule.
+Updated 2026-10-24 for kit 1.4.0. This public roadmap describes delivered capabilities and useful future work. It is not a promise of platform coverage or a release schedule.
 
 ## Available now
 
@@ -572,7 +574,7 @@ Updated 2026-10-23 for kit 1.4.0. This public roadmap describes delivered capabi
 - **Validation and import diagnostics:** native export compatibility checks, named reference diagnostics, conservative static advisories, and read-only source/import comparison.
 - **Story tools:** source-preserving extraction with reviewed boundaries, explicit branch identity, conflict rejection and integrity manifests.
 - **Browser harness:** dedicated-browser connection, rendered-page capture, refresh-verified editor export, backups and offline integrity inspection. Authenticated capture/export is verified; automatic gameplay and server persistence are not implied.
-- **Reusable examples:** completion and award guards, candidate acceptance, archive/reactivation, cached randomness, consumed timers and choice-domain checks. Exact compositions are structurally checked patterns, not individually certified gameplay.
+- **Reusable examples:** completion and award guards, candidate acceptance, archive/reactivation, cached randomness, consumed timers and choice-domain checks. Native startup payload examples also cover background, first action and Other Character Add/Modify/Delete, with explicit runtime limits. Exact compositions are structurally checked patterns, not individually certified gameplay.
 - **Plot compiler:** literal-Scenario prerequisite graphs with dependency ordering, guarded awards and structural reachability. Connectivity does not prove narrative satisfiability.
 - **Distribution:** browser checker, individual references, combined text editions and a hashed downloadable package built from shared sources.
 

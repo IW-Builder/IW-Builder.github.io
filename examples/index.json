@@ -383,5 +383,40 @@
     "evidence": "PATTERN",
     "structuralValidation": "Checked by tools/check_package.py; see its report.",
     "runtimeScope": "Structurally validated; no live playthrough performed. AI-managed narrative rules and memory are not deterministic enforcement."
+  },
+  {
+    "file": "effect-effectChangeBackground.json",
+    "purpose": "Change background native startup payload",
+    "evidence": "DOCUMENTED",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Native payload verified. Start-only background replacement is runtime-observed; ordinary and Start+Mid modes are not equivalent. This adapted example has structural validation, not a separate live-playthrough certification."
+  },
+  {
+    "file": "effect-effectChangeFirstAction.json",
+    "purpose": "Change first action native startup payload",
+    "evidence": "DOCUMENTED",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Native editor payload and startup picker availability verified. Ordinary use does not rewrite the opening; successful startup replacement is not separately certified here. This is a payload example, not a guarantee of narration or timing behavior."
+  },
+  {
+    "file": "effect-effectChangeOtherCharacters-add.json",
+    "purpose": "Add Other Character native startup payload",
+    "evidence": "DOCUMENTED",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Native editor payload verified; runtime character-record mutation unresolved. Startup picker availability is documented. Trigger firing, narration and the live-design NPC list do not establish that the live character record was added, modified or deleted. This adapted world is structurally validated only."
+  },
+  {
+    "file": "effect-effectChangeOtherCharacters-modify.json",
+    "purpose": "Modify Other Character native startup payload",
+    "evidence": "DOCUMENTED",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Native editor payload verified; runtime character-record mutation unresolved. Startup picker availability is documented. Trigger firing, narration and the live-design NPC list do not establish that the live character record was added, modified or deleted. This adapted world is structurally validated only."
+  },
+  {
+    "file": "effect-effectChangeOtherCharacters-delete.json",
+    "purpose": "Delete Other Character native startup payload",
+    "evidence": "DOCUMENTED",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Native editor payload verified; runtime character-record mutation unresolved. Startup picker availability is documented. Trigger firing, narration and the live-design NPC list do not establish that the live character record was added, modified or deleted. This adapted world is structurally validated only."
   }
 ]

@@ -1,6 +1,6 @@
 {
   "algorithm": "sha256",
-  "generatedAt": "2026-10-24T06:23:27+00:00",
+  "generatedAt": "2026-10-24T06:42:37+00:00",
   "files": [
     {
       "path": "Authoring-Prompt.md",
@@ -24,13 +24,13 @@
     },
     {
       "path": "chat/IW-Authoring-Guide.txt",
-      "bytes": 200917,
-      "sha256": "7730549d09fa761600be87d6eacaabcedd90148a081798ebf468edfc2a9045f9"
+      "bytes": 201577,
+      "sha256": "d272adcc0d0c3dd40fed16317a761e71fde4239e44a06bb548251de370188947"
     },
     {
       "path": "chat/IW-Examples.txt",
-      "bytes": 233095,
-      "sha256": "1fcce4fc49cee04aaf694f0eede9b8181f2238def8fae45d9107cf712bcf0f12"
+      "bytes": 241053,
+      "sha256": "15244704b8c16fe2a9b3221b52d50fec0084386ed35ff09f288151ddfe39177f"
     },
     {
       "path": "chat/IW-Sample-Library.txt",
@@ -49,13 +49,13 @@
     },
     {
       "path": "chat/index.html",
-      "bytes": 205025,
-      "sha256": "e9f372de80945bcc524db9ed712e511d7b7367b3bfe12ef70ac58f183b43041a"
+      "bytes": 205685,
+      "sha256": "b79f806c02525efabc56130516b256b11657b2fad72cf7a465eaa9f52de0ee70"
     },
     {
       "path": "chat/sources.json",
       "bytes": 2461,
-      "sha256": "b18924b21d4266e185ca295a19f1bc095b3ba96aa85e983caea0be38f10c1f77"
+      "sha256": "6d5572947d8d8bb221383f3aaad4e56886bfc927c8163f66c03cb9f5fc0a0079"
     },
     {
       "path": "checker/index.html",
@@ -64,13 +64,13 @@
     },
     {
       "path": "examples/Payloads.md",
-      "bytes": 12513,
-      "sha256": "cb058792e5aa7c64de5ded53ff8705e959dc8677a08c21274968c7124ff9b5e6"
+      "bytes": 17770,
+      "sha256": "c351b72186989233285582fee0a7fa8066249a342204f9cacd0e3f4e523eb39b"
     },
     {
       "path": "examples/README.md",
-      "bytes": 5800,
-      "sha256": "30212477a1de9e4b917187a390a9c8b80c7e93bb7f942dfd5d71753c4a54292a"
+      "bytes": 6561,
+      "sha256": "c3ea9e896a61f973b489cdbdff8a84ac662d40927caae3f62666f3a57a57711b"
     },
     {
       "path": "examples/character-starting-values.json",
@@ -123,6 +123,11 @@
       "sha256": "4899233ae481739c8abb2fe78f97f56dcfebfb0564e056eee243291c43642689"
     },
     {
+      "path": "examples/effect-effectChangeBackground.json",
+      "bytes": 4494,
+      "sha256": "4b083b8c8600a97ea4971de4ce08ee242bcc5f4b78eab845f612dbe91a2fc39c"
+    },
+    {
       "path": "examples/effect-effectChangeDefeatCondition.json",
       "bytes": 6878,
       "sha256": "73300164972f872347b36d7957b2d0e93a955f1b798757622394ce59b6d61a51"
@@ -133,6 +138,11 @@
       "sha256": "8f366addf8e708e21952d93b028b2d02f1a613ef3630d64e2c75d50fd2904a16"
     },
     {
+      "path": "examples/effect-effectChangeFirstAction.json",
+      "bytes": 4493,
+      "sha256": "bb0b1c719c69d711f5633f94a89badd88a30b5d57efcf589d103e4e5e40bb7df"
+    },
+    {
       "path": "examples/effect-effectChangeMainInstructions.json",
       "bytes": 6811,
       "sha256": "c4f57f56c48fb9d7608c43277fc036a94f58c965d65892359b4c97f81ea9dfe3"
@@ -141,6 +151,21 @@
       "path": "examples/effect-effectChangeObjective.json",
       "bytes": 6701,
       "sha256": "3d1ac19e387334a4affff67a83d24b8145d644dc6bf1eb22687c8844d62580cf"
+    },
+    {
+      "path": "examples/effect-effectChangeOtherCharacters-add.json",
+      "bytes": 5250,
+      "sha256": "bf24bf1b8c238cc0ae6fe9efac25546921c5cf021f7241726a41dd5a3618b905"
+    },
+    {
+      "path": "examples/effect-effectChangeOtherCharacters-delete.json",
+      "bytes": 5284,
+      "sha256": "8738c189f2d4d5050b7ca9e77534d1981a3d7420073f9c6094035f966296faac"
+    },
+    {
+      "path": "examples/effect-effectChangeOtherCharacters-modify.json",
+      "bytes": 5345,
+      "sha256": "9fe58081679d34dd8d13641276c2f1e842f320f4fb6547fb98eb78f608e0c5e0"
     },
     {
       "path": "examples/effect-effectChangePCDescription.json",
@@ -229,8 +254,8 @@
     },
     {
       "path": "examples/index.json",
-      "bytes": 18749,
-      "sha256": "d853ca7f08a09962dea64a8c74bbf912e2556b9ead5ec116d51cee6980e6b7b6"
+      "bytes": 21485,
+      "sha256": "2e7a51bf5f10aace7829386d727ce080955cb623d6526a0ce49e3f31d320d1aa"
     },
     {
       "path": "examples/logic-groups.json",
@@ -454,8 +479,8 @@
     },
     {
       "path": "reference/Roadmap.md",
-      "bytes": 2883,
-      "sha256": "4c2aaf7973e3dd023d0fc7975be0daf4b4624b7c9da5e585b76f71b15fbec389"
+      "bytes": 3020,
+      "sha256": "00ab6ad200e9ad095aa56b48285f8ab846078d48316294281622197ee224aed8"
     },
     {
       "path": "reference/Schema.md",
@@ -474,8 +499,8 @@
     },
     {
       "path": "reference/Trigger-Catalog.md",
-      "bytes": 5901,
-      "sha256": "9edd93153ef10e7cfe51a9b0f8eb68c581cec3308a87e3bd867a388e61e2ce5e"
+      "bytes": 6424,
+      "sha256": "4fd8094bc37a1cf7eaa9668c89f7188c7fe682da89526a34b74ab3f4bd7c1f8a"
     },
     {
       "path": "reference/Triggers.md",
@@ -504,8 +529,8 @@
     },
     {
       "path": "tools/Validation-Report.json",
-      "bytes": 7865,
-      "sha256": "c92cb4391291bc11e7c6000604f13a2c782d1c757b4a01d30a80401732c8d312"
+      "bytes": 8568,
+      "sha256": "92ca4b520186901a53107a26ed7579d680337480e8656a7a63e34ff7c46272e0"
     },
     {
       "path": "tools/build_distribution.py",

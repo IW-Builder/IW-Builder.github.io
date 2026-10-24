@@ -1,0 +1,140 @@
+{
+  "favorite": false,
+  "title": "Native effect: Add Other Character",
+  "description": "A compact startup payload example. Native editor payload verified; runtime character-record mutation unresolved. Startup picker availability is documented. Trigger firing, narration and the live-design NPC list do not establish that the live character record was added, modified or deleted. This adapted world is structurally validated only.",
+  "background": "You are visiting a quiet guild office before its morning appointments.",
+  "instructions": "Keep the scene grounded in the supplied setting and characters. Do not invent mechanical rewards.",
+  "authorStyle": "Clear, concise prose.",
+  "recommendedAIModel": null,
+  "firstInput": "I enter the guild office and look around.",
+  "objective": "Learn what work is available at the guild.",
+  "imageModel": "manticore",
+  "imageStyle": "photo_1",
+  "illustrationStyleNonCharacterLowPriority": "",
+  "illustrationStyleNonCharacterHighPriority": "",
+  "illustrationStyleCharacterLowPriority": "",
+  "illustrationStyleCharacterHighPriority": "",
+  "imageStyleCharacterPre": "",
+  "imageStyleCharacterPost": "",
+  "imageStyleNonCharacterPre": "",
+  "imageStyleNonCharacterPost": "",
+  "mature": false,
+  "nsfw": false,
+  "contentWarnings": "",
+  "enableAISpecificInstructionBlocks": false,
+  "previewImage": "",
+  "fullSizePreviewImage": "",
+  "previewImageOptions": [],
+  "fullSizePreviewImageOptions": [],
+  "currentPreviewImageIndex": -1,
+  "imagePromptDetails": {
+    "illustrClothes": "",
+    "illustrSetting": "",
+    "illustrSubject": "",
+    "illustrAppearance": "",
+    "illustrIsCharacter": false,
+    "illustrExpressionPosition": ""
+  },
+  "permissionsOnceShared": {
+    "sharing": true,
+    "editing": true
+  },
+  "allowChangeCharacterName": false,
+  "allowChangeCharacterDescription": false,
+  "allowChangeCharacterSkills": false,
+  "allowChangeCharacterItemValues": false,
+  "allowChangeCharacterPortrait": false,
+  "allowChangeCharacterNewPortrait": false,
+  "conditions": [],
+  "schemaVersion": 2.4,
+  "skills": [
+    "Generic skill"
+  ],
+  "possibleCharacters": [
+    {
+      "name": "Visitor",
+      "description": "An adult traveler seeking work.",
+      "portrait": "",
+      "portraitPromptDetails": {
+        "illustrAppearance": "",
+        "illustrClothes": "",
+        "illustrExpressionPosition": "",
+        "illustrSetting": ""
+      },
+      "fullSizePortrait": "",
+      "portraitOptions": [],
+      "fullSizePortraitOptions": [],
+      "currentPortraitIndex": -1,
+      "characterId": "c7038c97-b50f-57be-9e33-9ce2914d80ef",
+      "skills": {
+        "Generic skill": 3
+      },
+      "initialTrackedItemValues": []
+    }
+  ],
+  "triggerEvents": [
+    {
+      "id": "NativeTrigger01",
+      "name": "Add Other Character at startup",
+      "triggerConditions": [],
+      "triggerEffects": [
+        {
+          "type": "effectChangeOtherCharacters",
+          "data": {
+            "action": "add",
+            "character": null,
+            "npc": {
+              "id": "GuildPorter01",
+              "name": "Tavin",
+              "detail": "Tavin checks each crate against the delivery ledger and asks the clerk about missing entries.",
+              "one_liner": "Tavin is the guild porter, responsible for incoming deliveries.",
+              "appearance": "An adult man with a canvas apron and a weathered cap.",
+              "location": "Guild storeroom",
+              "secret_info": "",
+              "names": [
+                "guild porter"
+              ],
+              "img_appearance": "",
+              "img_clothing": ""
+            }
+          },
+          "id": "NativeEffect01"
+        }
+      ],
+      "triggerOnStartOfGame": true,
+      "triggerMidGame": false,
+      "canTriggerMoreThanOnce": false,
+      "advancedLogic": false
+    }
+  ],
+  "victoryCondition": null,
+  "defeatCondition": null,
+  "trackedItems": [],
+  "hideSkillSystem": true,
+  "autoAdvanceVersion": false,
+  "version": "1.0",
+  "charSelectText": "",
+  "descriptionRequest": "",
+  "evaluationRequest": "",
+  "summaryRequest": "",
+  "instructionBlocks": [],
+  "NPCs": [
+    {
+      "id": "GuildClerk01",
+      "name": "Mara",
+      "detail": "Mara handles appointments at the guild office. She asks visitors for a clear account of their needs.",
+      "one_liner": "Mara is the practical guild clerk.",
+      "appearance": "A middle-aged woman with cropped black hair and ink-stained fingers.",
+      "location": "Guild office",
+      "secret_info": "",
+      "names": [
+        "guild clerk"
+      ],
+      "img_appearance": "",
+      "img_clothing": "",
+      "positionInList": 0
+    }
+  ],
+  "loreBookEntries": [],
+  "designNotes": "Native editor payload verified; runtime character-record mutation unresolved. Startup picker availability is documented. Trigger firing, narration and the live-design NPC list do not establish that the live character record was added, modified or deleted. This adapted world is structurally validated only. Uses Start-only with an empty condition list; do not transfer this arrangement to an ordinary trigger."
+}

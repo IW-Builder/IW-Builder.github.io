@@ -23,7 +23,7 @@
       "reference/Default-Evaluation.txt",
       "reference/Current-AI-Profiles.json"
     ],
-    "sha256": "7730549d09fa761600be87d6eacaabcedd90148a081798ebf468edfc2a9045f9"
+    "sha256": "d272adcc0d0c3dd40fed16317a761e71fde4239e44a06bb548251de370188947"
   },
   "IW-Examples.txt": {
     "sourceFiles": [
@@ -46,7 +46,7 @@
       "examples/showcase-glass-ledger.json",
       "examples/character-starting-values.json"
     ],
-    "sha256": "1fcce4fc49cee04aaf694f0eede9b8181f2238def8fae45d9107cf712bcf0f12"
+    "sha256": "15244704b8c16fe2a9b3221b52d50fec0084386ed35ff09f288151ddfe39177f"
   },
   "IW-Sample-Library.txt": {
     "sourceFiles": [

@@ -48,6 +48,8 @@ Start of game, Or mid-game, repeat eligibility and advanced logic are trigger se
 | Change other characters | `effectChangeOtherCharacters` | Editor-recognized Add/Modify/Delete Character. Startup picker availability documented; authoritative runtime mutation unresolved. Represented structurally in the schema. |
 | Ends game | `effectEndsGame` | End ordinary play; data true allows optional continuation, false does not. |
 
+Native startup payload examples: [background](../examples/effect-effectChangeBackground.json), [first action](../examples/effect-effectChangeFirstAction.json), and Other Character [Add](../examples/effect-effectChangeOtherCharacters-add.json), [Modify](../examples/effect-effectChangeOtherCharacters-modify.json), [Delete](../examples/effect-effectChangeOtherCharacters-delete.json). Their verification limits are stated in each example; the [payload cookbook](../examples/Payloads.md) includes the complete effect nodes.
+
 ## Changing automatic updating
 
 **Modify tracked item details** can turn automatic updating on or off. Set `overrideAutoUpdate: true` and the desired `autoUpdate` value. Equivalent override flags select changes to Name, description, visibility and update instructions. Changing a field without its matching override does not apply it. This changes future update behavior; it does not undo an earlier write in the current turn. Visibility restrictions still matter. With `overrideVisibility: true`, the observed visibility values are everyone, player_only, ai_only, hidden, ai_only_boring and hidden_boring. They survive editor import; live effects apply the expected player-visible/hidden grouping. This does not establish complete AI prompt inclusion.

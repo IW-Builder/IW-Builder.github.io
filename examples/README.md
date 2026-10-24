@@ -70,6 +70,16 @@ These examples are useful when you know what you want to happen but are unsure w
 - [Run a script](effect-effectRunScript.json)
 - [End the game](effect-effectEndsGame.json)
 
+### Startup payloads with explicit verification limits
+
+- [Change background](effect-effectChangeBackground.json)
+- [Change first action](effect-effectChangeFirstAction.json)
+- [Add Other Character](effect-effectChangeOtherCharacters-add.json)
+- [Modify Other Character](effect-effectChangeOtherCharacters-modify.json)
+- [Delete Other Character](effect-effectChangeOtherCharacters-delete.json)
+
+These examples preserve native payload shapes. Background replacement is observed in Start-only mode; first-action timing is not fully qualified. Other Character Add/Modify/Delete payloads are editor-verified, but live record mutation remains unresolved. An unchanged live-design export or a fired-trigger badge is not proof of effect failure or success.
+
 ## Look under the hood
 
 The [feature recipes](../reference/Recipes.md) explain how these approaches work and when to use them. [Payloads.md](Payloads.md) contains smaller technical snippets, and [index.json](index.json) records the scope and testing status of the examples.

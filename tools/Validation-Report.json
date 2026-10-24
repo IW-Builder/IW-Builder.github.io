@@ -61,11 +61,19 @@
       "errors": 0,
       "warnings": {}
     },
+    "examples\\effect-effectChangeBackground.json": {
+      "errors": 0,
+      "warnings": {}
+    },
     "examples\\effect-effectChangeDefeatCondition.json": {
       "errors": 0,
       "warnings": {}
     },
     "examples\\effect-effectChangeDescriptionInstructions.json": {
+      "errors": 0,
+      "warnings": {}
+    },
+    "examples\\effect-effectChangeFirstAction.json": {
       "errors": 0,
       "warnings": {}
     },
@@ -76,6 +84,24 @@
     "examples\\effect-effectChangeObjective.json": {
       "errors": 0,
       "warnings": {}
+    },
+    "examples\\effect-effectChangeOtherCharacters-add.json": {
+      "errors": 0,
+      "warnings": {
+        "runtime-unverified-effect": 1
+      }
+    },
+    "examples\\effect-effectChangeOtherCharacters-delete.json": {
+      "errors": 0,
+      "warnings": {
+        "runtime-unverified-effect": 1
+      }
+    },
+    "examples\\effect-effectChangeOtherCharacters-modify.json": {
+      "errors": 0,
+      "warnings": {
+        "runtime-unverified-effect": 1
+      }
     },
     "examples\\effect-effectChangePCDescription.json": {
       "errors": 0,
