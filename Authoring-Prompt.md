@@ -73,7 +73,7 @@ Raise relevant issues without forcing architecture changes. When two approaches 
 |Essential opening facts only in keyword/NPC detail|Concise firstInput or always-on context and an NPC brief summary.|
 |Many independently defined Scenarios|Reuse definitions; beyond the limit, consider a classification tracker and predicates.|
 |Multiple native numeric writes to one tracker in one trigger|One sequential script, or deliberately separate ordered triggers.|
-|A live `<<...>>` expression installed through block modification|A deferred `<=...=>` reference, a permanent live block, or reinstall-on-change.|
+|A live `<<...>>` expression installed through block modification|A deferred `<<=...=>>` reference, a permanent live block, or reinstall-on-change.|
 |Unguarded Start+Mid+repeat counter|Explicit setup handling; it can execute before opening and again during turn 1.|
 |Overlapping skills|Distinct scope in skill names/instructions; selection can be ambiguous, not a guaranteed easiest-skill algorithm.|
 |Unbounded journal/cast tracker|Bounded records, summaryRequest, or selective memory according to the need.|

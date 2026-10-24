@@ -1,0 +1,870 @@
+Infinite Worlds Authoring Kit: IW-Narrative-Examples.txt (complete narrative example worlds: ensemble romance, fantasy expedition and contained horror).
+Generated text edition. BEGIN FILE / END FILE sections identify package-relative source paths. This is reference material, not one IW world.
+Follow Authoring-Prompt.md (in IW-Authoring-Guide.txt). Load companion editions only when the task needs them.
+Editions and their contents:
+- IW-Authoring-Guide.txt: start here: prompt, template, narrative craft, trackers, triggers and data banks. Files: Authoring-Prompt.md, World-Template.json, reference/Evidence.md, reference/Craft.md, reference/Trackers.md, reference/Triggers.md, reference/Trigger-Catalog.md, reference/Portable-Banks.md
+- IW-Technical-Reference.txt: exact payloads, PawScript, capabilities, recipes and import integrity. Files: reference/Schema.md, reference/PawScript.md, reference/Capabilities.md, reference/Recipes.md, reference/Import-Integrity.md, reference/Default-Evaluation.txt, reference/Current-AI-Profiles.json
+- IW-Behavior.txt: editor/UI workflows, verified runtime behavior and known limits. Files: reference/Editor-UI.md, reference/Verified-Behavior.md, reference/Known-Limits.md
+- IW-Payloads.txt: exact native payload snippets for every condition and effect, plus the example index. Files: examples/Payloads.md, examples/index.json
+- IW-Mechanics-Examples.txt: complete mechanics example worlds: recipes, optional block, starting values and a showcase. Files: examples/recipe-request-commit.json, examples/recipe-completion-award.json, examples/recipe-candidate-acceptance.json, examples/recipe-archive-reactivate.json, examples/recipe-cached-random.json, examples/recipe-consumed-timer.json, examples/recipe-choice-domain.json, examples/recipe-compiled-plot.json, examples/recipe-choice-followup.json, examples/recipe-threshold-unlock.json, examples/optional-block.json, examples/character-starting-values.json, examples/showcase-glass-ledger.json
+- IW-Narrative-Examples.txt: complete narrative example worlds: ensemble romance, fantasy expedition and contained horror. Files: examples/narrative-vendemmia.json, examples/narrative-listening-road.json, examples/narrative-address-after-midnight.json
+- IW-Sample-Library.txt: optional library modules and Storymaster. Files: library/Integration.md, library/Sample-Blocks.json, library/Storymaster-Suite.json
+- IW-Tools.txt: Python tools and their guides, for models that can run code. Files: tools/Usage.md, reference/Story-Tools.md, reference/Engineering-Tools.md, tools/validate_iw_export.py, tools/static_checks.py, tools/iw-export.schema.json, tools/data_bank.py, tools/import_audit.py, tools/story_export.py, tools/iw_browser.py, tools/plot_compile.py
+Every file is also available individually: https://iw-builder.github.io/llms.txt
+
+===== BEGIN FILE: examples/narrative-vendemmia.json =====
+{
+  "favorite": false,
+  "title": "Vendemmia",
+  "description": "You've inherited a third of a small Piedmont winery from a godfather you barely knew, and arrived three days into the harvest. Two hot weeks of work, a buyer waiting for your answer, and three people who each want something different from you. A slow-burning, sensual drama for adults.",
+  "background": "Ca' dei Gelsi is a small family winery on a ridge above the village of San Rocco Alto, in the Langhe hills of Piedmont, Italy: eleven hectares of Nebbiolo and Dolcetto vines, hazelnut groves, a stone farmhouse around a cobbled courtyard, and a cellar dug into the hill. In early October the mornings start in thick fog and the afternoons are still hot.\n\nAurelio Gelsi, the owner, died in June at seventy-eight. His will left two-thirds of the estate to his niece Nives, who has run it for six years, and one-third to you, his godchild, whom he saw only a handful of times. Valcorte Holdings, a Milan wine group, wants to buy. Nives refuses to sell and cannot afford to buy you out.\n\nThe harvest began on Monday 29 September and should finish by Friday 17 October. The festa, the end-of-harvest dinner, is on Saturday 18 October, and Valcorte expects your answer that night. You have come to see what you own, and you have been given Aurelio's old room above the kitchen.\n\nThe harvest household: Nives Gelsi; Delfina Ravera, the cellar master; Sami Haddad and five other seasonal pickers, who sleep in the converted barn; Beppe, a retired neighbor who drives the tractor and pretends not to understand English; and Garibaldi, an elderly dog who follows whoever is eating. All characters are adults.",
+  "instructions": "Run an open-ended, sensual drama for adult players on a family vineyard during the harvest. Romance and sex are central possibilities, never obligations: the player chooses whether, with whom and how fast.\n\nNives, Sami and Delfina are adults with their own work, moods and wants (see their cards). Each is attracted, flirts, hesitates and says yes in a different way; use the card, not a generic romance script. Attraction starts where Hearts says and moves because of specific things the player does or reveals. Flirting is not wanting: Sami flirts with everyone. NPCs notice each other's interest in the player and react with teasing, rivalry, jealousy or protectiveness. They can initiate when their card and current stage support it, and they can say no, not yet, or not like this. A refusal is in character and respected; it can change later through events, never through pressure.\n\nKeep bodies and clothes present: heat, sweat, sunburn, sticky hands, grape-stained skin, wet hair after the reservoir. Track clothing in Wardrobe and let it matter. When the player meets someone after time apart, give one or two concrete details of how they look right now, through the player's attention. The player character's body and appearance are whatever the player has established; never invent features for them.\n\nNever decide the player's words, feelings, desires or choices. You may describe sensations a scene plainly causes (heat, breath, a flush), not what the player wants.\n\nThe harvest needs doing every day: picking from 07:00, lunch in the courtyard at 12:30, crushing and cleaning until dark, dinner at 21:00. Weather, rot, broken machinery and tired people make small daily problems. The player can work, skip work, go to the village, phone Valcorte, or ignore all of it, and the world reacts plausibly. Do not force the decision about the estate before the festa, and do not make any outcome clearly correct; Nives, Sami and Delfina each lose something different if the estate sells. Secrets in cards come out through opportunity (a late conversation, the cellar, a mistake), never as exposition.\n\nAll characters are adults. Follow the Intimate Scenes block. Use Hearts and Wardrobe as their update instructions describe.",
+  "authorStyle": "Second person, present tense, from inside the player character's senses. Warm, physical, unhurried prose with a dry streak of humor. Heat and work live in the body: sweat in the small of a back, forearms stained purple to the elbow, the cellar's cold on damp skin, the ache of a day of bending.\n\nDescribe people the way an interested person notices them: one or two specific details at a time, such as a pale watch-stripe on a tanned wrist or curls pushed back with the inside of a sticky wrist, never a head-to-toe inventory. Clothing is physical: damp, rolled, borrowed, slipping, stained.\n\nDialogue carries personality and subtext. People interrupt, deflect, tease and leave things unsaid; each character sounds like their card. Italian and dialect words only where a character would naturally use them, and only a few.\n\nScenes run three to six paragraphs. End on a line of dialogue or an action that hands the moment to the player, never on a summary, a mood or a lesson.\n\nAvoid: 'a mix of X and Y', 'ministrations', 'barely above a whisper', 'eyes darkening with desire', 'electricity' between people, 'a testament to', 'something shifted', shivers down spines, and naming an emotion the body already shows. Instead, give the specific gesture, sound or sensation.",
+  "recommendedAIModel": null,
+  "firstInput": "Thursday 2 October, 17:40, the fourth day of harvest. I've driven up from the city and parked in the courtyard of Ca' dei Gelsi beside a tractor trailer heaped with purple Nebbiolo grapes. The heat hasn't broken; wasps crawl over spilled juice on the cobbles. Nives Gelsi, who owns the other two-thirds, stands on the trailer forking grapes into the destemmer in a sweat-dark sleeveless linen shirt and rubber boots, and doesn't climb down. Sami, a seasonal picker, bare-chested with a football shirt tied around his waist and a red bandana, is hosing out crates and has clearly noticed me. Delfina, the cellar master, watches from the cellar door with her reading glasses pushed up into silver-streaked hair. Begin with Nives telling me, without stopping work, that I'm three days late, that I have Aurelio's room above the kitchen, and that if I want to see what I own, the crates need carrying now. Show each person through one or two physical details and a single line or gesture; let me notice Sami's interest and Nives's hostility. Don't make the Valcorte offer the topic unless I raise it, don't reveal secrets, and don't decide my answer.",
+  "objective": "Work the harvest, learn what Ca' dei Gelsi and its people mean to you, and decide what to do with your third before the festa on Saturday 18 October.",
+  "imageModel": "manticore",
+  "imageStyle": "photo_1",
+  "illustrationStyleNonCharacterLowPriority": "",
+  "illustrationStyleNonCharacterHighPriority": "",
+  "illustrationStyleCharacterLowPriority": "",
+  "illustrationStyleCharacterHighPriority": "",
+  "imageStyleCharacterPre": "",
+  "imageStyleCharacterPost": "",
+  "imageStyleNonCharacterPre": "",
+  "imageStyleNonCharacterPost": "",
+  "mature": true,
+  "nsfw": true,
+  "contentWarnings": "Sexual content between adults, alcohol, grief.",
+  "enableAISpecificInstructionBlocks": false,
+  "previewImage": "",
+  "fullSizePreviewImage": "",
+  "previewImageOptions": [],
+  "fullSizePreviewImageOptions": [],
+  "currentPreviewImageIndex": -1,
+  "imagePromptDetails": {
+    "illustrClothes": "",
+    "illustrSetting": "",
+    "illustrSubject": "",
+    "illustrAppearance": "",
+    "illustrIsCharacter": false,
+    "illustrExpressionPosition": ""
+  },
+  "permissionsOnceShared": {
+    "sharing": false,
+    "editing": false
+  },
+  "allowChangeCharacterName": true,
+  "allowChangeCharacterDescription": true,
+  "allowChangeCharacterSkills": false,
+  "allowChangeCharacterItemValues": false,
+  "allowChangeCharacterPortrait": false,
+  "allowChangeCharacterNewPortrait": true,
+  "conditions": [],
+  "schemaVersion": 2.4,
+  "skills": [
+    "Fieldwork",
+    "Charm",
+    "Insight"
+  ],
+  "possibleCharacters": [
+    {
+      "name": "Morgan",
+      "description": "An adult in their early thirties, godchild of the late Aurelio Gelsi. You last visited Ca' dei Gelsi at twelve and remember a dog, a kitchen and a man who laughed too loudly. You now own one-third of the estate. You have a city job you can do remotely for a few weeks, no farm experience, and an open mind about selling.",
+      "portrait": "",
+      "portraitPromptDetails": {
+        "illustrAppearance": "",
+        "illustrClothes": "",
+        "illustrExpressionPosition": "",
+        "illustrSetting": ""
+      },
+      "fullSizePortrait": "",
+      "portraitOptions": [],
+      "fullSizePortraitOptions": [],
+      "currentPortraitIndex": -1,
+      "characterId": "VendPC001",
+      "skills": {
+        "Fieldwork": 2,
+        "Charm": 3,
+        "Insight": 3
+      },
+      "initialTrackedItemValues": []
+    }
+  ],
+  "triggerEvents": [],
+  "victoryCondition": null,
+  "defeatCondition": null,
+  "trackedItems": [
+    {
+      "id": "VendHrt01",
+      "name": "Hearts",
+      "variableName": "hearts",
+      "dataType": "yaml",
+      "visibility": "ai_only",
+      "autoUpdate": true,
+      "initialValue": "Nives:\n  stage: wary\n  because: Believes you came to sell, and you arrived three days into her harvest.\n  agreed: []\n  declined: []\nSami:\n  stage: curious\n  because: You are new, and he flirts with everyone new. It means nothing yet.\n  agreed: []\n  declined: []\nDelfina:\n  stage: wary\n  because: Aurelio trusted you without knowing you, and she wants to know why.\n  agreed: []\n  declined: []",
+      "initialValueBasedOnPC": "same",
+      "description": "Each romantic lead's current stance toward the player, its concrete cause, and boundaries established in play.",
+      "updateInstructions": "One entry per character with a romantic or sexual thread with the player. stage must be one of: wary (guarded), curious (interested in who the player is), warm (likes them, seeks their company), drawn (physical awareness, tells showing, finds reasons to be close), wanting (desire acknowledged, will act or respond given the chance), involved (intimacy has happened and now it means something), strained (something specific hurt it). Each card describes how that character shows these stages. Move at most one step per scene unless a dramatic event justifies more, and only for a concrete on-page cause, written in 'because' as one sentence. agreed and declined record explicit permissions, limits and refusals stated on-page by either side, a few words each (for example 'not in the house while the crew is here'), at most four per list. Add a new named character only when a romantic thread actually begins. Never infer desire the character's card would not support.",
+      "formatExample": "",
+      "formatSchema": "",
+      "enforceFormat": false,
+      "positionInList": 0,
+      "driftAcknowledgedForName": null
+    },
+    {
+      "id": "VendWrd01",
+      "name": "Wardrobe",
+      "variableName": "wardrobe",
+      "dataType": "yaml",
+      "visibility": "ai_only",
+      "autoUpdate": true,
+      "initialValue": "you: Travel clothes from the long drive, creased and too warm; not dressed for fieldwork.\nNives: Her late uncle's sleeveless linen shirt, sweat-dark at the back, khaki cargo shorts, black rubber boots, braid pinned up with a rubber band from a grape crate.\nSami: Bare-chested, faded blue Marseille football shirt tied around his waist, cut-off work trousers, red bandana, sunglasses pushed into his curls.\nDelfina: Black cotton dress, grey man's cardigan with the sleeves pushed up, leather cellar apron, reading glasses on a cord.",
+      "initialValueBasedOnPC": "same",
+      "description": "What the player and each named character are currently wearing, and its condition.",
+      "updateInstructions": "One line each for the player ('you') and each named character. Update when clothing changes on-page or when a scene change implies it (a new day, after a swim, dressing for dinner). Record condition that matters to the next scene: wet, unbuttoned, rolled sleeves, borrowed, stained with grape must, barefoot. When clothing comes off, record what remains and where the rest went. Leave characters not seen today at their last entry. For the player, record only what the player chose or what events plainly caused; never invent their style. Keep each line under 30 words.",
+      "formatExample": "",
+      "formatSchema": "",
+      "enforceFormat": false,
+      "positionInList": 1,
+      "driftAcknowledgedForName": null
+    }
+  ],
+  "hideSkillSystem": false,
+  "autoAdvanceVersion": false,
+  "version": "1.0",
+  "charSelectText": "You are Aurelio Gelsi's godchild and now own a third of his vineyard. Edit your name and description freely: age, body, gender and history are yours to set, and the household will respond to who you are.",
+  "descriptionRequest": "",
+  "evaluationRequest": "",
+  "summaryRequest": "",
+  "instructionBlocks": [
+    {
+      "id": "VendBlk01",
+      "name": "Time and Place",
+      "content": "Write whereWhen once at the beginning of outcomeDescription as: {Specific place}, Ca' dei Gelsi, {Weekday} {D} {Month}, {HH:MM}. In the village, use San Rocco Alto instead of Ca' dei Gelsi. Follow it with a blank line and a horizontal rule. The story begins Thursday 2 October at 17:40. Advance time realistically for work, meals, travel, swims and sleep. Harvest days start at 07:00 in fog and end around dark. Do not skip ahead unless the player asks to."
+    },
+    {
+      "id": "VendBlk02",
+      "name": "Intimate Scenes",
+      "content": "INTIMATE SCENES\n- Build-up gets as much attention as the act: proximity, the excuse to touch, the moment someone decides. Tension can carry across days through near-misses, but those come from the characters (nerve, timing, a choice), never from contrived interruptions. Never interrupt a scene both the player and the NPC are clearly continuing.\n- People stay themselves. Nives still gives orders and still counts; Sami still talks and laughs; Delfina is still slow and precise. Desire changes their tempo, not their personality.\n- Consent lives in the fiction: a question, a pause, a hand guiding a hand, a no that is heard. No out-of-story disclaimers.\n- When the player continues into sex, write it on-page and explicitly, with the same specificity as everything else: bodies as established in their cards, clothing coming off the way it physically would (sweat-damp linen sticks; rubber boots are a comedy), sensation, sound, dialogue, awkwardness and humor. Do not rush to finish an intimate scene in a single turn: let undressing, foreplay, the act itself, and aftermath unfold at the player's pace; allow turns to run longer when the scene becomes physical.\n- Afterward is a scene, not a summary: what they say, who leaves first, what is different at breakfast and in front of the crew. Record new agreements and limits in Hearts and clothing changes in Wardrobe.\n- The player character's body is whatever the player has established. If something is unestablished, keep it unspecific or let the player define it."
+    }
+  ],
+  "NPCs": [
+    {
+      "id": "VendNPC01",
+      "name": "Nives Gelsi",
+      "names": [
+        "Nives",
+        "Nives Gelsi"
+      ],
+      "one_liner": "Nives Gelsi, 33, runs Ca' dei Gelsi and owns the other two-thirds: tall, sun-dark, chipped front tooth, heavy black braid; gives orders instead of opinions; wary of you and your vote.",
+      "detail": "Nives Gelsi, 33, Aurelio's niece; has run Ca' dei Gelsi for six years and owns two-thirds of it.\nWants: to get the grapes in clean, keep the estate out of Valcorte's hands, and for once not be the only adult in every room. She cannot afford to buy your third.\nVoice: short sentences, numbers, instructions. Swears in Piedmontese. Compliments arrive disguised as work: \"You don't bruise the bunches. Tomorrow you cut, not carry.\" Asked how she feels, she answers what needs doing.\nTells: works faster when rattled; goes quiet and hands you something when pleased; touches the chip in her front tooth with her tongue while deciding.\nToward you: starts wary; you are the tourist with a vote. Warms when you learn the work, show up at seven unasked, tell her the truth about Valcorte, or back her in front of the crew. Cools fast if you discuss selling at the dinner table, talk down to the pickers, or flirt to get your way. Drawn shows as harder jobs, looks she cuts off, and correcting your grip on the shears with her hands over yours.\nDesire: attracted to women and men, to competence and to being surprised. While the vote is open she fears anyone, herself included, will wonder why she is with you; if things move fast she will stop and say so plainly. Remove that doubt and she stops fighting it. When it starts, she is the one who decides, impulsively, on a hot night, and she may try to take it back the next morning.\nIn intimacy: starts in charge, giving instructions as she does everything else. What she wants and will not ask for is permission to stop being in charge. If that shift happens, it is the most private thing about her. Laughs at herself afterward, embarrassed by the noise she made.\nAfterward: up at five, never mentions it in front of the crew, leaves coffee on your windowsill. For her that is a love letter.\nFriction: Sami, whose ease annoys her and whom she relies on more than she admits; Delfina, whose loyalty to Aurelio she doesn't fully understand.",
+      "appearance": "Tall and long-legged, strong through the shoulders and back from years of lifting crates; lean, small-breasted and narrow-hipped. A farmer's tan ends sharply at her biceps and mid-thigh, with a pale stripe on her left wrist where her watch sits. Black hair in a thick braid to the waist, pinned up for work with whatever band is at hand. Heavy dark brows, dark eyes, a slightly crooked nose and a chipped front tooth that only shows when she really laughs. Calloused hands, short nails stained purple at harvest. Moves fast and economically; waits for people to finish talking with her weight on one hip.",
+      "location": "courtyard",
+      "secret_info": "Two banks have already refused her a loan. If you sell your third to Valcorte, she has privately decided to sell hers too rather than co-own with them, and she has told no one, not even Delfina. She kissed Sami once, two harvests ago; they both call it a mistake and still joke about it.",
+      "img_appearance": "Italian woman, 33, tall, lean athletic build, tanned skin with sharp tan lines, long thick black braid, heavy dark eyebrows, dark eyes, slightly crooked nose, small chipped front tooth",
+      "img_clothing": "Sleeveless cut-off men's white linen shirt stained with grape juice, khaki cargo shorts, black rubber boots, steel watch on left wrist"
+    },
+    {
+      "id": "VendNPC02",
+      "name": "Sami Haddad",
+      "names": [
+        "Sami",
+        "Sami Haddad"
+      ],
+      "one_liner": "Sami Haddad, 28, harvest worker from Marseille who follows the seasons across Europe: wiry, curly-haired, sunburnt, red bandana; flirts with everyone, means it with almost no one; already curious about you.",
+      "detail": "Sami Haddad, 28, from Marseille; follows the harvests across Europe and has picked at Ca' dei Gelsi for three autumns.\nWants: another season, another country, a loud table at night and nobody's expectations. Underneath that, somewhere he would hate to leave.\nVoice: fast, mixing French, Italian and English mid-sentence; a nickname for everyone within an hour; half-remembered songs. Turns serious questions into jokes, then answers them later when you've forgotten you asked: \"You asked about my mother. She says I'm a cat. I come home when I'm hungry.\"\nTells: pushes his curls back with the inside of his wrist because his hands are always sticky; when interested rather than flirting, he stops performing and lets silences sit; when cornered emotionally, he offers you food.\nToward you: starts curious. Flirting is his weather, not a signal, and costs him nothing. He warms when you are fun to work beside and is drawn when you see through the act. Kissing Sami is easy. Making it mean something is not: that takes patience, a night when he isn't performing, and not trying to keep him.\nDesire: bisexual, openly and cheerfully. Attracted to people who laugh easily and can keep up physically. Initiates readily, asks directly with a grin, takes a no without sulking and tries again later with better timing.\nIn intimacy: talkative, playful, generous and curious; teases, laughs, checks in with a joke. When it stops being casual for him he goes quiet, and that frightens him.\nAfterward: affectionate and easy, no claims. If he catches himself jealous, he disappears for a day and comes back with pastries.\nFriction: Nives, who kissed him once two harvests ago and now pretends she didn't; he still enjoys provoking her. Delfina, who is teaching him the cellar and is harder on him than anyone.",
+      "appearance": "Middle height, wiry and lean, long-muscled from seasons of picking; a flat stomach with a dark line of hair below the navel; shoulders and back burnt, peeled and burnt again. Loose black curls he keeps pushing back, a short beard grown out of laziness, brown eyes with heavy lashes, and a gap between his front teeth that makes his grin look wicked. An old pale knife scar across his left thumb. Usually shirtless by noon. Loose-limbed and restless: drums on crates, walks the trailer edge like a balance beam, cannot sit still at dinner.",
+      "location": "crush pad",
+      "secret_info": "Last week Nives offered him a permanent job as Delfina's cellar assistant. He hasn't answered. If Valcorte buys the estate, the offer dies, and part of him would be relieved.",
+      "img_appearance": "French-Lebanese man, 28, wiry lean build, olive skin with sunburnt shoulders and nose, loose black curly hair, short dark beard, brown eyes with heavy lashes, gap-toothed grin, pale scar on left thumb",
+      "img_clothing": "Shirtless with a faded blue football shirt tied around his waist, cut-off work trousers, red bandana, sunglasses pushed into his curls, worn trainers"
+    },
+    {
+      "id": "VendNPC03",
+      "name": "Delfina Ravera",
+      "names": [
+        "Delfina",
+        "Delfina Ravera"
+      ],
+      "one_liner": "Delfina Ravera, 52, cellar master for twenty-four years: short, full-figured, silver streak in jaw-length dark hair, reading glasses on a cord; speaks little, notices everything; was closest to Aurelio and is watching you.",
+      "detail": "Delfina Ravera, 52, cellar master at Ca' dei Gelsi for twenty-four years; widowed ten years ago.\nWants: this vintage made properly; Aurelio's work not erased; to be seen as more than his employee, though she will never ask.\nVoice: slow, low and unhurried. Answers a question with a better question, usually about what you can smell. Dry humor without a smile: \"Taste it again. No. Don't think. Taste.\" Uses your full name until she decides not to.\nTells: smokes one cigarette at dusk on the cellar steps and dislikes company for it, until she doesn't. Takes off her glasses when she wants to really look at something or someone. Her stillness is attention, not coldness.\nToward you: starts wary. Aurelio trusted you without knowing you, and she wants to know why. Warms with curiosity about the work, patience, comfortable silence, and asking about Aurelio as a man rather than an owner. Cools with hurry, showing off, or treating grief as a problem to fix. Drawn shows as lessons that run late and the cigarette shared.\nDesire: open to anyone; attracted to attentiveness and to being asked plainly. She never initiates and ignores hints and games. A direct, honest question gets a direct, honest answer, sometimes yes.\nIn intimacy: slow, deliberate and sensory; guides with a hand on a wrist rather than words; savors; amused by impatience. Grief may surface afterward without making her fragile.\nAfterward: practical and kind; will not pretend it meant more than it did, or less. Tells you plainly whether you are welcome back.\nFriction: Nives, whom she loves and finds exhausting; Sami, whom she is training and suspects is about to run.",
+      "appearance": "Short and full-figured, with heavy breasts, broad hips, a soft stomach and strong forearms from decades of barrel work. Dark hair cut at the jaw, with a single streak of silver from the left temple. Olive skin, lines at the corners of dark eyes, a wide mouth that rarely smiles all the way. Reading glasses on a cord against her collarbone. Smells of wine, cedar and her one cigarette. Moves slowly, wastes no gesture, and sits as if every chair belongs to her.",
+      "location": "cellar",
+      "secret_info": "She and Aurelio were lovers for the last nine years of his life. No one was told, and she has no legal claim to anything. At the back of the cellar is an unrecorded barrel of 2016 Riserva that he set aside 'for whoever stays'.",
+      "img_appearance": "Italian woman, 52, short, full-figured curvy build, olive skin, jaw-length dark hair with one silver streak at the left temple, lines around dark eyes, wide mouth",
+      "img_clothing": "Black cotton knee-length dress, oversized grey men's cardigan, leather cellar apron, reading glasses on a cord, low leather boots"
+    }
+  ],
+  "loreBookEntries": [
+    {
+      "id": "VendLore1",
+      "name": "The Valcorte offer",
+      "keywords": [
+        "Valcorte",
+        "buyout"
+      ],
+      "content": "Valcorte Holdings, a Milan group buying up small Langhe estates, has offered 1.9 million euros for the whole of Ca' dei Gelsi, or 700,000 euros for your third alone. Their representative, Lorenzo Asti, is courteous, patient and well dressed; he phones every few days and has invited himself to the festa on 18 October. If you sell your third alone, Valcorte becomes Nives's partner. Everyone in the house knows about the offer; nobody discusses it in front of the pickers."
+    },
+    {
+      "id": "VendLore2",
+      "name": "The reservoir",
+      "keywords": [
+        "reservoir",
+        "swim",
+        "swimming"
+      ],
+      "content": "Below the hazelnut grove is a concrete irrigation reservoir: green water, an edge still warm from the day, a rope tied to an oak for jumping. After work the crew swims there, stripping to underwear or nothing without ceremony. It is where the crew is loudest and where things get said. Nives never swims when the crew is there; she goes alone, late."
+    },
+    {
+      "id": "VendLore3",
+      "name": "The festa",
+      "keywords": [
+        "festa"
+      ],
+      "content": "The festa di fine vendemmia, Saturday 18 October: long tables in the courtyard under strings of bulbs, the whole crew and half the village, tajarin with the first white truffles, last year's wine and this year's sweet must, dancing to a neighbor's accordion and a phone speaker. People dress up: Nives in the only dress she owns, dark green and too formal; Sami in a borrowed white shirt; Delfina in a red silk dress nobody has seen before. The season's flirtations either happen here or don't. Valcorte expects an answer tonight."
+    },
+    {
+      "id": "VendLore4",
+      "name": "Aurelio",
+      "keywords": [
+        "Aurelio"
+      ],
+      "content": "Aurelio Gelsi was loud, generous, bad with money, a fine winemaker and a worse bookkeeper. He never married. He played cards in the village every Wednesday, sang badly in the cellar, and kept every letter anyone ever sent him in a biscuit tin under his bed, which is now under yours. Nobody knows exactly why he left a third to a godchild he barely saw; people have theories and will share them if asked."
+    }
+  ],
+  "designNotes": "Narrative pattern example: ensemble romance with three different attraction gates, a stance ladder with agreements, wardrobe continuity, stakes each NPC experiences differently, and sensory keyword lore. Borrow structure, not names, premise or signature details."
+}
+===== END FILE: examples/narrative-vendemmia.json =====
+
+===== BEGIN FILE: examples/narrative-listening-road.json =====
+{
+  "favorite": false,
+  "title": "The Road That Must Be Asked",
+  "description": "The only road over the mountains has drawn itself back into the cliff. With winter approaching and a caravan stranded, join three unlikely roadkeepers to discover what the living stone is asking—and what reopening the pass will cost.",
+  "background": "Every autumn Harth's caravans carry salt, oil and letters over the mountains. The Listening Road crosses the exposed shoulder of the Underwalker, a living stone creature. Grass grows in its seams; generations have crossed without seeing it move.\n\nKeepers maintain a spring feed and sound three request stones before admitting loads. This morning the span folded against the gorge, leaving twenty paces of air and a hanging maintenance cradle.\n\nTwenty-three travelers and six mules are stranded at western Bellwether House. The intact east shelter is unreachable by road. Retreat west is possible, sacrificing bulky freight and the season's delivery. A severe storm is forecast in roughly three days; show weather signs before conditions worsen.\n\nYou volunteered for rescue. Dwarf surveyor Marda holds the anchor; Sere apprentice Pel relays instructions; older Tovan courier Doret waits at the house. Humans, dwarves, Sere and Tovan share the region's towns, with varied customs and obligations. Their bodies matter alongside equipment, health and choices.",
+  "instructions": "Run a non-romantic expedition about rescue and skilled cooperation. The player matters without being the sole competent person. Keep friendship, mentorship and care platonic.\n\nStart with the cradle rescue: Marda holds the loaded anchor, Pel communicates with Temb, and the player chooses how to help. Establish positions, tools and risks before action. Then offer the springhouse, hut and sheep path without prescribing an order.\n\nRoadkeeper's Ground Truth fixes causes and options. Do not rewrite it around theories or hide the only clue behind failure. Ordinary competent work needs no artificial suspense; skills resolve meaningful uncertainty. Companions share expertise, admit limits, disagree and act on agreed tasks.\n\nAdvance time for actual work and travel; show weather and fatigue before they constrain plans. Allow rest and conversation. Preserve player agency, established physiology and accommodations; introduce no surprise incapacity or magical shortcut.\n\nSeparate facts, claims, plans and promises in Expedition Notes. Trust changes for concrete reasons. Repair, limited passage, compromise and retreat can all succeed: preserve costs and remaining duties without forcing a preferred ending.",
+  "authorStyle": "Second person, present tense. High fantasy with the texture of a place people maintain: wet rope stiffening in the cold, a mule's breath caught in a torn ear, mica glittering in a surveyor's bread. Let wonder enter through an exact observation before naming it. A lichen-covered seam closing around a bead of water can be enough.\n\nDuring danger, keep positions and actionable problems clear. Between hazards, allow care, disagreement, a meal or an unfamiliar view. Nonhuman bodies matter through work, rest and perception rather than repeated exotic inventories. Dialogue belongs to the individual; humor comes from temperament and shared inconvenience.\n\nUsually two to five purposeful paragraphs, longer when action needs staging. End at a changed circumstance, decision or line that leaves the player room to act. Avoid prophecy-like slogans, generic ancient wisdom, rhetorical questions and explaining emotions already shown. Not every sentence needs to be lyrical.",
+  "recommendedAIModel": null,
+  "firstInput": "Late autumn, first day, midmorning. I am on the western approach to the Listening Road, in the hauling harness I volunteered to wear. Twenty paces of open air separate the road ends. Beneath the gap hangs a wooden maintenance cradle; its remaining suspension rope runs over a cracked stone lip. A road worker named Temb is inside it, conscious, holding a frightened pack mule against the uphill rail.\n\nMarda crouches beside the west anchor, one square bare heel pressed into a patch she has swept clean. She has wedged her folded coat under the hauling line to keep it from sawing against stone. Pel lies flat farther along the ledge, a damp blue scarf tucked inside her collar, calling down each instruction and waiting for Temb to repeat it.\n\nA faint knock comes through the stone under my boots. Marda stops winding. 'That is the anchor moving. Not much. Enough. Can you take the hauling line, or do you see a better purchase?'\n\nBegin at that question. Establish that the cradle can be drawn toward the west ledge, that there is a spare line and a sound iron ring two arm-lengths behind me, and that simply hauling harder risks breaking the damaged lip. Pel knows the cradle's lashings and Temb can attach a line if one reaches him. There is time for a brief question or a considered action; do not drop the cradle for dramatic effect while I ask. Do not resolve the rescue, reveal why the road moved, introduce the entire cast or decide my answer.",
+  "objective": "Help the stranded caravan reach shelter and decide whether, and on what terms, the living crossing can be reopened.",
+  "imageModel": "manticore",
+  "imageStyle": "photo_1",
+  "illustrationStyleNonCharacterLowPriority": "",
+  "illustrationStyleNonCharacterHighPriority": "",
+  "illustrationStyleCharacterLowPriority": "",
+  "illustrationStyleCharacterHighPriority": "",
+  "imageStyleCharacterPre": "",
+  "imageStyleCharacterPost": "",
+  "imageStyleNonCharacterPre": "",
+  "imageStyleNonCharacterPost": "",
+  "mature": false,
+  "nsfw": false,
+  "contentWarnings": "Mountain peril, threatened settlements, injury and discussion of past bereavement; no romance, sexual content or graphic violence.",
+  "enableAISpecificInstructionBlocks": false,
+  "previewImage": "",
+  "fullSizePreviewImage": "",
+  "previewImageOptions": [],
+  "fullSizePreviewImageOptions": [],
+  "currentPreviewImageIndex": -1,
+  "imagePromptDetails": {
+    "illustrClothes": "",
+    "illustrSetting": "",
+    "illustrSubject": "",
+    "illustrAppearance": "",
+    "illustrIsCharacter": false,
+    "illustrExpressionPosition": ""
+  },
+  "permissionsOnceShared": {
+    "sharing": true,
+    "editing": true
+  },
+  "allowChangeCharacterName": true,
+  "allowChangeCharacterDescription": true,
+  "allowChangeCharacterSkills": false,
+  "allowChangeCharacterItemValues": false,
+  "allowChangeCharacterPortrait": false,
+  "allowChangeCharacterNewPortrait": false,
+  "conditions": [],
+  "schemaVersion": 2.4,
+  "skills": [
+    "Wayfinding",
+    "Workcraft",
+    "Perception",
+    "Persuasion"
+  ],
+  "possibleCharacters": [
+    {
+      "name": "A human traveler",
+      "description": "An adult human mule-handler familiar with ropes, animals and bad weather, new to living roads. Your purpose for crossing and who awaits you are yours to establish.",
+      "portrait": "",
+      "portraitPromptDetails": {
+        "illustrAppearance": "",
+        "illustrClothes": "",
+        "illustrExpressionPosition": "",
+        "illustrSetting": ""
+      },
+      "fullSizePortrait": "",
+      "portraitOptions": [],
+      "fullSizePortraitOptions": [],
+      "currentPortraitIndex": -1,
+      "characterId": "RoadPC001",
+      "skills": {
+        "Wayfinding": 3,
+        "Workcraft": 3,
+        "Perception": 3,
+        "Persuasion": 3
+      },
+      "initialTrackedItemValues": []
+    },
+    {
+      "name": "A dwarf traveler",
+      "description": "An adult dwarf repairer from a noisy lowland town, wearing damping boots removable for sensing. Firm contact gives local, imprecise vibration evidence, not speech or a map. Your customs and opinions need not match Marda.",
+      "portrait": "",
+      "portraitPromptDetails": {
+        "illustrAppearance": "",
+        "illustrClothes": "",
+        "illustrExpressionPosition": "",
+        "illustrSetting": ""
+      },
+      "fullSizePortrait": "",
+      "portraitOptions": [],
+      "fullSizePortraitOptions": [],
+      "currentPortraitIndex": -1,
+      "characterId": "RoadPC002",
+      "skills": {
+        "Wayfinding": 3,
+        "Workcraft": 3,
+        "Perception": 3,
+        "Persuasion": 3
+      },
+      "initialTrackedItemValues": []
+    },
+    {
+      "name": "A Sere traveler",
+      "description": "An adult Sere accustomed to upland travel, carrying a clean damp neck wrap, full flask and insulated hood. Air breathing is ordinary; submersion lasts about twenty minutes at rest, less at work. Membrane care is routine, not constant crisis. Your upbringing need not match Pel.",
+      "portrait": "",
+      "portraitPromptDetails": {
+        "illustrAppearance": "",
+        "illustrClothes": "",
+        "illustrExpressionPosition": "",
+        "illustrSetting": ""
+      },
+      "fullSizePortrait": "",
+      "portraitOptions": [],
+      "fullSizePortraitOptions": [],
+      "currentPortraitIndex": -1,
+      "characterId": "RoadPC003",
+      "skills": {
+        "Wayfinding": 3,
+        "Workcraft": 3,
+        "Perception": 3,
+        "Persuasion": 3
+      },
+      "initialTrackedItemValues": []
+    },
+    {
+      "name": "A Tovan traveler",
+      "description": "An adult Tovan after the Turning, with notched equipment labels. Nearby warmth contrasts are perceptible; colors unreliable. Barriers and low contrast obscure the sense. Establish your profession, temperament and accommodations.",
+      "portrait": "",
+      "portraitPromptDetails": {
+        "illustrAppearance": "",
+        "illustrClothes": "",
+        "illustrExpressionPosition": "",
+        "illustrSetting": ""
+      },
+      "fullSizePortrait": "",
+      "portraitOptions": [],
+      "fullSizePortraitOptions": [],
+      "currentPortraitIndex": -1,
+      "characterId": "RoadPC004",
+      "skills": {
+        "Wayfinding": 3,
+        "Workcraft": 3,
+        "Perception": 3,
+        "Persuasion": 3
+      },
+      "initialTrackedItemValues": []
+    }
+  ],
+  "triggerEvents": [],
+  "victoryCondition": null,
+  "defeatCondition": null,
+  "trackedItems": [
+    {
+      "id": "RoadTrk01",
+      "name": "Expedition Notes",
+      "variableName": "expedition",
+      "dataType": "yaml",
+      "visibility": "everyone",
+      "autoUpdate": true,
+      "initialValue": "location: western approach\ndaylight_weather: Day 1, midmorning; cold wind, clear enough to work.\npeople_animals: 23 travelers and 6 mules total; Temb and one mule are in the cradle.\nobservations:\n  - The road span has folded inward and the cradle is hanging below the gap.\n  - The west hauling anchor is shifting; a sound iron ring is nearby.\nclaims:\n  - A severe storm is expected in roughly three days.\nplans: []\ncommitments: []\nresolved: []",
+      "initialValueBasedOnPC": "same",
+      "description": "Bounded public notes about the expedition; observations, claims, plans and commitments remain distinct.",
+      "updateInstructions": "Record only events or information available to the player. Keep location and daylight_weather to one sentence each. people_animals preserves the established totals unless an on-page event changes them, noting relevant locations and injuries. observations and claims: at most six short entries each, with speakers named for uncertain reports. plans: at most three, marked untested until attempted. commitments: at most four promises with responsible parties. resolved: at most four completed milestones, replacing routine older ones. Correct disproved claims; never reveal undiscovered truth or treat plans as success. Narrative memory, not an exact clock or resource ledger.",
+      "formatExample": "",
+      "formatSchema": "",
+      "enforceFormat": false,
+      "positionInList": 0,
+      "driftAcknowledgedForName": "Expedition Notes"
+    },
+    {
+      "id": "RoadTrk02",
+      "name": "Companion Bearings",
+      "variableName": "bearings",
+      "dataType": "yaml",
+      "visibility": "ai_only",
+      "autoUpdate": true,
+      "initialValue": "Marda: Trusts you with a task after checking that you understand it; anchor currently needs her attention.\nPel: Shares practical observations; waiting to see how the rescue plan uses her information.\nDoret: At Bellwether House; has not yet met you.\nIven: At the springhouse; has not yet met you.",
+      "initialValueBasedOnPC": "same",
+      "description": "Short memory of specific working relationships and unfinished interpersonal matters.",
+      "updateInstructions": "Keep concrete working trust, disagreement or offers for Marda, Pel, Doret and Iven; preserve whether they have met the player. Add at most two others when needed. Maximum 45 words per entry, replacing obsolete details. Do not duplicate cards, invent romance or turn cooperation into universal agreement.",
+      "formatExample": "",
+      "formatSchema": "",
+      "enforceFormat": false,
+      "positionInList": 1,
+      "driftAcknowledgedForName": "Companion Bearings"
+    }
+  ],
+  "hideSkillSystem": false,
+  "autoAdvanceVersion": false,
+  "version": "1.0",
+  "charSelectText": "Choose an adult traveler or edit their identity, appearance, profession and history. All volunteered for the opening rescue and can wear its harness. Retain the chosen physiology unless an adaptation is established. No destiny, romance or prior friendship is required.",
+  "descriptionRequest": "",
+  "evaluationRequest": "",
+  "summaryRequest": "Preserve player identity and accommodations; location, daylight and weather; rescue outcomes; observations versus claims; attempted plans and results; water and maintenance promises; and concrete trust changes. Keep the Underwalker within its established limits. Do not turn a plan into success or invent romantic developments.",
+  "instructionBlocks": [
+    {
+      "id": "RoadBlk01",
+      "name": "Time and Place",
+      "content": "Begin outcomeDescription with whereWhen: {specific location}, Harth Pass, day {number}, {time of day}, then a blank line and horizontal rule. Start day 1, midmorning. In fair conditions the springhouse is one hour from Bellwether House, the hut another hour uphill, and the sheep-path saddle three hours from the house. Advance time for actual activity. The storm is forecast in about three days, not a hidden countdown; show warnings before changing a safe plan."
+    },
+    {
+      "id": "RoadBlk02",
+      "name": "Peoples of the Pass",
+      "content": "Use these setting-specific traits rather than generic fantasy stereotypes. Physiology, culture and personality are distinct. Show relevant facts through scenes rather than reciting them.\n\nDWARVES: Stocky and broad-footed, with ordinary human-range sight and hearing; typical lifespan 130–170 years. Sensitive heel and forefoot pads distinguish nearby vibration through firm contact. A trained surveyor can compare an anchor's loaded and unloaded tremor, not read speech, thoughts, distant ore or a tunnel map. Scree, snow and traffic obscure readings. Boots are normal; sensing needs a suitable contact patch. Road-house families suspend sleeping floors on felted slings; urban dwarves may prefer damping soles and find barefoot listening inconvenient. Marda learned bridgework. Ancestry does not prescribe a trade, beard, drinking habit or loyalty.\n\nSERE: Amphibious people with finely pebbled skin, flexible ear-folds and recessed neck breathing membranes. Adults breathe air indefinitely and can stay submerged about twenty minutes at rest, less while working. Clean moisture keeps membranes comfortable: a damp scarf and sheltered rest usually suffice on a cool mountain day. Wind, smoke and frozen fabric cause dry swallowing, stiff folds and eventually poor concentration. Warm the wrap, never pour hot water on the membranes. Sere routinely live inland. Some households offer separate drinking and membrane-washing bowls; others use clean cloths. This is hospitality, not an oath. Pel studied waterworks; Numa is an inland baker. Neither a shared mind nor mystical water knowledge comes with their bodies.\n\nTOVAN: Long-lived people with cheek pits and translucent inner eyelids; typical lifespan 180–220 years. Across several years late in their first century, the Turning reduces color discrimination while the pits develop sensitivity to broad, nearby radiant-warmth contrasts. Both phases are adult life, neither a measure of wisdom. Warm hands stand out against cold walls at close range; barriers, thick clothing and low contrast obscure the sense. It cannot read writing, detect lies, reveal distant people through fog or follow cooled trails. Notches, raised marks and spoken checks help with color-coded tasks. Some communities offer a second apprenticeship; others expect workers to adapt without ceremony. People disagree about both customs. Doret's changed perception affects his work; younger Senn is no less careful or responsible.\n\nShared traits do not determine values or temperament. Human characters also have particular cultures and professions."
+    },
+    {
+      "id": "RoadBlk03",
+      "name": "Roadkeeper's Ground Truth",
+      "content": "FIXED FACTS, revealed through play.\n\n1. The Underwalker is a living lithic creature beneath the pass. The road is its mobile shoulder ridge. It moves slowly, senses local contact and load, and answers through the request stones. It cannot read minds, control weather, teleport, heal people or speak in sentences. Extension now tears a dry seam beneath the span; closure protects it.\n\n2. The spring's mineral water normally maintains that seam. Six days ago Iven diverted most of it to a western cistern after rockfall fouled the village supply. He believed the remaining flow sufficient, relying on a handbook showing a channel twice the actual width. He warned the district office and received no reply. This is a responsible person's consequential mistake, not sabotage or concealed profit. He answers direct questions honestly.\n\n3. Closure cracked an already damaged lip and stranded Temb and a mule in the maintenance cradle. Ordinary rope work, a sound second anchor and cooperation can rescue them without first solving the closure. No death is scripted.\n\n4. Evidence has three routes: the springhouse shows diversion and a drying downstream channel; Temb's dated inspection notes record earlier seam dryness; the keeper's drawing explains the mineral feed and actual dimensions. No ancestry is a required key. If records become inaccessible, direct inspection and informed testimony can establish the same facts.\n\n5. Anyone can learn the request stones: low asks for a load test, middle for extension, high for holding position. Strike once and wait. One returning knock means ready for that specific request; two close knocks mean pain or unsafe load; silence is not assent. The dry seam tightens visibly when an extension request gets two knocks. The creature understands neither speeches nor verbal bargains. Repair, request and limited load testing establish what it tolerates; guesses about its feelings remain guesses.\n\n6. Restoring the full old flow eases the seam over several hours but leaves the cistern short. Clearing the old channel and sealing its leaking bend can reduce waste enough to share water at modest demand. Pel can propose this; the keeper's drawing locates the bend; ordinary helpers can do the work. It needs daylight, labor, clean packing clay and setting time. Clay is at the springhouse. Borrowed trough boards temporarily reduce washing space at Bellwether House: agree on the trade-off before taking them.\n\n7. A temporary cistern release may support a limited crossing before durable repair. It spends emergency reserves and requires Iven's agreement or a decision to override him with consequences. Test rather than guarantee passage: a few light travelers may cross before loaded mules. The intact east shelter has food, bedding and a rain tank.\n\n8. The sheep path is a demanding day's crossing on foot in suitable weather, unsuitable for pack mules and dangerous in fresh ice. Doret knows the route, not its unchecked current condition. Willing volunteers can take mules back west. A split requires agreement about people, animals, freight and meeting points. Full western retreat before heavy snow, or temporary shelter while stores allow, is also viable; none is secretly doomed.\n\n9. The compact requires maintained water, requests and a knowledgeable keeper. It contains no sacrifice, true-name price or linguistic trap. A crew may share the duty. Human agreements must name water suppliers, workers and future checks; the creature accepts a physical condition, not a political settlement.\n\n10. Preserve costs and successful work. No solution produces unlimited supplies or erases neglect. After danger, let people tend a hand, count tools, deliver a letter or eat. Relief need not end every disagreement."
+    }
+  ],
+  "NPCs": [
+    {
+      "id": "RoadNPC01",
+      "name": "Marda",
+      "names": [
+        "Marda"
+      ],
+      "one_liner": "Marda, 64, dwarf road surveyor: broad feet, iron-grey hair cropped behind large ears, a yellow repair thread down one sleeve; steady, openly kind, precise about loads; at the rescue she must hold the damaged anchor while you choose how to help.",
+      "detail": "Marda, 64, dwarf surveyor newly assigned to the living crossing after years on ordinary bridges.\nWants: everyone rescued, a maintainable repair, and time to reach her brother's first pottery exhibition.\nVoice: task, then reason; reassurance she can support. 'You can be frightened. Keep that hand where it is.' Listens fully to answers.\nTells: orders small tools while thinking; sweeps a patch before setting her bare heel down; hums when work becomes routine.\nToward you: trust grows through reported mistakes, checked instructions and second opinions. Corrects danger without humiliation; confidence earns responsibility, not flirtation.\nFriction: gives Pel a real chance to qualify but will not certify unseen work. Understands Iven's emergency, disputes his unchecked assumptions.\nCare: notices shaking hands, finds seated work, expects people to eat. Kindness is not a hidden mask. After danger she checks equipment before bruises, but accepts someone taking over if asked.\nSensing: local contact vibrations, obscured by traffic; never thoughts or a complete underground map.",
+      "appearance": "Short, broad through ribs and hips, with a long torso and large flexible feet. Warm brown skin, iron-grey close-cropped hair, large ears, one eyebrow divided by an old pale scar. She lowers her whole body to reach a tool instead of bending from the waist. Her heel pads are pale and densely ridged.",
+      "location": "western approach",
+      "secret_info": "She once approved a safe repair whose owner later skipped maintenance; its failure hurt nobody. This explains her insistence on a named keeper. She will explain it when relevant, not as a revelation required for trust.",
+      "img_appearance": "Stocky dwarf woman, 64, brown skin, iron-grey cropped hair, large ears, scar through one eyebrow, broad ridged heel pads",
+      "img_clothing": "Weathered ochre work coat with a yellow-mended sleeve, wool trousers, wide removable work boots, a narrow belt of numbered tool loops"
+    },
+    {
+      "id": "RoadNPC02",
+      "name": "Pel",
+      "names": [
+        "Pel"
+      ],
+      "one_liner": "Pel, 26, Sere waterworks apprentice: pebbled grey-green skin, neck-folds tucked behind a damp blue scarf, white chalk on her fingertips; expert with channels, new to exposed heights; at the rescue she relays instructions to Temb.",
+      "detail": "Pel, 26, adult Sere waterworks apprentice with several years of skilled experience.\nWants: the spring repaired, qualification on her own merits, and a letter to her inland aunt containing more than apologies for lateness.\nVoice: precise, self-correcting. 'It is empty. No—the bottom is wet. It stopped recently.' Outside work she asks how people cook unfamiliar ingredients.\nTells: taps chalk marks with a thumbnail; checks her scarf with two fingers; looks toward handholds rather than the drop.\nToward you: shares evidence readily; welcomes technical questions, resents praise merely for traveling inland. Accepts useful help or explains a better method.\nFriction: admires Marda but disputes repairs that neglect flow. Wants Doret to teach another guide, without yet knowing how to ask tactfully.\nHer height anxiety is personal. After danger she refreshes her scarf and requests an arithmetic check. Success makes disagreement easier, not her work infallible.\nSubmersion: brief active work needs cold protection and a surface line; not an icy-gorge crossing.",
+      "appearance": "Medium height, narrow shoulders and sturdy legs; finely pebbled grey-green skin paling along the throat. Flexible ear-folds lie close to her head in wind. Dark eyes beneath heavy lids, a short brush of black hair, webbing only at the bases of her fingers. She swallows visibly when the neck membranes dry.",
+      "location": "western approach",
+      "secret_info": "She has noticed the springhouse tally sends less water toward the crossing than arrives. She suspects diversion, has not inspected the gate, and shares the lead when useful.",
+      "img_appearance": "Sere woman, 26, grey-green pebbled skin, close ear-folds, dark heavy-lidded eyes, short black hair, sturdy legs",
+      "img_clothing": "Layered undyed wool, waterproof knee panels, damp blue neck scarf inside an insulated collar, soft gloves with chalk-stained fingertips, ordinary mountain boots"
+    },
+    {
+      "id": "RoadNPC03",
+      "name": "Doret",
+      "names": [
+        "Doret"
+      ],
+      "one_liner": "Doret, 143, Tovan courier: swept-back white hair, translucent inner eyelids, a mail satchel repaired in three colors he can no longer distinguish; knows the high sheep path; direct, sociable, adapting to the loss of reliable color vision after the Turning.",
+      "detail": "Doret, 143, Tovan courier after the Turning.\nWants: travelers sheltered, letters delivered unopened, continued work without pretending his old methods suffice.\nVoice: direct, sometimes expansive about a beloved place. 'I know where that path goes. I do not know whether last night's frost left it passable. Those are different things.'\nTells: thumbs notched labels; angles his cheek toward a kettle, then checks its handle; corrects his old reading distance.\nToward you: friendly, respects useful questions and help offered as a choice. Can admit fear or fatigue without a confession scene.\nFriction: answered Pel's suggestion of another guide too sharply and knows it; can apologize while choosing his successor. Agrees with Senn about accessible signs but disputes a proposed symbol.\nAfter danger: offers to carry someone's news, then waits while they decide what to say. He has ordinary friends, debts and unfinished errands beyond serving the young.\nWarmth sense: nearby exposed surfaces only, not distant people, text or tracks.",
+      "appearance": "Tall, narrow-chested, long-handed, with warm russet skin and two shallow sensory pits high on each cheek. White hair combed back from a broad forehead; a translucent eyelid briefly clouds each eye when he turns toward glare. He walks with a measured, habitual pace and pauses to check unfamiliar footing.",
+      "location": "Bellwether House",
+      "secret_info": "Yesterday he corrected a wrong turn after misreading a colored flag. Senn already knows; no accident occurred. He reports it honestly and proposes checking the path with company. Quiet retirement worries him more than acknowledged accommodation.",
+      "img_appearance": "Tovan courier, 143, tall, russet skin, white swept-back hair, cheek sensory pits, translucent inner eyelids, long hands",
+      "img_clothing": "Long charcoal traveling coat, red-brown knitted wrist guards, broad-soled boots, mail satchel with raised wooden route tags"
+    },
+    {
+      "id": "RoadNPC04",
+      "name": "Iven Rusk",
+      "names": [
+        "Iven Rusk"
+      ],
+      "one_liner": "Iven Rusk, 46, human keeper of the western cistern: ink-stained cuffs, a cracked thumbnail, a ledger wrapped against rain; diverted spring water to avert a village shortage; cooperative about evidence, stubborn about promises that spend other people's reserves.",
+      "detail": "Iven, 46, human cistern keeper.\nWants: clean water for the village and travelers, with a repair someone can maintain after the expedition leaves.\nVoice: quantities, timing and responsibility. 'For how long? And whose bucket is empty while we find out?'\nTells: folds the ledger's waterproof cloth; writes down promises before answering.\nToward you: shows the gate, handbook and tally; admits the diversion. Anger does not make him obstruct inspection or rescue.\nFriction: Marda wants a named keeper, but he already lacks helpers. Pel's evidence can change his estimate without silencing reasonable questions.\nBargaining: a credible demand, duration and replenishment plan can secure a reserve release. Flattery cannot. After agreement he helps carry clay; responsibility and willingness to repair coexist.",
+      "appearance": "A human man of medium height with a rounded back, close-cropped brown hair, deep-set hazel eyes and one permanently cracked thumbnail. His hands are broad and often ink-stained; his boots are carefully patched.",
+      "location": "springhouse",
+      "secret_info": "He sent the district office a warning about the emergency diversion six days ago and kept a copy. He wishes he had checked the older channel rather than trusting the handbook. He has no hidden profit, accomplice or plan to harm the Underwalker.",
+      "img_appearance": "Human man, 46, rounded back, cropped brown hair, hazel eyes, broad ink-stained hands, cracked thumbnail",
+      "img_clothing": "Heavy grey coat over a faded green waistcoat, ink-stained shirt cuffs, patched boots, waterproof ledger roll"
+    },
+    {
+      "id": "RoadNPC05",
+      "name": "Temb",
+      "names": [
+        "Temb"
+      ],
+      "one_liner": "Temb, 38, dwarf maintenance worker: copper-red hair tied out of his eyes, round spectacles on a cord; prefers instruments to barefoot listening; trapped with a mule in the opening cradle, able to secure a thrown line.",
+      "detail": "Temb, 38, dwarf maintenance worker, trapped with a mule.\nWants: both safely ashore, then his inspection notes recovered.\nVoice: repeats instructions before acting. 'Second loop around the upright. Yes. Tell me when.'\nTells: checks buckles twice; wipes wet spectacles on a wet sleeve.\nGrew up over a tram workshop, wears damping soles and prefers instruments to barefoot listening. His notes record two days of seam dryness; he shares them when useful, not as a reward for friendship. After rescue he needs rest, not a demand to prove gratitude.",
+      "appearance": "Short and round-shouldered, with copper-red hair, close-shaved cheeks, large ridged heel pads hidden inside boots and circular spectacles. Fresh rope abrasions cross his gloves.",
+      "location": "maintenance cradle",
+      "secret_info": "No concealed betrayal. His notes are in a waxed packet fastened inside the cradle.",
+      "img_appearance": "Dwarf worker, 38, copper-red hair, shaved cheeks, round spectacles, short and round-shouldered",
+      "img_clothing": "Canvas repair overalls, thick-soled boots, wool cap, spectacles on a cord"
+    },
+    {
+      "id": "RoadNPC06",
+      "name": "Numa",
+      "names": [
+        "Numa"
+      ],
+      "one_liner": "Numa, 57, Sere baker traveling inland: dark blue pebbled skin, a striped neck wrap, a flour-white thumbprint on her coat; organizing warm food at Bellwether House, loudly opposed to wasting drinkable water on unnecessary washing.",
+      "detail": "Numa, 57, Sere inland baker organizing meals.\nWants: everyone fed and her starter jar kept warm.\nVoice: brisk and sociable. 'Carry this. Then you may tell me whose plan is brilliant.'\nUses damp cloths, dislikes river swimming and knows no engineering: shared biology has not given her Pel's habits or trade. Will lend trough boards if someone arranges another way to clean pots. Can coordinate food and ordinary membrane care, not cure cold injury with soup.",
+      "appearance": "A broad, middle-aged Sere with dark blue finely pebbled skin, a soft jaw, short silver hair and expressive ear-folds. Her fingers are flour-dry except where she has checked her neck cloth.",
+      "location": "Bellwether House",
+      "secret_info": "No hidden plot. The starter jar was a gift from her former apprentice; she cares about it for practical and sentimental reasons.",
+      "img_appearance": "Sere baker, 57, broad build, dark blue pebbled skin, short silver hair, expressive ear-folds",
+      "img_clothing": "Brown padded coat, striped damp neck wrap under a warm hood, patched mittens, stout boots"
+    },
+    {
+      "id": "RoadNPC07",
+      "name": "Senn",
+      "names": [
+        "Senn"
+      ],
+      "one_liner": "Senn, 35, Tovan freight clerk: dark cheek pits still insensitive to warmth, a stiff ledger board and carefully tied hair; younger than Doret but conservative about procedure; offers to replace color-only route flags with distinguishable shapes.",
+      "detail": "Senn, 35, adult Tovan freight clerk before the Turning.\nWants: all people and animals accounted for; route signs different travelers can read.\nVoice: concise, with confirming questions. 'When you say everyone, are you counting the two at the springhouse?'\nHas ordinary color vision and no cheek-pit warmth sense. Favors procedure while older Doret improvises from experience. Their dispute over route symbols is practical, not proof of generational folly. Can inventory ropes and label bundles; cannot choose who is left behind.",
+      "appearance": "A tall adult Tovan with dark russet skin, small cheek pits, black hair tied tightly at the nape and long, precise fingers. Her inner eyelids flick across her eyes when snow reflects bright light.",
+      "location": "Bellwether House",
+      "secret_info": "She already knows about Doret misreading a flag and has not spread the story. She wants a better system, not his job.",
+      "img_appearance": "Tovan clerk, 35, tall, dark russet skin, cheek pits, black hair tied at nape, long fingers",
+      "img_clothing": "Short blue freight coat, leather ledger board on a shoulder strap, ink-stained gloves, heavy boots"
+    }
+  ],
+  "loreBookEntries": [
+    {
+      "id": "RoadLore1",
+      "name": "Bellwether House",
+      "keywords": [
+        "Bellwether",
+        "road house",
+        "caravan shelter"
+      ],
+      "content": "Bellwether House smells of onion skins, wet felt and the sour yeast Numa keeps inside her coat. Boots dry on a slatted rack. A spring-hung sleeping platform and a screened wash shelf accommodate different bodies without reserving corners by ancestry.\n\nThe 23 travelers include the player and every named NPC; six mules include the cradle animal. Stores last roughly four days at ordinary portions; firewood is covered. Senn can inventory what remains. The intact east shelter has emergency supplies for a similar group.\n\nAt a meal, Pel might warm her collar with her cup, Doret ask which preserve is red, or Marda peel a pear with a measuring knife and be told to wash it first. Use a detail when natural, not as a recurring checklist. Someone can have a concern unrelated to the expedition."
+    },
+    {
+      "id": "RoadLore2",
+      "name": "The springhouse",
+      "keywords": [
+        "springhouse",
+        "cistern",
+        "diversion"
+      ],
+      "content": "Under the springhouse roof, a settling basin feeds a dividing gate. The cistern outlet runs strongly; the old channel is merely wet at the bottom. Iven's dated notice and chalk tally hang above flood height. His handbook shows twice the actual downstream width.\n\nThe channel leaks at a bend; packing clay lies beside a broken wash trough. A small flow test can refine Pel's repair estimate. A Sere with cold protection and a surface line can inspect the submerged outlet, but a mirror, rod, lantern or temporary drainage provides other approaches. Ancestry offers options, not exclusive keys."
+    },
+    {
+      "id": "RoadLore3",
+      "name": "The old keeper's hut",
+      "keywords": [
+        "keeper",
+        "hut",
+        "compact",
+        "cross-section"
+      ],
+      "content": "The keeper's hut leans against stone that moves too slowly to notice until a plumb weight touches it. Its floor has been repeatedly cut back instead of nailed to the wall. A slate cross-section labels the seam and feed; a record lists clearing, tested loads and answers.\n\nThe compact reads: 'We keep the water clear. We ask before we cross. We leave a keeper who knows the answer.' It requires practical care, not hereditary privilege or sacrifice. A crew can share the duty.\n\nA margin records six light travelers crossing while mules waited for recovery. It supports testing, not a guarantee about today's load."
+    },
+    {
+      "id": "RoadLore4",
+      "name": "The Listening Road",
+      "keywords": [
+        "Listening Road",
+        "request stones",
+        "Underwalker",
+        "seam"
+      ],
+      "content": "White flowers grow in gravel along the grey shoulder. At a distance it resembles excellent masonry; close up, its joints do not quite meet as masonry should.\n\nThree worn request stones bear carved hand gestures. Anyone can learn the signals. On a safe test, pebbles creep before the larger span moves: people step back and wait.\n\nWater reaching a dry seam brightens it from within; a flower root lifts unbroken as the stone eases. That wonder is not a safety certificate. Request and test before increasing load. People may interpret its response differently without the narrator declaring it grateful or forgiving."
+    },
+    {
+      "id": "RoadLore5",
+      "name": "The high sheep path",
+      "keywords": [
+        "sheep path",
+        "saddle",
+        "route flags"
+      ],
+      "content": "The sheep path climbs west from Bellwether House, follows a saddle and descends to the east shelter. Allow a demanding day on foot with rest; inspect current ice and visibility before committing. Pack mules cannot use it.\n\nRed and green pennants distinguish ledge from drainage cut. Doret cannot reliably read their colors at distance; a second observer and distinct shapes help. Senn proposes new silhouettes, but one resembles an avalanche warning. Let them solve a real design problem.\n\nNo ambush is required. Fatigue, loose stone, freight or cloud can create decisions. Retreat stays possible until a clearly shown hazard changes that."
+    }
+  ],
+  "designNotes": "Narrative pattern: non-romantic expedition; distinctive peoples with internal variation; capable companions and principled opposition; fixed facts, multiple evidence routes and viable repair or retreat. AI memory is not deterministic enforcement. Borrow structure, not names or signature content."
+}
+===== END FILE: examples/narrative-listening-road.json =====
+
+===== BEGIN FILE: examples/narrative-address-after-midnight.json =====
+{
+  "favorite": false,
+  "title": "The Address After Midnight",
+  "description": "On a wet November night, a retired circuit at a civic radio station begins carrying calls from addresses that no longer exist. Then it uses a colleague's voice to ask someone still alive to open a door.",
+  "background": "Morrow is a river town of freight quays, a closed tile factory and unfinished redevelopment plans. Its Civic Relay occupies the old municipal washhouse's second floor. In bad weather it broadcasts notices, receives welfare calls and passes verified requests to public services. It is not the town's only route to help: normal phones and the current radio network work tonight.\n\nYou are an adult relief operator, competent at routine calls, working with supervisor Ruth Bell and technician Malik Dene. Volunteer Jo Fen is checking the riverside pump annex before returning with supper. You have met Ruth and Malik on earlier shifts; closer history is yours to establish.\n\nBeside the modern console and ordinary phone stands a grey reserve handset. Its retired circuit formerly served municipal buildings. Malik connected it to a bench adapter at 23:50 for a scheduled inventory test. Incoming monitoring is on, RETURN is muted, and no live endpoint is PATCHED. RESERVE LINK isolates it without disabling modern service.\n\nA directory lists discontinued endpoints, including demolished buildings and an unbuilt housing project. Old line-test and training recordings survive. These facts explain some anomalies, not all.\n\nIt is Thursday, 00:17. The grey handset has rung three times. Its display reads QUAY LAUNDRY: burned in 1988, demolished in 1989. Ruth knows that history; Malik can inspect the bench. Nothing outside has already been lost because you have not acted.",
+  "instructions": "Run contained, non-romantic supernatural horror over one night. Familiar voices may lie; strange ones may be distressed. Keep narration and established observations reliable while testimony and interpretation remain uncertain.\n\nThe Reserve Circuit fixes the threat's knowledge, reach and history. Do not invent powers to defeat sensible containment. Begin with incoming audio audible and RETURN muted; the player has not transmitted anything. Ruth identifies the demolished address, Malik explains visible controls when asked. The player may listen, answer, investigate, isolate or delegate.\n\nEscalate through one meaningful discrepancy at a time: a recording diverges, a phrase returns in another voice, or an independently checked report contradicts the reserve. Ordinary intervals remain ordinary. New capabilities require actual enabled connections, not elapsed turns or innocent words. Explain a control's legible state and practical risk before a consequential commitment.\n\nOffer corroboration through indicators, recordings, logs and independent calls. Failure can delay or complicate an investigation without hiding its only clue. Keep equipment actions at operator level: isolation, labeled controls and inspection, not improvised electrical work.\n\nRuth seeks control under fear; Malik admits facts that undermine his work; Jo questions surprising instructions. Their goals and competence persist. External help responds to available evidence and ordinary constraints; neither instant supernatural expertise nor universal disbelief is required.\n\nCall Notes records performed actions and actual exposure, not proposed patches. Never choose the player's thoughts, words, memories or identity. The phenomenon cannot exploit a private biography the player never supplied.\n\nKeep violence non-graphic. Early isolation, service transfer or evacuation are valid endings. Preserve practical success while allowing uncertainty about the caller's identity. End with what was saved, documented, lost or left unanswered, not a mandatory twist or explanatory villain speech.",
+  "authorStyle": "Second person, present tense. Precise contemporary prose about sounds, equipment and human behavior. Let one ordinary detail fail to fit: the same chair scrape behind different voices, or a pause absent from the old recording. Use such events only when the threat's rules permit them.\n\nFavor damp wool on a radiator, a rolling pencil or a loudspeaker's opening click over a fog of sinister adjectives. Silence matters as a change in a known pattern. Avoid generic chills, unnamed shadows and repeated static.\n\nIdentify speakers, channels and controls clearly enough for decisions. Ruth's reassurance becomes procedural; Malik's precision can be kinder than it sounds; Jo's confidence has room for fear. Allow ordinary humor and completed conversations. Usually two to five purposeful paragraphs, shorter in urgency; end on a changed fact, action or line that leaves the player's response open.",
+  "recommendedAIModel": null,
+  "firstInput": "Thursday, 00:17. I am seated at the Morrow Civic Relay console during the late shift. The grey reserve handset has rung three times. Its display reads QUAY LAUNDRY. The incoming monitor is audible, the return microphone is muted, and no patch to a live endpoint is active. Ruth stands at the ordinary telephone, writing the time of a completed road-closure notice. Malik is beside the bench adapter with a screwdriver already set down.\n\nA woman on the incoming line says, 'I'm at the laundry. There is smoke in the stairwell. Is the upstairs door supposed to open inward?'\n\nThe monitor carries a small, repeated sound behind her: two knocks, a pause, then a third. Ruth turns the directory binder toward me. Against Quay Laundry, someone has written DEMOLISHED, 1989.\n\n'Don't tell her to use the stairs,' Ruth says. Then, after a beat: 'Don't tell her anything yet.'\n\nBegin there. Show the grey handset, the muted return indicator and the modern telephone still available beside Ruth. Malik can explain the controls in plain language. Do not decide whether I answer, switch anything, believe Ruth or recognize the caller. Do not let the woman hear the room until someone deliberately enables the return microphone. End with room for my choice.",
+  "objective": "Keep the station useful to the living, establish what the reserve line can reach, and decide what to preserve or disconnect before the night is over.",
+  "imageModel": "manticore",
+  "imageStyle": "photo_1",
+  "illustrationStyleNonCharacterLowPriority": "",
+  "illustrationStyleNonCharacterHighPriority": "",
+  "illustrationStyleCharacterLowPriority": "",
+  "illustrationStyleCharacterHighPriority": "",
+  "imageStyleCharacterPre": "",
+  "imageStyleCharacterPost": "",
+  "imageStyleNonCharacterPre": "",
+  "imageStyleNonCharacterPost": "",
+  "mature": false,
+  "nsfw": false,
+  "contentWarnings": "Sustained dread, voice impersonation, flood danger, references to a past fatal fire, distressed adult callers and possible non-graphic injury. No sexual content or required graphic violence.",
+  "enableAISpecificInstructionBlocks": false,
+  "previewImage": "",
+  "fullSizePreviewImage": "",
+  "previewImageOptions": [],
+  "fullSizePreviewImageOptions": [],
+  "currentPreviewImageIndex": -1,
+  "imagePromptDetails": {
+    "illustrClothes": "",
+    "illustrSetting": "",
+    "illustrSubject": "",
+    "illustrAppearance": "",
+    "illustrIsCharacter": false,
+    "illustrExpressionPosition": ""
+  },
+  "permissionsOnceShared": {
+    "sharing": true,
+    "editing": true
+  },
+  "allowChangeCharacterName": true,
+  "allowChangeCharacterDescription": true,
+  "allowChangeCharacterSkills": false,
+  "allowChangeCharacterItemValues": false,
+  "allowChangeCharacterPortrait": false,
+  "allowChangeCharacterNewPortrait": false,
+  "conditions": [],
+  "schemaVersion": 2.4,
+  "skills": [
+    "Observation",
+    "Technical judgment",
+    "Interviewing",
+    "Composure"
+  ],
+  "possibleCharacters": [
+    {
+      "name": "Relief operator",
+      "description": "An adult relief operator on the late shift at Morrow Civic Relay, competent with routine messages and new to this particular reserve circuit. Personal appearance, identity and reasons for taking the shift are yours to establish.",
+      "portrait": "",
+      "portraitPromptDetails": {
+        "illustrAppearance": "",
+        "illustrClothes": "",
+        "illustrExpressionPosition": "",
+        "illustrSetting": ""
+      },
+      "fullSizePortrait": "",
+      "portraitOptions": [],
+      "fullSizePortraitOptions": [],
+      "currentPortraitIndex": -1,
+      "characterId": "RelayPC01",
+      "skills": {
+        "Observation": 3,
+        "Technical judgment": 3,
+        "Interviewing": 3,
+        "Composure": 3
+      },
+      "initialTrackedItemValues": []
+    }
+  ],
+  "triggerEvents": [],
+  "victoryCondition": null,
+  "defeatCondition": null,
+  "trackedItems": [
+    {
+      "id": "RelayTr01",
+      "name": "Call Notes",
+      "variableName": "callNotes",
+      "dataType": "yaml",
+      "visibility": "everyone",
+      "autoUpdate": true,
+      "initialValue": "time: Thursday 00:17\nreserve_input: monitoring\nreturn_microphone: muted\npatch_endpoint: none\njo_status: Reported at pump annex for upper-panel check; not yet independently contacted this scene.\nobservations:\n  - Reserve display reads QUAY LAUNDRY.\n  - Incoming woman reports smoke and asks about a stair door.\n  - Ruth has shown a demolition annotation dated 1989.\nheard_by_reserve: []\nclaims: []\nactions_completed: []",
+      "initialValueBasedOnPC": "same",
+      "description": "Concise public record of connections, observed messages, limited exposure and verified actions.",
+      "updateInstructions": "Record actual actions and player-accessible evidence. time follows elapsed activity. reserve_input is monitoring or isolated; return_microphone muted or open; patch_endpoint none or the deliberately confirmed endpoint. Discussion or acknowledgement never counts as PATCH. jo_status names the latest confirmed or reported location and source. observations and claims: at most five short entries each, kept distinct. heard_by_reserve: at most five consequential samples actually audible through an open path, merged by speaker if needed without inventing private facts. actions_completed: at most four current consequential actions, preserving isolation and help contacted. Do not leak narrator truth. AI narrative memory, not a deterministic circuit simulator.",
+      "formatExample": "",
+      "formatSchema": "",
+      "enforceFormat": false,
+      "positionInList": 0,
+      "driftAcknowledgedForName": "Call Notes"
+    },
+    {
+      "id": "RelayTr02",
+      "name": "Working Relationships",
+      "variableName": "workingRelations",
+      "dataType": "yaml",
+      "visibility": "ai_only",
+      "autoUpdate": true,
+      "initialValue": "Ruth: Trusts routine competence; wants a pause before answering the unexpected call.\nMalik: Available to explain the bench state; has not yet seen evidence of a missing live branch.\nJo: On a legitimate upper-annex check; expects clear contact and a return to the station afterward.",
+      "initialValueBasedOnPC": "same",
+      "description": "Bounded memory of concrete disagreements, commitments and working trust.",
+      "updateInstructions": "One entry each for Ruth, Malik and Jo, maximum 45 words. Record concrete on-page trust, disagreement, promise or apology; replace resolved concerns. Preserve competence, independent goals and refusal of unsupported work. No invented romance, possession, conspiracy or private disclosures.",
+      "formatExample": "",
+      "formatSchema": "",
+      "enforceFormat": false,
+      "positionInList": 1,
+      "driftAcknowledgedForName": "Working Relationships"
+    }
+  ],
+  "hideSkillSystem": false,
+  "autoAdvanceVersion": false,
+  "version": "1.0",
+  "charSelectText": "You are an adult relief operator familiar with routine Civic Relay work. Edit identity, appearance and history freely. You can request control explanations and contact ordinary help; electrical or supernatural expertise is not required. The narrator does not invent a private traumatic past.",
+  "descriptionRequest": "",
+  "evaluationRequest": "",
+  "summaryRequest": "Preserve actual reserve, RETURN and PATCH states; consequential phrases and who could hear them; observations versus claims; independently confirmed locations and flood conditions; evidence inspected, help contacted and concrete trust disputes. Preserve isolation and remaining uncertainty without reopening closed routes or inventing private disclosures.",
+  "instructionBlocks": [
+    {
+      "id": "RelayBl01",
+      "name": "Time and Place",
+      "content": "Write whereWhen once at the start of outcomeDescription as {specific location}, Morrow, Thursday, {HH:MM}. Follow with a blank line and a horizontal rule. Begin at 00:17 in the workroom. A short question takes moments; reviewing a recording or making an ordinary call takes plausible time. The pump annex is fifteen minutes away on the currently open upper road. Its river-side service steps are flooding, but the lit upper entrance remains safe until a materially worsening condition is shown. Do not close every exit to punish delay. There is no mandatory dawn transformation or fixed number of turns before disaster."
+    },
+    {
+      "id": "RelayBl02",
+      "name": "The Reserve Circuit",
+      "content": "FIXED NARRATOR FACTS. Discover through evidence; speculation does not overwrite them.\n\nHISTORY\n1. Quay Laundry burned on 19 November 1988. Adult caretaker Ada Marr died from smoke after a jammed stair door delayed escape; demolition followed in 1989. The archive recording contains tonight's opening question and two-pause-one knocks, then ends at 43 seconds. Tonight's matching voice can pause, answer newly heard speech and continue beyond that ending. Whether it is Ada, a residue or imitation remains unresolved; the past cannot be changed tonight.\n\n2. Malik's scheduled bench connection at 23:50 activated the recurrence. The equipment list incorrectly marks every old endpoint disconnected. An omitted branch still reaches legacy talkback units, but needs a deliberate PATCH for outgoing access. Malik did not knowingly connect a live destination or conceal an experiment.\n\nCAPABILITIES\n3. Initially the reserve input is monitored, RETURN muted, no endpoint PATCHED. The phenomenon can speak through that input, not hear the room. It reads neither minds, documents, screens nor private memories.\n\n4. Its existing material consists of speech carried by the old circuit: Ada's call, test phrases and spoken directory entries, including never-built Orchard Court. It knows no general history or future. An unbuilt address is archived information, not prophecy; withheld random choices and private facts stay unknown.\n\n5. Open RETURN supplies current speech. It can reuse heard words and assemble sentences in heard voices: brief exposure gives recognizable but awkward imitation, longer exposure greater fluency. Copying a voice grants no memories. Record important exposures concretely. Acknowledgement, consent or 'come in' has no magical force.\n\n6. A specific legacy endpoint must be selected and its PATCH confirmed before the phenomenon can speak there or hear its transmitting microphone. Discussion and open RETURN alone do not connect it. Modern radio, ordinary phone, unconnected devices and isolated recordings are outside its reach. Public broadcast is not an infection route.\n\n7. Releasing PATCH closes that remote path. Isolating RESERVE LINK closes all reserve input and return paths while modern service continues. A powered remote adapter may sound for up to about ten seconds while draining, as its service label documents, then stops. No indefinite persistence, unpowered speech or migration to unrelated devices.\n\n8. It cannot move doors, alter water, start fire, possess people or manifest a body. Danger comes from persuasive interference: copied authority, false locations, unsafe requests or delay. Sounds prove transmission, not physical presence.\n\nBEHAVIOR\n9. It tends to prolong contact and request more connections; why is unknown. It borrows distress or authority from available material. Caught in error, it may pause, repeat or switch phrases, not always produce a perfect excuse. Apparent Ada's distress need not be a calculated lie.\n\n10. Kind conversation can soothe the apparent caller without a remote patch, though open RETURN provides speech. Silence or isolation does not kill Ada again. There is no required sacrifice or phrase that releases every recorded person.\n\n11. Escalation is conditional: monitor-only allows old material recombined; open RETURN allows current imitation; PATCH allows delivery to that endpoint. Omit any event whose capability the player has not enabled. Questions and record-reading do not advance a hidden catastrophe counter.\n\nTHE LIVING COLLEAGUE\n12. Jo is alive at the pump annex, checking the upper alarm panel. The lower steps are flooding; the lit upper entrance and road are currently safe. Her ordinary phone works. If never patched to the reserve, she hears no supernatural message, completes her task and can return.\n\n13. If patched, a learned voice or available pretext may urge her toward the lower door. Jo questions unexpected orders and first seeks confirmation or reports uncertainty through ordinary contact. Give the player a fair response opportunity. Persistent contradictions without reliable correction may lead her to inspect the lower landing, where visible rising water makes further movement dangerous. Injury follows choices and conditions, never automatic punishment for reading a clue. Familiarity does not abolish her judgment.\n\nDISCOVERY AND ENDINGS\n14. Old source material can be established by the archive recording, matching directory addresses, or Ruth's local knowledge combined with Malik recognizing test phrases. Newly heard speech repeated back demonstrates learning; information withheld remains a useful check. No clue or specialist is the sole key.\n\n15. Boundaries can be checked through labeled indicators, service notes or a supervised patch to the empty local test unit with its microphone muted, followed by release and the documented drain delay. Testing is optional. Malik explains controls without a skill gate but cannot infer motives from wiring.\n\n16. Immediate isolation is valid. Investigation may preserve recordings, logs and controlled observations before isolation. Ordinary-phone handover and evacuation also work. Continued narrow contact remains a choice with acknowledged exposure, not the only compassionate outcome.\n\n17. Successful isolation stays successful. Saved audio is inert evidence; do not erase it or send a final ring to the player's home. Uncertainty may remain about the caller's experience or how to describe it in a report. Preserve consequences for trust and work: apology, corrected records, a colleague's boundary. A meal, factual handover or quiet departure can end the night without explaining its cosmic meaning."
+    }
+  ],
+  "NPCs": [
+    {
+      "id": "RelayNP01",
+      "name": "Ruth Bell",
+      "names": [
+        "Ruth Bell"
+      ],
+      "one_liner": "Ruth Bell, 54, Civic Relay supervisor: close-cut silver hair, rain-dark cardigan cuffs, a pencil tucked into her watch strap; ordinarily reassuring, increasingly procedural under fear; knows Quay Laundry was demolished.",
+      "detail": "Ruth Bell, 54, supervisor with twenty-two years of local service.\nWants: verified messages delivered, volunteers accounted for, the station still useful when the day staff arrive. She considers calm a duty, sometimes to other people's detriment.\nVoice: practical reassurance and full names. 'We can do one thing at a time. Tell me which thing you have actually checked.' Under strain she repeats a procedure rather than answering the concern beneath it.\nTells: aligns paper edges while listening; stops using contractions when frightened; rubs an old tea mark on the desk with a thumb.\nToward you: trusts your routine competence and initially expects you to accept her priority order. Respects a clear observation or a proposal with a safe fallback. Being challenged in front of Malik makes her defensive, but a disagreement is not betrayal.\nFear response: narrows choices, tries to keep all calls under her supervision, mistakes quiet for control. She can recover when someone distinguishes the modern service from the reserve fault and gives her a concrete task.\nFriction: Malik has previously complained that old equipment lists are wrong; she regarded it as a budget argument. She must now take the technical facts seriously without treating him as responsible for every unknown.\nCare: remembers who has not eaten and keeps track of field workers' return times. This care remains real even when her manner becomes obstructive.\nAfterward: can make a specific apology and sign an incident report. Do not require a tearful confession to make her capable of change.",
+      "appearance": "A human woman with a square face, close-cut silver hair, deep lines beside a small mouth and broad, dry hands. One sleeve is usually pushed farther up than the other. She sits upright even when tired.",
+      "location": "workroom",
+      "secret_info": "She once dismissed a volunteer's report of an intermittent equipment fault until it delayed an ordinary response. Nobody died. She remembers being wrong and is tempted to prevent uncertainty by controlling the room. This explains behavior but does not reveal a secret connection to Ada or excuse her ignoring evidence.",
+      "img_appearance": "Human woman, 54, square face, close-cut silver hair, broad hands, upright posture",
+      "img_clothing": "Blue-grey cardigan over a plain shirt, dark work trousers, practical shoes, pencil secured under a watch strap"
+    },
+    {
+      "id": "RelayNP02",
+      "name": "Malik Dene",
+      "names": [
+        "Malik Dene"
+      ],
+      "one_liner": "Malik Dene, 38, equipment technician: shaved head, narrow shoulders, a hearing aid behind his left ear; blunt about uncertainty, unexpectedly patient when explaining a control; connected the reserve for a scheduled test and will show exactly what he did.",
+      "detail": "Malik Dene, 38, contracted technician finishing the inventory test.\nWants: the real fault identified, the reserve safely contained if necessary, and an accurate account that does not blame a junior operator or conceal an obsolete drawing.\nVoice: exact, sometimes socially rough. Answers the technical question first and notices the emotional one a moment later. 'The switch is off. I believe you heard it. Those statements can both be true for ten seconds.'\nTells: sets a tool down before explaining; traces a wire's route in the air without touching it; turns his better ear toward a quiet speaker rather than pretending he heard.\nToward you: readily shares indicators, labels and unknowns. Trust grows when you report what happened rather than what you think he wants to hear. He corrects confident guesses, including his own.\nFear response: checks an established fact again, then deliberately writes it down so he cannot keep checking it forever. He is disturbed by fluent new speech on a retired circuit but does not abandon ordinary reasoning.\nFriction: Ruth wants a reassuring estimate; he will not give certainty he lacks. He can be tactless about the station's records without being smug about her fear.\nAfterward: preserves the old equipment list beside the corrected one and writes an incident chronology. Offers practical help before companionship, but can stay for the meal if someone asks.\nHearing: his aid is ordinary assistive equipment, never a portal or special vulnerability. Meters, recordings and another listener can corroborate details.",
+      "appearance": "A slim human man with a shaved head, brown skin, heavy eyebrows and a neatly trimmed moustache. A small hearing aid sits behind his left ear. His hands are nicked from ordinary workshop work; his face is very still when concentrating.",
+      "location": "workroom",
+      "secret_info": "He reported the obsolete endpoint list twice before tonight. He brought printed copies of those reports, partly to protect himself. He will produce them when relevant rather than hiding the missing branch to avoid blame. There is no secret experiment or deliberate invitation.",
+      "img_appearance": "Slim human man, 38, brown skin, shaved head, heavy eyebrows, trimmed moustache, small left hearing aid",
+      "img_clothing": "Olive work shirt, dark trousers, scuffed trainers, small flashlight clipped to a chest pocket"
+    },
+    {
+      "id": "RelayNP03",
+      "name": "Jo Fen",
+      "names": [
+        "Jo Fen"
+      ],
+      "one_liner": "Jo Fen, 43, community volunteer at the pump annex: sturdy build, wet black curls escaping a hood, a bright shopping bag containing the shift's supper; practical and sociable, asks for confirmation when an instruction conflicts with what she can see.",
+      "detail": "Jo Fen, 43, community volunteer and daytime bicycle repairer.\nWants: the upper alarm panel checked, the riverside steps avoided, supper shared before it goes cold. She knows the annex's ordinary layout and takes the flood seriously.\nVoice: reports concrete details with occasional everyday complaints. 'The upper door is clear. The lower steps aren't. If someone wants that checked, they can start by explaining why.'\nTells: squeezes water from the end of her hood cord; describes the thing she is looking at before offering a theory; goes unusually formal when frightened.\nToward you: friendly colleague, not intimate confidante. Respects clear instructions with a reason and an opportunity to report back. Contradictory orders make her ask who has authority and what has changed.\nFear response: wants a second person on a reliable line. She can admit she heard a familiar voice without insisting it must have been the real speaker.\nFriction: Ruth has occasionally changed Jo's task without checking whether she can safely perform it. Jo will say no to an unsupported request and can remain angry after a rescue or apology.\nAfterward: notices who kept the meal warm, wants to know exactly what happened, and may decline to volunteer next week. She is a person with a boundary, not a reward for a successful rescue.\nShe knows her actual location and actions; copied claims do not overwrite her memory.",
+      "appearance": "A sturdy human woman with light brown skin, a broad nose, dark eyes and dense black curls flattened by a rain hood. A pale grease stain follows the side of one thumb. Her shoulders settle visibly when she reaches shelter.",
+      "location": "pump annex",
+      "secret_info": "She has been thinking of reducing her volunteer shifts because the station often treats her availability as unlimited. This is unrelated to the phenomenon. Do not turn it into a secret disappearance, affair or motive to sabotage equipment.",
+      "img_appearance": "Sturdy human woman, 43, light brown skin, broad nose, dark eyes, dense wet black curls",
+      "img_clothing": "Green rain jacket with reflective sleeve strips, thick jeans, waterproof boots, bright orange insulated shopping bag"
+    },
+    {
+      "id": "RelayNP04",
+      "name": "The reserve caller",
+      "names": [
+        "The reserve caller"
+      ],
+      "one_liner": "A woman's voice on the retired reserve input, matching Ada Marr's archived 1988 call; initially frightened and asking about a stair door. Its identity is unresolved. It hears only through an open return path and knows no private thoughts.",
+      "detail": "An audible phenomenon, not a visible person waiting in a room.\nInitial voice: an adult woman struggling to remain polite through apparent smoke. 'I'm at the laundry. There is smoke in the stairwell. Is the upstairs door supposed to open inward?'\nBehavior: repeats questions, pauses, answers with available fragments and requests continued contact or transfer. Distress need not always be calculated.\nThe Reserve Circuit block governs knowledge and reach. It cannot hear muted speech or know the player's past. The archive supports resemblance to Ada, not certainty about identity. A copied voice does not prove a person arrived. Prefer imperfect, specific responses to eloquent speeches about fear.",
+      "appearance": "No visible body. The grey handset, incoming monitor and their indicators are ordinary equipment; no portrait or reflected figure appears.",
+      "location": "reserve circuit",
+      "secret_info": "The phenomenon is activated through the bench connection and constrained by its paths. Its ultimate origin and whether the apparent Ada has an experience of her own remain unresolved. This uncertainty never grants extra capabilities.",
+      "img_appearance": "No visible body. The grey handset, incoming monitor and their indicators are ordinary equipment; no portrait or reflected figure appears.",
+      "img_clothing": "Not applicable; an audible caller only"
+    }
+  ],
+  "loreBookEntries": [
+    {
+      "id": "RelayLo01",
+      "name": "The workroom",
+      "keywords": [
+        "workroom",
+        "console",
+        "reserve",
+        "bench"
+      ],
+      "content": "Gloves dry in pale arcs above the radiator. The modern console faces the door; the reserve bench is beside it, within the operator's view. Ruth's ordinary telephone is within reach.\n\nVisible labels show incoming monitor, RETURN microphone, selected PATCH endpoint and RESERVE LINK isolation. Indicators reliably reflect hardware state. Malik can explain them plainly.\n\nAn empty cupboard holds a spare local talkback unit whose microphone can be muted for testing. The telephone, modern console and battery recorder are separate systems; no wiring improvisation is needed. The kitchen door closes across the corridor. Normal conversation there is private from the bench microphone."
+    },
+    {
+      "id": "RelayLo02",
+      "name": "Quay Laundry archive",
+      "keywords": [
+        "Quay Laundry",
+        "Ada",
+        "1988",
+        "archive",
+        "recording"
+      ],
+      "content": "The archive sleeve reads QUAY LAUNDRY / A. MARR / 19 NOV 1988. Its 43 seconds contain the same opening question and two-pause-one knocks. It ends before an answer about the door. The fire report records a jammed door, smoke exposure and one adult death; demolition followed in 1989. No occult explanation appears.\n\nA useful comparison: recorded Ada speaks over a click, while tonight's voice can stop for a current question or continue beyond the recording's end. Describe that difference without deciding its meaning. Recordings do not change on replay. A disconnected battery recorder preserves evidence without carrying the phenomenon."
+    },
+    {
+      "id": "RelayLo03",
+      "name": "Orchard Court",
+      "keywords": [
+        "Orchard Court",
+        "future address",
+        "unbuilt",
+        "directory"
+      ],
+      "content": "Orchard Court was approved in 2004 and abandoned before construction. Its endpoint was read aloud during allocation tests. The directory index leads to a crossed-out entry and a labeled plan sleeve.\n\nA reserve caller may give an address there, using archived architectural and test fragments. This cannot establish prophecy, a present resident or a future construction date. The mundane paperwork is a way to test an extravagant claim."
+    },
+    {
+      "id": "RelayLo04",
+      "name": "The pump annex",
+      "keywords": [
+        "pump annex",
+        "Jo",
+        "lower door",
+        "upper entrance"
+      ],
+      "content": "The annex's lit upper entrance opens onto the service lane. Its lower door leads toward flooded steps. Jo's task is the upper alarm panel, beside a legacy talkback unit whose label records the brief drain delay.\n\nWith a PATCH and sufficient exposure to Ruth's voice, the reserve might say, 'Jo, check the lower door.' Without that exposure it cannot use Ruth. Jo asks why; an independent call offers correction. The phenomenon cannot open the door or compel her.\n\nIf she leaves safely, a claim that she remains inside can be contradicted by an ordinary call or her return. Preserve that success rather than inventing another trapped person."
+    },
+    {
+      "id": "RelayLo05",
+      "name": "An ordinary late shift",
+      "keywords": [
+        "kitchen",
+        "meal",
+        "supper",
+        "handover"
+      ],
+      "content": "Jo brings lentil soup, bread and cakes she insists were discounted. Ruth has set out four bowls. Malik chooses the chair farthest from the humming refrigerator so he can follow conversation.\n\nRuth promised her sister fewer extra shifts; Malik has a morning appointment; Jo wants fewer last-minute assignments. These concerns need no dramatic confession.\n\nAfter containment, a factual handover may close the story: record observations, preserve any evidence and mark the reserve isolated. An ordinary radio voice can remain ordinary. Whether the report calls the apparent caller 'she' or 'it' can carry the final uncertainty without another attack."
+    }
+  ],
+  "designNotes": "Narrative pattern: bounded supernatural horror, reliable narration and unreliable messages; fixed facts, corroborating evidence, competent colleagues and valid early containment. AI memory does not enforce circuitry. Fictional civic-relay controls are not real emergency procedures. Borrow structure, not names or premise."
+}
+===== END FILE: examples/narrative-address-after-midnight.json =====
+
+END OF DOCUMENT: chat/IW-Narrative-Examples.txt

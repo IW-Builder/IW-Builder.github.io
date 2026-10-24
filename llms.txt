@@ -9,7 +9,7 @@ Independent and unaffiliated with Infinite Worlds. Sizes are approximate. Integr
 - [index.html](https://iw-builder.github.io/) (23 KB): Homepage: the authoring prompt (same text as Authoring-Prompt.md). Start here.
 - [Authoring-Prompt.md](https://iw-builder.github.io/Authoring-Prompt.md) (21 KB): The authoring prompt: task modes, which reference to read for each feature, construction, timing, validation and delivery rules.
 - [World-Template.json](https://iw-builder.github.io/World-Template.json) (2 KB): Empty importable world; the starting point for new builds.
-- [README.md](https://iw-builder.github.io/guide/) (9 KB): Human guide: workflows, starter requests, import/export steps. Rendered at /guide/; models can skip it.
+- [README.md](https://iw-builder.github.io/guide/) (10 KB): Human guide: workflows, starter requests, import/export steps. Rendered at /guide/; models can skip it.
 - [LICENSE](https://iw-builder.github.io/LICENSE) (1 KB): MIT license.
 
 ## Reference guides
@@ -25,7 +25,7 @@ Read only what the task needs; Authoring-Prompt.md says which guide covers which
 - [reference/Evidence.md](https://iw-builder.github.io/reference/Evidence.md) (3 KB): Platform baseline, version numbers and the evidence labels used across the kit.
 - [reference/Import-Integrity.md](https://iw-builder.github.io/reference/Import-Integrity.md) (3 KB): ID conventions, checks before and after import, editing live copies, and the import audit tool.
 - [reference/Known-Limits.md](https://iw-builder.github.io/reference/Known-Limits.md) (4 KB): Platform behavior that remains unverified, by area.
-- [reference/PawScript.md](https://iw-builder.github.io/reference/PawScript.md) (17 KB): PawScript language guide: syntax, collections, randomness, formatting, debugging, system roots and common mistakes.
+- [reference/PawScript.md](https://iw-builder.github.io/reference/PawScript.md) (18 KB): PawScript language guide: syntax, collections, randomness, formatting, debugging, system roots and common mistakes.
 - [reference/Portable-Banks.md](https://iw-builder.github.io/reference/Portable-Banks.md) (8 KB): Data mode: portable character/data bank format, dependencies, full-content build reports and data_bank.py commands.
 - [reference/README.md](https://iw-builder.github.io/reference/README.md) (2 KB): Human-friendly index of the reference guides.
 - [reference/Recipes.md](https://iw-builder.github.io/reference/Recipes.md) (12 KB): Ways to combine features: situation triggers, thresholds, choices, optional blocks, dynamic content, request/commit and guarded state patterns.
@@ -131,7 +131,7 @@ Python tools for models or users that can run code. Without Python, use the chec
 - [tools/iw_browser.py](https://iw-builder.github.io/tools/iw_browser.py) (11 KB): Optional Playwright harness: dedicated-browser capture and refresh-verified editor export. No import or play.
 - [tools/requirements-browser.txt](https://iw-builder.github.io/tools/requirements-browser.txt) (1 KB): Python dependencies for iw_browser.py.
 - [tools/Validation-Report.json](https://iw-builder.github.io/tools/Validation-Report.json) (8 KB): Latest package check results (maintainer output).
-- [tools/build_distribution.py](https://iw-builder.github.io/tools/build_distribution.py) (27 KB): Maintainer: rebuilds the homepage, combined text files, folder pages, llms.txt, checker and manifest.
+- [tools/build_distribution.py](https://iw-builder.github.io/tools/build_distribution.py) (28 KB): Maintainer: rebuilds the homepage, combined text files, folder pages, llms.txt, checker and manifest.
 - [tools/check_package.py](https://iw-builder.github.io/tools/check_package.py) (3 KB): Maintainer: validates every example world and local link; writes Validation-Report.json.
 - [tools/test_validator.py](https://iw-builder.github.io/tools/test_validator.py) (6 KB): Maintainer tests for the validator.
 - [tools/test_data_bank.py](https://iw-builder.github.io/tools/test_data_bank.py) (5 KB): Maintainer tests for data_bank.py.
@@ -149,11 +149,13 @@ Python tools for models or users that can run code. Without Python, use the chec
 Single-file bundles for chats without web access or with tool limits. Web-browsing models should prefer the individual files above.
 
 - [chat/index.html](https://iw-builder.github.io/chat/) (78 KB): HTML page containing IW-Authoring-Guide.txt, with links to the companion editions.
-- [chat/IW-Authoring-Guide.txt](https://iw-builder.github.io/chat/IW-Authoring-Guide.txt) (74 KB): Combined text, start here: prompt, template, Evidence, Craft, Trackers, Triggers, Trigger-Catalog and Portable-Banks.
-- [chat/IW-Technical-Reference.txt](https://iw-builder.github.io/chat/IW-Technical-Reference.txt) (82 KB): Combined text: Schema, PawScript, Capabilities, Recipes, Import-Integrity, Default Evaluation and AI profile IDs.
-- [chat/IW-Behavior.txt](https://iw-builder.github.io/chat/IW-Behavior.txt) (34 KB): Combined text: Editor-UI, Verified-Behavior and Known-Limits.
-- [chat/IW-Examples.txt](https://iw-builder.github.io/chat/IW-Examples.txt) (237 KB): Combined text: payload cookbook, example index and selected complete example worlds.
-- [chat/IW-Sample-Library.txt](https://iw-builder.github.io/chat/IW-Sample-Library.txt) (105 KB): Combined text: library integration guide, Sample-Blocks and Storymaster-Suite.
+- [chat/IW-Authoring-Guide.txt](https://iw-builder.github.io/chat/IW-Authoring-Guide.txt) (75 KB): Combined text, start here: prompt, template, Evidence, Craft, Trackers, Triggers, Trigger-Catalog and Portable-Banks.
+- [chat/IW-Technical-Reference.txt](https://iw-builder.github.io/chat/IW-Technical-Reference.txt) (83 KB): Combined text: Schema, PawScript, Capabilities, Recipes, Import-Integrity, Default Evaluation and AI profile IDs.
+- [chat/IW-Behavior.txt](https://iw-builder.github.io/chat/IW-Behavior.txt) (35 KB): Combined text: Editor-UI, Verified-Behavior and Known-Limits.
+- [chat/IW-Payloads.txt](https://iw-builder.github.io/chat/IW-Payloads.txt) (41 KB): Combined text: payload cookbook (every condition and effect) and the example index. Small and essential for mechanics.
+- [chat/IW-Mechanics-Examples.txt](https://iw-builder.github.io/chat/IW-Mechanics-Examples.txt) (101 KB): Combined text: complete mechanics example worlds (recipes, optional block, starting values, showcase).
+- [chat/IW-Narrative-Examples.txt](https://iw-builder.github.io/chat/IW-Narrative-Examples.txt) (101 KB): Combined text: complete narrative example worlds (ensemble romance, fantasy expedition, contained horror).
+- [chat/IW-Sample-Library.txt](https://iw-builder.github.io/chat/IW-Sample-Library.txt) (106 KB): Combined text: library integration guide, Sample-Blocks and Storymaster-Suite.
 - [chat/IW-Tools.txt](https://iw-builder.github.io/chat/IW-Tools.txt) (144 KB): Combined text: tool usage guide, Story-Tools and Engineering-Tools guides, plus validator, schema and helper sources to recreate locally.
 - [chat/README.md](https://iw-builder.github.io/chat/README.md) (2 KB): Human guide to the combined text files.
 - [chat/sources.json](https://iw-builder.github.io/chat/sources.json) (3 KB): Which source files make up each combined text file, with hashes.

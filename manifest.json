@@ -1,11 +1,11 @@
 {
   "algorithm": "sha256",
-  "generatedAt": "2026-10-24T23:35:26+00:00",
+  "generatedAt": "2026-10-24T23:48:51+00:00",
   "files": [
     {
       "path": "Authoring-Prompt.md",
-      "bytes": 21599,
-      "sha256": "8d9dc784f7c10f49d59c807cb9a2ac7f2ab9c8ccda7a4aa30d97a0554d68033b"
+      "bytes": 21601,
+      "sha256": "98cedcf394251c947e8a6867da515ac6a33e49d4cebd42ed6836af16011a33ae"
     },
     {
       "path": "LICENSE",
@@ -14,8 +14,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 9634,
-      "sha256": "efa26fe3092d0b85caafc37d875784091104336ba469622419c7f3b781b4d922"
+      "bytes": 9773,
+      "sha256": "555712643c7f12ccd0976281718083ac77dcbd2edbd1e325e149e26ca4d1f0bb"
     },
     {
       "path": "World-Template.json",
@@ -24,48 +24,58 @@
     },
     {
       "path": "chat/IW-Authoring-Guide.txt",
-      "bytes": 76259,
-      "sha256": "de349080a521ce398e3d56b2beb890798b422cf9f77580e4036abaab815cc7b5"
+      "bytes": 76548,
+      "sha256": "fa3944c7b9c92ee8a626960e679c9c6ab67bb8827f13e24ef28b549f1616ef8d"
     },
     {
       "path": "chat/IW-Behavior.txt",
-      "bytes": 35126,
-      "sha256": "f1551558359eb9607ab5d03ebb3e3fb3edf7b95fb5fb1bbcfed838d0ba181a10"
+      "bytes": 35415,
+      "sha256": "d854b380166b0c59ef2a308784ccb610f1500ab9f496420e7e8477de758c09f2"
     },
     {
-      "path": "chat/IW-Examples.txt",
-      "bytes": 243186,
-      "sha256": "c746a87bbd458a7b0def83163839c27f87a160727c8fd31445b320461fcad01f"
+      "path": "chat/IW-Mechanics-Examples.txt",
+      "bytes": 103595,
+      "sha256": "68809de52b73912d16146b586b9ef506f767b8fb8125030959a36d957ba7af17"
+    },
+    {
+      "path": "chat/IW-Narrative-Examples.txt",
+      "bytes": 103796,
+      "sha256": "39742a5e0b3a56fe661b60d0d6f36053b4f1c636ec77d350c3e7234fb4cd954c"
+    },
+    {
+      "path": "chat/IW-Payloads.txt",
+      "bytes": 41855,
+      "sha256": "45c5e452d99dabc6b1f714eab57708453a3482aad23ffebda77d24ef224209b0"
     },
     {
       "path": "chat/IW-Sample-Library.txt",
-      "bytes": 107864,
-      "sha256": "e62b1eb36fe2833f0845e37188329ea532e9c986bfe20d04e27443bf0538a5b2"
+      "bytes": 108151,
+      "sha256": "e9798b512333cf024e9d0fdeb6fad38a0b4d33391ce1790cc145692fae0ba3d5"
     },
     {
       "path": "chat/IW-Technical-Reference.txt",
-      "bytes": 84277,
-      "sha256": "5ca907541719d25d3a22cb7d83aeaaec34b90a5643141ab0cdefa460522615ca"
+      "bytes": 85400,
+      "sha256": "8cf824d7082f053e4010a38cb639bce4e6a3d98b6d1fa6914ab270ba6ed6b446"
     },
     {
       "path": "chat/IW-Tools.txt",
-      "bytes": 147166,
-      "sha256": "246fdb07354277b7a87f05cf229557962f1d677e62bb09903e7761d6169c9b8d"
+      "bytes": 147453,
+      "sha256": "dd6fcdefa3804ce46d29eebb282df921f9444f96e6c4e628ee5cfebeed70f354"
     },
     {
       "path": "chat/README.md",
-      "bytes": 1906,
-      "sha256": "b21b7aba45456fdfaea8f7162c9cd1aad7125c73ac52c649e86e21984d59a82f"
+      "bytes": 2271,
+      "sha256": "38840b8f81fa24709a07cbda5313cb8928a1441e0ff25a655d8786f84a8012e8"
     },
     {
       "path": "chat/index.html",
-      "bytes": 79479,
-      "sha256": "74de6593d1349ba1d11c6381d67c5a9b6f67173762d3976c71437397fbf4e469"
+      "bytes": 80135,
+      "sha256": "b8fb5bf921c0e270431520d1edd38972c852e561e055b314378a249ead6c7503"
     },
     {
       "path": "chat/sources.json",
-      "bytes": 2714,
-      "sha256": "023b16456de04cbd983078247223c22d80127d895c8b29f96a1b488fef1fa1c1"
+      "bytes": 3006,
+      "sha256": "d58ab3f1f22b6e131a49923ea8eced6cb428dfdabf547176785860b30a37f4f7"
     },
     {
       "path": "checker/index.html",
@@ -394,8 +404,8 @@
     },
     {
       "path": "index.html",
-      "bytes": 23148,
-      "sha256": "a2ce837721fc8baf43ee111bd9f1d7535ceef3e5eba1b23201e62f9744a9bc09"
+      "bytes": 23156,
+      "sha256": "38d08c0679830fed0fb1d34627e320aa44a8c2fed8170c84b96457f77cff15f1"
     },
     {
       "path": "library/Integration.md",
@@ -424,13 +434,13 @@
     },
     {
       "path": "llms.txt",
-      "bytes": 25508,
-      "sha256": "0a19da813189b02fd8c017abf5aee988d4078e22d4d5780d2fa1714929356dfd"
+      "bytes": 25964,
+      "sha256": "9642195132c44b6f2f079739a982f6ca35f0de19f4fb68dbb022b3b0630b1f71"
     },
     {
       "path": "reference/Capabilities.md",
-      "bytes": 23574,
-      "sha256": "471cf768c34b4066790f4961c1d6f600c96e36101ed96b5c96d243b058f2c97f"
+      "bytes": 23627,
+      "sha256": "eb4e9c9ec7aeab5ae829f8b9478be4bb614d4728e4607f740e71e1b3b1a4a6e2"
     },
     {
       "path": "reference/Craft.md",
@@ -474,8 +484,8 @@
     },
     {
       "path": "reference/PawScript.md",
-      "bytes": 17180,
-      "sha256": "aa897926f6efb27a833abc22831563262ebe25f881fc4d8d452fc6e879718d7c"
+      "bytes": 17961,
+      "sha256": "8e4ed6df1b0ae43404ba7e292ff2d29e29f4b8a58e7d36feb5a2b02a55a46d17"
     },
     {
       "path": "reference/Portable-Banks.md",
@@ -489,8 +499,8 @@
     },
     {
       "path": "reference/Recipes.md",
-      "bytes": 12214,
-      "sha256": "d23ab5fd7fae89a87df6e20629445d34ec971832048c517078a187746d8a9b4c"
+      "bytes": 12216,
+      "sha256": "1fec3f4d6eca496fb6f457c44f9d9a65f1f310220c245039d4a19eb04a1d5575"
     },
     {
       "path": "reference/Roadmap.md",
@@ -524,13 +534,13 @@
     },
     {
       "path": "reference/Verified-Behavior.md",
-      "bytes": 14329,
-      "sha256": "896dfab8f520a299285e4aacf528a64f18aa6040f0930c25fe7349e411dbb7c8"
+      "bytes": 14331,
+      "sha256": "f52132d649ea0b78526483998e1c632f0e8b07e6d1010211f82362032f93b475"
     },
     {
       "path": "reference/index.html",
       "bytes": 5797,
-      "sha256": "05bb1b57448b7e138b128c54babc242ad88e6932be7b3650692c9e7481019e85"
+      "sha256": "6cc40dd89e6a4984a403b58ae1d973da40bb44e6245cb057aa82a8684c8a0684"
     },
     {
       "path": "tools/README.md",
@@ -549,8 +559,8 @@
     },
     {
       "path": "tools/build_distribution.py",
-      "bytes": 27897,
-      "sha256": "2af98679340f3f33131fb977886d62737a2b95a18cb234ebead870f0d37bb38d"
+      "bytes": 28594,
+      "sha256": "95a5e4d5d5020a1e5b149f923a5d776c4f6dcbcce91d9e2b0a35b7140fc4d53d"
     },
     {
       "path": "tools/check_package.py",
@@ -575,7 +585,7 @@
     {
       "path": "tools/index.html",
       "bytes": 5348,
-      "sha256": "443ef8f73f6aa0d1566949fbcb57a17f79cb6cac0956893ca41c852c221fc22f"
+      "sha256": "03bb9c3c06eab243f8b14e5019d1c76ea8be899183381935ece26c19979307d7"
     },
     {
       "path": "tools/iw-export.schema.json",
@@ -614,8 +624,8 @@
     },
     {
       "path": "tools/test_distribution.py",
-      "bytes": 7372,
-      "sha256": "32ad435f657528f0efc08331b060d84f2fa108a931456a9a852e9fed2cd772fc"
+      "bytes": 7623,
+      "sha256": "dcf0b200ff9e00c80276629d68f4a484c7506bb07a511b5cc5ec42327c9d2fea"
     },
     {
       "path": "tools/test_engineering.py",
@@ -634,8 +644,8 @@
     },
     {
       "path": "tools/test_validator.py",
-      "bytes": 6120,
-      "sha256": "f395c27e9b4ffdf24cb51ca58b48772b34ae807942ccc5e3bcd1ddebff408c0a"
+      "bytes": 6619,
+      "sha256": "6d2152fbcda98328dd3710a33ba52d9f0ac86878f04622dff507197a708979f3"
     },
     {
       "path": "tools/validate_iw_export.py",

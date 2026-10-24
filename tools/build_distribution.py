@@ -40,12 +40,11 @@ GROUPS = {
         'reference/Verified-Behavior.md',
         'reference/Known-Limits.md',
     ],
-    'IW-Examples.txt': [
+    'IW-Payloads.txt': [
         'examples/Payloads.md',
         'examples/index.json',
-        'examples/narrative-vendemmia.json',
-        'examples/narrative-listening-road.json',
-        'examples/narrative-address-after-midnight.json',
+    ],
+    'IW-Mechanics-Examples.txt': [
         'examples/recipe-request-commit.json',
         'examples/recipe-completion-award.json',
         'examples/recipe-candidate-acceptance.json',
@@ -57,8 +56,13 @@ GROUPS = {
         'examples/recipe-choice-followup.json',
         'examples/recipe-threshold-unlock.json',
         'examples/optional-block.json',
-        'examples/showcase-glass-ledger.json',
         'examples/character-starting-values.json',
+        'examples/showcase-glass-ledger.json',
+    ],
+    'IW-Narrative-Examples.txt': [
+        'examples/narrative-vendemmia.json',
+        'examples/narrative-listening-road.json',
+        'examples/narrative-address-after-midnight.json',
     ],
     'IW-Sample-Library.txt': [
         'library/Integration.md',
@@ -72,7 +76,9 @@ EDITION_PURPOSE = {
     'IW-Authoring-Guide.txt': 'start here: prompt, template, narrative craft, trackers, triggers and data banks',
     'IW-Technical-Reference.txt': 'exact payloads, PawScript, capabilities, recipes and import integrity',
     'IW-Behavior.txt': 'editor/UI workflows, verified runtime behavior and known limits',
-    'IW-Examples.txt': 'payload cookbook and selected complete example worlds',
+    'IW-Payloads.txt': 'exact native payload snippets for every condition and effect, plus the example index',
+    'IW-Mechanics-Examples.txt': 'complete mechanics example worlds: recipes, optional block, starting values and a showcase',
+    'IW-Narrative-Examples.txt': 'complete narrative example worlds: ensemble romance, fantasy expedition and contained horror',
     'IW-Sample-Library.txt': 'optional library modules and Storymaster',
     'IW-Tools.txt': 'Python tools and their guides, for models that can run code',
 }
@@ -293,7 +299,9 @@ DESCRIPTIONS = {
     'chat/IW-Authoring-Guide.txt': 'Combined text, start here: prompt, template, Evidence, Craft, Trackers, Triggers, Trigger-Catalog and Portable-Banks.',
     'chat/IW-Technical-Reference.txt': 'Combined text: Schema, PawScript, Capabilities, Recipes, Import-Integrity, Default Evaluation and AI profile IDs.',
     'chat/IW-Behavior.txt': 'Combined text: Editor-UI, Verified-Behavior and Known-Limits.',
-    'chat/IW-Examples.txt': 'Combined text: payload cookbook, example index and selected complete example worlds.',
+    'chat/IW-Payloads.txt': 'Combined text: payload cookbook (every condition and effect) and the example index. Small and essential for mechanics.',
+    'chat/IW-Mechanics-Examples.txt': 'Combined text: complete mechanics example worlds (recipes, optional block, starting values, showcase).',
+    'chat/IW-Narrative-Examples.txt': 'Combined text: complete narrative example worlds (ensemble romance, fantasy expedition, contained horror).',
     'chat/IW-Sample-Library.txt': 'Combined text: library integration guide, Sample-Blocks and Storymaster-Suite.',
     'chat/IW-Tools.txt': 'Combined text: tool usage guide, Story-Tools and Engineering-Tools guides, plus validator, schema and helper sources to recreate locally.',
     'chat/README.md': 'Human guide to the combined text files.',

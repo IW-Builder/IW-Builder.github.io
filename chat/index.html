@@ -11,7 +11,9 @@
   <p>Start here. This page contains IW-Authoring-Guide.txt: the prompt, template and core references. Companion editions, only when needed:
     <a href="IW-Technical-Reference.txt">IW-Technical-Reference.txt</a> (exact payloads, PawScript, capabilities, recipes and import integrity),
     <a href="IW-Behavior.txt">IW-Behavior.txt</a> (editor/UI workflows, verified runtime behavior and known limits),
-    <a href="IW-Examples.txt">IW-Examples.txt</a> (payload cookbook and selected complete example worlds),
+    <a href="IW-Payloads.txt">IW-Payloads.txt</a> (exact native payload snippets for every condition and effect, plus the example index),
+    <a href="IW-Mechanics-Examples.txt">IW-Mechanics-Examples.txt</a> (complete mechanics example worlds: recipes, optional block, starting values and a showcase),
+    <a href="IW-Narrative-Examples.txt">IW-Narrative-Examples.txt</a> (complete narrative example worlds: ensemble romance, fantasy expedition and contained horror),
     <a href="IW-Sample-Library.txt">IW-Sample-Library.txt</a> (optional library modules and Storymaster),
     <a href="IW-Tools.txt">IW-Tools.txt</a> (Python tools and their guides, for models that can run code).
     Individual files: <a href="https://iw-builder.github.io/llms.txt">llms.txt</a>.</p>
@@ -22,7 +24,9 @@ Editions and their contents:
 - IW-Authoring-Guide.txt: start here: prompt, template, narrative craft, trackers, triggers and data banks. Files: Authoring-Prompt.md, World-Template.json, reference/Evidence.md, reference/Craft.md, reference/Trackers.md, reference/Triggers.md, reference/Trigger-Catalog.md, reference/Portable-Banks.md
 - IW-Technical-Reference.txt: exact payloads, PawScript, capabilities, recipes and import integrity. Files: reference/Schema.md, reference/PawScript.md, reference/Capabilities.md, reference/Recipes.md, reference/Import-Integrity.md, reference/Default-Evaluation.txt, reference/Current-AI-Profiles.json
 - IW-Behavior.txt: editor/UI workflows, verified runtime behavior and known limits. Files: reference/Editor-UI.md, reference/Verified-Behavior.md, reference/Known-Limits.md
-- IW-Examples.txt: payload cookbook and selected complete example worlds. Files: examples/Payloads.md, examples/index.json, examples/narrative-vendemmia.json, examples/narrative-listening-road.json, examples/narrative-address-after-midnight.json, examples/recipe-request-commit.json, examples/recipe-completion-award.json, examples/recipe-candidate-acceptance.json, examples/recipe-archive-reactivate.json, examples/recipe-cached-random.json, examples/recipe-consumed-timer.json, examples/recipe-choice-domain.json, examples/recipe-compiled-plot.json, examples/recipe-choice-followup.json, examples/recipe-threshold-unlock.json, examples/optional-block.json, examples/showcase-glass-ledger.json, examples/character-starting-values.json
+- IW-Payloads.txt: exact native payload snippets for every condition and effect, plus the example index. Files: examples/Payloads.md, examples/index.json
+- IW-Mechanics-Examples.txt: complete mechanics example worlds: recipes, optional block, starting values and a showcase. Files: examples/recipe-request-commit.json, examples/recipe-completion-award.json, examples/recipe-candidate-acceptance.json, examples/recipe-archive-reactivate.json, examples/recipe-cached-random.json, examples/recipe-consumed-timer.json, examples/recipe-choice-domain.json, examples/recipe-compiled-plot.json, examples/recipe-choice-followup.json, examples/recipe-threshold-unlock.json, examples/optional-block.json, examples/character-starting-values.json, examples/showcase-glass-ledger.json
+- IW-Narrative-Examples.txt: complete narrative example worlds: ensemble romance, fantasy expedition and contained horror. Files: examples/narrative-vendemmia.json, examples/narrative-listening-road.json, examples/narrative-address-after-midnight.json
 - IW-Sample-Library.txt: optional library modules and Storymaster. Files: library/Integration.md, library/Sample-Blocks.json, library/Storymaster-Suite.json
 - IW-Tools.txt: Python tools and their guides, for models that can run code. Files: tools/Usage.md, reference/Story-Tools.md, reference/Engineering-Tools.md, tools/validate_iw_export.py, tools/static_checks.py, tools/iw-export.schema.json, tools/data_bank.py, tools/import_audit.py, tools/story_export.py, tools/iw_browser.py, tools/plot_compile.py
 Every file is also available individually: https://iw-builder.github.io/llms.txt
@@ -103,7 +107,7 @@ Raise relevant issues without forcing architecture changes. When two approaches 
 |Essential opening facts only in keyword/NPC detail|Concise firstInput or always-on context and an NPC brief summary.|
 |Many independently defined Scenarios|Reuse definitions; beyond the limit, consider a classification tracker and predicates.|
 |Multiple native numeric writes to one tracker in one trigger|One sequential script, or deliberately separate ordered triggers.|
-|A live `&lt;&lt;...&gt;&gt;` expression installed through block modification|A deferred `&lt;=...=&gt;` reference, a permanent live block, or reinstall-on-change.|
+|A live `&lt;&lt;...&gt;&gt;` expression installed through block modification|A deferred `&lt;&lt;=...=&gt;&gt;` reference, a permanent live block, or reinstall-on-change.|
 |Unguarded Start+Mid+repeat counter|Explicit setup handling; it can execute before opening and again during turn 1.|
 |Overlapping skills|Distinct scope in skill names/instructions; selection can be ambiguous, not a guaranteed easiest-skill algorithm.|
 |Unbounded journal/cast tracker|Bounded records, summaryRequest, or selective memory according to the need.|

@@ -7,10 +7,19 @@ PawScript reads game data, computes values and updates trackers. It is its own l
 | Context | Example | Purpose |
 | --- | --- | --- |
 | Template in supported text field | `Coins: <<$coins>>` | Insert result into text; no mutation |
+| Deferred template in text installed by a block-modification effect | `Coins: <<=$coins=>>` | Stays live after installation instead of freezing; no mutation |
 | PawScript trigger condition | `$coins >= 5` | Return true/false; no mutation |
 | Run Script trigger effect | `$coins -= 5` | Execute statements, save changes |
 
-An **expression** returns a value. A **statement** performs work, such as assignment or a loop. Script conditions are still expressions: the test after `if` decides whether its indented statements run. Use bare code in trigger conditions and Run Script, without `<<...>>` or Markdown fences. Text that a block-modification effect installs is a snapshot of its `<<...>>` values; a deferred `<=...=>` reference stays live in that destination. See [Capabilities.md](Capabilities.md) for template timing.
+An **expression** returns a value. A **statement** performs work, such as assignment or a loop. Script conditions are still expressions: the test after `if` decides whether its indented statements run. Use bare code in trigger conditions and Run Script, without `<<...>>` or Markdown fences. Text that a block-modification effect installs is a snapshot of its `<<...>>` values; a deferred `<<=...=>>` reference stays live in that destination. See [Capabilities.md](Capabilities.md) for template timing.
+
+A deferred reference from a live world, adapted. It sits in the content of a Modify instruction block effect:
+
+```text
+Win path: <<=choose($win_path, "escape", "Find the hidden exit before dawn.", "expose", "Gather proof and reveal the warden.", "Survive until the relief ship arrives.")=>>
+```
+
+When the effect installs this text, the deferred reference is kept rather than resolved, so the block describes the current `win_path` each time it is prepared. Written as `<<choose(...)>>`, it would freeze at the value `win_path` had when the effect ran. In the JSON export the inner quotation marks are escaped as `\"`.
 
 PawScript cannot write arbitrary world fields, including background or instruction-block content, or invoke native trigger effects. Calculate or assemble content in trackers, then use native effects to install it or display messages. Templates do not expand write permissions. `$player` and `$game` are read-only; do not infer writability from a field being readable.
 

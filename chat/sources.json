@@ -10,7 +10,7 @@
       "reference/Trigger-Catalog.md",
       "reference/Portable-Banks.md"
     ],
-    "sha256": "de349080a521ce398e3d56b2beb890798b422cf9f77580e4036abaab815cc7b5"
+    "sha256": "fa3944c7b9c92ee8a626960e679c9c6ab67bb8827f13e24ef28b549f1616ef8d"
   },
   "IW-Technical-Reference.txt": {
     "sourceFiles": [
@@ -22,7 +22,7 @@
       "reference/Default-Evaluation.txt",
       "reference/Current-AI-Profiles.json"
     ],
-    "sha256": "5ca907541719d25d3a22cb7d83aeaaec34b90a5643141ab0cdefa460522615ca"
+    "sha256": "8cf824d7082f053e4010a38cb639bce4e6a3d98b6d1fa6914ab270ba6ed6b446"
   },
   "IW-Behavior.txt": {
     "sourceFiles": [
@@ -30,15 +30,17 @@
       "reference/Verified-Behavior.md",
       "reference/Known-Limits.md"
     ],
-    "sha256": "f1551558359eb9607ab5d03ebb3e3fb3edf7b95fb5fb1bbcfed838d0ba181a10"
+    "sha256": "d854b380166b0c59ef2a308784ccb610f1500ab9f496420e7e8477de758c09f2"
   },
-  "IW-Examples.txt": {
+  "IW-Payloads.txt": {
     "sourceFiles": [
       "examples/Payloads.md",
-      "examples/index.json",
-      "examples/narrative-vendemmia.json",
-      "examples/narrative-listening-road.json",
-      "examples/narrative-address-after-midnight.json",
+      "examples/index.json"
+    ],
+    "sha256": "45c5e452d99dabc6b1f714eab57708453a3482aad23ffebda77d24ef224209b0"
+  },
+  "IW-Mechanics-Examples.txt": {
+    "sourceFiles": [
       "examples/recipe-request-commit.json",
       "examples/recipe-completion-award.json",
       "examples/recipe-candidate-acceptance.json",
@@ -50,10 +52,18 @@
       "examples/recipe-choice-followup.json",
       "examples/recipe-threshold-unlock.json",
       "examples/optional-block.json",
-      "examples/showcase-glass-ledger.json",
-      "examples/character-starting-values.json"
+      "examples/character-starting-values.json",
+      "examples/showcase-glass-ledger.json"
     ],
-    "sha256": "c746a87bbd458a7b0def83163839c27f87a160727c8fd31445b320461fcad01f"
+    "sha256": "68809de52b73912d16146b586b9ef506f767b8fb8125030959a36d957ba7af17"
+  },
+  "IW-Narrative-Examples.txt": {
+    "sourceFiles": [
+      "examples/narrative-vendemmia.json",
+      "examples/narrative-listening-road.json",
+      "examples/narrative-address-after-midnight.json"
+    ],
+    "sha256": "39742a5e0b3a56fe661b60d0d6f36053b4f1c636ec77d350c3e7234fb4cd954c"
   },
   "IW-Sample-Library.txt": {
     "sourceFiles": [
@@ -61,7 +71,7 @@
       "library/Sample-Blocks.json",
       "library/Storymaster-Suite.json"
     ],
-    "sha256": "e62b1eb36fe2833f0845e37188329ea532e9c986bfe20d04e27443bf0538a5b2"
+    "sha256": "e9798b512333cf024e9d0fdeb6fad38a0b4d33391ce1790cc145692fae0ba3d5"
   },
   "IW-Tools.txt": {
     "sourceFiles": [
@@ -77,6 +87,6 @@
       "tools/iw_browser.py",
       "tools/plot_compile.py"
     ],
-    "sha256": "246fdb07354277b7a87f05cf229557962f1d677e62bb09903e7761d6169c9b8d"
+    "sha256": "dd6fcdefa3804ce46d29eebb282df921f9444f96e6c4e628ee5cfebeed70f354"
   }
 }
