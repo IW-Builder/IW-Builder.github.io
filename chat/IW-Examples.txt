@@ -801,6 +801,55 @@ END OF DOCUMENT: examples/Payloads.md
     "evidence": "PATTERN",
     "structuralValidation": "Checked with tools/validate_iw_export.py.",
     "runtimeScope": "Composition not yet runtime-tested in IW; see examples/README.md for checks."
+  },
+  {
+    "file": "recipe-completion-award.json",
+    "purpose": "Completion and award guard",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Optional composition of documented/observed primitives. This complete example has not been live-tested."
+  },
+  {
+    "file": "recipe-candidate-acceptance.json",
+    "purpose": "Candidate acceptance",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Optional composition of documented/observed primitives. This complete example has not been live-tested."
+  },
+  {
+    "file": "recipe-archive-reactivate.json",
+    "purpose": "Archive and reactivate",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Optional composition of documented/observed primitives. This complete example has not been live-tested."
+  },
+  {
+    "file": "recipe-cached-random.json",
+    "purpose": "Cached random choice",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Optional composition of documented/observed primitives. This complete example has not been live-tested."
+  },
+  {
+    "file": "recipe-consumed-timer.json",
+    "purpose": "Consumed turn milestone",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Optional composition of documented/observed primitives. This complete example has not been live-tested."
+  },
+  {
+    "file": "recipe-choice-domain.json",
+    "purpose": "Choice domain guard",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Optional composition of documented/observed primitives. This complete example has not been live-tested."
+  },
+  {
+    "file": "recipe-compiled-plot.json",
+    "purpose": "Guild prerequisite graph",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Optional composition of documented/observed primitives. This complete example has not been live-tested."
   }
 ]
 
@@ -1029,7 +1078,6 @@ END OF DOCUMENT: examples/Payloads.md
   ],
   "designNotes": "Narrative pattern example: ensemble romance with three different attraction gates, a stance ladder with agreements, wardrobe continuity, stakes each NPC experiences differently, and sensory keyword lore. Borrow structure, not names, premise or signature details."
 }
-
 ===== END FILE: examples/narrative-vendemmia.json =====
 
 ===== BEGIN FILE: examples/recipe-request-commit.json =====
@@ -1354,6 +1402,1100 @@ END OF DOCUMENT: examples/Payloads.md
   "designNotes": "Authoring example. See the example index for scope and verification status."
 }
 ===== END FILE: examples/recipe-request-commit.json =====
+
+===== BEGIN FILE: examples/recipe-completion-award.json =====
+{
+  "favorite": false,
+  "title": "Completion and award guard",
+  "description": "Optional authoring pattern; structurally checked, not a newly certified runtime composition.",
+  "background": "An adult courier waits at a guild desk.",
+  "instructions": "Respect the authored tracker state. Describe attempts without inventing mechanical rewards.",
+  "authorStyle": "",
+  "recommendedAIModel": null,
+  "firstInput": "Introduce the guild desk.",
+  "objective": "",
+  "imageModel": "manticore",
+  "imageStyle": "photo_1",
+  "illustrationStyleNonCharacterLowPriority": "",
+  "illustrationStyleNonCharacterHighPriority": "",
+  "illustrationStyleCharacterLowPriority": "",
+  "illustrationStyleCharacterHighPriority": "",
+  "imageStyleCharacterPre": "",
+  "imageStyleCharacterPost": "",
+  "imageStyleNonCharacterPre": "",
+  "imageStyleNonCharacterPost": "",
+  "mature": false,
+  "nsfw": false,
+  "contentWarnings": "",
+  "enableAISpecificInstructionBlocks": false,
+  "previewImage": "",
+  "fullSizePreviewImage": "",
+  "previewImageOptions": [],
+  "fullSizePreviewImageOptions": [],
+  "currentPreviewImageIndex": -1,
+  "imagePromptDetails": {
+    "illustrClothes": "",
+    "illustrSetting": "",
+    "illustrSubject": "",
+    "illustrAppearance": "",
+    "illustrIsCharacter": false,
+    "illustrExpressionPosition": ""
+  },
+  "permissionsOnceShared": {
+    "sharing": true,
+    "editing": true
+  },
+  "allowChangeCharacterName": false,
+  "allowChangeCharacterDescription": false,
+  "allowChangeCharacterSkills": false,
+  "allowChangeCharacterItemValues": false,
+  "allowChangeCharacterPortrait": false,
+  "allowChangeCharacterNewPortrait": false,
+  "conditions": [],
+  "schemaVersion": 2.4,
+  "skills": [
+    "Generic skill"
+  ],
+  "possibleCharacters": [
+    {
+      "name": "Player character",
+      "description": "",
+      "portrait": "",
+      "portraitPromptDetails": {
+        "illustrAppearance": "",
+        "illustrClothes": "",
+        "illustrExpressionPosition": "",
+        "illustrSetting": ""
+      },
+      "fullSizePortrait": "",
+      "portraitOptions": [],
+      "fullSizePortraitOptions": [],
+      "currentPortraitIndex": -1,
+      "characterId": "c7038c97-b50f-57be-9e33-9ce2914d80ef",
+      "skills": {
+        "Generic skill": 3
+      },
+      "initialTrackedItemValues": []
+    }
+  ],
+  "triggerEvents": [
+    {
+      "id": "e22c5ac585411a89f3",
+      "name": "Commit award",
+      "advancedLogic": false,
+      "triggerOnStartOfGame": false,
+      "triggerMidGame": false,
+      "canTriggerMoreThanOnce": true,
+      "triggerConditions": [
+        {
+          "id": "13c2c5d1c2672a7d8c",
+          "category": "condition",
+          "type": "triggerOnPawScript",
+          "data": "$award.ready = 1 and $award.completed = 0"
+        }
+      ],
+      "triggerEffects": [
+        {
+          "id": "5a6d5d51cabe995624",
+          "type": "effectRunScript",
+          "data": "if $award.ready = 1 and $award.completed = 0\n    $award.score += 5\n    $award.completed = 1"
+        }
+      ]
+    }
+  ],
+  "victoryCondition": null,
+  "defeatCondition": null,
+  "trackedItems": [
+    {
+      "id": "aa6e6a1bf02335a7ed",
+      "name": "Award state",
+      "variableName": "award",
+      "positionInList": 0,
+      "dataType": "yaml",
+      "visibility": "everyone",
+      "description": "Authored example state; script-owned.",
+      "initialValue": "ready: 0\ncompleted: 0\nscore: 0",
+      "initialValueBasedOnPC": "same",
+      "autoUpdate": false,
+      "updateInstructions": "",
+      "enforceFormat": false
+    }
+  ],
+  "hideSkillSystem": true,
+  "autoAdvanceVersion": false,
+  "version": "1.0",
+  "charSelectText": "",
+  "descriptionRequest": "",
+  "evaluationRequest": "",
+  "summaryRequest": "",
+  "instructionBlocks": [],
+  "NPCs": [],
+  "loreBookEntries": [],
+  "designNotes": ""
+}
+===== END FILE: examples/recipe-completion-award.json =====
+
+===== BEGIN FILE: examples/recipe-candidate-acceptance.json =====
+{
+  "favorite": false,
+  "title": "Candidate acceptance",
+  "description": "Optional authoring pattern; structurally checked, not a newly certified runtime composition.",
+  "background": "An adult courier waits at a guild desk.",
+  "instructions": "Respect the authored tracker state. Describe attempts without inventing mechanical rewards.",
+  "authorStyle": "",
+  "recommendedAIModel": null,
+  "firstInput": "Introduce the guild desk.",
+  "objective": "",
+  "imageModel": "manticore",
+  "imageStyle": "photo_1",
+  "illustrationStyleNonCharacterLowPriority": "",
+  "illustrationStyleNonCharacterHighPriority": "",
+  "illustrationStyleCharacterLowPriority": "",
+  "illustrationStyleCharacterHighPriority": "",
+  "imageStyleCharacterPre": "",
+  "imageStyleCharacterPost": "",
+  "imageStyleNonCharacterPre": "",
+  "imageStyleNonCharacterPost": "",
+  "mature": false,
+  "nsfw": false,
+  "contentWarnings": "",
+  "enableAISpecificInstructionBlocks": false,
+  "previewImage": "",
+  "fullSizePreviewImage": "",
+  "previewImageOptions": [],
+  "fullSizePreviewImageOptions": [],
+  "currentPreviewImageIndex": -1,
+  "imagePromptDetails": {
+    "illustrClothes": "",
+    "illustrSetting": "",
+    "illustrSubject": "",
+    "illustrAppearance": "",
+    "illustrIsCharacter": false,
+    "illustrExpressionPosition": ""
+  },
+  "permissionsOnceShared": {
+    "sharing": true,
+    "editing": true
+  },
+  "allowChangeCharacterName": false,
+  "allowChangeCharacterDescription": false,
+  "allowChangeCharacterSkills": false,
+  "allowChangeCharacterItemValues": false,
+  "allowChangeCharacterPortrait": false,
+  "allowChangeCharacterNewPortrait": false,
+  "conditions": [],
+  "schemaVersion": 2.4,
+  "skills": [
+    "Generic skill"
+  ],
+  "possibleCharacters": [
+    {
+      "name": "Player character",
+      "description": "",
+      "portrait": "",
+      "portraitPromptDetails": {
+        "illustrAppearance": "",
+        "illustrClothes": "",
+        "illustrExpressionPosition": "",
+        "illustrSetting": ""
+      },
+      "fullSizePortrait": "",
+      "portraitOptions": [],
+      "fullSizePortraitOptions": [],
+      "currentPortraitIndex": -1,
+      "characterId": "c7038c97-b50f-57be-9e33-9ce2914d80ef",
+      "skills": {
+        "Generic skill": 3
+      },
+      "initialTrackedItemValues": []
+    }
+  ],
+  "triggerEvents": [
+    {
+      "id": "889df3b68cd4c85183",
+      "name": "Accept bounded candidate",
+      "advancedLogic": false,
+      "triggerOnStartOfGame": false,
+      "triggerMidGame": false,
+      "canTriggerMoreThanOnce": true,
+      "triggerConditions": [
+        {
+          "id": "8697487d8a3bebcde6",
+          "category": "condition",
+          "type": "triggerOnPawScript",
+          "data": "$accepted.locked = 0 and $candidate.submitted = 1"
+        }
+      ],
+      "triggerEffects": [
+        {
+          "id": "d165cdd0aaee84c40f",
+          "type": "effectRunScript",
+          "data": "if $candidate.id.exists() and $candidate.qty.exists()\n    if $candidate.id = \"draft01\" and $candidate.qty >= 1 and $candidate.qty <= 9\n        $accepted.id = $candidate.id\n        $accepted.qty = $candidate.qty\n        $accepted.locked = 1"
+        }
+      ]
+    }
+  ],
+  "victoryCondition": null,
+  "defeatCondition": null,
+  "trackedItems": [
+    {
+      "id": "2b344a26c40d199e46",
+      "name": "Candidate",
+      "variableName": "candidate",
+      "positionInList": 0,
+      "dataType": "yaml",
+      "visibility": "everyone",
+      "description": "Authored example state; script-owned.",
+      "initialValue": "id: draft01\nqty: 1\nsubmitted: 0",
+      "initialValueBasedOnPC": "same",
+      "autoUpdate": false,
+      "updateInstructions": "",
+      "enforceFormat": false
+    },
+    {
+      "id": "106bfcdeff3035f31f",
+      "name": "Accepted",
+      "variableName": "accepted",
+      "positionInList": 1,
+      "dataType": "yaml",
+      "visibility": "everyone",
+      "description": "Authored example state; script-owned.",
+      "initialValue": "id: \"\"\nqty: 0\nlocked: 0",
+      "initialValueBasedOnPC": "same",
+      "autoUpdate": false,
+      "updateInstructions": "",
+      "enforceFormat": false
+    }
+  ],
+  "hideSkillSystem": true,
+  "autoAdvanceVersion": false,
+  "version": "1.0",
+  "charSelectText": "",
+  "descriptionRequest": "",
+  "evaluationRequest": "",
+  "summaryRequest": "",
+  "instructionBlocks": [],
+  "NPCs": [],
+  "loreBookEntries": [],
+  "designNotes": ""
+}
+===== END FILE: examples/recipe-candidate-acceptance.json =====
+
+===== BEGIN FILE: examples/recipe-archive-reactivate.json =====
+{
+  "favorite": false,
+  "title": "Archive and reactivate",
+  "description": "Optional authoring pattern; structurally checked, not a newly certified runtime composition.",
+  "background": "An adult courier waits at a guild desk.",
+  "instructions": "Respect the authored tracker state. Describe attempts without inventing mechanical rewards.",
+  "authorStyle": "",
+  "recommendedAIModel": null,
+  "firstInput": "Introduce the guild desk.",
+  "objective": "",
+  "imageModel": "manticore",
+  "imageStyle": "photo_1",
+  "illustrationStyleNonCharacterLowPriority": "",
+  "illustrationStyleNonCharacterHighPriority": "",
+  "illustrationStyleCharacterLowPriority": "",
+  "illustrationStyleCharacterHighPriority": "",
+  "imageStyleCharacterPre": "",
+  "imageStyleCharacterPost": "",
+  "imageStyleNonCharacterPre": "",
+  "imageStyleNonCharacterPost": "",
+  "mature": false,
+  "nsfw": false,
+  "contentWarnings": "",
+  "enableAISpecificInstructionBlocks": false,
+  "previewImage": "",
+  "fullSizePreviewImage": "",
+  "previewImageOptions": [],
+  "fullSizePreviewImageOptions": [],
+  "currentPreviewImageIndex": -1,
+  "imagePromptDetails": {
+    "illustrClothes": "",
+    "illustrSetting": "",
+    "illustrSubject": "",
+    "illustrAppearance": "",
+    "illustrIsCharacter": false,
+    "illustrExpressionPosition": ""
+  },
+  "permissionsOnceShared": {
+    "sharing": true,
+    "editing": true
+  },
+  "allowChangeCharacterName": false,
+  "allowChangeCharacterDescription": false,
+  "allowChangeCharacterSkills": false,
+  "allowChangeCharacterItemValues": false,
+  "allowChangeCharacterPortrait": false,
+  "allowChangeCharacterNewPortrait": false,
+  "conditions": [],
+  "schemaVersion": 2.4,
+  "skills": [
+    "Generic skill"
+  ],
+  "possibleCharacters": [
+    {
+      "name": "Player character",
+      "description": "",
+      "portrait": "",
+      "portraitPromptDetails": {
+        "illustrAppearance": "",
+        "illustrClothes": "",
+        "illustrExpressionPosition": "",
+        "illustrSetting": ""
+      },
+      "fullSizePortrait": "",
+      "portraitOptions": [],
+      "fullSizePortraitOptions": [],
+      "currentPortraitIndex": -1,
+      "characterId": "c7038c97-b50f-57be-9e33-9ce2914d80ef",
+      "skills": {
+        "Generic skill": 3
+      },
+      "initialTrackedItemValues": []
+    }
+  ],
+  "triggerEvents": [
+    {
+      "id": "289ef888f70423fa5c",
+      "name": "Archive record",
+      "advancedLogic": false,
+      "triggerOnStartOfGame": false,
+      "triggerMidGame": false,
+      "canTriggerMoreThanOnce": true,
+      "triggerConditions": [
+        {
+          "id": "ba9ee44050b18b232e",
+          "category": "condition",
+          "type": "triggerOnPawScript",
+          "data": "$active.request = \"archive\" and $active.enabled = 1"
+        }
+      ],
+      "triggerEffects": [
+        {
+          "id": "1c2a1c4f46f31e7368",
+          "type": "effectRunScript",
+          "data": "if $active.enabled = 1\n    $archive.id = $active.id\n    $archive.value = $active.value\n    $archive.present = 1\n    $active.enabled = 0\n    $active.request = \"none\""
+        }
+      ]
+    },
+    {
+      "id": "831fdc6142a7520ae5",
+      "name": "Restore record",
+      "advancedLogic": false,
+      "triggerOnStartOfGame": false,
+      "triggerMidGame": false,
+      "canTriggerMoreThanOnce": true,
+      "triggerConditions": [
+        {
+          "id": "b901406dddaa9e60e0",
+          "category": "condition",
+          "type": "triggerOnPawScript",
+          "data": "$active.request = \"restore\" and $active.enabled = 0 and $archive.present = 1"
+        }
+      ],
+      "triggerEffects": [
+        {
+          "id": "80852903b06f2d3882",
+          "type": "effectRunScript",
+          "data": "if $archive.present = 1\n    $active.id = $archive.id\n    $active.value = $archive.value\n    $active.enabled = 1\n    $archive.present = 0\n    $active.request = \"none\""
+        }
+      ]
+    }
+  ],
+  "victoryCondition": null,
+  "defeatCondition": null,
+  "trackedItems": [
+    {
+      "id": "162bcd8c82289f6ab5",
+      "name": "Active record",
+      "variableName": "active",
+      "positionInList": 0,
+      "dataType": "yaml",
+      "visibility": "everyone",
+      "description": "Authored example state; script-owned.",
+      "initialValue": "id: entry01\nvalue: 7\nenabled: 1\nrequest: none",
+      "initialValueBasedOnPC": "same",
+      "autoUpdate": false,
+      "updateInstructions": "",
+      "enforceFormat": false
+    },
+    {
+      "id": "95208e7532ea431f70",
+      "name": "Archive",
+      "variableName": "archive",
+      "positionInList": 1,
+      "dataType": "yaml",
+      "visibility": "everyone",
+      "description": "Authored example state; script-owned.",
+      "initialValue": "id: \"\"\nvalue: 0\npresent: 0",
+      "initialValueBasedOnPC": "same",
+      "autoUpdate": false,
+      "updateInstructions": "",
+      "enforceFormat": false
+    }
+  ],
+  "hideSkillSystem": true,
+  "autoAdvanceVersion": false,
+  "version": "1.0",
+  "charSelectText": "",
+  "descriptionRequest": "",
+  "evaluationRequest": "",
+  "summaryRequest": "",
+  "instructionBlocks": [],
+  "NPCs": [],
+  "loreBookEntries": [],
+  "designNotes": ""
+}
+===== END FILE: examples/recipe-archive-reactivate.json =====
+
+===== BEGIN FILE: examples/recipe-cached-random.json =====
+{
+  "favorite": false,
+  "title": "Cached random choice",
+  "description": "Optional authoring pattern; structurally checked, not a newly certified runtime composition.",
+  "background": "An adult courier waits at a guild desk.",
+  "instructions": "Respect the authored tracker state. Describe attempts without inventing mechanical rewards.",
+  "authorStyle": "",
+  "recommendedAIModel": null,
+  "firstInput": "Introduce the guild desk.",
+  "objective": "",
+  "imageModel": "manticore",
+  "imageStyle": "photo_1",
+  "illustrationStyleNonCharacterLowPriority": "",
+  "illustrationStyleNonCharacterHighPriority": "",
+  "illustrationStyleCharacterLowPriority": "",
+  "illustrationStyleCharacterHighPriority": "",
+  "imageStyleCharacterPre": "",
+  "imageStyleCharacterPost": "",
+  "imageStyleNonCharacterPre": "",
+  "imageStyleNonCharacterPost": "",
+  "mature": false,
+  "nsfw": false,
+  "contentWarnings": "",
+  "enableAISpecificInstructionBlocks": false,
+  "previewImage": "",
+  "fullSizePreviewImage": "",
+  "previewImageOptions": [],
+  "fullSizePreviewImageOptions": [],
+  "currentPreviewImageIndex": -1,
+  "imagePromptDetails": {
+    "illustrClothes": "",
+    "illustrSetting": "",
+    "illustrSubject": "",
+    "illustrAppearance": "",
+    "illustrIsCharacter": false,
+    "illustrExpressionPosition": ""
+  },
+  "permissionsOnceShared": {
+    "sharing": true,
+    "editing": true
+  },
+  "allowChangeCharacterName": false,
+  "allowChangeCharacterDescription": false,
+  "allowChangeCharacterSkills": false,
+  "allowChangeCharacterItemValues": false,
+  "allowChangeCharacterPortrait": false,
+  "allowChangeCharacterNewPortrait": false,
+  "conditions": [],
+  "schemaVersion": 2.4,
+  "skills": [
+    "Generic skill"
+  ],
+  "possibleCharacters": [
+    {
+      "name": "Player character",
+      "description": "",
+      "portrait": "",
+      "portraitPromptDetails": {
+        "illustrAppearance": "",
+        "illustrClothes": "",
+        "illustrExpressionPosition": "",
+        "illustrSetting": ""
+      },
+      "fullSizePortrait": "",
+      "portraitOptions": [],
+      "fullSizePortraitOptions": [],
+      "currentPortraitIndex": -1,
+      "characterId": "c7038c97-b50f-57be-9e33-9ce2914d80ef",
+      "skills": {
+        "Generic skill": 3
+      },
+      "initialTrackedItemValues": []
+    }
+  ],
+  "triggerEvents": [
+    {
+      "id": "f01b29d857c0eb4c39",
+      "name": "Draw once",
+      "advancedLogic": false,
+      "triggerOnStartOfGame": false,
+      "triggerMidGame": false,
+      "canTriggerMoreThanOnce": true,
+      "triggerConditions": [
+        {
+          "id": "67c1f7a95ac9a76531",
+          "category": "condition",
+          "type": "triggerOnPawScript",
+          "data": "$cached.ready = 0"
+        }
+      ],
+      "triggerEffects": [
+        {
+          "id": "7a84ca4cb5dffa528d",
+          "type": "effectRunScript",
+          "data": "if $cached.ready = 0\n    $cached.roll = random_between(1, 6)\n    $cached.ready = 1"
+        }
+      ]
+    }
+  ],
+  "victoryCondition": null,
+  "defeatCondition": null,
+  "trackedItems": [
+    {
+      "id": "8193c1780e5bc2c801",
+      "name": "Cached choice",
+      "variableName": "cached",
+      "positionInList": 0,
+      "dataType": "yaml",
+      "visibility": "everyone",
+      "description": "Authored example state; script-owned.",
+      "initialValue": "roll: 0\nready: 0",
+      "initialValueBasedOnPC": "same",
+      "autoUpdate": false,
+      "updateInstructions": "",
+      "enforceFormat": false
+    }
+  ],
+  "hideSkillSystem": true,
+  "autoAdvanceVersion": false,
+  "version": "1.0",
+  "charSelectText": "",
+  "descriptionRequest": "",
+  "evaluationRequest": "",
+  "summaryRequest": "",
+  "instructionBlocks": [
+    {
+      "id": "cachedConsumerA",
+      "name": "First consumer",
+      "content": "Cached roll: <<$cached.roll>>"
+    },
+    {
+      "id": "cachedConsumerB",
+      "name": "Second consumer",
+      "content": "Use the same cached roll: <<$cached.roll>>"
+    }
+  ],
+  "NPCs": [],
+  "loreBookEntries": [],
+  "designNotes": ""
+}
+===== END FILE: examples/recipe-cached-random.json =====
+
+===== BEGIN FILE: examples/recipe-consumed-timer.json =====
+{
+  "favorite": false,
+  "title": "Consumed turn milestone",
+  "description": "Optional authoring pattern; structurally checked, not a newly certified runtime composition.",
+  "background": "An adult courier waits at a guild desk.",
+  "instructions": "Respect the authored tracker state. Describe attempts without inventing mechanical rewards.",
+  "authorStyle": "",
+  "recommendedAIModel": null,
+  "firstInput": "Introduce the guild desk.",
+  "objective": "",
+  "imageModel": "manticore",
+  "imageStyle": "photo_1",
+  "illustrationStyleNonCharacterLowPriority": "",
+  "illustrationStyleNonCharacterHighPriority": "",
+  "illustrationStyleCharacterLowPriority": "",
+  "illustrationStyleCharacterHighPriority": "",
+  "imageStyleCharacterPre": "",
+  "imageStyleCharacterPost": "",
+  "imageStyleNonCharacterPre": "",
+  "imageStyleNonCharacterPost": "",
+  "mature": false,
+  "nsfw": false,
+  "contentWarnings": "",
+  "enableAISpecificInstructionBlocks": false,
+  "previewImage": "",
+  "fullSizePreviewImage": "",
+  "previewImageOptions": [],
+  "fullSizePreviewImageOptions": [],
+  "currentPreviewImageIndex": -1,
+  "imagePromptDetails": {
+    "illustrClothes": "",
+    "illustrSetting": "",
+    "illustrSubject": "",
+    "illustrAppearance": "",
+    "illustrIsCharacter": false,
+    "illustrExpressionPosition": ""
+  },
+  "permissionsOnceShared": {
+    "sharing": true,
+    "editing": true
+  },
+  "allowChangeCharacterName": false,
+  "allowChangeCharacterDescription": false,
+  "allowChangeCharacterSkills": false,
+  "allowChangeCharacterItemValues": false,
+  "allowChangeCharacterPortrait": false,
+  "allowChangeCharacterNewPortrait": false,
+  "conditions": [],
+  "schemaVersion": 2.4,
+  "skills": [
+    "Generic skill"
+  ],
+  "possibleCharacters": [
+    {
+      "name": "Player character",
+      "description": "",
+      "portrait": "",
+      "portraitPromptDetails": {
+        "illustrAppearance": "",
+        "illustrClothes": "",
+        "illustrExpressionPosition": "",
+        "illustrSetting": ""
+      },
+      "fullSizePortrait": "",
+      "portraitOptions": [],
+      "fullSizePortraitOptions": [],
+      "currentPortraitIndex": -1,
+      "characterId": "c7038c97-b50f-57be-9e33-9ce2914d80ef",
+      "skills": {
+        "Generic skill": 3
+      },
+      "initialTrackedItemValues": []
+    }
+  ],
+  "triggerEvents": [
+    {
+      "id": "611cce704c84bffc60",
+      "name": "Advance clock",
+      "advancedLogic": false,
+      "triggerOnStartOfGame": false,
+      "triggerMidGame": false,
+      "canTriggerMoreThanOnce": true,
+      "triggerConditions": [
+        {
+          "id": "32ed25695cdda40773",
+          "category": "condition",
+          "type": "triggerOnPawScript",
+          "data": "true"
+        }
+      ],
+      "triggerEffects": [
+        {
+          "id": "c86ce2d8e86fe4d4c4",
+          "type": "effectRunScript",
+          "data": "$clock.ticks += 1"
+        }
+      ]
+    },
+    {
+      "id": "095678cd83c19dd556",
+      "name": "Consume crossing",
+      "advancedLogic": false,
+      "triggerOnStartOfGame": false,
+      "triggerMidGame": false,
+      "canTriggerMoreThanOnce": true,
+      "triggerConditions": [
+        {
+          "id": "ee58d30fa7483a1973",
+          "category": "condition",
+          "type": "triggerOnPawScript",
+          "data": "$clock.ticks >= 3 and $clock.consumed = 0"
+        }
+      ],
+      "triggerEffects": [
+        {
+          "id": "a18713541a1eae736f",
+          "type": "effectRunScript",
+          "data": "if $clock.ticks >= 3 and $clock.consumed = 0\n    $clock.awards += 1\n    $clock.consumed = 1"
+        }
+      ]
+    }
+  ],
+  "victoryCondition": null,
+  "defeatCondition": null,
+  "trackedItems": [
+    {
+      "id": "60f441949869916b98",
+      "name": "Clock state",
+      "variableName": "clock",
+      "positionInList": 0,
+      "dataType": "yaml",
+      "visibility": "everyone",
+      "description": "Authored example state; script-owned.",
+      "initialValue": "ticks: 0\nconsumed: 0\nawards: 0",
+      "initialValueBasedOnPC": "same",
+      "autoUpdate": false,
+      "updateInstructions": "",
+      "enforceFormat": false
+    }
+  ],
+  "hideSkillSystem": true,
+  "autoAdvanceVersion": false,
+  "version": "1.0",
+  "charSelectText": "",
+  "descriptionRequest": "",
+  "evaluationRequest": "",
+  "summaryRequest": "",
+  "instructionBlocks": [],
+  "NPCs": [],
+  "loreBookEntries": [],
+  "designNotes": ""
+}
+===== END FILE: examples/recipe-consumed-timer.json =====
+
+===== BEGIN FILE: examples/recipe-choice-domain.json =====
+{
+  "favorite": false,
+  "title": "Choice domain guard",
+  "description": "Optional authoring pattern; structurally checked, not a newly certified runtime composition.",
+  "background": "An adult courier waits at a guild desk.",
+  "instructions": "Respect the authored tracker state. Describe attempts without inventing mechanical rewards.",
+  "authorStyle": "",
+  "recommendedAIModel": null,
+  "firstInput": "Introduce the guild desk.",
+  "objective": "",
+  "imageModel": "manticore",
+  "imageStyle": "photo_1",
+  "illustrationStyleNonCharacterLowPriority": "",
+  "illustrationStyleNonCharacterHighPriority": "",
+  "illustrationStyleCharacterLowPriority": "",
+  "illustrationStyleCharacterHighPriority": "",
+  "imageStyleCharacterPre": "",
+  "imageStyleCharacterPost": "",
+  "imageStyleNonCharacterPre": "",
+  "imageStyleNonCharacterPost": "",
+  "mature": false,
+  "nsfw": false,
+  "contentWarnings": "",
+  "enableAISpecificInstructionBlocks": false,
+  "previewImage": "",
+  "fullSizePreviewImage": "",
+  "previewImageOptions": [],
+  "fullSizePreviewImageOptions": [],
+  "currentPreviewImageIndex": -1,
+  "imagePromptDetails": {
+    "illustrClothes": "",
+    "illustrSetting": "",
+    "illustrSubject": "",
+    "illustrAppearance": "",
+    "illustrIsCharacter": false,
+    "illustrExpressionPosition": ""
+  },
+  "permissionsOnceShared": {
+    "sharing": true,
+    "editing": true
+  },
+  "allowChangeCharacterName": false,
+  "allowChangeCharacterDescription": false,
+  "allowChangeCharacterSkills": false,
+  "allowChangeCharacterItemValues": false,
+  "allowChangeCharacterPortrait": false,
+  "allowChangeCharacterNewPortrait": false,
+  "conditions": [],
+  "schemaVersion": 2.4,
+  "skills": [
+    "Generic skill"
+  ],
+  "possibleCharacters": [
+    {
+      "name": "Player character",
+      "description": "",
+      "portrait": "",
+      "portraitPromptDetails": {
+        "illustrAppearance": "",
+        "illustrClothes": "",
+        "illustrExpressionPosition": "",
+        "illustrSetting": ""
+      },
+      "fullSizePortrait": "",
+      "portraitOptions": [],
+      "fullSizePortraitOptions": [],
+      "currentPortraitIndex": -1,
+      "characterId": "c7038c97-b50f-57be-9e33-9ce2914d80ef",
+      "skills": {
+        "Generic skill": 3
+      },
+      "initialTrackedItemValues": []
+    }
+  ],
+  "triggerEvents": [
+    {
+      "id": "8d0bb91d66ed2e221c",
+      "name": "Offer assignment",
+      "advancedLogic": false,
+      "triggerOnStartOfGame": false,
+      "triggerMidGame": false,
+      "canTriggerMoreThanOnce": true,
+      "triggerConditions": [
+        {
+          "id": "7f025dcc300e5e4d46",
+          "category": "condition",
+          "type": "triggerOnPawScript",
+          "data": "$assignment = \"\""
+        }
+      ],
+      "triggerEffects": [
+        {
+          "id": "offerChoiceEffect",
+          "data": {
+            "path": "",
+            "valueDelimiter": "newline",
+            "updateMode": "replace",
+            "minSelections": null,
+            "choices": "Courier\nArchivist",
+            "maxSelections": null,
+            "targetTrackedItemId": "0824ab8358b3d4ab52",
+            "selectionMode": "single",
+            "message": "Choose your guild assignment."
+          },
+          "type": "effectPresentChoice"
+        }
+      ]
+    },
+    {
+      "id": "e780a5bed40518ce09",
+      "name": "Accept listed assignment",
+      "advancedLogic": false,
+      "triggerOnStartOfGame": false,
+      "triggerMidGame": false,
+      "canTriggerMoreThanOnce": true,
+      "triggerConditions": [
+        {
+          "id": "42fbccbb0b0430de69",
+          "category": "condition",
+          "type": "triggerOnPawScript",
+          "data": "$assignment = \"Courier\" or $assignment = \"Archivist\""
+        }
+      ],
+      "triggerEffects": [
+        {
+          "id": "5d01f871c758f1eb83",
+          "type": "effectRunScript",
+          "data": "$accepted_assignment = $assignment"
+        }
+      ]
+    }
+  ],
+  "victoryCondition": null,
+  "defeatCondition": null,
+  "trackedItems": [
+    {
+      "id": "0824ab8358b3d4ab52",
+      "name": "Assignment",
+      "variableName": "assignment",
+      "positionInList": 0,
+      "dataType": "text",
+      "visibility": "everyone",
+      "description": "Authored example state; script-owned.",
+      "initialValue": "",
+      "initialValueBasedOnPC": "same",
+      "autoUpdate": false,
+      "updateInstructions": "",
+      "enforceFormat": false
+    },
+    {
+      "id": "0067740be39d17dad5",
+      "name": "Accepted assignment",
+      "variableName": "accepted_assignment",
+      "positionInList": 1,
+      "dataType": "text",
+      "visibility": "everyone",
+      "description": "Authored example state; script-owned.",
+      "initialValue": "",
+      "initialValueBasedOnPC": "same",
+      "autoUpdate": false,
+      "updateInstructions": "",
+      "enforceFormat": false
+    }
+  ],
+  "hideSkillSystem": true,
+  "autoAdvanceVersion": false,
+  "version": "1.0",
+  "charSelectText": "",
+  "descriptionRequest": "",
+  "evaluationRequest": "",
+  "summaryRequest": "",
+  "instructionBlocks": [],
+  "NPCs": [],
+  "loreBookEntries": [],
+  "designNotes": ""
+}
+===== END FILE: examples/recipe-choice-domain.json =====
+
+===== BEGIN FILE: examples/recipe-compiled-plot.json =====
+{
+  "favorite": false,
+  "title": "Guild prerequisite graph",
+  "description": "A literal-Scenario prerequisite graph.",
+  "background": "A courier works through the objectives below.",
+  "instructions": "Follow the declared objectives. Treat Plot progress as authoritative; do not invent rewards.",
+  "authorStyle": "",
+  "recommendedAIModel": null,
+  "firstInput": "Describe the opening situation and the available objectives.",
+  "objective": "",
+  "imageModel": "manticore",
+  "imageStyle": "photo_1",
+  "illustrationStyleNonCharacterLowPriority": "",
+  "illustrationStyleNonCharacterHighPriority": "",
+  "illustrationStyleCharacterLowPriority": "",
+  "illustrationStyleCharacterHighPriority": "",
+  "imageStyleCharacterPre": "",
+  "imageStyleCharacterPost": "",
+  "imageStyleNonCharacterPre": "",
+  "imageStyleNonCharacterPost": "",
+  "mature": false,
+  "nsfw": false,
+  "contentWarnings": "",
+  "enableAISpecificInstructionBlocks": false,
+  "previewImage": "",
+  "fullSizePreviewImage": "",
+  "previewImageOptions": [],
+  "fullSizePreviewImageOptions": [],
+  "currentPreviewImageIndex": -1,
+  "imagePromptDetails": {
+    "illustrClothes": "",
+    "illustrSetting": "",
+    "illustrSubject": "",
+    "illustrAppearance": "",
+    "illustrIsCharacter": false,
+    "illustrExpressionPosition": ""
+  },
+  "permissionsOnceShared": {
+    "sharing": true,
+    "editing": true
+  },
+  "allowChangeCharacterName": false,
+  "allowChangeCharacterDescription": false,
+  "allowChangeCharacterSkills": false,
+  "allowChangeCharacterItemValues": false,
+  "allowChangeCharacterPortrait": false,
+  "allowChangeCharacterNewPortrait": false,
+  "conditions": [
+    "The courier hands the parcel to the recipient.",
+    "The clerk issues a valid delivery permit."
+  ],
+  "schemaVersion": 2.4,
+  "skills": [
+    "Generic skill"
+  ],
+  "possibleCharacters": [
+    {
+      "name": "Player character",
+      "description": "",
+      "portrait": "",
+      "portraitPromptDetails": {
+        "illustrAppearance": "",
+        "illustrClothes": "",
+        "illustrExpressionPosition": "",
+        "illustrSetting": ""
+      },
+      "fullSizePortrait": "",
+      "portraitOptions": [],
+      "fullSizePortraitOptions": [],
+      "currentPortraitIndex": -1,
+      "characterId": "c7038c97-b50f-57be-9e33-9ce2914d80ef",
+      "skills": {
+        "Generic skill": 3
+      },
+      "initialTrackedItemValues": []
+    }
+  ],
+  "triggerEvents": [
+    {
+      "id": "77dbb756706a6dcefb",
+      "name": "Obtain permit",
+      "advancedLogic": false,
+      "triggerOnStartOfGame": false,
+      "triggerMidGame": false,
+      "canTriggerMoreThanOnce": true,
+      "triggerConditions": [
+        {
+          "id": "6a684a783e32c17868",
+          "category": "condition",
+          "type": "triggerOnEvent",
+          "data": "The clerk issues a valid delivery permit."
+        },
+        {
+          "id": "12419595a5615cd4bf",
+          "category": "condition",
+          "type": "triggerOnPawScript",
+          "data": "$plot.permit = 0"
+        }
+      ],
+      "triggerEffects": [
+        {
+          "id": "eb867ef25eca80b1cd",
+          "type": "effectRunScript",
+          "data": "if $plot.permit = 0\n    $plot.score += 1\n    $plot.permit = 1"
+        }
+      ]
+    },
+    {
+      "id": "3bb108610df262e059",
+      "name": "Complete delivery",
+      "advancedLogic": false,
+      "triggerOnStartOfGame": false,
+      "triggerMidGame": false,
+      "canTriggerMoreThanOnce": true,
+      "triggerConditions": [
+        {
+          "id": "41d8cb04ed95507412",
+          "category": "condition",
+          "type": "triggerOnEvent",
+          "data": "The courier hands the parcel to the recipient."
+        },
+        {
+          "id": "6989d7961d52d612ec",
+          "category": "condition",
+          "type": "triggerOnPawScript",
+          "data": "$plot.delivery = 0 and $plot.permit = 1"
+        }
+      ],
+      "triggerEffects": [
+        {
+          "id": "73794749b1d1347888",
+          "type": "effectRunScript",
+          "data": "if $plot.delivery = 0 and $plot.permit = 1\n    $plot.score += 5\n    $plot.delivery = 1"
+        }
+      ]
+    }
+  ],
+  "victoryCondition": null,
+  "defeatCondition": null,
+  "trackedItems": [
+    {
+      "id": "24e968a808321e557e",
+      "name": "Plot progress",
+      "variableName": "plot",
+      "positionInList": 0,
+      "dataType": "yaml",
+      "visibility": "everyone",
+      "description": "Completion flags and awarded score. Script-owned.",
+      "initialValue": "score: 0\npermit: 0\ndelivery: 0",
+      "initialValueBasedOnPC": "same",
+      "autoUpdate": false,
+      "updateInstructions": "",
+      "enforceFormat": false
+    }
+  ],
+  "hideSkillSystem": true,
+  "autoAdvanceVersion": false,
+  "version": "1.0",
+  "charSelectText": "",
+  "descriptionRequest": "",
+  "evaluationRequest": "",
+  "summaryRequest": "",
+  "instructionBlocks": [],
+  "NPCs": [],
+  "loreBookEntries": [],
+  "designNotes": ""
+}
+===== END FILE: examples/recipe-compiled-plot.json =====
 
 ===== BEGIN FILE: examples/recipe-choice-followup.json =====
 {

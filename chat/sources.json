@@ -4,6 +4,12 @@
       "Authoring-Prompt.md",
       "World-Template.json",
       "reference/Evidence.md",
+      "reference/Trigger-Catalog.md",
+      "reference/Editor-UI.md",
+      "reference/Verified-Behavior.md",
+      "reference/Roadmap.md",
+      "reference/Story-Tools.md",
+      "reference/Engineering-Tools.md",
       "reference/Craft.md",
       "reference/Portable-Banks.md",
       "reference/Trackers.md",
@@ -17,7 +23,7 @@
       "reference/Default-Evaluation.txt",
       "reference/Current-AI-Profiles.json"
     ],
-    "sha256": "c5d4753ec03afbd2cb8df999a101b7e5eeb8cd83c6ab74cb6e52baaf65b0d613"
+    "sha256": "aa96ff44784c98b6b9f95a30552150018a2a1b2aac4a707b360fec5f64fb715f"
   },
   "IW-Examples.txt": {
     "sourceFiles": [
@@ -25,13 +31,20 @@
       "examples/index.json",
       "examples/narrative-vendemmia.json",
       "examples/recipe-request-commit.json",
+      "examples/recipe-completion-award.json",
+      "examples/recipe-candidate-acceptance.json",
+      "examples/recipe-archive-reactivate.json",
+      "examples/recipe-cached-random.json",
+      "examples/recipe-consumed-timer.json",
+      "examples/recipe-choice-domain.json",
+      "examples/recipe-compiled-plot.json",
       "examples/recipe-choice-followup.json",
       "examples/recipe-threshold-unlock.json",
       "examples/optional-block.json",
       "examples/showcase-glass-ledger.json",
       "examples/character-starting-values.json"
     ],
-    "sha256": "87bb3972aec81d027c483d9c79814c66623489e7d43dd723895126fc231c0cd9"
+    "sha256": "6c279fc1f2c06e0d4927dce079e913157da465843be562441ddcbb742d5a357d"
   },
   "IW-Sample-Library.txt": {
     "sourceFiles": [
@@ -39,7 +52,7 @@
       "library/Sample-Blocks.json",
       "library/Storymaster-Suite.json"
     ],
-    "sha256": "4721092eb87d17a7ffaee1ddf22e13d1af751993b56c79ae17062f5836de9ec5"
+    "sha256": "e9cfc610a9da2d4974babffac62a25c3e117adcbf40d55f5e3009e3d7c09e819"
   },
   "IW-Tools.txt": {
     "sourceFiles": [
@@ -47,8 +60,12 @@
       "tools/validate_iw_export.py",
       "tools/static_checks.py",
       "tools/iw-export.schema.json",
-      "tools/data_bank.py"
+      "tools/data_bank.py",
+      "tools/import_audit.py",
+      "tools/story_export.py",
+      "tools/iw_browser.py",
+      "tools/plot_compile.py"
     ],
-    "sha256": "303e07819bc2f9deaefe65cc61e882c0742f8c6c935555ec07522160193df1ec"
+    "sha256": "65470bb664fad6e4c66a0effeb938ddb34f52ce05ef24c7bd495701bfd1dcaa5"
   }
 }
