@@ -1,0 +1,167 @@
+{
+  "favorite": false,
+  "title": "Guild prerequisite graph",
+  "description": "A literal-Scenario prerequisite graph.",
+  "background": "A courier works through the objectives below.",
+  "instructions": "Follow the declared objectives. Treat Plot progress as authoritative; do not invent rewards.",
+  "authorStyle": "",
+  "recommendedAIModel": null,
+  "firstInput": "Describe the opening situation and the available objectives.",
+  "objective": "",
+  "imageModel": "manticore",
+  "imageStyle": "photo_1",
+  "illustrationStyleNonCharacterLowPriority": "",
+  "illustrationStyleNonCharacterHighPriority": "",
+  "illustrationStyleCharacterLowPriority": "",
+  "illustrationStyleCharacterHighPriority": "",
+  "imageStyleCharacterPre": "",
+  "imageStyleCharacterPost": "",
+  "imageStyleNonCharacterPre": "",
+  "imageStyleNonCharacterPost": "",
+  "mature": false,
+  "nsfw": false,
+  "contentWarnings": "",
+  "enableAISpecificInstructionBlocks": false,
+  "previewImage": "",
+  "fullSizePreviewImage": "",
+  "previewImageOptions": [],
+  "fullSizePreviewImageOptions": [],
+  "currentPreviewImageIndex": -1,
+  "imagePromptDetails": {
+    "illustrClothes": "",
+    "illustrSetting": "",
+    "illustrSubject": "",
+    "illustrAppearance": "",
+    "illustrIsCharacter": false,
+    "illustrExpressionPosition": ""
+  },
+  "permissionsOnceShared": {
+    "sharing": true,
+    "editing": true
+  },
+  "allowChangeCharacterName": false,
+  "allowChangeCharacterDescription": false,
+  "allowChangeCharacterSkills": false,
+  "allowChangeCharacterItemValues": false,
+  "allowChangeCharacterPortrait": false,
+  "allowChangeCharacterNewPortrait": false,
+  "conditions": [
+    "The courier hands the parcel to the recipient.",
+    "The clerk issues a valid delivery permit."
+  ],
+  "schemaVersion": 2.4,
+  "skills": [
+    "Generic skill"
+  ],
+  "possibleCharacters": [
+    {
+      "name": "Player character",
+      "description": "",
+      "portrait": "",
+      "portraitPromptDetails": {
+        "illustrAppearance": "",
+        "illustrClothes": "",
+        "illustrExpressionPosition": "",
+        "illustrSetting": ""
+      },
+      "fullSizePortrait": "",
+      "portraitOptions": [],
+      "fullSizePortraitOptions": [],
+      "currentPortraitIndex": -1,
+      "characterId": "c7038c97-b50f-57be-9e33-9ce2914d80ef",
+      "skills": {
+        "Generic skill": 3
+      },
+      "initialTrackedItemValues": []
+    }
+  ],
+  "triggerEvents": [
+    {
+      "id": "77dbb756706a6dcefb",
+      "name": "Obtain permit",
+      "advancedLogic": false,
+      "triggerOnStartOfGame": false,
+      "triggerMidGame": false,
+      "canTriggerMoreThanOnce": true,
+      "triggerConditions": [
+        {
+          "id": "6a684a783e32c17868",
+          "category": "condition",
+          "type": "triggerOnEvent",
+          "data": "The clerk issues a valid delivery permit."
+        },
+        {
+          "id": "12419595a5615cd4bf",
+          "category": "condition",
+          "type": "triggerOnPawScript",
+          "data": "$plot.permit = 0"
+        }
+      ],
+      "triggerEffects": [
+        {
+          "id": "eb867ef25eca80b1cd",
+          "type": "effectRunScript",
+          "data": "if $plot.permit = 0\n    $plot.score += 1\n    $plot.permit = 1"
+        }
+      ]
+    },
+    {
+      "id": "3bb108610df262e059",
+      "name": "Complete delivery",
+      "advancedLogic": false,
+      "triggerOnStartOfGame": false,
+      "triggerMidGame": false,
+      "canTriggerMoreThanOnce": true,
+      "triggerConditions": [
+        {
+          "id": "41d8cb04ed95507412",
+          "category": "condition",
+          "type": "triggerOnEvent",
+          "data": "The courier hands the parcel to the recipient."
+        },
+        {
+          "id": "6989d7961d52d612ec",
+          "category": "condition",
+          "type": "triggerOnPawScript",
+          "data": "$plot.delivery = 0 and $plot.permit = 1"
+        }
+      ],
+      "triggerEffects": [
+        {
+          "id": "73794749b1d1347888",
+          "type": "effectRunScript",
+          "data": "if $plot.delivery = 0 and $plot.permit = 1\n    $plot.score += 5\n    $plot.delivery = 1"
+        }
+      ]
+    }
+  ],
+  "victoryCondition": null,
+  "defeatCondition": null,
+  "trackedItems": [
+    {
+      "id": "24e968a808321e557e",
+      "name": "Plot progress",
+      "variableName": "plot",
+      "positionInList": 0,
+      "dataType": "yaml",
+      "visibility": "everyone",
+      "description": "Completion flags and awarded score. Script-owned.",
+      "initialValue": "score: 0\npermit: 0\ndelivery: 0",
+      "initialValueBasedOnPC": "same",
+      "autoUpdate": false,
+      "updateInstructions": "",
+      "enforceFormat": false
+    }
+  ],
+  "hideSkillSystem": true,
+  "autoAdvanceVersion": false,
+  "version": "1.0",
+  "charSelectText": "",
+  "descriptionRequest": "",
+  "evaluationRequest": "",
+  "summaryRequest": "",
+  "instructionBlocks": [],
+  "NPCs": [],
+  "loreBookEntries": [],
+  "designNotes": ""
+}

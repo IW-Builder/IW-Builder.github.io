@@ -1,0 +1,129 @@
+{
+  "favorite": false,
+  "title": "Completion and award guard",
+  "description": "Optional authoring pattern; structurally checked, not a newly certified runtime composition.",
+  "background": "An adult courier waits at a guild desk.",
+  "instructions": "Respect the authored tracker state. Describe attempts without inventing mechanical rewards.",
+  "authorStyle": "",
+  "recommendedAIModel": null,
+  "firstInput": "Introduce the guild desk.",
+  "objective": "",
+  "imageModel": "manticore",
+  "imageStyle": "photo_1",
+  "illustrationStyleNonCharacterLowPriority": "",
+  "illustrationStyleNonCharacterHighPriority": "",
+  "illustrationStyleCharacterLowPriority": "",
+  "illustrationStyleCharacterHighPriority": "",
+  "imageStyleCharacterPre": "",
+  "imageStyleCharacterPost": "",
+  "imageStyleNonCharacterPre": "",
+  "imageStyleNonCharacterPost": "",
+  "mature": false,
+  "nsfw": false,
+  "contentWarnings": "",
+  "enableAISpecificInstructionBlocks": false,
+  "previewImage": "",
+  "fullSizePreviewImage": "",
+  "previewImageOptions": [],
+  "fullSizePreviewImageOptions": [],
+  "currentPreviewImageIndex": -1,
+  "imagePromptDetails": {
+    "illustrClothes": "",
+    "illustrSetting": "",
+    "illustrSubject": "",
+    "illustrAppearance": "",
+    "illustrIsCharacter": false,
+    "illustrExpressionPosition": ""
+  },
+  "permissionsOnceShared": {
+    "sharing": true,
+    "editing": true
+  },
+  "allowChangeCharacterName": false,
+  "allowChangeCharacterDescription": false,
+  "allowChangeCharacterSkills": false,
+  "allowChangeCharacterItemValues": false,
+  "allowChangeCharacterPortrait": false,
+  "allowChangeCharacterNewPortrait": false,
+  "conditions": [],
+  "schemaVersion": 2.4,
+  "skills": [
+    "Generic skill"
+  ],
+  "possibleCharacters": [
+    {
+      "name": "Player character",
+      "description": "",
+      "portrait": "",
+      "portraitPromptDetails": {
+        "illustrAppearance": "",
+        "illustrClothes": "",
+        "illustrExpressionPosition": "",
+        "illustrSetting": ""
+      },
+      "fullSizePortrait": "",
+      "portraitOptions": [],
+      "fullSizePortraitOptions": [],
+      "currentPortraitIndex": -1,
+      "characterId": "c7038c97-b50f-57be-9e33-9ce2914d80ef",
+      "skills": {
+        "Generic skill": 3
+      },
+      "initialTrackedItemValues": []
+    }
+  ],
+  "triggerEvents": [
+    {
+      "id": "e22c5ac585411a89f3",
+      "name": "Commit award",
+      "advancedLogic": false,
+      "triggerOnStartOfGame": false,
+      "triggerMidGame": false,
+      "canTriggerMoreThanOnce": true,
+      "triggerConditions": [
+        {
+          "id": "13c2c5d1c2672a7d8c",
+          "category": "condition",
+          "type": "triggerOnPawScript",
+          "data": "$award.ready = 1 and $award.completed = 0"
+        }
+      ],
+      "triggerEffects": [
+        {
+          "id": "5a6d5d51cabe995624",
+          "type": "effectRunScript",
+          "data": "if $award.ready = 1 and $award.completed = 0\n    $award.score += 5\n    $award.completed = 1"
+        }
+      ]
+    }
+  ],
+  "victoryCondition": null,
+  "defeatCondition": null,
+  "trackedItems": [
+    {
+      "id": "aa6e6a1bf02335a7ed",
+      "name": "Award state",
+      "variableName": "award",
+      "positionInList": 0,
+      "dataType": "yaml",
+      "visibility": "everyone",
+      "description": "Authored example state; script-owned.",
+      "initialValue": "ready: 0\ncompleted: 0\nscore: 0",
+      "initialValueBasedOnPC": "same",
+      "autoUpdate": false,
+      "updateInstructions": "",
+      "enforceFormat": false
+    }
+  ],
+  "hideSkillSystem": true,
+  "autoAdvanceVersion": false,
+  "version": "1.0",
+  "charSelectText": "",
+  "descriptionRequest": "",
+  "evaluationRequest": "",
+  "summaryRequest": "",
+  "instructionBlocks": [],
+  "NPCs": [],
+  "loreBookEntries": [],
+  "designNotes": ""
+}

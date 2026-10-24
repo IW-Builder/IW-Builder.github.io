@@ -1,0 +1,152 @@
+{
+  "favorite": false,
+  "title": "Consumed turn milestone",
+  "description": "Optional authoring pattern; structurally checked, not a newly certified runtime composition.",
+  "background": "An adult courier waits at a guild desk.",
+  "instructions": "Respect the authored tracker state. Describe attempts without inventing mechanical rewards.",
+  "authorStyle": "",
+  "recommendedAIModel": null,
+  "firstInput": "Introduce the guild desk.",
+  "objective": "",
+  "imageModel": "manticore",
+  "imageStyle": "photo_1",
+  "illustrationStyleNonCharacterLowPriority": "",
+  "illustrationStyleNonCharacterHighPriority": "",
+  "illustrationStyleCharacterLowPriority": "",
+  "illustrationStyleCharacterHighPriority": "",
+  "imageStyleCharacterPre": "",
+  "imageStyleCharacterPost": "",
+  "imageStyleNonCharacterPre": "",
+  "imageStyleNonCharacterPost": "",
+  "mature": false,
+  "nsfw": false,
+  "contentWarnings": "",
+  "enableAISpecificInstructionBlocks": false,
+  "previewImage": "",
+  "fullSizePreviewImage": "",
+  "previewImageOptions": [],
+  "fullSizePreviewImageOptions": [],
+  "currentPreviewImageIndex": -1,
+  "imagePromptDetails": {
+    "illustrClothes": "",
+    "illustrSetting": "",
+    "illustrSubject": "",
+    "illustrAppearance": "",
+    "illustrIsCharacter": false,
+    "illustrExpressionPosition": ""
+  },
+  "permissionsOnceShared": {
+    "sharing": true,
+    "editing": true
+  },
+  "allowChangeCharacterName": false,
+  "allowChangeCharacterDescription": false,
+  "allowChangeCharacterSkills": false,
+  "allowChangeCharacterItemValues": false,
+  "allowChangeCharacterPortrait": false,
+  "allowChangeCharacterNewPortrait": false,
+  "conditions": [],
+  "schemaVersion": 2.4,
+  "skills": [
+    "Generic skill"
+  ],
+  "possibleCharacters": [
+    {
+      "name": "Player character",
+      "description": "",
+      "portrait": "",
+      "portraitPromptDetails": {
+        "illustrAppearance": "",
+        "illustrClothes": "",
+        "illustrExpressionPosition": "",
+        "illustrSetting": ""
+      },
+      "fullSizePortrait": "",
+      "portraitOptions": [],
+      "fullSizePortraitOptions": [],
+      "currentPortraitIndex": -1,
+      "characterId": "c7038c97-b50f-57be-9e33-9ce2914d80ef",
+      "skills": {
+        "Generic skill": 3
+      },
+      "initialTrackedItemValues": []
+    }
+  ],
+  "triggerEvents": [
+    {
+      "id": "611cce704c84bffc60",
+      "name": "Advance clock",
+      "advancedLogic": false,
+      "triggerOnStartOfGame": false,
+      "triggerMidGame": false,
+      "canTriggerMoreThanOnce": true,
+      "triggerConditions": [
+        {
+          "id": "32ed25695cdda40773",
+          "category": "condition",
+          "type": "triggerOnPawScript",
+          "data": "true"
+        }
+      ],
+      "triggerEffects": [
+        {
+          "id": "c86ce2d8e86fe4d4c4",
+          "type": "effectRunScript",
+          "data": "$clock.ticks += 1"
+        }
+      ]
+    },
+    {
+      "id": "095678cd83c19dd556",
+      "name": "Consume crossing",
+      "advancedLogic": false,
+      "triggerOnStartOfGame": false,
+      "triggerMidGame": false,
+      "canTriggerMoreThanOnce": true,
+      "triggerConditions": [
+        {
+          "id": "ee58d30fa7483a1973",
+          "category": "condition",
+          "type": "triggerOnPawScript",
+          "data": "$clock.ticks >= 3 and $clock.consumed = 0"
+        }
+      ],
+      "triggerEffects": [
+        {
+          "id": "a18713541a1eae736f",
+          "type": "effectRunScript",
+          "data": "if $clock.ticks >= 3 and $clock.consumed = 0\n    $clock.awards += 1\n    $clock.consumed = 1"
+        }
+      ]
+    }
+  ],
+  "victoryCondition": null,
+  "defeatCondition": null,
+  "trackedItems": [
+    {
+      "id": "60f441949869916b98",
+      "name": "Clock state",
+      "variableName": "clock",
+      "positionInList": 0,
+      "dataType": "yaml",
+      "visibility": "everyone",
+      "description": "Authored example state; script-owned.",
+      "initialValue": "ticks: 0\nconsumed: 0\nawards: 0",
+      "initialValueBasedOnPC": "same",
+      "autoUpdate": false,
+      "updateInstructions": "",
+      "enforceFormat": false
+    }
+  ],
+  "hideSkillSystem": true,
+  "autoAdvanceVersion": false,
+  "version": "1.0",
+  "charSelectText": "",
+  "descriptionRequest": "",
+  "evaluationRequest": "",
+  "summaryRequest": "",
+  "instructionBlocks": [],
+  "NPCs": [],
+  "loreBookEntries": [],
+  "designNotes": ""
+}
