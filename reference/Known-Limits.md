@@ -21,7 +21,7 @@ Current through 2026-10-23. Verified conclusions are in [Consolidated behavior](
 | Recovery | Interrupted generation can leave a turn unretained | Server-side cause and standalone authenticated runner recovery require additional diagnostics/environment |
 | Tooling | External parsing and merge defects identified | Reviewed-boundary parser/merge and a local browser capture/export harness are supplied; authenticated capture/export is verified, while gameplay recovery and server persistence remain unverified |
 
-The schema/validator is a partial compatibility profile. Native string turn thresholds and observed startup effect shapes are now represented. This still does not establish complete platform coverage or runtime correctness. [Roadmap](Roadmap.md) lists pending engineering.
+The schema/validator is a partial compatibility profile. Native string turn thresholds and observed startup effect shapes are represented. This still does not establish complete platform coverage or runtime correctness. [Roadmap](Roadmap.md) lists pending engineering.
 
 ---
 

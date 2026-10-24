@@ -6,7 +6,7 @@
       "errors": 0,
       "warnings": {}
     },
-    "library\\Sample-Blocks.json": {
+    "library/Sample-Blocks.json": {
       "errors": 0,
       "warnings": {
         "unverified-expression": 3,
@@ -15,252 +15,252 @@
         "unknown-script-root": 1
       }
     },
-    "examples\\character-starting-values.json": {
+    "examples/character-starting-values.json": {
       "errors": 0,
       "warnings": {
         "unverified-choice-expression": 2
       }
     },
-    "examples\\condition-triggerBlockers.json": {
+    "examples/condition-triggerBlockers.json": {
       "errors": 0,
       "warnings": {}
     },
-    "examples\\condition-triggerOnCharacter.json": {
+    "examples/condition-triggerOnCharacter.json": {
       "errors": 0,
       "warnings": {}
     },
-    "examples\\condition-triggerOnEvent.json": {
+    "examples/condition-triggerOnEvent.json": {
       "errors": 0,
       "warnings": {
         "start-incompatible-condition": 1
       }
     },
-    "examples\\condition-triggerOnPawScript.json": {
+    "examples/condition-triggerOnPawScript.json": {
       "errors": 0,
       "warnings": {
         "unverified-expression": 1
       }
     },
-    "examples\\condition-triggerOnRandomChance.json": {
+    "examples/condition-triggerOnRandomChance.json": {
       "errors": 0,
       "warnings": {}
     },
-    "examples\\condition-triggerOnTrackedItem.json": {
+    "examples/condition-triggerOnTrackedItem.json": {
       "errors": 0,
       "warnings": {}
     },
-    "examples\\condition-triggerOnTurn.json": {
+    "examples/condition-triggerOnTurn.json": {
       "errors": 0,
       "warnings": {}
     },
-    "examples\\condition-triggerPrereqs.json": {
+    "examples/condition-triggerPrereqs.json": {
       "errors": 0,
       "warnings": {}
     },
-    "examples\\effect-effectChangeAuthorStyle.json": {
+    "examples/effect-effectChangeAuthorStyle.json": {
       "errors": 0,
       "warnings": {}
     },
-    "examples\\effect-effectChangeBackground.json": {
+    "examples/effect-effectChangeBackground.json": {
       "errors": 0,
       "warnings": {}
     },
-    "examples\\effect-effectChangeDefeatCondition.json": {
+    "examples/effect-effectChangeDefeatCondition.json": {
       "errors": 0,
       "warnings": {}
     },
-    "examples\\effect-effectChangeDescriptionInstructions.json": {
+    "examples/effect-effectChangeDescriptionInstructions.json": {
       "errors": 0,
       "warnings": {}
     },
-    "examples\\effect-effectChangeFirstAction.json": {
+    "examples/effect-effectChangeFirstAction.json": {
       "errors": 0,
       "warnings": {}
     },
-    "examples\\effect-effectChangeMainInstructions.json": {
+    "examples/effect-effectChangeMainInstructions.json": {
       "errors": 0,
       "warnings": {}
     },
-    "examples\\effect-effectChangeObjective.json": {
+    "examples/effect-effectChangeObjective.json": {
       "errors": 0,
       "warnings": {}
     },
-    "examples\\effect-effectChangeOtherCharacters-add.json": {
+    "examples/effect-effectChangeOtherCharacters-add.json": {
       "errors": 0,
       "warnings": {
         "runtime-unverified-effect": 1
       }
     },
-    "examples\\effect-effectChangeOtherCharacters-delete.json": {
+    "examples/effect-effectChangeOtherCharacters-delete.json": {
       "errors": 0,
       "warnings": {
         "runtime-unverified-effect": 1
       }
     },
-    "examples\\effect-effectChangeOtherCharacters-modify.json": {
+    "examples/effect-effectChangeOtherCharacters-modify.json": {
       "errors": 0,
       "warnings": {
         "runtime-unverified-effect": 1
       }
     },
-    "examples\\effect-effectChangePCDescription.json": {
+    "examples/effect-effectChangePCDescription.json": {
       "errors": 0,
       "warnings": {}
     },
-    "examples\\effect-effectChangePCName.json": {
+    "examples/effect-effectChangePCName.json": {
       "errors": 0,
       "warnings": {}
     },
-    "examples\\effect-effectChangePCSkill.json": {
+    "examples/effect-effectChangePCSkill.json": {
       "errors": 0,
       "warnings": {}
     },
-    "examples\\effect-effectChangeVictoryCondition.json": {
+    "examples/effect-effectChangeVictoryCondition.json": {
       "errors": 0,
       "warnings": {}
     },
-    "examples\\effect-effectEndsGame.json": {
+    "examples/effect-effectEndsGame.json": {
       "errors": 0,
       "warnings": {}
     },
-    "examples\\effect-effectFireRandomTrigger.json": {
+    "examples/effect-effectFireRandomTrigger.json": {
       "errors": 0,
       "warnings": {
         "saved-inactive-trigger": 2
       }
     },
-    "examples\\effect-effectGiveInfo.json": {
+    "examples/effect-effectGiveInfo.json": {
       "errors": 0,
       "warnings": {}
     },
-    "examples\\effect-effectModifyInstructionBlock.json": {
+    "examples/effect-effectModifyInstructionBlock.json": {
       "errors": 0,
       "warnings": {}
     },
-    "examples\\effect-effectModifyKeywordBlock.json": {
+    "examples/effect-effectModifyKeywordBlock.json": {
       "errors": 0,
       "warnings": {}
     },
-    "examples\\effect-effectModifyTrackedItemDetails.json": {
+    "examples/effect-effectModifyTrackedItemDetails.json": {
       "errors": 0,
       "warnings": {}
     },
-    "examples\\effect-effectPresentChoice.json": {
+    "examples/effect-effectPresentChoice.json": {
       "errors": 0,
       "warnings": {
         "unverified-expression": 1
       }
     },
-    "examples\\effect-effectRequestInput.json": {
+    "examples/effect-effectRequestInput.json": {
       "errors": 0,
       "warnings": {
         "unverified-expression": 1
       }
     },
-    "examples\\effect-effectRunScript.json": {
+    "examples/effect-effectRunScript.json": {
       "errors": 0,
       "warnings": {
         "unverified-script": 1
       }
     },
-    "examples\\effect-effectSetTrackedItemValue.json": {
+    "examples/effect-effectSetTrackedItemValue.json": {
       "errors": 0,
       "warnings": {}
     },
-    "examples\\effect-effectShowMessage.json": {
+    "examples/effect-effectShowMessage.json": {
       "errors": 0,
       "warnings": {}
     },
-    "examples\\effect-effectTellAIWhatToDo.json": {
+    "examples/effect-effectTellAIWhatToDo.json": {
       "errors": 0,
       "warnings": {}
     },
-    "examples\\logic-groups.json": {
+    "examples/logic-groups.json": {
       "errors": 0,
       "warnings": {
         "unverified-expression": 2
       }
     },
-    "examples\\narrative-address-after-midnight.json": {
+    "examples/narrative-address-after-midnight.json": {
       "errors": 0,
       "warnings": {}
     },
-    "examples\\narrative-listening-road.json": {
+    "examples/narrative-listening-road.json": {
       "errors": 0,
       "warnings": {}
     },
-    "examples\\narrative-seven-nights.json": {
+    "examples/narrative-seven-nights.json": {
       "errors": 0,
       "warnings": {}
     },
-    "examples\\narrative-velvet-wager.json": {
+    "examples/narrative-velvet-wager.json": {
       "errors": 0,
       "warnings": {
         "unverified-expression": 1
       }
     },
-    "examples\\narrative-vendemmia.json": {
+    "examples/narrative-vendemmia.json": {
       "errors": 0,
       "warnings": {}
     },
-    "examples\\native-text-operations.json": {
+    "examples/native-text-operations.json": {
       "errors": 0,
       "warnings": {}
     },
-    "examples\\npc-keyword-portrait-ending.json": {
+    "examples/npc-keyword-portrait-ending.json": {
       "errors": 0,
       "warnings": {}
     },
-    "examples\\optional-block.json": {
+    "examples/optional-block.json": {
       "errors": 0,
       "warnings": {}
     },
-    "examples\\probe-skills.json": {
+    "examples/probe-skills.json": {
       "errors": 0,
       "warnings": {}
     },
-    "examples\\probe-template-timing.json": {
+    "examples/probe-template-timing.json": {
       "errors": 0,
       "warnings": {
         "unverified-script": 1,
         "review-repeat-accumulation": 1
       }
     },
-    "examples\\recipe-archive-reactivate.json": {
+    "examples/recipe-archive-reactivate.json": {
       "errors": 0,
       "warnings": {
         "unverified-expression": 2,
         "unverified-script": 2
       }
     },
-    "examples\\recipe-cached-random.json": {
+    "examples/recipe-cached-random.json": {
       "errors": 0,
       "warnings": {
         "unverified-expression": 1,
         "unverified-script": 1
       }
     },
-    "examples\\recipe-candidate-acceptance.json": {
+    "examples/recipe-candidate-acceptance.json": {
       "errors": 0,
       "warnings": {
         "unverified-expression": 1,
         "unverified-script": 1
       }
     },
-    "examples\\recipe-choice-domain.json": {
+    "examples/recipe-choice-domain.json": {
       "errors": 0,
       "warnings": {
         "unverified-expression": 2,
         "unverified-script": 1
       }
     },
-    "examples\\recipe-choice-followup.json": {
+    "examples/recipe-choice-followup.json": {
       "errors": 0,
       "warnings": {
         "unverified-expression": 1
       }
     },
-    "examples\\recipe-compiled-plot.json": {
+    "examples/recipe-compiled-plot.json": {
       "errors": 0,
       "warnings": {
         "unverified-expression": 2,
@@ -268,7 +268,7 @@
         "review-repeat-accumulation": 2
       }
     },
-    "examples\\recipe-completion-award.json": {
+    "examples/recipe-completion-award.json": {
       "errors": 0,
       "warnings": {
         "unverified-expression": 1,
@@ -276,7 +276,7 @@
         "review-repeat-accumulation": 1
       }
     },
-    "examples\\recipe-consumed-timer.json": {
+    "examples/recipe-consumed-timer.json": {
       "errors": 0,
       "warnings": {
         "unverified-expression": 2,
@@ -284,11 +284,11 @@
         "review-repeat-accumulation": 2
       }
     },
-    "examples\\recipe-layered-opening.json": {
+    "examples/recipe-layered-opening.json": {
       "errors": 0,
       "warnings": {}
     },
-    "examples\\recipe-on-demand-generation.json": {
+    "examples/recipe-on-demand-generation.json": {
       "errors": 0,
       "warnings": {
         "unverified-expression": 2,
@@ -296,28 +296,28 @@
         "review-repeat-accumulation": 1
       }
     },
-    "examples\\recipe-request-commit.json": {
+    "examples/recipe-request-commit.json": {
       "errors": 0,
       "warnings": {
         "unverified-script": 3,
         "unverified-expression": 2
       }
     },
-    "examples\\recipe-threshold-unlock.json": {
+    "examples/recipe-threshold-unlock.json": {
       "errors": 0,
       "warnings": {
         "unverified-expression": 1,
         "unverified-script": 1
       }
     },
-    "examples\\showcase-glass-ledger.json": {
+    "examples/showcase-glass-ledger.json": {
       "errors": 0,
       "warnings": {
         "unverified-expression": 8,
         "unverified-script": 6
       }
     },
-    "examples\\yaml-path-operations.json": {
+    "examples/yaml-path-operations.json": {
       "errors": 0,
       "warnings": {}
     }

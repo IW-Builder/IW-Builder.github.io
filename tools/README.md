@@ -10,7 +10,7 @@ The files here provide the same kinds of checks locally, along with tools for sa
 | `data_bank.py` | Save characters or other world content in a portable text bank, or create a full-content report. |
 | `build_distribution.py` | Rebuild the homepage, combined text packages, checker tools and file-integrity manifest in one step. |
 | `check_package.py` | Check the kit's example files and links. Primarily for maintaining the kit itself. |
-| `test_validator.py`, `test_data_bank.py` and `test_distribution.py` | Run checks on the tools themselves. |
+| `test_validator.py`, `test_data_bank.py`, `test_distribution.py`, `test_engineering.py`, `test_native_compat.py` and `test_story_export.py` | Run checks on the tools themselves. |
 
 For commands, setup and detailed explanations of the results, see [Usage.md](Usage.md). For character banks and reusable bundles, see the [data-bank guide](../reference/Portable-Banks.md).
 

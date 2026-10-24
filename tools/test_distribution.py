@@ -57,6 +57,21 @@ class DistributionTests(unittest.TestCase):
         self.assertIn('https://iw-builder.github.io/reference/PawScript.md', text)
         self.assertIn('https://iw-builder.github.io/examples/Payloads.md', text)
 
+    def test_reference_editions_are_split_and_bounded(self):
+        sources = {k: v['sourceFiles'] for k, v in json.loads((self.root/'chat/sources.json').read_text()).items()}
+        self.assertEqual(set(sources), {'IW-Authoring-Guide.txt', 'IW-Technical-Reference.txt', 'IW-Behavior.txt',
+                                        'IW-Examples.txt', 'IW-Sample-Library.txt', 'IW-Tools.txt'})
+        for name in ['IW-Authoring-Guide.txt', 'IW-Technical-Reference.txt', 'IW-Behavior.txt']:
+            self.assertLess((self.root/'chat'/name).stat().st_size, 90_000, name)
+        every = [p for files in sources.values() for p in files]
+        self.assertNotIn('reference/Roadmap.md', every)
+        self.assertIn('reference/Story-Tools.md', sources['IW-Tools.txt'])
+        self.assertIn('reference/Engineering-Tools.md', sources['IW-Tools.txt'])
+        self.assertEqual(len(every), len(set(every)), 'a source appears in two editions')
+        guide = (self.root/'chat/IW-Authoring-Guide.txt').read_text()
+        for name in sources:
+            self.assertIn('- ' + name + ': ', guide)
+
     def test_folder_pages_list_files_without_redirect(self):
         for folder in ['reference', 'examples', 'library', 'tools']:
             page = (self.root/folder/'index.html').read_text()

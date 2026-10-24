@@ -12,6 +12,7 @@ You do not need to read these guides before making a world. They are here when y
 
 - [Trackers](Trackers.md): Remember money, relationships, inventory and other changing details.
 - [Triggers](Triggers.md): Make something happen when a condition is met.
+- [Trigger capability catalog](Trigger-Catalog.md): Every identified trigger condition and effect in one table.
 - [PawScript](PawScript.md): Learn to read and change game data with scripts and expressions.
 - [Capabilities](Capabilities.md): Explore Skills, character information, images, timing and other IW behavior.
 
@@ -19,18 +20,20 @@ You do not need to read these guides before making a world. They are here when y
 
 - [Import integrity](Import-Integrity.md): Avoid problems when editing or combining worlds.
 - [Schema guide](Schema.md): Find the technical structure of an IW export.
-- [Known limits](Known-Limits.md): See what remains uncertain or needs checking in play.
-- [Compatibility and evidence](Evidence.md): Learn where the kit's information comes from and what has been tested.
 - [Default Evaluation](Default-Evaluation.txt): Read IW's supplied instructions for judging player actions.
 - [AI profile IDs](Current-AI-Profiles.json): Look up the identifiers used for model-specific instructions.
 
-[Back to the main guide](https://iw-builder.github.io/guide/)
-
-## Current results and UI help
+## Current behavior, limits and editor help
 
 - [Editor and UI reference](Editor-UI.md): Labels, menus, visibility, import and troubleshooting.
-- [Trigger capability catalog](Trigger-Catalog.md): All currently identified conditions and effects without opening examples.
-- [Consolidated behavior](Verified-Behavior.md): Runtime conclusions and limits.
-- [Roadmap](Roadmap.md): Research coverage and engineering backlog.
+- [Consolidated behavior](Verified-Behavior.md): What has been tested in IW and the results.
+- [Known limits](Known-Limits.md): See what remains uncertain or needs checking in play.
+- [Compatibility and evidence](Evidence.md): Learn where the kit's information comes from and what has been tested.
 
-- [Story tools](Story-Tools.md): Read-only import comparison, source-preserving extraction and explicit same-branch merge.
+## Tools and project status
+
+- [Story tools](Story-Tools.md): Compare a world before and after import; extract and merge story exports.
+- [Engineering tools](Engineering-Tools.md): Browser capture/export harness and plot compiler.
+- [Roadmap](Roadmap.md): What the kit covers now and planned work.
+
+[Back to the main guide](https://iw-builder.github.io/guide/)

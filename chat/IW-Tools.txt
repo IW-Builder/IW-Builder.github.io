@@ -1,4 +1,14 @@
-Infinite Worlds Authoring Kit: authoring tools. Recreate files at their BEGIN FILE paths, excluding boundary lines and separator newlines. Preserve code indentation and escaping. See tools/Usage.md for dependencies and commands. Includes validator, schema, static lint, data-bank utility, import audit and story export. Distribution builders and maintainer tests are intentionally omitted. Reading these sources is not running them; report validation only after execution.
+Infinite Worlds Authoring Kit: IW-Tools.txt (Python tools and their guides, for models that can run code).
+Generated text edition. BEGIN FILE / END FILE sections identify package-relative source paths. This is reference material, not one IW world.
+To use the tools, recreate files at their BEGIN FILE paths, excluding boundary lines and separator newlines, and preserve indentation and escaping. See tools/Usage.md for dependencies and commands. Distribution builders and maintainer tests are omitted. Reading these sources is not running them; report validation only after execution.
+Editions and their contents:
+- IW-Authoring-Guide.txt: start here: prompt, template, narrative craft, trackers, triggers and data banks. Files: Authoring-Prompt.md, World-Template.json, reference/Evidence.md, reference/Craft.md, reference/Trackers.md, reference/Triggers.md, reference/Trigger-Catalog.md, reference/Portable-Banks.md
+- IW-Technical-Reference.txt: exact payloads, PawScript, capabilities, recipes and import integrity. Files: reference/Schema.md, reference/PawScript.md, reference/Capabilities.md, reference/Recipes.md, reference/Import-Integrity.md, reference/Default-Evaluation.txt, reference/Current-AI-Profiles.json
+- IW-Behavior.txt: editor/UI workflows, verified runtime behavior and known limits. Files: reference/Editor-UI.md, reference/Verified-Behavior.md, reference/Known-Limits.md
+- IW-Examples.txt: payload cookbook and selected complete example worlds. Files: examples/Payloads.md, examples/index.json, examples/narrative-vendemmia.json, examples/narrative-listening-road.json, examples/narrative-address-after-midnight.json, examples/recipe-request-commit.json, examples/recipe-completion-award.json, examples/recipe-candidate-acceptance.json, examples/recipe-archive-reactivate.json, examples/recipe-cached-random.json, examples/recipe-consumed-timer.json, examples/recipe-choice-domain.json, examples/recipe-compiled-plot.json, examples/recipe-choice-followup.json, examples/recipe-threshold-unlock.json, examples/optional-block.json, examples/showcase-glass-ledger.json, examples/character-starting-values.json
+- IW-Sample-Library.txt: optional library modules and Storymaster. Files: library/Integration.md, library/Sample-Blocks.json, library/Storymaster-Suite.json
+- IW-Tools.txt: Python tools and their guides, for models that can run code. Files: tools/Usage.md, reference/Story-Tools.md, reference/Engineering-Tools.md, tools/validate_iw_export.py, tools/static_checks.py, tools/iw-export.schema.json, tools/data_bank.py, tools/import_audit.py, tools/story_export.py, tools/iw_browser.py, tools/plot_compile.py
+Every file is also available individually: https://iw-builder.github.io/llms.txt
 
 ===== BEGIN FILE: tools/Usage.md =====
 # Tool usage and validation reference
@@ -51,6 +61,9 @@ These are repository maintenance tasks, not requirements for authoring worlds:
 python tools/test_validator.py
 python tools/test_data_bank.py
 python tools/test_distribution.py
+python tools/test_engineering.py
+python tools/test_native_compat.py
+python tools/test_story_export.py
 python tools/check_package.py
 python tools/build_distribution.py
 ```
@@ -61,7 +74,7 @@ The builder updates visible EOF markers in AI-facing Markdown documents, generat
 
 Required sources are checked before output begins; a missing source or checker embedding stops the build with an error. Repeated builds with unchanged inputs preserve output bytes and the manifest timestamp. A write failure can leave partial outputs; fix it and rerun before publishing.
 
-`IW-Tools.txt` has an explicit authoring-tool list: this usage guide, validator, static checks, JSON schema, data-bank utility, import audit and story-export tool. Builders, regression tests and package reports remain in the repository but are omitted from that model-facing bundle. Human READMEs are also omitted from combined technical packages. No model needs the distribution builder to author a world.
+`IW-Tools.txt` has an explicit authoring-tool list: this usage guide, the Story-Tools and Engineering-Tools guides, validator, static checks, JSON schema, data-bank utility, import audit, story-export tool, browser harness and plot compiler. Builders, regression tests and package reports remain in the repository but are omitted from that model-facing bundle. Human READMEs are also omitted from combined technical packages. No model needs the distribution builder to author a world.
 
 The root manifest records repository-relative paths, byte lengths and SHA-256 hashes. It covers the authoring sources and supported files under reference, library, examples, tools, chat and checker, plus the homepage and root guide/template/license. It excludes itself, ZIP archives, sample histories, hidden files and caches. It is separate from the files it hashes to avoid circular dependencies. Hash original bytes, never a browser's rendered/extracted text. A mismatch may mean the manifest is stale; investigate apparent missing content without treating every mismatch as damage. A match establishes the recorded bytes, not freshness or runtime correctness.
 
@@ -84,6 +97,120 @@ See [Engineering tools](../reference/Engineering-Tools.md) for `iw_browser.py` s
 END OF DOCUMENT: tools/Usage.md
 
 ===== END FILE: tools/Usage.md =====
+
+===== BEGIN FILE: reference/Story-Tools.md =====
+# Story extraction and import diagnostics
+
+These local tools operate on files, not the live game. They do not infer hidden character records, run PawScript or certify narrative consistency.
+
+## Compare a source world with its native re-export
+
+Run:
+
+```sh
+python tools/import_audit.py source.json imported.json
+```
+
+The report includes source hashes, complete structural differences, possible tracker-ID changes and references still pointing at removed tracker targets. Possible identity changes require a unique Name/variable-handle candidate; ambiguity is reported, never automatically repaired. Array changes remain visible even when positional reordering makes them noisy. No input is modified.
+
+The validator supports native string turn thresholds, the editor-recognized first-action/Other Character effects, and the verified turn_number root. Other Character mutation remains runtime-unverified. Exact Scenario mismatches are errors when a registry is present; an absent registry produces migration guidance rather than pretending a legacy import cannot populate it. Non-alphanumeric tracker IDs produce an import-risk advisory. Findings identify the owning tracker/trigger Name where available; JSON paths remain technical coordinates.
+
+## Extract story text without silently resolving ambiguity
+
+Run:
+
+```sh
+python tools/story_export.py plan story.txt --world world.json --session my-session --branch main > plan.json
+```
+
+The plan proposes turn, section and tracker line ranges using the world's tracker Names. Review the actual source at those ranges, correct any boundary mistaken for prose/data, resolve reviewIssues, and set reviewed to true. A human or an AI with access to the source can perform this review. This is a data-review requirement, not a request to rerun the story. Duplicate tracker Names cannot be safely represented as a Name-keyed state map; resolve that ambiguity before extraction.
+
+Native story text has no escaping contract for headings. An embedded marker that looks exactly like a real turn or section can be indistinguishable by syntax alone. The source hash locks a plan to the reviewed bytes; review is an operator assertion, not an authenticated platform identity or a proof of automatic parsing correctness. Unknown prose headings are retained, and detected duplicate/out-of-order known boundaries are rejected.
+
+Then run:
+
+```sh
+python tools/story_export.py build plan.json --output new-extraction
+python tools/story_export.py verify new-extraction
+```
+
+Output includes original source bytes, reviewed plans, story.json and a SHA-256 manifest. Tracker values remain raw text, preserving nested YAML and multiline content rather than inventing typed structure. Blank separators may remain in raw value spans. Section text and original bytes provide the complete source representation. Line ranges are one-based and inclusive.
+
+The output path must be new. Publication uses a fresh sibling staging directory, validates its hashes and renames the completed directory into place. Existing output is never reused or deleted, preventing stale files from masquerading as new state. Read only manifest-listed files; verify checks their hashes and ignores unrelated files.
+
+## Merge only an explicitly selected history
+
+Supply multiple reviewed plans to build. Every plan must declare the same nonempty session and branch. Neither title, player Name, timestamp nor overlap proves identity. Identical overlapping turn content and extraction can deduplicate, retaining all source provenance. Any conflicting overlap is rejected, independent of file modification time or input order.
+
+Select a single coherent branch/revision before building conflicting history; the tool offers no latest-file winner and does not combine downstream turns from divergent branches automatically. Complete histories require turn one and no gaps. --partial permits a contiguous later range and labels it partial; it does not permit holes or silently promote partial history to complete.
+
+The tool is a conservative IW-Builder implementation. It does not patch or certify the separate external parser. Standalone live-browser capture and recovery remain separate roadmap items.
+
+---
+
+END OF DOCUMENT: reference/Story-Tools.md
+
+===== END FILE: reference/Story-Tools.md =====
+
+===== BEGIN FILE: reference/Engineering-Tools.md =====
+# Browser capture and plot compilation
+
+These are local authoring tools, not platform APIs. They never submit a turn or publish a world. See [Story tools](Story-Tools.md) for export parsing and import comparison.
+
+## Standalone browser harness
+
+`tools/iw_browser.py` uses an optional Playwright dependency and a dedicated local Chromium profile. The in-app browser's login is a separate session. Authenticated standalone connection, rendered-page capture and refresh-verified editor export were verified on 2026-10-23. Exported content matched the preserved original and passed structural validation. This establishes the observed capture/export workflow, not imports, gameplay automation, interrupted-turn recovery or server persistence. A command-runner sandbox may block local debugging sockets even when the browser is running; in that environment, run the harness from your own terminal.
+
+Install into a local virtual environment from the kit root:
+
+```text
+python -m venv .venv
+.venv/Scripts/python -m pip install -r tools/requirements-browser.txt
+.venv/Scripts/python -m playwright install chromium
+.venv/Scripts/python tools/iw_browser.py launch
+```
+
+Log in directly in the dedicated browser. Keep its launcher terminal open. The profile defaults to `.iw-builder-browser` under your home directory; keep it private. Debugging binds to loopback. The launcher opens a visible interactive browser for login. On non-Windows systems use `.venv/bin/python`.
+
+In a second terminal:
+
+```text
+.venv/Scripts/python tools/iw_browser.py status
+.venv/Scripts/python tools/iw_browser.py capture captures/before --tab 0
+.venv/Scripts/python tools/iw_browser.py export-current exports/world.json --tab 0 --expected-title "My World"
+.venv/Scripts/python tools/iw_browser.py inspect captures/before
+```
+
+`status` lists only Infinite Worlds hostnames. Multiple tabs require an explicit index. Open the intended editor/raw panel yourself and finish any import/rebuild before export. The exact title check concerns the raw buffer; it is not authentication or a server identity check.
+
+Export preserves the current raw buffer as `world.json.before.json`, then temporarily replaces only that raw text with a unique invalid-JSON marker and clicks Refresh raw JSON. Do not interact with the editor during this operation. It never clicks Import or Save. It requires the marker to be replaced by valid JSON of the expected title; unchanged final content is valid when regeneration was observed. A timeout is failure, not permission to reuse old raw text. A successful export has a hash/freshness receipt. This establishes editor regeneration, not server persistence or complete live state.
+
+After failure, the original raw text is restored only if the buffer still contains the tool's marker. If disconnected, the backup remains available; manually restore it after reconnecting if needed. A failed receipt write can leave the exported JSON without a receipt: treat it as incomplete and inspect it, then use a new output path. Existing export/backup/receipt names are never overwritten.
+
+Capture writes page text, accessibility text, metadata and hashes into a new directory. Partial capture staging is removed on failure; earlier captures remain untouched. `inspect` verifies listed files offline. Closed panels, historical prompts and live character records are outside its scope. Captures can contain story material; review before sharing.
+
+Recovery is observational: reconnect, run status, choose the intended tab and capture again. Check retained history and controls before deciding whether any action needs retrying. This harness never reloads, regenerates or resubmits a turn automatically. A future unattended gameplay runner needs a separate supported persistence/completion signal; streamed narration is insufficient.
+
+## Literal-Scenario plot compiler
+
+`tools/plot_compile.py` accepts a deliberately bounded plan: title and nodes; each node has an internal lowercase identifier, a user-facing Name, a literal Scenario, optional all-of prerequisites and a nonnegative integer award. It builds a fresh world, never modifies an existing one. See [example plan](../tools/example-plot-plan.json).
+
+```text
+python tools/plot_compile.py tools/example-plot-plan.json
+python tools/plot_compile.py tools/example-plot-plan.json --output new-world.json
+```
+
+Without output, it reports dependency order, roots, structurally reachable nodes and shared Scenarios. With output, it also validates and writes a new world; existing files are refused. Full schema checks need `jsonschema`; otherwise the report explicitly identifies reduced coverage.
+
+Generation puts prerequisite triggers before their dependents. A single script guards both completion and award and commits them together, allowing retry when a script has not completed. The resulting world uses literal Scenarios and a script-owned Plot progress tracker. Two eligible nodes sharing a Scenario may both complete in one turn; no hidden priority or fairness rule is implied. Later narration sees committed state according to platform timing; the compiler does not rewrite narration retrospectively.
+
+Unknown prerequisites, cycles, duplicate identifiers, dynamic Scenario templates and unsupported plan fields are rejected. This compiler supports prerequisite DAGs, not arbitrary cyclic plots, mutually exclusive branches or all possible IW worlds. Independent nodes retain author order. It does not infer events from prose or prove that the AI will recognize a Scenario, that a scene is achievable, or that every player's route is possible. Connectivity is not narrative satisfiability. The generated composition is structurally checked, not live-certified.
+
+---
+
+END OF DOCUMENT: reference/Engineering-Tools.md
+
+===== END FILE: reference/Engineering-Tools.md =====
 
 ===== BEGIN FILE: tools/validate_iw_export.py =====
 #!/usr/bin/env python3

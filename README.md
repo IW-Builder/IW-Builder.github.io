@@ -14,7 +14,7 @@ Send AI a link and your idea, get a completely built IW world back! It selects s
 
 **Two-step workflow:** unzip the archive and attach `Authoring-Prompt.md` and `World-Template.json` (or your world) and describe the task. The AI outlines the features and names additional files it needs. Attach those files, then it builds. You do not have to decide which technical references apply.
 
-**[Text-only workflow](https://github.com/IW-Builder/IW-Builder.github.io/tree/main/chat):** start with [IW-Authoring-Guide.txt](chat/IW-Authoring-Guide.txt): the prompt, template and core references. Add [IW-Examples.txt](chat/IW-Examples.txt) for native payloads and complete recipes and [IW-Sample-Library.txt](chat/IW-Sample-Library.txt) for library modules. Only provide if the model asks for them. [IW-Tools.txt](chat/IW-Tools.txt) supplies the tool sources for an AI that can reconstruct files and run Python.
+**[Text-only workflow](https://github.com/IW-Builder/IW-Builder.github.io/tree/main/chat):** start with [IW-Authoring-Guide.txt](chat/IW-Authoring-Guide.txt): the prompt, template and core references. Add [IW-Technical-Reference.txt](chat/IW-Technical-Reference.txt) for exact payloads and PawScript, [IW-Behavior.txt](chat/IW-Behavior.txt) for editor help and debugging, [IW-Examples.txt](chat/IW-Examples.txt) for native payloads and complete recipes and [IW-Sample-Library.txt](chat/IW-Sample-Library.txt) for library modules. Only provide them if the model asks. [IW-Tools.txt](chat/IW-Tools.txt) supplies the tool sources for an AI that can reconstruct files and run Python.
 
 ## Ready-to-use requests
 

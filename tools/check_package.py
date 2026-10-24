@@ -16,7 +16,7 @@ for path in worlds:
  assert path.read_bytes().endswith(b'}'),path
  if path.parent.name=='examples':
   assert not [f for f in findings if f['code'] in ['unknown-script-root','borrowed-syntax','string-plus','authoring-placeholder']],(path,findings)
- results[str(path.relative_to(ROOT))]={'errors':0,'warnings':dict(collections.Counter(f['code'] for f in findings))}
+ results[path.relative_to(ROOT).as_posix()]={'errors':0,'warnings':dict(collections.Counter(f['code'] for f in findings))}
 # Check only publication inputs, not installed packages in a local .venv.
 for doc in (p for p in manifest_paths() if p.suffix == '.md'):
  for link in re.findall(r'\]\(([^)]+)\)',doc.read_text(encoding='utf-8')):

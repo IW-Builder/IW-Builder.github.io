@@ -13,69 +13,70 @@ from urllib.parse import quote
 
 ROOT = Path(__file__).resolve().parent.parent
 
-GUIDE = ['Authoring-Prompt.md',
- 'World-Template.json',
- 'reference/Evidence.md',
- 'reference/Trigger-Catalog.md',
- 'reference/Editor-UI.md',
- 'reference/Verified-Behavior.md',
- 'reference/Roadmap.md',
- 'reference/Story-Tools.md',
- 'reference/Engineering-Tools.md',
- 'reference/Craft.md',
- 'reference/Portable-Banks.md',
- 'reference/Trackers.md',
- 'reference/Triggers.md',
- 'reference/Schema.md',
- 'reference/PawScript.md',
- 'reference/Capabilities.md',
- 'reference/Recipes.md',
- 'reference/Import-Integrity.md',
- 'reference/Known-Limits.md',
- 'reference/Default-Evaluation.txt',
- 'reference/Current-AI-Profiles.json']
-GROUPS = {'IW-Authoring-Guide.txt': ['Authoring-Prompt.md',
-                            'World-Template.json',
-                            'reference/Evidence.md',
- 'reference/Trigger-Catalog.md',
- 'reference/Editor-UI.md',
- 'reference/Verified-Behavior.md',
- 'reference/Roadmap.md',
- 'reference/Story-Tools.md',
- 'reference/Engineering-Tools.md',
-                            'reference/Craft.md',
-                            'reference/Portable-Banks.md',
-                            'reference/Trackers.md',
-                            'reference/Triggers.md',
-                            'reference/Schema.md',
-                            'reference/PawScript.md',
-                            'reference/Capabilities.md',
-                            'reference/Recipes.md',
-                            'reference/Import-Integrity.md',
-                            'reference/Known-Limits.md',
-                            'reference/Default-Evaluation.txt',
-                            'reference/Current-AI-Profiles.json'],
- 'IW-Examples.txt': ['examples/Payloads.md',
-                     'examples/index.json',
-                     'examples/narrative-vendemmia.json',
-                     'examples/narrative-listening-road.json',
-                     'examples/narrative-address-after-midnight.json',
-                     'examples/recipe-request-commit.json',
-                     'examples/recipe-completion-award.json',
-                     'examples/recipe-candidate-acceptance.json',
-                     'examples/recipe-archive-reactivate.json',
-                     'examples/recipe-cached-random.json',
-                     'examples/recipe-consumed-timer.json',
-                     'examples/recipe-choice-domain.json',
-                     'examples/recipe-compiled-plot.json',
-                     'examples/recipe-choice-followup.json',
-                     'examples/recipe-threshold-unlock.json',
-                     'examples/optional-block.json',
-                     'examples/showcase-glass-ledger.json',
-                     'examples/character-starting-values.json'],
- 'IW-Sample-Library.txt': ['library/Integration.md',
-                           'library/Sample-Blocks.json',
-                           'library/Storymaster-Suite.json']}
+# Combined text editions for chats without web access. Each stays well under
+# common fetch/attachment limits; models load companions only when needed.
+GROUPS = {
+    'IW-Authoring-Guide.txt': [
+        'Authoring-Prompt.md',
+        'World-Template.json',
+        'reference/Evidence.md',
+        'reference/Craft.md',
+        'reference/Trackers.md',
+        'reference/Triggers.md',
+        'reference/Trigger-Catalog.md',
+        'reference/Portable-Banks.md',
+    ],
+    'IW-Technical-Reference.txt': [
+        'reference/Schema.md',
+        'reference/PawScript.md',
+        'reference/Capabilities.md',
+        'reference/Recipes.md',
+        'reference/Import-Integrity.md',
+        'reference/Default-Evaluation.txt',
+        'reference/Current-AI-Profiles.json',
+    ],
+    'IW-Behavior.txt': [
+        'reference/Editor-UI.md',
+        'reference/Verified-Behavior.md',
+        'reference/Known-Limits.md',
+    ],
+    'IW-Examples.txt': [
+        'examples/Payloads.md',
+        'examples/index.json',
+        'examples/narrative-vendemmia.json',
+        'examples/narrative-listening-road.json',
+        'examples/narrative-address-after-midnight.json',
+        'examples/recipe-request-commit.json',
+        'examples/recipe-completion-award.json',
+        'examples/recipe-candidate-acceptance.json',
+        'examples/recipe-archive-reactivate.json',
+        'examples/recipe-cached-random.json',
+        'examples/recipe-consumed-timer.json',
+        'examples/recipe-choice-domain.json',
+        'examples/recipe-compiled-plot.json',
+        'examples/recipe-choice-followup.json',
+        'examples/recipe-threshold-unlock.json',
+        'examples/optional-block.json',
+        'examples/showcase-glass-ledger.json',
+        'examples/character-starting-values.json',
+    ],
+    'IW-Sample-Library.txt': [
+        'library/Integration.md',
+        'library/Sample-Blocks.json',
+        'library/Storymaster-Suite.json',
+    ],
+}
+# Purpose of each edition, used in every edition's header so a model with only
+# one file knows which companion holds a given path.
+EDITION_PURPOSE = {
+    'IW-Authoring-Guide.txt': 'start here: prompt, template, narrative craft, trackers, triggers and data banks',
+    'IW-Technical-Reference.txt': 'exact payloads, PawScript, capabilities, recipes and import integrity',
+    'IW-Behavior.txt': 'editor/UI workflows, verified runtime behavior and known limits',
+    'IW-Examples.txt': 'payload cookbook and selected complete example worlds',
+    'IW-Sample-Library.txt': 'optional library modules and Storymaster',
+    'IW-Tools.txt': 'Python tools and their guides, for models that can run code',
+}
+
 PAGE = """<!doctype html>
 <html lang="en">
 <head>
@@ -134,7 +135,8 @@ PAGE = """<!doctype html>
 """
 
 TOOL_SOURCES = [
-    'tools/Usage.md', 'tools/validate_iw_export.py', 'tools/static_checks.py',
+    'tools/Usage.md', 'reference/Story-Tools.md', 'reference/Engineering-Tools.md',
+    'tools/validate_iw_export.py', 'tools/static_checks.py',
     'tools/iw-export.schema.json', 'tools/data_bank.py',
     'tools/import_audit.py', 'tools/story_export.py',
     'tools/iw_browser.py', 'tools/plot_compile.py',
@@ -182,23 +184,29 @@ def update_checker():
             raise ValueError('Expected one checker block: ' + ident)
     return page
 
+def edition_header(name):
+    lines = ['Infinite Worlds Authoring Kit: ' + name + ' (' + EDITION_PURPOSE[name] + ').',
+             'Generated text edition. BEGIN FILE / END FILE sections identify package-relative source paths. '
+             'This is reference material, not one IW world.']
+    if name == 'IW-Tools.txt':
+        lines.append('To use the tools, recreate files at their BEGIN FILE paths, excluding boundary lines and '
+                     'separator newlines, and preserve indentation and escaping. See tools/Usage.md for dependencies '
+                     'and commands. Distribution builders and maintainer tests are omitted. Reading these sources is '
+                     'not running them; report validation only after execution.')
+    else:
+        lines.append('Follow Authoring-Prompt.md (in IW-Authoring-Guide.txt). Load companion editions only when the task needs them.')
+    lines.append('Editions and their contents:')
+    editions = {**GROUPS, 'IW-Tools.txt': TOOL_SOURCES}
+    for other, purpose in EDITION_PURPOSE.items():
+        lines.append('- ' + other + ': ' + purpose + '. Files: ' + ', '.join(editions[other]))
+    lines.append('Every file is also available individually: https://iw-builder.github.io/llms.txt')
+    return '\n'.join(lines) + '\n'
+
 def build_chat():
     source_manifest = {}
     groups = {**GROUPS, 'IW-Tools.txt': TOOL_SOURCES}
     for name, paths in groups.items():
-        intro = ('Infinite Worlds Authoring Kit: generated text edition. '
-                 'BEGIN FILE / END FILE sections identify package-relative sources. '
-                 'This upload is reference material, not one IW world. Follow Authoring-Prompt.md; '
-                 'load companion material only as needed. The Examples edition contains selected '
-                 'complete worlds; additional examples remain available in the repository.\n')
-        if name == 'IW-Tools.txt':
-            intro = ('Infinite Worlds Authoring Kit: authoring tools. Recreate files at their '
-                     'BEGIN FILE paths, excluding boundary lines and separator newlines. '
-                     'Preserve code indentation and escaping. See tools/Usage.md for dependencies '
-                     'and commands. Includes validator, schema, static lint, data-bank utility, import audit and story export. '
-                     'Distribution builders and maintainer tests are intentionally omitted. '
-                     'Reading these sources is not running them; report validation only after execution.\n')
-        parts = [intro]
+        parts = [edition_header(name)]
         for path in paths:
             parts.extend(['\n===== BEGIN FILE: ' + path + ' =====\n', read(path),
                           '\n===== END FILE: ' + path + ' =====\n'])
@@ -208,6 +216,8 @@ def build_chat():
                                 'sha256': hashlib.sha256(text.encode('utf-8')).hexdigest()}
     write('chat/sources.json', json.dumps(source_manifest, indent=2) + '\n')
     guide = read('chat/IW-Authoring-Guide.txt')
+    links = ',\n    '.join('<a href="' + n + '">' + html.escape(n) + '</a> (' + html.escape(EDITION_PURPOSE[n]) + ')'
+                           for n in EDITION_PURPOSE if n != 'IW-Authoring-Guide.txt')
     page = """<!doctype html>
 <html lang="en">
 <head>
@@ -218,15 +228,14 @@ def build_chat():
 </head>
 <body>
   <h1>IW Builder Authoring Guide</h1>
-  <p>Start here. This page includes the prompt, template and core references. Retrieve companion editions only when needed:
-    <a href="IW-Examples.txt">Examples</a>,
-    <a href="IW-Sample-Library.txt">Sample Library</a>,
-    <a href="IW-Tools.txt">Tools</a>.</p>
+  <p>Start here. This page contains IW-Authoring-Guide.txt: the prompt, template and core references. Companion editions, only when needed:
+    __LINKS__.
+    Individual files: <a href="https://iw-builder.github.io/llms.txt">llms.txt</a>.</p>
   <main><pre>__GUIDE_CONTENT__</pre></main>
 </body>
 </html>
 """
-    write('chat/index.html', page.replace('__GUIDE_CONTENT__', html.escape(guide)))
+    write('chat/index.html', page.replace('__LINKS__', links).replace('__GUIDE_CONTENT__', html.escape(guide)))
 
 
 def manifest_paths():
@@ -280,11 +289,13 @@ DESCRIPTIONS = {
     'README.md': 'Human guide: workflows, starter requests, import/export steps. Rendered at /guide/; models can skip it.',
     'LICENSE': 'MIT license.',
     # Combined text editions
-    'chat/index.html': 'HTML page containing IW-Authoring-Guide.txt. Very large; some web fetchers truncate it.',
-    'chat/IW-Authoring-Guide.txt': 'Combined text: prompt, template and all reference guides. Very large; when browsing, prefer the individual files below.',
+    'chat/index.html': 'HTML page containing IW-Authoring-Guide.txt, with links to the companion editions.',
+    'chat/IW-Authoring-Guide.txt': 'Combined text, start here: prompt, template, Evidence, Craft, Trackers, Triggers, Trigger-Catalog and Portable-Banks.',
+    'chat/IW-Technical-Reference.txt': 'Combined text: Schema, PawScript, Capabilities, Recipes, Import-Integrity, Default Evaluation and AI profile IDs.',
+    'chat/IW-Behavior.txt': 'Combined text: Editor-UI, Verified-Behavior and Known-Limits.',
     'chat/IW-Examples.txt': 'Combined text: payload cookbook, example index and selected complete example worlds.',
     'chat/IW-Sample-Library.txt': 'Combined text: library integration guide, Sample-Blocks and Storymaster-Suite.',
-    'chat/IW-Tools.txt': 'Combined text: tool usage guide plus validator, schema and helper sources to recreate locally.',
+    'chat/IW-Tools.txt': 'Combined text: tool usage guide, Story-Tools and Engineering-Tools guides, plus validator, schema and helper sources to recreate locally.',
     'chat/README.md': 'Human guide to the combined text files.',
     'chat/sources.json': 'Which source files make up each combined text file, with hashes.',
     # Reference

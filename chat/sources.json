@@ -4,26 +4,33 @@
       "Authoring-Prompt.md",
       "World-Template.json",
       "reference/Evidence.md",
-      "reference/Trigger-Catalog.md",
-      "reference/Editor-UI.md",
-      "reference/Verified-Behavior.md",
-      "reference/Roadmap.md",
-      "reference/Story-Tools.md",
-      "reference/Engineering-Tools.md",
       "reference/Craft.md",
-      "reference/Portable-Banks.md",
       "reference/Trackers.md",
       "reference/Triggers.md",
+      "reference/Trigger-Catalog.md",
+      "reference/Portable-Banks.md"
+    ],
+    "sha256": "de349080a521ce398e3d56b2beb890798b422cf9f77580e4036abaab815cc7b5"
+  },
+  "IW-Technical-Reference.txt": {
+    "sourceFiles": [
       "reference/Schema.md",
       "reference/PawScript.md",
       "reference/Capabilities.md",
       "reference/Recipes.md",
       "reference/Import-Integrity.md",
-      "reference/Known-Limits.md",
       "reference/Default-Evaluation.txt",
       "reference/Current-AI-Profiles.json"
     ],
-    "sha256": "0934e344e064518a8d8384cf0af2d383919f6ade2eb2b9a1f3994057e001471f"
+    "sha256": "5ca907541719d25d3a22cb7d83aeaaec34b90a5643141ab0cdefa460522615ca"
+  },
+  "IW-Behavior.txt": {
+    "sourceFiles": [
+      "reference/Editor-UI.md",
+      "reference/Verified-Behavior.md",
+      "reference/Known-Limits.md"
+    ],
+    "sha256": "f1551558359eb9607ab5d03ebb3e3fb3edf7b95fb5fb1bbcfed838d0ba181a10"
   },
   "IW-Examples.txt": {
     "sourceFiles": [
@@ -46,7 +53,7 @@
       "examples/showcase-glass-ledger.json",
       "examples/character-starting-values.json"
     ],
-    "sha256": "15244704b8c16fe2a9b3221b52d50fec0084386ed35ff09f288151ddfe39177f"
+    "sha256": "c746a87bbd458a7b0def83163839c27f87a160727c8fd31445b320461fcad01f"
   },
   "IW-Sample-Library.txt": {
     "sourceFiles": [
@@ -54,11 +61,13 @@
       "library/Sample-Blocks.json",
       "library/Storymaster-Suite.json"
     ],
-    "sha256": "e9cfc610a9da2d4974babffac62a25c3e117adcbf40d55f5e3009e3d7c09e819"
+    "sha256": "e62b1eb36fe2833f0845e37188329ea532e9c986bfe20d04e27443bf0538a5b2"
   },
   "IW-Tools.txt": {
     "sourceFiles": [
       "tools/Usage.md",
+      "reference/Story-Tools.md",
+      "reference/Engineering-Tools.md",
       "tools/validate_iw_export.py",
       "tools/static_checks.py",
       "tools/iw-export.schema.json",
@@ -68,6 +77,6 @@
       "tools/iw_browser.py",
       "tools/plot_compile.py"
     ],
-    "sha256": "3c2f08ff4136f38552b13b0275c35d76124f1d6fc4ee40e0b8d6e311e1203798"
+    "sha256": "246fdb07354277b7a87f05cf229557962f1d677e62bb09903e7761d6169c9b8d"
   }
 }

@@ -13,7 +13,7 @@ Each JSON file is a complete world. Import it into a separate world to explore i
 - [Velvet Wager](narrative-velvet-wager.json): An adult villa setting focused on intimate character dynamics.
 - [The Glass Ledger](showcase-glass-ledger.json): A more involved example combining a crew, choices, purchases, a countdown and endings.
 
-The relationship-focused examples include mature material; the expedition and horror examples are non-sexual. The two new examples are structurally validated, not live-playthrough certified. Pick one close to the kind of experience you want, rather than treating any of them as a required template.
+The relationship-focused examples include mature material; the expedition and horror examples are non-sexual. The expedition and horror examples are structurally validated, not live-playthrough certified. Pick one close to the kind of experience you want, rather than treating any of them as a required template.
 
 ## Try a useful combination
 
