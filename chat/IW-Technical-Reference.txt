@@ -21,11 +21,11 @@ This reference describes arbitrary IW worlds. The schema and validator contain n
 
 ## Scope and validation
 
-`../tools/iw-export.schema.json` is a JSON Schema Draft 2020-12 profile of native exported structure, not an official exhaustive importer contract. Known fields have characterized types. Unknown fields, values and condition/effect discriminators remain permissive and produce warnings where the validator can identify them. Observed vocabularies are not necessarily exhaustive enums.
+`../tools/iw-export.schema.json` is a JSON Schema Draft 2020-12 profile of native exported structure, not an official exhaustive importer contract. Known fields have characterized types. Unknown fields, values and condition/effect discriminators are accepted and produce warnings where the validator can identify them. Observed vocabularies are not necessarily exhaustive enums.
 
-At least one skill is required, in the editor. Other sparse `required` declarations do not prove that a skills-only object is a sufficient usable import. The neutral `../World-Template.json` supplies a conservative envelope; it intentionally requires the author to fill the story rather than supplying a game design.
+At least one skill is required, in the editor. Other sparse `required` declarations do not prove that a skills-only object is a sufficient usable import. `../World-Template.json` supplies a conservative envelope; it intentionally leaves the story for the author to fill rather than supplying a game design.
 
-The validator checks explicit tracker, trigger, PC, NPC, block and skill wiring. It does not parse or execute PawScript or template strings, enforce a particular narrative architecture, validate every reference hidden in text, test AI instruction compliance, or prove importer/runtime acceptance.
+The validator checks explicit tracker, trigger, PC, NPC, block and skill wiring. It does not execute PawScript or templates, enforce a narrative architecture, validate every reference hidden in text, test AI instruction compliance, or prove importer/runtime acceptance.
 
 Structural errors are returned before reference traversal; fix them and rerun. Exit codes: 0 means no errors with warnings permitted; 1 means validation errors; 2 means an input/dependency problem. Read each warning. Known opaque-code warnings are not the same as unknown payloads or unresolved targets.
 
@@ -46,19 +46,17 @@ Structural errors are returned before reference traversal; fix them and rerun. E
 |Permissions|permissionsOnceShared, `allowChangeCharacter*`|
 |Metadata/advanced controls|schemaVersion, favorite, hideSkillSystem, autoAdvanceVersion, version, designNotes, showPawScriptButtons|
 
-These groups map purpose; they do not assert every UI label or control is bijective. `recommendedAIModel` is obsolete/export-only with no current editor selector. Keep it null if retained. `driftAcknowledgedForName` is null or the display name for which the variable-name mismatch alert was dismissed. Normal capitalization and separator differences such as Win Path / win_path are not drift and do not require acknowledgement. It is editor metadata, not a script alias. Metadata is not automatically story context: put necessary instructions in actual AI-facing fields.
+These groups map purpose; not every UI label corresponds one-to-one to a field. `recommendedAIModel` is obsolete/export-only with no current editor selector; keep it null if retained. `driftAcknowledgedForName` is editor metadata for the variable-name mismatch alert, not a script alias; see [Trackers.md](Trackers.md). Metadata is not story context: put necessary instructions in AI-facing fields. schemaVersion is visible in raw JSON; it is not an application release number.
 
 ## Trackers
 
-Tracker definitions use an ID, display name, explicit variableName, dataType, visibility, initial-value fields and optional AI-update/format instructions. Use unique IDs and variable names. A variable name is not the same as a target ID.
+Tracker definitions use an ID, display name, explicit variableName, dataType, visibility, initial-value fields and optional AI-update/format instructions. Use unique IDs and variable names; a variable name is not a target ID. Ownership, visibility behavior, memory and name/handle drift are covered in [Trackers.md](Trackers.md).
 
-Tracker dataType values: text, number, yaml, xml. Lists/boolean values can exist inside structured YAML; do not infer a separate native boolean/list dataType. `initialValue` is a JSON string even for numeric or structured content; parsed YAML values inside that string retain their own types. The editor does not enforce numeric-only typing in Number input controls. Use meaningful numeric literals when calculations depend on them.
+dataType values: text, number, yaml, xml. Lists and booleans live inside YAML; there is no native boolean/list dataType. `initialValue` is a JSON string even for numeric or structured content. The editor does not enforce numeric-only input in Number controls, so use numeric literals when calculations depend on them.
 
-Visibility values include everyone, player_only, ai_only, ai_only_boring, hidden and hidden_boring. The latter variants are characterized by the supplied usage; do not infer unverified UI highlighting distinctions from their names. Player visibility clears the separate hide-in-Storyteller checkbox. Hidden trackers may be read by scripts and are omitted from ordinary player exports.
+visibility values: everyone, player_only, ai_only, ai_only_boring, hidden, hidden_boring. Hidden trackers remain readable by scripts and are omitted from ordinary player exports.
 
-AI updating can be enabled for ordinary story-driven facts, relationships, appearance and other evolving information. Script/native effects can instead own values where exact control is useful. Neither is universally required. If combining them, specify the intended division to avoid competing writes.
-
-`formatExample` and `formatSchema` are strings. The library demonstrates YAML-like schema notation, including text/number, optional-key and open-content forms. This is not evidence that formatSchema accepts JSON Schema, nor does the supplied JSON validator enforce its full grammar or AI semantic intent.
+`formatExample` and `formatSchema` are strings. The library demonstrates a YAML-like schema notation with text/number, optional-key and open-content forms. formatSchema is not JSON Schema, and the validator does not enforce its grammar.
 
 ### Starting values: platform modes
 
@@ -70,94 +68,52 @@ AI updating can be enabled for ordinary story-driven facts, relationships, appea
 |Character-defined script selection|Same per-PC entry with initialPCValue empty and initialPCValueChoicesScript string|Script generates that character's choices at startup|
 |Player-defined selection|Tracker initialValueBasedOnPC player, initialValue string, initialValueChoices array of strings|Player chooses a startup preference independently of PC-specific values|
 
-The optional-block export supplies the concrete player form: initialValue On, initialValueChoices [On, Off], player mode and autoUpdate false. Those are tracker-level fields; do not put this list into a per-PC initialTrackedItemValues entry unless that is the intended character-defined mode. The player can change the live preference later to affect a following turn.
+The optional-block export supplies the concrete player form: initialValue On, initialValueChoices [On, Off], player mode and autoUpdate false. Those are tracker-level fields; do not put this list into a per-PC initialTrackedItemValues entry unless the character-defined mode is intended. The player can change the live preference later to affect a following turn.
 
-The script-choice editor description says choices are evaluated at game start from initial tracker values, including that character's values and skills. This is a platform capability rather than a game-specific rule. Arbitrary combinations of conflicting initialization fields, and player-mode UI behavior for every unconstrained input type, are not established by the selection examples; request a targeted export only if that additional variation matters.
+Per the editor, script choices are evaluated at game start from initial tracker values, including that character's values and skills. Conflicting combinations of initialization fields, and player-mode controls for unconstrained input types, are not established; request a targeted export if that variation matters.
 
-## Conditions and effects
+## Conditions
 
-Conditions use category condition with a type/data leaf, or category logic with operator and a data child array. Normal condition lists are AND. Logic operators include and, or, none_of. Effects use type and data. IDs are opaque but importer preservation is entity-specific. Some punctuation/non-ASCII tracker IDs are regenerated without remapping references; use ASCII alphanumeric IDs for new trackers. Field case matters: trackedItemID, targetTrackedItemId and characterId are different native spellings.
-
-|Condition|Payload|
-|-|-|
-|triggerOnEvent|Scenario string evaluated by AI; root conditions lists Scenarios reusable by multiple triggers; the editor creation cap is ten, not a verified runtime maximum|
-|triggerOnPawScript|Bare expression string|
-|triggerOnRandomChance|Success percentage string: numeric literal, variable or PawScript expression; "50" means 50%|
-|triggerOnTurn|Native string threshold or numeric threshold|
-|triggerOnCharacter|Array of PC IDs|
-|triggerOnTrackedItem|Tracker target/comparison object|
-|triggerPrereqs / triggerBlockers|Trigger-ID arrays in prereqs/blockers plus firedThisTurn boolean|
-
-Native tracked comparisons include is_exactly, at_least, not_equal, at_most; text comparisons include contains and does_not_contain. Value effects include set/add/subtract/replace. Native numeric and text controls are type-aware despite text-entry fields. Wrapper fields can repeat payload metadata; precedence is not established, and disagreement is an error. Preserve a coherent convention from the relevant sample rather than creating conflicting duplicates.
-
-Native effects can show messages, guide/give information to the storyteller, edit tracker values/definitions, modify main/ordinary/keyword instructions, change PC name/description/skills, change objective/style/endings, present choices/request input, dispatch random triggers, run scripts and end the game. Use their exact schema payloads; do not infer additional effect types from similar names.
-
-`effectEndsGame.data` is the "Player can choose to continue the game" boolean, not an enabled checkbox. True permits continuation after the game-over message; false does not. Native ending definitions have their own shapes. Null victoryCondition/defeatCondition is an exported disabled configuration.
-
-## Payload catalog
-
-Condition payload quick reference (all nodes still need category/type/id):
+A condition node is either a leaf (`category: "condition"` with type and data) or a logic group (`category: "logic"`, operator and a data array of child nodes; operators and, or, none_of). Normal condition lists are AND. Every node needs category, type and id. IDs are opaque, and importer preservation is entity-specific: use ASCII alphanumeric IDs for new trackers ([Import-Integrity.md](Import-Integrity.md)). Field case matters: trackedItemID, targetTrackedItemId and characterId are different native spellings.
 
 |type|data shape and intent|
 |-|-|
 |triggerOnPawScript|Bare expression STRING, without `<< >>`; deterministic check of current state|
-|triggerOnEvent|Scenario STRING interpreted by AI; flexible but subject to false positives/negatives; include it in root conditions registry. The editor stops adding at ten entries; larger imported registries can persist and execute. Multiple triggers can reuse each Scenario|
-|triggerOnTrackedItem|Object: trackedItemID, inequality, requiredValue, textComparison; target uses tracker ID, not variable name|
+|triggerOnEvent|Scenario STRING interpreted by AI; flexible but subject to false positives/negatives. Must match an entry in the root `conditions` registry exactly; multiple triggers can reuse each Scenario. Registry size: see [Triggers.md](Triggers.md)|
+|triggerOnTrackedItem|Object: trackedItemID, inequality, requiredValue, textComparison; target uses tracker ID, not variable name. See Comparator fields|
 |triggerOnTurn|Native string or numeric turn threshold|
 |triggerOnCharacter|Array of possibleCharacters characterId references|
 |triggerPrereqs|Object: prereqs array of trigger IDs, firedThisTurn boolean|
 |triggerBlockers|Object: blockers array of trigger IDs, firedThisTurn boolean|
 |triggerOnRandomChance|Success percentage as a STRING: numeric literal, variable or PawScript expression; "50" means a 50% chance|
 
-Native numeric comparison vocabulary: is_exactly, at_least, not_equal, at_most. Text comparisons: contains, does_not_contain. Do not extrapolate arbitrary comparison strings. Native wrappers can duplicate trackedItemID/inequality outside data; preserve a supplied export's consistent convention, never create mismatches. PawScript conditions are another option when useful, not a requirement to replace native conditions.
+PawScript conditions are an option when useful, not a requirement to replace native conditions.
 
-Effects by purpose:
+## Comparator fields
+
+For Number trackers, `inequality` selects is_exactly, at_least, not_equal or at_most. For Text trackers, `textComparison` selects contains or does_not_contain. Do not extrapolate other comparison strings. Exports may retain both fields; they are not two simultaneous predicates. Native numeric and text controls are type-aware despite text-entry fields. Use PawScript for structured YAML field checks rather than text comparison over a whole document.
+
+Native wrappers can repeat trackedItemID/inequality outside `data`. Precedence is not established and disagreement is an error: keep wrapper and payload consistent, following the supplied export's convention.
+
+## Effects
 
 |Effect|Authoring guidance|
 |-|-|
 |effectRunScript|Bare multiline script STRING; changes tracker values only|
 |effectShowMessage|Text STRING rendered to player; use for authoritative results/status|
 |effectTellAIWhatToDo|Guidance STRING influencing subsequent narration; not a state mutation or guaranteed repair|
-|effectGiveInfo|AI background-information STRING; distinct from player output|
-|effectSetTrackedItemValue|Object includes trackedItemID, action, newValue, replaceWith, path, updateMode, listExpression, targetExpression; use exact schema shape, not invented targeting modes|
-|effectModifyTrackedItemDetails|Changes Name, description, visibility, automatic updating (autoUpdate), and update instructions; matching override booleans select changes|
-|effectModifyInstructionBlock|`{id: instruction-block-ID, content: text}`|
+|effectGiveInfo|AI background-information STRING; distinct from player output. Ignored with Start of Game enabled ([Triggers.md](Triggers.md))|
+|effectSetTrackedItemValue|Object with trackedItemID, action, newValue, replaceWith, path, updateMode, listExpression, targetExpression; see Native value effects|
+|effectModifyTrackedItemDetails|Changes Name, description, visibility, automatic updating and update instructions; a value changes only when its matching override boolean is true. See [Trigger-Catalog.md](Trigger-Catalog.md#changing-automatic-updating)|
+|effectModifyInstructionBlock|`{id: instruction-block-ID, content: text}`; template timing in [Capabilities.md](Capabilities.md)|
 |effectModifyKeywordBlock|`{id: keyword-block-ID, keywords: string-array, content: text}`|
-|effectPresentChoice|Native inline choice form; correctly bound single-answer persistence is verified; choices is a STRING, targetTrackedItemId is a tracker ID; single/multiple modes and string limits as schema describes|
-|effectRequestInput|Native input request; requestText, targetTrackedItemId, inputMode, requiresInput, path; do not assume it is equivalent to ordinary next-turn input|
-|effectFireRandomTrigger|Array of trigger IDs; literal nothing is a sentinel. Target conditions are bypassed but consumed one-shot eligibility remains enforced. Duplicate weighting is unresolved.|
-|effectChangePCSkill|Declared skill display name, integer amount and minmax, increase boolean. Levels and minmax are 0–5; minmax is the upper/lower boundary according to increase. See Capabilities.md for outcomes|
-|effectEndsGame|Boolean data is "player may continue": true allows continuation, false does not. It is not an enabled flag.|
+|effectPresentChoice / effectRequestInput|Native forms; see Choice and input forms|
+|effectFireRandomTrigger|Array of trigger IDs; literal nothing is a sentinel. Target conditions are bypassed but consumed one-shot eligibility is enforced. Duplicate weighting is unresolved|
+|effectChangePCSkill|Declared skill display name, integer amount and minmax, increase boolean. Levels and minmax are 0–5; minmax is the upper or lower boundary according to increase. Outcomes in [Capabilities.md](Capabilities.md)|
+|effectChangeBackground|String `data`, which can be a template such as `<<$opening_assembly>>`; see [layered opening](../examples/recipe-layered-opening.json). Startup behavior in [Triggers.md](Triggers.md); mid-game history behavior not established|
+|effectEndsGame|Boolean data means "player may continue": true allows continuation after the game-over message, false does not. It is not an enabled flag|
 
-Other schema-defined effects change PC name/description, objective, main instructions, author style, Description instructions and victory/defeat definitions. Consult their exact payloads. A Run Script cannot directly edit those system properties; stage tracker text and use the appropriate native effect. Do not invent change-evaluation/summary/image effects because a similar Description effect exists.
-
-In the native choice payload, choices is newline-separated text (JSON `"Take road\nTake ferry"`), single selection uses selectionMode single with null limits, and multiple selection uses string limits such as "1" and "3" with valueDelimiter newline. Those are export examples, not proof of every modal timing or selection-storage detail. Use real target tracker IDs and an empty path for whole-value targeting where appropriate. Nested-path writes and newline-delimited multi-selection text are supported within the observed scope. Native forms constrain answers and correctly bound single-answer targets update immediately; later triggers can react in the same turn.
-
-## Comparator fields
-
-For Number trackers, inequality selects is_exactly, at_least, not_equal or at_most. For Text trackers, textComparison selects contains or does_not_contain. Exports may retain both fields; do not interpret them as two simultaneous predicates. Use PawScript for structured YAML field checks rather than guessing how text comparison applies to a whole document. Native wrappers can repeat trackedItemID/inequality; keep wrapper and payload consistent.
-
-## Assets and persistence
-
-Do not invent image URLs, data-URI support or preset identifiers. Image style fields can require editor save/reload before their export reflects changes. Preview strings can persist with no attached image; empty settings can auto-populate. Preserve intentional whitespace rather than inventing universal default strings. Nonempty portrait metadata has characterized string fields for appearance, clothes, expression/position and setting.
-
-Editor workflow: enable Show optional feature, expand Misc advanced features (optional), enable Show raw JSON, copy the full box to export. To import, overwrite the full box, avoid an extra trailing newline, and click Import JSON to world. Acknowledge the dialogs and wait for the editor rebuild before reopening raw JSON and refreshing. Import may persist independently of a later Discard changes action. The trailing-newline issue is an importer quirk, not invalid JSON syntax.
-
-Playing creates an independent live world copy. Base edits/deletion do not affect existing games; live edits do not change the base. Save as new world or export live JSON and import it over the intended base to preserve/reuse changes. schemaVersion can be inspected in raw JSON; it is not a visible application release number.
-
-## Remaining limits
-
-The profile does not establish every importer-required field, every future vocabulary/preset, all path/list-expression targeting modes, arbitrary initialization-field precedence, random-child dispatch/duplicate weighting, complete system skill slug normalization, or a general performance/trigger limit. Collect targeted evidence only when an additional behavior is required. These limits do not require imposing a restrictive game architecture on ordinary world authoring.
-
-## Authoring context
-
-background, firstInput and objective feed AI context and direct play; objective also has a native update effect. They are not merely player-facing metadata. `<#...#>` are IW comment delimiters; sample authoring slots inside them should be filled, while genuine comments can remain. The sample Time and Location (whereWhen) block is a soft default for visible chronology. whereWhen is runtime output vocabulary, not an additional root export field.
-
-Skill levels in possibleCharacters are integers from 0 through 5. effectChangePCSkill.minmax is a level boundary in that same range. The editor-provided Evaluation uses skill, difficulty, character context and common sense, including PARTIAL_SUCCESS; there is no established numeric success-probability formula. See Capabilities.md.
-
-
-
-Native path fields are unchecked editor inputs. Review target structure and operation together; JSON validation alone cannot establish runtime path meaning. See Import-Integrity.md.
+Other schema-defined effects change PC name/description, objective, main instructions, author style, Description instructions and victory/defeat definitions; consult their exact payloads in the schema and [Payloads.md](../examples/Payloads.md). Run Script cannot edit those system properties or the background: stage text in a tracker and apply it with the native effect. Do not invent change-evaluation/summary/image effects because a similar Description effect exists. Native ending definitions have their own shapes; null victoryCondition/defeatCondition is an exported disabled configuration.
 
 ## Native value effects
 
@@ -172,11 +128,11 @@ Native path fields are unchecked editor inputs. Review target structure and oper
 |path|Plain dotted path, e.g. wallet.coins; empty targets the whole tracker|
 |updateMode|`path` edits a selected path; `replace` replaces the whole YAML value|
 |action append|Add a value to the list at path; distinct from numeric/text add|
-|listExpression / targetExpression|Empty in the current export; preserve when importing, but do not use them to invent a currently unsupported editor workflow|
+|listExpression / targetExpression|Empty in current exports; preserve when importing, but do not use them to invent an unsupported editor workflow|
 
-Text adds accumulate and preserve literal quotation marks; text removal removes all matching occurrences. Numeric repeated writes within one trigger have different semantics. The cookbook supplies separate native text and number examples.
+Text adds accumulate and preserve literal quotation marks; text removal removes all matching occurrences. Repeated numeric writes within one trigger behave differently ([Triggers.md](Triggers.md)). The cookbook supplies separate native text and number examples.
 
-The current YAML editor offers Replace Value, Path, and "Do Something Complicated"; the last directs authors to Run Script. There is no separately exposed List Update workflow in this editor. Path offers Set a Value, Remove Value, Add to a list and Change Number By. Set uses YAML text with optional <<...>> interpolation, including whole-structure injection. The append export uses action append. Remove Value serializes as action remove; Change Number By as action adjust. Both use updateMode path. Do not confuse these YAML operations with native text subtract or numeric add/subtract.
+The YAML editor offers Replace Value, Path, and "Do Something Complicated" (which directs authors to Run Script); there is no separate List Update workflow. Path offers Set a Value, Remove Value, Add to a list and Change Number By. Set uses YAML text with optional `<<...>>` interpolation, including whole-structure injection. Add to a list exports action append, Remove Value action remove, and Change Number By action adjust, all with updateMode path. Do not confuse these YAML operations with native text subtract or numeric add/subtract. Path fields are unchecked editor inputs: review target structure and operation together ([Import-Integrity.md](Import-Integrity.md)).
 
 Adding one list member is different from updating every member. To refill each character's HP, use a script:
 
@@ -185,19 +141,33 @@ for each $member in $test_party
   $member.hp = $member.max_hp
 ```
 
-For structured append payloads, a leading `-` describes a list, while `name: Frank` with sibling fields describes one record. Flow-style YAML record append stores structured data and permits duplicates. Arbitrary list flattening/nesting and coercion remain unresolved; do not infer automatic deduplication. Use Run Script for list-wide transformations.
+For structured append payloads, a leading `-` describes a list, while `name: Frank` with sibling fields describes one record. Flow-style YAML record append stores structured data and permits duplicates. List flattening/nesting and coercion are unresolved; do not assume deduplication. Use Run Script for list-wide transformations.
 
-Modify Tracked Item Details uses override flags. A value only changes when its matching override flag is enabled. This can reveal a tracker or hand future updates between AI and scripts. Changing autoUpdate after generation cannot undo a write already made this turn. Include an explicit handoff point and inspect the next turn.
+## Choice and input forms
 
-Present Choice includes message, newline-separated choices, targetTrackedItemId, selectionMode, updateMode, limits, delimiter and path. Request Input uses requestText, targetTrackedItemId, inputMode, requiresInput and path. Correctly bound single-answer forms work: narration streams, the inline form waits for submission, the answer tracker updates immediately, and following triggers can fire in the same turn. The tested follow-up message is rendered ABOVE the question/answer receipt, followed by normal story options. Rendered placement does not imply execution before submission. The tested required forms offer no cancellation or forced focus.
+Present Choice includes message, choices, targetTrackedItemId, selectionMode, updateMode, limits, delimiter and path. `choices` is one newline-separated STRING (JSON `"Take road\nTake ferry"`). Single selection uses selectionMode single with null limits; multiple selection uses selectionMode multiple, string min/maxSelections such as "1" and "3", and valueDelimiter newline or comma.
 
-Multiple choice exports selectionMode multiple, string min/maxSelections (for example "1" and "2"), and valueDelimiter newline or comma. Text input exports inputMode single or multi and requiresInput true or false. YAML Request Input exposes a dotted path. [RUNTIME] Multiple-choice bounds constrain selection; newline-delimited answers store text, not an automatic YAML list. Optional blank input clears its destination while preserving sibling keys. Required blank input is rejected, and multiline/nested-path writes preserve submitted line breaks. Arbitrary delimiter variants remain outside this result.
+Request Input uses requestText, targetTrackedItemId, inputMode (single or multi), requiresInput (true or false) and path; YAML targets expose a dotted path. Do not treat it as equivalent to ordinary next-turn input.
 
-Correct target binding is required. Preserve IDs and verify that targetTrackedItemId names the intended tracker. The supplied single-choice world preserves its IDs and binding through a fresh import and works without retargeting. See Import-Integrity.md.
+[RUNTIME] Correctly bound single-answer forms work: narration streams, the inline form waits for submission, the target tracker updates immediately, and following triggers can fire in the same turn. The tested follow-up message renders above the question/answer receipt; placement does not imply execution before submission. Required forms offer no cancellation. Multiple-choice bounds constrain selection, and newline-delimited answers are stored as text, not a YAML list. Optional blank input clears its destination while preserving sibling keys; required blank input is rejected. Multiline and nested-path writes preserve line breaks. Other delimiter variants are untested.
 
-### Background replacement
+Binding must be correct: targetTrackedItemId must name the intended tracker, using an empty path for whole-value targeting. The supplied single-choice world keeps its IDs and binding through a fresh import. Check bindings after import ([Import-Integrity.md](Import-Integrity.md)).
 
-`effectChangeBackground` uses string `data` payload including template e.g. `<<$opening_assembly>>`. Represented in [layered opening](../examples/recipe-layered-opening.json) for startup assembly. Changes background through native effect; not script-writable. Mid-game history behavior not established.
+## Authoring context
+
+background, firstInput and objective feed AI context and direct play; objective also has a native update effect. They are not merely player-facing metadata. `<#...#>` are IW comment delimiters; fill sample authoring slots inside them, while genuine comments can remain. The sample Time and Location (whereWhen) block is a soft default for visible chronology; whereWhen is runtime output vocabulary, not a root export field.
+
+Skill levels in possibleCharacters are integers from 0 through 5. The editor-provided Evaluation uses skill, difficulty, character context and common sense, including PARTIAL_SUCCESS; there is no established numeric success formula. See [Capabilities.md](Capabilities.md).
+
+## Assets and persistence
+
+Do not invent image URLs, data-URI support or preset identifiers. Image style fields can require editor save/reload before their export reflects changes. Preview strings can persist with no attached image; empty settings can auto-populate. Preserve intentional whitespace rather than inventing default strings. Nonempty portrait metadata has string fields for appearance, clothes, expression/position and setting.
+
+Import/export steps are in [Editor-UI.md](Editor-UI.md); the trailing-newline issue is an importer quirk, not invalid JSON. Base worlds and live games are separate copies ([Import-Integrity.md](Import-Integrity.md)).
+
+## Remaining limits
+
+The profile does not establish every importer-required field, future vocabularies or presets, all path/list-expression targeting modes, initialization-field precedence, random-dispatch duplicate weighting, skill slug normalization, or a general performance/trigger limit. Collect targeted evidence only when a design needs one of these. None of this requires imposing a restrictive architecture on ordinary worlds.
 
 ---
 
@@ -520,16 +490,7 @@ flowchart TD
 - Guidance and block changes do not rewrite already-generated narration. Updates supply context for subsequent generation. The precise persistence/priority of competing guidance is not a stable contract.
 - Summary generation is a separate context-maintenance process. Compression follows a six-turn cadence beginning at turn eight (user-confirmed); its ordering relative to other turn stages is not established.
 
-### Timing flags
-
-| Start | Mid Game | Intended eligibility |
-| --- | --- | --- |
-| false | false | Ordinary conditions can trigger after opening; no conditions means saved/inactive content |
-| true | false | Opening only, subject to conditions |
-| true | true | Opening and later turns, subject to conditions |
-| false | true | Avoid: not a consistent editor configuration |
-
-`canTriggerMoreThanOnce` independently controls reuse. A Start+Mid trigger with no conditions and repeat true runs in the opening setup pass and each turn; the opening can therefore contain two executions. Repeat false means once per game. Prerequisites/blockers reference trigger IDs: firedThisTurn true checks this turn's earlier execution; false checks history. The editor disallows requiring and blocking the same trigger.
+Timing flags (Start, Mid Game, repeat), prerequisites and blockers are covered in [Triggers.md](Triggers.md).
 
 ## Skills and player characters
 
@@ -580,7 +541,7 @@ Keyword entries have id, name, keywords (string array), and content. Choose dist
 | --- | --- | --- |
 | evaluationRequest | Interpreting action feasibility, skills/difficulty and outcome reasoning | Retain empty to use native behavior when no override is needed; Default-Evaluation.txt contains the editor-provided baseline |
 | descriptionRequest | Narration, viewpoint, presentation and prose rules | Use native behavior or supply a focused override |
-| summaryRequest | Instructions for persistent summaries | Preserve facts important to this world's continuity; six-turn compression cadence from turn eight is user-confirmed; exact summary contents remain unavailable |
+| summaryRequest | Instructions for persistent summaries | Preserve facts important to this world's continuity; cadence in [Trackers.md](Trackers.md) |
 | videoPromptInstructions | Separate video planning/image-position/prompt instructions | Preserve default/empty configuration unless video is part of the requested design |
 
 Editor help says Evaluation outputs guide AI thinking; SUCCESS/FAILURE are not special control tokens. These are instructions, not executable hooks. Writing SUCCESS in Evaluation does not itself fire a custom trigger. Replacing a default request with a large custom framework can change its responsibilities; inspect dependencies rather than copying only one field.
@@ -628,7 +589,7 @@ Native value and input payloads are documented in Schema.md.
 
 ## Formats, editor controls and content settings
 
-`formatSchema` uses the library's readable structured notation: text/number describe leaf values, `field?: text` marks an optional key, and `...:` permits open/additional content. It is not JSON Schema. `formatExample` shows an intended value; examples should not become starting facts. The full enforcement grammar is not established; characterize it with editor examples rather than claiming arbitrary schema validation.
+`formatSchema` uses the library's readable structured notation: text/number describe leaf values, `field?: text` marks an optional key, and `...:` permits open/additional content. It is not JSON Schema. `formatExample` shows an intended value; examples should not become starting facts. Do not claim it validates arbitrary schemas; its full grammar is unknown.
 
 `xml` is an available tracker dataType. Its existence does not establish XPath support or the same path/mutation semantics as YAML. Use it for a requested XML representation; obtain a small export/runtime check for structured XML manipulation.
 
@@ -640,7 +601,7 @@ Each PawScript entry's Open in Sandbox opens an editable script/expression plus 
 
 Story exports support a chosen turn range, optional background, character, secret information, trackers and hidden trackers; text or PDF with optional images. Select hidden trackers explicitly when diagnostics require them.
 
-`mature` and `nsfw` are content-setting booleans. Select them deliberately for the intended audience and content, and provide contentWarnings where appropriate. They do not define a precise prose policy or guarantee permission, discoverability, model selection or filter behavior; those platform effects are not established by the export. Write the actual creative boundaries in AI-facing instructions.
+`mature` and `nsfw` are content-setting booleans. Select them deliberately for the intended audience and content, and provide contentWarnings where appropriate. They do not define a precise prose policy or guarantee permission, discoverability, model selection or filter behavior. Write the actual creative boundaries in AI-facing instructions.
 
 ## Images, video and model-specific blocks
 
@@ -661,13 +622,13 @@ Enable model selection per world under Show optional features > Misc advanced fe
 Disabling this editor option removes selectedAIProfiles from exported blocks and hides their controls. The still-open editor temporarily remembers choices if re-enabled, but that memory does not survive closing it. Do not treat disabling as a durable reversible runtime switch or promise that exporting while disabled preserves selections. A block name alone does not select models. Whether the choices are fetched live is an inference; their exact source is unnecessary for authoring.
 
 ## Current-game editing and debug boundaries
-The active-world editor explicitly warns that changes to player characters or Other Characters do not affect the current playthrough. Already-fired trigger effects are not rewritten retroactively. Save as new world makes the edited world available for future games. Debug shows keyword-block active/inactive state and its keywords, but not the matched keyword, activation turn or remaining retention. It does not expose NPC activation or static character information. Do not attribute this difference to an unverified internal implementation. A live-world JSON export can retain the tracker's initialValue despite a successful runtime change; inspect current tracker data for current values.
+Live copies and what editing them changes are covered in [Import-Integrity.md](Import-Integrity.md). Debug shows keyword-block active/inactive state and its keywords, but not the matched keyword, activation turn or remaining retention. It does not expose NPC activation or static character information. A live-world JSON export can retain the tracker's initialValue despite a successful runtime change; inspect current tracker data for current values.
 
 
 For temporary instruction-block installation with a retained result, see [on-demand generation](Recipes.md#dynamic-content). Generation happens after installation; cleanup checks the request identity and completion rather than assuming the next turn succeeded. This pattern is useful only when omitted instruction context justifies result-storage and update costs.
 
 
-[Editor-UI](Editor-UI.md) contains exact workflow distinctions; [Verified-Behavior](Verified-Behavior.md) consolidates results without treating live rendering as full prompt capture.
+[Editor-UI](Editor-UI.md) contains exact workflow distinctions; [Verified-Behavior](Verified-Behavior.md) consolidates tested results.
 
 ---
 
@@ -776,7 +737,7 @@ For a native input, confirm the current target value after submitting an answer.
 
 ## Editing an existing playthrough
 
-Base worlds and live games are separate copies. Changes to player characters or Other Characters in the live-world editor do not affect that playthrough; already-fired effects are not retroactively rewritten. Use Save as new world to reuse live-world edits in future games. Image-style changes can require save/reload before their export reflects the editor.
+Base worlds and live games are separate copies. Changes to player characters or Other Characters in the live-world editor do not affect that playthrough; already-fired effects are not retroactively rewritten. Use Save as new world, or export the live JSON and import it over the intended base, to reuse live-world edits in future games. Image-style changes can require save/reload before their export reflects the editor.
 
 ## Read-only source/import comparison
 

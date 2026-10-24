@@ -27,16 +27,11 @@ Visibility values include everyone (player and AI), ai_only and ai_only_boring (
 
 [RUNTIME] Extra-hidden values remain visible in the Storyteller tracker editor even when Include Extra-hidden is off. Import normalizes automatic updating off for hidden, hidden_boring and player_only; everyone, ai_only and ai_only_boring can retain automatic updates. UI visibility does not establish full AI prompt inclusion.
 
-Modify tracked item details accepts all six visibility values with overrideVisibility: true, and can change future automatic updating with overrideAutoUpdate and autoUpdate. The live player-visible/hidden lists reflect a visibility change even when the live-design export retains the original visibility.
+A trigger can change a tracker's visibility or automatic updating during play with Modify tracked item details; see [Trigger-Catalog](Trigger-Catalog.md#changing-automatic-updating). The live player-visible/hidden lists reflect a visibility change even when the live-design export retains the original visibility.
 
-Starting values:
+Starting values: a tracker's value can be the same for all characters, set per player character (fixed, a fixed choice list, or script-generated choices), or chosen by the player at startup. Exact shapes are in the [Schema](Schema.md) starting-values table, with worked examples in ../examples/character-starting-values.json and ../examples/optional-block.json. For a player-chosen preference, set autoUpdate false so the AI cannot rewrite it; the player can still change it live. Use one mode per tracker; do not combine modes and guess precedence.
 
-- initialValueBasedOnPC same: one initialValue for all PCs.
-- character: per-character initialTrackedItemValues entries target the TRACKER ID. Fixed initialPCValue is a string. A fixed single-choice list is an array of strings. A script-generated list uses initialPCValueChoicesScript with initialPCValue empty, as illustrated in ../examples/character-starting-values.json. The expression is evaluated at game start with initial trackers and that PC's skills available, per editor description.
-- player: the tracker itself defines a player-chosen startup value. ../examples/optional-block.json exports initialValueBasedOnPC: "player", initialValue: "On", and initialValueChoices: ["On", "Off"]. These are tracker-level fields, independent of per-character initialTrackedItemValues. Use this for an offered startup preference; autoUpdate false prevents AI rewriting it. The user can edit the live preference later. For unconstrained player input or an unusual type, do not assume the choice-list example establishes every corresponding UI control; obtain a representative export only for that additional variant.
-- Never combine arbitrary fixed/list/script modes and guess precedence. Do not assume formatSchema is JSON Schema or enforces semantic intent; its exact enforcement language is not established by our sample fields.
-
-Name/handle drift: The editor does not compare Name and variableName as case-sensitive literal strings. Normal generated differences such as Win Path / win_path need no acknowledgement. Use driftAcknowledgedForName for an intentionally different handle when the editor reports a mismatch; its value is the current display Name. It does not rename the variable or change script references. Preserve existing metadata during unrelated edits; do not rename handles or fill null acknowledgements merely because capitalization, spaces or separators differ. The complete normalization algorithm is not specified here.
+Name/handle drift: The editor does not compare Name and variableName as case-sensitive literal strings. Normal generated differences such as Win Path / win_path need no acknowledgement. Use driftAcknowledgedForName for an intentionally different handle when the editor reports a mismatch; its value is the current display Name. It does not rename the variable or change script references. Preserve existing metadata during unrelated edits; do not rename handles or fill null acknowledgements merely because capitalization, spaces or separators differ. 
 
 ## Memory, continuity and context cost
 
@@ -46,9 +41,7 @@ If a bad turn establishes a false fact, adding an instruction may leave conflict
 
 Native trigger changes can affect runtime instructions without changing the base editor definition. Inspect active instruction contents and trigger/debug results when troubleshooting; a base-world export alone does not show everything the model received. Base and live worlds are separate copies.
 
-Keep loaded instructions and AI-visible tracker names, descriptions, update rules and values purposeful. Prefer concise shared rules over repetition, keyword activation for occasional lore, and PawScript for exact calculations. Large AI-updated records can be expensive to rewrite. Inspect actual state and rendered instructions rather than assuming hidden prompt contents. Summary compression follows a six-turn cadence beginning at turn eight, as confirmed by the user; exact summary contents remain unavailable.
-
-Alternate selectable protagonists can also have NPC cards if unchosen protagonists should appear in the story. A selected player sharing an Other Character name can use information from that entry. Internal identity merging or exclusion is not visible; do not promise automatic same-name NPC exclusion.
+Keep loaded instructions and AI-visible tracker names, descriptions, update rules and values purposeful. Prefer concise shared rules over repetition, keyword activation for occasional lore, and PawScript for exact calculations. Large AI-updated records can be expensive to rewrite. Summary compression follows a six-turn cadence beginning at turn eight (user-confirmed); exact summary contents are not visible.
 
 See [Editor-UI](Editor-UI.md) for current-value editing and [Verified-Behavior](Verified-Behavior.md) for forms, initialization and retention results.
 

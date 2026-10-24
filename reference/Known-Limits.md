@@ -1,27 +1,27 @@
 # Unresolved boundaries
 
-Current through 2026-10-23. Verified conclusions are in [Consolidated behavior](Verified-Behavior.md); workflows are in [Editor and UI](Editor-UI.md). Partial research groups contain useful verified findings alongside specific unresolved boundaries.
+Current through 2026-10-24. This is the kit's single list of platform behavior that remains unverified; other files state only what is established. Verified conclusions are in [Consolidated behavior](Verified-Behavior.md); workflows are in [Editor and UI](Editor-UI.md).
 
-| Area | Established result | Remaining boundary |
-| --- | --- | --- |
-| Prompt construction | Active instructions renders live templates and updates | Full historical storyteller/specialist prompts, hidden wrappers and exact inclusion/timing need authoritative prompt visibility |
-| Scenarios | Exact literal binding works; larger imported registries can persist | Dynamic multi-slot/cyclic/parallel failures need actual evaluation inputs or a supported corrected mechanism; no universal runtime maximum established |
-| NPCs and knowledge | Authored facts can be retrieved; dedicated image fields have observable effects | Live character records, identity merging, mutation and retrieval routing are not exposed; Secret Info is not the database |
-| Import normalization | ID reminting, field omission and scope normalization observed | Internal failure stages and universal ID rules across entities remain unknown |
-| Visibility | Extra-hidden values remain inspectable; AI-only automatic updates work | UI visibility does not establish full prompt inclusion or exclusion |
-| Interpolation | Direct rendering, installed snapshots and deferred references differ | Other destination-specific timing and complete specialist inputs remain hidden |
-| Randomness and selectors | Independent evaluations can differ; cached choices agree | Exact hidden evaluation counts and unselected-library exclusion need full prompts |
-| AI tracker dependencies | Same-turn dependent values can be available | Hidden generation architecture is not inferable; explicit staging is needed for prior-state semantics |
-| Format and YAML | Manual/script writes can bypass expectations; coercions occur | Complete grammar, XML mutation, strict type semantics and hidden AI repair are not fully established |
-| Legacy list context | current() is rejected in Run Script | A supported List Update Target/Value context is unavailable in the current editor |
-| Memory | Compression cadence from turn eight is user-confirmed; later recall occurs | Exact summary contents and contribution versus persistent context require summarizer visibility |
-| Length | Strong override wording does not reliably achieve longer narration | No guaranteed length recipe, verified hidden maximum or validated reduction version |
-| Images and video | Current wrappers and dedicated image fields affect results | Full image prompt/cache, universal precedence, internal macros and video runtime remain unverified |
-| Limits and permissions | Large text retention and separate startup customization established | No inferred maximum field/loop/trigger limits or exhaustive account-role permission matrix |
-| Recovery | Interrupted generation can leave a turn unretained | Server-side cause and standalone authenticated runner recovery require additional diagnostics/environment |
-| Tooling | External parsing and merge defects identified | Reviewed-boundary parser/merge and a local browser capture/export harness are supplied; authenticated capture/export is verified, while gameplay recovery and server persistence remain unverified |
+| Area | Established | Still unknown | What to do meanwhile |
+| --- | --- | --- | --- |
+| Prompt construction | Active instructions shows live rendered templates and updates | Full historical storyteller/specialist prompts, hidden wrappers, exact inclusion and timing | Put essential facts in fields known to reach the storyteller (background, firstInput, instructions, always-on blocks); treat UI visibility as display, not proof of what the AI receives |
+| Scenarios | Exact literal binding works; imported registries larger than ten persist and execute | Why dynamic multi-slot, cyclic and parallel arrangements fail; any runtime maximum | Use literal Scenarios with explicit state gates ([Triggers.md](Triggers.md#scenarios)) |
+| NPCs and knowledge | Authored facts can be retrieved; dedicated image fields have observable effects | Live character records, identity merging, mutation and retrieval routing; Secret Info is not a database | Author relationships and knowledge explicitly; keep essential identity in the Summary and repeat it in detail |
+| Import normalization | ID reminting, field omission and scope normalization observed | Internal failure stages; ID rules for every entity type | Use ASCII alphanumeric tracker IDs; re-export after import and compare with tools/import_audit.py |
+| Visibility | Extra-hidden values remain inspectable; AI-only automatic updates work | Whether visibility changes what the AI receives | Do not rely on visibility to keep information from the storyteller |
+| Interpolation | Direct templates, installed snapshots and deferred `<<=...=>>` references behave differently | Timing in other destination fields; full specialist inputs | Use the template probe example before relying on a new field ([Capabilities.md](Capabilities.md)) |
+| Randomness and selectors | Independent evaluations can differ; cached choices agree | Exact evaluation counts; whether unselected library text is excluded | Store a shared roll in a tracker when several consumers must agree |
+| AI tracker dependencies | Same-turn dependent values can be available | How generation is staged internally | Stage prior-turn values explicitly when a rule depends on them |
+| Format and YAML | Manual and script writes can bypass expectations; coercions occur | Complete grammar, XML mutation, strict typing, hidden AI repair | Validate shape and meaning in scripts before accepting state |
+| Legacy list context | current() is rejected in Run Script | A supported List Update target/value context in the current editor | Use for-each loops and collection methods instead |
+| Memory | Summary compression every six turns from turn eight (user-confirmed); later recall occurs | Summary contents and how they weigh against persistent context | Use summaryRequest and trackers for facts that must persist |
+| Length | Strong override wording does not reliably lengthen narration | A reliable length recipe or hidden maximum | Describe the desired length in authorStyle; do not promise exact length |
+| Images and video | Current wrappers and dedicated image fields affect results | Full image prompt and cache, precedence, internal macros, video runtime | Author with current style controls and preserve imported legacy fields; avoid depending on video until checked |
+| Limits and permissions | Large text retention and separate startup customization established | Maximum field, loop or trigger sizes; account-role permission matrix | Treat observed sizes as working examples, not limits |
+| Recovery | Interrupted generation can leave a turn unretained | Server-side cause and automated recovery | After an interruption, inspect retained history and controls before resubmitting |
+| Tooling | External parser and merge defects identified; kit extractor, merge and capture/export harness supplied and authenticated capture/export verified | Gameplay recovery and server persistence through the harness | Use the kit's tools ([Story-Tools.md](Story-Tools.md), [Engineering-Tools.md](Engineering-Tools.md)); verify persistence in the editor |
 
-The schema/validator is a partial compatibility profile. Native string turn thresholds and observed startup effect shapes are represented. This still does not establish complete platform coverage or runtime correctness. [Roadmap](Roadmap.md) lists pending engineering.
+The schema and validator are a partial compatibility profile: structural validation does not establish complete platform coverage or runtime correctness.
 
 ---
 

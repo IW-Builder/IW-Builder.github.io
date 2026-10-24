@@ -24,16 +24,7 @@ flowchart TD
 - Guidance and block changes do not rewrite already-generated narration. Updates supply context for subsequent generation. The precise persistence/priority of competing guidance is not a stable contract.
 - Summary generation is a separate context-maintenance process. Compression follows a six-turn cadence beginning at turn eight (user-confirmed); its ordering relative to other turn stages is not established.
 
-### Timing flags
-
-| Start | Mid Game | Intended eligibility |
-| --- | --- | --- |
-| false | false | Ordinary conditions can trigger after opening; no conditions means saved/inactive content |
-| true | false | Opening only, subject to conditions |
-| true | true | Opening and later turns, subject to conditions |
-| false | true | Avoid: not a consistent editor configuration |
-
-`canTriggerMoreThanOnce` independently controls reuse. A Start+Mid trigger with no conditions and repeat true runs in the opening setup pass and each turn; the opening can therefore contain two executions. Repeat false means once per game. Prerequisites/blockers reference trigger IDs: firedThisTurn true checks this turn's earlier execution; false checks history. The editor disallows requiring and blocking the same trigger.
+Timing flags (Start, Mid Game, repeat), prerequisites and blockers are covered in [Triggers.md](Triggers.md).
 
 ## Skills and player characters
 
@@ -84,7 +75,7 @@ Keyword entries have id, name, keywords (string array), and content. Choose dist
 | --- | --- | --- |
 | evaluationRequest | Interpreting action feasibility, skills/difficulty and outcome reasoning | Retain empty to use native behavior when no override is needed; Default-Evaluation.txt contains the editor-provided baseline |
 | descriptionRequest | Narration, viewpoint, presentation and prose rules | Use native behavior or supply a focused override |
-| summaryRequest | Instructions for persistent summaries | Preserve facts important to this world's continuity; six-turn compression cadence from turn eight is user-confirmed; exact summary contents remain unavailable |
+| summaryRequest | Instructions for persistent summaries | Preserve facts important to this world's continuity; cadence in [Trackers.md](Trackers.md) |
 | videoPromptInstructions | Separate video planning/image-position/prompt instructions | Preserve default/empty configuration unless video is part of the requested design |
 
 Editor help says Evaluation outputs guide AI thinking; SUCCESS/FAILURE are not special control tokens. These are instructions, not executable hooks. Writing SUCCESS in Evaluation does not itself fire a custom trigger. Replacing a default request with a large custom framework can change its responsibilities; inspect dependencies rather than copying only one field.
@@ -132,7 +123,7 @@ Native value and input payloads are documented in Schema.md.
 
 ## Formats, editor controls and content settings
 
-`formatSchema` uses the library's readable structured notation: text/number describe leaf values, `field?: text` marks an optional key, and `...:` permits open/additional content. It is not JSON Schema. `formatExample` shows an intended value; examples should not become starting facts. The full enforcement grammar is not established; characterize it with editor examples rather than claiming arbitrary schema validation.
+`formatSchema` uses the library's readable structured notation: text/number describe leaf values, `field?: text` marks an optional key, and `...:` permits open/additional content. It is not JSON Schema. `formatExample` shows an intended value; examples should not become starting facts. Do not claim it validates arbitrary schemas; its full grammar is unknown.
 
 `xml` is an available tracker dataType. Its existence does not establish XPath support or the same path/mutation semantics as YAML. Use it for a requested XML representation; obtain a small export/runtime check for structured XML manipulation.
 
@@ -144,7 +135,7 @@ Each PawScript entry's Open in Sandbox opens an editable script/expression plus 
 
 Story exports support a chosen turn range, optional background, character, secret information, trackers and hidden trackers; text or PDF with optional images. Select hidden trackers explicitly when diagnostics require them.
 
-`mature` and `nsfw` are content-setting booleans. Select them deliberately for the intended audience and content, and provide contentWarnings where appropriate. They do not define a precise prose policy or guarantee permission, discoverability, model selection or filter behavior; those platform effects are not established by the export. Write the actual creative boundaries in AI-facing instructions.
+`mature` and `nsfw` are content-setting booleans. Select them deliberately for the intended audience and content, and provide contentWarnings where appropriate. They do not define a precise prose policy or guarantee permission, discoverability, model selection or filter behavior. Write the actual creative boundaries in AI-facing instructions.
 
 ## Images, video and model-specific blocks
 
@@ -165,13 +156,13 @@ Enable model selection per world under Show optional features > Misc advanced fe
 Disabling this editor option removes selectedAIProfiles from exported blocks and hides their controls. The still-open editor temporarily remembers choices if re-enabled, but that memory does not survive closing it. Do not treat disabling as a durable reversible runtime switch or promise that exporting while disabled preserves selections. A block name alone does not select models. Whether the choices are fetched live is an inference; their exact source is unnecessary for authoring.
 
 ## Current-game editing and debug boundaries
-The active-world editor explicitly warns that changes to player characters or Other Characters do not affect the current playthrough. Already-fired trigger effects are not rewritten retroactively. Save as new world makes the edited world available for future games. Debug shows keyword-block active/inactive state and its keywords, but not the matched keyword, activation turn or remaining retention. It does not expose NPC activation or static character information. Do not attribute this difference to an unverified internal implementation. A live-world JSON export can retain the tracker's initialValue despite a successful runtime change; inspect current tracker data for current values.
+Live copies and what editing them changes are covered in [Import-Integrity.md](Import-Integrity.md). Debug shows keyword-block active/inactive state and its keywords, but not the matched keyword, activation turn or remaining retention. It does not expose NPC activation or static character information. A live-world JSON export can retain the tracker's initialValue despite a successful runtime change; inspect current tracker data for current values.
 
 
 For temporary instruction-block installation with a retained result, see [on-demand generation](Recipes.md#dynamic-content). Generation happens after installation; cleanup checks the request identity and completion rather than assuming the next turn succeeded. This pattern is useful only when omitted instruction context justifies result-storage and update costs.
 
 
-[Editor-UI](Editor-UI.md) contains exact workflow distinctions; [Verified-Behavior](Verified-Behavior.md) consolidates results without treating live rendering as full prompt capture.
+[Editor-UI](Editor-UI.md) contains exact workflow distinctions; [Verified-Behavior](Verified-Behavior.md) consolidates tested results.
 
 ---
 

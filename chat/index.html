@@ -140,7 +140,7 @@ Post-generation triggers cannot retroactively change narration already written. 
 |Repeat when X holds after opening|false|false|true|X; add a state guard when repeat effects must be idempotent|
 |Saved/inactive ordinary trigger|false|false|As intended|None; explicit dispatch is separate, see reference/Triggers.md|
 
-Order dependencies in triggerEvents. Later triggers see earlier committed writes. Dependent arithmetic belongs in one multiline Run Script; native numeric effects within one trigger can overwrite rather than accumulate. Script failure rolls back that script, not necessarily preceding effects. Give scripts meaningful effect names. The editor stops adding Scenarios at ten entries; larger imported registries can remain bound and usable. This is not a universal runtime maximum. Use exact literal bindings and explicit state gates.
+Order dependencies in triggerEvents. Later triggers see earlier committed writes. Dependent arithmetic belongs in one multiline Run Script; native numeric effects within one trigger can overwrite rather than accumulate. Script failure rolls back that script, not necessarily preceding effects. Give scripts meaningful effect names. For Scenarios, use exact literal registry strings and explicit state gates; the editor&#x27;s ten-entry cap is not a runtime maximum (reference/Triggers.md).
 
 ## 7. Validate and deliver for this audience
 
@@ -484,16 +484,11 @@ Visibility values include everyone (player and AI), ai_only and ai_only_boring (
 
 [RUNTIME] Extra-hidden values remain visible in the Storyteller tracker editor even when Include Extra-hidden is off. Import normalizes automatic updating off for hidden, hidden_boring and player_only; everyone, ai_only and ai_only_boring can retain automatic updates. UI visibility does not establish full AI prompt inclusion.
 
-Modify tracked item details accepts all six visibility values with overrideVisibility: true, and can change future automatic updating with overrideAutoUpdate and autoUpdate. The live player-visible/hidden lists reflect a visibility change even when the live-design export retains the original visibility.
+A trigger can change a tracker&#x27;s visibility or automatic updating during play with Modify tracked item details; see [Trigger-Catalog](Trigger-Catalog.md#changing-automatic-updating). The live player-visible/hidden lists reflect a visibility change even when the live-design export retains the original visibility.
 
-Starting values:
+Starting values: a tracker&#x27;s value can be the same for all characters, set per player character (fixed, a fixed choice list, or script-generated choices), or chosen by the player at startup. Exact shapes are in the [Schema](Schema.md) starting-values table, with worked examples in ../examples/character-starting-values.json and ../examples/optional-block.json. For a player-chosen preference, set autoUpdate false so the AI cannot rewrite it; the player can still change it live. Use one mode per tracker; do not combine modes and guess precedence.
 
-- initialValueBasedOnPC same: one initialValue for all PCs.
-- character: per-character initialTrackedItemValues entries target the TRACKER ID. Fixed initialPCValue is a string. A fixed single-choice list is an array of strings. A script-generated list uses initialPCValueChoicesScript with initialPCValue empty, as illustrated in ../examples/character-starting-values.json. The expression is evaluated at game start with initial trackers and that PC&#x27;s skills available, per editor description.
-- player: the tracker itself defines a player-chosen startup value. ../examples/optional-block.json exports initialValueBasedOnPC: &quot;player&quot;, initialValue: &quot;On&quot;, and initialValueChoices: [&quot;On&quot;, &quot;Off&quot;]. These are tracker-level fields, independent of per-character initialTrackedItemValues. Use this for an offered startup preference; autoUpdate false prevents AI rewriting it. The user can edit the live preference later. For unconstrained player input or an unusual type, do not assume the choice-list example establishes every corresponding UI control; obtain a representative export only for that additional variant.
-- Never combine arbitrary fixed/list/script modes and guess precedence. Do not assume formatSchema is JSON Schema or enforces semantic intent; its exact enforcement language is not established by our sample fields.
-
-Name/handle drift: The editor does not compare Name and variableName as case-sensitive literal strings. Normal generated differences such as Win Path / win_path need no acknowledgement. Use driftAcknowledgedForName for an intentionally different handle when the editor reports a mismatch; its value is the current display Name. It does not rename the variable or change script references. Preserve existing metadata during unrelated edits; do not rename handles or fill null acknowledgements merely because capitalization, spaces or separators differ. The complete normalization algorithm is not specified here.
+Name/handle drift: The editor does not compare Name and variableName as case-sensitive literal strings. Normal generated differences such as Win Path / win_path need no acknowledgement. Use driftAcknowledgedForName for an intentionally different handle when the editor reports a mismatch; its value is the current display Name. It does not rename the variable or change script references. Preserve existing metadata during unrelated edits; do not rename handles or fill null acknowledgements merely because capitalization, spaces or separators differ. 
 
 ## Memory, continuity and context cost
 
@@ -503,9 +498,7 @@ If a bad turn establishes a false fact, adding an instruction may leave conflict
 
 Native trigger changes can affect runtime instructions without changing the base editor definition. Inspect active instruction contents and trigger/debug results when troubleshooting; a base-world export alone does not show everything the model received. Base and live worlds are separate copies.
 
-Keep loaded instructions and AI-visible tracker names, descriptions, update rules and values purposeful. Prefer concise shared rules over repetition, keyword activation for occasional lore, and PawScript for exact calculations. Large AI-updated records can be expensive to rewrite. Inspect actual state and rendered instructions rather than assuming hidden prompt contents. Summary compression follows a six-turn cadence beginning at turn eight, as confirmed by the user; exact summary contents remain unavailable.
-
-Alternate selectable protagonists can also have NPC cards if unchosen protagonists should appear in the story. A selected player sharing an Other Character name can use information from that entry. Internal identity merging or exclusion is not visible; do not promise automatic same-name NPC exclusion.
+Keep loaded instructions and AI-visible tracker names, descriptions, update rules and values purposeful. Prefer concise shared rules over repetition, keyword activation for occasional lore, and PawScript for exact calculations. Large AI-updated records can be expensive to rewrite. Summary compression follows a six-turn cadence beginning at turn eight (user-confirmed); exact summary contents are not visible.
 
 See [Editor-UI](Editor-UI.md) for current-value editing and [Verified-Behavior](Verified-Behavior.md) for forms, initialization and retention results.
 
@@ -518,19 +511,15 @@ END OF DOCUMENT: reference/Trackers.md
 ===== BEGIN FILE: reference/Triggers.md =====
 # Triggers and effects
 
-A trigger combines eligibility rules with effects. Conditions checked in a processing pass; if they pass and its repeat/prerequisite rules, its effects run. Ordinary triggers are processed in triggerEvents array order. Enabling repeat allows the trigger to fire again whenever eligible; condition not required to become false between firings.
-
-That last distinction matters: “HP below 5” with repeat enabled can fire every turn while HP remains low, not a “just crossed below 5” event.
+A trigger combines eligibility rules with effects. Its conditions are checked in a processing pass; if they pass and its repeat/prerequisite rules allow it, its effects run. Ordinary triggers are processed in triggerEvents array order. Repeat lets a trigger fire again whenever it is eligible; the condition does not have to become false in between. &quot;HP below 5&quot; with repeat enabled fires every turn while HP stays low, not once when it crosses below 5.
 
 ## Composition and sequencing
 
-Each trigger has id, name, triggerConditions, triggerEffects, and explicit timing/repeat flags. Conditions are a list of nodes; the normal list is AND. A leaf uses `category: &quot;condition&quot;`, `type` and `data`. A logic node uses `category: &quot;logic&quot;`, operator and a data ARRAY of child nodes. Known operators: and, or, none_of. A logic group is not a leaf with type &quot;or&quot;.
+Each trigger has id, name, triggerConditions, triggerEffects, and explicit timing/repeat flags. Conditions are a list of nodes combined with AND; nested logic groups (and, or, none_of) are separate nodes, not leaves with type &quot;or&quot;. Node shapes, payloads and comparator vocabulary are in [Schema.md](Schema.md) and [Payloads.md](../examples/Payloads.md). Scripts change trackers; native effects change instructions, objectives and other system properties.
 
 Use a combined PawScript condition and sequential script when they make calculation or transaction clearer. Simple native conditions and effects remain appropriate. Keep separate triggers for phase boundaries or cross-effect dependencies. Give Scripts meaningful names describing effect; avoid generic &quot;Update State.&quot; The owning trigger&#x27;s name is useful when it describes effect. Clear script names make error reports easier.
 
 A one-time reward can require quest_complete = 1 AND reward_claimed = 0. Its effects grant the reward and set reward_claimed = 1. An OR group could instead accept either of two qualifying quests. none_of passes when none of its child conditions pass. A state guard prevents repeated grants even if the trigger is repeatable; a one-shot trigger additionally records that it has already fired.
-
-Exact payloads and native comparison vocabulary are in Schema.md and ../examples/Payloads.md.
 
 ### Timing guidance:
 
@@ -545,15 +534,13 @@ Exact payloads and native comparison vocabulary are in Schema.md and ../examples
 
 Start enables pre-opening evaluation; additional conditions still apply except for the incompatible condition types noted below. Mid Game extends a Start-enabled trigger to ordinary turns. With Start disabled, ordinary conditional triggers do not require Mid Game.
 
-Repeat permits subsequent firings; it does not require conditions to become false between firings. Start + Mid Game + Repeat can execute before the opening and again during turn 1, so guard counters and other effects that should run only once per turn.
+Start + Mid Game + Repeat can execute before the opening and again during turn 1, so guard counters and other effects that should run only once per turn.
 
 With Start false, Mid Game has no effect; a stored true value requires no warning or repair. A trigger with no conditions and Start false does not fire automatically, but can remain available for explicit dispatch.
 
 - Prerequisites/blockers with firedThisTurn true are ordered this-turn checks, resetting on subsequent turns; false uses game history. Order matters. The editor disallows requiring and blocking the same trigger; do not generate that conflict.
 - Defaults are not a contract: always serialize canTriggerMoreThanOnce and the timing flags intentionally. Use repeatable commit triggers with idempotent state guards where appropriate, and true one-shot events when required.
 - Restriction: Do not combine Start of Game with Scenario or minimum-turn conditions. The editor warns that these conditions are ignored; minimum-turn bypass is confirmed during both startup and mid-game execution. Use a separate startup trigger and leave Start off on the conditional trigger. Scenario runtime behavior remains unverified.
-
-See Schema.md for native effect payloads and input options. Scripts change trackers; native effects change instructions, objectives and other system properties.
 
 ### Execution order and effect semantics:
 
@@ -576,20 +563,26 @@ See Schema.md for native effect payloads and input options. Scripts change track
 Native comparisons and PawScript conditions are both evaluated mechanically. Neither inherently makes narration more reliable. Use AI instructions to explain the intended behavior and deterministic conditions/scripts where exact enforcement matters.
 Consolidate repeated logic when it improves clarity, but preserve meaningful execution stages and useful debugging boundaries. Consider where content is stored: moving inactive trigger payloads into AI-visible trackers can increase context cost. Performance gains from consolidation require measurement.
 
-## Start-of-game effect restriction
+## Start-of-game effect restrictions
 
-Give Information to AI (`effectGiveInfo`) is incompatible with Start of Game; the effect was ignored in a runtime test. Put opening context in background or an instruction block, or use a separate ordinary-play trigger. This restriction does not establish a restriction on Instruct AI (`effectTellAIWhatToDo`), which is a different effect. The validator warns for `effectGiveInfo` when Start is enabled, regardless of Mid Game.
+[RUNTIME] Some effects behave differently when Start of Game is enabled:
 
-[RUNTIME] Give Information to AI also remained suppressed on subsequent ordinary activations with Start and Mid Game enabled. Full prompt delivery is still not inspectable.
+- **Give information to AI** (`effectGiveInfo`) is ignored with Start enabled, including later ordinary activations of a Start+Mid trigger. Put opening context in background or an instruction block, or use a separate ordinary-play trigger. Tell the AI what should happen next turn (`effectTellAIWhatToDo`) is a different effect and is not covered by this restriction. The validator warns for `effectGiveInfo` whenever Start is enabled.
+- **Change background** replaces the opening background in Start-only mode. With Start+Mid it did not apply, and ordinary-play background or first-action changes do not rewrite an opening already shown.
+- **Fire random trigger** dispatches in ordinary play but did not dispatch with Start enabled.
+
+A trigger counting as fired does not guarantee that every stored effect executed.
 
 
 ## Capability discovery and reliable gating
 
-Read [Trigger-Catalog](Trigger-Catalog.md) for the complete identified condition/effect overview. **Modify tracked item details** can change Name, description, visibility, automatic updating and update instructions through matching override flags. It changes definitions, unlike Set tracked item value.
+Read [Trigger-Catalog](Trigger-Catalog.md) for every identified condition and effect, including **Modify tracked item details**, which changes a tracker&#x27;s definition (Name, description, visibility, automatic updating, update instructions) rather than its value.
 
 Eligible no-effect triggers record firing. Random dispatch bypasses target conditions but not a consumed one-shot. A failing script can still consume its containing one-shot and satisfy prerequisites; explicit successful-completion flags are therefore distinct from firing history. Native And/Or groups and PawScript expressions short-circuit in order. See [consolidated behavior](Verified-Behavior.md) for supported boundaries.
 
-Use literal Scenarios with exact registry strings and explicit state gates. Dynamic multi-slot/cyclic/parallel arrangements are unreliable, and blank slot text is not dependable deactivation. The editor&#x27;s ten-entry creation cap is not a universal runtime limit.
+### Scenarios
+
+Say Scenarios when talking to users; the root JSON field is `conditions`, referenced by `triggerOnEvent`. Binding requires an exact registry string, including case, spaces and punctuation; preserved JSON can still be unbound, so check the selector after import. Use literal Scenarios with explicit state gates. Dynamic Scenario text works in some single-slot arrangements but fails in multi-slot, cyclic and parallel ones, and blank slot text is not dependable deactivation. The editor stops adding Scenarios at ten entries, but imported registries of twelve were retained and executed; ten is not a runtime maximum.
 
 ---
 
@@ -652,7 +645,7 @@ Native startup payload examples: [background](../examples/effect-effectChangeBac
 
 ## Changing automatic updating
 
-**Modify tracked item details** can turn automatic updating on or off. Set `overrideAutoUpdate: true` and the desired `autoUpdate` value. Equivalent override flags select changes to Name, description, visibility and update instructions. Changing a field without its matching override does not apply it. This changes future update behavior; it does not undo an earlier write in the current turn. Visibility restrictions still matter. With `overrideVisibility: true`, the observed visibility values are everyone, player_only, ai_only, hidden, ai_only_boring and hidden_boring. They survive editor import; live effects apply the expected player-visible/hidden grouping. This does not establish complete AI prompt inclusion.
+**Modify tracked item details** can turn automatic updating on or off. Set `overrideAutoUpdate: true` and the desired `autoUpdate` value. Equivalent override flags select changes to Name, description, visibility and update instructions. Changing a field without its matching override does not apply it. This changes future update behavior; it does not undo an earlier write in the current turn, so plan an explicit handoff point between AI and script ownership and inspect the next turn. It can also reveal a hidden tracker. Visibility restrictions still matter. With `overrideVisibility: true`, the observed visibility values are everyone, player_only, ai_only, hidden, ai_only_boring and hidden_boring. They survive editor import, and live effects apply the expected player-visible/hidden grouping.
 
 This capability is already represented by the schema and [native example](../examples/effect-effectModifyTrackedItemDetails.json); no example needs to be read merely to discover that it exists. Read [Schema](Schema.md) and the specific payload only when implementing. The schema is a partial compatibility profile, not the definition of all platform capabilities. Do not infer nonexistent Evaluation, Summary or image-change effects from similarly named effects.
 

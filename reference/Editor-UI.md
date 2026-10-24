@@ -41,7 +41,7 @@ An ordinary trigger with no conditions says it will never fire. This is not unco
 
 Start mode changes the picker and compatibility warnings. Start-only disables Repeat in the editor; Or mid-game enables it. Stored unsupported combinations may survive import while effects are ignored. Read the [trigger capability catalog](Trigger-Catalog.md) before declaring an operation unavailable.
 
-A mismatched Scenario can show **Select a situation** while JSON retains its string. Registry matching is exact. The manager's Add control caps creation at ten entries; larger imported registries can remain bound and usable. Dynamic Scenario text is unreliable across arrangements; use literal Scenarios and explicit state gates.
+A mismatched Scenario shows **Select a situation** while the JSON keeps its string. The Situations manager's Add control stops at ten entries. Binding rules and limits are in [Triggers.md](Triggers.md#scenarios).
 
 ## Trackers, visibility and customization
 
@@ -54,11 +54,11 @@ A mismatched Scenario can show **Select a situation** while JSON retains its str
 | Tracker editing dialog, Storyteller on, override off | Extra-hidden still visible/editable |
 | Storyteller off | Player-visible values remain; live tracker editing control unavailable in the observed UI |
 
-Neither hidden nor extra-hidden protects information from Storyteller inspection. UI display does not prove AI prompt inclusion. Hidden-from-AI modes normalize automatic updating off; extra-hidden AI-only can still update.
+Neither hidden nor extra-hidden protects information from Storyteller inspection. Visibility and automatic-update rules are in [Trackers.md](Trackers.md).
 
 For per-character values, select **Initial value depends on which character the player chooses** under Tracked items, then edit under **Player character options > [Name]**. Player-selected preferences can appear on the character card and in Customize Character. Opening the customizer can reset card selections; check final values there. Starting-value permission is not general in-play edit permission.
 
-Rename warnings offer **Update** and **Ignore** for variable-name mismatch. Normal capitalization and separator differences, such as Win Path / win_path, are not drift. Ignore preserves the handle and ID; do not fill null acknowledgements based on literal string inequality. Initial-value changes do not migrate running state; edit current tracker values for that.
+Rename warnings offer **Update** and **Ignore** for a variable-name mismatch; Ignore preserves the handle and ID. When acknowledgement is needed is covered in [Trackers.md](Trackers.md). Initial-value changes do not migrate running state; edit current tracker values for that.
 
 ## Play, debug and live design
 
@@ -68,7 +68,7 @@ The bug icon opens debug. **Active instructions** is live rendered state, includ
 
 **PawScript > Open in Sandbox** uses the historical data that script ran against. It can differ from current manually edited values. A run displays a result/diff; **Update Game** is separate. A collapsed summary can misrepresent nested structure; inspect actual values or supported reads.
 
-The live-design notice says Player/Other Characters changes do not affect the current playthrough and already-fired effects are not retroactively rewritten. **Save as new world** makes edits reusable. Runtime block replacements and tracker changes can leave original content/initial values in design exports; those exports are not complete live-state snapshots.
+The live-design notice warns that Player/Other Character changes do not affect the current playthrough; live copies are covered in [Import-Integrity.md](Import-Integrity.md). Runtime block replacements and tracker changes can leave original content/initial values in design exports; those exports are not complete live-state snapshots.
 
 Story exports offer a turn range and optional background, character, secrets, trackers and hidden trackers, with text/PDF/image options. Select the relevant options. Secret Info is generated narrative data, not an authoritative character database. No live character-database or complete prompt viewer is available through these surfaces.
 
@@ -86,7 +86,7 @@ Image style has Character/Scenery start/end prompts, mapped to `imageStyleCharac
 
 ## Specialist instructions, forms and PawScript cues
 
-[DOCUMENTED] Evaluation outputs guide AI thinking; SUCCESS/FAILURE are not special engine commands. Description includes length guidance, but exact length control remains unreliable. Video help describes `$videoDuration` and `$videoStyle` in video context; runtime video behavior is not verified here.
+[DOCUMENTED] Description includes length guidance, but exact length control remains unreliable. Video help describes `$videoDuration` and `$videoStyle` in video context (see below).
 
 Misc advanced features can show PawScript Expression Editor buttons. Missing icons do not prove lack of support: YAML Set a value supports template expressions according to help despite having no icon. This is not an exhaustive icon inventory.
 
@@ -126,7 +126,7 @@ These mappings describe the observed editor controls, not an exhaustive account-
 | Trigger history shows firing but accepted state is unchanged | Inspect script failure/rollback and an explicit completion flag; firing is not successful commit. |
 | Reload shows an earlier turn | Inspect retained history/export and controls before retrying; streamed output does not prove persistence. |
 
-Observed input counters, Scenario creation caps and retained text sizes are scoped observations, not universal platform maxima. Model choices are a dated roster; an unfamiliar imported model is not automatically invalid. Absent PawScript icons do not prove expressions are unsupported. Additional roles, full prompts, live character records and video runtime remain explicit reference gaps.
+Input counters, the Scenario creation cap and retained text sizes are observations, not platform maxima. Additional roles, full prompts, live character records and video runtime remain reference gaps.
 
 ---
 

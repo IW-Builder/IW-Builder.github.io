@@ -157,7 +157,7 @@ Post-generation triggers cannot retroactively change narration already written. 
 |Repeat when X holds after opening|false|false|true|X; add a state guard when repeat effects must be idempotent|
 |Saved/inactive ordinary trigger|false|false|As intended|None; explicit dispatch is separate, see reference/Triggers.md|
 
-Order dependencies in triggerEvents. Later triggers see earlier committed writes. Dependent arithmetic belongs in one multiline Run Script; native numeric effects within one trigger can overwrite rather than accumulate. Script failure rolls back that script, not necessarily preceding effects. Give scripts meaningful effect names. The editor stops adding Scenarios at ten entries; larger imported registries can remain bound and usable. This is not a universal runtime maximum. Use exact literal bindings and explicit state gates.
+Order dependencies in triggerEvents. Later triggers see earlier committed writes. Dependent arithmetic belongs in one multiline Run Script; native numeric effects within one trigger can overwrite rather than accumulate. Script failure rolls back that script, not necessarily preceding effects. Give scripts meaningful effect names. For Scenarios, use exact literal registry strings and explicit state gates; the editor&#x27;s ten-entry cap is not a runtime maximum (reference/Triggers.md).
 
 ## 7. Validate and deliver for this audience
 

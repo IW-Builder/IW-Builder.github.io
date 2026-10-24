@@ -42,11 +42,11 @@ Results current through 2026-10-24. Evidence labels follow [Evidence](Evidence.m
 
 ## Instructions, visibility and memory
 
-- [RUNTIME] Modify tracked item details with overrideVisibility enabled accepts everyone, player_only, ai_only, hidden, ai_only_boring and hidden_boring through editor import and applies the expected live player-visible/hidden grouping. Live-design exports can retain the original visibility. This does not expose complete AI prompt contents.
+- [RUNTIME] Modify tracked item details with overrideVisibility enabled accepts everyone, player_only, ai_only, hidden, ai_only_boring and hidden_boring through editor import and applies the expected live player-visible/hidden grouping. Live-design exports can retain the original visibility.
 - [RUNTIME] An unchecked Hide skill system option can export with hideSkillSystem omitted, including after importing false. Omission is normal visible-skills state.
 
 - [RUNTIME] Hidden and extra-hidden values remain script-accessible. Extra-hidden is display filtering, not protection against Storyteller inspection. The tracker editor can expose them with the debug display override off.
-- [RUNTIME] Import normalizes automatic updating off for hidden, hidden_boring and player_only. Everyone, ai_only and ai_only_boring retain supported updates. Extra-hidden AI-only filtering does not stop updating. UI visibility does not prove full prompt inclusion.
+- [RUNTIME] Import normalizes automatic updating off for hidden, hidden_boring and player_only. Everyone, ai_only and ai_only_boring retain supported updates. Extra-hidden AI-only filtering does not stop updating.
 - [RUNTIME] Direct active templates reevaluate. Ordinary interpolation installed through Modify instruction block snapshots its value; deferred `<<=...=>>` references remain live in that destination. Nested expression text is not generally evaluated recursively.
 - [RUNTIME] Empty/whitespace replacement clears content while headings can remain. Malformed expressions may stay literal; an unclosed delimiter can affect a following block. Active instructions is current rendered state, not a historical full prompt.
 - [RUNTIME] Independent random expressions can differ within/across blocks and effects. Cache a choice when consumers must agree. Hidden storage and rendered selection do not prove complete exclusion of unselected content.
@@ -63,7 +63,7 @@ Results current through 2026-10-24. Evidence labels follow [Evidence](Evidence.m
 - [RUNTIME] Bound Choice/Request Input answers are available to subsequent triggers in the same turn. Multiple-choice min/max constrain submission. Newline-delimited selections store text, not automatically a YAML list. Optional blank input clears the destination while preserving siblings; required blank input is rejected. Multiline input preserves line breaks at nested paths.
 - [RUNTIME] Preset back-fill is order-sensitive. Fill missing fields without overwriting nonblank choices. Starting-value customization is distinct from live-state editing permission.
 - [RUNTIME] Source/live-design initial-value changes do not migrate current values. Fresh games use new source starting values. Renaming a display Name with Ignore preserves the variable handle and ID.
-- [RUNTIME] Dedicated Other Character image fields can populate Illustration details independently of narrative appearance. Appearance/clothing edits affect images and can be reversed. Alias-associated clothing drift can occur; repeated-name stability does not establish cache identity rules.
+- [RUNTIME] Dedicated Other Character image fields can populate Illustration details independently of narrative appearance. Appearance/clothing edits affect images and can be reversed. Alias-associated clothing drift can occur.
 - [RUNTIME/UNKNOWN] Character/scenery results followed `imageStyle*Pre/Post` text opposed to `illustrationStyle*HighPriority`. Exact assembly and universal precedence remain hidden. Preserve imported fields and author using current style controls.
 - [RUNTIME] Model-filtered blocks follow the selected active model; All blocks remain active. Available models are a dated UI roster, not a fixed schema enum.
 - [RUNTIME] Ends game `data: true` offers Continue game and restores actions after confirmation. False removes action/continuation controls but leaves history/regeneration available. This is not irreversible deletion or proof of built-in ending-checker timing.

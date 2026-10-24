@@ -23,7 +23,7 @@ For a native input, confirm the current target value after submitting an answer.
 
 ## Editing an existing playthrough
 
-Base worlds and live games are separate copies. Changes to player characters or Other Characters in the live-world editor do not affect that playthrough; already-fired effects are not retroactively rewritten. Use Save as new world to reuse live-world edits in future games. Image-style changes can require save/reload before their export reflects the editor.
+Base worlds and live games are separate copies. Changes to player characters or Other Characters in the live-world editor do not affect that playthrough; already-fired effects are not retroactively rewritten. Use Save as new world, or export the live JSON and import it over the intended base, to reuse live-world edits in future games. Image-style changes can require save/reload before their export reflects the editor.
 
 ## Read-only source/import comparison
 
