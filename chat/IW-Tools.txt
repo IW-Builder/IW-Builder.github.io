@@ -1151,7 +1151,7 @@ def pattern_advisories(doc):
   },
   "additionalProperties": true,
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "InfiniteWorlds observed export schema \u2014 schemaVersion 2.4",
+  "title": "InfiniteWorlds observed export schema — schemaVersion 2.4",
   "description": "General Infinite Worlds export structure and explicit-reference profile. Compatibility baseline: Save/load system, Image style system and Pawscript update, announced 2026-10-08 (compatibility baseline). Not an official exhaustive importer contract. Unknown fields/discriminators remain permitted and reported. Presence observations alone do not establish importer-required fields.",
   "x-profileVersion": "1.2.0",
   "x-observedSchemaVersions": [
@@ -1316,8 +1316,14 @@ def pattern_advisories(doc):
             "visibility": {
               "type": "string",
               "x-observedValues": [
-                "everyone"
-              ]
+                "everyone",
+                "player_only",
+                "ai_only",
+                "hidden",
+                "ai_only_boring",
+                "hidden_boring"
+              ],
+              "description": "Observed editor-preserved visibility modes for Modify tracked item details. Set overrideVisibility true to apply. Live player-visible/hidden grouping is verified; complete AI prompt inclusion is not observable."
             },
             "autoUpdate": {
               "type": "boolean"

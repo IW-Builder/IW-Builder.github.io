@@ -32,7 +32,7 @@ Starting values:
 - player: the tracker itself defines a player-chosen startup value. ../examples/optional-block.json exports initialValueBasedOnPC: "player", initialValue: "On", and initialValueChoices: ["On", "Off"]. These are tracker-level fields, independent of per-character initialTrackedItemValues. Use this for an offered startup preference; autoUpdate false prevents AI rewriting it. The user can edit the live preference later. For unconstrained player input or an unusual type, do not assume the choice-list example establishes every corresponding UI control; obtain a representative export only for that additional variant.
 - Never combine arbitrary fixed/list/script modes and guess precedence. Do not assume formatSchema is JSON Schema or enforces semantic intent; its exact enforcement language is not established by our sample fields.
 
-Intentional name differences: When creating a tracked item, if variableName differs from name, set driftAcknowledgedForName to the exact current name. This acknowledges the intentional difference and suppresses the editor's mismatch indicator; it does not rename the variable or change script references. When editing an existing tracker, preserve its acknowledgement unless the user authorizes a change. If an unacknowledged mismatch is noticed, explain it and offer to acknowledge it; do not silently rename the variable or suppress the indicator.
+Name/handle drift: The editor does not compare Name and variableName as case-sensitive literal strings. Normal generated differences such as Win Path / win_path need no acknowledgement. Use driftAcknowledgedForName for an intentionally different handle when the editor reports a mismatch; its value is the current display Name. It does not rename the variable or change script references. Preserve existing metadata during unrelated edits; do not rename handles or fill null acknowledgements merely because capitalization, spaces or separators differ. The complete normalization algorithm is not specified here.
 
 ## Memory, continuity and context cost
 
@@ -52,6 +52,8 @@ Alternate selectable protagonists can also have NPC cards if unchosen protagonis
 [RUNTIME] Extra-hidden values remain visible in the Storyteller tracker editor even when Include Extra-hidden is off. Import normalizes automatic updating off for hidden, hidden_boring and player_only; everyone, ai_only and ai_only_boring can retain automatic updates. Full AI prompt inclusion is a separate unresolved boundary.
 
 Enforce format does not prevent all malformed manual/script writes. Use explicit shape and semantic checks before accepting generated state. Native path adjustment and script assignment have different missing-path behavior; do not generalize one write mechanism to all others. Independent random expressions can disagree; cache shared choices.
+
+Modify tracked item details supports all six visibility values listed above with overrideVisibility: true. Hidden is an observed effect value, not an unsupported-value warning. The live player-visible/hidden lists reflect the change even when the live-design export retains the original tracker visibility. Full AI prompt inclusion remains unobservable.
 
 A trigger can change future automatic updating through Modify tracked item details with overrideAutoUpdate and autoUpdate. Initial values remain configuration, not current state. See [Editor-UI](Editor-UI.md) for current-value editing and [Verified-Behavior](Verified-Behavior.md) for forms, initialization and retention results.
 

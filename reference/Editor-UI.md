@@ -58,7 +58,7 @@ Neither hidden nor extra-hidden protects information from Storyteller inspection
 
 For per-character values, select **Initial value depends on which character the player chooses** under Tracked items, then edit under **Player character options > [Name]**. Player-selected preferences can appear on the character card and in Customize Character. Opening the customizer can reset card selections; check final values there. Starting-value permission is not general in-play edit permission.
 
-Rename warnings offer **Update** and **Ignore** for variable-name mismatch. Ignore preserves the handle and ID. Initial-value changes do not migrate running state; edit current tracker values for that.
+Rename warnings offer **Update** and **Ignore** for variable-name mismatch. Normal capitalization and separator differences, such as Win Path / win_path, are not drift. Ignore preserves the handle and ID; do not fill null acknowledgements based on literal string inequality. Initial-value changes do not migrate running state; edit current tracker values for that.
 
 ## Play, debug and live design
 
@@ -71,6 +71,8 @@ The bug icon opens debug. **Active instructions** is live rendered state, includ
 The live-design notice says Player/Other Characters changes do not affect the current playthrough and already-fired effects are not retroactively rewritten. **Save as new world** makes edits reusable. Runtime block replacements and tracker changes can leave original content/initial values in design exports; those exports are not complete live-state snapshots.
 
 Story exports offer a turn range and optional background, character, secrets, trackers and hidden trackers, with text/PDF/image options. Select the relevant options. Secret Info is generated narrative data, not an authoritative character database. No live character-database or complete prompt viewer is available through these surfaces.
+
+An unchecked **Hide skill system** option may omit `hideSkillSystem` from the editor export. This is normal visible-skills state, not a missing setting to repair. Generated JSON may explicitly use `false`.
 
 ## Characters, images and models
 

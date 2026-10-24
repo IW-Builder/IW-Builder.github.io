@@ -31,7 +31,7 @@ Structural errors are returned before reference traversal; fix them and rerun. E
 |Permissions|permissionsOnceShared, allowChangeCharacter\*|
 |Metadata/advanced controls|schemaVersion, favorite, hideSkillSystem, autoAdvanceVersion, version, designNotes, showPawScriptButtons|
 
-These groups map purpose; they do not assert every UI label or control is bijective. `recommendedAIModel` is obsolete/export-only with no current editor selector. Keep it null if retained. `driftAcknowledgedForName` is null or the display name for which the variable-name mismatch alert was dismissed. It is editor metadata, not a script alias. Metadata is not automatically story context: put necessary instructions in actual AI-facing fields.
+These groups map purpose; they do not assert every UI label or control is bijective. `recommendedAIModel` is obsolete/export-only with no current editor selector. Keep it null if retained. `driftAcknowledgedForName` is null or the display name for which the variable-name mismatch alert was dismissed. Normal capitalization and separator differences such as Win Path / win_path are not drift and do not require acknowledgement. It is editor metadata, not a script alias. Metadata is not automatically story context: put necessary instructions in actual AI-facing fields.
 
 ## Trackers
 

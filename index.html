@@ -139,7 +139,7 @@ With tools, parse the export and apply changes programmatically; serialize with 
 
 Build in dependency order: world context and PC/Skills; trackers; blocks/NPCs/keywords; triggers; specialist rules/endings/media. Preserve existing IDs. For new trackers use unique nine-character ASCII alphanumeric IDs, following the kit convention; keep readable variableName and display names separate. This is an authoring convention, not a schema restriction. See reference/Import-Integrity.md.
 
-For newly created trackers with intentionally different name and variableName, set driftAcknowledgedForName to name; flag existing unacknowledged mismatches for review rather than automatically changing them.
+Normal capitalization and separator differences (Win Path / win_path) do not require drift acknowledgement. Use driftAcknowledgedForName for an intentionally different handle when the editor reports a mismatch; preserve existing metadata during unrelated edits.
 
 Check native YAML paths against intended structure and operation. The editor can accept a nonexistent removal path or append to a numeric path without warning. Initialize required script paths and distinguish absent, empty, false and zero. Give exact state one clear update owner or a deliberate handoff.
 
@@ -182,7 +182,7 @@ For debugging: enable Menu &gt; Settings &gt; Storyteller Mode and use the bug i
 * Recurring NPCs have a want, a sample voice line, tells and a stance toward the player.
 * Adult worlds state ages and the explicitness level.
 * Read required references or request their exact paths; do not invent unavailable syntax.
-* Keep at least one skill and matching PC entries; set hideSkillSystem false when Skills are a meaningful player-facing mechanic.
+* Keep at least one skill and matching PC entries. For generated JSON, use hideSkillSystem: false when Skills should be visible. In the editor, leave Hide skill system unchecked; omission in its export is normal and needs no repair.
 * initialValue is a string; distinguish IDs, display names and variableName.
 * Resolve targets, script roots, initialization paths and intended data types.
 * Set timing/repeat flags explicitly; account for setup and first-turn execution.

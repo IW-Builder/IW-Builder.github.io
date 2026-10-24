@@ -1,11 +1,11 @@
 {
   "algorithm": "sha256",
-  "generatedAt": "2026-10-24T05:48:20+00:00",
+  "generatedAt": "2026-10-24T06:23:27+00:00",
   "files": [
     {
       "path": "Authoring-Prompt.md",
-      "bytes": 20991,
-      "sha256": "313c58a90bf1298f059fa2f71267923190fc3f923e2feb7b50f6c959cfa33cad"
+      "bytes": 21147,
+      "sha256": "ff18f9eb53501a542789e15a7b864098b2c73dc999bc7399bb8d785776702bc8"
     },
     {
       "path": "LICENSE",
@@ -24,13 +24,13 @@
     },
     {
       "path": "chat/IW-Authoring-Guide.txt",
-      "bytes": 198887,
-      "sha256": "9358dc07354f66a0bc22adf24185bc32a118d9324f0d64ff8baa85fad530b60a"
+      "bytes": 200917,
+      "sha256": "7730549d09fa761600be87d6eacaabcedd90148a081798ebf468edfc2a9045f9"
     },
     {
       "path": "chat/IW-Examples.txt",
-      "bytes": 260274,
-      "sha256": "6dde8489c460ac05fea8718abe4bb1a23efb1f46589ede4472472f59cce05983"
+      "bytes": 233095,
+      "sha256": "1fcce4fc49cee04aaf694f0eede9b8181f2238def8fae45d9107cf712bcf0f12"
     },
     {
       "path": "chat/IW-Sample-Library.txt",
@@ -39,8 +39,8 @@
     },
     {
       "path": "chat/IW-Tools.txt",
-      "bytes": 134053,
-      "sha256": "65470bb664fad6e4c66a0effeb938ddb34f52ce05ef24c7bd495701bfd1dcaa5"
+      "bytes": 134444,
+      "sha256": "9e8aae1be455cb658687462424d97818ca9ccdb1dce1b86b7bfdc397cbb653c5"
     },
     {
       "path": "chat/README.md",
@@ -49,18 +49,18 @@
     },
     {
       "path": "chat/index.html",
-      "bytes": 203000,
-      "sha256": "aa955cf0e1f0c3b7674aee11018af3e5bca58fa8832d6129271a07be620d3973"
+      "bytes": 205025,
+      "sha256": "e9f372de80945bcc524db9ed712e511d7b7367b3bfe12ef70ac58f183b43041a"
     },
     {
       "path": "chat/sources.json",
       "bytes": 2461,
-      "sha256": "d2a22b0782c7a8b67b1fd87d955288e4f87aa86bc7f90522e5dc8b63937b7de4"
+      "sha256": "b18924b21d4266e185ca295a19f1bc095b3ba96aa85e983caea0be38f10c1f77"
     },
     {
       "path": "checker/index.html",
-      "bytes": 117031,
-      "sha256": "c23e3ca533135af22ca31b765d8409847775c5d41252b7f665a5a2a33b7b3c92"
+      "bytes": 117422,
+      "sha256": "fbc552f6e9c1afa09f76c45a13e457d38823d0d43a98773e3f28ca42a8576905"
     },
     {
       "path": "examples/Payloads.md",
@@ -239,13 +239,13 @@
     },
     {
       "path": "examples/narrative-address-after-midnight.json",
-      "bytes": 46077,
-      "sha256": "18c47cc814da6f4187befb698544f0d460746eac87875f4381f723030e2f04c5"
+      "bytes": 33705,
+      "sha256": "503080c8fd35981c75b96136ffd03eb11c5591be6817c443627c0ed0e1432302"
     },
     {
       "path": "examples/narrative-listening-road.json",
-      "bytes": 54281,
-      "sha256": "95acfeea63a5f3ffad9f52529a7bed85c34f46b0ee3dbcf259ab7cde76e56da1"
+      "bytes": 39474,
+      "sha256": "d7ceb23e05b4941a607c943e446db85fd9054ebec7bce246f4a3a31b82b40f30"
     },
     {
       "path": "examples/narrative-seven-nights.json",
@@ -359,8 +359,8 @@
     },
     {
       "path": "index.html",
-      "bytes": 22477,
-      "sha256": "623f3565eec90b7b0dfa9afaa2ef248381485d8290012dd15d8079f9d1f18d65"
+      "bytes": 22633,
+      "sha256": "0adc9f2cf31f6bc11f047ec036edbebf400c76aaf8dc1bce43a4fc66ddc891b4"
     },
     {
       "path": "library/Integration.md",
@@ -389,8 +389,8 @@
     },
     {
       "path": "reference/Capabilities.md",
-      "bytes": 23377,
-      "sha256": "d95dcb186b9aeb40f525e4fd6019c55b5186e399580b5671402423abff3f7ccb"
+      "bytes": 23541,
+      "sha256": "8545ef34734791fd11079064dfa3c27753e55ad1de2b1fa272689e3b6e6a80be"
     },
     {
       "path": "reference/Craft.md",
@@ -409,8 +409,8 @@
     },
     {
       "path": "reference/Editor-UI.md",
-      "bytes": 13908,
-      "sha256": "8fe76f0439d1e52ccf5b7f20b25d189e7536d38e0692430d7cf30f802cb939ce"
+      "bytes": 14278,
+      "sha256": "9747d740c3dd08b7fb292fdf683998075320876f2b24007e283b975b283daa89"
     },
     {
       "path": "reference/Engineering-Tools.md",
@@ -459,8 +459,8 @@
     },
     {
       "path": "reference/Schema.md",
-      "bytes": 21482,
-      "sha256": "2ec25a65f8535cfd55a0c56e54f492ca2dc13303fda5d54e3b7cdb7daa4e1747"
+      "bytes": 21608,
+      "sha256": "9e2f1b45837766940c293824b385ed51bb6a38ddc2bf75e50abec807e18aebb0"
     },
     {
       "path": "reference/Story-Tools.md",
@@ -469,13 +469,13 @@
     },
     {
       "path": "reference/Trackers.md",
-      "bytes": 7776,
-      "sha256": "de8851510c6cdafba088811432bd4e163a2999a8906d9e4fc4684e4fa4b65fe4"
+      "bytes": 8193,
+      "sha256": "014eca84edbd2c1bdd2e03530cf5bf8b5757eebab626ebf95707609c0ea8b481"
     },
     {
       "path": "reference/Trigger-Catalog.md",
-      "bytes": 5613,
-      "sha256": "d9120865ebdb604b7203f390e138992aaf33ecb8614b80b9f87b98a0ed198f66"
+      "bytes": 5901,
+      "sha256": "9edd93153ef10e7cfe51a9b0f8eb68c581cec3308a87e3bd867a388e61e2ce5e"
     },
     {
       "path": "reference/Triggers.md",
@@ -484,8 +484,8 @@
     },
     {
       "path": "reference/Verified-Behavior.md",
-      "bytes": 13824,
-      "sha256": "9c5aaa67b6c3f5c15317ea5cc9ff3b98de82fa2ffdff7da59101e5d7e3b9f560"
+      "bytes": 14333,
+      "sha256": "50595835f791c9e431cb4f618092d09aad08522d53d9b4988b04f34e947be53d"
     },
     {
       "path": "reference/index.html",
@@ -539,8 +539,8 @@
     },
     {
       "path": "tools/iw-export.schema.json",
-      "bytes": 50462,
-      "sha256": "f5fbe880d9b6cc6947198ae55b9b9be638c8ea790561c0e5fd5c6fc7ca08f8f6"
+      "bytes": 50859,
+      "sha256": "7e9f8236b8523f9d5c68368cf66209c038a6fbdfcbb909d6f0396621a7705ff8"
     },
     {
       "path": "tools/iw_browser.py",
@@ -594,8 +594,8 @@
     },
     {
       "path": "tools/test_validator.py",
-      "bytes": 5042,
-      "sha256": "54348fb8b060ac0af3371b753bc1a62be975bbbe9e94c3b0662ada87b907068d"
+      "bytes": 6201,
+      "sha256": "1f9bb518ee095616aae318500cdb6010d84b7fa7434ff1c9eb993e31a196e81b"
     },
     {
       "path": "tools/validate_iw_export.py",

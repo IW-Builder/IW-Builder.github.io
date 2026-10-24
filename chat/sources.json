@@ -23,7 +23,7 @@
       "reference/Default-Evaluation.txt",
       "reference/Current-AI-Profiles.json"
     ],
-    "sha256": "9358dc07354f66a0bc22adf24185bc32a118d9324f0d64ff8baa85fad530b60a"
+    "sha256": "7730549d09fa761600be87d6eacaabcedd90148a081798ebf468edfc2a9045f9"
   },
   "IW-Examples.txt": {
     "sourceFiles": [
@@ -46,7 +46,7 @@
       "examples/showcase-glass-ledger.json",
       "examples/character-starting-values.json"
     ],
-    "sha256": "6dde8489c460ac05fea8718abe4bb1a23efb1f46589ede4472472f59cce05983"
+    "sha256": "1fcce4fc49cee04aaf694f0eede9b8181f2238def8fae45d9107cf712bcf0f12"
   },
   "IW-Sample-Library.txt": {
     "sourceFiles": [
@@ -68,6 +68,6 @@
       "tools/iw_browser.py",
       "tools/plot_compile.py"
     ],
-    "sha256": "65470bb664fad6e4c66a0effeb938ddb34f52ce05ef24c7bd495701bfd1dcaa5"
+    "sha256": "9e8aae1be455cb658687462424d97818ca9ccdb1dce1b86b7bfdc397cbb653c5"
   }
 }

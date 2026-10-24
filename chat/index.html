@@ -106,7 +106,7 @@ With tools, parse the export and apply changes programmatically; serialize with 
 
 Build in dependency order: world context and PC/Skills; trackers; blocks/NPCs/keywords; triggers; specialist rules/endings/media. Preserve existing IDs. For new trackers use unique nine-character ASCII alphanumeric IDs, following the kit convention; keep readable variableName and display names separate. This is an authoring convention, not a schema restriction. See reference/Import-Integrity.md.
 
-For newly created trackers with intentionally different name and variableName, set driftAcknowledgedForName to name; flag existing unacknowledged mismatches for review rather than automatically changing them.
+Normal capitalization and separator differences (Win Path / win_path) do not require drift acknowledgement. Use driftAcknowledgedForName for an intentionally different handle when the editor reports a mismatch; preserve existing metadata during unrelated edits.
 
 Check native YAML paths against intended structure and operation. The editor can accept a nonexistent removal path or append to a numeric path without warning. Initialize required script paths and distinguish absent, empty, false and zero. Give exact state one clear update owner or a deliberate handoff.
 
@@ -149,7 +149,7 @@ For debugging: enable Menu &gt; Settings &gt; Storyteller Mode and use the bug i
 * Recurring NPCs have a want, a sample voice line, tells and a stance toward the player.
 * Adult worlds state ages and the explicitness level.
 * Read required references or request their exact paths; do not invent unavailable syntax.
-* Keep at least one skill and matching PC entries; set hideSkillSystem false when Skills are a meaningful player-facing mechanic.
+* Keep at least one skill and matching PC entries. For generated JSON, use hideSkillSystem: false when Skills should be visible. In the editor, leave Hide skill system unchecked; omission in its export is normal and needs no repair.
 * initialValue is a string; distinguish IDs, display names and variableName.
 * Resolve targets, script roots, initialization paths and intended data types.
 * Set timing/repeat flags explicitly; account for setup and first-turn execution.
@@ -345,7 +345,7 @@ Start of game, Or mid-game, repeat eligibility and advanced logic are trigger se
 
 ## Changing automatic updating
 
-**Modify tracked item details** can turn automatic updating on or off. Set `overrideAutoUpdate: true` and the desired `autoUpdate` value. Equivalent override flags select changes to Name, description, visibility and update instructions. Changing a field without its matching override does not apply it. This changes future update behavior; it does not undo an earlier write in the current turn. Visibility restrictions still matter.
+**Modify tracked item details** can turn automatic updating on or off. Set `overrideAutoUpdate: true` and the desired `autoUpdate` value. Equivalent override flags select changes to Name, description, visibility and update instructions. Changing a field without its matching override does not apply it. This changes future update behavior; it does not undo an earlier write in the current turn. Visibility restrictions still matter. With `overrideVisibility: true`, the observed visibility values are everyone, player_only, ai_only, hidden, ai_only_boring and hidden_boring. They survive editor import; live effects apply the expected player-visible/hidden grouping. This does not establish complete AI prompt inclusion.
 
 This capability is already represented by the schema and [native example](../examples/effect-effectModifyTrackedItemDetails.json); no example needs to be read merely to discover that it exists. Read [Schema](Schema.md) and the specific payload only when implementing. The schema is a partial compatibility profile, not the definition of all platform capabilities. Do not infer nonexistent Evaluation, Summary or image-change effects from similarly named effects.
 
@@ -416,7 +416,7 @@ Neither hidden nor extra-hidden protects information from Storyteller inspection
 
 For per-character values, select **Initial value depends on which character the player chooses** under Tracked items, then edit under **Player character options &gt; [Name]**. Player-selected preferences can appear on the character card and in Customize Character. Opening the customizer can reset card selections; check final values there. Starting-value permission is not general in-play edit permission.
 
-Rename warnings offer **Update** and **Ignore** for variable-name mismatch. Ignore preserves the handle and ID. Initial-value changes do not migrate running state; edit current tracker values for that.
+Rename warnings offer **Update** and **Ignore** for variable-name mismatch. Normal capitalization and separator differences, such as Win Path / win_path, are not drift. Ignore preserves the handle and ID; do not fill null acknowledgements based on literal string inequality. Initial-value changes do not migrate running state; edit current tracker values for that.
 
 ## Play, debug and live design
 
@@ -429,6 +429,8 @@ The bug icon opens debug. **Active instructions** is live rendered state, includ
 The live-design notice says Player/Other Characters changes do not affect the current playthrough and already-fired effects are not retroactively rewritten. **Save as new world** makes edits reusable. Runtime block replacements and tracker changes can leave original content/initial values in design exports; those exports are not complete live-state snapshots.
 
 Story exports offer a turn range and optional background, character, secrets, trackers and hidden trackers, with text/PDF/image options. Select the relevant options. Secret Info is generated narrative data, not an authoritative character database. No live character-database or complete prompt viewer is available through these surfaces.
+
+An unchecked **Hide skill system** option may omit `hideSkillSystem` from the editor export. This is normal visible-skills state, not a missing setting to repair. Generated JSON may explicitly use `false`.
 
 ## Characters, images and models
 
@@ -493,7 +495,7 @@ END OF DOCUMENT: reference/Editor-UI.md
 ===== BEGIN FILE: reference/Verified-Behavior.md =====
 # Consolidated behavior reference
 
-Results current through 2026-10-23. Evidence labels follow [Evidence](Evidence.md). **[RUNTIME]** means observed behavior within the stated scope, **[DOCUMENTED]** means editor/export guidance, **[PATTERN]** means an authoring choice, and **[UNKNOWN]** means unresolved. Import success, rendered instructions and narration answer different questions; none is a complete view of hidden engine state. This reference contains conclusions, not research procedures.
+Results current through 2026-10-24. Evidence labels follow [Evidence](Evidence.md). **[RUNTIME]** means observed behavior within the stated scope, **[DOCUMENTED]** means editor/export guidance, **[PATTERN]** means an authoring choice, and **[UNKNOWN]** means unresolved. Import success, rendered instructions and narration answer different questions; none is a complete view of hidden engine state. This reference contains conclusions, not research procedures.
 
 ## Triggers and Scenarios
 
@@ -534,6 +536,9 @@ Results current through 2026-10-23. Evidence labels follow [Evidence](Evidence.m
 - [PATTERN] Choose turn time, story time or hybrid clocks intentionally. Consume milestone crossings and guard rewards. Counter order changes the first firing boundary. Shared arbitration and priority are authored policies, not automatic fairness.
 
 ## Instructions, visibility and memory
+
+- [RUNTIME] Modify tracked item details with overrideVisibility enabled accepts everyone, player_only, ai_only, hidden, ai_only_boring and hidden_boring through editor import and applies the expected live player-visible/hidden grouping. Live-design exports can retain the original visibility. This does not expose complete AI prompt contents.
+- [RUNTIME] An unchecked Hide skill system option can export with hideSkillSystem omitted, including after importing false. Omission is normal visible-skills state.
 
 - [RUNTIME] Hidden and extra-hidden values remain script-accessible. Extra-hidden is display filtering, not protection against Storyteller inspection. The tracker editor can expose them with the debug display override off.
 - [RUNTIME] Import normalizes automatic updating off for hidden, hidden_boring and player_only. Everyone, ai_only and ai_only_boring retain supported updates. Extra-hidden AI-only filtering does not stop updating. UI visibility does not prove full prompt inclusion.
@@ -977,7 +982,7 @@ Starting values:
 - player: the tracker itself defines a player-chosen startup value. ../examples/optional-block.json exports initialValueBasedOnPC: &quot;player&quot;, initialValue: &quot;On&quot;, and initialValueChoices: [&quot;On&quot;, &quot;Off&quot;]. These are tracker-level fields, independent of per-character initialTrackedItemValues. Use this for an offered startup preference; autoUpdate false prevents AI rewriting it. The user can edit the live preference later. For unconstrained player input or an unusual type, do not assume the choice-list example establishes every corresponding UI control; obtain a representative export only for that additional variant.
 - Never combine arbitrary fixed/list/script modes and guess precedence. Do not assume formatSchema is JSON Schema or enforces semantic intent; its exact enforcement language is not established by our sample fields.
 
-Intentional name differences: When creating a tracked item, if variableName differs from name, set driftAcknowledgedForName to the exact current name. This acknowledges the intentional difference and suppresses the editor&#x27;s mismatch indicator; it does not rename the variable or change script references. When editing an existing tracker, preserve its acknowledgement unless the user authorizes a change. If an unacknowledged mismatch is noticed, explain it and offer to acknowledge it; do not silently rename the variable or suppress the indicator.
+Name/handle drift: The editor does not compare Name and variableName as case-sensitive literal strings. Normal generated differences such as Win Path / win_path need no acknowledgement. Use driftAcknowledgedForName for an intentionally different handle when the editor reports a mismatch; its value is the current display Name. It does not rename the variable or change script references. Preserve existing metadata during unrelated edits; do not rename handles or fill null acknowledgements merely because capitalization, spaces or separators differ. The complete normalization algorithm is not specified here.
 
 ## Memory, continuity and context cost
 
@@ -997,6 +1002,8 @@ Alternate selectable protagonists can also have NPC cards if unchosen protagonis
 [RUNTIME] Extra-hidden values remain visible in the Storyteller tracker editor even when Include Extra-hidden is off. Import normalizes automatic updating off for hidden, hidden_boring and player_only; everyone, ai_only and ai_only_boring can retain automatic updates. Full AI prompt inclusion is a separate unresolved boundary.
 
 Enforce format does not prevent all malformed manual/script writes. Use explicit shape and semantic checks before accepting generated state. Native path adjustment and script assignment have different missing-path behavior; do not generalize one write mechanism to all others. Independent random expressions can disagree; cache shared choices.
+
+Modify tracked item details supports all six visibility values listed above with overrideVisibility: true. Hidden is an observed effect value, not an unsupported-value warning. The live player-visible/hidden lists reflect the change even when the live-design export retains the original tracker visibility. Full AI prompt inclusion remains unobservable.
 
 A trigger can change future automatic updating through Modify tracked item details with overrideAutoUpdate and autoUpdate. Initial values remain configuration, not current state. See [Editor-UI](Editor-UI.md) for current-value editing and [Verified-Behavior](Verified-Behavior.md) for forms, initialization and retention results.
 
@@ -1122,7 +1129,7 @@ Structural errors are returned before reference traversal; fix them and rerun. E
 |Permissions|permissionsOnceShared, allowChangeCharacter\*|
 |Metadata/advanced controls|schemaVersion, favorite, hideSkillSystem, autoAdvanceVersion, version, designNotes, showPawScriptButtons|
 
-These groups map purpose; they do not assert every UI label or control is bijective. `recommendedAIModel` is obsolete/export-only with no current editor selector. Keep it null if retained. `driftAcknowledgedForName` is null or the display name for which the variable-name mismatch alert was dismissed. It is editor metadata, not a script alias. Metadata is not automatically story context: put necessary instructions in actual AI-facing fields.
+These groups map purpose; they do not assert every UI label or control is bijective. `recommendedAIModel` is obsolete/export-only with no current editor selector. Keep it null if retained. `driftAcknowledgedForName` is null or the display name for which the variable-name mismatch alert was dismissed. Normal capitalization and separator differences such as Win Path / win_path are not drift and do not require acknowledgement. It is editor metadata, not a script alias. Metadata is not automatically story context: put necessary instructions in actual AI-facing fields.
 
 ## Trackers
 
@@ -1614,7 +1621,7 @@ flowchart TD
 
 Root `skills` is a list of display names. Each possibleCharacters entry has a `skills` object keyed by those names, with integer levels. Define focused skills with distinct jobs; overlapping names can make the evaluator&#x27;s choice ambiguous. Example: Observation, Persuasion and Engineering. PC `description` establishes identity, abilities and context; it is not just selection-page decoration. `charSelectText` introduces the available choices to the player. The allowChangeCharacter* flags control which parts players may customize.
 
-Keep at least one skill. `hideSkillSystem` hides the skill system&#x27;s presentation; it is not evidence that all evaluation of abilities is disabled. A neutral generic skill is appropriate when the story does not need custom skill distinctions.
+Keep at least one skill. For generated JSON, use `hideSkillSystem: false` when Skills should be visible; an unchecked editor option may omit the field, which is normal and needs no repair. `hideSkillSystem` hides the skill system&#x27;s presentation; it is not evidence that all evaluation of abilities is disabled. A neutral generic skill is appropriate when the story does not need custom skill distinctions.
 
 PawScript exposes `$player.skills`, `$player.skills_and_levels`, `$game.skill_map`, `$game.skill_list`, `$game.skill_example`, `$game.difficulty_list` and `$game.difficulty_example`. The skill map connects runtime slugs to display names. The documented difficulty names are Trivial, Easy, Medium, Hard and Legendary; use the supplied runtime list when rendering prompts rather than inventing numerical modifiers. Official documentation describes a default level of 3 for skills not raised. Explicitly initialize authored PC levels rather than depending on that fallback. Do not invent slug normalization for punctuation-heavy names. [PawScript reference](https://infiniteworlds.app/pawscript-reference)
 

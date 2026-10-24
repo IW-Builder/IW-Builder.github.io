@@ -1,6 +1,6 @@
 # Consolidated behavior reference
 
-Results current through 2026-10-23. Evidence labels follow [Evidence](Evidence.md). **[RUNTIME]** means observed behavior within the stated scope, **[DOCUMENTED]** means editor/export guidance, **[PATTERN]** means an authoring choice, and **[UNKNOWN]** means unresolved. Import success, rendered instructions and narration answer different questions; none is a complete view of hidden engine state. This reference contains conclusions, not research procedures.
+Results current through 2026-10-24. Evidence labels follow [Evidence](Evidence.md). **[RUNTIME]** means observed behavior within the stated scope, **[DOCUMENTED]** means editor/export guidance, **[PATTERN]** means an authoring choice, and **[UNKNOWN]** means unresolved. Import success, rendered instructions and narration answer different questions; none is a complete view of hidden engine state. This reference contains conclusions, not research procedures.
 
 ## Triggers and Scenarios
 
@@ -41,6 +41,9 @@ Results current through 2026-10-23. Evidence labels follow [Evidence](Evidence.m
 - [PATTERN] Choose turn time, story time or hybrid clocks intentionally. Consume milestone crossings and guard rewards. Counter order changes the first firing boundary. Shared arbitration and priority are authored policies, not automatic fairness.
 
 ## Instructions, visibility and memory
+
+- [RUNTIME] Modify tracked item details with overrideVisibility enabled accepts everyone, player_only, ai_only, hidden, ai_only_boring and hidden_boring through editor import and applies the expected live player-visible/hidden grouping. Live-design exports can retain the original visibility. This does not expose complete AI prompt contents.
+- [RUNTIME] An unchecked Hide skill system option can export with hideSkillSystem omitted, including after importing false. Omission is normal visible-skills state.
 
 - [RUNTIME] Hidden and extra-hidden values remain script-accessible. Extra-hidden is display filtering, not protection against Storyteller inspection. The tracker editor can expose them with the debug display override off.
 - [RUNTIME] Import normalizes automatic updating off for hidden, hidden_boring and player_only. Everyone, ai_only and ai_only_boring retain supported updates. Extra-hidden AI-only filtering does not stop updating. UI visibility does not prove full prompt inclusion.

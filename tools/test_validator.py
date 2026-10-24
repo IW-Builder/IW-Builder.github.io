@@ -26,6 +26,24 @@ class ValidatorTests(unittest.TestCase):
        self.assertEqual(hits[0]['severity'],'warning')
        self.assertEqual(hits[0]['path'],'/triggerEvents/0/triggerEffects/0')
       self.assertNotIn('timing-editor-consistency',{f['code'] for f in findings})
+ def test_visible_skills_false_or_omitted(self):
+  for value in (False, None):
+   w=copy.deepcopy(BASE)
+   if value is None:w.pop('hideSkillSystem',None)
+   else:w['hideSkillSystem']=value
+   self.assertFalse([f for f in v.validate(w,SCHEMA) if f['path']=='/hideSkillSystem'])
+ def test_modify_tracker_visibility_vocabulary(self):
+  w=json.loads((ROOT/'examples/effect-effectModifyTrackedItemDetails.json').read_text(encoding='utf-8'))
+  effect=next(e for t in w['triggerEvents'] for e in t['triggerEffects'] if e['type']=='effectModifyTrackedItemDetails')
+  effect['data']['overrideVisibility']=True
+  for mode in ('everyone','player_only','ai_only','hidden','ai_only_boring','hidden_boring'):
+   with self.subTest(mode=mode):
+    effect['data']['visibility']=mode
+    self.assertFalse([f for f in v.validate(w,SCHEMA) if f['path'].endswith('/visibility')])
+  effect['data']['visibility']='future_mode'
+  hits=[f for f in v.validate(w,SCHEMA) if f['path'].endswith('/visibility')]
+  self.assertTrue(any(f['code']=='unobserved-value' and f['severity']=='warning' for f in hits))
+  self.assertFalse(any(f['severity']=='error' for f in hits))
  def test_root_typo(self):self.assertIn('unknown-script-root',codes(code_world('$missing += 1')))
  def test_locals_system_and_strings(self):self.assertNotIn('unknown-script-root',codes(code_world('set $local = $game.turn_number\nfor each $entry in $player.skills\n  log($entry)\nlog("$not_a_root; == &&")\n# $ignored')))
  def test_template_any_field(self):

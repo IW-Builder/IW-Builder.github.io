@@ -50,7 +50,7 @@ Start of game, Or mid-game, repeat eligibility and advanced logic are trigger se
 
 ## Changing automatic updating
 
-**Modify tracked item details** can turn automatic updating on or off. Set `overrideAutoUpdate: true` and the desired `autoUpdate` value. Equivalent override flags select changes to Name, description, visibility and update instructions. Changing a field without its matching override does not apply it. This changes future update behavior; it does not undo an earlier write in the current turn. Visibility restrictions still matter.
+**Modify tracked item details** can turn automatic updating on or off. Set `overrideAutoUpdate: true` and the desired `autoUpdate` value. Equivalent override flags select changes to Name, description, visibility and update instructions. Changing a field without its matching override does not apply it. This changes future update behavior; it does not undo an earlier write in the current turn. Visibility restrictions still matter. With `overrideVisibility: true`, the observed visibility values are everyone, player_only, ai_only, hidden, ai_only_boring and hidden_boring. They survive editor import; live effects apply the expected player-visible/hidden grouping. This does not establish complete AI prompt inclusion.
 
 This capability is already represented by the schema and [native example](../examples/effect-effectModifyTrackedItemDetails.json); no example needs to be read merely to discover that it exists. Read [Schema](Schema.md) and the specific payload only when implementing. The schema is a partial compatibility profile, not the definition of all platform capabilities. Do not infer nonexistent Evaluation, Summary or image-change effects from similarly named effects.
 
