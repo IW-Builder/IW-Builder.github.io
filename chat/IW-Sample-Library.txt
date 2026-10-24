@@ -1,4 +1,14 @@
-Infinite Worlds Authoring Kit: generated text edition. BEGIN FILE / END FILE sections identify package-relative sources. This upload is reference material, not one IW world. Follow Authoring-Prompt.md; load companion material only as needed. The Examples edition contains selected complete worlds; additional examples remain available in the repository.
+Infinite Worlds Authoring Kit: IW-Sample-Library.txt (optional library modules and Storymaster).
+Generated text edition. BEGIN FILE / END FILE sections identify package-relative source paths. This is reference material, not one IW world.
+Follow Authoring-Prompt.md (in IW-Authoring-Guide.txt). Load companion editions only when the task needs them.
+Editions and their contents:
+- IW-Authoring-Guide.txt: start here: prompt, template, narrative craft, trackers, triggers and data banks. Files: Authoring-Prompt.md, World-Template.json, reference/Evidence.md, reference/Craft.md, reference/Trackers.md, reference/Triggers.md, reference/Trigger-Catalog.md, reference/Portable-Banks.md
+- IW-Technical-Reference.txt: exact payloads, PawScript, capabilities, recipes and import integrity. Files: reference/Schema.md, reference/PawScript.md, reference/Capabilities.md, reference/Recipes.md, reference/Import-Integrity.md, reference/Default-Evaluation.txt, reference/Current-AI-Profiles.json
+- IW-Behavior.txt: editor/UI workflows, verified runtime behavior and known limits. Files: reference/Editor-UI.md, reference/Verified-Behavior.md, reference/Known-Limits.md
+- IW-Examples.txt: payload cookbook and selected complete example worlds. Files: examples/Payloads.md, examples/index.json, examples/narrative-vendemmia.json, examples/narrative-listening-road.json, examples/narrative-address-after-midnight.json, examples/recipe-request-commit.json, examples/recipe-completion-award.json, examples/recipe-candidate-acceptance.json, examples/recipe-archive-reactivate.json, examples/recipe-cached-random.json, examples/recipe-consumed-timer.json, examples/recipe-choice-domain.json, examples/recipe-compiled-plot.json, examples/recipe-choice-followup.json, examples/recipe-threshold-unlock.json, examples/optional-block.json, examples/showcase-glass-ledger.json, examples/character-starting-values.json
+- IW-Sample-Library.txt: optional library modules and Storymaster. Files: library/Integration.md, library/Sample-Blocks.json, library/Storymaster-Suite.json
+- IW-Tools.txt: Python tools and their guides, for models that can run code. Files: tools/Usage.md, reference/Story-Tools.md, reference/Engineering-Tools.md, tools/validate_iw_export.py, tools/static_checks.py, tools/iw-export.schema.json, tools/data_bank.py, tools/import_audit.py, tools/story_export.py, tools/iw_browser.py, tools/plot_compile.py
+Every file is also available individually: https://iw-builder.github.io/llms.txt
 
 ===== BEGIN FILE: library/Integration.md =====
 # Adapting the sample library

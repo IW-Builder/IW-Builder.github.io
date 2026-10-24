@@ -10,7 +10,7 @@ Use the dataType vocabulary `text`, `number`, `yaml`, `xml`; do not emit an inve
 
 Tracker `initialValue` is a JSON STRING even for numbers and YAML: `"10"`, or `"held: 0\nuses: 3\n"`. YAML content inside that string has its own parsed numbers, strings, lists and records. IW text entry does not enforce numeric-only input, but a mathematical tracker should start from an actual numeric literal. This does NOT make the entire export string-valued: JSON booleans, arrays and numeric fields elsewhere retain schema types.
 
-Initialize every mechanical path explicitly. Distinguish 0, false, empty text, an empty list, an absent key and null. Define each value's meaning consistently; numeric 0/1 is one practical flag convention. Narration must not reinterpret a stored value to justify a conflicting story. Treat missing required data as malformed/denied unless the design explicitly defines a fallback.
+Initialize every mechanical path explicitly. Distinguish 0, false, empty text, an empty list, an absent key and null. Define each value's meaning consistently; numeric 0/1 is one practical flag convention. Narration must not reinterpret a stored value to justify a conflicting story. Treat missing required data as malformed/denied unless the design explicitly defines a fallback. Enforce format does not prevent all malformed manual/script writes; use explicit shape and semantic checks before accepting generated state. Native path adjustment and script assignment have different missing-path behavior, and independent random expressions can disagree, so cache shared choices.
 
 Ownership:
 
@@ -24,6 +24,10 @@ Ownership:
 Do not let the AI and scripts compete to rewrite the same mechanical YAML document. Consolidating related flags in a YAML tracker reduces editor clutter; it does not by itself reduce trigger count or guarantee lower token cost. Large AI-visible YAML and duplicative logs still cost context. Keep hidden cache text out of the storyteller unless needed.
 
 Visibility values include everyone (player and AI), ai_only and ai_only_boring (AI-only), player_only, hidden and hidden_boring (hidden from player and AI in supplied uses). Do not infer additional UI highlighting behavior from the suffix alone. The editor clears "Hide in Storyteller mode" when player visibility is enabled. Do not invent contradictory UI combinations. Exports can include hidden trackers and secret information when Storyteller Mode is enabled; select those export options when collecting diagnostics. Visibility is not script access control: hidden values remain script-usable at runtime.
+
+[RUNTIME] Extra-hidden values remain visible in the Storyteller tracker editor even when Include Extra-hidden is off. Import normalizes automatic updating off for hidden, hidden_boring and player_only; everyone, ai_only and ai_only_boring can retain automatic updates. UI visibility does not establish full AI prompt inclusion.
+
+Modify tracked item details accepts all six visibility values with overrideVisibility: true, and can change future automatic updating with overrideAutoUpdate and autoUpdate. The live player-visible/hidden lists reflect a visibility change even when the live-design export retains the original visibility.
 
 Starting values:
 
@@ -46,16 +50,7 @@ Keep loaded instructions and AI-visible tracker names, descriptions, update rule
 
 Alternate selectable protagonists can also have NPC cards if unchosen protagonists should appear in the story. A selected player sharing an Other Character name can use information from that entry. Internal identity merging or exclusion is not visible; do not promise automatic same-name NPC exclusion.
 
-
-## Current visibility, updates and validation
-
-[RUNTIME] Extra-hidden values remain visible in the Storyteller tracker editor even when Include Extra-hidden is off. Import normalizes automatic updating off for hidden, hidden_boring and player_only; everyone, ai_only and ai_only_boring can retain automatic updates. Full AI prompt inclusion is a separate unresolved boundary.
-
-Enforce format does not prevent all malformed manual/script writes. Use explicit shape and semantic checks before accepting generated state. Native path adjustment and script assignment have different missing-path behavior; do not generalize one write mechanism to all others. Independent random expressions can disagree; cache shared choices.
-
-Modify tracked item details supports all six visibility values listed above with overrideVisibility: true. Hidden is an observed effect value, not an unsupported-value warning. The live player-visible/hidden lists reflect the change even when the live-design export retains the original tracker visibility. Full AI prompt inclusion remains unobservable.
-
-A trigger can change future automatic updating through Modify tracked item details with overrideAutoUpdate and autoUpdate. Initial values remain configuration, not current state. See [Editor-UI](Editor-UI.md) for current-value editing and [Verified-Behavior](Verified-Behavior.md) for forms, initialization and retention results.
+See [Editor-UI](Editor-UI.md) for current-value editing and [Verified-Behavior](Verified-Behavior.md) for forms, initialization and retention results.
 
 ---
 

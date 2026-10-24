@@ -126,9 +126,9 @@ Use corroborating clues, ordinary intervals and independent channels of help. Ke
 | --- | --- | --- |
 | [The Road That Must Be Asked](../examples/narrative-listening-road.json) | Non-romantic high-fantasy expedition | Distinct peoples with internal variation; platonic teamwork; fixed facts; repair, negotiation and retreat |
 | [The Address After Midnight](../examples/narrative-address-after-midnight.json) | Contained contemporary horror | Limited threat capabilities; reliable evidence; conditional escalation; independent verification and valid containment |
-| ../examples/narrative-vendemmia.json | Contemporary ensemble, three love interests | Different attraction gates; stance ladder with agreements; wardrobe continuity; stakes each NPC experiences differently; sensory keyword lore |
-| ../examples/narrative-seven-nights.json | Fantasy: central partner, foil, late rival | World-rules block; consent built into the fiction; non-human tells; player-visible promise ledger; minimal card for a minor character |
-| ../examples/narrative-velvet-wager.json | High-heat erotica & power-exchange trio | Immediate heat from turn 1; escalation & control tracker instead of courtship gates; multi-turn sex pacing; kinetic body descriptions; light state triggers |
+| [Vendemmia](../examples/narrative-vendemmia.json) | Contemporary ensemble, three love interests | Different attraction gates; stance ladder with agreements; wardrobe continuity; stakes each NPC experiences differently; sensory keyword lore |
+| [Seven Nights](../examples/narrative-seven-nights.json) | Fantasy: central partner, foil, late rival | World-rules block; consent built into the fiction; non-human tells; player-visible promise ledger; minimal card for a minor character |
+| [Velvet Wager](../examples/narrative-velvet-wager.json) | High-heat erotica & power-exchange trio | Immediate heat from turn 1; escalation & control tracker instead of courtship gates; multi-turn sex pacing; kinetic body descriptions; light state triggers |
 
 For narrative worlds, read the example closest to the requested genre and relationship structure. Borrow structure, never content: do not reuse example names, premises or signature details. These are authoring patterns, not runtime-qualified benchmarks. The expedition and horror examples have structural validation only, not live playthrough certification.
 

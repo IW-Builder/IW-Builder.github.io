@@ -48,6 +48,9 @@ These are repository maintenance tasks, not requirements for authoring worlds:
 python tools/test_validator.py
 python tools/test_data_bank.py
 python tools/test_distribution.py
+python tools/test_engineering.py
+python tools/test_native_compat.py
+python tools/test_story_export.py
 python tools/check_package.py
 python tools/build_distribution.py
 ```
@@ -58,7 +61,7 @@ The builder updates visible EOF markers in AI-facing Markdown documents, generat
 
 Required sources are checked before output begins; a missing source or checker embedding stops the build with an error. Repeated builds with unchanged inputs preserve output bytes and the manifest timestamp. A write failure can leave partial outputs; fix it and rerun before publishing.
 
-`IW-Tools.txt` has an explicit authoring-tool list: this usage guide, validator, static checks, JSON schema, data-bank utility, import audit and story-export tool. Builders, regression tests and package reports remain in the repository but are omitted from that model-facing bundle. Human READMEs are also omitted from combined technical packages. No model needs the distribution builder to author a world.
+`IW-Tools.txt` has an explicit authoring-tool list: this usage guide, the Story-Tools and Engineering-Tools guides, validator, static checks, JSON schema, data-bank utility, import audit, story-export tool, browser harness and plot compiler. Builders, regression tests and package reports remain in the repository but are omitted from that model-facing bundle. Human READMEs are also omitted from combined technical packages. No model needs the distribution builder to author a world.
 
 The root manifest records repository-relative paths, byte lengths and SHA-256 hashes. It covers the authoring sources and supported files under reference, library, examples, tools, chat and checker, plus the homepage and root guide/template/license. It excludes itself, ZIP archives, sample histories, hidden files and caches. It is separate from the files it hashes to avoid circular dependencies. Hash original bytes, never a browser's rendered/extracted text. A mismatch may mean the manifest is stale; investigate apparent missing content without treating every mismatch as damage. A match establishes the recorded bytes, not freshness or runtime correctness.
 

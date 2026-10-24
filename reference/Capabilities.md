@@ -22,7 +22,7 @@ flowchart TD
 - Scenario judgments must be available for their trigger checks, but their exact production stage relative to Evaluation, narration and tracker updates is not mapped. Do not place them at a fabricated precise point in the diagram.
 - Messages belong to their effects; they need not be a single final batch after all triggers. Choice/input effects can suspend for a player answer. Correctly bound single-answer forms update immediately and permit later triggers to read the answer in the same turn.
 - Guidance and block changes do not rewrite already-generated narration. Updates supply context for subsequent generation. The precise persistence/priority of competing guidance is not a stable contract.
-- Summary generation is a separate context-maintenance process. Its exact turn schedule and ordering are not established here.
+- Summary generation is a separate context-maintenance process. Compression follows a six-turn cadence beginning at turn eight (user-confirmed); its ordering relative to other turn stages is not established.
 
 ### Timing flags
 
@@ -89,6 +89,8 @@ Keyword entries have id, name, keywords (string array), and content. Choose dist
 
 Editor help says Evaluation outputs guide AI thinking; SUCCESS/FAILURE are not special control tokens. These are instructions, not executable hooks. Writing SUCCESS in Evaluation does not itself fire a custom trigger. Replacing a default request with a large custom framework can change its responsibilities; inspect dependencies rather than copying only one field.
 
+Longer-output requests, including strong priority-override language and richer lore, did not reliably reach the requested length. No guaranteed length recipe or hidden maximum is established.
+
 Runtime names referenced by the sample library:
 
 | Names | Use / limit |
@@ -115,10 +117,10 @@ Use `<<expression>>` inside supported text templates; use bare expressions in `t
 | Main/active instruction text | Values are substituted when prepared for AI context; conditional expressions can select current guidance |
 | Show Message / native effect text | Text is resolved for that effect; inspect the exact output if timing matters |
 | Initial values / PC script-generated options | Initialization context, not a persistent live binding |
-| Native block-modification content | Expressions are resolved when the effect installs the text. In the tested block, coins=13 stayed 13 on later turns while Coins advanced to 14 and 15 |
+| Native block-modification content | Ordinary `<<...>>` expressions are resolved when the effect installs the text. In the tested block, coins=13 stayed 13 on later turns while Coins advanced to 14 and 15. Deferred `<=...=>` references in the installed text remain live |
 | NPC, keyword, image, specialist or metadata fields | Do not infer identical evaluation timing for every string field; use the template probe before relying on a novel surface |
 
-An expression authored directly in a permanent block can select current text without a trigger whose only job is switching it. In contrast, expressions passed through a block-modification effect become a snapshot in the tested path; refresh that block when the source changes, or keep live expressions in a separate permanent block. It does not save tokens automatically: the selected content still enters context. Random expressions may reevaluate independently; store a shared roll in a tracker when several outputs must agree. Runtime output names and video-context names do not become globally available merely because a sample uses them.
+An expression authored directly in a permanent block can select current text without a trigger whose only job is switching it. In contrast, ordinary `<<...>>` expressions passed through a block-modification effect become a snapshot in the tested path. To keep a value live, write it as a deferred `<=...=>` reference in the installed text, keep the expression in a separate permanent block, or refresh the block when the source changes. Nested expression strings are not evaluated recursively. Selecting text this way does not save tokens automatically: the selected content still enters context. Random expressions may reevaluate independently; store a shared roll in a tracker when several outputs must agree. Runtime output names and video-context names do not become globally available merely because a sample uses them.
 
 ## Endings
 
@@ -148,7 +150,9 @@ Story exports support a chosen turn range, optional background, character, secre
 
 The current image-style editor is a reusable style editor with Name, Model and prompt wrappers. With separate character/scenery prompts enabled, Characters—start/end and Scenery—start/end add text before/after their respective image prompts. With it disabled, Start/End apply to every image. The corresponding world export fields are imageStyleCharacterPre/Post and imageStyleNonCharacterPre/Post; shared Start/End are exported by duplicating the values into both character and non-character Pre/Post fields. No extra switch is needed to represent the shared prompt text in these exports. The imageStyle value is a generated bespoke identifier; preserve it rather than deriving it from the prompt text. This world export is not a complete standalone reusable-style library export.
 
-The old illustrationStyle*LowPriority/HighPriority fields still occur in exports, but there are no matching current controls. Preserve them in existing worlds; do not present them as active current editor controls or invent their precedence. Manticore is the current recommended model in editor help. The selected style can be overridden by the player. A cover prompt is separate from these wrappers.
+The old illustrationStyle*LowPriority/HighPriority fields still occur in exports, but there are no matching current controls. Preserve them in existing worlds; do not present them as active current editor controls or invent their precedence. Manticore is the current recommended model in editor help. The selected style can be overridden by the player. A cover prompt is separate from these wrappers. Current Pre/Post wrappers influenced character/scenery styles, but exact prompt assembly and universal precedence remain unknown.
+
+Dedicated Other Character image appearance/clothing can populate image details independently of narrative appearance. Edits affect generated images and can be reversed; alias-related clothing drift is possible.
 
 PC portraitPromptDetails holds four strings: illustrAppearance, illustrClothes, illustrExpressionPosition and illustrSetting. The cookbook supplies an example. Image generation/upload produces asset references; those references belong in portrait/preview fields. Cover Image script produces a **prompt**, not an asset URL. Use it in the image workflow, then select/upload the result as the world preview and export the resulting metadata. Do not paste a prose prompt into previewImage.
 
@@ -156,7 +160,7 @@ Resolve bracketed image-style slots as deliberate choices. Remove unselected cho
 
 videoPromptInstructions has videoPlan, videoImagePosition and videoPrompt strings. The library uses videoPlan to choose a beat, videoImagePosition to choose start/end anchoring, and videoPrompt to describe the clip. Its `$videoDuration` and `$videoStyle` references are video-context dependencies, not declared trackers in that library and not documented global PawScript roots. Confirm their availability through the video editor/debug context before adopting the sample unchanged. No video-enabled runnable example is claimed until that capture exists.
 
-Enable model selection per world under Show optional features > Misc advanced features > Enable AI-specific instruction blocks. Selected block models serialize in selectedAIProfiles. The current authoring choices are listed in Current-AI-Profiles.json, dated October 17, 2026. This is a dated suggestion list, not a validator enum: accept arbitrary historical IDs and preserve imported selections.
+Enable model selection per world under Show optional features > Misc advanced features > Enable AI-specific instruction blocks. Selected block models serialize in selectedAIProfiles. All-model blocks remain active while selected-model blocks follow the active model. The current authoring choices are listed in Current-AI-Profiles.json, dated October 17, 2026. This is a dated suggestion list, not a validator enum: accept arbitrary historical IDs and preserve imported selections.
 
 Disabling this editor option removes selectedAIProfiles from exported blocks and hides their controls. The still-open editor temporarily remembers choices if re-enabled, but that memory does not survive closing it. Do not treat disabling as a durable reversible runtime switch or promise that exporting while disabled preserves selections. A block name alone does not select models. Whether the choices are fetched live is an inference; their exact source is unnecessary for authoring.
 
@@ -166,14 +170,6 @@ The active-world editor explicitly warns that changes to player characters or Ot
 
 For temporary instruction-block installation with a retained result, see [on-demand generation](Recipes.md#dynamic-content). Generation happens after installation; cleanup checks the request identity and completion rather than assuming the next turn succeeded. This pattern is useful only when omitted instruction context justifies result-storage and update costs.
 
-
-## Consolidated updates
-
-Deferred <=...=> references can retain live evaluation in installed instruction blocks; ordinary interpolation snapshots installed text. Nested expression strings do not establish recursive evaluation. Independent random draws can differ; cache values used by multiple consumers.
-
-Dedicated Other Character image appearance/clothing can populate image details independently of narrative appearance. Edits affect generated images and can be reversed; alias-related clothing drift is possible. Current Pre/Post wrappers influenced character/scenery styles, but exact prompt assembly and universal precedence remain unknown.
-
-Longer-output requests, including strong priority-override language and richer lore, did not reliably reach the requested length. No guaranteed shorter-output recipe or hidden maximum is established. All-model blocks remain active while selected-model blocks follow the active model.
 
 [Editor-UI](Editor-UI.md) contains exact workflow distinctions; [Verified-Behavior](Verified-Behavior.md) consolidates results without treating live rendering as full prompt capture.
 

@@ -10,7 +10,7 @@ PawScript reads game data, computes values and updates trackers. It is its own l
 | PawScript trigger condition | `$coins >= 5` | Return true/false; no mutation |
 | Run Script trigger effect | `$coins -= 5` | Execute statements, save changes |
 
-An **expression** returns a value. A **statement** performs work, such as assignment or a loop. Script conditions are still expressions: the test after `if` decides whether its indented statements run. Use bare code in trigger conditions and Run Script, without `<<...>>` or Markdown fences.
+An **expression** returns a value. A **statement** performs work, such as assignment or a loop. Script conditions are still expressions: the test after `if` decides whether its indented statements run. Use bare code in trigger conditions and Run Script, without `<<...>>` or Markdown fences. Text that a block-modification effect installs is a snapshot of its `<<...>>` values; a deferred `<=...=>` reference stays live in that destination. See [Capabilities.md](Capabilities.md) for template timing.
 
 PawScript cannot write arbitrary world fields, including background or instruction-block content, or invoke native trigger effects. Calculate or assemble content in trackers, then use native effects to install it or display messages. Templates do not expand write permissions. `$player` and `$game` are read-only; do not infer writability from a field being readable.
 
@@ -42,7 +42,7 @@ tags:
 
 Stored in tracker `hero`, it provides `$hero.name`, `$hero.hp` and `$hero.tags`. YAML indentation defines nesting; `[]` initializes an empty list and `{}` an empty record. Quote numeric-looking identifiers such as `"001"` to preserve leading zeros. Use YAML `|` for multiline text. In an export, `initialValue` is a JSON string containing this YAML, not a JSON object. `formatSchema` is a separate shape description; see [Trackers.md](Trackers.md).
 
-Persistent roots use direct assignments: `$coins = 12`. Temporary locals use `set $price = 5` and last only for that script run. Do not give a local the name of an existing tracker. Inside collection predicates, bare field names refer to the current member; `$...` refers to a tracker/system root or script local. For a list of plain values, `value()` denotes the current value.
+Persistent roots use direct assignments: `$coins = 12`. Temporary locals use `set $price = 5` and last only for that script run. Locals do not cross Run Script effect boundaries; executed branch locals and the last nonempty-loop binding remain available later in the same script. Do not give a local the name of an existing tracker. Inside collection predicates, bare field names refer to the current member; `$...` refers to a tracker/system root or script local. For a list of plain values, `value()` denotes the current value.
 
 ## 3. A complete small example
 
@@ -102,7 +102,7 @@ if $status = "locked"
   $status = "open"
 ```
 
-`and` and `or` short-circuit. A left-hand guard can prevent an unsafe right-hand read. Functions require parentheses: `.count()` calls a function; `.count` reads a field named count.
+`and` and `or` short-circuit, as do native And/Or condition groups. A left-hand guard can prevent an unsafe right-hand read; this skips evaluation but has no measured speed benefit. Fallback and `try` operations handle missing values but do not make expressions valid in unsupported contexts. `current()` is rejected in Run Script; it belongs to a legacy List Update context the current editor does not expose. Functions require parentheses: `.count()` calls a function; `.count` reads a field named count.
 
 A statement-level branch changes data, unlike expression-level `if(...)`, which returns a selected value:
 
@@ -168,7 +168,7 @@ Initialize `requirements` as a list and `flags` as a record. An empty requiremen
 | Replace matched records | `$entries.where(id = $update.id) = $update` |
 | Persist a transformed list | `$tags = $tags.unique()` |
 
-A read such as `$tags.unique()` does not change stored tags by itself. Assignment persists its result. Appending a list appends its members; it does not wrap them as a nested list. Replacement of matched records is not a field-preserving merge: include every field to retain. Native text add/remove effects are not substitutes for structured list mutation.
+A read such as `$tags.unique()` does not change stored tags by itself. Assignment persists its result. Appending a list appends its members; it does not wrap them as a nested list. Replacement of matched records is not a field-preserving merge: include every field to retain. Plain nested assignment can create missing paths, but a scalar parent rejects child writes and rolls back the script; compound arithmetic on a missing path can fail where plain assignment succeeds. Boolean-expression results can be stored as quoted text, so rendered output is not strict type introspection. Native text add/remove effects are not substitutes for structured list mutation.
 
 To construct an entry, create a local record, fill its fields and append it:
 
@@ -228,7 +228,7 @@ Use `log("Coins: {$coins}")` for diagnostics in the PawScript Log. Logs are not 
 
 Enable Menu > Settings > Storyteller Mode, then open the bug icon beside tracked items. Inspect tracker state, evaluated conditions and script errors; use Open in Sandbox to isolate a script. See [Capabilities.md](Capabilities.md) for wider debug coverage.
 
-The validator's lint is heuristic, not a PawScript interpreter. It checks likely mistakes, roots and locals with limited static analysis; passing it does not prove runtime behavior. When teaching or reporting tests, distinguish documented syntax from compositions actually run in IW.
+The validator's lint is heuristic, not a PawScript interpreter. It checks likely mistakes, roots and locals with limited static analysis; passing it does not prove runtime behavior. When teaching or reporting tests, distinguish documented syntax from compositions actually run in IW. [Verified-Behavior](Verified-Behavior.md) lists the runtime-tested PawScript results.
 
 ## 8. System roots, escaping and common mistakes
 
@@ -269,13 +269,6 @@ This guide covers common authoring and teaching needs, not every function. Use t
 - [YAML guide](https://infiniteworlds.app/yaml-guide)
 
 The language tables include officially documented operations beyond the kit's runtime-tested examples. A new composition still needs appropriate testing; see [Known-Limits.md](Known-Limits.md).
-
-
-## Verified guards and scope boundaries
-
-Native And/Or groups and PawScript boolean expressions short-circuit in order. Existence guards should precede dependent reads; supported fallback/try operations handle missing values but do not permit expressions in invalid contexts. current() is rejected in Run Script and lacks a supported positive List Update context in the current editor.
-
-Locals do not cross Run Script effect boundaries. Executed branch locals and the last nonempty-loop binding can remain available later in the same script. Plain nested assignment can create paths while incompatible scalar parents fail; compound reads/writes can fail on missing paths. Boolean-expression results can serialize as quoted text, so rendered output is not strict type introspection. No measured speedup follows merely from short-circuit support. See [Verified-Behavior](Verified-Behavior.md).
 
 ---
 
