@@ -17,7 +17,7 @@ class DistributionTests(unittest.TestCase):
     def setUpClass(cls):
         cls.temp = tempfile.TemporaryDirectory()
         cls.root = Path(cls.temp.name)/'kit'
-        shutil.copytree(SOURCE, cls.root, ignore=shutil.ignore_patterns('.git', '__pycache__', 'samples', '*.zip'))
+        shutil.copytree(SOURCE, cls.root, ignore=shutil.ignore_patterns('.git', '.venv', '__pycache__', 'samples', '*.zip'))
         cls.script = cls.root/'tools/build_distribution.py'
         cls.run_build()
 
@@ -76,6 +76,16 @@ class DistributionTests(unittest.TestCase):
             self.assertEqual(manifest, (self.root/'manifest.json').read_bytes())
         finally:
             p.write_bytes(data)
+
+    def test_duplicate_source_markers_normalized(self):
+        spec = importlib.util.spec_from_file_location('distribution_marker_test', self.script)
+        module = importlib.util.module_from_spec(spec); spec.loader.exec_module(module)
+        name = 'reference/Example.md'
+        text = 'First section\n\n---\n\nEND OF DOCUMENT: '+name+'\n\nSecond section\n\n---\n\nEND OF DOCUMENT: '+name+'\n'
+        actual = module.marked(text, name)
+        self.assertEqual(actual.count('END OF DOCUMENT: '+name), 1)
+        self.assertIn('First section', actual)
+        self.assertIn('Second section', actual)
 
     def test_marker_rename(self):
         spec = importlib.util.spec_from_file_location('distribution', self.script)

@@ -15,6 +15,12 @@ ROOT = Path(__file__).resolve().parent.parent
 GUIDE = ['Authoring-Prompt.md',
  'World-Template.json',
  'reference/Evidence.md',
+ 'reference/Trigger-Catalog.md',
+ 'reference/Editor-UI.md',
+ 'reference/Verified-Behavior.md',
+ 'reference/Roadmap.md',
+ 'reference/Story-Tools.md',
+ 'reference/Engineering-Tools.md',
  'reference/Craft.md',
  'reference/Portable-Banks.md',
  'reference/Trackers.md',
@@ -30,6 +36,12 @@ GUIDE = ['Authoring-Prompt.md',
 GROUPS = {'IW-Authoring-Guide.txt': ['Authoring-Prompt.md',
                             'World-Template.json',
                             'reference/Evidence.md',
+ 'reference/Trigger-Catalog.md',
+ 'reference/Editor-UI.md',
+ 'reference/Verified-Behavior.md',
+ 'reference/Roadmap.md',
+ 'reference/Story-Tools.md',
+ 'reference/Engineering-Tools.md',
                             'reference/Craft.md',
                             'reference/Portable-Banks.md',
                             'reference/Trackers.md',
@@ -46,6 +58,13 @@ GROUPS = {'IW-Authoring-Guide.txt': ['Authoring-Prompt.md',
                      'examples/index.json',
                      'examples/narrative-vendemmia.json',
                      'examples/recipe-request-commit.json',
+                     'examples/recipe-completion-award.json',
+                     'examples/recipe-candidate-acceptance.json',
+                     'examples/recipe-archive-reactivate.json',
+                     'examples/recipe-cached-random.json',
+                     'examples/recipe-consumed-timer.json',
+                     'examples/recipe-choice-domain.json',
+                     'examples/recipe-compiled-plot.json',
                      'examples/recipe-choice-followup.json',
                      'examples/recipe-threshold-unlock.json',
                      'examples/optional-block.json',
@@ -113,6 +132,8 @@ PAGE = """<!doctype html>
 TOOL_SOURCES = [
     'tools/Usage.md', 'tools/validate_iw_export.py', 'tools/static_checks.py',
     'tools/iw-export.schema.json', 'tools/data_bank.py',
+    'tools/import_audit.py', 'tools/story_export.py',
+    'tools/iw_browser.py', 'tools/plot_compile.py',
 ]
 CHECKER_SOURCES = {
     'src-validate': 'tools/validate_iw_export.py',
@@ -134,6 +155,7 @@ def write(path, content):
 
 def marked(content, path):
     # Replace only the terminal marker; preserve embedded END FILE boundaries.
+    content = re.sub(r'\n(?:---\n\n)?' + re.escape('END OF DOCUMENT: ' + path) + r'(?=\n|$)\n?', '\n', content)
     content = re.sub(r'\n(?:---\n\n)?END OF DOCUMENT: [^\n]+\s*\Z', '', content)
     return content.rstrip() + '\n\n---\n\nEND OF DOCUMENT: ' + path + '\n'
 
@@ -169,7 +191,7 @@ def build_chat():
             intro = ('Infinite Worlds Authoring Kit: authoring tools. Recreate files at their '
                      'BEGIN FILE paths, excluding boundary lines and separator newlines. '
                      'Preserve code indentation and escaping. See tools/Usage.md for dependencies '
-                     'and commands. Includes validator, schema, static lint and data-bank utility. '
+                     'and commands. Includes validator, schema, static lint, data-bank utility, import audit and story export. '
                      'Distribution builders and maintainer tests are intentionally omitted. '
                      'Reading these sources is not running them; report validation only after execution.\n')
         parts = [intro]

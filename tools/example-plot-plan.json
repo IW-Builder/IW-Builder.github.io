@@ -1,0 +1,20 @@
+{
+  "title": "Guild prerequisite graph",
+  "nodes": [
+    {
+      "id": "delivery",
+      "name": "Complete delivery",
+      "scenario": "The courier hands the parcel to the recipient.",
+      "requires": [
+        "permit"
+      ],
+      "award": 5
+    },
+    {
+      "id": "permit",
+      "name": "Obtain permit",
+      "scenario": "The clerk issues a valid delivery permit.",
+      "award": 1
+    }
+  ]
+}

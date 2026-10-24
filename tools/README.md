@@ -19,3 +19,14 @@ The remaining support files are `iw-export.schema.json` (the expected world stru
 A clean report is useful, but it cannot guarantee how a world will play. Try the important features in IW too.
 
 [Back to the main guide](https://iw-builder.github.io/guide/)
+
+## Additional diagnostics
+
+- `import_audit.py` compares source and imported worlds without repairing them.
+- `story_export.py` proposes reviewable boundaries, extracts raw tracker text and merges only nonconflicting declared histories.
+
+See [Story tools](../reference/Story-Tools.md) for commands and limits.
+
+- [iw_browser.py](iw_browser.py): optional standalone browser capture, refresh-verified export and offline integrity/recovery inspection.
+- [plot_compile.py](plot_compile.py): literal-Scenario prerequisite-DAG analysis and fresh-world generation; [example plan](example-plot-plan.json).
+- [Engineering tools](../reference/Engineering-Tools.md): contracts, setup and remaining live-integration boundary.

@@ -58,11 +58,23 @@ The builder updates visible EOF markers in AI-facing Markdown documents, generat
 
 Required sources are checked before output begins; a missing source or checker embedding stops the build with an error. Repeated builds with unchanged inputs preserve output bytes and the manifest timestamp. A write failure can leave partial outputs; fix it and rerun before publishing.
 
-`IW-Tools.txt` has an explicit authoring-tool list: this usage guide, validator, static checks, JSON schema and data-bank utility. Builders, regression tests and package reports remain in the repository but are omitted from that model-facing bundle. Human READMEs are also omitted from combined technical packages. No model needs the distribution builder to author a world.
+`IW-Tools.txt` has an explicit authoring-tool list: this usage guide, validator, static checks, JSON schema, data-bank utility, import audit and story-export tool. Builders, regression tests and package reports remain in the repository but are omitted from that model-facing bundle. Human READMEs are also omitted from combined technical packages. No model needs the distribution builder to author a world.
 
 The root manifest records repository-relative paths, byte lengths and SHA-256 hashes. It covers the authoring sources and supported files under reference, library, examples, tools, chat and checker, plus the homepage and root guide/template/license. It excludes itself, ZIP archives, sample histories, hidden files and caches. It is separate from the files it hashes to avoid circular dependencies. Hash original bytes, never a browser's rendered/extracted text. A mismatch may mean the manifest is stale; investigate apparent missing content without treating every mismatch as damage. A match establishes the recorded bytes, not freshness or runtime correctness.
 
 EOF markers are added only to AI-facing Markdown and the generated chat documents. They are not added to JSON, scripts, the native default Evaluation text or other directly reusable content. They are documentation boundaries, not world instructions to copy into a story.
+
+## Import audit and story exports
+
+Use `python tools/import_audit.py source.json imported.json` for possible tracker reminting, stale references and a loss-aware structural diff. It never rewrites the worlds. Full schema coverage depends on jsonschema; source hashes and comparison do not.
+
+Use `python tools/story_export.py plan story.txt --world world.json --session NAME --branch NAME` to propose a layout. After source review, `build plan.json --output NEW_DIRECTORY` extracts/merges it; `verify NEW_DIRECTORY` checks manifest hashes. These subcommands follow `python tools/story_export.py`. It requires a new output directory and explicit reviewed boundaries/session/branch declarations. It preserves raw source and tracker strings, rejects conflicts/gaps, and never selects by timestamps. See [Story tools](../reference/Story-Tools.md) for partial histories and ambiguous delimiters.
+
+Run all maintained regression checks with `python -m unittest discover -s tools -p "test_*.py"`. These are local tool checks, not IW execution.
+
+## Browser and plot tools
+
+See [Engineering tools](../reference/Engineering-Tools.md) for `iw_browser.py` setup, capture/export/recovery contracts and `plot_compile.py` plan syntax. Browser support is optional and uses `requirements-browser.txt`. No tool here submits a game turn, imports a world or publishes content. Authenticated standalone capture and refresh-verified editor export are verified; gameplay recovery and server persistence remain outside that result.
 
 ---
 
