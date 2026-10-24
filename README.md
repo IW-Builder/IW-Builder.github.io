@@ -65,6 +65,7 @@ These are reading selections, not mandatory extra downloads. The AI can request 
 | Location | Purpose |
 | --- | --- |
 | Authoring-Prompt.md | The instructions you give your AI |
+| [llms.txt](https://iw-builder.github.io/llms.txt) | File index for AI: every published file with its URL, size and purpose |
 | World-Template.json | A starting world file |
 | [reference/](https://github.com/IW-Builder/IW-Builder.github.io/tree/main/reference) | Guides to features, storytelling and troubleshooting |
 | [examples/](https://github.com/IW-Builder/IW-Builder.github.io/tree/main/examples) | Small worlds and worked examples to explore |

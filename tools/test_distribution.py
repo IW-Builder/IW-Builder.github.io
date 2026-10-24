@@ -43,6 +43,38 @@ class DistributionTests(unittest.TestCase):
         self.assertNotIn('manifest.json', paths)
         self.assertFalse(any(p.startswith('samples/') or p.endswith('.zip') for p in paths))
 
+    def test_llms_index_covers_published_files(self):
+        text = (self.root/'llms.txt').read_text()
+        self.assertTrue(text.endswith('END OF DOCUMENT: llms.txt\n'))
+        m = json.loads((self.root/'manifest.json').read_text())
+        folder_pages = {f + '/index.html' for f in ['reference', 'examples', 'library', 'tools', 'samples']}
+        for entry in m['files']:
+            path = entry['path']
+            if path in folder_pages or path == 'llms.txt':
+                continue
+            self.assertIn('[' + path + '](', text, path)
+        self.assertIn('llms.txt', {e['path'] for e in m['files']})
+        self.assertIn('https://iw-builder.github.io/reference/PawScript.md', text)
+        self.assertIn('https://iw-builder.github.io/examples/Payloads.md', text)
+
+    def test_folder_pages_list_files_without_redirect(self):
+        for folder in ['reference', 'examples', 'library', 'tools']:
+            page = (self.root/folder/'index.html').read_text()
+            self.assertNotIn('http-equiv="refresh"', page)
+            self.assertNotIn('rel="canonical"', page)
+            self.assertIn('https://iw-builder.github.io/' + folder + '/', page)
+
+    def test_missing_description_fails(self):
+        extra = self.root/'reference/Undescribed.md'
+        try:
+            extra.write_text('# Undescribed\n')
+            result = subprocess.run([sys.executable, str(self.script)], cwd=self.temp.name, capture_output=True, text=True)
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn('No index description for: reference/Undescribed.md', result.stderr)
+        finally:
+            extra.unlink()
+            self.run_build()
+
     def test_repeat_build_is_identical(self):
         before = {p.relative_to(self.root): p.read_bytes() for p in self.root.rglob('*') if p.is_file()}
         self.run_build()

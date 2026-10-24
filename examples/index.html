@@ -2,15 +2,78 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>IW Builder Examples</title>
-  <meta http-equiv="refresh"
-        content="0; url=https://github.com/IW-Builder/IW-Builder.github.io/tree/main/examples">
-  <link rel="canonical"
-        href="https://github.com/IW-Builder/IW-Builder.github.io/tree/main/examples">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>IW Builder: Example worlds</title>
+  <style>body { max-width: 960px; margin: 40px auto; padding: 0 24px; color: #202820; background: #fafbf7; font: 16px/1.6 system-ui, sans-serif; } a { color: #235e4b; } li { margin: 6px 0; } code { font: 14px ui-monospace, Consolas, monospace; } .size { color: #5b665b; }</style>
 </head>
 <body>
-  <a href="https://github.com/IW-Builder/IW-Builder.github.io/tree/main/examples">
-    Browse the IW Builder Examples
-  </a>
+  <h1>Example worlds</h1>
+  <p>Each JSON file is a complete importable world demonstrating one feature or combination.</p>
+  <p><a href="https://iw-builder.github.io/">Authoring prompt (start here)</a> · <a href="https://iw-builder.github.io/llms.txt">Full file index</a> · <a href="https://github.com/IW-Builder/IW-Builder.github.io/tree/main/examples">Browse on GitHub</a></p>
+  <ul>
+    <li><a href="https://iw-builder.github.io/examples/README.md"><code>README.md</code></a> <span class="size">(6 KB)</span>: Human guide to the examples, grouped by what you want to do.</li>
+    <li><a href="https://iw-builder.github.io/examples/Payloads.md"><code>Payloads.md</code></a> <span class="size">(17 KB)</span>: Compact native payload snippets for every condition and effect, taken from the example worlds.</li>
+    <li><a href="https://iw-builder.github.io/examples/index.json"><code>index.json</code></a> <span class="size">(21 KB)</span>: Machine index of every example world: purpose, evidence label and verification scope.</li>
+    <li><a href="https://iw-builder.github.io/examples/character-starting-values.json"><code>character-starting-values.json</code></a> <span class="size">(8 KB)</span>: Fixed, fixed-choice and script-choice per-PC values. Evidence: PATTERN.</li>
+    <li><a href="https://iw-builder.github.io/examples/condition-triggerBlockers.json"><code>condition-triggerBlockers.json</code></a> <span class="size">(7 KB)</span>: One native condition: triggerBlockers. Evidence: PATTERN.</li>
+    <li><a href="https://iw-builder.github.io/examples/condition-triggerOnCharacter.json"><code>condition-triggerOnCharacter.json</code></a> <span class="size">(7 KB)</span>: One native condition: triggerOnCharacter. Evidence: PATTERN.</li>
+    <li><a href="https://iw-builder.github.io/examples/condition-triggerOnEvent.json"><code>condition-triggerOnEvent.json</code></a> <span class="size">(7 KB)</span>: One native condition: triggerOnEvent. Evidence: PATTERN.</li>
+    <li><a href="https://iw-builder.github.io/examples/condition-triggerOnPawScript.json"><code>condition-triggerOnPawScript.json</code></a> <span class="size">(7 KB)</span>: One native condition: triggerOnPawScript. Evidence: PATTERN.</li>
+    <li><a href="https://iw-builder.github.io/examples/condition-triggerOnRandomChance.json"><code>condition-triggerOnRandomChance.json</code></a> <span class="size">(7 KB)</span>: One native condition: triggerOnRandomChance. Evidence: PATTERN.</li>
+    <li><a href="https://iw-builder.github.io/examples/condition-triggerOnTrackedItem.json"><code>condition-triggerOnTrackedItem.json</code></a> <span class="size">(7 KB)</span>: One native condition: triggerOnTrackedItem. Evidence: PATTERN.</li>
+    <li><a href="https://iw-builder.github.io/examples/condition-triggerOnTurn.json"><code>condition-triggerOnTurn.json</code></a> <span class="size">(7 KB)</span>: One native condition: triggerOnTurn. Evidence: PATTERN.</li>
+    <li><a href="https://iw-builder.github.io/examples/condition-triggerPrereqs.json"><code>condition-triggerPrereqs.json</code></a> <span class="size">(7 KB)</span>: One native condition: triggerPrereqs. Evidence: PATTERN.</li>
+    <li><a href="https://iw-builder.github.io/examples/effect-effectChangeAuthorStyle.json"><code>effect-effectChangeAuthorStyle.json</code></a> <span class="size">(7 KB)</span>: One native effect: effectChangeAuthorStyle. Evidence: PATTERN.</li>
+    <li><a href="https://iw-builder.github.io/examples/effect-effectChangeBackground.json"><code>effect-effectChangeBackground.json</code></a> <span class="size">(4 KB)</span>: Change background native startup payload. Evidence: DOCUMENTED.</li>
+    <li><a href="https://iw-builder.github.io/examples/effect-effectChangeDefeatCondition.json"><code>effect-effectChangeDefeatCondition.json</code></a> <span class="size">(7 KB)</span>: One native effect: effectChangeDefeatCondition. Evidence: PATTERN.</li>
+    <li><a href="https://iw-builder.github.io/examples/effect-effectChangeDescriptionInstructions.json"><code>effect-effectChangeDescriptionInstructions.json</code></a> <span class="size">(7 KB)</span>: One native effect: effectChangeDescriptionInstructions. Evidence: PATTERN.</li>
+    <li><a href="https://iw-builder.github.io/examples/effect-effectChangeFirstAction.json"><code>effect-effectChangeFirstAction.json</code></a> <span class="size">(4 KB)</span>: Change first action native startup payload. Evidence: DOCUMENTED.</li>
+    <li><a href="https://iw-builder.github.io/examples/effect-effectChangeMainInstructions.json"><code>effect-effectChangeMainInstructions.json</code></a> <span class="size">(7 KB)</span>: One native effect: effectChangeMainInstructions. Evidence: PATTERN.</li>
+    <li><a href="https://iw-builder.github.io/examples/effect-effectChangeObjective.json"><code>effect-effectChangeObjective.json</code></a> <span class="size">(7 KB)</span>: One native effect: effectChangeObjective. Evidence: PATTERN.</li>
+    <li><a href="https://iw-builder.github.io/examples/effect-effectChangeOtherCharacters-add.json"><code>effect-effectChangeOtherCharacters-add.json</code></a> <span class="size">(5 KB)</span>: Add Other Character native startup payload. Evidence: DOCUMENTED.</li>
+    <li><a href="https://iw-builder.github.io/examples/effect-effectChangeOtherCharacters-delete.json"><code>effect-effectChangeOtherCharacters-delete.json</code></a> <span class="size">(5 KB)</span>: Delete Other Character native startup payload. Evidence: DOCUMENTED.</li>
+    <li><a href="https://iw-builder.github.io/examples/effect-effectChangeOtherCharacters-modify.json"><code>effect-effectChangeOtherCharacters-modify.json</code></a> <span class="size">(5 KB)</span>: Modify Other Character native startup payload. Evidence: DOCUMENTED.</li>
+    <li><a href="https://iw-builder.github.io/examples/effect-effectChangePCDescription.json"><code>effect-effectChangePCDescription.json</code></a> <span class="size">(7 KB)</span>: One native effect: effectChangePCDescription. Evidence: PATTERN.</li>
+    <li><a href="https://iw-builder.github.io/examples/effect-effectChangePCName.json"><code>effect-effectChangePCName.json</code></a> <span class="size">(7 KB)</span>: One native effect: effectChangePCName. Evidence: PATTERN.</li>
+    <li><a href="https://iw-builder.github.io/examples/effect-effectChangePCSkill.json"><code>effect-effectChangePCSkill.json</code></a> <span class="size">(7 KB)</span>: One native effect: effectChangePCSkill. Evidence: PATTERN.</li>
+    <li><a href="https://iw-builder.github.io/examples/effect-effectChangeVictoryCondition.json"><code>effect-effectChangeVictoryCondition.json</code></a> <span class="size">(7 KB)</span>: One native effect: effectChangeVictoryCondition. Evidence: PATTERN.</li>
+    <li><a href="https://iw-builder.github.io/examples/effect-effectEndsGame.json"><code>effect-effectEndsGame.json</code></a> <span class="size">(7 KB)</span>: One native effect: effectEndsGame. Evidence: PATTERN.</li>
+    <li><a href="https://iw-builder.github.io/examples/effect-effectFireRandomTrigger.json"><code>effect-effectFireRandomTrigger.json</code></a> <span class="size">(7 KB)</span>: One native effect: effectFireRandomTrigger. Evidence: PATTERN.</li>
+    <li><a href="https://iw-builder.github.io/examples/effect-effectGiveInfo.json"><code>effect-effectGiveInfo.json</code></a> <span class="size">(7 KB)</span>: One native effect: effectGiveInfo. Evidence: PATTERN.</li>
+    <li><a href="https://iw-builder.github.io/examples/effect-effectModifyInstructionBlock.json"><code>effect-effectModifyInstructionBlock.json</code></a> <span class="size">(7 KB)</span>: One native effect: effectModifyInstructionBlock. Evidence: PATTERN.</li>
+    <li><a href="https://iw-builder.github.io/examples/effect-effectModifyKeywordBlock.json"><code>effect-effectModifyKeywordBlock.json</code></a> <span class="size">(7 KB)</span>: One native effect: effectModifyKeywordBlock. Evidence: PATTERN.</li>
+    <li><a href="https://iw-builder.github.io/examples/effect-effectModifyTrackedItemDetails.json"><code>effect-effectModifyTrackedItemDetails.json</code></a> <span class="size">(7 KB)</span>: One native effect: effectModifyTrackedItemDetails. Evidence: PATTERN.</li>
+    <li><a href="https://iw-builder.github.io/examples/effect-effectPresentChoice.json"><code>effect-effectPresentChoice.json</code></a> <span class="size">(7 KB)</span>: One native effect: effectPresentChoice. Evidence: PATTERN.</li>
+    <li><a href="https://iw-builder.github.io/examples/effect-effectRequestInput.json"><code>effect-effectRequestInput.json</code></a> <span class="size">(6 KB)</span>: One native effect: effectRequestInput. Evidence: PATTERN.</li>
+    <li><a href="https://iw-builder.github.io/examples/effect-effectRunScript.json"><code>effect-effectRunScript.json</code></a> <span class="size">(7 KB)</span>: One native effect: effectRunScript. Evidence: PATTERN.</li>
+    <li><a href="https://iw-builder.github.io/examples/effect-effectSetTrackedItemValue.json"><code>effect-effectSetTrackedItemValue.json</code></a> <span class="size">(7 KB)</span>: One native effect: effectSetTrackedItemValue. Evidence: PATTERN.</li>
+    <li><a href="https://iw-builder.github.io/examples/effect-effectShowMessage.json"><code>effect-effectShowMessage.json</code></a> <span class="size">(7 KB)</span>: One native effect: effectShowMessage. Evidence: PATTERN.</li>
+    <li><a href="https://iw-builder.github.io/examples/effect-effectTellAIWhatToDo.json"><code>effect-effectTellAIWhatToDo.json</code></a> <span class="size">(7 KB)</span>: One native effect: effectTellAIWhatToDo. Evidence: PATTERN.</li>
+    <li><a href="https://iw-builder.github.io/examples/logic-groups.json"><code>logic-groups.json</code></a> <span class="size">(7 KB)</span>: Nested logic nodes with native shape. Evidence: PATTERN.</li>
+    <li><a href="https://iw-builder.github.io/examples/narrative-address-after-midnight.json"><code>narrative-address-after-midnight.json</code></a> <span class="size">(33 KB)</span>: Contained supernatural horror: bounded voice imitation, reliable evidence, conditional escalation and valid early containment. Evidence: PATTERN.</li>
+    <li><a href="https://iw-builder.github.io/examples/narrative-listening-road.json"><code>narrative-listening-road.json</code></a> <span class="size">(39 KB)</span>: Non-romantic high-fantasy expedition: distinct peoples, platonic companions, fixed facts and several viable resolutions. Evidence: PATTERN.</li>
+    <li><a href="https://iw-builder.github.io/examples/narrative-seven-nights.json"><code>narrative-seven-nights.json</code></a> <span class="size">(25 KB)</span>: Narrative-first fantasy built around central love interest, foil and rival. Shows world rules in block, consent built into fiction. Evidence: PATTERN.</li>
+    <li><a href="https://iw-builder.github.io/examples/narrative-velvet-wager.json"><code>narrative-velvet-wager.json</code></a> <span class="size">(24 KB)</span>: Immediate heat from turn 1; escalation &amp; control tracker instead of courtship gates; multi-turn sex pacing; kinetic body descriptions; light state triggers. Evidence: PATTERN.</li>
+    <li><a href="https://iw-builder.github.io/examples/narrative-vendemmia.json"><code>narrative-vendemmia.json</code></a> <span class="size">(28 KB)</span>: Narrative-first NPC cards with labeled sections, rules for intimate scenes, and keyword lore with sensory detail. Evidence: PATTERN.</li>
+    <li><a href="https://iw-builder.github.io/examples/native-text-operations.json"><code>native-text-operations.json</code></a> <span class="size">(9 KB)</span>: Append, remove all matches and replace text. Evidence: PATTERN.</li>
+    <li><a href="https://iw-builder.github.io/examples/npc-keyword-portrait-ending.json"><code>npc-keyword-portrait-ending.json</code></a> <span class="size">(6 KB)</span>: NPC, keyword, portrait descriptors and natural-language endings. Evidence: PATTERN.</li>
+    <li><a href="https://iw-builder.github.io/examples/optional-block.json"><code>optional-block.json</code></a> <span class="size">(8 KB)</span>: Player preference, cached application and dynamic instructions. Evidence: PATTERN.</li>
+    <li><a href="https://iw-builder.github.io/examples/probe-skills.json"><code>probe-skills.json</code></a> <span class="size">(12 KB)</span>: Editor-baseline Evaluation installed explicitly; capped skill effects and runtime readout. Evidence: PATTERN.</li>
+    <li><a href="https://iw-builder.github.io/examples/probe-template-timing.json"><code>probe-template-timing.json</code></a> <span class="size">(8 KB)</span>: Compare live block interpolation with effect-installed interpolation. Evidence: PATTERN.</li>
+    <li><a href="https://iw-builder.github.io/examples/recipe-archive-reactivate.json"><code>recipe-archive-reactivate.json</code></a> <span class="size">(5 KB)</span>: Archive and reactivate. Evidence: PATTERN.</li>
+    <li><a href="https://iw-builder.github.io/examples/recipe-cached-random.json"><code>recipe-cached-random.json</code></a> <span class="size">(4 KB)</span>: Cached random choice. Evidence: PATTERN.</li>
+    <li><a href="https://iw-builder.github.io/examples/recipe-candidate-acceptance.json"><code>recipe-candidate-acceptance.json</code></a> <span class="size">(4 KB)</span>: Candidate acceptance. Evidence: PATTERN.</li>
+    <li><a href="https://iw-builder.github.io/examples/recipe-choice-domain.json"><code>recipe-choice-domain.json</code></a> <span class="size">(5 KB)</span>: Choice domain guard. Evidence: PATTERN.</li>
+    <li><a href="https://iw-builder.github.io/examples/recipe-choice-followup.json"><code>recipe-choice-followup.json</code></a> <span class="size">(7 KB)</span>: Choice response updates objective in a later ordered trigger. Evidence: PATTERN.</li>
+    <li><a href="https://iw-builder.github.io/examples/recipe-compiled-plot.json"><code>recipe-compiled-plot.json</code></a> <span class="size">(5 KB)</span>: Guild prerequisite graph. Evidence: PATTERN.</li>
+    <li><a href="https://iw-builder.github.io/examples/recipe-completion-award.json"><code>recipe-completion-award.json</code></a> <span class="size">(4 KB)</span>: Completion and award guard. Evidence: PATTERN.</li>
+    <li><a href="https://iw-builder.github.io/examples/recipe-consumed-timer.json"><code>recipe-consumed-timer.json</code></a> <span class="size">(4 KB)</span>: Consumed turn milestone. Evidence: PATTERN.</li>
+    <li><a href="https://iw-builder.github.io/examples/recipe-layered-opening.json"><code>recipe-layered-opening.json</code></a> <span class="size">(14 KB)</span>: Player-selected dimensions assembled into a varied opening using native text replacements and background installation. Evidence: PATTERN.</li>
+    <li><a href="https://iw-builder.github.io/examples/recipe-on-demand-generation.json"><code>recipe-on-demand-generation.json</code></a> <span class="size">(10 KB)</span>: Event-driven temporary generation brief, persistent compact results and request-matched cleanup. Evidence: PATTERN.</li>
+    <li><a href="https://iw-builder.github.io/examples/recipe-request-commit.json"><code>recipe-request-commit.json</code></a> <span class="size">(11 KB)</span>: Optional precise transaction using a fresh AI request and script receipt. Evidence: PATTERN.</li>
+    <li><a href="https://iw-builder.github.io/examples/recipe-threshold-unlock.json"><code>recipe-threshold-unlock.json</code></a> <span class="size">(8 KB)</span>: State threshold grants access and modifies content once. Evidence: PATTERN.</li>
+    <li><a href="https://iw-builder.github.io/examples/showcase-glass-ledger.json"><code>showcase-glass-ledger.json</code></a> <span class="size">(26 KB)</span>: Integrated cast, alternate PCs, planning choice, precise transactions, countdown, optional prose, Scenario and script-triggered endings. Evidence: PATTERN.</li>
+    <li><a href="https://iw-builder.github.io/examples/yaml-path-operations.json"><code>yaml-path-operations.json</code></a> <span class="size">(7 KB)</span>: Set, remove, append and adjust paths on separate turns. Evidence: PATTERN.</li>
+  </ul>
 </body>
 </html>
