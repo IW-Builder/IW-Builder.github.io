@@ -23,7 +23,7 @@
       "reference/Default-Evaluation.txt",
       "reference/Current-AI-Profiles.json"
     ],
-    "sha256": "d272adcc0d0c3dd40fed16317a761e71fde4239e44a06bb548251de370188947"
+    "sha256": "0934e344e064518a8d8384cf0af2d383919f6ade2eb2b9a1f3994057e001471f"
   },
   "IW-Examples.txt": {
     "sourceFiles": [
@@ -68,6 +68,6 @@
       "tools/iw_browser.py",
       "tools/plot_compile.py"
     ],
-    "sha256": "9e8aae1be455cb658687462424d97818ca9ccdb1dce1b86b7bfdc397cbb653c5"
+    "sha256": "3c2f08ff4136f38552b13b0275c35d76124f1d6fc4ee40e0b8d6e311e1203798"
   }
 }

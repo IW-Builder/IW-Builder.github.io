@@ -57,7 +57,7 @@ python tools/build_distribution.py
 
 `build_distribution.py` uses its own location in `/tools` to find the repository, so it needs no arguments and works from any working directory. It uses only Python's standard library. Run validation before building when publishing changed worlds or tools.
 
-The builder updates visible EOF markers in AI-facing Markdown documents, generates `index.html` from `Authoring-Prompt.md`, synchronizes the checker's embedded validator/schema, writes the combined chat TXT files and `chat/sources.json`, then hashes the finished files into root `manifest.json`. It does not produce a separate `prompt.txt`, run validation or rebuild ZIP archives. Repackage `full-package.zip` after the build when distributing a new archive.
+The builder updates visible EOF markers in AI-facing Markdown documents, generates `index.html` from `Authoring-Prompt.md`, synchronizes the checker's embedded validator/schema, writes the combined chat TXT files and `chat/sources.json`, generates `llms.txt` and the folder index pages from the descriptions table in `build_distribution.py`, then hashes the finished files into root `manifest.json`. It does not produce a separate `prompt.txt`, run validation or rebuild ZIP archives. Repackage `full-package.zip` after the build when distributing a new archive.
 
 Required sources are checked before output begins; a missing source or checker embedding stops the build with an error. Repeated builds with unchanged inputs preserve output bytes and the manifest timestamp. A write failure can leave partial outputs; fix it and rerun before publishing.
 

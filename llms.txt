@@ -1,0 +1,172 @@
+# IW-Builder: Infinite Worlds Authoring Kit
+
+> Reference kit for AI models that build, edit, review and debug Infinite Worlds (IW) games. Start with the authoring prompt at https://iw-builder.github.io/ (or Authoring-Prompt.md), then fetch only the files the task needs. Every published file is listed below with its direct URL, size and purpose.
+
+Independent and unaffiliated with Infinite Worlds. Sizes are approximate. Integrity hashes for these files are in https://iw-builder.github.io/manifest.json (for verification only; not needed to author).
+
+## Start here
+
+- [index.html](https://iw-builder.github.io/) (22 KB): Homepage: the authoring prompt (same text as Authoring-Prompt.md). Start here.
+- [Authoring-Prompt.md](https://iw-builder.github.io/Authoring-Prompt.md) (21 KB): The authoring prompt: task modes, which reference to read for each feature, construction, timing, validation and delivery rules.
+- [World-Template.json](https://iw-builder.github.io/World-Template.json) (2 KB): Empty importable world; the starting point for new builds.
+- [README.md](https://iw-builder.github.io/guide/) (9 KB): Human guide: workflows, starter requests, import/export steps. Rendered at /guide/; models can skip it.
+- [LICENSE](https://iw-builder.github.io/LICENSE) (1 KB): MIT license.
+
+## Reference guides
+
+Read only what the task needs; Authoring-Prompt.md says which guide covers which feature.
+
+- [reference/Capabilities.md](https://iw-builder.github.io/reference/Capabilities.md) (23 KB): Turn lifecycle, Skills, NPC cards and keyword blocks, specialist requests, template timing, endings, images, video and model-specific blocks.
+- [reference/Craft.md](https://iw-builder.github.io/reference/Craft.md) (15 KB): Narrative design: what goes in each field, openings, character cards, romance and adult worlds, prose style, names, example worlds by genre.
+- [reference/Current-AI-Profiles.json](https://iw-builder.github.io/reference/Current-AI-Profiles.json) (1 KB): Dated list of storyteller model IDs for model-specific instruction blocks.
+- [reference/Default-Evaluation.txt](https://iw-builder.github.io/reference/Default-Evaluation.txt) (3 KB): IW's built-in Evaluation instructions, verbatim; the baseline for a custom Evaluation.
+- [reference/Editor-UI.md](https://iw-builder.github.io/reference/Editor-UI.md) (14 KB): Editor labels and their JSON fields, import/export steps, debug tools, visibility, permissions and troubleshooting by symptom.
+- [reference/Engineering-Tools.md](https://iw-builder.github.io/reference/Engineering-Tools.md) (6 KB): Browser capture/export harness and literal-Scenario plot compiler: setup, commands and limits.
+- [reference/Evidence.md](https://iw-builder.github.io/reference/Evidence.md) (3 KB): Platform baseline, version numbers and the evidence labels used across the kit.
+- [reference/Import-Integrity.md](https://iw-builder.github.io/reference/Import-Integrity.md) (3 KB): ID conventions, checks before and after import, editing live copies, and the import audit tool.
+- [reference/Known-Limits.md](https://iw-builder.github.io/reference/Known-Limits.md) (4 KB): Platform behavior that remains unverified, by area.
+- [reference/PawScript.md](https://iw-builder.github.io/reference/PawScript.md) (17 KB): PawScript language guide: syntax, collections, randomness, formatting, debugging, system roots and common mistakes.
+- [reference/Portable-Banks.md](https://iw-builder.github.io/reference/Portable-Banks.md) (8 KB): Data mode: portable character/data bank format, dependencies, full-content build reports and data_bank.py commands.
+- [reference/README.md](https://iw-builder.github.io/reference/README.md) (2 KB): Human-friendly index of the reference guides.
+- [reference/Recipes.md](https://iw-builder.github.io/reference/Recipes.md) (12 KB): Ways to combine features: situation triggers, thresholds, choices, optional blocks, dynamic content, request/commit and guarded state patterns.
+- [reference/Roadmap.md](https://iw-builder.github.io/reference/Roadmap.md) (3 KB): Kit development status and planned work.
+- [reference/Schema.md](https://iw-builder.github.io/reference/Schema.md) (21 KB): Export structure: field groups, trackers, starting values, condition and effect payloads, comparators and value-effect operations.
+- [reference/Story-Tools.md](https://iw-builder.github.io/reference/Story-Tools.md) (4 KB): Import comparison and story-text extraction/merge tools: commands and limits.
+- [reference/Trackers.md](https://iw-builder.github.io/reference/Trackers.md) (8 KB): Tracker fields, data types, visibility, update ownership, starting values and memory/context cost.
+- [reference/Trigger-Catalog.md](https://iw-builder.github.io/reference/Trigger-Catalog.md) (6 KB): Every identified trigger condition and effect type in one table. Check it before saying a trigger can't do something.
+- [reference/Triggers.md](https://iw-builder.github.io/reference/Triggers.md) (9 KB): Trigger timing flags, ordering, effect semantics, choosing native effects or PawScript, and start-of-game restrictions.
+- [reference/Verified-Behavior.md](https://iw-builder.github.io/reference/Verified-Behavior.md) (14 KB): Consolidated runtime findings: triggers, imports, PawScript, visibility, memory, forms, images and endings.
+
+## Examples
+
+Each JSON file is a complete importable world demonstrating one feature or combination.
+
+- [examples/README.md](https://iw-builder.github.io/examples/README.md) (6 KB): Human guide to the examples, grouped by what you want to do.
+- [examples/Payloads.md](https://iw-builder.github.io/examples/Payloads.md) (17 KB): Compact native payload snippets for every condition and effect, taken from the example worlds.
+- [examples/index.json](https://iw-builder.github.io/examples/index.json) (21 KB): Machine index of every example world: purpose, evidence label and verification scope.
+- [examples/character-starting-values.json](https://iw-builder.github.io/examples/character-starting-values.json) (8 KB): Fixed, fixed-choice and script-choice per-PC values. Evidence: PATTERN.
+- [examples/condition-triggerBlockers.json](https://iw-builder.github.io/examples/condition-triggerBlockers.json) (7 KB): One native condition: triggerBlockers. Evidence: PATTERN.
+- [examples/condition-triggerOnCharacter.json](https://iw-builder.github.io/examples/condition-triggerOnCharacter.json) (7 KB): One native condition: triggerOnCharacter. Evidence: PATTERN.
+- [examples/condition-triggerOnEvent.json](https://iw-builder.github.io/examples/condition-triggerOnEvent.json) (7 KB): One native condition: triggerOnEvent. Evidence: PATTERN.
+- [examples/condition-triggerOnPawScript.json](https://iw-builder.github.io/examples/condition-triggerOnPawScript.json) (7 KB): One native condition: triggerOnPawScript. Evidence: PATTERN.
+- [examples/condition-triggerOnRandomChance.json](https://iw-builder.github.io/examples/condition-triggerOnRandomChance.json) (7 KB): One native condition: triggerOnRandomChance. Evidence: PATTERN.
+- [examples/condition-triggerOnTrackedItem.json](https://iw-builder.github.io/examples/condition-triggerOnTrackedItem.json) (7 KB): One native condition: triggerOnTrackedItem. Evidence: PATTERN.
+- [examples/condition-triggerOnTurn.json](https://iw-builder.github.io/examples/condition-triggerOnTurn.json) (7 KB): One native condition: triggerOnTurn. Evidence: PATTERN.
+- [examples/condition-triggerPrereqs.json](https://iw-builder.github.io/examples/condition-triggerPrereqs.json) (7 KB): One native condition: triggerPrereqs. Evidence: PATTERN.
+- [examples/effect-effectChangeAuthorStyle.json](https://iw-builder.github.io/examples/effect-effectChangeAuthorStyle.json) (7 KB): One native effect: effectChangeAuthorStyle. Evidence: PATTERN.
+- [examples/effect-effectChangeBackground.json](https://iw-builder.github.io/examples/effect-effectChangeBackground.json) (4 KB): Change background native startup payload. Evidence: DOCUMENTED.
+- [examples/effect-effectChangeDefeatCondition.json](https://iw-builder.github.io/examples/effect-effectChangeDefeatCondition.json) (7 KB): One native effect: effectChangeDefeatCondition. Evidence: PATTERN.
+- [examples/effect-effectChangeDescriptionInstructions.json](https://iw-builder.github.io/examples/effect-effectChangeDescriptionInstructions.json) (7 KB): One native effect: effectChangeDescriptionInstructions. Evidence: PATTERN.
+- [examples/effect-effectChangeFirstAction.json](https://iw-builder.github.io/examples/effect-effectChangeFirstAction.json) (4 KB): Change first action native startup payload. Evidence: DOCUMENTED.
+- [examples/effect-effectChangeMainInstructions.json](https://iw-builder.github.io/examples/effect-effectChangeMainInstructions.json) (7 KB): One native effect: effectChangeMainInstructions. Evidence: PATTERN.
+- [examples/effect-effectChangeObjective.json](https://iw-builder.github.io/examples/effect-effectChangeObjective.json) (7 KB): One native effect: effectChangeObjective. Evidence: PATTERN.
+- [examples/effect-effectChangeOtherCharacters-add.json](https://iw-builder.github.io/examples/effect-effectChangeOtherCharacters-add.json) (5 KB): Add Other Character native startup payload. Evidence: DOCUMENTED.
+- [examples/effect-effectChangeOtherCharacters-delete.json](https://iw-builder.github.io/examples/effect-effectChangeOtherCharacters-delete.json) (5 KB): Delete Other Character native startup payload. Evidence: DOCUMENTED.
+- [examples/effect-effectChangeOtherCharacters-modify.json](https://iw-builder.github.io/examples/effect-effectChangeOtherCharacters-modify.json) (5 KB): Modify Other Character native startup payload. Evidence: DOCUMENTED.
+- [examples/effect-effectChangePCDescription.json](https://iw-builder.github.io/examples/effect-effectChangePCDescription.json) (7 KB): One native effect: effectChangePCDescription. Evidence: PATTERN.
+- [examples/effect-effectChangePCName.json](https://iw-builder.github.io/examples/effect-effectChangePCName.json) (7 KB): One native effect: effectChangePCName. Evidence: PATTERN.
+- [examples/effect-effectChangePCSkill.json](https://iw-builder.github.io/examples/effect-effectChangePCSkill.json) (7 KB): One native effect: effectChangePCSkill. Evidence: PATTERN.
+- [examples/effect-effectChangeVictoryCondition.json](https://iw-builder.github.io/examples/effect-effectChangeVictoryCondition.json) (7 KB): One native effect: effectChangeVictoryCondition. Evidence: PATTERN.
+- [examples/effect-effectEndsGame.json](https://iw-builder.github.io/examples/effect-effectEndsGame.json) (7 KB): One native effect: effectEndsGame. Evidence: PATTERN.
+- [examples/effect-effectFireRandomTrigger.json](https://iw-builder.github.io/examples/effect-effectFireRandomTrigger.json) (7 KB): One native effect: effectFireRandomTrigger. Evidence: PATTERN.
+- [examples/effect-effectGiveInfo.json](https://iw-builder.github.io/examples/effect-effectGiveInfo.json) (7 KB): One native effect: effectGiveInfo. Evidence: PATTERN.
+- [examples/effect-effectModifyInstructionBlock.json](https://iw-builder.github.io/examples/effect-effectModifyInstructionBlock.json) (7 KB): One native effect: effectModifyInstructionBlock. Evidence: PATTERN.
+- [examples/effect-effectModifyKeywordBlock.json](https://iw-builder.github.io/examples/effect-effectModifyKeywordBlock.json) (7 KB): One native effect: effectModifyKeywordBlock. Evidence: PATTERN.
+- [examples/effect-effectModifyTrackedItemDetails.json](https://iw-builder.github.io/examples/effect-effectModifyTrackedItemDetails.json) (7 KB): One native effect: effectModifyTrackedItemDetails. Evidence: PATTERN.
+- [examples/effect-effectPresentChoice.json](https://iw-builder.github.io/examples/effect-effectPresentChoice.json) (7 KB): One native effect: effectPresentChoice. Evidence: PATTERN.
+- [examples/effect-effectRequestInput.json](https://iw-builder.github.io/examples/effect-effectRequestInput.json) (6 KB): One native effect: effectRequestInput. Evidence: PATTERN.
+- [examples/effect-effectRunScript.json](https://iw-builder.github.io/examples/effect-effectRunScript.json) (7 KB): One native effect: effectRunScript. Evidence: PATTERN.
+- [examples/effect-effectSetTrackedItemValue.json](https://iw-builder.github.io/examples/effect-effectSetTrackedItemValue.json) (7 KB): One native effect: effectSetTrackedItemValue. Evidence: PATTERN.
+- [examples/effect-effectShowMessage.json](https://iw-builder.github.io/examples/effect-effectShowMessage.json) (7 KB): One native effect: effectShowMessage. Evidence: PATTERN.
+- [examples/effect-effectTellAIWhatToDo.json](https://iw-builder.github.io/examples/effect-effectTellAIWhatToDo.json) (7 KB): One native effect: effectTellAIWhatToDo. Evidence: PATTERN.
+- [examples/logic-groups.json](https://iw-builder.github.io/examples/logic-groups.json) (7 KB): Nested logic nodes with native shape. Evidence: PATTERN.
+- [examples/narrative-address-after-midnight.json](https://iw-builder.github.io/examples/narrative-address-after-midnight.json) (33 KB): Contained supernatural horror: bounded voice imitation, reliable evidence, conditional escalation and valid early containment. Evidence: PATTERN.
+- [examples/narrative-listening-road.json](https://iw-builder.github.io/examples/narrative-listening-road.json) (39 KB): Non-romantic high-fantasy expedition: distinct peoples, platonic companions, fixed facts and several viable resolutions. Evidence: PATTERN.
+- [examples/narrative-seven-nights.json](https://iw-builder.github.io/examples/narrative-seven-nights.json) (25 KB): Narrative-first fantasy built around central love interest, foil and rival. Shows world rules in block, consent built into fiction. Evidence: PATTERN.
+- [examples/narrative-velvet-wager.json](https://iw-builder.github.io/examples/narrative-velvet-wager.json) (24 KB): Immediate heat from turn 1; escalation & control tracker instead of courtship gates; multi-turn sex pacing; kinetic body descriptions; light state triggers. Evidence: PATTERN.
+- [examples/narrative-vendemmia.json](https://iw-builder.github.io/examples/narrative-vendemmia.json) (28 KB): Narrative-first NPC cards with labeled sections, rules for intimate scenes, and keyword lore with sensory detail. Evidence: PATTERN.
+- [examples/native-text-operations.json](https://iw-builder.github.io/examples/native-text-operations.json) (9 KB): Append, remove all matches and replace text. Evidence: PATTERN.
+- [examples/npc-keyword-portrait-ending.json](https://iw-builder.github.io/examples/npc-keyword-portrait-ending.json) (6 KB): NPC, keyword, portrait descriptors and natural-language endings. Evidence: PATTERN.
+- [examples/optional-block.json](https://iw-builder.github.io/examples/optional-block.json) (8 KB): Player preference, cached application and dynamic instructions. Evidence: PATTERN.
+- [examples/probe-skills.json](https://iw-builder.github.io/examples/probe-skills.json) (12 KB): Editor-baseline Evaluation installed explicitly; capped skill effects and runtime readout. Evidence: PATTERN.
+- [examples/probe-template-timing.json](https://iw-builder.github.io/examples/probe-template-timing.json) (8 KB): Compare live block interpolation with effect-installed interpolation. Evidence: PATTERN.
+- [examples/recipe-archive-reactivate.json](https://iw-builder.github.io/examples/recipe-archive-reactivate.json) (5 KB): Archive and reactivate. Evidence: PATTERN.
+- [examples/recipe-cached-random.json](https://iw-builder.github.io/examples/recipe-cached-random.json) (4 KB): Cached random choice. Evidence: PATTERN.
+- [examples/recipe-candidate-acceptance.json](https://iw-builder.github.io/examples/recipe-candidate-acceptance.json) (4 KB): Candidate acceptance. Evidence: PATTERN.
+- [examples/recipe-choice-domain.json](https://iw-builder.github.io/examples/recipe-choice-domain.json) (5 KB): Choice domain guard. Evidence: PATTERN.
+- [examples/recipe-choice-followup.json](https://iw-builder.github.io/examples/recipe-choice-followup.json) (7 KB): Choice response updates objective in a later ordered trigger. Evidence: PATTERN.
+- [examples/recipe-compiled-plot.json](https://iw-builder.github.io/examples/recipe-compiled-plot.json) (5 KB): Guild prerequisite graph. Evidence: PATTERN.
+- [examples/recipe-completion-award.json](https://iw-builder.github.io/examples/recipe-completion-award.json) (4 KB): Completion and award guard. Evidence: PATTERN.
+- [examples/recipe-consumed-timer.json](https://iw-builder.github.io/examples/recipe-consumed-timer.json) (4 KB): Consumed turn milestone. Evidence: PATTERN.
+- [examples/recipe-layered-opening.json](https://iw-builder.github.io/examples/recipe-layered-opening.json) (14 KB): Player-selected dimensions assembled into a varied opening using native text replacements and background installation. Evidence: PATTERN.
+- [examples/recipe-on-demand-generation.json](https://iw-builder.github.io/examples/recipe-on-demand-generation.json) (10 KB): Event-driven temporary generation brief, persistent compact results and request-matched cleanup. Evidence: PATTERN.
+- [examples/recipe-request-commit.json](https://iw-builder.github.io/examples/recipe-request-commit.json) (11 KB): Optional precise transaction using a fresh AI request and script receipt. Evidence: PATTERN.
+- [examples/recipe-threshold-unlock.json](https://iw-builder.github.io/examples/recipe-threshold-unlock.json) (8 KB): State threshold grants access and modifies content once. Evidence: PATTERN.
+- [examples/showcase-glass-ledger.json](https://iw-builder.github.io/examples/showcase-glass-ledger.json) (26 KB): Integrated cast, alternate PCs, planning choice, precise transactions, countdown, optional prose, Scenario and script-triggered endings. Evidence: PATTERN.
+- [examples/yaml-path-operations.json](https://iw-builder.github.io/examples/yaml-path-operations.json) (7 KB): Set, remove, append and adjust paths on separate turns. Evidence: PATTERN.
+
+## Sample library
+
+Optional modules to adapt into worlds.
+
+- [library/Integration.md](https://iw-builder.github.io/library/Integration.md) (12 KB): How to choose and adapt library modules: Storymaster versus lightweight direction, token costs, dependency checklists. Read before using the library JSON.
+- [library/README.md](https://iw-builder.github.io/library/README.md) (1 KB): Human-friendly overview of the library.
+- [library/Sample-Blocks.json](https://iw-builder.github.io/library/Sample-Blocks.json) (57 KB): Library modules in world-file format: time/location, characterization, craft, pacing, trackers, image styles and more. Copy whole content values by name.
+- [library/Storymaster-Suite.json](https://iw-builder.github.io/library/Storymaster-Suite.json) (34 KB): The Storymaster narrative-direction framework in world-file format. Substantial; read Integration.md first.
+
+## Tools
+
+Python tools for models or users that can run code. Without Python, use the checker.
+
+- [tools/README.md](https://iw-builder.github.io/tools/README.md) (2 KB): Human overview of the tools.
+- [tools/Usage.md](https://iw-builder.github.io/tools/Usage.md) (8 KB): Commands, checks, warning meanings and limits for the validator and other tools.
+- [tools/validate_iw_export.py](https://iw-builder.github.io/tools/validate_iw_export.py) (18 KB): World validator: schema, references and lint; --diff compares with an original. The main tool to run.
+- [tools/iw-export.schema.json](https://iw-builder.github.io/tools/iw-export.schema.json) (50 KB): JSON Schema (Draft 2020-12) profile of the IW export format, used by the validator.
+- [tools/static_checks.py](https://iw-builder.github.io/tools/static_checks.py) (13 KB): Lint and reference checks used by the validator.
+- [tools/data_bank.py](https://iw-builder.github.io/tools/data_bank.py) (12 KB): Create, check, pack/unpack and restore portable data banks and full-content build reports. Standard library only.
+- [tools/import_audit.py](https://iw-builder.github.io/tools/import_audit.py) (3 KB): Read-only comparison of a source world with its re-exported import: ID changes and dangling references.
+- [tools/story_export.py](https://iw-builder.github.io/tools/story_export.py) (13 KB): Plan, build and verify reviewed extractions of IW story exports; merges only non-conflicting histories.
+- [tools/plot_compile.py](https://iw-builder.github.io/tools/plot_compile.py) (6 KB): Builds a fresh world from a literal-Scenario prerequisite plan.
+- [tools/example-plot-plan.json](https://iw-builder.github.io/tools/example-plot-plan.json) (1 KB): Sample input for plot_compile.py.
+- [tools/iw_browser.py](https://iw-builder.github.io/tools/iw_browser.py) (11 KB): Optional Playwright harness: dedicated-browser capture and refresh-verified editor export. No import or play.
+- [tools/requirements-browser.txt](https://iw-builder.github.io/tools/requirements-browser.txt) (1 KB): Python dependencies for iw_browser.py.
+- [tools/Validation-Report.json](https://iw-builder.github.io/tools/Validation-Report.json) (8 KB): Latest package check results (maintainer output).
+- [tools/build_distribution.py](https://iw-builder.github.io/tools/build_distribution.py) (27 KB): Maintainer: rebuilds the homepage, combined text files, folder pages, llms.txt, checker and manifest.
+- [tools/check_package.py](https://iw-builder.github.io/tools/check_package.py) (3 KB): Maintainer: validates every example world and local link; writes Validation-Report.json.
+- [tools/test_validator.py](https://iw-builder.github.io/tools/test_validator.py) (6 KB): Maintainer tests for the validator.
+- [tools/test_data_bank.py](https://iw-builder.github.io/tools/test_data_bank.py) (5 KB): Maintainer tests for data_bank.py.
+- [tools/test_distribution.py](https://iw-builder.github.io/tools/test_distribution.py) (6 KB): Maintainer tests for the distribution build.
+- [tools/test_engineering.py](https://iw-builder.github.io/tools/test_engineering.py) (8 KB): Maintainer tests for the browser harness and plot compiler.
+- [tools/test_native_compat.py](https://iw-builder.github.io/tools/test_native_compat.py) (5 KB): Maintainer tests for native export compatibility.
+- [tools/test_story_export.py](https://iw-builder.github.io/tools/test_story_export.py) (6 KB): Maintainer tests for story_export.py.
+
+## Browser checker
+
+- [checker/index.html](https://iw-builder.github.io/checker/) (115 KB): Browser validator: paste a world or a model's whole reply; runs validate_iw_export.py locally, joins numbered chunks and copies a report for the AI.
+
+## Combined text editions
+
+Single-file bundles for chats without web access or with tool limits. Web-browsing models should prefer the individual files above.
+
+- [chat/index.html](https://iw-builder.github.io/chat/) (201 KB): HTML page containing IW-Authoring-Guide.txt. Very large; some web fetchers truncate it.
+- [chat/IW-Authoring-Guide.txt](https://iw-builder.github.io/chat/IW-Authoring-Guide.txt) (197 KB): Combined text: prompt, template and all reference guides. Very large; when browsing, prefer the individual files below.
+- [chat/IW-Examples.txt](https://iw-builder.github.io/chat/IW-Examples.txt) (235 KB): Combined text: payload cookbook, example index and selected complete example worlds.
+- [chat/IW-Sample-Library.txt](https://iw-builder.github.io/chat/IW-Sample-Library.txt) (103 KB): Combined text: library integration guide, Sample-Blocks and Storymaster-Suite.
+- [chat/IW-Tools.txt](https://iw-builder.github.io/chat/IW-Tools.txt) (131 KB): Combined text: tool usage guide plus validator, schema and helper sources to recreate locally.
+- [chat/README.md](https://iw-builder.github.io/chat/README.md) (1 KB): Human guide to the combined text files.
+- [chat/sources.json](https://iw-builder.github.io/chat/sources.json) (2 KB): Which source files make up each combined text file, with hashes.
+
+## Sample worlds
+
+Worlds made with the kit, with the conversations that produced them. Not documentation.
+
+- [samples/Claude Fable 5.1 - Line of Sight.json](https://iw-builder.github.io/samples/Claude%20Fable%205.1%20-%20Line%20of%20Sight.json) (75 KB): Finished world: Claude Fable 5.1 - Line of Sight. Optional inspiration, not documentation.
+- [samples/Claude Fable 5.1 - Line of Sight.md](https://iw-builder.github.io/samples/line-of-sight/) (27 KB): Design conversation for Claude Fable 5.1 - Line of Sight. Long; may include mature content.
+- [samples/Gemini 4 Argon - Shard of the Loom.json](https://iw-builder.github.io/samples/Gemini%204%20Argon%20-%20Shard%20of%20the%20Loom.json) (70 KB): Finished world: Gemini 4 Argon - Shard of the Loom. Optional inspiration, not documentation.
+- [samples/Gemini 4 Argon - Shard of the Loom.md](https://iw-builder.github.io/samples/shard-of-the-loom/) (25 KB): Design conversation for Gemini 4 Argon - Shard of the Loom. Long; may include mature content.
+- [samples/MiMo 2.6 Pro - Bad Touch.json](https://iw-builder.github.io/samples/MiMo%202.6%20Pro%20-%20Bad%20Touch.json) (60 KB): Finished world: MiMo 2.6 Pro - Bad Touch. Optional inspiration, not documentation.
+- [samples/MiMo 2.6 Pro - Bad Touch.md](https://iw-builder.github.io/samples/bad-touch/) (56 KB): Design conversation for MiMo 2.6 Pro - Bad Touch. Long; may include mature content.
+
+---
+
+END OF DOCUMENT: llms.txt

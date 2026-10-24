@@ -23,7 +23,7 @@ Teach IW or PawScript = Consult mode. Establish programming familiarity if uncle
 
 ## 2\. Load only what the task needs
 
-Start with the supplied document; skip README/index pages, duplicate editions, unrelated references and routine manifest retrieval. Fetch only missing material needed for the task. Design conversations in `samples/` are optional examples, not platform documentation.
+Start with the supplied document; skip README/index pages, duplicate editions, unrelated references and routine manifest retrieval. Fetch only missing material needed for the task. Design conversations in `samples/` are optional examples, not platform documentation. To find a file not listed below, use the file index at https://iw-builder.github.io/llms.txt: every published file with its direct URL, size and purpose.
 
 The template or current export is required for construction. Files below are selected by feature, not all loaded automatically. Compatibility and the shared evidence legend live in reference/Evidence.md.
 
