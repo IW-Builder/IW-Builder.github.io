@@ -1,6 +1,6 @@
 {
   "algorithm": "sha256",
-  "generatedAt": "2026-10-24T03:54:21+00:00",
+  "generatedAt": "2026-10-24T03:59:07+00:00",
   "files": [
     {
       "path": "Authoring-Prompt.md",
@@ -24,8 +24,8 @@
     },
     {
       "path": "chat/IW-Authoring-Guide.txt",
-      "bytes": 196415,
-      "sha256": "aa96ff44784c98b6b9f95a30552150018a2a1b2aac4a707b360fec5f64fb715f"
+      "bytes": 196414,
+      "sha256": "fc78ea23a9e360fc6083884450f3369e240ce1d1fb3f1df452753b515741e679"
     },
     {
       "path": "chat/IW-Examples.txt",
@@ -55,7 +55,7 @@
     {
       "path": "chat/sources.json",
       "bytes": 2357,
-      "sha256": "6528067db10d1a46fb6c46ca48f1392f7e21c3f0d2116f64df188fef4641506e"
+      "sha256": "bbee8a14010e9ea7ce243c6d5ee4e1296413c8725811fbd06ff75664438cfc63"
     },
     {
       "path": "checker/index.html",
