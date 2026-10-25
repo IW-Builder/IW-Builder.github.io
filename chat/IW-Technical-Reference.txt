@@ -704,7 +704,7 @@ The [example index](../examples/index.json) records each complete world's purpos
 
 1. **Generate.** The Cast Generation block gives the storyteller a recipe: extras get one line and are never recorded. A person becomes recurring on a second appearance, social importance, or when the player seeks them out, and then gets a full core: role, concrete want, 1-3 values, voice with a sample line, 2 tells, 2-4 habits, friction with another cast member, starting stance and an anchor from 1 (impressionable) to 5 (immovable).
 2. **Lock.** Admit Cast Proposals checks each proposal (name not already used, core complete, 2-4 habits, at least one value, cast under 12), copies the fields into Cast and clears the buffer. Rejections are explained in the report. After admission no script writes a core field again.
-3. **Resist.** Apply Cast Influence reads this turn's entries (stale turn stamps are ignored). Attempts on the core change nothing. Earned attempts add progress; a person's stance improves only after as many earned turns as their anchor, and never more than one step per turn. Pressure adds nothing, makes them guarded for 1 + anchor turns, and three pressures cost a step. Hurtful acts lower stance one step.
+3. **Resist.** Apply Cast Influence reads this turn's entries (stale turn stamps are ignored). Attempts on the core change nothing. Earned attempts add progress; a person's stance improves only after as many earned turns as their anchor, and never more than one step per turn. Pressure adds nothing, makes them guarded for 1 + anchor turns (pushing a guarded person still counts and extends the guard), and three pressures cost a step. Sincere repair while guarded shortens the guard by one turn but earns nothing. Hurtful acts lower stance one step.
 4. **Show.** The Persistent Cast block renders the current turn and the latest report through live templates, so the storyteller plays walls, progress and setbacks from authoritative state. Changes apply from the next turn: narrate the current attempt as an attempt.
 
 Adapting it:
@@ -713,9 +713,10 @@ Adapting it:
 - **Faster or slower worlds.** The anchor is both resistance and pacing. Lower anchors for impressionable casts; raise the guarded duration or the pressure limit for stubborn ones.
 - **Several relationships per person.** Keep one Cast record per person and add fields such as a second level for a rival or partner, applied by the same script with a separate `target` value.
 - **Visibility.** Cast is ai_only so players do not see the numbers; switch to everyone if visible progress is part of the design.
+- **Buffer shape.** Both AI buffers are rooted in a record (`entries: []`) and the scripts read and clear `.entries`. A buffer whose whole value is a YAML list lost some AI updates in live testing; keep the record root.
 - **Limits.** The cast cap of 12 bounds context cost; raise it deliberately. The storyteller still classifies earned versus pressure, so the guarantee is the pacing and the fixed core, not the classification. A malformed proposal (for example quirks written as a sentence instead of a list) can make the admit script fail and roll back; the proposal then stays in the buffer for correction.
 
-This composition is structurally validated, not live-tested; check the two scripts in Sandbox against sample proposals and influence entries before relying on it.
+A variant of this pattern (same buffers, admit and apply logic, with hypnosis stages in place of stance) was live-tested in IW on Dolphin: admission, earned progress, pressure while guarded, repair while guarded and the record-rooted buffers behaved as described. This recipe itself is structurally validated; check its two scripts in Sandbox against sample proposals and influence entries before relying on it.
 
 ## Guarded state patterns
 

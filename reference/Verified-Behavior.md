@@ -1,6 +1,6 @@
 # Consolidated behavior reference
 
-Results current through 2026-10-24. Evidence labels follow [Evidence](Evidence.md). **[RUNTIME]** means observed behavior within the stated scope, **[DOCUMENTED]** means editor/export guidance, **[PATTERN]** means an authoring choice, and **[UNKNOWN]** means unresolved. Import success, rendered instructions and narration answer different questions; none is a complete view of hidden engine state. This reference contains conclusions, not research procedures.
+Results current through 2026-10-25. Evidence labels follow [Evidence](Evidence.md). **[RUNTIME]** means observed behavior within the stated scope, **[DOCUMENTED]** means editor/export guidance, **[PATTERN]** means an authoring choice, and **[UNKNOWN]** means unresolved. Import success, rendered instructions and narration answer different questions; none is a complete view of hidden engine state. This reference contains conclusions, not research procedures.
 
 ## Triggers and Scenarios
 
@@ -46,6 +46,7 @@ Results current through 2026-10-24. Evidence labels follow [Evidence](Evidence.m
 - [RUNTIME] An unchecked Hide skill system option can export with hideSkillSystem omitted, including after importing false. Omission is normal visible-skills state.
 
 - [RUNTIME] Hidden and extra-hidden values remain script-accessible. Extra-hidden is display filtering, not protection against Storyteller inspection. The tracker editor can expose them with the debug display override off.
+- [RUNTIME] An AI-updated tracker whose whole value is a YAML list lost 2 of 6 updates in one Dolphin session, with debug messages such as "'$set' body must be an object mapping paths to values, got a list" and "Cannot set 'value' - parent is a list"; the turn's entries never reached the tracker. The same buffers rooted in a record (`entries: []`, scripts reading `.entries`) completed every update across 9 later turns. The storyteller once wrote `entries: []` followed by the items, leaving a stray key beside `entries`; instruct it to replace `[]` with the indented items. Sample size is small; failure frequency for list roots is not characterized.
 - [RUNTIME] Import normalizes automatic updating off for hidden, hidden_boring and player_only. Everyone, ai_only and ai_only_boring retain supported updates. Extra-hidden AI-only filtering does not stop updating.
 - [RUNTIME] Direct active templates reevaluate. Ordinary interpolation installed through Modify instruction block snapshots its value; deferred `<<=...=>>` references remain live in that destination. Nested expression text is not generally evaluated recursively.
 - [RUNTIME] Empty/whitespace replacement clears content while headings can remain. Malformed expressions may stay literal; an unclosed delimiter can affect a following block. Active instructions is current rendered state, not a historical full prompt.

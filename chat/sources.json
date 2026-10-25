@@ -23,7 +23,7 @@
       "reference/Default-Evaluation.txt",
       "reference/Current-AI-Profiles.json"
     ],
-    "sha256": "cdd67736b708bfdda9754c8888aa4ce31cdf594556f214689066a5804b984c8e"
+    "sha256": "b6296ca12d6da8c71548f2197828d2d71c1e0692801ae6520e58c9acc3cd6ac4"
   },
   "IW-Behavior.txt": {
     "sourceFiles": [
@@ -31,7 +31,7 @@
       "reference/Verified-Behavior.md",
       "reference/Known-Limits.md"
     ],
-    "sha256": "ed8e7e0d95120637c83a305f4832ab4da2c634d8172541484002d51dea961bf0"
+    "sha256": "4bd796a2d11c976c37cf8b4f73288ae3e5e683f1259cd5199a6847ef37c024b9"
   },
   "IW-Payloads.txt": {
     "sourceFiles": [
@@ -56,7 +56,7 @@
       "examples/character-starting-values.json",
       "examples/recipe-persistent-cast.json"
     ],
-    "sha256": "eb291e40069b4e056a77f536ce0550f32605093e0342741aa35c3887621a107b"
+    "sha256": "f5d30c78365b6ca99fd19b7697212672ac5a9806459eb336ab7580779f1cc92f"
   },
   "IW-Narrative-Examples.txt": {
     "sourceFiles": [
