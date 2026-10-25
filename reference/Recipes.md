@@ -37,7 +37,7 @@ secretInfo, outcomeDescription, whereWhen and option1_text/option2_text/option3_
 Use ordinary Markdown formatting where appropriate. Tests showed raw span HTML rendered literally, so do not promise arbitrary HTML/CSS styling. Header behavior and special output formatting should be tested in their actual display context. An inline-code style is a platform-rendered style, not a general color API.
 
 ## Dynamic content
-Native block-modification effects substitute ordinary `<<...>>` templates when the content is installed. For live values, write deferred `<=...=>` references in the installed text, use a separate permanent block, or reinstall content when the relevant values change. See Capabilities.md for the interpolation table.
+Native block-modification effects substitute ordinary `<<...>>` templates when the content is installed. For live values, write deferred `<<=...=>>` references in the installed text, use a separate permanent block, or reinstall content when the relevant values change. See Capabilities.md for the interpolation table.
 
 **Player-selected layered openings.** Combine independent choices into meaningful variations using ordered text replacements, then install the result as background. This avoids authoring every full combination; keep fragments compatible and add combination-specific handling where needed. See [layered opening](../examples/recipe-layered-opening.json).
 

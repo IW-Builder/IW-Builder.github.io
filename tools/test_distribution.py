@@ -60,7 +60,10 @@ class DistributionTests(unittest.TestCase):
     def test_reference_editions_are_split_and_bounded(self):
         sources = {k: v['sourceFiles'] for k, v in json.loads((self.root/'chat/sources.json').read_text()).items()}
         self.assertEqual(set(sources), {'IW-Authoring-Guide.txt', 'IW-Technical-Reference.txt', 'IW-Behavior.txt',
-                                        'IW-Examples.txt', 'IW-Sample-Library.txt', 'IW-Tools.txt'})
+                                        'IW-Payloads.txt', 'IW-Mechanics-Examples.txt', 'IW-Narrative-Examples.txt',
+                                        'IW-Sample-Library.txt', 'IW-Tools.txt'})
+        self.assertLess((self.root/'chat/IW-Payloads.txt').stat().st_size, 60_000)
+        self.assertFalse((self.root/'chat/IW-Examples.txt').exists())
         for name in ['IW-Authoring-Guide.txt', 'IW-Technical-Reference.txt', 'IW-Behavior.txt']:
             self.assertLess((self.root/'chat'/name).stat().st_size, 90_000, name)
         every = [p for files in sources.values() for p in files]

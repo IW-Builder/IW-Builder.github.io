@@ -26,6 +26,13 @@ class ValidatorTests(unittest.TestCase):
        self.assertEqual(hits[0]['severity'],'warning')
        self.assertEqual(hits[0]['path'],'/triggerEvents/0/triggerEffects/0')
       self.assertNotIn('timing-editor-consistency',{f['code'] for f in findings})
+ def test_deferred_template_roots(self):
+  text='Win path: <<=choose($win_path, "a", "A", "B")=>> now <<$coins>>'
+  self.assertEqual(list(templates(text)),['=choose($win_path, "a", "A", "B")=','$coins'])
+  w=copy.deepcopy(BASE);w['instructionBlocks']=[{'id':'deferred','name':'Deferred','content':text}]
+  roots={f['message'] for f in lint(w) if f['code']=='unknown-script-root'}
+  self.assertTrue(any('$win_path' in m for m in roots))
+  self.assertFalse({'borrowed-syntax','string-plus'}&codes(w))
  def test_visible_skills_false_or_omitted(self):
   for value in (False, None):
    w=copy.deepcopy(BASE)

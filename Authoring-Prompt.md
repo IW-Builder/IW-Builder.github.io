@@ -73,7 +73,7 @@ Raise relevant issues without forcing architecture changes. When two approaches 
 |Essential opening facts only in keyword/NPC detail|Concise firstInput or always-on context and an NPC brief summary.|
 |Many independently defined Scenarios|Reuse definitions; beyond the limit, consider a classification tracker and predicates.|
 |Multiple native numeric writes to one tracker in one trigger|One sequential script, or deliberately separate ordered triggers.|
-|A live `<<...>>` expression installed through block modification|A deferred `<=...=>` reference, a permanent live block, or reinstall-on-change.|
+|A live `<<...>>` expression installed through block modification|A deferred `<<=...=>>` reference, a permanent live block, or reinstall-on-change.|
 |Unguarded Start+Mid+repeat counter|Explicit setup handling; it can execute before opening and again during turn 1.|
 |Overlapping skills|Distinct scope in skill names/instructions; selection can be ambiguous, not a guaranteed easiest-skill algorithm.|
 |Unbounded journal/cast tracker|Bounded records, summaryRequest, or selective memory according to the need.|
@@ -106,7 +106,7 @@ Post-generation triggers cannot retroactively change narration already written. 
 |Repeat when X holds after opening|false|false|true|X; add a state guard when repeat effects must be idempotent|
 |Saved/inactive ordinary trigger|false|false|As intended|None; explicit dispatch is separate, see reference/Triggers.md|
 
-Order dependencies in triggerEvents. Later triggers see earlier committed writes. Dependent arithmetic belongs in one multiline Run Script; native numeric effects within one trigger can overwrite rather than accumulate. Script failure rolls back that script, not necessarily preceding effects. Give scripts meaningful effect names. The editor stops adding Scenarios at ten entries; larger imported registries can remain bound and usable. This is not a universal runtime maximum. Use exact literal bindings and explicit state gates.
+Order dependencies in triggerEvents. Later triggers see earlier committed writes. Dependent arithmetic belongs in one multiline Run Script; native numeric effects within one trigger can overwrite rather than accumulate. Script failure rolls back that script, not necessarily preceding effects. Give scripts meaningful effect names. For Scenarios, use exact literal registry strings and explicit state gates; the editor's ten-entry cap is not a runtime maximum (reference/Triggers.md).
 
 ## 7. Validate and deliver for this audience
 

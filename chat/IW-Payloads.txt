@@ -1,0 +1,1042 @@
+Infinite Worlds Authoring Kit: IW-Payloads.txt (exact native payload snippets for every condition and effect, plus the example index).
+Generated text edition. BEGIN FILE / END FILE sections identify package-relative source paths. This is reference material, not one IW world.
+Follow Authoring-Prompt.md (in IW-Authoring-Guide.txt). Load companion editions only when the task needs them.
+Editions and their contents:
+- IW-Authoring-Guide.txt: start here: prompt, template, narrative craft, trackers, triggers and data banks. Files: Authoring-Prompt.md, World-Template.json, reference/Evidence.md, reference/Craft.md, reference/Trackers.md, reference/Triggers.md, reference/Trigger-Catalog.md, reference/Portable-Banks.md
+- IW-Technical-Reference.txt: exact payloads, PawScript, capabilities, recipes and import integrity. Files: reference/Schema.md, reference/PawScript.md, reference/Capabilities.md, reference/Recipes.md, reference/Import-Integrity.md, reference/Default-Evaluation.txt, reference/Current-AI-Profiles.json
+- IW-Behavior.txt: editor/UI workflows, verified runtime behavior and known limits. Files: reference/Editor-UI.md, reference/Verified-Behavior.md, reference/Known-Limits.md
+- IW-Payloads.txt: exact native payload snippets for every condition and effect, plus the example index. Files: examples/Payloads.md, examples/index.json
+- IW-Mechanics-Examples.txt: complete mechanics example worlds: recipes, optional block, starting values and a showcase. Files: examples/recipe-request-commit.json, examples/recipe-completion-award.json, examples/recipe-candidate-acceptance.json, examples/recipe-archive-reactivate.json, examples/recipe-cached-random.json, examples/recipe-consumed-timer.json, examples/recipe-choice-domain.json, examples/recipe-compiled-plot.json, examples/recipe-choice-followup.json, examples/recipe-threshold-unlock.json, examples/optional-block.json, examples/character-starting-values.json, examples/showcase-glass-ledger.json
+- IW-Narrative-Examples.txt: complete narrative example worlds: ensemble romance, fantasy expedition and contained horror. Files: examples/narrative-vendemmia.json, examples/narrative-listening-road.json, examples/narrative-address-after-midnight.json
+- IW-Sample-Library.txt: optional library modules and Storymaster. Files: library/Integration.md, library/Sample-Blocks.json, library/Storymaster-Suite.json
+- IW-Tools.txt: Python tools and their guides, for models that can run code. Files: tools/Usage.md, reference/Story-Tools.md, reference/Engineering-Tools.md, tools/validate_iw_export.py, tools/static_checks.py, tools/iw-export.schema.json, tools/data_bank.py, tools/import_audit.py, tools/story_export.py, tools/iw_browser.py, tools/plot_compile.py
+Every file is also available individually: https://iw-builder.github.io/llms.txt
+
+===== BEGIN FILE: examples/Payloads.md =====
+# Compact native payload cookbook
+
+[DOCUMENTED] Exact payload shapes, extracted from the complete example worlds. These are snippets, not independently importable worlds. Read ../reference/Schema.md for field semantics and ../reference/Triggers.md for timing. Copy the node into triggerConditions or triggerEffects as appropriate, assign a unique node ID, and declare/remap every target. For a coherent transaction, choose one complete recipe rather than concatenating unrelated snippets.
+
+Every authored trigger also needs an id, name, conditions/effects arrays and explicit triggerOnStartOfGame, triggerMidGame and canTriggerMoreThanOnce flags. Conditions normally AND together. Scripts are bare code strings; messages may contain templates. String payload values remain JSON strings.
+
+## triggerBlockers
+
+Suppress an event if another trigger fired this turn or earlier in the game. Full world: [condition-triggerBlockers.json](condition-triggerBlockers.json).
+
+```json
+{
+  "category": "condition",
+  "type": "triggerBlockers",
+  "data": {
+    "blockers": [
+      "trg-anchor"
+    ],
+    "firedThisTurn": true
+  },
+  "id": "node-condition-triggerBlockers-3"
+}
+```
+
+Dependencies: triggerEvents trg-anchor (Anchor).
+
+## triggerOnCharacter
+
+Limit an event to selected player characters. Full world: [condition-triggerOnCharacter.json](condition-triggerOnCharacter.json).
+
+```json
+{
+  "category": "condition",
+  "type": "triggerOnCharacter",
+  "data": [
+    "pc-visitor"
+  ],
+  "id": "node-condition-triggerOnCharacter-1"
+}
+```
+
+Dependencies: possibleCharacters pc-visitor (Avery).
+
+## triggerOnEvent
+
+Recognize an AI-judged narrative Scenario; define it once in root conditions. Full world: [condition-triggerOnEvent.json](condition-triggerOnEvent.json).
+
+```json
+{
+  "category": "condition",
+  "type": "triggerOnEvent",
+  "data": "The player explicitly asks the clerk for a receipt.",
+  "id": "node-condition-triggerOnEvent-1"
+}
+```
+
+Dependencies: root conditions must include the Scenario text.
+
+## triggerOnPawScript
+
+Evaluate a deterministic state predicate. Full world: [condition-triggerOnPawScript.json](condition-triggerOnPawScript.json).
+
+```json
+{
+  "category": "condition",
+  "type": "triggerOnPawScript",
+  "data": "$coins >= 10",
+  "id": "node-condition-triggerOnPawScript-1"
+}
+```
+
+Dependencies: script/template roots: $coins.
+
+## triggerOnRandomChance
+
+Apply a percentage chance to an otherwise eligible trigger. Full world: [condition-triggerOnRandomChance.json](condition-triggerOnRandomChance.json).
+
+```json
+{
+  "category": "condition",
+  "type": "triggerOnRandomChance",
+  "data": "50",
+  "id": "node-condition-triggerOnRandomChance-1"
+}
+```
+
+## triggerOnTrackedItem
+
+Compare a tracker with a threshold or text condition. Full world: [condition-triggerOnTrackedItem.json](condition-triggerOnTrackedItem.json).
+
+```json
+{
+  "category": "condition",
+  "type": "triggerOnTrackedItem",
+  "data": {
+    "trackedItemID": "o8pvrgyOL",
+    "inequality": "at_least",
+    "requiredValue": "10",
+    "textComparison": "contains"
+  },
+  "id": "node-condition-triggerOnTrackedItem-1"
+}
+```
+
+Dependencies: trackedItems o8pvrgyOL (Coins).
+
+## triggerOnTurn
+
+Run at a specified turn. Full world: [condition-triggerOnTurn.json](condition-triggerOnTurn.json).
+
+```json
+{
+  "category": "condition",
+  "type": "triggerOnTurn",
+  "data": 2,
+  "id": "node-condition-triggerOnTurn-1"
+}
+```
+
+## triggerPrereqs
+
+Require another trigger to have fired this turn or earlier in the game. Full world: [condition-triggerPrereqs.json](condition-triggerPrereqs.json).
+
+```json
+{
+  "category": "condition",
+  "type": "triggerPrereqs",
+  "data": {
+    "prereqs": [
+      "trg-anchor"
+    ],
+    "firedThisTurn": true
+  },
+  "id": "node-condition-triggerPrereqs-3"
+}
+```
+
+Dependencies: triggerEvents trg-anchor (Anchor).
+
+## effectChangeAuthorStyle
+
+Change the requested prose style. Full world: [effect-effectChangeAuthorStyle.json](effect-effectChangeAuthorStyle.json).
+
+```json
+{
+  "type": "effectChangeAuthorStyle",
+  "data": "Use short paragraphs and dry, understated humor.",
+  "id": "node-effect-effectChangeAuthorStyle-2"
+}
+```
+
+## effectChangeDefeatCondition
+
+Replace the native defeat criterion/message. Full world: [effect-effectChangeDefeatCondition.json](effect-effectChangeDefeatCondition.json).
+
+```json
+{
+  "type": "effectChangeDefeatCondition",
+  "data": {
+    "condition": "The player has explicitly abandoned the demonstration.",
+    "text": "The demonstration ends unfinished.",
+    "alreadyFired": false
+  },
+  "id": "node-effect-effectChangeDefeatCondition-2"
+}
+```
+
+## effectChangeDescriptionInstructions
+
+Change Description specialist instructions. Full world: [effect-effectChangeDescriptionInstructions.json](effect-effectChangeDescriptionInstructions.json).
+
+```json
+{
+  "type": "effectChangeDescriptionInstructions",
+  "data": "Write a concise second-person scene grounded in the guild office. Keep the player's intentions intact.",
+  "id": "node-effect-effectChangeDescriptionInstructions-2"
+}
+```
+
+## effectChangeMainInstructions
+
+Replace main storyteller instructions. Full world: [effect-effectChangeMainInstructions.json](effect-effectChangeMainInstructions.json).
+
+```json
+{
+  "type": "effectChangeMainInstructions",
+  "data": "Continue a short guild-office scene. Mara is the clerk. Respect the tracker values; the player decides what to do next.",
+  "id": "node-effect-effectChangeMainInstructions-2"
+}
+```
+
+## effectChangeObjective
+
+Replace the current story objective. Full world: [effect-effectChangeObjective.json](effect-effectChangeObjective.json).
+
+```json
+{
+  "type": "effectChangeObjective",
+  "data": "Learn why the silver seal is missing.",
+  "id": "node-effect-effectChangeObjective-2"
+}
+```
+
+## effectChangePCDescription
+
+Change the active player character description. Full world: [effect-effectChangePCDescription.json](effect-effectChangePCDescription.json).
+
+```json
+{
+  "type": "effectChangePCDescription",
+  "data": "Avery Reed is a courier newly recognized by the guild.",
+  "id": "node-effect-effectChangePCDescription-2"
+}
+```
+
+## effectChangePCName
+
+Change the active player character name. Full world: [effect-effectChangePCName.json](effect-effectChangePCName.json).
+
+```json
+{
+  "type": "effectChangePCName",
+  "data": "Avery Reed",
+  "id": "node-effect-effectChangePCName-2"
+}
+```
+
+## effectChangePCSkill
+
+Increase/decrease a named skill with a level boundary. Full world: [effect-effectChangePCSkill.json](effect-effectChangePCSkill.json).
+
+```json
+{
+  "type": "effectChangePCSkill",
+  "data": {
+    "name": "Observation",
+    "amount": 2,
+    "minmax": 4,
+    "increase": true
+  },
+  "id": "node-effect-effectChangePCSkill-2"
+}
+```
+
+## effectChangeVictoryCondition
+
+Replace the native victory criterion/message. Full world: [effect-effectChangeVictoryCondition.json](effect-effectChangeVictoryCondition.json).
+
+```json
+{
+  "type": "effectChangeVictoryCondition",
+  "data": {
+    "condition": "The player has explicitly asked to finish the demonstration.",
+    "text": "The demonstration is complete.",
+    "alreadyFired": false
+  },
+  "id": "node-effect-effectChangeVictoryCondition-2"
+}
+```
+
+## effectEndsGame
+
+End the game; boolean data controls whether continuing is allowed. Full world: [effect-effectEndsGame.json](effect-effectEndsGame.json).
+
+```json
+{
+  "type": "effectEndsGame",
+  "data": true,
+  "id": "node-effect-effectEndsGame-3"
+}
+```
+
+## effectFireRandomTrigger
+
+Dispatch a random listed trigger or the nothing sentinel; extra dispatch semantics are bounded. Full world: [effect-effectFireRandomTrigger.json](effect-effectFireRandomTrigger.json).
+
+```json
+{
+  "type": "effectFireRandomTrigger",
+  "data": [
+    "trg-child-a",
+    "trg-child-b"
+  ],
+  "id": "node-effect-effectFireRandomTrigger-2"
+}
+```
+
+Dependencies: triggerEvents trg-child-a (Child A); triggerEvents trg-child-b (Child B).
+
+## effectGiveInfo
+
+Supply background information to the AI. Full world: [effect-effectGiveInfo.json](effect-effectGiveInfo.json).
+
+```json
+{
+  "type": "effectGiveInfo",
+  "data": "Mara has just learned that the courier route is clear.",
+  "id": "node-effect-effectGiveInfo-2"
+}
+```
+
+## effectModifyInstructionBlock
+
+Install, replace or clear a named instruction block. Full world: [effect-effectModifyInstructionBlock.json](effect-effectModifyInstructionBlock.json).
+
+```json
+{
+  "type": "effectModifyInstructionBlock",
+  "data": {
+    "id": "blk-guidance",
+    "content": "Mara now offers the courier assignment."
+  },
+  "id": "node-effect-effectModifyInstructionBlock-2"
+}
+```
+
+Dependencies: instructionBlocks blk-guidance (Guild Guidance).
+
+## effectModifyKeywordBlock
+
+Change a keyword block and its activation keywords. Full world: [effect-effectModifyKeywordBlock.json](effect-effectModifyKeywordBlock.json).
+
+```json
+{
+  "type": "effectModifyKeywordBlock",
+  "data": {
+    "id": "kw-guild",
+    "keywords": [
+      "silver seal",
+      "crescent"
+    ],
+    "content": "The silver seal has a crescent engraving and is kept in the clerk's desk."
+  },
+  "id": "node-effect-effectModifyKeywordBlock-2"
+}
+```
+
+Dependencies: loreBookEntries kw-guild (Guild Seal).
+
+## effectModifyTrackedItemDetails
+
+Change selected tracker settings through explicit override flags. Full world: [effect-effectModifyTrackedItemDetails.json](effect-effectModifyTrackedItemDetails.json).
+
+```json
+{
+  "type": "effectModifyTrackedItemDetails",
+  "data": {
+    "trackedItemID": "SRdpskbWh",
+    "overrideName": false,
+    "overrideDescription": false,
+    "overrideVisibility": true,
+    "overrideAutoUpdate": true,
+    "overrideUpdateInstructions": true,
+    "name": "Note",
+    "description": "",
+    "updateInstructions": "Record one brief observation about the guild each turn.",
+    "visibility": "everyone",
+    "autoUpdate": true
+  },
+  "id": "node-effect-effectModifyTrackedItemDetails-2"
+}
+```
+
+Dependencies: trackedItems SRdpskbWh (Note).
+
+## effectPresentChoice
+
+Ask the player to select from defined options and store the result. Full world: [effect-effectPresentChoice.json](effect-effectPresentChoice.json).
+
+```json
+{
+  "id": "node-effect-effectPresentChoice-2",
+  "data": {
+    "path": "",
+    "valueDelimiter": "newline",
+    "updateMode": "replace",
+    "minSelections": null,
+    "choices": "Courier\nArchivist",
+    "maxSelections": null,
+    "targetTrackedItemId": "GJlIgehdL",
+    "selectionMode": "single",
+    "message": "Choose your guild assignment."
+  },
+  "type": "effectPresentChoice"
+}
+```
+
+Dependencies: trackedItems GJlIgehdL (Answer).
+
+## effectRequestInput
+
+Request text and store it in a tracker. Full world: [effect-effectRequestInput.json](effect-effectRequestInput.json).
+
+```json
+{
+  "id": "node-effect-effectRequestInput-2",
+  "data": {
+    "path": "",
+    "inputMode": "single",
+    "requestText": "What nickname should the clerk use?",
+    "requiresInput": true,
+    "targetTrackedItemId": "jcbMjWZOx"
+  },
+  "type": "effectRequestInput"
+}
+```
+
+Dependencies: trackedItems jcbMjWZOx (Answer).
+
+## effectRunScript
+
+Execute sequential tracker updates in PawScript. Full world: [effect-effectRunScript.json](effect-effectRunScript.json).
+
+```json
+{
+  "type": "effectRunScript",
+  "data": "$coins -= 2\n$flag = 1",
+  "name": "Spend Coins and Mark Flag",
+  "id": "node-effect-effectRunScript-2"
+}
+```
+
+Dependencies: script/template roots: $coins, $flag.
+
+## effectSetTrackedItemValue
+
+Set or modify a tracked value with a native operation. Full world: [effect-effectSetTrackedItemValue.json](effect-effectSetTrackedItemValue.json).
+
+```json
+{
+  "type": "effectSetTrackedItemValue",
+  "data": {
+    "trackedItemID": "NR2bqLfoi",
+    "action": "add",
+    "newValue": "2",
+    "replaceWith": "",
+    "path": "",
+    "updateMode": "path",
+    "listExpression": "",
+    "targetExpression": ""
+  },
+  "id": "node-effect-effectSetTrackedItemValue-2"
+}
+```
+
+Dependencies: trackedItems NR2bqLfoi (Coins).
+
+## effectShowMessage
+
+Display an authoritative player-facing result. Full world: [effect-effectShowMessage.json](effect-effectShowMessage.json).
+
+```json
+{
+  "type": "effectShowMessage",
+  "data": "The clerk has recorded your visit.",
+  "id": "node-effect-effectShowMessage-2"
+}
+```
+
+## effectTellAIWhatToDo
+
+Guide subsequent narration. Full world: [effect-effectTellAIWhatToDo.json](effect-effectTellAIWhatToDo.json).
+
+```json
+{
+  "type": "effectTellAIWhatToDo",
+  "data": "On the next scene, have Mara ask which assignment interests the player.",
+  "id": "node-effect-effectTellAIWhatToDo-2"
+}
+```
+
+## Change background (effectChangeBackground)
+
+Native payload verified. Start-only background replacement is runtime-observed; ordinary and Start+Mid modes are not equivalent. This adapted example has structural validation, not a separate live-playthrough certification. Full world: [effect-effectChangeBackground.json](effect-effectChangeBackground.json).
+
+```json
+{
+  "id": "NativeEffect01",
+  "type": "effectChangeBackground",
+  "data": "You are visiting the guild office after a storm. A fallen oak blocks its courtyard gate, and the clerk is arranging a repair crew."
+}
+```
+
+No tracker dependencies. Runs at startup.
+
+## Change first action (effectChangeFirstAction)
+
+Native editor payload and startup picker availability verified. Ordinary use does not rewrite the opening; successful startup replacement is not separately certified here. This is a payload example, not a guarantee of narration or timing behavior. Full world: [effect-effectChangeFirstAction.json](effect-effectChangeFirstAction.json).
+
+```json
+{
+  "id": "NativeEffect01",
+  "type": "effectChangeFirstAction",
+  "data": "I ask the guild clerk whether anyone needs help clearing the courtyard gate."
+}
+```
+
+No tracker dependencies. Runs at startup.
+
+## Add Other Character (effectChangeOtherCharacters)
+
+Native editor payload verified; runtime character-record mutation unresolved. Startup picker availability is documented. Trigger firing, narration and the live-design NPC list do not establish that the live character record was added, modified or deleted. This adapted world is structurally validated only. Full world: [effect-effectChangeOtherCharacters-add.json](effect-effectChangeOtherCharacters-add.json).
+
+```json
+{
+  "type": "effectChangeOtherCharacters",
+  "data": {
+    "action": "add",
+    "character": null,
+    "npc": {
+      "id": "GuildPorter01",
+      "name": "Tavin",
+      "detail": "Tavin checks each crate against the delivery ledger and asks the clerk about missing entries.",
+      "one_liner": "Tavin is the guild porter, responsible for incoming deliveries.",
+      "appearance": "An adult man with a canvas apron and a weathered cap.",
+      "location": "Guild storeroom",
+      "secret_info": "",
+      "names": [
+        "guild porter"
+      ],
+      "img_appearance": "",
+      "img_clothing": ""
+    }
+  },
+  "id": "NativeEffect01"
+}
+```
+
+For Add, character is null and npc contains a new character record with its own ID.
+
+## Modify Other Character (effectChangeOtherCharacters)
+
+Native editor payload verified; runtime character-record mutation unresolved. Startup picker availability is documented. Trigger firing, narration and the live-design NPC list do not establish that the live character record was added, modified or deleted. This adapted world is structurally validated only. Full world: [effect-effectChangeOtherCharacters-modify.json](effect-effectChangeOtherCharacters-modify.json).
+
+```json
+{
+  "type": "effectChangeOtherCharacters",
+  "data": {
+    "action": "modify",
+    "character": "Mara",
+    "npc": {
+      "id": "GuildClerk01",
+      "name": "Mara",
+      "detail": "Mara now coordinates repair crews and supplies. She prioritizes clearing the courtyard gate before accepting routine appointments.",
+      "one_liner": "Mara is the acting guild quartermaster, organizing storm repairs.",
+      "appearance": "A middle-aged woman with cropped black hair and ink-stained fingers.",
+      "location": "Guild office",
+      "secret_info": "",
+      "names": [
+        "guild clerk"
+      ],
+      "img_appearance": "",
+      "img_clothing": "",
+      "positionInList": 0
+    }
+  },
+  "id": "NativeEffect01"
+}
+```
+
+character targets the existing Other Character Name (Mara), not its ID. Preserve the full npc record, including the existing ID, as in the native export; do not reduce Delete to a name-only payload or assume Modify is a sparse patch.
+
+## Delete Other Character (effectChangeOtherCharacters)
+
+Native editor payload verified; runtime character-record mutation unresolved. Startup picker availability is documented. Trigger firing, narration and the live-design NPC list do not establish that the live character record was added, modified or deleted. This adapted world is structurally validated only. Full world: [effect-effectChangeOtherCharacters-delete.json](effect-effectChangeOtherCharacters-delete.json).
+
+```json
+{
+  "type": "effectChangeOtherCharacters",
+  "data": {
+    "action": "delete",
+    "character": "Mara",
+    "npc": {
+      "id": "GuildClerk01",
+      "name": "Mara",
+      "detail": "Mara handles appointments at the guild office. She asks visitors for a clear account of their needs.",
+      "one_liner": "Mara is the practical guild clerk.",
+      "appearance": "A middle-aged woman with cropped black hair and ink-stained fingers.",
+      "location": "Guild office",
+      "secret_info": "",
+      "names": [
+        "guild clerk"
+      ],
+      "img_appearance": "",
+      "img_clothing": "",
+      "positionInList": 0
+    }
+  },
+  "id": "NativeEffect01"
+}
+```
+
+character targets the existing Other Character Name (Mara), not its ID. Preserve the full npc record, including the existing ID, as in the native export; do not reduce Delete to a name-only payload or assume Modify is a sparse patch.
+
+---
+
+END OF DOCUMENT: examples/Payloads.md
+
+===== END FILE: examples/Payloads.md =====
+
+===== BEGIN FILE: examples/index.json =====
+[
+  {
+    "file": "condition-triggerOnEvent.json",
+    "purpose": "One native condition: triggerOnEvent",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Structurally validated; complete runtime behavior not certified."
+  },
+  {
+    "file": "condition-triggerOnRandomChance.json",
+    "purpose": "One native condition: triggerOnRandomChance",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Structurally validated; complete runtime behavior not certified."
+  },
+  {
+    "file": "condition-triggerOnCharacter.json",
+    "purpose": "One native condition: triggerOnCharacter",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Structurally validated; complete runtime behavior not certified."
+  },
+  {
+    "file": "condition-triggerOnTrackedItem.json",
+    "purpose": "One native condition: triggerOnTrackedItem",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Structurally validated; complete runtime behavior not certified."
+  },
+  {
+    "file": "condition-triggerPrereqs.json",
+    "purpose": "One native condition: triggerPrereqs",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Structurally validated; complete runtime behavior not certified."
+  },
+  {
+    "file": "condition-triggerBlockers.json",
+    "purpose": "One native condition: triggerBlockers",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Structurally validated; complete runtime behavior not certified."
+  },
+  {
+    "file": "condition-triggerOnPawScript.json",
+    "purpose": "One native condition: triggerOnPawScript",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Structurally validated; complete runtime behavior not certified."
+  },
+  {
+    "file": "condition-triggerOnTurn.json",
+    "purpose": "One native condition: triggerOnTurn",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Structurally validated; complete runtime behavior not certified."
+  },
+  {
+    "file": "effect-effectShowMessage.json",
+    "purpose": "One native effect: effectShowMessage",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Structurally validated; complete runtime behavior not certified."
+  },
+  {
+    "file": "effect-effectTellAIWhatToDo.json",
+    "purpose": "One native effect: effectTellAIWhatToDo",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Structurally validated; complete runtime behavior not certified."
+  },
+  {
+    "file": "effect-effectGiveInfo.json",
+    "purpose": "One native effect: effectGiveInfo",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Structurally validated; complete runtime behavior not certified."
+  },
+  {
+    "file": "effect-effectSetTrackedItemValue.json",
+    "purpose": "One native effect: effectSetTrackedItemValue",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Structurally validated; complete runtime behavior not certified."
+  },
+  {
+    "file": "effect-effectModifyTrackedItemDetails.json",
+    "purpose": "One native effect: effectModifyTrackedItemDetails",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Structurally validated; complete runtime behavior not certified."
+  },
+  {
+    "file": "effect-effectChangePCName.json",
+    "purpose": "One native effect: effectChangePCName",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Structurally validated; complete runtime behavior not certified."
+  },
+  {
+    "file": "effect-effectChangePCDescription.json",
+    "purpose": "One native effect: effectChangePCDescription",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Structurally validated; complete runtime behavior not certified."
+  },
+  {
+    "file": "effect-effectChangePCSkill.json",
+    "purpose": "One native effect: effectChangePCSkill",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Structurally validated; complete runtime behavior not certified."
+  },
+  {
+    "file": "effect-effectChangeObjective.json",
+    "purpose": "One native effect: effectChangeObjective",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Structurally validated; complete runtime behavior not certified."
+  },
+  {
+    "file": "effect-effectChangeVictoryCondition.json",
+    "purpose": "One native effect: effectChangeVictoryCondition",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Structurally validated; complete runtime behavior not certified."
+  },
+  {
+    "file": "effect-effectChangeDefeatCondition.json",
+    "purpose": "One native effect: effectChangeDefeatCondition",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Structurally validated; complete runtime behavior not certified."
+  },
+  {
+    "file": "effect-effectChangeMainInstructions.json",
+    "purpose": "One native effect: effectChangeMainInstructions",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Structurally validated; complete runtime behavior not certified."
+  },
+  {
+    "file": "effect-effectModifyInstructionBlock.json",
+    "purpose": "One native effect: effectModifyInstructionBlock",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Structurally validated; complete runtime behavior not certified."
+  },
+  {
+    "file": "effect-effectModifyKeywordBlock.json",
+    "purpose": "One native effect: effectModifyKeywordBlock",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Structurally validated; complete runtime behavior not certified."
+  },
+  {
+    "file": "effect-effectChangeAuthorStyle.json",
+    "purpose": "One native effect: effectChangeAuthorStyle",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Structurally validated; complete runtime behavior not certified."
+  },
+  {
+    "file": "effect-effectChangeDescriptionInstructions.json",
+    "purpose": "One native effect: effectChangeDescriptionInstructions",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Structurally validated; complete runtime behavior not certified."
+  },
+  {
+    "file": "effect-effectPresentChoice.json",
+    "purpose": "One native effect: effectPresentChoice",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Single-answer update and same-turn follow-up verified. Fresh-import binding verified."
+  },
+  {
+    "file": "effect-effectRequestInput.json",
+    "purpose": "One native effect: effectRequestInput",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Single-answer update and same-turn follow-up verified."
+  },
+  {
+    "file": "effect-effectFireRandomTrigger.json",
+    "purpose": "One native effect: effectFireRandomTrigger",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Structurally validated; complete runtime behavior not certified."
+  },
+  {
+    "file": "effect-effectRunScript.json",
+    "purpose": "One native effect: effectRunScript",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Structurally validated; complete runtime behavior not certified."
+  },
+  {
+    "file": "effect-effectEndsGame.json",
+    "purpose": "One native effect: effectEndsGame",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Structurally validated; complete runtime behavior not certified."
+  },
+  {
+    "file": "logic-groups.json",
+    "purpose": "Nested logic nodes with native shape.",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Structurally validated; complete runtime behavior not certified."
+  },
+  {
+    "file": "native-text-operations.json",
+    "purpose": "Append, remove all matches and replace text.",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Structurally validated; complete runtime behavior not certified."
+  },
+  {
+    "file": "character-starting-values.json",
+    "purpose": "Fixed, fixed-choice and script-choice per-PC values.",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Structurally validated; complete runtime behavior not certified."
+  },
+  {
+    "file": "npc-keyword-portrait-ending.json",
+    "purpose": "NPC, keyword, portrait descriptors and natural-language endings.",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Structurally validated; complete runtime behavior not certified."
+  },
+  {
+    "file": "recipe-request-commit.json",
+    "purpose": "Optional precise transaction using a fresh AI request and script receipt.",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Component behaviors are documented; this complete composition is not runtime-qualified."
+  },
+  {
+    "file": "recipe-choice-followup.json",
+    "purpose": "Choice response updates objective in a later ordered trigger.",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Component behaviors are documented; this complete composition is not runtime-qualified."
+  },
+  {
+    "file": "recipe-threshold-unlock.json",
+    "purpose": "State threshold grants access and modifies content once.",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Structurally validated; complete runtime behavior not certified."
+  },
+  {
+    "file": "probe-skills.json",
+    "purpose": "Editor-baseline Evaluation installed explicitly; capped skill effects and runtime readout.",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Numeric skill updates and caps verified; generated skill labels can disagree."
+  },
+  {
+    "file": "probe-template-timing.json",
+    "purpose": "Compare live block interpolation with effect-installed interpolation.",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Block interpolation and pre-opening/first-turn execution behavior verified."
+  },
+  {
+    "file": "showcase-glass-ledger.json",
+    "purpose": "Integrated cast, alternate PCs, planning choice, precise transactions, countdown, optional prose, Scenario and script-triggered endings.",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Component behaviors are documented; this complete composition is not runtime-qualified."
+  },
+  {
+    "file": "optional-block.json",
+    "purpose": "Player preference, cached application and dynamic instructions.",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Structurally validated; complete runtime behavior not certified."
+  },
+  {
+    "file": "yaml-path-operations.json",
+    "purpose": "Set, remove, append and adjust paths on separate turns.",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Component behaviors are documented; this complete composition is not runtime-qualified."
+  },
+  {
+    "file": "narrative-vendemmia.json",
+    "purpose": "Narrative-first NPC cards with labeled sections, rules for intimate scenes, and keyword lore with sensory detail.",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Not runtime-qualified; a creative authoring example."
+  },
+  {
+    "file": "narrative-seven-nights.json",
+    "purpose": "Narrative-first fantasy built around central love interest, foil and rival. Shows world rules in block, consent built into fiction.",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Not runtime-qualified; a creative authoring example."
+  },
+  {
+    "file": "narrative-velvet-wager.json",
+    "purpose": "Immediate heat from turn 1; escalation & control tracker instead of courtship gates; multi-turn sex pacing; kinetic body descriptions; light state triggers.",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Not runtime-qualified; a creative authoring example."
+  },
+  {
+    "file": "recipe-layered-opening.json",
+    "purpose": "Player-selected dimensions assembled into a varied opening using native text replacements and background installation.",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked with tools/validate_iw_export.py.",
+    "runtimeScope": "Composition not yet runtime-tested in IW; see examples/README.md for checks."
+  },
+  {
+    "file": "recipe-on-demand-generation.json",
+    "purpose": "Event-driven temporary generation brief, persistent compact results and request-matched cleanup.",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked with tools/validate_iw_export.py.",
+    "runtimeScope": "Composition not yet runtime-tested in IW; see examples/README.md for checks."
+  },
+  {
+    "file": "recipe-completion-award.json",
+    "purpose": "Completion and award guard",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Optional composition of documented/observed primitives. This complete example has not been live-tested."
+  },
+  {
+    "file": "recipe-candidate-acceptance.json",
+    "purpose": "Candidate acceptance",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Optional composition of documented/observed primitives. This complete example has not been live-tested."
+  },
+  {
+    "file": "recipe-archive-reactivate.json",
+    "purpose": "Archive and reactivate",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Optional composition of documented/observed primitives. This complete example has not been live-tested."
+  },
+  {
+    "file": "recipe-cached-random.json",
+    "purpose": "Cached random choice",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Optional composition of documented/observed primitives. This complete example has not been live-tested."
+  },
+  {
+    "file": "recipe-consumed-timer.json",
+    "purpose": "Consumed turn milestone",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Optional composition of documented/observed primitives. This complete example has not been live-tested."
+  },
+  {
+    "file": "recipe-choice-domain.json",
+    "purpose": "Choice domain guard",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Optional composition of documented/observed primitives. This complete example has not been live-tested."
+  },
+  {
+    "file": "recipe-compiled-plot.json",
+    "purpose": "Guild prerequisite graph",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Optional composition of documented/observed primitives. This complete example has not been live-tested."
+  },
+  {
+    "file": "narrative-listening-road.json",
+    "purpose": "Non-romantic high-fantasy expedition: distinct peoples, platonic companions, fixed facts and several viable resolutions.",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Structurally validated; no live playthrough performed. AI-managed narrative rules and memory are not deterministic enforcement."
+  },
+  {
+    "file": "narrative-address-after-midnight.json",
+    "purpose": "Contained supernatural horror: bounded voice imitation, reliable evidence, conditional escalation and valid early containment.",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Structurally validated; no live playthrough performed. AI-managed narrative rules and memory are not deterministic enforcement."
+  },
+  {
+    "file": "effect-effectChangeBackground.json",
+    "purpose": "Change background native startup payload",
+    "evidence": "DOCUMENTED",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Native payload verified. Start-only background replacement is runtime-observed; ordinary and Start+Mid modes are not equivalent. This adapted example has structural validation, not a separate live-playthrough certification."
+  },
+  {
+    "file": "effect-effectChangeFirstAction.json",
+    "purpose": "Change first action native startup payload",
+    "evidence": "DOCUMENTED",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Native editor payload and startup picker availability verified. Ordinary use does not rewrite the opening; successful startup replacement is not separately certified here. This is a payload example, not a guarantee of narration or timing behavior."
+  },
+  {
+    "file": "effect-effectChangeOtherCharacters-add.json",
+    "purpose": "Add Other Character native startup payload",
+    "evidence": "DOCUMENTED",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Native editor payload verified; runtime character-record mutation unresolved. Startup picker availability is documented. Trigger firing, narration and the live-design NPC list do not establish that the live character record was added, modified or deleted. This adapted world is structurally validated only."
+  },
+  {
+    "file": "effect-effectChangeOtherCharacters-modify.json",
+    "purpose": "Modify Other Character native startup payload",
+    "evidence": "DOCUMENTED",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Native editor payload verified; runtime character-record mutation unresolved. Startup picker availability is documented. Trigger firing, narration and the live-design NPC list do not establish that the live character record was added, modified or deleted. This adapted world is structurally validated only."
+  },
+  {
+    "file": "effect-effectChangeOtherCharacters-delete.json",
+    "purpose": "Delete Other Character native startup payload",
+    "evidence": "DOCUMENTED",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Native editor payload verified; runtime character-record mutation unresolved. Startup picker availability is documented. Trigger firing, narration and the live-design NPC list do not establish that the live character record was added, modified or deleted. This adapted world is structurally validated only."
+  }
+]
+
+===== END FILE: examples/index.json =====
+
+END OF DOCUMENT: chat/IW-Payloads.txt
