@@ -4,7 +4,7 @@ Current through 2026-10-23. This covers observed authoring, play and troubleshoo
 
 ## Terminology for users
 
-Use tracker and trigger **Names**, not IDs, unless the user requests IDs. Distinguish duplicate Names by purpose/editor location. Keep IDs for internal wiring and preserve them during edits. Use variable handles when explaining code. Say **Scenarios**, never ambiguous Conditions, for reusable narrative situations. Call a character's Brief Summary **Summary**.
+Use tracker and trigger **Names**, not IDs, unless the user requests IDs. Distinguish duplicate Names by purpose/editor location. Keep IDs for internal wiring and preserve them during edits. Use variable handles when explaining code. Say **Scenarios**, never ambiguous Conditions, for reusable narrative situations. Call a character's one_liner **Summary**.
 
 | User/editor term | JSON mapping or distinction |
 | --- | --- |
