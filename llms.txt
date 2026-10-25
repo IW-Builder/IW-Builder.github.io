@@ -35,7 +35,7 @@ Read only what the task needs; Authoring-Prompt.md says which guide covers which
 - [reference/Trackers.md](https://iw-builder.github.io/reference/Trackers.md) (6 KB): Tracker fields, data types, visibility, update ownership, starting values and memory/context cost.
 - [reference/Trigger-Catalog.md](https://iw-builder.github.io/reference/Trigger-Catalog.md) (6 KB): Every identified trigger condition and effect type in one table. Check it before saying a trigger can't do something.
 - [reference/Triggers.md](https://iw-builder.github.io/reference/Triggers.md) (9 KB): Trigger timing flags, ordering, effect semantics, choosing native effects or PawScript, and start-of-game restrictions.
-- [reference/Verified-Behavior.md](https://iw-builder.github.io/reference/Verified-Behavior.md) (14 KB): Consolidated runtime findings: triggers, imports, PawScript, visibility, memory, forms, images and endings.
+- [reference/Verified-Behavior.md](https://iw-builder.github.io/reference/Verified-Behavior.md) (15 KB): Consolidated runtime findings: triggers, imports, PawScript, visibility, memory, forms, images and endings.
 
 ## Examples
 
@@ -112,7 +112,7 @@ Optional modules to adapt into worlds.
 
 - [library/Integration.md](https://iw-builder.github.io/library/Integration.md) (12 KB): How to choose and adapt library modules: Storymaster versus lightweight direction, token costs, dependency checklists. Read before using the library JSON.
 - [library/README.md](https://iw-builder.github.io/library/README.md) (1 KB): Human-friendly overview of the library.
-- [library/Sample-Blocks.json](https://iw-builder.github.io/library/Sample-Blocks.json) (56 KB): Library modules in world-file format: time/location, characterization, craft, pacing, trackers, image styles and more. Copy whole content values by name.
+- [library/Sample-Blocks.json](https://iw-builder.github.io/library/Sample-Blocks.json) (58 KB): Library modules in world-file format: time/location, characterization, craft, pacing, trackers, image styles and more. Copy whole content values by name.
 - [library/Storymaster-Suite.json](https://iw-builder.github.io/library/Storymaster-Suite.json) (34 KB): The Storymaster narrative-direction framework in world-file format. Substantial; read Integration.md first.
 
 ## Tools
@@ -149,14 +149,14 @@ Python tools for models or users that can run code. Without Python, use the chec
 
 Single-file bundles for chats without web access or with tool limits. Web-browsing models should prefer the individual files above.
 
-- [chat/index.html](https://iw-builder.github.io/chat/) (90 KB): HTML page containing IW-Authoring-Guide.txt, with links to the companion editions.
+- [chat/index.html](https://iw-builder.github.io/chat/) (91 KB): HTML page containing IW-Authoring-Guide.txt, with links to the companion editions.
 - [chat/IW-Authoring-Guide.txt](https://iw-builder.github.io/chat/IW-Authoring-Guide.txt) (87 KB): Combined text, start here: prompt, template, Evidence, Craft, Trackers, Triggers, Trigger-Catalog, Portable-Banks and library Integration.
 - [chat/IW-Technical-Reference.txt](https://iw-builder.github.io/chat/IW-Technical-Reference.txt) (82 KB): Combined text: Schema, PawScript, Capabilities, Recipes, Import-Integrity, Default Evaluation and AI profile IDs.
-- [chat/IW-Behavior.txt](https://iw-builder.github.io/chat/IW-Behavior.txt) (35 KB): Combined text: Editor-UI, Verified-Behavior and Known-Limits.
+- [chat/IW-Behavior.txt](https://iw-builder.github.io/chat/IW-Behavior.txt) (36 KB): Combined text: Editor-UI, Verified-Behavior and Known-Limits.
 - [chat/IW-Payloads.txt](https://iw-builder.github.io/chat/IW-Payloads.txt) (41 KB): Combined text: payload cookbook (every condition and effect) and the example index. Small and essential for mechanics.
 - [chat/IW-Mechanics-Examples.txt](https://iw-builder.github.io/chat/IW-Mechanics-Examples.txt) (98 KB): Combined text: complete mechanics example worlds (recipes, optional block, starting values, persistent cast).
 - [chat/IW-Narrative-Examples.txt](https://iw-builder.github.io/chat/IW-Narrative-Examples.txt) (102 KB): Combined text: complete narrative example worlds (ensemble romance, fantasy expedition, contained horror).
-- [chat/IW-Sample-Blocks.txt](https://iw-builder.github.io/chat/IW-Sample-Blocks.txt) (59 KB): Combined text: library modules (Sample-Blocks.json). Integration guide is in IW-Authoring-Guide.txt.
+- [chat/IW-Sample-Blocks.txt](https://iw-builder.github.io/chat/IW-Sample-Blocks.txt) (61 KB): Combined text: library modules (Sample-Blocks.json). Integration guide is in IW-Authoring-Guide.txt.
 - [chat/IW-Storymaster.txt](https://iw-builder.github.io/chat/IW-Storymaster.txt) (37 KB): Combined text: the Storymaster framework (Storymaster-Suite.json). Integration guide is in IW-Authoring-Guide.txt.
 - [chat/IW-Tools.txt](https://iw-builder.github.io/chat/IW-Tools.txt) (144 KB): Combined text: tool usage guide, Story-Tools and Engineering-Tools guides, plus validator, schema and helper sources to recreate locally.
 - [chat/README.md](https://iw-builder.github.io/chat/README.md) (2 KB): Human guide to the combined text files.

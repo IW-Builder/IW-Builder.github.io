@@ -62,9 +62,9 @@ Tracker estimates below cover updateInstructions only; descriptions, schemas, st
 
 The source offers both small- and large-cast appearance trackers. Its appearance merge script targets `$npc_appearance`, which is not automatically the variableName of either variant. Normalize the chosen store's variableName or rewrite all references. The large-cast updater depends on Relationship Tracker significance.
 
-The relationship/intimacy buffers and stores demonstrate an AI-proposed update followed by a script merge. The supplied scripts replace matching records; that is not automatically a field-level patch. Ensure the update contains the required full entry, or deliberately implement a field-preserving merge. This is an integration choice, not a new requirement for every world.
+The relationship, intimacy and appearance buffers demonstrate an AI-proposed update followed by a script merge. Each buffer is rooted in a record (`entries: []`) and asks for complete entries; the merge scripts read and clear `.entries` and replace matching records in the store. Live comparison showed list-rooted AI buffers losing most updates and "changed fields only" buffers receiving patches against the cleared buffer (see ../reference/Verified-Behavior.md). The relationship pair was tested directly; the intimacy and appearance buffers use the same pattern. Keep instructions, root and script in agreement if you adapt them. The stores are script-owned and stay lists.
 
-Initial blank list-like trackers in the library are source examples. Where a chosen script requires an actual list, initialize `[]` or ensure the first-use initialization is correct; do not assume blank text and an empty YAML list are interchangeable. The schema checks field storage type but not the nested runtime reference or merge algorithm.
+Initial blank list-like stores in the library are source examples. Direct (unbuffered) appearance trackers are AI-updated lists and share the list-root exposure; prefer the buffered setup for long casts. Where a chosen script requires an actual list, initialize `[]` or ensure the first-use initialization is correct; do not assume blank text and an empty YAML list are interchangeable. The schema checks field storage type but not the nested runtime reference or merge algorithm.
 
 ## Optional block recipe
 
