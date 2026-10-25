@@ -12,6 +12,7 @@ import re
 from urllib.parse import quote
 
 ROOT = Path(__file__).resolve().parent.parent
+KIT_VERSION = '1.5.0'  # also stated in reference/Evidence.md (checked by tests)
 
 # Combined text editions for chats without web access. Each stays well under
 # common fetch/attachment limits; models load companions only when needed.
@@ -25,6 +26,7 @@ GROUPS = {
         'reference/Triggers.md',
         'reference/Trigger-Catalog.md',
         'reference/Portable-Banks.md',
+        'library/Integration.md',
     ],
     'IW-Technical-Reference.txt': [
         'reference/Schema.md',
@@ -64,22 +66,24 @@ GROUPS = {
         'examples/narrative-listening-road.json',
         'examples/narrative-address-after-midnight.json',
     ],
-    'IW-Sample-Library.txt': [
-        'library/Integration.md',
+    'IW-Sample-Blocks.txt': [
         'library/Sample-Blocks.json',
+    ],
+    'IW-Storymaster.txt': [
         'library/Storymaster-Suite.json',
     ],
 }
 # Purpose of each edition, used in every edition's header so a model with only
 # one file knows which companion holds a given path.
 EDITION_PURPOSE = {
-    'IW-Authoring-Guide.txt': 'start here: prompt, template, narrative craft, trackers, triggers and data banks',
+    'IW-Authoring-Guide.txt': 'start here: prompt, template, narrative craft, trackers, triggers, data banks and library integration',
     'IW-Technical-Reference.txt': 'exact payloads, PawScript, capabilities, recipes and import integrity',
     'IW-Behavior.txt': 'editor/UI workflows, verified runtime behavior and known limits',
     'IW-Payloads.txt': 'exact native payload snippets for every condition and effect, plus the example index',
     'IW-Mechanics-Examples.txt': 'complete mechanics example worlds: recipes, optional block, starting values and a showcase',
     'IW-Narrative-Examples.txt': 'complete narrative example worlds: ensemble romance, fantasy expedition and contained horror',
-    'IW-Sample-Library.txt': 'optional library modules and Storymaster',
+    'IW-Sample-Blocks.txt': 'optional library modules (read library/Integration.md first)',
+    'IW-Storymaster.txt': 'the Storymaster narrative-direction framework (read library/Integration.md first)',
     'IW-Tools.txt': 'Python tools and their guides, for models that can run code',
 }
 
@@ -121,8 +125,9 @@ PAGE = """<!doctype html>
 <body>
   <header>
     <h1>Infinite Worlds Authoring Prompt</h1>
-    <p>Give this prompt to your AI along with your world idea.
-       The supporting kit supplies its templates and references.</p>
+    <p>Send this page's link to your AI together with your request, for example:
+       <code>Use https://IW-Builder.github.io/ to build: [your idea]</code>.
+       The supporting kit supplies its templates and references. Kit __KIT_VERSION__.</p>
     <nav aria-label="Resources">
       <a href="chat/">Plain-text prompt</a>
       <a href="full-package.zip">Download ZIP package</a>
@@ -296,13 +301,14 @@ DESCRIPTIONS = {
     'LICENSE': 'MIT license.',
     # Combined text editions
     'chat/index.html': 'HTML page containing IW-Authoring-Guide.txt, with links to the companion editions.',
-    'chat/IW-Authoring-Guide.txt': 'Combined text, start here: prompt, template, Evidence, Craft, Trackers, Triggers, Trigger-Catalog and Portable-Banks.',
+    'chat/IW-Authoring-Guide.txt': 'Combined text, start here: prompt, template, Evidence, Craft, Trackers, Triggers, Trigger-Catalog, Portable-Banks and library Integration.',
     'chat/IW-Technical-Reference.txt': 'Combined text: Schema, PawScript, Capabilities, Recipes, Import-Integrity, Default Evaluation and AI profile IDs.',
     'chat/IW-Behavior.txt': 'Combined text: Editor-UI, Verified-Behavior and Known-Limits.',
     'chat/IW-Payloads.txt': 'Combined text: payload cookbook (every condition and effect) and the example index. Small and essential for mechanics.',
     'chat/IW-Mechanics-Examples.txt': 'Combined text: complete mechanics example worlds (recipes, optional block, starting values, showcase).',
     'chat/IW-Narrative-Examples.txt': 'Combined text: complete narrative example worlds (ensemble romance, fantasy expedition, contained horror).',
-    'chat/IW-Sample-Library.txt': 'Combined text: library integration guide, Sample-Blocks and Storymaster-Suite.',
+    'chat/IW-Sample-Blocks.txt': 'Combined text: library modules (Sample-Blocks.json). Integration guide is in IW-Authoring-Guide.txt.',
+    'chat/IW-Storymaster.txt': 'Combined text: the Storymaster framework (Storymaster-Suite.json). Integration guide is in IW-Authoring-Guide.txt.',
     'chat/IW-Tools.txt': 'Combined text: tool usage guide, Story-Tools and Engineering-Tools guides, plus validator, schema and helper sources to recreate locally.',
     'chat/README.md': 'Human guide to the combined text files.',
     'chat/sources.json': 'Which source files make up each combined text file, with hashes.',
@@ -460,7 +466,7 @@ INDEX_SECTIONS = [
 
 def build_llms():
     groups = index_entries()
-    lines = ['# IW-Builder: Infinite Worlds Authoring Kit', '',
+    lines = ['# IW-Builder: Infinite Worlds Authoring Kit ' + KIT_VERSION, '',
              '> Reference kit for AI models that build, edit, review and debug Infinite Worlds (IW) games. '
              'Start with the authoring prompt at ' + SITE + ' (or Authoring-Prompt.md), then fetch only the '
              'files the task needs. Every published file is listed below with its direct URL, size and purpose.',
@@ -524,7 +530,7 @@ def build():
     checker = update_checker()
     for path in document_paths():
         write(path, marked(read(path), path))
-    write('index.html', PAGE.replace('__PROMPT_CONTENT__', html.escape(read('Authoring-Prompt.md'))))
+    write('index.html', PAGE.replace('__KIT_VERSION__', KIT_VERSION).replace('__PROMPT_CONTENT__', html.escape(read('Authoring-Prompt.md'))))
     write('checker/index.html', checker)
     build_chat()
     build_folder_pages(build_llms())

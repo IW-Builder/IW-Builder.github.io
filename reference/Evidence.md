@@ -1,6 +1,6 @@
 # Compatibility and evidence
 
-This is an independent, unaffiliated kit. Platform baseline: Infinite Worlds' October 8, 2026 "Save/load system, Image style system and Pawscript update," with editor/runtime information consolidated through October 23, 2026. Export schemaVersion is 2.4. Kit version is 1.4.0; the structural profile is 1.2.0. Neither is an IW application version. The unaffiliated Script Library source snapshot is version 3.16, October 16, 2026; source details and updating advice are in ../library/Integration.md.
+This is an independent, unaffiliated kit. Platform baseline: Infinite Worlds' October 8, 2026 "Save/load system, Image style system and Pawscript update," with editor/runtime information consolidated through October 24, 2026. Export schemaVersion is 2.4. Kit version is 1.5.0; the structural profile is 1.2.0. Neither is an IW application version. The unaffiliated Script Library source snapshot is version 3.16, October 16, 2026; source details and updating advice are in ../library/Integration.md.
 
 Use four evidence labels when a distinction matters. Ordinary reference sentences do not need a repeated tag.
 
