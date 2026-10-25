@@ -28,7 +28,7 @@ Read only what the task needs; Authoring-Prompt.md says which guide covers which
 - [reference/PawScript.md](https://iw-builder.github.io/reference/PawScript.md) (18 KB): PawScript language guide: syntax, collections, randomness, formatting, debugging, system roots and common mistakes.
 - [reference/Portable-Banks.md](https://iw-builder.github.io/reference/Portable-Banks.md) (8 KB): Data mode: portable character/data bank format, dependencies, full-content build reports and data_bank.py commands.
 - [reference/README.md](https://iw-builder.github.io/reference/README.md) (2 KB): Human-friendly index of the reference guides.
-- [reference/Recipes.md](https://iw-builder.github.io/reference/Recipes.md) (12 KB): Ways to combine features: situation triggers, thresholds, choices, optional blocks, dynamic content, request/commit and guarded state patterns.
+- [reference/Recipes.md](https://iw-builder.github.io/reference/Recipes.md) (16 KB): Ways to combine features: situation triggers, thresholds, choices, optional blocks, dynamic content, request/commit and guarded state patterns.
 - [reference/Roadmap.md](https://iw-builder.github.io/reference/Roadmap.md) (3 KB): Kit development status and planned work.
 - [reference/Schema.md](https://iw-builder.github.io/reference/Schema.md) (16 KB): Export structure: field groups, trackers, starting values, condition and effect payloads, comparators and value-effect operations.
 - [reference/Story-Tools.md](https://iw-builder.github.io/reference/Story-Tools.md) (4 KB): Import comparison and story-text extraction/merge tools: commands and limits.
@@ -100,6 +100,7 @@ Each JSON file is a complete importable world demonstrating one feature or combi
 - [examples/recipe-consumed-timer.json](https://iw-builder.github.io/examples/recipe-consumed-timer.json) (4 KB): Consumed turn milestone. Evidence: PATTERN.
 - [examples/recipe-layered-opening.json](https://iw-builder.github.io/examples/recipe-layered-opening.json) (13 KB): Player-selected dimensions assembled into a varied opening using native text replacements and background installation. Evidence: PATTERN.
 - [examples/recipe-on-demand-generation.json](https://iw-builder.github.io/examples/recipe-on-demand-generation.json) (9 KB): Event-driven temporary generation brief, persistent compact results and request-matched cleanup. Evidence: PATTERN.
+- [examples/recipe-persistent-cast.json](https://iw-builder.github.io/examples/recipe-persistent-cast.json) (20 KB): Generated recurring cast with script-locked personality cores and paced, pressure-resistant stance changes. Evidence: PATTERN.
 - [examples/recipe-request-commit.json](https://iw-builder.github.io/examples/recipe-request-commit.json) (10 KB): Optional precise transaction using a fresh AI request and script receipt. Evidence: PATTERN.
 - [examples/recipe-threshold-unlock.json](https://iw-builder.github.io/examples/recipe-threshold-unlock.json) (8 KB): State threshold grants access and modifies content once. Evidence: PATTERN.
 - [examples/showcase-glass-ledger.json](https://iw-builder.github.io/examples/showcase-glass-ledger.json) (25 KB): Integrated cast, alternate PCs, planning choice, precise transactions, countdown, optional prose, Scenario and script-triggered endings. Evidence: PATTERN.
@@ -149,11 +150,11 @@ Python tools for models or users that can run code. Without Python, use the chec
 Single-file bundles for chats without web access or with tool limits. Web-browsing models should prefer the individual files above.
 
 - [chat/index.html](https://iw-builder.github.io/chat/) (90 KB): HTML page containing IW-Authoring-Guide.txt, with links to the companion editions.
-- [chat/IW-Authoring-Guide.txt](https://iw-builder.github.io/chat/IW-Authoring-Guide.txt) (86 KB): Combined text, start here: prompt, template, Evidence, Craft, Trackers, Triggers, Trigger-Catalog, Portable-Banks and library Integration.
-- [chat/IW-Technical-Reference.txt](https://iw-builder.github.io/chat/IW-Technical-Reference.txt) (78 KB): Combined text: Schema, PawScript, Capabilities, Recipes, Import-Integrity, Default Evaluation and AI profile IDs.
+- [chat/IW-Authoring-Guide.txt](https://iw-builder.github.io/chat/IW-Authoring-Guide.txt) (87 KB): Combined text, start here: prompt, template, Evidence, Craft, Trackers, Triggers, Trigger-Catalog, Portable-Banks and library Integration.
+- [chat/IW-Technical-Reference.txt](https://iw-builder.github.io/chat/IW-Technical-Reference.txt) (82 KB): Combined text: Schema, PawScript, Capabilities, Recipes, Import-Integrity, Default Evaluation and AI profile IDs.
 - [chat/IW-Behavior.txt](https://iw-builder.github.io/chat/IW-Behavior.txt) (35 KB): Combined text: Editor-UI, Verified-Behavior and Known-Limits.
 - [chat/IW-Payloads.txt](https://iw-builder.github.io/chat/IW-Payloads.txt) (41 KB): Combined text: payload cookbook (every condition and effect) and the example index. Small and essential for mechanics.
-- [chat/IW-Mechanics-Examples.txt](https://iw-builder.github.io/chat/IW-Mechanics-Examples.txt) (101 KB): Combined text: complete mechanics example worlds (recipes, optional block, starting values, showcase).
+- [chat/IW-Mechanics-Examples.txt](https://iw-builder.github.io/chat/IW-Mechanics-Examples.txt) (97 KB): Combined text: complete mechanics example worlds (recipes, optional block, starting values, persistent cast).
 - [chat/IW-Narrative-Examples.txt](https://iw-builder.github.io/chat/IW-Narrative-Examples.txt) (102 KB): Combined text: complete narrative example worlds (ensemble romance, fantasy expedition, contained horror).
 - [chat/IW-Sample-Blocks.txt](https://iw-builder.github.io/chat/IW-Sample-Blocks.txt) (59 KB): Combined text: library modules (Sample-Blocks.json). Integration guide is in IW-Authoring-Guide.txt.
 - [chat/IW-Storymaster.txt](https://iw-builder.github.io/chat/IW-Storymaster.txt) (37 KB): Combined text: the Storymaster framework (Storymaster-Suite.json). Integration guide is in IW-Authoring-Guide.txt.

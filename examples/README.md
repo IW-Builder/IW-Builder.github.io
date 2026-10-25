@@ -21,6 +21,7 @@ The relationship-focused examples include mature material; the expedition and ho
 | --- | --- |
 | [A purchase with a receipt](recipe-request-commit.json) | Check funds, make a purchase and report what changed. |
 | [A choice that changes the goal](recipe-choice-followup.json) | Let the player's answer guide what comes next. |
+| [People who stay themselves](recipe-persistent-cast.json) | Invent recurring characters during play and keep their personalities steady when the player pushes. |
 | [Unlock something through progress](recipe-threshold-unlock.json) | Open up new content when a tracked value reaches a threshold. |
 | [An optional story setting](optional-block.json) | Let the player switch an extra feature on or off. |
 | [Different character starting values](character-starting-values.json) | Give characters fixed values or a choice of starting options. |

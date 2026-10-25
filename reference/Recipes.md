@@ -50,6 +50,33 @@ In [recipe-request-commit.json](../examples/recipe-request-commit.json), the AI 
 
 The [example index](../examples/index.json) records each complete world's purpose and verification scope. [Payloads.md](../examples/Payloads.md) supplies smaller native shapes. Remap IDs when combining worlds and validate the result; structural checks do not certify gameplay. Select examples by feature rather than imposing the showcase's architecture on every world.
 
+## Persistent cast: generated people who stay themselves
+
+[Persistent cast](../examples/recipe-persistent-cast.json) generates recurring people on the fly and protects their personalities from player influence. Prose rules alone ("never skip a stage", "quirks always persist") are requests the storyteller can quietly ignore when the AI owns the tracker that holds them. This pattern moves the guarantees into scripts.
+
+| Tracker | Owner | Job |
+| --- | --- | --- |
+| Cast Proposals | AI (buffer) | Full core for a person who just became recurring |
+| Cast | Scripts only | Locked cores plus current stance, progress, pressure and cooldown |
+| Cast Influence | AI (buffer, rewritten each turn) | This turn's attempts to influence Cast members, classified earned or pressure |
+| Stance Ladder | Author | Six stance names, lowest first; edit to suit the world |
+| Cast Report | Scripts | What changed in the latest pass, shown to the storyteller |
+
+1. **Generate.** The Cast Generation block gives the storyteller a recipe: extras get one line and are never recorded. A person becomes recurring on a second appearance, social importance, or when the player seeks them out, and then gets a full core: role, concrete want, 1-3 values, voice with a sample line, 2 tells, 2-4 habits, friction with another cast member, starting stance and an anchor from 1 (impressionable) to 5 (immovable).
+2. **Lock.** Admit Cast Proposals checks each proposal (name not already used, core complete, 2-4 habits, at least one value, cast under 12), copies the fields into Cast and clears the buffer. Rejections are explained in the report. After admission no script writes a core field again.
+3. **Resist.** Apply Cast Influence reads this turn's entries (stale turn stamps are ignored). Attempts on the core change nothing. Earned attempts add progress; a person's stance improves only after as many earned turns as their anchor, and never more than one step per turn. Pressure adds nothing, makes them guarded for 1 + anchor turns, and three pressures cost a step. Hurtful acts lower stance one step.
+4. **Show.** The Persistent Cast block renders the current turn and the latest report through live templates, so the storyteller plays walls, progress and setbacks from authoritative state. Changes apply from the next turn: narrate the current attempt as an attempt.
+
+Adapting it:
+
+- **Different ladders.** Replace the six stance words with the world's own progression (for example stranger, acquaintance, regular, friend, confidant, family) and the level descriptions in the Persistent Cast block. Keep six levels or change the 0-5 bounds in both scripts.
+- **Faster or slower worlds.** The anchor is both resistance and pacing. Lower anchors for impressionable casts; raise the guarded duration or the pressure limit for stubborn ones.
+- **Several relationships per person.** Keep one Cast record per person and add fields such as a second level for a rival or partner, applied by the same script with a separate `target` value.
+- **Visibility.** Cast is ai_only so players do not see the numbers; switch to everyone if visible progress is part of the design.
+- **Limits.** The cast cap of 12 bounds context cost; raise it deliberately. The storyteller still classifies earned versus pressure, so the guarantee is the pacing and the fixed core, not the classification. A malformed proposal (for example quirks written as a sentence instead of a list) can make the admit script fail and roll back; the proposal then stays in the buffer for correction.
+
+This composition is structurally validated, not live-tested; check the two scripts in Sandbox against sample proposals and influence entries before relying on it.
+
 ## Guarded state patterns
 
 These optional complete worlds compose known primitives; their exact compositions have not been live-certified. Do not replace a world's design with them automatically.

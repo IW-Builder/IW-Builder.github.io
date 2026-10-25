@@ -418,5 +418,12 @@
     "evidence": "DOCUMENTED",
     "structuralValidation": "Checked by tools/check_package.py; see its report.",
     "runtimeScope": "Native editor payload verified; runtime character-record mutation unresolved. Startup picker availability is documented. Trigger firing, narration and the live-design NPC list do not establish that the live character record was added, modified or deleted. This adapted world is structurally validated only."
+  },
+  {
+    "file": "recipe-persistent-cast.json",
+    "purpose": "Generated recurring cast with script-locked personality cores and paced, pressure-resistant stance changes",
+    "evidence": "PATTERN",
+    "structuralValidation": "Checked by tools/check_package.py; see its report.",
+    "runtimeScope": "Optional composition of documented/observed primitives. This complete example has not been live-tested; check both scripts in Sandbox."
   }
 ]

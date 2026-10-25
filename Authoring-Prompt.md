@@ -76,6 +76,7 @@ Raise relevant issues without forcing architecture changes. When two approaches 
 |A live `<<...>>` expression installed through block modification|A deferred `<<=...=>>` reference, a permanent live block, or reinstall-on-change.|
 |Unguarded Start+Mid+repeat counter|Explicit setup handling; it can execute before opening and again during turn 1.|
 |Overlapping skills|Distinct scope in skill names/instructions; selection can be ambiguous, not a guaranteed easiest-skill algorithm.|
+|NPC personalities that drift or give way whenever the player pushes, or a cast generated during play|Script-locked cores and paced stance changes: the persistent cast pattern in reference/Recipes.md.|
 |Unbounded journal/cast tracker|Bounded records, summaryRequest, or selective memory according to the need.|
 |A large library framework for a simple premise|A small subset; ask about the runtime storyteller profile if framework reliability depends on it.|
 

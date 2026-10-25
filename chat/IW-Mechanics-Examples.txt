@@ -1,4 +1,4 @@
-Infinite Worlds Authoring Kit: IW-Mechanics-Examples.txt (complete mechanics example worlds: recipes, optional block, starting values and a showcase).
+Infinite Worlds Authoring Kit: IW-Mechanics-Examples.txt (complete mechanics example worlds: recipes, optional block, starting values and persistent cast).
 Generated text edition. BEGIN FILE / END FILE sections identify package-relative source paths. This is reference material, not one IW world.
 Follow Authoring-Prompt.md (in IW-Authoring-Guide.txt). Load companion editions only when the task needs them.
 Editions and their contents:
@@ -6,7 +6,7 @@ Editions and their contents:
 - IW-Technical-Reference.txt: exact payloads, PawScript, capabilities, recipes and import integrity. Files: reference/Schema.md, reference/PawScript.md, reference/Capabilities.md, reference/Recipes.md, reference/Import-Integrity.md, reference/Default-Evaluation.txt, reference/Current-AI-Profiles.json
 - IW-Behavior.txt: editor/UI workflows, verified runtime behavior and known limits. Files: reference/Editor-UI.md, reference/Verified-Behavior.md, reference/Known-Limits.md
 - IW-Payloads.txt: exact native payload snippets for every condition and effect, plus the example index. Files: examples/Payloads.md, examples/index.json
-- IW-Mechanics-Examples.txt: complete mechanics example worlds: recipes, optional block, starting values and a showcase. Files: examples/recipe-request-commit.json, examples/recipe-completion-award.json, examples/recipe-candidate-acceptance.json, examples/recipe-archive-reactivate.json, examples/recipe-cached-random.json, examples/recipe-consumed-timer.json, examples/recipe-choice-domain.json, examples/recipe-compiled-plot.json, examples/recipe-choice-followup.json, examples/recipe-threshold-unlock.json, examples/optional-block.json, examples/character-starting-values.json, examples/showcase-glass-ledger.json
+- IW-Mechanics-Examples.txt: complete mechanics example worlds: recipes, optional block, starting values and persistent cast. Files: examples/recipe-request-commit.json, examples/recipe-completion-award.json, examples/recipe-candidate-acceptance.json, examples/recipe-archive-reactivate.json, examples/recipe-cached-random.json, examples/recipe-consumed-timer.json, examples/recipe-choice-domain.json, examples/recipe-compiled-plot.json, examples/recipe-choice-followup.json, examples/recipe-threshold-unlock.json, examples/optional-block.json, examples/character-starting-values.json, examples/recipe-persistent-cast.json
 - IW-Narrative-Examples.txt: complete narrative example worlds: ensemble romance, fantasy expedition and contained horror. Files: examples/narrative-vendemmia.json, examples/narrative-listening-road.json, examples/narrative-address-after-midnight.json
 - IW-Sample-Blocks.txt: optional library modules (read library/Integration.md first). Files: library/Sample-Blocks.json
 - IW-Storymaster.txt: the Storymaster narrative-direction framework (read library/Integration.md first). Files: library/Storymaster-Suite.json
@@ -2482,671 +2482,262 @@ Every file is also available individually: https://iw-builder.github.io/llms.txt
 }
 ===== END FILE: examples/character-starting-values.json =====
 
-===== BEGIN FILE: examples/showcase-glass-ledger.json =====
+===== BEGIN FILE: examples/recipe-persistent-cast.json =====
 {
-  "favorite": false,
-  "title": "The Glass Ledger — Showcase",
-  "description": "An understated caper about recovering a stolen ledger before the auction begins.",
-  "background": "The Glass Ledger proves that the harbor guild has been stealing wages. Tonight it is displayed at a private auction. Your crew meets in a rented map shop before attempting a quiet recovery. No one in the crew wants anyone hurt.",
-  "instructions": "Run a compact, nonviolent caper. Nia is in the opening room: a patient planner with a pencilled map who wants to recover stolen wages. Offer planning, crew conversation and explicit preparation. The fixed resource/caper steps are defined by the Caper Rules block; other actions use ordinary narrative judgment. Keep secrets out of unearned player knowledge. Do not add a second mandatory objective.",
-  "authorStyle": "Second-person present. Wry dialogue, tactile detail, compact scenes and resourceful characters. Keep consequences legible.",
-  "recommendedAIModel": null,
-  "firstInput": "Begin at 8:00 PM in the rented map shop. Nia unfolds the floor plan and reviews the selected approach: <<$plan>>. Introduce only Nia and the immediate preparation.",
-  "objective": "Prepare the selected approach, recover the Glass Ledger and leave safely.",
-  "imageModel": "manticore",
-  "imageStyle": "photo_1",
-  "illustrationStyleNonCharacterLowPriority": "",
-  "illustrationStyleNonCharacterHighPriority": "",
-  "illustrationStyleCharacterLowPriority": "",
-  "illustrationStyleCharacterHighPriority": "",
-  "imageStyleCharacterPre": "",
-  "imageStyleCharacterPost": "",
-  "imageStyleNonCharacterPre": "",
-  "imageStyleNonCharacterPost": "",
-  "mature": false,
-  "nsfw": false,
-  "contentWarnings": "",
-  "enableAISpecificInstructionBlocks": false,
-  "previewImage": "",
-  "fullSizePreviewImage": "",
-  "previewImageOptions": [],
-  "fullSizePreviewImageOptions": [],
-  "currentPreviewImageIndex": -1,
-  "imagePromptDetails": {
-    "illustrClothes": "",
-    "illustrSetting": "",
-    "illustrSubject": "",
-    "illustrAppearance": "",
-    "illustrIsCharacter": false,
-    "illustrExpressionPosition": ""
-  },
-  "permissionsOnceShared": {
-    "sharing": true,
-    "editing": true
-  },
-  "allowChangeCharacterName": false,
-  "allowChangeCharacterDescription": false,
-  "allowChangeCharacterSkills": false,
-  "allowChangeCharacterItemValues": false,
-  "allowChangeCharacterPortrait": false,
-  "allowChangeCharacterNewPortrait": false,
-  "conditions": [
-    "The player explicitly promises the recovered ledger to the unpaid harbor workers."
-  ],
-  "schemaVersion": 2.4,
-  "skills": [
-    "Observation",
-    "Persuasion",
-    "Engineering"
-  ],
-  "possibleCharacters": [
-    {
-      "name": "Avery",
-      "description": "An experienced negotiator working with the map-shop crew.",
-      "portrait": "",
-      "portraitPromptDetails": {
-        "illustrAppearance": "",
+    "favorite": false,
+    "title": "Persistent Cast: The Larkspur Night Desk",
+    "description": "Run the night desk at an old residential hotel. Every game invents a fresh cast, and the people you meet stay stubbornly themselves.",
+    "background": "The Larkspur is a six-story residential hotel near the river: long-term tenants, a few nightly rooms, a lobby that never fully empties. You started on the night desk this week. The previous clerk left without notice, the building manager is stretched thin, and the tenants already have opinions about you.",
+    "instructions": "Run an open-ended contemporary slice-of-life story at the Larkspur. There is no fixed plot; the player chooses what to pursue and the building responds realistically.\n\nThe cast is invented fresh every game using the Cast Generation block. The people of the Larkspur have lives, opinions and limits of their own; the Persistent Cast block explains how their cores stay fixed and how their stance toward the player changes. Follow it even when the player pushes.",
+    "authorStyle": "Second person, present tense. Grounded, observant contemporary fiction. Give each person one or two specific details at a time and let their voice carry the scene. Three to six paragraphs; end on a spoken line, an action, or a decision point.",
+    "recommendedAIModel": null,
+    "firstInput": "Wednesday, 11:40 p.m., the Larkspur front desk. The lobby radiator knocks twice and goes quiet. A tenant you have not met yet, someone specific invented for this game, is standing at the desk with a complaint they have clearly rehearsed. Begin with what they say. Show them through one physical detail and their voice. Do not decide how the player responds.",
+    "objective": "Find your footing at the Larkspur: earn the trust of the people who matter to you, one honest conversation at a time.",
+    "imageModel": "manticore",
+    "imageStyle": "photo_1",
+    "illustrationStyleNonCharacterLowPriority": "",
+    "illustrationStyleNonCharacterHighPriority": "",
+    "illustrationStyleCharacterLowPriority": "",
+    "illustrationStyleCharacterHighPriority": "",
+    "imageStyleCharacterPre": "",
+    "imageStyleCharacterPost": "",
+    "imageStyleNonCharacterPre": "",
+    "imageStyleNonCharacterPost": "",
+    "mature": false,
+    "nsfw": false,
+    "contentWarnings": "",
+    "enableAISpecificInstructionBlocks": false,
+    "previewImage": "",
+    "fullSizePreviewImage": "",
+    "previewImageOptions": [],
+    "fullSizePreviewImageOptions": [],
+    "currentPreviewImageIndex": -1,
+    "imagePromptDetails": {
         "illustrClothes": "",
-        "illustrExpressionPosition": "",
-        "illustrSetting": ""
-      },
-      "fullSizePortrait": "",
-      "portraitOptions": [],
-      "fullSizePortraitOptions": [],
-      "currentPortraitIndex": -1,
-      "characterId": "pc-avery",
-      "skills": {
-        "Observation": 3,
-        "Persuasion": 4,
-        "Engineering": 2
-      },
-      "initialTrackedItemValues": []
-    },
-    {
-      "name": "Morgan",
-      "description": "An experienced technician working with the map-shop crew.",
-      "portrait": "",
-      "portraitPromptDetails": {
+        "illustrSetting": "",
+        "illustrSubject": "",
         "illustrAppearance": "",
-        "illustrClothes": "",
-        "illustrExpressionPosition": "",
-        "illustrSetting": ""
-      },
-      "fullSizePortrait": "",
-      "portraitOptions": [],
-      "fullSizePortraitOptions": [],
-      "currentPortraitIndex": -1,
-      "characterId": "pc-morgan",
-      "skills": {
-        "Observation": 3,
-        "Persuasion": 2,
-        "Engineering": 4
-      },
-      "initialTrackedItemValues": []
-    }
-  ],
-  "triggerEvents": [
-    {
-      "id": "trg-acknowledge-plan",
-      "name": "Acknowledge Plan",
-      "triggerConditions": [
+        "illustrIsCharacter": false,
+        "illustrExpressionPosition": ""
+    },
+    "permissionsOnceShared": {
+        "sharing": true,
+        "editing": true
+    },
+    "allowChangeCharacterName": false,
+    "allowChangeCharacterDescription": false,
+    "allowChangeCharacterSkills": false,
+    "allowChangeCharacterItemValues": false,
+    "allowChangeCharacterPortrait": false,
+    "allowChangeCharacterNewPortrait": false,
+    "conditions": [],
+    "schemaVersion": 2.4,
+    "skills": [
+        "Social",
+        "Observation"
+    ],
+    "possibleCharacters": [
         {
-          "category": "condition",
-          "type": "triggerOnPawScript",
-          "data": "$plan != \"\"",
-          "id": "node-showcase-glass-ledger-1"
+            "name": "Night clerk",
+            "description": "The new night-desk clerk at the Larkspur: patient, observant, still learning who everyone is.",
+            "portrait": "",
+            "portraitPromptDetails": {
+                "illustrAppearance": "",
+                "illustrClothes": "",
+                "illustrExpressionPosition": "",
+                "illustrSetting": ""
+            },
+            "fullSizePortrait": "",
+            "portraitOptions": [],
+            "fullSizePortraitOptions": [],
+            "currentPortraitIndex": -1,
+            "characterId": "c7038c97-b50f-57be-9e33-9ce2914d80ef",
+            "skills": {
+                "Social": 3,
+                "Observation": 3
+            },
+            "initialTrackedItemValues": []
         }
-      ],
-      "triggerEffects": [
+    ],
+    "triggerEvents": [
         {
-          "type": "effectChangeObjective",
-          "data": "Prepare the <<$plan>> approach, recover the ledger, then leave.",
-          "id": "node-showcase-glass-ledger-2"
+            "id": "PcTrgRst1",
+            "name": "Cast Report Reset",
+            "advancedLogic": false,
+            "triggerOnStartOfGame": true,
+            "triggerMidGame": true,
+            "canTriggerMoreThanOnce": true,
+            "triggerConditions": [],
+            "triggerEffects": [
+                {
+                    "id": "PcEffRst1",
+                    "type": "effectRunScript",
+                    "name": "Clear Last Cast Report",
+                    "data": "$cast_report = \"\""
+                }
+            ]
         },
         {
-          "type": "effectShowMessage",
-          "data": "Approach: <<$plan>>. Tools cost 4 coins.",
-          "id": "node-showcase-glass-ledger-3"
-        }
-      ],
-      "triggerOnStartOfGame": true,
-      "triggerMidGame": true,
-      "canTriggerMoreThanOnce": false,
-      "advancedLogic": false
-    },
-    {
-      "id": "trg-receipt-reset",
-      "name": "Receipt Reset",
-      "triggerConditions": [],
-      "triggerEffects": [
-        {
-          "type": "effectRunScript",
-          "data": "$receipt = \"No caper transaction requested.\"",
-          "name": "Initialize Caper Receipt",
-          "id": "node-showcase-glass-ledger-4"
-        }
-      ],
-      "triggerOnStartOfGame": true,
-      "triggerMidGame": true,
-      "canTriggerMoreThanOnce": true,
-      "advancedLogic": false
-    },
-    {
-      "id": "trg-process-request",
-      "name": "Process Request",
-      "triggerConditions": [
-        {
-          "category": "condition",
-          "type": "triggerOnPawScript",
-          "data": "$request.turn = $game.turn_number and $request.event != \"NONE\"",
-          "id": "node-showcase-glass-ledger-5"
-        }
-      ],
-      "triggerEffects": [
-        {
-          "type": "effectRunScript",
-          "data": "if $state.finished = 1\n  $receipt = \"The caper is already complete.\"\nelse if $state.remaining <= 0\n  $receipt = \"The auction has begun; this attempt is over.\"\nelse if $request.event = \"BUY_TOOLS\"\n  if $state.tools = 1\n    $receipt = \"Tools already owned; no charge.\"\n  else if $coins >= 4\n    $coins -= 4\n    $state.tools = 1\n    $receipt = \"Tools purchased for 4 coins.\"\n  else\n    $receipt = \"Not enough coins for tools.\"\nelse if $request.event = \"RECOVER_LEDGER\"\n  if $plan != \"\" and $state.tools = 1\n    $state.ledger = 1\n    $receipt = \"Glass Ledger recovered.\"\n  else\n    $receipt = \"Choose an approach and obtain tools first.\"\nelse if $request.event = \"LEAVE\"\n  if $state.ledger = 1\n    $state.finished = 1\n    $receipt = \"You leave safely with the Glass Ledger.\"\n  else\n    $receipt = \"You can withdraw, but the ledger has not been recovered.\"",
-          "name": "Resolve Caper Transaction",
-          "id": "node-showcase-glass-ledger-6"
-        }
-      ],
-      "triggerOnStartOfGame": true,
-      "triggerMidGame": true,
-      "canTriggerMoreThanOnce": true,
-      "advancedLogic": false
-    },
-    {
-      "id": "trg-countdown",
-      "name": "Countdown",
-      "triggerConditions": [
-        {
-          "category": "condition",
-          "type": "triggerOnPawScript",
-          "data": "$game.turn_number > 1 and $plan != \"\" and $state.finished = 0 and $state.remaining > 0",
-          "id": "node-showcase-glass-ledger-7"
-        }
-      ],
-      "triggerEffects": [
-        {
-          "type": "effectRunScript",
-          "data": "$state.remaining -= 1",
-          "name": "Spend One Caper Beat",
-          "id": "node-showcase-glass-ledger-8"
-        }
-      ],
-      "triggerOnStartOfGame": false,
-      "triggerMidGame": false,
-      "canTriggerMoreThanOnce": true,
-      "advancedLogic": false
-    },
-    {
-      "id": "trg-detail-on",
-      "name": "Detail On",
-      "triggerConditions": [
-        {
-          "category": "condition",
-          "type": "triggerOnPawScript",
-          "data": "$extra_detail = \"On\" and $detail_cache != \"Enabled\"",
-          "id": "node-showcase-glass-ledger-9"
-        }
-      ],
-      "triggerEffects": [
-        {
-          "type": "effectModifyInstructionBlock",
-          "data": {
-            "id": "blk-detail",
-            "content": "Include one concrete sensory detail per scene without extending its length."
-          },
-          "id": "node-showcase-glass-ledger-10"
+            "id": "PcTrgAdm2",
+            "name": "Admit Cast Proposals",
+            "advancedLogic": false,
+            "triggerOnStartOfGame": false,
+            "triggerMidGame": false,
+            "canTriggerMoreThanOnce": true,
+            "triggerConditions": [
+                {
+                    "id": "PcCndAdm2",
+                    "category": "condition",
+                    "type": "triggerOnPawScript",
+                    "data": "$cast_proposals.any(name.exists())"
+                }
+            ],
+            "triggerEffects": [
+                {
+                    "id": "PcEffAdm2",
+                    "type": "effectRunScript",
+                    "name": "Validate and Lock New Cast Cores",
+                    "data": "# Lock newly recurring people into Cast after checking their core\nfor each $p in $cast_proposals\n  set $ok = 1\n  set $why = \"\"\n  if $p.name.exists() = false\n    set $ok = 0\n    set $why = \"missing name\"\n  else if $cast.any(name = $p.name) or $cast.any(aliases contains $p.name)\n    set $ok = 0\n    set $why = \"already in Cast\"\n  else if $cast.count() >= 12\n    set $ok = 0\n    set $why = \"Cast is full (12)\"\n  else if $p.want.exists() = false or $p.voice.exists() = false or $p.values.exists() = false or $p.quirks.exists() = false or $p.tells.exists() = false\n    set $ok = 0\n    set $why = \"core incomplete: needs want, voice, values, quirks and tells\"\n  else if $p.quirks.count() < 2 or $p.quirks.count() > 4 or $p.values.count() < 1\n    set $ok = 0\n    set $why = \"needs 2-4 quirks and at least one value\"\n  if $ok = 1\n    set $rec = record()\n    $rec.name = $p.name\n    $rec.aliases = first_available($p.aliases, list())\n    $rec.role = first_available($p.role, \"\")\n    $rec.look = first_available($p.look, \"\")\n    $rec.want = $p.want\n    $rec.values = $p.values\n    $rec.voice = $p.voice\n    $rec.tells = $p.tells\n    $rec.quirks = $p.quirks\n    $rec.friction = first_available($p.friction, \"none yet\")\n    $rec.anchor = 3\n    if $p.anchor.exists()\n      if $p.anchor >= 1 and $p.anchor <= 5\n        $rec.anchor = $p.anchor\n    $rec.level = 2\n    if $p.start_level.exists()\n      if $p.start_level >= 0 and $p.start_level <= 5\n        $rec.level = $p.start_level\n    $rec.stance = $cast_ladder.item($rec.level + 1)\n    $rec.progress = 0\n    $rec.pressure = 0\n    $rec.guarded_until = 0\n    $rec.last_shift = 0\n    $rec.since = $game.turn_number\n    $cast.append($rec)\n    $cast_report = $cast_report & \"Added to Cast: \" & $p.name & \" (\" & $rec.stance & \").\\n\"\n  else\n    $cast_report = $cast_report & \"Not added: \" & first_available($p.name, \"unnamed\") & \" - \" & $why & \".\\n\"\n$cast_proposals = list()"
+                }
+            ]
         },
         {
-          "type": "effectRunScript",
-          "data": "$detail_cache = \"Enabled\"",
-          "name": "Cache Detail Enabled",
-          "id": "node-showcase-glass-ledger-11"
+            "id": "PcTrgApl3",
+            "name": "Apply Cast Influence",
+            "advancedLogic": false,
+            "triggerOnStartOfGame": false,
+            "triggerMidGame": false,
+            "canTriggerMoreThanOnce": true,
+            "triggerConditions": [
+                {
+                    "id": "PcCndApl3",
+                    "category": "condition",
+                    "type": "triggerOnPawScript",
+                    "data": "$cast_influence.any(name.exists())"
+                }
+            ],
+            "triggerEffects": [
+                {
+                    "id": "PcEffApl3",
+                    "type": "effectRunScript",
+                    "name": "Resist, Pace and Apply Stance Changes",
+                    "data": "# Apply influence: cores never change; stance moves slowly, one step per turn at most\nset $turn = $game.turn_number\nfor each $inf in $cast_influence\n  set $found = 0\n  if $inf.turn.exists() and $inf.name.exists()\n    if $inf.turn = $turn\n      set $method = first_available($inf.method, \"unclassified\")\n      set $direction = first_available($inf.direction, \"toward\")\n      set $target = first_available($inf.target, \"stance\")\n      for each $c in $cast\n        if $c.name = $inf.name or $c.aliases.contains($inf.name)\n          set $found = 1\n          if $target = \"core\"\n            $cast_report = $cast_report & $c.name & \": core traits are fixed; they answer this in character.\\n\"\n          if $turn < $c.guarded_until\n            $cast_report = $cast_report & $c.name & \": guarded until turn \" & $c.guarded_until & \"; no progress.\\n\"\n          else if $method = \"pressure\"\n            $c.pressure += 1\n            $c.progress = 0\n            $c.guarded_until = $turn + 1 + $c.anchor\n            if $c.pressure >= 3 and $c.level > 0 and $c.last_shift != $turn\n              $c.level -= 1\n              $c.pressure = 0\n              $c.last_shift = $turn\n              $c.stance = $cast_ladder.item($c.level + 1)\n              $cast_report = $cast_report & $c.name & \": pushed too hard; drops to \" & $c.stance & \", guarded until turn \" & $c.guarded_until & \".\\n\"\n            else\n              $cast_report = $cast_report & $c.name & \": resists the pressure; guarded until turn \" & $c.guarded_until & \".\\n\"\n          else if $method != \"earned\"\n            $cast_report = $cast_report & $c.name & \": influence entry not classified as earned or pressure; no change.\\n\"\n          else if $direction = \"away\"\n            if $c.level > 0 and $c.last_shift != $turn\n              $c.level -= 1\n              $c.progress = 0\n              $c.last_shift = $turn\n              $c.stance = $cast_ladder.item($c.level + 1)\n              $cast_report = $cast_report & $c.name & \": cools to \" & $c.stance & \".\\n\"\n          else if $target != \"core\"\n            $c.progress += 1\n            if $c.progress >= $c.anchor and $c.level < 5 and $c.last_shift != $turn\n              $c.level += 1\n              $c.progress = 0\n              $c.pressure = 0\n              $c.last_shift = $turn\n              $c.stance = $cast_ladder.item($c.level + 1)\n              $cast_report = $cast_report & $c.name & \": warms to \" & $c.stance & \".\\n\"\n            else\n              $cast_report = $cast_report & $c.name & \": earned progress \" & $c.progress & \" of \" & $c.anchor & \" toward the next stance.\\n\"\n      if $found = 0\n        $cast_report = $cast_report & $inf.name & \": not in Cast; propose them in Cast Proposals first.\\n\"\n    else\n      $cast_report = $cast_report & \"Ignored a stale influence entry for \" & $inf.name & \".\\n\"\n$cast_influence = list()"
+                }
+            ]
         }
-      ],
-      "triggerOnStartOfGame": true,
-      "triggerMidGame": true,
-      "canTriggerMoreThanOnce": true,
-      "advancedLogic": false
-    },
-    {
-      "id": "trg-detail-off",
-      "name": "Detail Off",
-      "triggerConditions": [
+    ],
+    "victoryCondition": null,
+    "defeatCondition": null,
+    "trackedItems": [
         {
-          "category": "condition",
-          "type": "triggerOnPawScript",
-          "data": "$extra_detail = \"Off\" and $detail_cache != \"Disabled\"",
-          "id": "node-showcase-glass-ledger-12"
-        }
-      ],
-      "triggerEffects": [
-        {
-          "type": "effectModifyInstructionBlock",
-          "data": {
-            "id": "blk-detail",
-            "content": ""
-          },
-          "id": "node-showcase-glass-ledger-13"
+            "id": "PcCast001",
+            "name": "Cast",
+            "positionInList": 0,
+            "dataType": "yaml",
+            "visibility": "ai_only",
+            "description": "Locked character cores and current stance toward the player. Written only by scripts: the storyteller reads it but never edits it. Core fields (role, look, want, values, voice, tells, quirks, friction, anchor) never change after admission; level, stance, progress, pressure, guarded_until and last_shift are managed by the Apply Cast Influence script.",
+            "updateInstructions": "",
+            "formatExample": "",
+            "enforceFormat": false,
+            "formatSchema": "",
+            "initialValue": "[]",
+            "initialValueBasedOnPC": "same",
+            "autoUpdate": false,
+            "variableName": "cast",
+            "driftAcknowledgedForName": null
         },
         {
-          "type": "effectRunScript",
-          "data": "$detail_cache = \"Disabled\"",
-          "name": "Cache Detail Disabled",
-          "id": "node-showcase-glass-ledger-14"
-        }
-      ],
-      "triggerOnStartOfGame": true,
-      "triggerMidGame": true,
-      "canTriggerMoreThanOnce": true,
-      "advancedLogic": false
-    },
-    {
-      "id": "trg-promise",
-      "name": "Promise",
-      "triggerConditions": [
-        {
-          "category": "condition",
-          "type": "triggerOnEvent",
-          "data": "The player explicitly promises the recovered ledger to the unpaid harbor workers.",
-          "id": "node-showcase-glass-ledger-15"
-        }
-      ],
-      "triggerEffects": [
-        {
-          "type": "effectGiveInfo",
-          "data": "The crew remembers the promise to return the evidence to the workers.",
-          "id": "node-showcase-glass-ledger-16"
-        }
-      ],
-      "triggerOnStartOfGame": false,
-      "triggerMidGame": false,
-      "canTriggerMoreThanOnce": false,
-      "advancedLogic": false
-    },
-    {
-      "id": "trg-receipt",
-      "name": "Receipt",
-      "triggerConditions": [
-        {
-          "id": "trg-receipt-requested",
-          "category": "condition",
-          "type": "triggerOnPawScript",
-          "data": "$request.turn = $game.turn_number and $request.event != \"NONE\""
-        }
-      ],
-      "triggerEffects": [
-        {
-          "type": "effectShowMessage",
-          "data": "<<$receipt>> Coins: <<$coins>>. Beats: <<$state.remaining>>.",
-          "id": "node-showcase-glass-ledger-17"
+            "id": "PcProp002",
+            "name": "Cast Proposals",
+            "positionInList": 1,
+            "dataType": "yaml",
+            "visibility": "ai_only_boring",
+            "description": "Buffer for newly recurring people. The storyteller proposes; a script validates and locks them into Cast.",
+            "updateInstructions": "Add an entry only when a person newly becomes recurring this turn: they appear for the second time, they matter socially, or the player seeks them out. Never add someone already in Cast; check names and aliases. Do not edit or remove existing entries: scripts move valid entries into Cast and clear this list. One-scene extras are never added.\nFields:\n- name; aliases: list of other names they go by, may be empty\n- role: their place in daily life (job, home, routine)\n- look: one line of concrete physical detail\n- want: something concrete they pursue whether or not the player shows up\n- values: 1-3 things they protect or refuse to do\n- voice: speech rhythm plus one sample line in quotes\n- tells: 2 physical behaviors that reveal their state\n- quirks: 2-4 habits present in every scene\n- friction: a tie or tension with another Cast member, or \"none yet\"\n- anchor: 1-5, how settled they are: 1 impressionable, 3 typical adult, 5 immovable. Derive it from age, confidence, what they stand to lose and how well they know the player\n- start_level: 0-5 on the stance ladder (0 hostile, 1 wary, 2 neutral, 3 warm, 4 trusting, 5 devoted); most strangers start at 1 or 2",
+            "formatExample": "- name: Odalys Ferro\n  aliases: [Dali]\n  role: retired court stenographer, room 5C, sixteen years at the Larkspur\n  look: small and upright, reading glasses on a beaded chain, cardigan buttoned to the throat\n  want: a quiet hallway after ten so she can finish transcribing her late husband's letters\n  values: [precision, keeping her word]\n  voice: clipped and exact, repeats your words back before answering: \"You said soon. Define soon.\"\n  tells: [taps the desk twice before disagreeing, removes her glasses when she softens]\n  quirks: [corrects grammar under her breath, keeps peppermints in her sleeve]\n  friction: feuding with the tenant in 5D over his late-night music\n  anchor: 4\n  start_level: 1",
+            "enforceFormat": false,
+            "formatSchema": "",
+            "initialValue": "[]",
+            "initialValueBasedOnPC": "same",
+            "autoUpdate": true,
+            "variableName": "cast_proposals",
+            "driftAcknowledgedForName": null
         },
         {
-          "type": "effectRunScript",
-          "data": "$request.turn = 0\n$request.event = \"NONE\"",
-          "name": "Consume Caper Request",
-          "id": "node-showcase-glass-ledger-18"
-        }
-      ],
-      "triggerOnStartOfGame": true,
-      "triggerMidGame": true,
-      "canTriggerMoreThanOnce": true,
-      "advancedLogic": false
-    },
-    {
-      "id": "trg-success",
-      "name": "Success",
-      "triggerConditions": [
-        {
-          "category": "condition",
-          "type": "triggerOnPawScript",
-          "data": "$state.finished = 1",
-          "id": "node-showcase-glass-ledger-19"
-        }
-      ],
-      "triggerEffects": [
-        {
-          "type": "effectShowMessage",
-          "data": "The evidence is safe. Your crew can choose what comes next.",
-          "id": "node-showcase-glass-ledger-20"
+            "id": "PcInfl003",
+            "name": "Cast Influence",
+            "positionInList": 2,
+            "dataType": "yaml",
+            "visibility": "ai_only_boring",
+            "description": "Buffer for this turn's attempts to influence Cast members. A script applies resistance, pacing and cooldowns, then clears it.",
+            "updateInstructions": "Rewrite this list every turn. Add one entry for each Cast member the player tried to influence this turn: changing how they feel about the player, what they do, or who they are. If there was none, write [].\nFields:\n- name\n- turn: the CURRENT TURN number shown in the Persistent Cast block\n- method: earned when the attempt fits their values and wants and builds real rapport; pressure when it is forceful, rushed, commanding, deceptive, or pushes against their values. The player's confidence or insistence never makes pressure earned\n- direction: toward (more favorable) or away (hurt, betrayed, alienated)\n- target: stance for feelings about the player; core when the attempt tries to change their values, quirks, voice or wants\n- note: a few words",
+            "formatExample": "- name: Odalys Ferro\n  turn: 7\n  method: earned\n  direction: toward\n  target: stance\n  note: kept the hallway quiet as promised",
+            "enforceFormat": false,
+            "formatSchema": "",
+            "initialValue": "[]",
+            "initialValueBasedOnPC": "same",
+            "autoUpdate": true,
+            "variableName": "cast_influence",
+            "driftAcknowledgedForName": null
         },
         {
-          "type": "effectEndsGame",
-          "data": true,
-          "id": "node-showcase-glass-ledger-21"
-        }
-      ],
-      "triggerOnStartOfGame": false,
-      "triggerMidGame": false,
-      "canTriggerMoreThanOnce": false,
-      "advancedLogic": false
-    },
-    {
-      "id": "trg-timeout",
-      "name": "Timeout",
-      "triggerConditions": [
-        {
-          "category": "condition",
-          "type": "triggerOnPawScript",
-          "data": "$state.remaining = 0 and $state.finished = 0",
-          "id": "node-showcase-glass-ledger-22"
-        }
-      ],
-      "triggerEffects": [
-        {
-          "type": "effectShowMessage",
-          "data": "The auction begins before the crew is ready. You withdraw safely; continuation is permitted.",
-          "id": "node-showcase-glass-ledger-23"
+            "id": "PcLadr004",
+            "name": "Stance Ladder",
+            "positionInList": 3,
+            "dataType": "yaml",
+            "visibility": "hidden",
+            "description": "Stance names by level, lowest first (level 0 is the first entry). Edit the six words to suit the world; keep six entries or adjust the level bounds in the scripts.",
+            "updateInstructions": "",
+            "formatExample": "",
+            "enforceFormat": false,
+            "formatSchema": "",
+            "initialValue": "- hostile\n- wary\n- neutral\n- warm\n- trusting\n- devoted\n",
+            "initialValueBasedOnPC": "same",
+            "autoUpdate": false,
+            "variableName": "cast_ladder",
+            "driftAcknowledgedForName": null
         },
         {
-          "type": "effectEndsGame",
-          "data": true,
-          "id": "node-showcase-glass-ledger-24"
+            "id": "PcRprt005",
+            "name": "Cast Report",
+            "positionInList": 4,
+            "dataType": "text",
+            "visibility": "ai_only",
+            "description": "What the cast scripts changed during the latest trigger pass. Shown to the storyteller in the Persistent Cast block.",
+            "updateInstructions": "",
+            "formatExample": "",
+            "enforceFormat": false,
+            "formatSchema": "",
+            "initialValue": "",
+            "initialValueBasedOnPC": "same",
+            "autoUpdate": false,
+            "variableName": "cast_report",
+            "driftAcknowledgedForName": null
         }
-      ],
-      "triggerOnStartOfGame": false,
-      "triggerMidGame": false,
-      "canTriggerMoreThanOnce": false,
-      "advancedLogic": false
-    }
-  ],
-  "victoryCondition": null,
-  "defeatCondition": null,
-  "trackedItems": [
-    {
-      "id": "nzr9cnDuo",
-      "name": "Coins",
-      "positionInList": 0,
-      "dataType": "number",
-      "visibility": "everyone",
-      "description": "Example coins",
-      "updateInstructions": "",
-      "formatExample": "",
-      "enforceFormat": false,
-      "formatSchema": "",
-      "initialValue": "12",
-      "initialValueBasedOnPC": "same",
-      "autoUpdate": false,
-      "variableName": "coins",
-      "driftAcknowledgedForName": null
-    },
-    {
-      "id": "qKfRA7vRe",
-      "name": "Plan",
-      "positionInList": 1,
-      "dataType": "text",
-      "visibility": "everyone",
-      "description": "Example plan",
-      "updateInstructions": "",
-      "formatExample": "",
-      "enforceFormat": false,
-      "formatSchema": "",
-      "initialValue": "Guests",
-      "initialValueBasedOnPC": "player",
-      "autoUpdate": false,
-      "variableName": "plan",
-      "driftAcknowledgedForName": null,
-      "initialValueChoices": [
-        "Guests",
-        "Service"
-      ]
-    },
-    {
-      "id": "yhK6linEz",
-      "name": "Request",
-      "positionInList": 2,
-      "dataType": "yaml",
-      "visibility": "ai_only",
-      "description": "Example request",
-      "updateInstructions": "Write turn=the CURRENT TURN value in the permanent Turn Context block as number and event EVERY turn. From the current explicit player request select one: BUY_TOOLS, RECOVER_LEDGER, LEAVE, or NONE. Talking or asking about an action is NONE. Do not infer completion from prose.",
-      "formatExample": "",
-      "enforceFormat": false,
-      "formatSchema": "",
-      "initialValue": "turn: 0\nevent: NONE",
-      "initialValueBasedOnPC": "same",
-      "autoUpdate": true,
-      "variableName": "request",
-      "driftAcknowledgedForName": null
-    },
-    {
-      "id": "oW6C9cIlg",
-      "name": "State",
-      "positionInList": 3,
-      "dataType": "yaml",
-      "visibility": "ai_only",
-      "description": "Example state",
-      "updateInstructions": "",
-      "formatExample": "",
-      "enforceFormat": false,
-      "formatSchema": "",
-      "initialValue": "tools: 0\nledger: 0\nfinished: 0\nremaining: 8",
-      "initialValueBasedOnPC": "same",
-      "autoUpdate": false,
-      "variableName": "state",
-      "driftAcknowledgedForName": null
-    },
-    {
-      "id": "OTvEy5AxE",
-      "name": "Receipt",
-      "positionInList": 4,
-      "dataType": "text",
-      "visibility": "ai_only",
-      "description": "Example receipt",
-      "updateInstructions": "",
-      "formatExample": "",
-      "enforceFormat": false,
-      "formatSchema": "",
-      "initialValue": "",
-      "initialValueBasedOnPC": "same",
-      "autoUpdate": false,
-      "variableName": "receipt",
-      "driftAcknowledgedForName": null
-    },
-    {
-      "id": "KaKnk20l9",
-      "name": "Extra Detail",
-      "positionInList": 5,
-      "dataType": "text",
-      "visibility": "player_only",
-      "description": "Example extra detail",
-      "updateInstructions": "",
-      "formatExample": "",
-      "enforceFormat": false,
-      "formatSchema": "",
-      "initialValue": "Off",
-      "initialValueBasedOnPC": "player",
-      "autoUpdate": false,
-      "variableName": "extra_detail",
-      "driftAcknowledgedForName": null,
-      "initialValueChoices": [
-        "On",
-        "Off"
-      ]
-    },
-    {
-      "id": "AzPojr8mB",
-      "name": "Detail Cache",
-      "positionInList": 6,
-      "dataType": "text",
-      "visibility": "hidden_boring",
-      "description": "Example detail cache",
-      "updateInstructions": "",
-      "formatExample": "",
-      "enforceFormat": false,
-      "formatSchema": "",
-      "initialValue": "",
-      "initialValueBasedOnPC": "same",
-      "autoUpdate": false,
-      "variableName": "detail_cache",
-      "driftAcknowledgedForName": null
-    }
-  ],
-  "hideSkillSystem": false,
-  "autoAdvanceVersion": false,
-  "version": "1.0",
-  "charSelectText": "Choose a negotiator or a technician. Both can complete the caper.",
-  "descriptionRequest": "",
-  "evaluationRequest": "",
-  "summaryRequest": "",
-  "instructionBlocks": [
-    {
-      "id": "blk-core",
-      "name": "Caper Rules",
-      "content": "The crew can prepare and talk freely. Tools cost 4 coins once. Once an approach is selected, each later turn before completion spends one of the eight remaining beats. Recovering the ledger requires a selected plan and purchased tools; leaving successfully requires the ledger. These exact changes occur in triggers: narrate attempts without awarding resources or declaring success before the receipt. Continue from state and receipt next turn. Current coins: <<$coins>>. Approach: <<$plan>>. Tools: <<$state.tools>>. Ledger: <<$state.ledger>>. Remaining beats: <<$state.remaining>>. Both plans support success; details and complications can differ."
-    },
-    {
-      "id": "blk-detail",
-      "name": "Optional Detail",
-      "content": ""
-    },
-    {
-      "id": "blk-time",
-      "name": "Time and Location",
-      "content": "Use whereWhen as a single opening header in outcomeDescription: {Place}, at HH:MM AM/PM. Start at 8:00 PM in the map shop; advance time reasonably for scene events. Follow the header with a blank line and horizontal rule. The beat counter is a gameplay deadline, not a fixed number of clock minutes."
-    },
-    {
-      "id": "blk-turn-context",
-      "name": "Turn Context",
-      "content": "CURRENT TURN: <<$game.turn_number>>. The request tracker must copy this number into its turn field for the current input."
-    }
-  ],
-  "NPCs": [
-    {
-      "id": "npc-nia",
-      "name": "Nia",
-      "names": [
-        "Nia"
-      ],
-      "one_liner": "Nia is the crew's planner. She states a plan as a question, then waits for a real answer.",
-      "detail": "Patient, quietly stubborn; wants unpaid workers to receive the evidence. She states a plan as a question, then waits for a real answer. Under pressure she folds and refolds one map corner. She will change a plan to protect a worker even when it costs time.",
-      "appearance": "Broad-shouldered, silver braid looped through a pencil, navy coat with patched elbows.",
-      "location": "map shop",
-      "secret_info": "",
-      "img_appearance": "Broad-shouldered, silver braid looped through a pencil, navy coat with patched elbows.",
-      "img_clothing": "Practical evening clothes appropriate to the harbor.",
-      "positionInList": 0
-    },
-    {
-      "id": "npc-joss",
-      "name": "Joss",
-      "names": [
-        "Joss"
-      ],
-      "one_liner": "Joss is the crew's driver. He speaks in departure times and distances, with a dry half-smile instead of reassurance.",
-      "detail": "Laconic and punctual; insists on a clear departure signal. He speaks in departure times and distances, with a dry half-smile instead of reassurance. He refuses surprise passengers but will not abandon the crew.",
-      "appearance": "Lean man with a crooked nose, close-cropped hair and a worn leather driving coat.",
-      "location": "back lane",
-      "secret_info": "",
-      "img_appearance": "Lean man with a crooked nose, close-cropped hair and a worn leather driving coat.",
-      "img_clothing": "Practical evening clothes appropriate to the harbor.",
-      "positionInList": 1
-    },
-    {
-      "id": "npc-em",
-      "name": "Em",
-      "names": [
-        "Em"
-      ],
-      "one_liner": "Em is the crew's locksmith. She describes locks as badly behaved acquaintances.",
-      "detail": "Dry humor; values clean work more than speed. She describes locks as badly behaved acquaintances. Her jokes are precise and quiet; rushed hands make her stop the conversation and restart the task.",
-      "appearance": "Compact woman with a freckled face, round spectacles and a velvet tool roll.",
-      "location": "map shop",
-      "secret_info": "",
-      "img_appearance": "Compact woman with a freckled face, round spectacles and a velvet tool roll.",
-      "img_clothing": "Practical evening clothes appropriate to the harbor.",
-      "positionInList": 2
-    },
-    {
-      "id": "npc-rafi",
-      "name": "Rafi",
-      "names": [
-        "Rafi"
-      ],
-      "one_liner": "Rafi is the crew's lookout. He fills anxious silences with elaborate guesses, then becomes sharply concise when reporting something he actually saw.",
-      "detail": "Talkative when nervous; watches arrivals carefully. He fills anxious silences with elaborate guesses, then becomes sharply concise when reporting something he actually saw. He wants to be trusted with more than lookout duty.",
-      "appearance": "Tall, restless man in a mustard scarf and an oversized rain cape.",
-      "location": "opposite roof",
-      "secret_info": "",
-      "img_appearance": "Tall, restless man in a mustard scarf and an oversized rain cape.",
-      "img_clothing": "Practical evening clothes appropriate to the harbor.",
-      "positionInList": 3
-    },
-    {
-      "id": "npc-sol",
-      "name": "Sol",
-      "names": [
-        "Sol"
-      ],
-      "one_liner": "Sol is the crew's forger. He corrects the weight of paper before discussing the morality of forgery.",
-      "detail": "Meticulous; treats convincing stationery as an art. He corrects the weight of paper before discussing the morality of forgery. He speaks with gentle ceremonial formality and hates waste.",
-      "appearance": "Bald older man with immaculate cuffs, a green eye shade tucked in his pocket and a violet ink stain at one thumb.",
-      "location": "print shop",
-      "secret_info": "",
-      "img_appearance": "Bald older man with immaculate cuffs, a green eye shade tucked in his pocket and a violet ink stain at one thumb.",
-      "img_clothing": "Practical evening clothes appropriate to the harbor.",
-      "positionInList": 4
-    },
-    {
-      "id": "npc-tess",
-      "name": "Tess",
-      "names": [
-        "Tess"
-      ],
-      "one_liner": "Tess is the crew's porter. She greets people by the last useful thing they did.",
-      "detail": "Friendly and physically assured; remembers staff routines. She greets people by the last useful thing they did. Her warmth is practical: carrying a crate, finding a chair, sharing a sandwich. She notices who gets ignored.",
-      "appearance": "Sturdy woman with close-shaved dark hair, a chipped front tooth and rolled linen sleeves.",
-      "location": "service yard",
-      "secret_info": "",
-      "img_appearance": "Sturdy woman with close-shaved dark hair, a chipped front tooth and rolled linen sleeves.",
-      "img_clothing": "Practical evening clothes appropriate to the harbor.",
-      "positionInList": 5
-    },
-    {
-      "id": "npc-ivo",
-      "name": "Ivo",
-      "names": [
-        "Ivo"
-      ],
-      "one_liner": "Ivo is the crew's accountant. He hesitates over personal questions but becomes clear and passionate when explaining stolen wages.",
-      "detail": "Soft-spoken; can explain why the ledger matters. He hesitates over personal questions but becomes clear and passionate when explaining stolen wages. He gives concrete examples instead of grand speeches.",
-      "appearance": "Narrow-faced man with tired eyes, a burgundy waistcoat and a brass counting chain.",
-      "location": "map shop",
-      "secret_info": "",
-      "img_appearance": "Narrow-faced man with tired eyes, a burgundy waistcoat and a brass counting chain.",
-      "img_clothing": "Practical evening clothes appropriate to the harbor.",
-      "positionInList": 6
-    },
-    {
-      "id": "npc-bea",
-      "name": "Bea",
-      "names": [
-        "Bea"
-      ],
-      "one_liner": "Bea is the crew's fence. She names a price once and lets silence do the negotiating.",
-      "detail": "Practical; can arrange safe transfer of evidence, but refuses stolen personal valuables. She names a price once and lets silence do the negotiating. Beneath that reserve she remembers every worker whose testimony she has protected.",
-      "appearance": "Older woman with white curls, bright brass earrings and a spotless black oilskin coat.",
-      "location": "canal warehouse",
-      "secret_info": "",
-      "img_appearance": "Older woman with white curls, bright brass earrings and a spotless black oilskin coat.",
-      "img_clothing": "Practical evening clothes appropriate to the harbor.",
-      "positionInList": 7
-    }
-  ],
-  "loreBookEntries": [
-    {
-      "id": "kw-auction",
-      "name": "Auction House",
-      "keywords": [
-        "auction house",
-        "service corridor"
-      ],
-      "content": "The auction house occupies a former customs office. Guests use the front hall; staff use the service corridor. Both lead toward the ledger display. The crew's floor plan gives only ordinary architecture, not secret solutions."
-    }
-  ],
-  "designNotes": "Authoring example. See the example index for scope and verification status."
+    ],
+    "hideSkillSystem": false,
+    "autoAdvanceVersion": false,
+    "version": "1.0",
+    "charSelectText": "Who is taking the night desk?",
+    "descriptionRequest": "",
+    "evaluationRequest": "",
+    "summaryRequest": "",
+    "instructionBlocks": [
+        {
+            "id": "PcBlkGen1",
+            "name": "Cast Generation",
+            "content": "CAST GENERATION\nInvent people when a scene needs them; this world has no fixed cast.\n- Extras (one scene, no name needed by the player) get one line and one distinguishing detail. Never record them.\n- A person becomes recurring when they appear a second time, matter socially, or the player seeks them out. That turn, give them a full core and write it to Cast Proposals.\n- A full core has: a role in daily life; a concrete want they pursue without the player; 1-3 values they protect or refuse to break; a voice (rhythm plus one sample line); 2 physical tells; 2-4 habits that show up in every scene; a friction with someone else in the cast; a starting stance; an anchor from 1 (impressionable) to 5 (immovable).\n- Variety: draw names from the setting's language, era and class. Avoid names models overuse (Elara, Lyra, Seraphina, Aria, Luna, Kael, Thorne, Zephyr, Vex). Give recurring people different initials and syllable counts. Vary ages, backgrounds, bodies, temperaments and how much they care about the player; when adding someone, give them at least one trait the current cast lacks.\n- Not everyone is interested in the player, and interest differs in kind and pace.\n- Recurring people live off-screen: their wants advance between scenes, and they notice changes in each other."
+        },
+        {
+            "id": "PcBlkPer2",
+            "name": "Persistent Cast",
+            "content": "PERSISTENT CAST - CURRENT TURN: <<$game.turn_number>>\nCast holds each recurring person's locked core and current stance (0 hostile, 1 wary, 2 neutral, 3 warm, 4 trusting, 5 devoted). Scripts own it; never contradict it.\n- A core never changes. Whatever the player does, a person keeps their values, voice, tells, habits and wants. They react to persuasion, charm, threats or pressure in character, and they fill gaps in any request with their own judgment.\n- Stance moves only through Cast Influence. Log every attempt there honestly as earned or pressure. Earned progress needs as many earned turns as the person's anchor before their stance improves, at most one step per turn. Pressure gains nothing, makes them guarded for a while, and repeated pressure costs a step.\n- While someone is guarded, play the wall: deflection, irritation, humor, an excuse to leave. Progress resumes after the guarded turn.\n- Narrate this turn's attempt as an attempt. Stance changes take effect from the next turn; show them through behavior, not announcements.\n- If a scene seems to require a person to act against their core, have them refuse, bargain or comply on their own terms and show what it costs them.\nChanges from the last trigger pass (reflect them now):\n<<first_available($cast_report, \"No cast changes.\")>>"
+        }
+    ],
+    "NPCs": [],
+    "loreBookEntries": [],
+    "designNotes": ""
 }
-===== END FILE: examples/showcase-glass-ledger.json =====
+===== END FILE: examples/recipe-persistent-cast.json =====
 
 END OF DOCUMENT: chat/IW-Mechanics-Examples.txt

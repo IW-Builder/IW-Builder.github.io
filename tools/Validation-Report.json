@@ -296,6 +296,14 @@
         "review-repeat-accumulation": 1
       }
     },
+    "examples/recipe-persistent-cast.json": {
+      "errors": 0,
+      "warnings": {
+        "unverified-script": 3,
+        "unverified-expression": 2,
+        "review-repeat-accumulation": 1
+      }
+    },
     "examples/recipe-request-commit.json": {
       "errors": 0,
       "warnings": {

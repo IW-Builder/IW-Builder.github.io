@@ -42,6 +42,8 @@ Write `detail` as labeled lines; they are easy for the storyteller to use and ha
 
 `appearance` describes body, face and movement in plain, specific facts: build, height, notable features, how they stand and move. "Broad-hipped, soft stomach, freckled shoulders" gives the storyteller something to use; "beautiful", "curvy" and "perfect" do not. Vary bodies across the cast. Put the default outfit in img_clothing and track current clothing separately if it changes.
 
+For casts generated during play, or personalities that must hold up against player influence, use the [persistent cast](Recipes.md#persistent-cast-generated-people-who-stay-themselves) pattern.
+
 Reveal secret_info through opportunity (a late conversation, a mistake, a bargain), never exposition. Minor characters need only a one_liner and a few lines; spend detail where the player will spend time.
 
 ## Romance, desire and adult worlds

@@ -65,6 +65,8 @@ class DistributionTests(unittest.TestCase):
         self.assertIn('library/Integration.md', sources['IW-Authoring-Guide.txt'])
         self.assertFalse((self.root/'chat/IW-Sample-Library.txt').exists())
         self.assertLess((self.root/'chat/IW-Payloads.txt').stat().st_size, 60_000)
+        for name in ['IW-Mechanics-Examples.txt', 'IW-Narrative-Examples.txt']:
+            self.assertLess((self.root/'chat'/name).stat().st_size, 110_000, name)
         self.assertFalse((self.root/'chat/IW-Examples.txt').exists())
         for name in ['IW-Authoring-Guide.txt', 'IW-Technical-Reference.txt', 'IW-Behavior.txt']:
             self.assertLess((self.root/'chat'/name).stat().st_size, 90_000, name)
