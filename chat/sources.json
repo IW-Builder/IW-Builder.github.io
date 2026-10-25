@@ -56,7 +56,7 @@
       "examples/character-starting-values.json",
       "examples/recipe-persistent-cast.json"
     ],
-    "sha256": "858c52266237e51bc1fcda71ad24f5c840098223acd0b6a0f2a2e27b93aee114"
+    "sha256": "eb291e40069b4e056a77f536ce0550f32605093e0342741aa35c3887621a107b"
   },
   "IW-Narrative-Examples.txt": {
     "sourceFiles": [

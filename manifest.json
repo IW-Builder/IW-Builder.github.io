@@ -1,6 +1,6 @@
 {
   "algorithm": "sha256",
-  "generatedAt": "2026-10-25T00:53:58+00:00",
+  "generatedAt": "2026-10-25T01:33:01+00:00",
   "files": [
     {
       "path": "Authoring-Prompt.md",
@@ -34,8 +34,8 @@
     },
     {
       "path": "chat/IW-Mechanics-Examples.txt",
-      "bytes": 99195,
-      "sha256": "858c52266237e51bc1fcda71ad24f5c840098223acd0b6a0f2a2e27b93aee114"
+      "bytes": 99346,
+      "sha256": "eb291e40069b4e056a77f536ce0550f32605093e0342741aa35c3887621a107b"
     },
     {
       "path": "chat/IW-Narrative-Examples.txt",
@@ -80,7 +80,7 @@
     {
       "path": "chat/sources.json",
       "bytes": 3145,
-      "sha256": "08c4b864daa1617445351b937ce153e2bae306c62f75765e7dded9fc4c0eb5cb"
+      "sha256": "5e21b00e30d423f6a354597cfb5f209f041463f9d68f7f7e8a9f8b7d8886142d"
     },
     {
       "path": "checker/index.html",
@@ -275,7 +275,7 @@
     {
       "path": "examples/index.html",
       "bytes": 16893,
-      "sha256": "6f1d391376a5d699c8c723967f1e7882f44a8cf715b4462407c40d2da4d19861"
+      "sha256": "9acdbaf021dbad2a1a87267f9149627bdbbf124dfe7a61293563db29592785b6"
     },
     {
       "path": "examples/index.json",
@@ -389,8 +389,8 @@
     },
     {
       "path": "examples/recipe-persistent-cast.json",
-      "bytes": 20975,
-      "sha256": "24007df30279538a0c5948582bae879a2d745c754ead37dfc37610eb64bb7050"
+      "bytes": 21126,
+      "sha256": "ce0d21dce2f75e7975b8c013f5c15f4d9ef1a43b037162a59a8d8979274393c8"
     },
     {
       "path": "examples/recipe-request-commit.json",
@@ -445,7 +445,7 @@
     {
       "path": "llms.txt",
       "bytes": 26466,
-      "sha256": "aa6d92b662cd3c20a1f186162a6e6ef4f16011512c9c580fbc4642d34b41fe7d"
+      "sha256": "4fc5ad07fcfc2f8b0184fc0aaa55be8d3d3fcf49e7e5db2348ce254e1bb6d1d7"
     },
     {
       "path": "reference/Capabilities.md",
