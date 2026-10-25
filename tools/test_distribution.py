@@ -61,7 +61,9 @@ class DistributionTests(unittest.TestCase):
         sources = {k: v['sourceFiles'] for k, v in json.loads((self.root/'chat/sources.json').read_text()).items()}
         self.assertEqual(set(sources), {'IW-Authoring-Guide.txt', 'IW-Technical-Reference.txt', 'IW-Behavior.txt',
                                         'IW-Payloads.txt', 'IW-Mechanics-Examples.txt', 'IW-Narrative-Examples.txt',
-                                        'IW-Sample-Library.txt', 'IW-Tools.txt'})
+                                        'IW-Sample-Blocks.txt', 'IW-Storymaster.txt', 'IW-Tools.txt'})
+        self.assertIn('library/Integration.md', sources['IW-Authoring-Guide.txt'])
+        self.assertFalse((self.root/'chat/IW-Sample-Library.txt').exists())
         self.assertLess((self.root/'chat/IW-Payloads.txt').stat().st_size, 60_000)
         self.assertFalse((self.root/'chat/IW-Examples.txt').exists())
         for name in ['IW-Authoring-Guide.txt', 'IW-Technical-Reference.txt', 'IW-Behavior.txt']:
@@ -74,6 +76,13 @@ class DistributionTests(unittest.TestCase):
         guide = (self.root/'chat/IW-Authoring-Guide.txt').read_text()
         for name in sources:
             self.assertIn('- ' + name + ': ', guide)
+
+    def test_kit_version_consistent(self):
+        spec = importlib.util.spec_from_file_location('bd', self.root/'tools/build_distribution.py')
+        bd = importlib.util.module_from_spec(spec); spec.loader.exec_module(bd)
+        self.assertIn('Kit version is ' + bd.KIT_VERSION + ';', (self.root/'reference/Evidence.md').read_text())
+        self.assertIn('Kit ' + bd.KIT_VERSION, (self.root/'index.html').read_text())
+        self.assertTrue((self.root/'llms.txt').read_text().startswith('# IW-Builder: Infinite Worlds Authoring Kit ' + bd.KIT_VERSION))
 
     def test_folder_pages_list_files_without_redirect(self):
         for folder in ['reference', 'examples', 'library', 'tools']:

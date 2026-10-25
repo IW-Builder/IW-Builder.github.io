@@ -1,6 +1,6 @@
 # IW-Builder roadmap
 
-Updated 2026-10-24 for kit 1.4.0. This public roadmap describes delivered capabilities and useful future work. It is not a promise of platform coverage or a release schedule.
+Updated 2026-10-24 for kit 1.5.0. This public roadmap describes delivered capabilities and useful future work. It is not a promise of platform coverage or a release schedule.
 
 ## Available now
 
