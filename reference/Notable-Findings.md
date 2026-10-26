@@ -58,7 +58,7 @@ The Infinite Worlds behavior most likely to surprise an author or break a world,
 
 ## Narration, images and play
 
-40. **Length requests do not reliably work**, in either direction. The default Description instructions ask for several paragraphs.
+40. **Shorten narration from authorStyle, not descriptionRequest.** A word-and-paragraph cap at the end of authorStyle held output near the stated number (often 10–20% over) even on story-beat turns; the same cap in descriptionRequest or an always-on block broke on those turns. Making narration longer is not established.
 41. **Raw HTML renders as literal text.** Use ordinary Markdown.
 42. **Short avoid-lists help, long ones backfire** on weaker models by priming the banned phrases.
 43. **Image style uses the start/end prompt fields.** The old illustrationStyle priority fields have no current controls and lost to the start/end prompts in testing. Saving Illustration details generates a new image (about 4 credits).

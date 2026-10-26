@@ -64,7 +64,8 @@ Results current through 2026-10-26. Labels and kit-wide caveats follow [Evidence
 - [RUNTIME] Secret Info and narration can disagree or misattribute knowledge. Characters can deny a fact just told to them, and hidden facts can become player knowledge in prose. A general provenance policy showed no clear benefit; explicit correction of the source chain did.
 - [RUNTIME] Once a secret reaches narration, removing or emptying its disclosure block does not remove it from later turns.
 - [DOCUMENTED, user-confirmed] Summary compression follows a six-turn cadence beginning at turn eight; the cost breakdown first shows LTM about then, as STM drops. Later recall is possible; summary contents remain hidden.
-- [RUNTIME/UNKNOWN] Paragraph-count requests and strong priority-overriding wording did not reliably lengthen narration, even with richer lore; a one-sentence descriptionRequest did not shorten it. No reliable length control is established.
+- [RUNTIME] Shortening (Dolphin, one world): a cap of at most 2 short paragraphs and 90 words, with priority-override framing, appended to authorStyle averaged 82 words (control 413) and held through a story-beat turn; a plain one-sentence version averaged 96. The same cap in descriptionRequest (mean 118, max 215) or an always-on block (max 226) broke on the story-beat turn. A per-turn Tell AI trigger held later turns but cannot reach the opening. The cap acts as a soft target; credits fell only about 10%.
+- [RUNTIME/UNKNOWN] Lengthening: paragraph-count requests and strong priority-overriding wording did not reliably lengthen narration, even with richer lore. A one-sentence descriptionRequest did not shorten it. Other models are untested for the authorStyle cap.
 
 ## Forms, images and endings
 

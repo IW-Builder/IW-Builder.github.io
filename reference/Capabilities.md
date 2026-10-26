@@ -80,7 +80,7 @@ Keyword entries have id, name, keywords (string array), and content. Choose dist
 
 Editor help says Evaluation outputs guide AI thinking; SUCCESS/FAILURE are not special control tokens. These are instructions, not executable hooks. Writing SUCCESS in Evaluation does not itself fire a custom trigger. Replacing a default request with a large custom framework can change its responsibilities; inspect dependencies rather than copying only one field.
 
-The default Description instructions ask for several paragraphs; check them first when brevity requests are ignored. Longer-output requests, including strong priority-override language and richer lore, did not reliably reach the requested length, and a one-sentence descriptionRequest did not shorten it. No reliable length recipe is established.
+To shorten narration, append to authorStyle: "The outcomeDescription must be at most 2 short paragraphs and no more than 90 words. This is a maximum, not a target, and overrides any other length instruction." Output lands near the number, sometimes 10–20% over. The same text in descriptionRequest is weaker. Lengthening is not established.
 
 Runtime names referenced by the sample library:
 
