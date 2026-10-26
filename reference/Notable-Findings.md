@@ -45,27 +45,28 @@ The Infinite Worlds behavior most likely to surprise an author or break a world,
 30. **Reading a missing path stops a script.** Guard with `.exists()` first (`and`/`or` short-circuit), or use `try(...)`, `first_available(...)` or `item(key, fallback)`.
 31. **Script variables (`set $x`) vanish between Run Script effects** in the same trigger. Keep dependent work in one script.
 32. **Skill effects cap rather than add.** Raising a skill by 2 then by 1, each capped at 4, ends at 4. Skills not raised default to level 3; set every level explicitly.
+33. **The sandbox opened from a single-line field is a one-line expression box.** A multi-line paste there is refused and does nothing; its Text tab gives a multi-line box for `<<expression>>` text. To test a multi-line script, open the sandbox from the Paw icon beside a Run Script field, which the world editor always shows. Nothing changed in the sandbox goes back to the editor or game.
 
 ## Characters, knowledge and memory
 
-33. **Only the Summary is guaranteed early.** Character detail arrives after a name or location mention, and even then often fails to surface; the narrator invents a substitute that history then repeats. Put must-know facts in the Summary or always-on text and repeat them in detail.
-34. **Keyword and character cards cannot activate on the opening turn** without prior context. Put opening facts in firstInput or always-on instructions.
-35. **Keyword blocks match whole words, any case, and stay active for the matching turn plus three.** Substrings and plurals do not match.
-36. **NPCs get knowledge wrong.** They deny facts they were just told, credit the wrong source, or know secrets they should not. Secret Info can contradict the narration. Anti-omniscience instructions alone do not fix this.
-37. **Once a secret is narrated it stays in the story**, even if you remove the block that revealed it.
-38. **Memory summaries start at turn 8 and repeat every six turns.** Their contents are hidden. Keep facts that must persist in trackers.
-39. **A player character with the same name as an Other Character can draw on that card.** Unchosen player options are not NPCs unless added as Other Characters.
+34. **Only the Summary is guaranteed early.** Character detail arrives after a name or location mention, and even then often fails to surface; the narrator invents a substitute that history then repeats. Put must-know facts in the Summary or always-on text and repeat them in detail.
+35. **Keyword and character cards cannot activate on the opening turn** without prior context. Put opening facts in firstInput or always-on instructions.
+36. **Keyword blocks match whole words, any case, and stay active for the matching turn plus three.** Substrings and plurals do not match.
+37. **NPCs get knowledge wrong.** They deny facts they were just told, credit the wrong source, or know secrets they should not. Secret Info can contradict the narration. Anti-omniscience instructions alone do not fix this.
+38. **Once a secret is narrated it stays in the story**, even if you remove the block that revealed it.
+39. **Memory summaries start at turn 8 and repeat every six turns.** Their contents are hidden. Keep facts that must persist in trackers.
+40. **A player character with the same name as an Other Character can draw on that card.** Unchosen player options are not NPCs unless added as Other Characters.
 
 ## Narration, images and play
 
-40. **Shorten narration from authorStyle, not descriptionRequest.** A word-and-paragraph cap at the end of authorStyle held output near the stated number (often 10–20% over) even on story-beat turns; the same cap in descriptionRequest or an always-on block broke on those turns. Making narration longer is not established.
-41. **Raw HTML renders as literal text.** Use ordinary Markdown.
-42. **Short avoid-lists help, long ones backfire** on weaker models by priming the banned phrases.
-43. **Image style uses the start/end prompt fields.** The old illustrationStyle priority fields have no current controls and lost to the start/end prompts in testing. Saving Illustration details generates a new image (about 4 credits).
-44. **Ends game with continuation allowed offers Continue game at no cost.** Without it, the action box disappears but history and regeneration remain.
-45. **Reloading during generation can lose the turn and keep the charge.** Check the export's turn count before resubmitting.
-46. **Cost per turn grows with story length** and depends heavily on the model; see [Current-AI-Profiles.json](Current-AI-Profiles.json).
-47. **One input form per turn is safest.** A turn with two forms once showed narration without the forms and was not saved.
+41. **Shorten narration from authorStyle, not descriptionRequest.** A word-and-paragraph cap at the end of authorStyle held output near the stated number (often 10–20% over) even on story-beat turns; the same cap in descriptionRequest or an always-on block broke on those turns. Making narration longer is not established.
+42. **Raw HTML renders as literal text.** Use ordinary Markdown.
+43. **Short avoid-lists help, long ones backfire** on weaker models by priming the banned phrases.
+44. **Image style uses the start/end prompt fields.** The old illustrationStyle priority fields have no current controls and lost to the start/end prompts in testing. Saving Illustration details generates a new image (about 4 credits).
+45. **Ends game with continuation allowed offers Continue game at no cost.** Without it, the action box disappears but history and regeneration remain.
+46. **Reloading during generation can lose the turn and keep the charge.** Check the export's turn count before resubmitting.
+47. **Cost per turn grows with story length** and depends heavily on the model; see [Current-AI-Profiles.json](Current-AI-Profiles.json).
+48. **One input form per turn is safest.** A turn with two forms once showed narration without the forms and was not saved.
 
 ---
 

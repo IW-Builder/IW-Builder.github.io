@@ -61,27 +61,28 @@ The Infinite Worlds behavior most likely to surprise an author or break a world,
 30. **Reading a missing path stops a script.** Guard with `.exists()` first (`and`/`or` short-circuit), or use `try(...)`, `first_available(...)` or `item(key, fallback)`.
 31. **Script variables (`set $x`) vanish between Run Script effects** in the same trigger. Keep dependent work in one script.
 32. **Skill effects cap rather than add.** Raising a skill by 2 then by 1, each capped at 4, ends at 4. Skills not raised default to level 3; set every level explicitly.
+33. **The sandbox opened from a single-line field is a one-line expression box.** A multi-line paste there is refused and does nothing; its Text tab gives a multi-line box for `<<expression>>` text. To test a multi-line script, open the sandbox from the Paw icon beside a Run Script field, which the world editor always shows. Nothing changed in the sandbox goes back to the editor or game.
 
 ## Characters, knowledge and memory
 
-33. **Only the Summary is guaranteed early.** Character detail arrives after a name or location mention, and even then often fails to surface; the narrator invents a substitute that history then repeats. Put must-know facts in the Summary or always-on text and repeat them in detail.
-34. **Keyword and character cards cannot activate on the opening turn** without prior context. Put opening facts in firstInput or always-on instructions.
-35. **Keyword blocks match whole words, any case, and stay active for the matching turn plus three.** Substrings and plurals do not match.
-36. **NPCs get knowledge wrong.** They deny facts they were just told, credit the wrong source, or know secrets they should not. Secret Info can contradict the narration. Anti-omniscience instructions alone do not fix this.
-37. **Once a secret is narrated it stays in the story**, even if you remove the block that revealed it.
-38. **Memory summaries start at turn 8 and repeat every six turns.** Their contents are hidden. Keep facts that must persist in trackers.
-39. **A player character with the same name as an Other Character can draw on that card.** Unchosen player options are not NPCs unless added as Other Characters.
+34. **Only the Summary is guaranteed early.** Character detail arrives after a name or location mention, and even then often fails to surface; the narrator invents a substitute that history then repeats. Put must-know facts in the Summary or always-on text and repeat them in detail.
+35. **Keyword and character cards cannot activate on the opening turn** without prior context. Put opening facts in firstInput or always-on instructions.
+36. **Keyword blocks match whole words, any case, and stay active for the matching turn plus three.** Substrings and plurals do not match.
+37. **NPCs get knowledge wrong.** They deny facts they were just told, credit the wrong source, or know secrets they should not. Secret Info can contradict the narration. Anti-omniscience instructions alone do not fix this.
+38. **Once a secret is narrated it stays in the story**, even if you remove the block that revealed it.
+39. **Memory summaries start at turn 8 and repeat every six turns.** Their contents are hidden. Keep facts that must persist in trackers.
+40. **A player character with the same name as an Other Character can draw on that card.** Unchosen player options are not NPCs unless added as Other Characters.
 
 ## Narration, images and play
 
-40. **Shorten narration from authorStyle, not descriptionRequest.** A word-and-paragraph cap at the end of authorStyle held output near the stated number (often 10–20% over) even on story-beat turns; the same cap in descriptionRequest or an always-on block broke on those turns. Making narration longer is not established.
-41. **Raw HTML renders as literal text.** Use ordinary Markdown.
-42. **Short avoid-lists help, long ones backfire** on weaker models by priming the banned phrases.
-43. **Image style uses the start/end prompt fields.** The old illustrationStyle priority fields have no current controls and lost to the start/end prompts in testing. Saving Illustration details generates a new image (about 4 credits).
-44. **Ends game with continuation allowed offers Continue game at no cost.** Without it, the action box disappears but history and regeneration remain.
-45. **Reloading during generation can lose the turn and keep the charge.** Check the export's turn count before resubmitting.
-46. **Cost per turn grows with story length** and depends heavily on the model; see [Current-AI-Profiles.json](Current-AI-Profiles.json).
-47. **One input form per turn is safest.** A turn with two forms once showed narration without the forms and was not saved.
+41. **Shorten narration from authorStyle, not descriptionRequest.** A word-and-paragraph cap at the end of authorStyle held output near the stated number (often 10–20% over) even on story-beat turns; the same cap in descriptionRequest or an always-on block broke on those turns. Making narration longer is not established.
+42. **Raw HTML renders as literal text.** Use ordinary Markdown.
+43. **Short avoid-lists help, long ones backfire** on weaker models by priming the banned phrases.
+44. **Image style uses the start/end prompt fields.** The old illustrationStyle priority fields have no current controls and lost to the start/end prompts in testing. Saving Illustration details generates a new image (about 4 credits).
+45. **Ends game with continuation allowed offers Continue game at no cost.** Without it, the action box disappears but history and regeneration remain.
+46. **Reloading during generation can lose the turn and keep the charge.** Check the export's turn count before resubmitting.
+47. **Cost per turn grows with story length** and depends heavily on the model; see [Current-AI-Profiles.json](Current-AI-Profiles.json).
+48. **One input form per turn is safest.** A turn with two forms once showed narration without the forms and was not saved.
 
 ---
 
@@ -160,13 +161,28 @@ The database icon opens trackers; the nearby edit control edits their values. Th
 
 The bug icon opens debug. **Active instructions** is live rendered state, including post-narration trigger updates and live edits, not the full historical prompt. A trigger badge/list is not always exhaustive; inspect detailed history and actual state.
 
-**PawScript > Open in Sandbox** uses the historical data that script ran against. Its header names the script and says what it changed when it ran in the game. **Turn data** lists trackers plus the `$player` and `$game` roots (`$game` has seven keys, including turn_number, ai_model and skill_list); **Legacy turn data** holds older flat variables. In a short-circuited And/Or group, debug lists only the deciding condition. It can differ from current manually edited values. A run displays a result/diff; **Update Game** is separate. A collapsed summary can misrepresent nested structure; inspect actual values or supported reads.
-
 The live-design notice warns that Player/Other Character changes do not affect the current playthrough; live copies are covered in [Import-Integrity.md](Import-Integrity.md). Runtime block replacements and tracker changes can leave original content/initial values in design exports; those exports are not complete live-state snapshots.
 
 Story exports offer a turn range and optional background, character, secrets, trackers and hidden trackers, with text/PDF/image options. Select the relevant options. Secret Info is generated narrative data, not an authoritative character database. No live character-database or complete prompt viewer is available through these surfaces.
 
 An unchecked **Hide skill system** option may omit `hideSkillSystem` from the editor export. This is normal visible-skills state, not a missing setting to repair. Generated JSON may explicitly use `false`.
+
+## PawScript sandbox
+
+The sandbox (PawScript Expression Editor) runs a script or expression against editable tracker data. Nothing changed in it goes back to the editor or game; copy anything worth keeping.
+
+| Entry point | When it is available | Tracker data it starts with |
+| --- | --- | --- |
+| World editor: Paw icon beside a Run Script effect's script field | Always | All base trackers |
+| World editor: Paw icon beside other PawScript-capable fields | When **Show optional features > Misc advanced features > Show the PawScript Expression Editor button next to each expression field** is enabled for that world (`showPawScriptButtons: true`) | All base trackers |
+| In play: **View/edit world design** | Same Paw icons as the world editor | The game state of that turn |
+| In play: debug **PawScript > Open in Sandbox** | For a script that has run in this game; with the expression-editor option enabled, evaluated conditions also get an entry. The play screen has no other sandbox button | The game state of the turn it ran |
+
+From the world editor, a tracker with a fixed initial value shows that value; one with no initial value, or a player-chosen or character-dependent one, shows 0 or empty. With the option enabled, Paw icons were observed beside trigger conditions and tracker description and update instructions, but not beside initial value, authorStyle, specialist instructions, main or keyword instruction blocks, background, first action or objective.
+
+The sandbox matches the field it was opened from. A script field opens a multi-line **Your script** box with **Run script**. A single-line field, such as a trigger condition, opens a one-line **Your expression** box in **Expression** mode with **Evaluate**; a multi-line paste there is refused and does nothing. Its **Text** tab switches to a multi-line box that evaluates text containing `<<expressions>>`. To test a multi-line script, open the sandbox from a Run Script field.
+
+Trackers can be added, edited and deleted in the sandbox, and runs use those values. From debug, the header names the script and says what it changed when it ran in the game. **Turn data** lists trackers plus the `$player` and `$game` roots (`$game` has seven keys, including turn_number, ai_model and skill_list); **Legacy turn data** holds older flat variables. In a short-circuited And/Or group, debug lists only the deciding condition. Sandbox data can differ from current manually edited values. A run displays a result/diff; **Update Game** is separate. A collapsed summary can misrepresent nested structure; inspect actual values or supported reads.
 
 ## Credits and cost
 
@@ -188,7 +204,7 @@ Image style has a Model and Character/Scenery start/end prompts, mapped to `imag
 
 [DOCUMENTED] The default Description instructions ask for several paragraphs; to shorten narration, put the cap in authorStyle (see [Capabilities](Capabilities.md)). Video help describes `$videoDuration` and `$videoStyle` in video context (see below).
 
-Misc advanced features can show PawScript Expression Editor buttons. Missing icons do not prove lack of support: YAML Set a value supports template expressions according to help despite having no icon. This is not an exhaustive icon inventory.
+The expression-editor option shows a Paw icon beside some PawScript-capable fields (see [PawScript sandbox](#pawscript-sandbox)). Missing icons do not prove lack of support: YAML Set a value supports template expressions according to help despite having no icon. This is not an exhaustive icon inventory.
 
 Present choice enforces required selection and configured multiple-selection bounds. Required Request Input can leave Confirm enabled while empty, then reject submission with **Please enter a response**. Optional blank input clears its target. Single/multiline fields show counters of 600/3000 respectively, not universal tracker limits. Newline-delimited multiple selections remain text, not automatically a YAML list.
 
@@ -287,6 +303,7 @@ Results current through 2026-10-26. Labels and kit-wide caveats follow [Evidence
 - [RUNTIME/UNKNOWN] `current()` is rejected in Run Script even inside `try`; the diagnostic limits it to List Update Target/Value, which the current editor does not expose.
 - [RUNTIME] Enforce format is not a write-validation boundary: malformed manual/script values persist. Hidden AI repair is not inspectable. Validate shape and meaning explicitly.
 - [RUNTIME] Comparisons and arithmetic coerce YAML values (see [PawScript](PawScript.md#2-values-trackers-and-scope)), and Boolean-expression writes serialize as quoted text. Rendered values and collapsed summaries do not prove types. Duplicate inventory records are not prevented.
+- [RUNTIME] The PawScript sandbox matches the field it opens from: a script field gives a multi-line script box; a single-line field gives a one-line expression box that refuses a multi-line paste, with a Text tab for multi-line `<<expression>>` text. Sandbox trackers can be added, edited and deleted, and runs use those values; nothing changed goes back to the editor or game. From the world editor it loads all base trackers, at fixed initial values or 0/empty for unspecified, player-chosen or character-dependent ones; from debug or from View/edit world design during play, it loads the game state of that turn.
 - [RUNTIME] Initial text of 10,014 characters and script-written text of 20,014 characters were retained exactly.
 - [PATTERN] Separate generated candidates from accepted state, immutable definitions from mutable state, and archive storage from active context. Validate identity and entry types before freezing; a list-length check is insufficient. Record assignment copies by value, so an archive is unaffected by later edits to the active record.
 - [PATTERN] Choose turn time, story time or hybrid clocks intentionally. Detect crossings (`previous < N and now >= N`), consume them, and guard rewards. Use inequalities for thresholds: a countdown of 1 reduced by 3 is -2, so `= 0` is false. Counter order changes the first firing turn. Shared locks favor the first eligible trigger; priority is authored, not automatic.
