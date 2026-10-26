@@ -20,7 +20,7 @@ The Infinite Worlds behavior most likely to surprise an author or break a world,
 
 ## Triggers
 
-1. **A trigger with no conditions never fires on its own.** It is a saved trigger for Fire random trigger, not an "always" trigger. Start-of-game triggers are the exception: they fire at startup.
+1. **A trigger with no conditions never fires on its own.** It is a saved trigger for Fire random trigger, not an "always" trigger. Start-of-game triggers are the exception: they fire at startup. With Start on, the editor drops its "so it will never fire" warning even when Mid-game and Repeat are also on, but firing on later turns is not established. For an every-turn trigger, add an always-true condition such as `$game.turn_number >= 0`.
 2. **Repeat means every eligible turn.** "HP below 5" with Allow triggering multiple times fires every turn HP stays low. Add a state guard for one-time effects.
 3. **Start + Mid-game + Repeat runs twice before the player acts:** once before the opening and again on turn 1. Guard counters and rewards.
 4. **Give information to AI does nothing on a Start-enabled trigger**, even on its later mid-game activations. Use background, an instruction block or a separate ordinary trigger.
@@ -131,7 +131,7 @@ Opening a world in the editor advances its version in the export (for example 1.
 
 ## Triggers and Scenarios
 
-An ordinary trigger with no conditions says it will never fire. This is not unconditional execution; Start-gated triggers and explicit random dispatch differ. Empty effects do no work but eligible triggers can still record firing.
+An ordinary trigger with no conditions says it will never fire. With Trigger at start of game checked, the condition box reads only "(No conditions added to this block yet)", with or without Or mid-game and Allow triggering multiple times; the missing warning reflects startup firing and does not show that the trigger runs on later turns. This is not unconditional execution; Start-gated triggers and explicit random dispatch differ. Empty effects do no work but eligible triggers can still record firing.
 
 Start mode changes the picker and compatibility warnings. Start-only disables Repeat in the editor; Or mid-game enables it. **Use advanced logic** adds Add logic block; new blocks default to Or. Switching a condition between types keeps hidden fields: Turn number to Player action keeps the old inequality and clears the required value. Trigger history lists Start-pass firings as turn 0. Stored unsupported combinations may survive import while effects are ignored. Read the [trigger capability catalog](Trigger-Catalog.md) before declaring an operation unavailable.
 
@@ -247,7 +247,7 @@ Results current through 2026-10-26. Labels and kit-wide caveats follow [Evidence
 
 ## Triggers and Scenarios
 
-- [RUNTIME] Ordinary triggers with no conditions never fire automatically. Start-gated empty-condition triggers fire at startup. An eligible trigger with no effects still records firing and can satisfy prerequisites.
+- [RUNTIME] Ordinary triggers with no conditions never fire automatically. Start-gated empty-condition triggers fire at startup. [UNKNOWN] Whether an empty-condition Start+Mid+Repeat trigger also fires on ordinary turns; give every-turn triggers an always-true condition. An eligible trigger with no effects still records firing and can satisfy prerequisites.
 - [RUNTIME] Fire random trigger bypasses target conditions, including empty or false conditions. Consumed one-shot targets do not execute again, even on later turns; nested dispatch works. Editor help's "already fired this turn" wording understates this. Duplicate-pool weighting is unresolved.
 - [RUNTIME] A failing Run Script rolls back that script's writes. Separate earlier and later effects can commit. The trigger still counts as fired and consumes one-shot eligibility. Prerequisites mean firing, not successful completion.
 - [RUNTIME] This-turn prerequisites/blockers see a producer only when it is earlier in triggerEvents. History prerequisites see a later-ordered producer from the next turn. Current-turn gates reset each turn.
@@ -341,6 +341,7 @@ Current through 2026-10-26. This is the kit's single list of platform behavior t
 | Area | Established | Still unknown | What to do meanwhile |
 | --- | --- | --- | --- |
 | Prompt construction | Active instructions shows live rendered templates and updates | Full historical storyteller/specialist prompts, hidden wrappers, exact inclusion and timing | Put essential facts in fields known to reach the storyteller (background, firstInput, instructions, always-on blocks); treat UI visibility as display, not proof of what the AI receives |
+| Empty-condition triggers | Ordinary empty-condition triggers never fire; Start-gated ones fire at startup; the editor drops its never-fire warning when Start is on | Whether a Start+Mid+Repeat trigger with no conditions fires on ordinary turns | Give every-turn triggers an always-true condition such as `$game.turn_number >= 0` |
 | Scenarios | Exact literal binding works; imported registries larger than ten persist and execute | Why dynamic multi-slot, cyclic and parallel arrangements fail; any runtime maximum | Use literal Scenarios with explicit state gates ([Triggers.md](Triggers.md#scenarios)) |
 | NPCs and knowledge | Same-name player retrieval of authored facts; dedicated image fields have observable effects | Live character records, identity merging, mutation and retrieval routing; why name-only mentions often fail to surface Character detail; Secret Info is not a database | Put facts that must surface in the Summary or always-on text; author relationships and knowledge explicitly; correct an invented detail early by editing the turn |
 | Import normalization | ID reminting, field omission, scope normalization and registry population observed; missing tracker description breaks the rebuild | Internal failure stages; ID rules for every entity type; why an omitted replaceWith broke the opening | Use ASCII alphanumeric tracker IDs; always serialize description and replaceWith; re-export after import and compare with tools/import_audit.py |
