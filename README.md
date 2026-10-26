@@ -104,6 +104,6 @@ Install jsonschema for full schema checks (`python -m pip install jsonschema`). 
 
 ## Current behavior and editor help
 
-Use the [editor/UI reference](reference/Editor-UI.md) for workflows and terminology, the [trigger capability catalog](reference/Trigger-Catalog.md) to discover operations, and [consolidated behavior](reference/Verified-Behavior.md) for current results. The [roadmap](reference/Roadmap.md) separates completed research, unresolved boundaries and engineering backlog.
+Start with [notable findings](reference/Notable-Findings.md) for the behavior most likely to surprise you or break a world. Use the [editor/UI reference](reference/Editor-UI.md) for workflows and terminology, the [trigger capability catalog](reference/Trigger-Catalog.md) to discover operations, [consolidated behavior](reference/Verified-Behavior.md) for detailed results and [known limits](reference/Known-Limits.md) for what remains unresolved.
 
-Local [engineering tools](reference/Engineering-Tools.md) provide guarded state patterns, literal-Scenario plot compilation and browser capture/export support. See the [roadmap](reference/Roadmap.md) for delivery scopes and remaining environment limitations.
+The local [plot compiler](reference/Engineering-Tools.md) builds literal-Scenario prerequisite plots.

@@ -49,7 +49,7 @@ tags:
   - injured
 ```
 
-Stored in tracker `hero`, it provides `$hero.name`, `$hero.hp` and `$hero.tags`. YAML indentation defines nesting; `[]` initializes an empty list and `{}` an empty record. Quote numeric-looking identifiers such as `"001"` to preserve leading zeros. Use YAML `|` for multiline text. In an export, `initialValue` is a JSON string containing this YAML, not a JSON object. `formatSchema` is a separate shape description; see [Trackers.md](Trackers.md).
+Stored in tracker `hero`, it provides `$hero.name`, `$hero.hp` and `$hero.tags`. YAML indentation defines nesting; `[]` initializes an empty list and `{}` an empty record. Quote numeric-looking identifiers such as `"001"` to preserve leading zeros in storage; comparisons and arithmetic still treat them as numbers (quoted or unquoted `007` plus 1 gave 8). YAML `yes`, `no`, `on` and `off` are text, not Booleans. `true`/`false` compare equal to both the Boolean and the same-spelled text. A `null` value's `.exists()` is false. Use YAML `|` for multiline text. In an export, `initialValue` is a JSON string containing this YAML, not a JSON object. `formatSchema` is a separate shape description; see [Trackers.md](Trackers.md).
 
 Persistent roots use direct assignments: `$coins = 12`. Temporary locals use `set $price = 5` and last only for that script run. Locals do not cross Run Script effect boundaries; executed branch locals and the last nonempty-loop binding remain available later in the same script. Do not give a local the name of an existing tracker. Inside collection predicates, bare field names refer to the current member; `$...` refers to a tracker/system root or script local. For a list of plain values, `value()` denotes the current value.
 
@@ -98,10 +98,10 @@ Use the expression/script Sandbox to try the read and change separately. For an 
 | Conditional value | `if($coins >= 5, "Affordable", "Too expensive")` |
 | Value mapping | `choose($status, "open", "Enter", "locked", "Find a key", "Inspect")` |
 | Missing/blank fallback | `first_available($hero.nickname, $hero.name, "Stranger")` |
-| Error fallback | `try($total / $count, 0)`; do not use it to conceal broken essential state |
+| Error fallback | `try($total / $count, 0)`; catches missing paths, type mismatches, division by zero, reads through a scalar and out-of-range `item(99)`. Do not use it to conceal broken essential state |
 | Existence | `$hero.nickname.exists()`; distinct from being nonempty or nonzero |
 | Numeric bounds | `$hp.constrain(0, $max_hp)` |
-| Rounding | `round_down($cost)`, `round_up($cost)`, `$cost.round()` |
+| Rounding and bounds | `round_down($cost)`, `round_up($cost)`, `$cost.round()`; standalone `round(1.6)`, `min(2, 3)`, `max(2, 3)` also work |
 | Text normalization | `$label.replace("_", " ")` |
 
 `=` compares within an expression and assigns in an assignment statement. In the following script, the first `=` tests; the second writes:
@@ -177,7 +177,7 @@ Initialize `requirements` as a list and `flags` as a record. An empty requiremen
 | Replace matched records | `$entries.where(id = $update.id) = $update` |
 | Persist a transformed list | `$tags = $tags.unique()` |
 
-A read such as `$tags.unique()` does not change stored tags by itself. Assignment persists its result. Appending a list appends its members; it does not wrap them as a nested list. Replacement of matched records is not a field-preserving merge: include every field to retain. Plain nested assignment can create missing paths, but a scalar parent rejects child writes and rolls back the script; compound arithmetic on a missing path can fail where plain assignment succeeds. Boolean-expression results can be stored as quoted text, so rendered output is not strict type introspection. Native text add/remove effects are not substitutes for structured list mutation.
+Assigning a record copies it: `$archive = $current` keeps an independent copy that later edits to `$current` do not change. A read such as `$tags.unique()` does not change stored tags by itself. Assignment persists its result. Appending a list appends its members; it does not wrap them as a nested list. Replacement of matched records is not a field-preserving merge: include every field to retain. Plain nested assignment can create missing paths, but a scalar parent rejects child writes and rolls back the script; compound arithmetic on a missing path can fail where plain assignment succeeds. Boolean-expression results can be stored as quoted text, so rendered output is not strict type introspection. Native text add/remove effects are not substitutes for structured list mutation.
 
 To construct an entry, create a local record, fill its fields and append it:
 
@@ -233,7 +233,7 @@ Additional presentation helpers include `.bold()`, `.italic()`, `.code()` and `.
 
 Statements in one script execute sequentially. Later triggers see earlier committed writes. Multiple native numeric effects in one trigger can overwrite rather than accumulate; they do not share script statement semantics. A script failure rolls back that script's changes, not preceding effects or the entire turn.
 
-Use `log("Coins: {$coins}")` for diagnostics in the PawScript Log. Logs are not player narration; messages logged before a failure remain useful for locating the problem. "Ran successfully, with no output" is normal for assignments. A model saying PASS is not runtime verification.
+Use `log("Coins: {$coins}")` for diagnostics in the PawScript Log. Logs are not player narration; messages logged before a failure remain useful for locating the problem. "Ran successfully, with no output" is normal for assignments. Writing a key that does not yet exist in a record succeeds but logs `created a new entry 'x' in $tracker - did you mean 'y'?`; treat it as a typo check. A model saying PASS is not runtime verification.
 
 Enable Menu > Settings > Storyteller Mode, then open the bug icon beside tracked items. Inspect tracker state, evaluated conditions and script errors; use Open in Sandbox to isolate a script. See [Capabilities.md](Capabilities.md) for wider debug coverage.
 

@@ -12,7 +12,7 @@ import re
 from urllib.parse import quote
 
 ROOT = Path(__file__).resolve().parent.parent
-KIT_VERSION = '1.5.0'  # also stated in reference/Evidence.md (checked by tests)
+KIT_VERSION = '1.6.0'  # also stated in reference/Evidence.md (checked by tests)
 
 # Combined text editions for chats without web access. Each stays well under
 # common fetch/attachment limits; models load companions only when needed.
@@ -38,6 +38,7 @@ GROUPS = {
         'reference/Current-AI-Profiles.json',
     ],
     'IW-Behavior.txt': [
+        'reference/Notable-Findings.md',
         'reference/Editor-UI.md',
         'reference/Verified-Behavior.md',
         'reference/Known-Limits.md',
@@ -78,7 +79,7 @@ GROUPS = {
 EDITION_PURPOSE = {
     'IW-Authoring-Guide.txt': 'start here: prompt, template, narrative craft, trackers, triggers, data banks and library integration',
     'IW-Technical-Reference.txt': 'exact payloads, PawScript, capabilities, recipes and import integrity',
-    'IW-Behavior.txt': 'editor/UI workflows, verified runtime behavior and known limits',
+    'IW-Behavior.txt': 'notable findings, editor/UI workflows, verified runtime behavior and known limits',
     'IW-Payloads.txt': 'exact native payload snippets for every condition and effect, plus the example index',
     'IW-Mechanics-Examples.txt': 'complete mechanics example worlds: recipes, optional block, starting values and a showcase',
     'IW-Narrative-Examples.txt': 'complete narrative example worlds: ensemble romance, fantasy expedition and contained horror',
@@ -150,7 +151,7 @@ TOOL_SOURCES = [
     'tools/validate_iw_export.py', 'tools/static_checks.py',
     'tools/iw-export.schema.json', 'tools/data_bank.py',
     'tools/import_audit.py', 'tools/story_export.py',
-    'tools/iw_browser.py', 'tools/plot_compile.py',
+    'tools/plot_compile.py',
 ]
 CHECKER_SOURCES = {
     'src-validate': 'tools/validate_iw_export.py',
@@ -303,22 +304,22 @@ DESCRIPTIONS = {
     'chat/index.html': 'HTML page containing IW-Authoring-Guide.txt, with links to the companion editions.',
     'chat/IW-Authoring-Guide.txt': 'Combined text, start here: prompt, template, Evidence, Craft, Trackers, Triggers, Trigger-Catalog, Portable-Banks and library Integration.',
     'chat/IW-Technical-Reference.txt': 'Combined text: Schema, PawScript, Capabilities, Recipes, Import-Integrity, Default Evaluation and AI profile IDs.',
-    'chat/IW-Behavior.txt': 'Combined text: Editor-UI, Verified-Behavior and Known-Limits.',
+    'chat/IW-Behavior.txt': 'Combined text: Notable-Findings, Editor-UI, Verified-Behavior and Known-Limits.',
     'chat/IW-Payloads.txt': 'Combined text: payload cookbook (every condition and effect) and the example index. Small and essential for mechanics.',
     'chat/IW-Mechanics-Examples.txt': 'Combined text: complete mechanics example worlds (recipes, optional block, starting values, showcase).',
     'chat/IW-Narrative-Examples.txt': 'Combined text: complete narrative example worlds (ensemble romance, fantasy expedition, contained horror).',
     'chat/IW-Sample-Blocks.txt': 'Combined text: library modules (Sample-Blocks.json). Integration guide is in IW-Authoring-Guide.txt.',
     'chat/IW-Storymaster.txt': 'Combined text: the Storymaster framework (Storymaster-Suite.json). Integration guide is in IW-Authoring-Guide.txt.',
-    'chat/IW-Tools.txt': 'Combined text: tool usage guide, Story-Tools and Engineering-Tools guides, plus validator, schema and helper sources to recreate locally.',
+    'chat/IW-Tools.txt': 'Combined text: tool usage guide, Story-Tools and plot-compiler guides, plus validator, schema and helper sources to recreate locally.',
     'chat/README.md': 'Human guide to the combined text files.',
     'chat/sources.json': 'Which source files make up each combined text file, with hashes.',
     # Reference
     'reference/Capabilities.md': 'Turn lifecycle, Skills, NPC cards and keyword blocks, specialist requests, template timing, endings, images, video and model-specific blocks.',
     'reference/Craft.md': 'Narrative design: what goes in each field, openings, character cards, romance and adult worlds, prose style, names, example worlds by genre.',
-    'reference/Current-AI-Profiles.json': 'Dated list of storyteller model IDs for model-specific instruction blocks.',
+    'reference/Current-AI-Profiles.json': 'Storyteller models, current and retired: block IDs, underlying real-world model, isCurrent flag and typical credits per turn.',
     'reference/Default-Evaluation.txt': "IW's built-in Evaluation instructions, verbatim; the baseline for a custom Evaluation.",
     'reference/Editor-UI.md': 'Editor labels and their JSON fields, import/export steps, debug tools, visibility, permissions and troubleshooting by symptom.',
-    'reference/Engineering-Tools.md': 'Browser capture/export harness and literal-Scenario plot compiler: setup, commands and limits.',
+    'reference/Engineering-Tools.md': 'Literal-Scenario plot compiler: commands and limits.',
     'reference/Evidence.md': 'Platform baseline, version numbers and the evidence labels used across the kit.',
     'reference/Import-Integrity.md': 'ID conventions, checks before and after import, editing live copies, and the import audit tool.',
     'reference/Known-Limits.md': 'Platform behavior that remains unverified, by area.',
@@ -326,12 +327,12 @@ DESCRIPTIONS = {
     'reference/Portable-Banks.md': 'Data mode: portable character/data bank format, dependencies, full-content build reports and data_bank.py commands.',
     'reference/README.md': 'Human-friendly index of the reference guides.',
     'reference/Recipes.md': 'Ways to combine features: situation triggers, thresholds, choices, optional blocks, dynamic content, request/commit and guarded state patterns.',
-    'reference/Roadmap.md': 'Kit development status and planned work.',
     'reference/Schema.md': 'Export structure: field groups, trackers, starting values, condition and effect payloads, comparators and value-effect operations.',
     'reference/Story-Tools.md': 'Import comparison and story-text extraction/merge tools: commands and limits.',
     'reference/Trackers.md': 'Tracker fields, data types, visibility, update ownership, starting values and memory/context cost.',
     'reference/Trigger-Catalog.md': "Every identified trigger condition and effect type in one table. Check it before saying a trigger can't do something.",
     'reference/Triggers.md': 'Trigger timing flags, ordering, effect semantics, choosing native effects or PawScript, and start-of-game restrictions.',
+    'reference/Notable-Findings.md': 'Plain-language list of the behavior most likely to surprise an author or break a world, with what to do.',
     'reference/Verified-Behavior.md': 'Consolidated runtime findings: triggers, imports, PawScript, visibility, memory, forms, images and endings.',
     # Library
     'library/Integration.md': 'How to choose and adapt library modules: Storymaster versus lightweight direction, token costs, dependency checklists. Read before using the library JSON.',
@@ -353,8 +354,6 @@ DESCRIPTIONS = {
     'tools/story_export.py': 'Plan, build and verify reviewed extractions of IW story exports; merges only non-conflicting histories.',
     'tools/plot_compile.py': 'Builds a fresh world from a literal-Scenario prerequisite plan.',
     'tools/example-plot-plan.json': 'Sample input for plot_compile.py.',
-    'tools/iw_browser.py': 'Optional Playwright harness: dedicated-browser capture and refresh-verified editor export. No import or play.',
-    'tools/requirements-browser.txt': 'Python dependencies for iw_browser.py.',
     'tools/Validation-Report.json': 'Latest package check results (maintainer output).',
     'tools/build_distribution.py': 'Maintainer: rebuilds the homepage, combined text files, folder pages, llms.txt, checker and manifest.',
     'tools/check_package.py': 'Maintainer: validates every example world and local link; writes Validation-Report.json.',

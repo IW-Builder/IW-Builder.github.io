@@ -135,7 +135,7 @@ def validate(doc, schema):
             elif t=='triggerOnTrackedItem' and isinstance(d,dict):
                 ref(d.get('trackedItemID'),'trackedItems',q+'/data/trackedItemID',condition=True)
                 if not isinstance(d.get('textComparison'),str) or not d['textComparison'].strip():
-                    add('warning','missing-native-comparator',q+'/data/textComparison','Native tracker comparisons retain textComparison even for numeric targets. Missing/blank values can be omitted or inactive on import; preserve the native nonempty field.')
+                    add('warning','missing-native-comparator',q+'/data/textComparison','Native tracker comparisons retain textComparison even for numeric targets. A missing/blank value drops the condition from the export and the trigger loses that gate; preserve the native nonempty field.')
             elif t in ['triggerPrereqs','triggerBlockers'] and isinstance(d,dict):
                 key='prereqs' if t=='triggerPrereqs' else 'blockers'
                 for j,x in enumerate(d.get(key,[]) if isinstance(d.get(key,[]),list) else []): ref(x,'triggerEvents',q+'/data/'+key+'/'+str(j))
@@ -182,6 +182,8 @@ def validate(doc, schema):
                 compare_wrapper(e,d,q)
                 if et in ['effectSetTrackedItemValue','effectModifyTrackedItemDetails']:
                     ref(d.get('trackedItemID'),'trackedItems',q+'/data/trackedItemID')
+                    if et=='effectSetTrackedItemValue' and 'replaceWith' not in d:
+                        add('warning','missing-replace-with',q+'/data','Native value effects carry replaceWith (empty string when unused). An effect without it was associated with the game failing at the opening.')
                 elif et in ['effectPresentChoice','effectRequestInput']:
                     ref(d.get('targetTrackedItemId'),'trackedItems',q+'/data/targetTrackedItemId')
                 elif et=='effectModifyInstructionBlock': ref(d.get('id'),'instructionBlocks',q+'/data/id')
@@ -200,6 +202,8 @@ def validate(doc, schema):
         ident=t.get('id')
         if isinstance(ident,str) and ident and not re.fullmatch(r'[A-Za-z0-9]+',ident):
             add('warning','tracker-id-import-risk',p+'/id','Tracker '+repr(t.get('name','Unnamed tracker'))+' has a non-ASCII-alphanumeric ID. Import may regenerate it without remapping references; inspect the imported targets. This is advisory, not a universal ID validity rule.')
+        if 'description' not in t:
+            add('warning','missing-tracker-description',p,'Tracker '+repr(t.get('name','Unnamed tracker'))+' has no description field. Import can report success and then fail while rebuilding the editor; include description, even as an empty string.')
         v=t.get('variableName')
         if isinstance(v,str) and v:
             if v in variables:add('warning','duplicate-variable',p+'/variableName','Repeated variable name; binding ambiguity not resolved.')

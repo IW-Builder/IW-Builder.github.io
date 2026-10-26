@@ -27,9 +27,9 @@ Start + Mid Game + Repeat can execute before the opening and again during turn 1
 
 With Start false, Mid Game has no effect; a stored true value requires no warning or repair. A trigger with no conditions and Start false does not fire automatically, but can remain available for explicit dispatch.
 
-- Prerequisites/blockers with firedThisTurn true are ordered this-turn checks, resetting on subsequent turns; false uses game history. Order matters. The editor disallows requiring and blocking the same trigger; do not generate that conflict.
+- Prerequisites/blockers with firedThisTurn true are this-turn checks that see a producer only when it is earlier in triggerEvents, and reset each turn. False uses game history, which sees a later-ordered producer from the next turn. The editor disallows requiring and blocking the same trigger; do not generate that conflict.
 - Defaults are not a contract: always serialize canTriggerMoreThanOnce and the timing flags intentionally. Use repeatable commit triggers with idempotent state guards where appropriate, and true one-shot events when required.
-- Restriction: Do not combine Start of Game with Scenario or minimum-turn conditions. The editor warns that these conditions are ignored; minimum-turn bypass is confirmed during both startup and mid-game execution. Use a separate startup trigger and leave Start off on the conditional trigger. Scenario runtime behavior remains unverified.
+- Restriction: Do not combine Start of Game with Scenario or minimum-turn conditions. The editor warns that these conditions are ignored; minimum-turn bypass is confirmed during both startup and mid-game execution. Use a separate startup trigger and leave Start off on the conditional trigger.
 
 ### Execution order and effect semantics:
 
@@ -71,7 +71,7 @@ Eligible no-effect triggers record firing. Random dispatch bypasses target condi
 
 ### Scenarios
 
-Say Scenarios when talking to users; the root JSON field is `conditions`, referenced by `triggerOnEvent`. Binding requires an exact registry string, including case, spaces and punctuation; preserved JSON can still be unbound, so check the selector after import. Use literal Scenarios with explicit state gates. Dynamic Scenario text works in some single-slot arrangements but fails in multi-slot, cyclic and parallel ones, and blank slot text is not dependable deactivation. The editor stops adding Scenarios at ten entries, but imported registries of twelve were retained and executed; ten is not a runtime maximum.
+Say Scenarios when talking to users; the root JSON field is `conditions`, referenced by `triggerOnEvent`. Binding requires an exact registry string, including case, spaces and punctuation; preserved JSON can still be unbound, so check the selector after import. A Scenario fires only when the event actually happens in the narrated outcome; the narrator can refuse or substitute a requested action. Unused registry entries and duplicate references are tolerated, and import fills an absent registry from the trigger references. Use literal Scenarios with explicit state gates. Dynamic Scenario text works in some single-slot arrangements but fails in multi-slot, cyclic and parallel ones, and blank slot text is not dependable deactivation. The editor stops adding Scenarios at ten entries, but imported registries of twelve were retained and all fired in one turn.
 
 ---
 

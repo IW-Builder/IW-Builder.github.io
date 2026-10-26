@@ -4,7 +4,7 @@ Use Evidence.md for the shared evidence legend and compatibility baseline. Known
 
 ## Turn lifecycle [RUNTIME]
 
-This is an authoring model of the established boundaries, not a trace of IW internals:
+An authoring model of the established boundaries:
 
 ```mermaid
 flowchart TD
@@ -17,11 +17,11 @@ flowchart TD
     N --> P
 ```
 
-- Start+Mid+repeat triggers can execute in a pre-opening setup pass and again during the first normal turn. Messages from the setup pass appear before the opening background. The value of $game.turn_number during setup is not established. Guard initialization and counters according to the intended behavior.
+- Start+Mid+repeat triggers can execute in a pre-opening setup pass and again during the first normal turn. Messages from the setup pass appear before the opening background. Trigger history records setup-pass firings as turn 0; the value of $game.turn_number during setup is not established. Guard initialization and counters according to the intended behavior.
 - During normal turns, generated tracker changes are available to trigger conditions. Ordered triggers can see earlier trigger writes. The practical order to author is the `triggerEvents` array; preserve it and verify editor reorder/export behavior if changing order through the UI.
-- Scenario judgments must be available for their trigger checks, but their exact production stage relative to Evaluation, narration and tracker updates is not mapped. Do not place them at a fabricated precise point in the diagram.
+- Scenario judgments must be available for their trigger checks, but their exact stage relative to Evaluation, narration and tracker updates is not mapped.
 - Messages belong to their effects; they need not be a single final batch after all triggers. Choice/input effects can suspend for a player answer. Correctly bound single-answer forms update immediately and permit later triggers to read the answer in the same turn.
-- Guidance and block changes do not rewrite already-generated narration. Updates supply context for subsequent generation. The precise persistence/priority of competing guidance is not a stable contract.
+- Guidance and block changes do not rewrite already-generated narration. Updates supply context for subsequent generation. When guidance effects conflict, the first tends to win; generate one coherent directive instead.
 - Summary generation is a separate context-maintenance process. Compression follows a six-turn cadence beginning at turn eight (user-confirmed); its ordering relative to other turn stages is not established.
 
 Timing flags (Start, Mid Game, repeat), prerequisites and blockers are covered in [Triggers.md](Triggers.md).
@@ -61,9 +61,9 @@ NPC field/activation guidance is [DOCUMENTED]; the stated plain-word keyword mat
 | img_appearance / img_clothing | Visual identity and clothing guidance for image handling |
 | positionInList | Ordering metadata; preserve existing values; use sequential integers for new lists |
 
-IW permits a character among both player choices and Other Characters under the same name. The selected player can retrieve information from that entry, but internal identity merging/exclusion is not visible. Author the intended relationship explicitly where it matters. PC/NPC conversion is available in Data mode: preserve the source and map relevant fields into the destination type, rather than relabeling the native object.
+IW permits a character among both player choices and Other Characters under the same name. The selected player can retrieve information from that entry, but internal identity merging/exclusion is not visible. Unchosen player options are not NPCs unless also added as Other Characters. Author the intended relationship explicitly where it matters. PC/NPC conversion is available in Data mode: preserve the source and map relevant fields into the destination type, rather than relabeling the native object.
 
-Only Name is required in the NPC editor. Storytelling and image information have independent optional sections; do not infer their serialized enable flags from the UI alone. The storytelling help states that the brief summary is the only character information available to the storyteller until the turn after the character or their location is first mentioned. Characters can activate by name with no location. Put essential information in one_liner and repeat it in detail. Location is a short starting location (editor asks for no more than two words). Full list of names accepts comma-separated variants in the editor; preserve the export's names representation. Image appearance/clothing guide the image AI and can be inspected using the wrench under a character image. Mentioning footwear can encourage full-body framing, per editor help.
+Only Name is required in the NPC editor. Storytelling and image information have independent optional sections; do not infer their serialized enable flags from the UI alone. The storytelling help states that the brief summary is the only character information available to the storyteller until the turn after the character or their location is first mentioned. Characters can activate by name with no location. Put essential information in one_liner and repeat it in detail. Detail retrieval is unreliable: a name-only mention did not surface an authored hobby on two turns, the narrator invented one, and history then repeated the invention. Put facts that must surface in the Summary or always-on text, and correct a wrong invented detail early by editing the turn. The narrator can also introduce named NPCs into an opening that says the player is alone. Location is a short starting location (editor asks for no more than two words). Full list of names accepts comma-separated variants in the editor; preserve the export's names representation. Image appearance/clothing guide the image AI and can be inspected using the wrench under a character image. Mentioning footwear can encourage full-body framing, per editor help.
 
 NPC activation and static character context are not exposed in World Debug. The editor help supplies the activation guidance above; debug cannot verify a card's activation window. Secret fields are not a guaranteed protection against narrative leaks.
 
@@ -80,7 +80,7 @@ Keyword entries have id, name, keywords (string array), and content. Choose dist
 
 Editor help says Evaluation outputs guide AI thinking; SUCCESS/FAILURE are not special control tokens. These are instructions, not executable hooks. Writing SUCCESS in Evaluation does not itself fire a custom trigger. Replacing a default request with a large custom framework can change its responsibilities; inspect dependencies rather than copying only one field.
 
-Longer-output requests, including strong priority-override language and richer lore, did not reliably reach the requested length. No guaranteed length recipe or hidden maximum is established.
+The default Description instructions ask for several paragraphs; check them first when brevity requests are ignored. Longer-output requests, including strong priority-override language and richer lore, did not reliably reach the requested length, and a one-sentence descriptionRequest did not shorten it. No reliable length recipe is established.
 
 Runtime names referenced by the sample library:
 
@@ -141,7 +141,7 @@ Story exports support a chosen turn range, optional background, character, secre
 
 The current image-style editor is a reusable style editor with Name, Model and prompt wrappers. With separate character/scenery prompts enabled, Characters—start/end and Scenery—start/end add text before/after their respective image prompts. With it disabled, Start/End apply to every image. The corresponding world export fields are imageStyleCharacterPre/Post and imageStyleNonCharacterPre/Post; shared Start/End are exported by duplicating the values into both character and non-character Pre/Post fields. No extra switch is needed to represent the shared prompt text in these exports. The imageStyle value is a generated bespoke identifier; preserve it rather than deriving it from the prompt text. This world export is not a complete standalone reusable-style library export.
 
-The old illustrationStyle*LowPriority/HighPriority fields still occur in exports, but there are no matching current controls. Preserve them in existing worlds; do not present them as active current editor controls or invent their precedence. Manticore is the current recommended model in editor help. The selected style can be overridden by the player. A cover prompt is separate from these wrappers. Current Pre/Post wrappers influenced character/scenery styles, but exact prompt assembly and universal precedence remain unknown.
+The old illustrationStyle*LowPriority/HighPriority fields still occur in exports, but there are no matching current controls. Preserve them in existing worlds; do not present them as active current editor controls or invent their precedence. Manticore is the current recommended model in editor help; its preset text includes IWBeautiful/IWUpscaleFace macros whose mechanism is undocumented. The selected style can be overridden by the player. A cover prompt is separate from these wrappers. Current Pre/Post wrappers influenced character/scenery styles, but exact prompt assembly and universal precedence remain unknown.
 
 Dedicated Other Character image appearance/clothing can populate image details independently of narrative appearance. Edits affect generated images and can be reversed; alias-related clothing drift is possible.
 
@@ -151,7 +151,7 @@ Resolve bracketed image-style slots as deliberate choices. Remove unselected cho
 
 videoPromptInstructions has videoPlan, videoImagePosition and videoPrompt strings. The library uses videoPlan to choose a beat, videoImagePosition to choose start/end anchoring, and videoPrompt to describe the clip. Its `$videoDuration` and `$videoStyle` references are video-context dependencies, not declared trackers in that library and not documented global PawScript roots. Confirm their availability through the video editor/debug context before adopting the sample unchanged. No video-enabled runnable example is claimed until that capture exists.
 
-Enable model selection per world under Show optional features > Misc advanced features > Enable AI-specific instruction blocks. Selected block models serialize in selectedAIProfiles. All-model blocks remain active while selected-model blocks follow the active model. The current authoring choices are listed in Current-AI-Profiles.json, dated October 17, 2026. This is a dated suggestion list, not a validator enum: accept arbitrary historical IDs and preserve imported selections.
+Enable model selection per world under Show optional features > Misc advanced features > Enable AI-specific instruction blocks. Selected block models serialize in selectedAIProfiles. All-model blocks remain active while selected-model blocks follow the active model. Current-AI-Profiles.json lists each storyteller model's ID, underlying real-world model, isCurrent flag and typical credits per turn, including retired models (dated October 26, 2026; the community wiki is the live source). It is not a validator enum: accept arbitrary historical IDs and preserve imported selections.
 
 Disabling this editor option removes selectedAIProfiles from exported blocks and hides their controls. The still-open editor temporarily remembers choices if re-enabled, but that memory does not survive closing it. Do not treat disabling as a durable reversible runtime switch or promise that exporting while disabled preserves selections. A block name alone does not select models. Whether the choices are fetched live is an inference; their exact source is unnecessary for authoring.
 

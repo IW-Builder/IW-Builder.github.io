@@ -14,10 +14,12 @@ The supplied single-choice world preserves its IDs and binding through a fresh i
 - Run the validator on that exact file. Resolve missing or duplicate IDs and mismatched target references.
 - Review native YAML paths against the tracker's declared initial structure and intended operation. The editor can accept unchecked paths without warning. Removing a nonexistent key or appending to a numeric path may be syntactically valid but semantically wrong. Dynamic paths may require runtime inspection rather than a blanket validation error.
 - Review script references separately: structural validation does not execute PawScript or prove its paths exist.
+- Give every tracker a `description` (it may be empty). Without it, import reports success and then the editor rebuild fails with a KeyError.
+- Convert legacy bare-array prerequisites/blockers and blank PawScript conditions to native object shape. Import drops them, and the trigger silently loses that gate.
 
 ## After import
 
-Save and inspect affected target controls. An invalid-value target is a binding failure even if the original JSON had consistent references. Export the imported world and validate that export when diagnosing discrepancies. Preserve the untouched export before repairing a suspect target so source and imported IDs can be compared.
+A round trip of well-formed native JSON is byte-identical, so any change after import points at a normalization (ID reminting, dropped gates, scope repair, registry population). Save and inspect affected target controls. An invalid-value target is a binding failure even if the original JSON had consistent references. Export the imported world and validate that export when diagnosing discrepancies. Preserve the untouched export before repairing a suspect target so source and imported IDs can be compared.
 
 For a native input, confirm the current target value after submitting an answer. Correctly bound single-answer Choice and Request Input effects update immediately, and subsequent ordered triggers can read the result in the same turn. Their follow-up messages can render above the question/answer receipt. The live-world editor's initialValue remains configuration, not the current runtime value.
 

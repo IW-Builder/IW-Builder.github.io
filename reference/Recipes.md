@@ -16,7 +16,7 @@ These are independent recipes. Select, adapt or omit them; none is a required wo
 
 **Player-optional block, with no repeated writes.** The companion optional example distills the supplied native demonstration:
 
-1. A player-only text preference has initialValueBasedOnPC player, initialValue On or Off, initialValueChoices [On, Off], autoUpdate false. The player can change this live.
+1. A player-only text preference has initialValueBasedOnPC player, initialValue On or Off, initialValueChoices [On, Off], autoUpdate false. The player picks it at startup; later changes need the Storyteller-mode tracker editor.
 2. A hidden non-AI-updated text tracker records which choice has actually been applied. It is a cache, not another player preference. hidden_boring is used by the source example.
 3. A repeatable enabling trigger requires preference On AND cache not Enabled. It writes the enabled block content, then records Enabled.
 4. A repeatable disabling trigger requires preference Off AND cache not Disabled. It writes empty content, or a deliberately chosen simpler fallback, then records Disabled.
@@ -48,11 +48,11 @@ Native block-modification effects substitute ordinary `<<...>>` templates when t
 
 In [recipe-request-commit.json](../examples/recipe-request-commit.json), the AI records the current requested event and turn stamp. The first trigger resets the receipt, not the unconsumed request. A later trigger checks freshness, then checks funds/ownership and commits a purchase or rejection. A following effect displays the receipt and clears the request; the receipt remains for next-turn continuity. Narration describes an attempt until the committed result is available. A freshness stamp prevents stale reuse, not incorrect classification. This pattern is optional: native choices, thresholds and timed effects do not need an AI request layer.
 
-The [example index](../examples/index.json) records each complete world's purpose and verification scope. [Payloads.md](../examples/Payloads.md) supplies smaller native shapes. Remap IDs when combining worlds and validate the result; structural checks do not certify gameplay. Select examples by feature rather than imposing the showcase's architecture on every world.
+The [example index](../examples/index.json) records each complete world's purpose and verification scope. [Payloads.md](../examples/Payloads.md) supplies smaller native shapes. Remap IDs when combining worlds and validate the result. Select examples by feature rather than imposing the showcase's architecture on every world.
 
 ## Guarded state patterns
 
-These optional complete worlds compose known primitives; their exact compositions have not been live-certified. Do not replace a world's design with them automatically.
+These optional complete worlds compose known primitives. Do not replace a world's design with them automatically.
 
 | Example | Intent and boundary |
 | --- | --- |
@@ -62,7 +62,7 @@ These optional complete worlds compose known primitives; their exact composition
 | [Cached random](../examples/recipe-cached-random.json) | One trigger samples once and both blocks read the stored roll. Before that trigger runs the initial value is 0; reset ready to 0 only when a new draw is intended. This is not a guarantee of same-turn narrative visibility. |
 | [Consumed milestone](../examples/recipe-consumed-timer.json) | Increment turn time before checking ticks >= 3; consume the crossing once. This counts ordinary eligible trigger cycles, not elapsed story time. Resetting only the consumed flag permits another award. |
 | [Choice domain](../examples/recipe-choice-domain.json) | Accept only Courier or Archivist at consumption. Blank offers the form again; unexpected manual/script values do not commit. Multiple selections need their own delimiter/representation validation. |
-| [Compiled plot](../examples/recipe-compiled-plot.json) | Literal Scenarios with ordered prerequisites and guarded awards. See [compiler contract](Engineering-Tools.md). |
+| [Compiled plot](../examples/recipe-compiled-plot.json) | Literal Scenarios with ordered prerequisites and guarded awards. See [plot compiler](Engineering-Tools.md). |
 
 The validator's review advisories cover repeat accumulation, separate script transaction boundaries, computed choice domains, multiple-choice storage and independently evaluated random expressions. They are prompts to inspect intent, never hard prohibitions or proof that a guard is missing. Existing guards can legitimately trigger a review notice. Choice menus and Enforce format do not validate all manual/script write paths.
 

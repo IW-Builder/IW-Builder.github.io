@@ -1,26 +1,102 @@
-Infinite Worlds Authoring Kit: IW-Behavior.txt (editor/UI workflows, verified runtime behavior and known limits).
+Infinite Worlds Authoring Kit: IW-Behavior.txt (notable findings, editor/UI workflows, verified runtime behavior and known limits).
 Generated text edition. BEGIN FILE / END FILE sections identify package-relative source paths. This is reference material, not one IW world.
 Follow Authoring-Prompt.md (in IW-Authoring-Guide.txt). Load companion editions only when the task needs them.
 Editions and their contents:
 - IW-Authoring-Guide.txt: start here: prompt, template, narrative craft, trackers, triggers, data banks and library integration. Files: Authoring-Prompt.md, World-Template.json, reference/Evidence.md, reference/Craft.md, reference/Trackers.md, reference/Triggers.md, reference/Trigger-Catalog.md, reference/Portable-Banks.md, library/Integration.md
 - IW-Technical-Reference.txt: exact payloads, PawScript, capabilities, recipes and import integrity. Files: reference/Schema.md, reference/PawScript.md, reference/Capabilities.md, reference/Recipes.md, reference/Import-Integrity.md, reference/Default-Evaluation.txt, reference/Current-AI-Profiles.json
-- IW-Behavior.txt: editor/UI workflows, verified runtime behavior and known limits. Files: reference/Editor-UI.md, reference/Verified-Behavior.md, reference/Known-Limits.md
+- IW-Behavior.txt: notable findings, editor/UI workflows, verified runtime behavior and known limits. Files: reference/Notable-Findings.md, reference/Editor-UI.md, reference/Verified-Behavior.md, reference/Known-Limits.md
 - IW-Payloads.txt: exact native payload snippets for every condition and effect, plus the example index. Files: examples/Payloads.md, examples/index.json
 - IW-Mechanics-Examples.txt: complete mechanics example worlds: recipes, optional block, starting values and a showcase. Files: examples/recipe-request-commit.json, examples/recipe-completion-award.json, examples/recipe-candidate-acceptance.json, examples/recipe-archive-reactivate.json, examples/recipe-cached-random.json, examples/recipe-consumed-timer.json, examples/recipe-choice-domain.json, examples/recipe-compiled-plot.json, examples/recipe-choice-followup.json, examples/recipe-threshold-unlock.json, examples/optional-block.json, examples/character-starting-values.json, examples/showcase-glass-ledger.json
 - IW-Narrative-Examples.txt: complete narrative example worlds: ensemble romance, fantasy expedition and contained horror. Files: examples/narrative-vendemmia.json, examples/narrative-listening-road.json, examples/narrative-address-after-midnight.json
 - IW-Sample-Blocks.txt: optional library modules (read library/Integration.md first). Files: library/Sample-Blocks.json
 - IW-Storymaster.txt: the Storymaster narrative-direction framework (read library/Integration.md first). Files: library/Storymaster-Suite.json
-- IW-Tools.txt: Python tools and their guides, for models that can run code. Files: tools/Usage.md, reference/Story-Tools.md, reference/Engineering-Tools.md, tools/validate_iw_export.py, tools/static_checks.py, tools/iw-export.schema.json, tools/data_bank.py, tools/import_audit.py, tools/story_export.py, tools/iw_browser.py, tools/plot_compile.py
+- IW-Tools.txt: Python tools and their guides, for models that can run code. Files: tools/Usage.md, reference/Story-Tools.md, reference/Engineering-Tools.md, tools/validate_iw_export.py, tools/static_checks.py, tools/iw-export.schema.json, tools/data_bank.py, tools/import_audit.py, tools/story_export.py, tools/plot_compile.py
 Every file is also available individually: https://iw-builder.github.io/llms.txt
+
+===== BEGIN FILE: reference/Notable-Findings.md =====
+# Notable findings
+
+The Infinite Worlds behavior most likely to surprise an author or break a world, in plain language. Each entry says what happens and what to do. Details and evidence labels are in [Verified behavior](Verified-Behavior.md); open questions are in [Known limits](Known-Limits.md). Use this page as a checklist when reviewing or debugging a world.
+
+## Triggers
+
+1. **A trigger with no conditions never fires on its own.** It is a saved trigger for Fire random trigger, not an "always" trigger. Start-of-game triggers are the exception: they fire at startup.
+2. **Repeat means every eligible turn.** "HP below 5" with Allow triggering multiple times fires every turn HP stays low. Add a state guard for one-time effects.
+3. **Start + Mid-game + Repeat runs twice before the player acts:** once before the opening and again on turn 1. Guard counters and rewards.
+4. **Give information to AI does nothing on a Start-enabled trigger**, even on its later mid-game activations. Use background, an instruction block or a separate ordinary trigger.
+5. **Effects available depend on Start mode.** Background, first-action and Other Character changes are Start-only; Fire random trigger does not dispatch with Start on.
+6. **"Fired" does not mean "succeeded".** A script that errors rolls back only its own writes, but its trigger still counts as fired, uses up a one-shot and satisfies prerequisites. Set a completion flag inside the script that does the work.
+7. **Order in the trigger list is execution order.** Later triggers see earlier writes; a this-turn prerequisite only sees producers above it. Reversing two triggers can delay an effect by a turn.
+8. **Two native number changes to one tracker in one trigger overwrite each other.** Add 2 then add 3 ends at 3. Use one script for dependent arithmetic.
+9. **Fire random trigger skips the target's conditions** but will not rerun a one-shot that already fired. Put required checks inside the target's effects.
+10. **Thresholds need inequalities.** A countdown that jumps from 1 to -2 never equals 0. Use `<=`/`>=` and consume each crossing once.
+11. **Effects run after the narration is written.** A trigger cannot change the scene that caused it. If a rule must shape that scene, put it in active instructions beforehand.
+12. **When two guidance effects conflict, the first tends to win.** Generate one coherent outcome instead of competing directives.
+
+## Scenarios
+
+13. **Scenario text must match the registry exactly**: case, spaces and punctuation. A mismatch keeps the text in JSON but the selector shows "Select a situation" and the trigger never fires.
+14. **A Scenario fires only when the event really happens in the narration.** The narrator can refuse or alter a requested action.
+15. **Dynamic Scenario text (`<<$slot>>`) is unreliable** beyond a single slot: multi-slot, cyclic and parallel setups silently fail. Use literal Scenarios plus state conditions.
+16. **The editor's ten-Scenario limit is an editor limit.** Imported worlds with twelve or more work.
+
+## Import and editing
+
+17. **Tracker IDs with punctuation, spaces or accents are replaced on import, and triggers still point at the old ID.** Use letters and digits only for tracker IDs.
+18. **Some missing fields break things silently.** A condition without `textComparison` is dropped. A value effect without `replaceWith` was linked to the game failing at the opening. A tracker without `description` makes the editor rebuild fail after a "success" message.
+19. **Legacy array-style prerequisites and blank script conditions are dropped on import.** The trigger loses that gate, or never fires if it was the only one.
+20. **Import is saved immediately**, even if you later click Discard changes. Keep a backup. Wait for the editor to rebuild before refreshing the raw JSON.
+21. **A running game is a separate copy.** Editing the world, its starting values or its characters does not change a game in progress. Edit current tracker values in Storyteller mode, or start a new game.
+22. **Renaming a tracker's display Name with Ignore keeps its script handle.** Scripts keep working.
+
+## Trackers and PawScript
+
+23. **Hidden and extra-hidden trackers are not secret.** The storyteller and any Storyteller-mode player can see them; extra-hidden only filters one display.
+24. **Hidden and player-only trackers cannot auto-update.** Import turns automatic updating off for them.
+25. **Enforce format does not reject bad data** written by scripts or by hand. Validate shape and values in scripts before accepting them.
+26. **Random expressions disagree with each other.** Two `random()` calls, even in one block, give different results. Store one roll in a tracker when several things must agree.
+27. **Text installed by a block effect freezes its values.** Use a deferred `<<=...=>>` reference to keep a value live.
+28. **An unclosed `<<` can break the next instruction block too.** Check delimiters across neighboring blocks.
+29. **YAML types are loose.** `yes`/`no` are text, `"007"` counts as 7 in arithmetic, Boolean results are stored as quoted text, and appending to a list allows duplicates.
+30. **Reading a missing path stops a script.** Guard with `.exists()` first (`and`/`or` short-circuit), or use `try(...)`, `first_available(...)` or `item(key, fallback)`.
+31. **Script variables (`set $x`) vanish between Run Script effects** in the same trigger. Keep dependent work in one script.
+32. **Skill effects cap rather than add.** Raising a skill by 2 then by 1, each capped at 4, ends at 4. Skills not raised default to level 3; set every level explicitly.
+
+## Characters, knowledge and memory
+
+33. **Only the Summary is guaranteed early.** Character detail arrives after a name or location mention, and even then often fails to surface; the narrator invents a substitute that history then repeats. Put must-know facts in the Summary or always-on text and repeat them in detail.
+34. **Keyword and character cards cannot activate on the opening turn** without prior context. Put opening facts in firstInput or always-on instructions.
+35. **Keyword blocks match whole words, any case, and stay active for the matching turn plus three.** Substrings and plurals do not match.
+36. **NPCs get knowledge wrong.** They deny facts they were just told, credit the wrong source, or know secrets they should not. Secret Info can contradict the narration. Anti-omniscience instructions alone do not fix this.
+37. **Once a secret is narrated it stays in the story**, even if you remove the block that revealed it.
+38. **Memory summaries start at turn 8 and repeat every six turns.** Their contents are hidden. Keep facts that must persist in trackers.
+39. **A player character with the same name as an Other Character can draw on that card.** Unchosen player options are not NPCs unless added as Other Characters.
+
+## Narration, images and play
+
+40. **Length requests do not reliably work**, in either direction. The default Description instructions ask for several paragraphs.
+41. **Raw HTML renders as literal text.** Use ordinary Markdown.
+42. **Short avoid-lists help, long ones backfire** on weaker models by priming the banned phrases.
+43. **Image style uses the start/end prompt fields.** The old illustrationStyle priority fields have no current controls and lost to the start/end prompts in testing. Saving Illustration details generates a new image (about 4 credits).
+44. **Ends game with continuation allowed offers Continue game at no cost.** Without it, the action box disappears but history and regeneration remain.
+45. **Reloading during generation can lose the turn and keep the charge.** Check the export's turn count before resubmitting.
+46. **Cost per turn grows with story length** and depends heavily on the model; see [Current-AI-Profiles.json](Current-AI-Profiles.json).
+47. **One input form per turn is safest.** A turn with two forms once showed narration without the forms and was not saved.
+
+---
+
+END OF DOCUMENT: reference/Notable-Findings.md
+
+===== END FILE: reference/Notable-Findings.md =====
 
 ===== BEGIN FILE: reference/Editor-UI.md =====
 # Editor and UI reference
 
-Current through 2026-10-23. This covers observed authoring, play and troubleshooting surfaces, not every menu. [DOCUMENTED] means editor guidance; [RUNTIME] means observed behavior. Unlisted fields are not necessarily unsupported.
+Current through 2026-10-26. This covers observed authoring, play and troubleshooting surfaces, not every menu. [DOCUMENTED] means editor guidance; [RUNTIME] means observed behavior. Unlisted fields are not necessarily unsupported.
 
 ## Terminology for users
 
-Use tracker and trigger **Names**, not IDs, unless the user requests IDs. Distinguish duplicate Names by purpose/editor location. Keep IDs for internal wiring and preserve them during edits. Use variable handles when explaining code. Say **Scenarios**, never ambiguous Conditions, for reusable narrative situations. Call a character's Brief Summary **Summary**.
+Use tracker and trigger **Names**, not IDs, unless the user requests IDs. Distinguish duplicate Names by purpose/editor location. Keep IDs for internal wiring and preserve them during edits. Use variable handles when explaining code. Say **Scenarios**, never ambiguous Conditions, for reusable narrative situations. Call a character's one_liner **Summary**.
 
 | User/editor term | JSON mapping or distinction |
 | --- | --- |
@@ -47,6 +123,8 @@ Use tracker and trigger **Names**, not IDs, unless the user requests IDs. Distin
 3. To import, replace the whole raw value and select **Import JSON to world**. Accept the intended overwrite, acknowledge success, and wait for the editor to rebuild itself.
 4. After rebuilding, reopen optional/raw sections and refresh/export if needed. Do not refresh the old editor immediately after import or refresh a pasted source you intend to import.
 
+Opening a world in the editor advances its version in the export (for example 1.01 to 1.02), even if changes are then discarded.
+
 [RUNTIME] Import can persist independently of a later Discard changes action. Keep a backup. Check target dropdowns and Scenario bindings after import; preserved text is not proof of valid references. Tracker IDs can be regenerated without remapping their references.
 
 [RUNTIME] Narration can stream before background work finishes. Following interruption, inspect retained state and controls before submitting again; a temporary turn number is not a saved-turn guarantee.
@@ -55,7 +133,7 @@ Use tracker and trigger **Names**, not IDs, unless the user requests IDs. Distin
 
 An ordinary trigger with no conditions says it will never fire. This is not unconditional execution; Start-gated triggers and explicit random dispatch differ. Empty effects do no work but eligible triggers can still record firing.
 
-Start mode changes the picker and compatibility warnings. Start-only disables Repeat in the editor; Or mid-game enables it. Stored unsupported combinations may survive import while effects are ignored. Read the [trigger capability catalog](Trigger-Catalog.md) before declaring an operation unavailable.
+Start mode changes the picker and compatibility warnings. Start-only disables Repeat in the editor; Or mid-game enables it. **Use advanced logic** adds Add logic block; new blocks default to Or. Switching a condition between types keeps hidden fields: Turn number to Player action keeps the old inequality and clears the required value. Trigger history lists Start-pass firings as turn 0. Stored unsupported combinations may survive import while effects are ignored. Read the [trigger capability catalog](Trigger-Catalog.md) before declaring an operation unavailable.
 
 A mismatched Scenario shows **Select a situation** while the JSON keeps its string. The Situations manager's Add control stops at ten entries. Binding rules and limits are in [Triggers.md](Triggers.md#scenarios).
 
@@ -72,7 +150,7 @@ A mismatched Scenario shows **Select a situation** while the JSON keeps its stri
 
 Neither hidden nor extra-hidden protects information from Storyteller inspection. Visibility and automatic-update rules are in [Trackers.md](Trackers.md).
 
-For per-character values, select **Initial value depends on which character the player chooses** under Tracked items, then edit under **Player character options > [Name]**. Player-selected preferences can appear on the character card and in Customize Character. Opening the customizer can reset card selections; check final values there. Starting-value permission is not general in-play edit permission.
+For per-character values, select **Initial value depends on which character the player chooses** under Tracked items, then edit under **Player character options > [Name]**. Player-selected preferences can appear on the character card and in Customize Character. Opening the customizer can reset card selections; check final values there. With starting-value permission on, Customize Character shows only character-scoped or player-chosen trackers, not same-for-everyone ones. Starting-value permission is not general in-play edit permission.
 
 Rename warnings offer **Update** and **Ignore** for a variable-name mismatch; Ignore preserves the handle and ID. When acknowledgement is needed is covered in [Trackers.md](Trackers.md). Initial-value changes do not migrate running state; edit current tracker values for that.
 
@@ -82,7 +160,7 @@ The database icon opens trackers; the nearby edit control edits their values. Th
 
 The bug icon opens debug. **Active instructions** is live rendered state, including post-narration trigger updates and live edits, not the full historical prompt. A trigger badge/list is not always exhaustive; inspect detailed history and actual state.
 
-**PawScript > Open in Sandbox** uses the historical data that script ran against. It can differ from current manually edited values. A run displays a result/diff; **Update Game** is separate. A collapsed summary can misrepresent nested structure; inspect actual values or supported reads.
+**PawScript > Open in Sandbox** uses the historical data that script ran against. Its header names the script and says what it changed when it ran in the game. **Turn data** lists trackers plus the `$player` and `$game` roots (`$game` has seven keys, including turn_number, ai_model and skill_list); **Legacy turn data** holds older flat variables. In a short-circuited And/Or group, debug lists only the deciding condition. It can differ from current manually edited values. A run displays a result/diff; **Update Game** is separate. A collapsed summary can misrepresent nested structure; inspect actual values or supported reads.
 
 The live-design notice warns that Player/Other Character changes do not affect the current playthrough; live copies are covered in [Import-Integrity.md](Import-Integrity.md). Runtime block replacements and tracker changes can leave original content/initial values in design exports; those exports are not complete live-state snapshots.
 
@@ -90,19 +168,25 @@ Story exports offer a turn range and optional background, character, secrets, tr
 
 An unchecked **Hide skill system** option may omit `hideSkillSystem` from the editor export. This is normal visible-skills state, not a missing setting to repair. Generated JSON may explicitly use `false`.
 
+## Credits and cost
+
+The header shows the credit balance and the remaining daily free turns (3 per day observed). **Credits > Credit activity >** a turn **> Cost breakdown** splits Inputs and Outputs into instructions, trackers, STM (recent story), LTM (summaries) and other; thinking models add an output category. LTM first appears after the first summary compression, as STM drops. Breakdown values are rounded decimals: the list can differ from the balance change by a credit.
+
+Cost per turn depends on the model (the picker shows a typical range; see [Current-AI-Profiles.json](Current-AI-Profiles.json)) and rises with story length: Lynx turns went from about 20 to about 40 credits over nine turns. Saving Illustration details generates an image for about 4 credits. A failed opening is refunded. Continue game after an ending costs nothing. A turn interrupted by reload can stay charged without being kept.
+
 ## Characters, images and models
 
 Other Characters separates Summary, Character detail, narrative appearance and image appearance/clothing. Help says Summary is available before full detail, with detail available from the turn after name/location mention. Repeat essential Summary facts in detail. Location guidance asks for no more than two words; Full list of names accepts comma-separated variants. Unchosen player options are not automatically NPCs: add Other Characters when they should exist in the story.
 
 The illustration wrench opens **Illustration details**. Character fields: Appearance, Clothing, Expression/position, Setting. Scenery fields: Appearance, Setting. **Edit details > Save changes** immediately generates an image; it is not a text-only save. **Settings > Illustration options** supports one, two or three alternatives; automatic generation is separate.
 
-Image style has Character/Scenery start/end prompts, mapped to `imageStyleCharacterPre/Post` and `imageStyleNonCharacterPre/Post`. Retained `illustrationStyle*` fields are not current controls. Full image prompts and cache identities are hidden.
+Image style has a Model and Character/Scenery start/end prompts, mapped to `imageStyleCharacterPre/Post` and `imageStyleNonCharacterPre/Post`. Retained `illustrationStyle*` fields are not current controls. Full image prompts and cache identities are hidden.
 
 **Misc advanced features > Enable AI-specific instruction blocks** exposes block model choices mapped to `selectedAIProfiles`. All-model blocks remain active during model switches; filtered blocks follow the selected model. Availability changes; imported unfamiliar IDs are not automatically invalid.
 
 ## Specialist instructions, forms and PawScript cues
 
-[DOCUMENTED] Description includes length guidance, but exact length control remains unreliable. Video help describes `$videoDuration` and `$videoStyle` in video context (see below).
+[DOCUMENTED] The default Description instructions ask for several paragraphs; exact length control remains unreliable. Video help describes `$videoDuration` and `$videoStyle` in video context (see below).
 
 Misc advanced features can show PawScript Expression Editor buttons. Missing icons do not prove lack of support: YAML Set a value supports template expressions according to help despite having no icon. This is not an exhaustive icon inventory.
 
@@ -140,9 +224,15 @@ These mappings describe the observed editor controls, not an exhaustive account-
 | Extra-hidden item appears unexpectedly | Distinguish the display panel override from the tracker editing dialog, which still exposes it in Storyteller mode. |
 | Form answer exists but later values are blank | Check trigger order and the answer's stored type/domain; consuming triggers must follow the form. |
 | Trigger history shows firing but accepted state is unchanged | Inspect script failure/rollback and an explicit completion flag; firing is not successful commit. |
-| Reload shows an earlier turn | Inspect retained history/export and controls before retrying; streamed output does not prove persistence. |
+| Reload shows an earlier turn | Inspect retained history/export and controls before retrying; streamed output does not prove persistence. Credit activity can list a charge for the lost turn, and the balance can stay stale until a second reload; the export dialog's turn count is authoritative. |
+| Opening fails with a generic streaming error | Check for effects missing `replaceWith` or other malformed payloads; failed openings are refunded. |
+| Import succeeds, then the editor errors (KeyError) while rebuilding | A tracker is missing `description`. |
+| `TypeError: list indices must be integers or slices, not str` when opening a trigger | Legacy bare-array prerequisites/blockers; convert them to object shape. |
+| `TypeError: npc_added() missing 1 required argument: 'npc'` | Seen while authoring an Other Character template; it persists until dismissed. Re-export and check the characters. |
+| Narration appears without the expected form, and the turn is not kept | Two input forms in one turn once did this; move one form to another turn. |
+| Scenario trigger did not fire | Confirm the narrated outcome actually contains the event; the narrator can refuse or substitute the action. |
 
-Input counters, the Scenario creation cap and retained text sizes are observations, not platform maxima. Additional roles, full prompts, live character records and video runtime remain reference gaps.
+Additional roles, full prompts, live character records and video runtime remain reference gaps.
 
 ---
 
@@ -153,79 +243,88 @@ END OF DOCUMENT: reference/Editor-UI.md
 ===== BEGIN FILE: reference/Verified-Behavior.md =====
 # Consolidated behavior reference
 
-Results current through 2026-10-24. Evidence labels follow [Evidence](Evidence.md). **[RUNTIME]** means observed behavior within the stated scope, **[DOCUMENTED]** means editor/export guidance, **[PATTERN]** means an authoring choice, and **[UNKNOWN]** means unresolved. Import success, rendered instructions and narration answer different questions; none is a complete view of hidden engine state. This reference contains conclusions, not research procedures.
+Results current through 2026-10-26. Labels and kit-wide caveats follow [Evidence](Evidence.md): **[RUNTIME]** observed behavior, **[DOCUMENTED]** editor/export guidance, **[PATTERN]** an authoring choice, **[UNKNOWN]** unresolved. Import success, rendered instructions and narration answer different questions. This reference contains conclusions, not research procedures; [Notable findings](Notable-Findings.md) gives the plain-language summary.
 
 ## Triggers and Scenarios
 
-- [RUNTIME] Ordinary triggers with no conditions do not fire automatically. Start-gated empty-condition triggers can fire at startup. An eligible trigger with no effects still records firing and can satisfy prerequisites.
-- [RUNTIME] Fire random trigger bypasses target conditions, including empty or false conditions. Consumed one-shot targets do not execute again; nested dispatch works. Duplicate-pool weighting remains unresolved.
-- [RUNTIME] A failing Run Script rolls back that script's writes. Separate earlier and later effects can commit. The trigger can count as fired and consume one-shot eligibility despite failure. Prerequisites mean firing, not successful completion.
-- [PATTERN] Set completion flags only after successful work. Order producers before consumers when same-turn consumption is intended. Later triggers see earlier committed writes; reversing order can defer dependent work.
-- [RUNTIME] Start+Mid+Repeat can execute before the opening and again during ordinary play. Repeat does not require a false-to-true condition transition. Start=false makes the stored Mid flag inert.
-- [RUNTIME] Give information to AI is ignored with Start enabled, including subsequent Start+Mid activations. It differs from Tell the AI what should happen next turn. Computed information can appear in Secret Info; full prompt delivery is not visible.
-- [RUNTIME] Background replacement affects startup in Start-only mode. Ordinary background/first-action effects do not rewrite the opening. Start+Mid did not apply background replacement. Fire random trigger dispatches in ordinary mode but did not dispatch with Start enabled. A containing trigger firing does not guarantee every stored effect executes.
-- [DOCUMENTED] Change first action and Change other characters appear among startup-related choices. Full runtime character-record mutation is not observable through the current UI.
+- [RUNTIME] Ordinary triggers with no conditions never fire automatically. Start-gated empty-condition triggers fire at startup. An eligible trigger with no effects still records firing and can satisfy prerequisites.
+- [RUNTIME] Fire random trigger bypasses target conditions, including empty or false conditions. Consumed one-shot targets do not execute again, even on later turns; nested dispatch works. Editor help's "already fired this turn" wording understates this. Duplicate-pool weighting is unresolved.
+- [RUNTIME] A failing Run Script rolls back that script's writes. Separate earlier and later effects can commit. The trigger still counts as fired and consumes one-shot eligibility. Prerequisites mean firing, not successful completion.
+- [RUNTIME] This-turn prerequisites/blockers see a producer only when it is earlier in triggerEvents. History prerequisites see a later-ordered producer from the next turn. Current-turn gates reset each turn.
+- [PATTERN] Set completion flags only after successful work. Order producers before consumers when same-turn consumption is intended. Later triggers see earlier committed writes; reversing order defers dependent work by a turn.
+- [RUNTIME] Start+Mid+Repeat executes before the opening and again during ordinary play; trigger history records Start-pass firings as turn 0. Repeat does not require a false-to-true condition transition. Start=false makes the stored Mid flag inert.
+- [RUNTIME] Give information to AI is ignored with Start enabled, including later Start+Mid activations; the payload is not stripped. It differs from Tell the AI what should happen next turn. Computed information appears in Secret Info.
+- [RUNTIME] Background replacement affects startup in Start-only mode. Ordinary background/first-action effects do not rewrite the opening. Start+Mid did not apply background replacement. Fire random trigger dispatches in ordinary mode but not with Start enabled. A trigger firing does not guarantee every stored effect executes.
+- [DOCUMENTED] Change first action and Change other characters appear only in the Start picker. Live character-record mutation is not observable.
 - [RUNTIME] Scenario binding requires exact registry strings, including case, spaces and punctuation. Preserved JSON can still be unbound. Say Scenarios in prose; the top-level JSON field is `conditions`.
-- [RUNTIME] Add Scenario has a ten-entry editor creation cap. Imported worlds containing twelve bound Scenarios retained them through reopening and executed them. This is neither a universal runtime maximum of ten nor unlimited-support evidence.
-- [RUNTIME/UNKNOWN] Dynamic Scenario text works in some single-slot arrangements but fails in multi-slot, cyclic and parallel arrangements where literal Scenarios work. Adding resolved registry entries does not repair this. Blank slot text is not reliable deactivation. Prefer literal Scenarios with explicit state gates; the internal cause remains unresolved.
-- [RUNTIME] Independent plot gates can advance together; a shared gate restricts them according to authored policy. Character-specific conditions follow the selected source character rather than exchanging eligibility after display-name changes.
+- [RUNTIME] A Scenario fires only when the event actually occurs in the narrated outcome. The narrator can refuse or substitute a requested action, and then the trigger does not fire. An already-satisfied Scenario does not refire on quiet turns.
+- [RUNTIME] Add Scenario stops at ten entries in the editor. Imported registries of twelve bound Scenarios persisted through save/reopen and all fired in one turn; a fourteen-entry registry with unused entries and duplicate references also ran.
+- [RUNTIME/UNKNOWN] Dynamic Scenario text works in some single-slot arrangements but fails in multi-slot, cyclic and parallel arrangements where literal Scenarios work. Adding the resolved literal strings to the registry does not repair it. Blank slot text is not reliable deactivation. Prefer literal Scenarios with explicit state gates; the cause is unresolved.
+- [RUNTIME] Independent plot gates can advance together; a shared gate serializes them according to authored policy. Character-specific conditions follow the selected source character, not its customized display name.
 
 ## Import and native payloads
 
-- [RUNTIME] Tracker IDs containing underscore, hyphen, plus, slash, dot, space, colon or accented characters were regenerated on import, while paired trigger IDs were retained. Tracker references were not remapped. ASCII alphanumeric tracker IDs were preserved. Use this conservative convention for new IDs; preserve existing valid IDs and audit imported references. No universal character-set rule for every entity is established.
-- [RUNTIME] Missing/blank PawScript condition data and legacy bare-array prerequisite/blocker data can be omitted from exports while problematic objects remain in imported editor state. Export omission is not proof of deletion. Use current object-shaped gate payloads.
-- [RUNTIME] PawScript conditions require true/false, not numeric truthiness. Unknown handles produce missing-variable diagnostics.
-- [RUNTIME] Numeric tracker conditions retain nonempty `textComparison` even when hidden in the UI; preserve it. Turn-at-least values can be native strings or numbers. Do not reject native exports solely for that representation.
-- [RUNTIME] Nested And/Or/None Of logic executes from its node tree even where `advancedLogic` is absent or false. Use the enabled flag for new native logic. Duplicate leaf/effect IDs can survive and execute, but general collision/editing safety is unresolved; prefer unique IDs.
-- [RUNTIME] Item-level and per-character initial-value scopes must agree. Import can remove incompatible entries and materialize defaults on a later round trip. Fixed text and array-based choices have different meanings; preserve their native shapes.
+- [RUNTIME] Tracker IDs containing underscore, hyphen, plus, slash, dot, space, colon or accented characters are regenerated on import while paired trigger IDs are kept. Tracker references are not remapped, leaving dangling targets. ASCII alphanumeric tracker IDs are preserved. Use them for new trackers; preserve existing valid IDs and audit references.
+- [RUNTIME] A tracker definition without `description` imports with a success dialog, then the editor rebuild fails with a KeyError. Always serialize description, even empty.
+- [RUNTIME/UNKNOWN] An effectSetTrackedItemValue without `replaceWith` survived export, but the game twice failed at the opening with a generic streaming error (charges refunded); removing that one effect fixed it. Always serialize replaceWith, even as "".
+- [RUNTIME] Missing/blank PawScript condition data and legacy bare-array prerequisite/blocker data are omitted from exports. The open editor can still hold them (opening such a trigger raised a list-index TypeError), but importing that export elsewhere leaves the gate deleted; a trigger left with no conditions shows "will never fire". Convert legacy gates to object shape before import.
+- [RUNTIME] A numeric or text tracked-item condition with `textComparison` missing or "" is dropped from the export and its trigger stays dormant. After re-import, a trigger whose only condition was dropped never fires; one with other conditions loses that gate. Preserve the nonempty native value, which numeric conditions carry even though the UI hides it.
+- [RUNTIME] Import fills an absent root `conditions` registry from triggerOnEvent references, and normalizes schemaVersion 2.2 to 2.4 with trigger payloads unchanged.
+- [RUNTIME] A round trip of well-formed native JSON was byte-identical, including Unicode, multiline text, quotes, backslashes, nulls and empty arrays. Export adds positionInList to Other Characters that lack it.
+- [RUNTIME] PawScript conditions require true/false, not numeric truthiness. Unknown handles produce missing-variable diagnostics. An interpolated comparison such as `<<$x>> >= 0` works in a PawScript condition.
+- [RUNTIME] Turn-at-least values can be native strings or numbers; both fire. Do not reject native exports for that representation.
+- [RUNTIME] Text Contains/Does not contain is ASCII case-insensitive, unlike Scenario binding and PawScript equality.
+- [RUNTIME] Nested And/Or/None Of logic executes from its node tree even where `advancedLogic` is absent or false. Use the enabled flag for new native logic. Duplicate leaf/effect IDs survive and execute, but editing collisions is untested; prefer unique IDs.
+- [RUNTIME] Item-level and per-character initial-value scopes must agree. Import removes incompatible entries and materializes defaults on a later round trip. Fixed text and array-based choices have different meanings; preserve their native shapes.
 
 ## Tracker writes and PawScript
 
-- [RUNTIME] Native numeric effects within one trigger can overwrite rather than accumulate. Text additions accumulate and text removal removes matching occurrences. Sequential scripts are preferable for dependent arithmetic.
-- [RUNTIME] Native YAML paths support set/remove/append/adjust, one-based list indexes and interpolation. Record append stores structured data and permits duplicates. Numeric adjustment can create a missing parent/leaf. Whole-value replacement overrides stale path/action fields: interpret `updateMode` first.
-- [RUNTIME] Native And/Or and PawScript boolean expressions short-circuit in order. Place existence guards before dependent reads. This establishes skipped evaluation, not measured speedup.
-- [RUNTIME] Plain nested assignments and runtime-key `.item` writes can create paths. Scalar parents can reject child writes and roll back the script. Missing-path compound arithmetic differs from assignment. Supported `try`, fallback item access and guarded reads handle missing values; `first_available` preserves zero/false and skips empty text.
-- [RUNTIME] Locals do not cross Run Script effect boundaries. Executed branch locals and the last binding of a nonempty loop remain available later in that script. Filter bare fields resolve per row. Empty-loop/shadowing behavior is not fully characterized.
-- [RUNTIME/UNKNOWN] `current()` is rejected in Run Script even inside `try`; the diagnostic limits it to List Update Target/Value. A supported positive legacy context is unavailable in the current editor.
-- [RUNTIME] Enforce format is not a universal write-validation boundary: malformed manual/script values can persist. Hidden AI repair is not inspectable. Validate shape and semantic invariants explicitly when required.
-- [RUNTIME] Comparisons/arithmetic can coerce YAML types, and Boolean-expression writes may serialize as quoted text. Rendered values and collapsed summaries do not prove strict types. Duplicate inventory records are not automatically prevented.
-- [RUNTIME] Initial text of 10,014 characters and script-written text of 20,014 characters can be retained exactly. These are observed supported sizes, not maximum limits.
-- [PATTERN] Separate generated candidates from accepted state, immutable definitions from mutable state, and archive storage from active context. Validate identity and entry types before freezing; a list-length check is insufficient. Explicit archive/reactivation can preserve state without duplicate transitions.
-- [PATTERN] Choose turn time, story time or hybrid clocks intentionally. Consume milestone crossings and guard rewards. Counter order changes the first firing boundary. Shared arbitration and priority are authored policies, not automatic fairness.
+- [RUNTIME] Native numeric effects within one trigger overwrite rather than accumulate. Text additions accumulate and text removal removes matching occurrences. Use sequential scripts for dependent arithmetic.
+- [RUNTIME] Native YAML paths support set/remove/append/adjust, one-based list indexes and interpolation. Record append stores structured data and permits duplicates. Numeric adjustment creates a missing parent/leaf. Whole-value replacement overrides stale path/action fields: interpret `updateMode` first.
+- [RUNTIME] Native And/Or and PawScript boolean expressions short-circuit left to right; debug lists only the deciding condition. Place existence guards before dependent reads. No speed benefit has been measured.
+- [RUNTIME] Plain nested assignments and runtime-key `.item` writes create paths. Scalar parents reject child writes and roll back the script. Missing-path compound arithmetic (`+=`) fails where assignment succeeds. `try`, `item(key, fallback)` and `if(x.exists(), x, fallback)` handle missing values; `first_available` preserves zero/false and skips empty text.
+- [RUNTIME] Locals do not cross Run Script effect boundaries. Executed branch locals and the last binding of a nonempty loop remain available later in that script. Filter bare fields resolve per row. Empty-loop/shadowing behavior is uncharacterized.
+- [RUNTIME/UNKNOWN] `current()` is rejected in Run Script even inside `try`; the diagnostic limits it to List Update Target/Value, which the current editor does not expose.
+- [RUNTIME] Enforce format is not a write-validation boundary: malformed manual/script values persist. Hidden AI repair is not inspectable. Validate shape and meaning explicitly.
+- [RUNTIME] Comparisons and arithmetic coerce YAML values (see [PawScript](PawScript.md#2-values-trackers-and-scope)), and Boolean-expression writes serialize as quoted text. Rendered values and collapsed summaries do not prove types. Duplicate inventory records are not prevented.
+- [RUNTIME] Initial text of 10,014 characters and script-written text of 20,014 characters were retained exactly.
+- [PATTERN] Separate generated candidates from accepted state, immutable definitions from mutable state, and archive storage from active context. Validate identity and entry types before freezing; a list-length check is insufficient. Record assignment copies by value, so an archive is unaffected by later edits to the active record.
+- [PATTERN] Choose turn time, story time or hybrid clocks intentionally. Detect crossings (`previous < N and now >= N`), consume them, and guard rewards. Use inequalities for thresholds: a countdown of 1 reduced by 3 is -2, so `= 0` is false. Counter order changes the first firing turn. Shared locks favor the first eligible trigger; priority is authored, not automatic.
 
 ## Instructions, visibility and memory
 
-- [RUNTIME] Modify tracked item details with overrideVisibility enabled accepts everyone, player_only, ai_only, hidden, ai_only_boring and hidden_boring through editor import and applies the expected live player-visible/hidden grouping. Live-design exports can retain the original visibility.
-- [RUNTIME] An unchecked Hide skill system option can export with hideSkillSystem omitted, including after importing false. Omission is normal visible-skills state.
-
-- [RUNTIME] Hidden and extra-hidden values remain script-accessible. Extra-hidden is display filtering, not protection against Storyteller inspection. The tracker editor can expose them with the debug display override off.
-- [RUNTIME] Import normalizes automatic updating off for hidden, hidden_boring and player_only. Everyone, ai_only and ai_only_boring retain supported updates. Extra-hidden AI-only filtering does not stop updating.
-- [RUNTIME] Direct active templates reevaluate. Ordinary interpolation installed through Modify instruction block snapshots its value; deferred `<<=...=>>` references remain live in that destination. Nested expression text is not generally evaluated recursively.
-- [RUNTIME] Empty/whitespace replacement clears content while headings can remain. Malformed expressions may stay literal; an unclosed delimiter can affect a following block. Active instructions is current rendered state, not a historical full prompt.
-- [RUNTIME] Independent random expressions can differ within/across blocks and effects. Cache a choice when consumers must agree. Hidden storage and rendered selection do not prove complete exclusion of unselected content.
-- [RUNTIME] Selector case matters for observed equality/choose behavior; provide explicit fallbacks. AI-managed dependencies can see same-turn updates despite tracker order. Use staging for prior-turn values; hidden generation architecture is unresolved.
-- [RUNTIME] Keyword matching accepts case variants, surrounding punctuation and authored alternate keywords; embedded substrings and a simple plural did not match. Activation persists through the matching turn and three following turns without refresh. Actions, completed narration and Secret Info can contribute; the complete tokenizer/scanned-field set is unspecified.
-- [DOCUMENTED] Other Character Summary precedes fuller detail according to editor help, which describes availability from the turn after name/location mention. Repeat essential Summary facts in Character detail. This is not live-database visibility.
-- [RUNTIME] A selected player sharing an Other Character name can use information from that entry. Unchosen player options authored separately as Other Characters can also provide information. Internal identity merging, exclusion and mutation remain unresolved; do not assert automatic same-name NPC exclusion.
-- [RUNTIME] Secret Info and narration can disagree or misattribute knowledge. Characters can fail to learn disclosures; hidden facts can become player knowledge in prose. Separate direct knowledge, reports and sources. Anti-omniscience prose alone is not enforcement.
-- [DOCUMENTED, user-confirmed] Summary compression follows a six-turn cadence beginning at turn eight. Later recall is possible; exact summary contents and their contribution versus persistent context remain hidden.
-- [RUNTIME/UNKNOWN] Ordinary paragraph requests and strong priority-overriding wording did not reliably achieve requested longer output, including with richer lore. No reliable length-control recipe or hidden maximum is established. A shorter version is not validated.
+- [RUNTIME] Modify tracked item details with overrideVisibility accepts everyone, player_only, ai_only, hidden, ai_only_boring and hidden_boring and applies the live player-visible/hidden grouping. Live-design exports can retain the original visibility.
+- [RUNTIME] An unchecked Hide skill system option exports with hideSkillSystem omitted, including after importing false. Omission is normal visible-skills state.
+- [RUNTIME] Hidden and extra-hidden values remain script-accessible. Extra-hidden is display filtering, not protection from Storyteller inspection; the tracker editor shows them even with the debug override off.
+- [RUNTIME] Import normalizes automatic updating off for hidden, hidden_boring and player_only. Everyone, ai_only and ai_only_boring keep updates. Extra-hidden filtering does not stop updating.
+- [RUNTIME] Direct active templates reevaluate. Ordinary interpolation installed through Modify instruction block snapshots its value; deferred `<<=...=>>` references stay live. Nested expression text stored in a tracker is not evaluated recursively.
+- [RUNTIME] Empty/whitespace replacement clears content while headings remain. Missing-path, invalid and unclosed expressions stay literal; an unclosed delimiter can break a valid expression in the following block. Active instructions is current rendered state and updates immediately on live-design edits.
+- [RUNTIME] Independent random expressions differ within and across blocks and effects, including from a hidden pool. Cache a choice when consumers must agree.
+- [RUNTIME] Selector case matters for equality/choose; provide explicit fallbacks. AI-managed dependencies can see same-turn updates despite tracker order. Stage prior-turn values explicitly.
+- [RUNTIME] Keyword matching accepts case variants, surrounding punctuation and authored alternate keywords; embedded substrings and a simple plural did not match. Activation lasts the matching turn and three more. Player actions, completed narration and Secret Info contribute, from the next generated turn; the complete scanned-field set is unspecified.
+- [DOCUMENTED] Other Character Summary is available before fuller detail, which editor help says becomes available the turn after a name/location mention. Repeat essential Summary facts in detail.
+- [RUNTIME] Character detail retrieval is unreliable. A selected player sharing an Other Character name used that entry's facts, but a name-only mention did not surface an authored hobby on two turns; the narrator invented one, and history then reinforced it. The narrator can also introduce named NPCs into an opening that says the player is alone. Internal identity merging and exclusion are unresolved.
+- [RUNTIME] Secret Info and narration can disagree or misattribute knowledge. Characters can deny a fact just told to them, and hidden facts can become player knowledge in prose. A general provenance policy showed no clear benefit; explicit correction of the source chain did.
+- [RUNTIME] Once a secret reaches narration, removing or emptying its disclosure block does not remove it from later turns.
+- [DOCUMENTED, user-confirmed] Summary compression follows a six-turn cadence beginning at turn eight; the cost breakdown first shows LTM about then, as STM drops. Later recall is possible; summary contents remain hidden.
+- [RUNTIME/UNKNOWN] Paragraph-count requests and strong priority-overriding wording did not reliably lengthen narration, even with richer lore; a one-sentence descriptionRequest did not shorten it. No reliable length control is established.
 
 ## Forms, images and endings
 
-- [RUNTIME] Bound Choice/Request Input answers are available to subsequent triggers in the same turn. Multiple-choice min/max constrain submission. Newline-delimited selections store text, not automatically a YAML list. Optional blank input clears the destination while preserving siblings; required blank input is rejected. Multiline input preserves line breaks at nested paths.
-- [RUNTIME] Preset back-fill is order-sensitive. Fill missing fields without overwriting nonblank choices. Starting-value customization is distinct from live-state editing permission.
-- [RUNTIME] Source/live-design initial-value changes do not migrate current values. Fresh games use new source starting values. Renaming a display Name with Ignore preserves the variable handle and ID.
-- [RUNTIME] Dedicated Other Character image fields can populate Illustration details independently of narrative appearance. Appearance/clothing edits affect images and can be reversed. Alias-associated clothing drift can occur.
-- [RUNTIME/UNKNOWN] Character/scenery results followed `imageStyle*Pre/Post` text opposed to `illustrationStyle*HighPriority`. Exact assembly and universal precedence remain hidden. Preserve imported fields and author using current style controls.
-- [RUNTIME] Model-filtered blocks follow the selected active model; All blocks remain active. Available models are a dated UI roster, not a fixed schema enum.
-- [RUNTIME] Ends game `data: true` offers Continue game and restores actions after confirmation. False removes action/continuation controls but leaves history/regeneration available. This is not irreversible deletion or proof of built-in ending-checker timing.
+- [RUNTIME] Bound Choice/Request Input answers are available to subsequent triggers in the same turn. Multiple-choice min/max constrain submission. Newline-delimited selections store text, not a YAML list. Optional blank input clears the destination while preserving siblings; required blank input is rejected. Multiline input preserves line breaks at nested paths.
+- [RUNTIME/UNKNOWN] One turn combining a malformed-candidate input with a multiline Request Input showed narration without forms and did not persist, though it was charged; each worked alone. Prefer one input form per turn.
+- [RUNTIME] Preset back-fill is order-sensitive: a script after the choice fills in the same turn, before it fills nothing. Fill missing fields without overwriting nonblank choices. Starting-value customization is distinct from live editing.
+- [RUNTIME] Source/live-design initial-value changes do not migrate current values; fresh games use the new values. Renaming a display Name with Ignore preserves the variable handle and ID.
+- [RUNTIME] Dedicated Other Character image fields populate Illustration details independently of narrative appearance. Appearance/clothing edits change images and can be reversed. Alias-associated clothing drift can occur.
+- [RUNTIME/UNKNOWN] Character/scenery results followed `imageStyle*Pre/Post` when opposed to `illustrationStyle*HighPriority`. Exact prompt assembly is hidden. Preserve imported fields and author with current style controls.
+- [RUNTIME] Model-filtered blocks follow the selected active model; All blocks stay active.
+- [RUNTIME] Ends game `data: true` offers Continue game and restores actions after confirmation, at no charge. False removes action/continuation controls but leaves history/regeneration available. This is not proof of the built-in ending checker's timing.
 
-## Tooling conclusions
+## Story exports
 
-The reviewed external story parser can split nested YAML into false tracker entries, mishandle delimiters, merge branches according to file order/time and retain stale outputs. Preserve raw exports and require validated parsing with explicit branch identity. The external implementation remains unchanged. IW-Builder supplies a separate reviewed-boundary extractor and conflict-rejecting merge; see [Story tools](Story-Tools.md). A local capture/export harness is also supplied; its authenticated standalone connection, capture and refresh-verified editor export are verified. Gameplay recovery and server persistence remain unverified. See [Engineering tools](Engineering-Tools.md) for its bounded capabilities. Reloading during generation can leave the latest turn unretained; streamed prose is not persistence.
+Native story text has no escaping for headings or nested YAML, so naive parsers split nested YAML into false trackers and mistake embedded markers for turns. Parse with the kit's reviewed-boundary extractor ([Story tools](Story-Tools.md)) and keep raw exports. Reloading during generation can leave the latest turn unretained; streamed prose is not persistence.
 
-See [Editor and UI](Editor-UI.md), [Known limits](Known-Limits.md) and [Roadmap](Roadmap.md).
+See [Editor and UI](Editor-UI.md) and [Known limits](Known-Limits.md).
 
 ---
 
@@ -236,14 +335,14 @@ END OF DOCUMENT: reference/Verified-Behavior.md
 ===== BEGIN FILE: reference/Known-Limits.md =====
 # Unresolved boundaries
 
-Current through 2026-10-24. This is the kit's single list of platform behavior that remains unverified; other files state only what is established. Verified conclusions are in [Consolidated behavior](Verified-Behavior.md); workflows are in [Editor and UI](Editor-UI.md).
+Current through 2026-10-26. This is the kit's single list of platform behavior that remains unverified; other files state only what is established. Verified conclusions are in [Consolidated behavior](Verified-Behavior.md); workflows are in [Editor and UI](Editor-UI.md).
 
 | Area | Established | Still unknown | What to do meanwhile |
 | --- | --- | --- | --- |
 | Prompt construction | Active instructions shows live rendered templates and updates | Full historical storyteller/specialist prompts, hidden wrappers, exact inclusion and timing | Put essential facts in fields known to reach the storyteller (background, firstInput, instructions, always-on blocks); treat UI visibility as display, not proof of what the AI receives |
 | Scenarios | Exact literal binding works; imported registries larger than ten persist and execute | Why dynamic multi-slot, cyclic and parallel arrangements fail; any runtime maximum | Use literal Scenarios with explicit state gates ([Triggers.md](Triggers.md#scenarios)) |
-| NPCs and knowledge | Authored facts can be retrieved; dedicated image fields have observable effects | Live character records, identity merging, mutation and retrieval routing; Secret Info is not a database | Author relationships and knowledge explicitly; keep essential identity in the Summary and repeat it in detail |
-| Import normalization | ID reminting, field omission and scope normalization observed | Internal failure stages; ID rules for every entity type | Use ASCII alphanumeric tracker IDs; re-export after import and compare with tools/import_audit.py |
+| NPCs and knowledge | Same-name player retrieval of authored facts; dedicated image fields have observable effects | Live character records, identity merging, mutation and retrieval routing; why name-only mentions often fail to surface Character detail; Secret Info is not a database | Put facts that must surface in the Summary or always-on text; author relationships and knowledge explicitly; correct an invented detail early by editing the turn |
+| Import normalization | ID reminting, field omission, scope normalization and registry population observed; missing tracker description breaks the rebuild | Internal failure stages; ID rules for every entity type; why an omitted replaceWith broke the opening | Use ASCII alphanumeric tracker IDs; always serialize description and replaceWith; re-export after import and compare with tools/import_audit.py |
 | Visibility | Extra-hidden values remain inspectable; AI-only automatic updates work | Whether visibility changes what the AI receives | Do not rely on visibility to keep information from the storyteller |
 | Interpolation | Direct templates, installed snapshots and deferred `<<=...=>>` references behave differently | Timing in other destination fields; full specialist inputs | Use the template probe example before relying on a new field ([Capabilities.md](Capabilities.md)) |
 | Randomness and selectors | Independent evaluations can differ; cached choices agree | Exact evaluation counts; whether unselected library text is excluded | Store a shared roll in a tracker when several consumers must agree |
@@ -253,11 +352,10 @@ Current through 2026-10-24. This is the kit's single list of platform behavior t
 | Memory | Summary compression every six turns from turn eight (user-confirmed); later recall occurs | Summary contents and how they weigh against persistent context | Use summaryRequest and trackers for facts that must persist |
 | Length | Strong override wording does not reliably lengthen narration | A reliable length recipe or hidden maximum | Describe the desired length in authorStyle; do not promise exact length |
 | Images and video | Current wrappers and dedicated image fields affect results | Full image prompt and cache, precedence, internal macros, video runtime | Author with current style controls and preserve imported legacy fields; avoid depending on video until checked |
-| Limits and permissions | Large text retention and separate startup customization established | Maximum field, loop or trigger sizes; account-role permission matrix | Treat observed sizes as working examples, not limits |
-| Recovery | Interrupted generation can leave a turn unretained | Server-side cause and automated recovery | After an interruption, inspect retained history and controls before resubmitting |
-| Tooling | External parser and merge defects identified; kit extractor, merge and capture/export harness supplied and authenticated capture/export verified | Gameplay recovery and server persistence through the harness | Use the kit's tools ([Story-Tools.md](Story-Tools.md), [Engineering-Tools.md](Engineering-Tools.md)); verify persistence in the editor |
+| Limits and permissions | Large text retention and separate startup customization established | Maximum field, loop or trigger sizes; account-role permission matrix | Treat observed sizes as working examples |
+| Recovery and forms | Interrupted generation can leave a turn unretained but charged; a turn with two input forms once failed to persist | Server-side cause and automated recovery | After an interruption, inspect retained history and the export's turn count before resubmitting; prefer one input form per turn |
 
-The schema and validator are a partial compatibility profile: structural validation does not establish complete platform coverage or runtime correctness.
+The schema and validator are a partial compatibility profile.
 
 ---
 

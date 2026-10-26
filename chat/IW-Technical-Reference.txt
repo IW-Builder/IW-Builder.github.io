@@ -4,13 +4,13 @@ Follow Authoring-Prompt.md (in IW-Authoring-Guide.txt). Load companion editions 
 Editions and their contents:
 - IW-Authoring-Guide.txt: start here: prompt, template, narrative craft, trackers, triggers, data banks and library integration. Files: Authoring-Prompt.md, World-Template.json, reference/Evidence.md, reference/Craft.md, reference/Trackers.md, reference/Triggers.md, reference/Trigger-Catalog.md, reference/Portable-Banks.md, library/Integration.md
 - IW-Technical-Reference.txt: exact payloads, PawScript, capabilities, recipes and import integrity. Files: reference/Schema.md, reference/PawScript.md, reference/Capabilities.md, reference/Recipes.md, reference/Import-Integrity.md, reference/Default-Evaluation.txt, reference/Current-AI-Profiles.json
-- IW-Behavior.txt: editor/UI workflows, verified runtime behavior and known limits. Files: reference/Editor-UI.md, reference/Verified-Behavior.md, reference/Known-Limits.md
+- IW-Behavior.txt: notable findings, editor/UI workflows, verified runtime behavior and known limits. Files: reference/Notable-Findings.md, reference/Editor-UI.md, reference/Verified-Behavior.md, reference/Known-Limits.md
 - IW-Payloads.txt: exact native payload snippets for every condition and effect, plus the example index. Files: examples/Payloads.md, examples/index.json
 - IW-Mechanics-Examples.txt: complete mechanics example worlds: recipes, optional block, starting values and a showcase. Files: examples/recipe-request-commit.json, examples/recipe-completion-award.json, examples/recipe-candidate-acceptance.json, examples/recipe-archive-reactivate.json, examples/recipe-cached-random.json, examples/recipe-consumed-timer.json, examples/recipe-choice-domain.json, examples/recipe-compiled-plot.json, examples/recipe-choice-followup.json, examples/recipe-threshold-unlock.json, examples/optional-block.json, examples/character-starting-values.json, examples/showcase-glass-ledger.json
 - IW-Narrative-Examples.txt: complete narrative example worlds: ensemble romance, fantasy expedition and contained horror. Files: examples/narrative-vendemmia.json, examples/narrative-listening-road.json, examples/narrative-address-after-midnight.json
 - IW-Sample-Blocks.txt: optional library modules (read library/Integration.md first). Files: library/Sample-Blocks.json
 - IW-Storymaster.txt: the Storymaster narrative-direction framework (read library/Integration.md first). Files: library/Storymaster-Suite.json
-- IW-Tools.txt: Python tools and their guides, for models that can run code. Files: tools/Usage.md, reference/Story-Tools.md, reference/Engineering-Tools.md, tools/validate_iw_export.py, tools/static_checks.py, tools/iw-export.schema.json, tools/data_bank.py, tools/import_audit.py, tools/story_export.py, tools/iw_browser.py, tools/plot_compile.py
+- IW-Tools.txt: Python tools and their guides, for models that can run code. Files: tools/Usage.md, reference/Story-Tools.md, reference/Engineering-Tools.md, tools/validate_iw_export.py, tools/static_checks.py, tools/iw-export.schema.json, tools/data_bank.py, tools/import_audit.py, tools/story_export.py, tools/plot_compile.py
 Every file is also available individually: https://iw-builder.github.io/llms.txt
 
 ===== BEGIN FILE: reference/Schema.md =====
@@ -69,7 +69,7 @@ visibility values: everyone, player_only, ai_only, ai_only_boring, hidden, hidde
 |Character-defined script selection|Same per-PC entry with initialPCValue empty and initialPCValueChoicesScript string|Script generates that character's choices at startup|
 |Player-defined selection|Tracker initialValueBasedOnPC player, initialValue string, initialValueChoices array of strings|Player chooses a startup preference independently of PC-specific values|
 
-The optional-block export supplies the concrete player form: initialValue On, initialValueChoices [On, Off], player mode and autoUpdate false. Those are tracker-level fields; do not put this list into a per-PC initialTrackedItemValues entry unless the character-defined mode is intended. The player can change the live preference later to affect a following turn.
+The optional-block export supplies the concrete player form: initialValue On, initialValueChoices [On, Off], player mode and autoUpdate false. Those are tracker-level fields; do not put this list into a per-PC initialTrackedItemValues entry unless the character-defined mode is intended. A live change later (through the Storyteller-mode tracker editor) affects the following turn.
 
 Per the editor, script choices are evaluated at game start from initial tracker values, including that character's values and skills. Conflicting combinations of initialization fields, and player-mode controls for unconstrained input types, are not established; request a targeted export if that variation matters.
 
@@ -92,7 +92,7 @@ PawScript conditions are an option when useful, not a requirement to replace nat
 
 ## Comparator fields
 
-For Number trackers, `inequality` selects is_exactly, at_least, not_equal or at_most. For Text trackers, `textComparison` selects contains or does_not_contain. Do not extrapolate other comparison strings. Exports may retain both fields; they are not two simultaneous predicates. Native numeric and text controls are type-aware despite text-entry fields. Use PawScript for structured YAML field checks rather than text comparison over a whole document.
+For Number trackers, `inequality` selects is_exactly, at_least, not_equal or at_most. For Text trackers, `textComparison` selects contains or does_not_contain. Do not extrapolate other comparison strings. Exports may retain both fields; they are not two simultaneous predicates. Numeric conditions natively carry `textComparison: "contains"`; if it is missing or empty, the condition is dropped from the export and the trigger loses that gate. Text Contains matching is ASCII case-insensitive. Native numeric and text controls are type-aware despite text-entry fields. Use PawScript for structured YAML field checks rather than text comparison over a whole document.
 
 Native wrappers can repeat trackedItemID/inequality outside `data`. Precedence is not established and disagreement is an error: keep wrapper and payload consistent, following the supplied export's convention.
 
@@ -130,6 +130,7 @@ Other schema-defined effects change PC name/description, objective, main instruc
 |updateMode|`path` edits a selected path; `replace` replaces the whole YAML value|
 |action append|Add a value to the list at path; distinct from numeric/text add|
 |listExpression / targetExpression|Empty in current exports; preserve when importing, but do not use them to invent an unsupported editor workflow|
+|replaceWith|Always serialize, as "" when unused. An effect missing it was associated with the game failing at the opening|
 
 Text adds accumulate and preserve literal quotation marks; text removal removes all matching occurrences. Repeated numeric writes within one trigger behave differently ([Triggers.md](Triggers.md)). The cookbook supplies separate native text and number examples.
 
@@ -228,7 +229,7 @@ tags:
   - injured
 ```
 
-Stored in tracker `hero`, it provides `$hero.name`, `$hero.hp` and `$hero.tags`. YAML indentation defines nesting; `[]` initializes an empty list and `{}` an empty record. Quote numeric-looking identifiers such as `"001"` to preserve leading zeros. Use YAML `|` for multiline text. In an export, `initialValue` is a JSON string containing this YAML, not a JSON object. `formatSchema` is a separate shape description; see [Trackers.md](Trackers.md).
+Stored in tracker `hero`, it provides `$hero.name`, `$hero.hp` and `$hero.tags`. YAML indentation defines nesting; `[]` initializes an empty list and `{}` an empty record. Quote numeric-looking identifiers such as `"001"` to preserve leading zeros in storage; comparisons and arithmetic still treat them as numbers (quoted or unquoted `007` plus 1 gave 8). YAML `yes`, `no`, `on` and `off` are text, not Booleans. `true`/`false` compare equal to both the Boolean and the same-spelled text. A `null` value's `.exists()` is false. Use YAML `|` for multiline text. In an export, `initialValue` is a JSON string containing this YAML, not a JSON object. `formatSchema` is a separate shape description; see [Trackers.md](Trackers.md).
 
 Persistent roots use direct assignments: `$coins = 12`. Temporary locals use `set $price = 5` and last only for that script run. Locals do not cross Run Script effect boundaries; executed branch locals and the last nonempty-loop binding remain available later in the same script. Do not give a local the name of an existing tracker. Inside collection predicates, bare field names refer to the current member; `$...` refers to a tracker/system root or script local. For a list of plain values, `value()` denotes the current value.
 
@@ -277,10 +278,10 @@ Use the expression/script Sandbox to try the read and change separately. For an 
 | Conditional value | `if($coins >= 5, "Affordable", "Too expensive")` |
 | Value mapping | `choose($status, "open", "Enter", "locked", "Find a key", "Inspect")` |
 | Missing/blank fallback | `first_available($hero.nickname, $hero.name, "Stranger")` |
-| Error fallback | `try($total / $count, 0)`; do not use it to conceal broken essential state |
+| Error fallback | `try($total / $count, 0)`; catches missing paths, type mismatches, division by zero, reads through a scalar and out-of-range `item(99)`. Do not use it to conceal broken essential state |
 | Existence | `$hero.nickname.exists()`; distinct from being nonempty or nonzero |
 | Numeric bounds | `$hp.constrain(0, $max_hp)` |
-| Rounding | `round_down($cost)`, `round_up($cost)`, `$cost.round()` |
+| Rounding and bounds | `round_down($cost)`, `round_up($cost)`, `$cost.round()`; standalone `round(1.6)`, `min(2, 3)`, `max(2, 3)` also work |
 | Text normalization | `$label.replace("_", " ")` |
 
 `=` compares within an expression and assigns in an assignment statement. In the following script, the first `=` tests; the second writes:
@@ -356,7 +357,7 @@ Initialize `requirements` as a list and `flags` as a record. An empty requiremen
 | Replace matched records | `$entries.where(id = $update.id) = $update` |
 | Persist a transformed list | `$tags = $tags.unique()` |
 
-A read such as `$tags.unique()` does not change stored tags by itself. Assignment persists its result. Appending a list appends its members; it does not wrap them as a nested list. Replacement of matched records is not a field-preserving merge: include every field to retain. Plain nested assignment can create missing paths, but a scalar parent rejects child writes and rolls back the script; compound arithmetic on a missing path can fail where plain assignment succeeds. Boolean-expression results can be stored as quoted text, so rendered output is not strict type introspection. Native text add/remove effects are not substitutes for structured list mutation.
+Assigning a record copies it: `$archive = $current` keeps an independent copy that later edits to `$current` do not change. A read such as `$tags.unique()` does not change stored tags by itself. Assignment persists its result. Appending a list appends its members; it does not wrap them as a nested list. Replacement of matched records is not a field-preserving merge: include every field to retain. Plain nested assignment can create missing paths, but a scalar parent rejects child writes and rolls back the script; compound arithmetic on a missing path can fail where plain assignment succeeds. Boolean-expression results can be stored as quoted text, so rendered output is not strict type introspection. Native text add/remove effects are not substitutes for structured list mutation.
 
 To construct an entry, create a local record, fill its fields and append it:
 
@@ -412,7 +413,7 @@ Additional presentation helpers include `.bold()`, `.italic()`, `.code()` and `.
 
 Statements in one script execute sequentially. Later triggers see earlier committed writes. Multiple native numeric effects in one trigger can overwrite rather than accumulate; they do not share script statement semantics. A script failure rolls back that script's changes, not preceding effects or the entire turn.
 
-Use `log("Coins: {$coins}")` for diagnostics in the PawScript Log. Logs are not player narration; messages logged before a failure remain useful for locating the problem. "Ran successfully, with no output" is normal for assignments. A model saying PASS is not runtime verification.
+Use `log("Coins: {$coins}")` for diagnostics in the PawScript Log. Logs are not player narration; messages logged before a failure remain useful for locating the problem. "Ran successfully, with no output" is normal for assignments. Writing a key that does not yet exist in a record succeeds but logs `created a new entry 'x' in $tracker - did you mean 'y'?`; treat it as a typo check. A model saying PASS is not runtime verification.
 
 Enable Menu > Settings > Storyteller Mode, then open the bug icon beside tracked items. Inspect tracker state, evaluated conditions and script errors; use Open in Sandbox to isolate a script. See [Capabilities.md](Capabilities.md) for wider debug coverage.
 
@@ -471,7 +472,7 @@ Use Evidence.md for the shared evidence legend and compatibility baseline. Known
 
 ## Turn lifecycle [RUNTIME]
 
-This is an authoring model of the established boundaries, not a trace of IW internals:
+An authoring model of the established boundaries:
 
 ```mermaid
 flowchart TD
@@ -484,11 +485,11 @@ flowchart TD
     N --> P
 ```
 
-- Start+Mid+repeat triggers can execute in a pre-opening setup pass and again during the first normal turn. Messages from the setup pass appear before the opening background. The value of $game.turn_number during setup is not established. Guard initialization and counters according to the intended behavior.
+- Start+Mid+repeat triggers can execute in a pre-opening setup pass and again during the first normal turn. Messages from the setup pass appear before the opening background. Trigger history records setup-pass firings as turn 0; the value of $game.turn_number during setup is not established. Guard initialization and counters according to the intended behavior.
 - During normal turns, generated tracker changes are available to trigger conditions. Ordered triggers can see earlier trigger writes. The practical order to author is the `triggerEvents` array; preserve it and verify editor reorder/export behavior if changing order through the UI.
-- Scenario judgments must be available for their trigger checks, but their exact production stage relative to Evaluation, narration and tracker updates is not mapped. Do not place them at a fabricated precise point in the diagram.
+- Scenario judgments must be available for their trigger checks, but their exact stage relative to Evaluation, narration and tracker updates is not mapped.
 - Messages belong to their effects; they need not be a single final batch after all triggers. Choice/input effects can suspend for a player answer. Correctly bound single-answer forms update immediately and permit later triggers to read the answer in the same turn.
-- Guidance and block changes do not rewrite already-generated narration. Updates supply context for subsequent generation. The precise persistence/priority of competing guidance is not a stable contract.
+- Guidance and block changes do not rewrite already-generated narration. Updates supply context for subsequent generation. When guidance effects conflict, the first tends to win; generate one coherent directive instead.
 - Summary generation is a separate context-maintenance process. Compression follows a six-turn cadence beginning at turn eight (user-confirmed); its ordering relative to other turn stages is not established.
 
 Timing flags (Start, Mid Game, repeat), prerequisites and blockers are covered in [Triggers.md](Triggers.md).
@@ -528,9 +529,9 @@ NPC field/activation guidance is [DOCUMENTED]; the stated plain-word keyword mat
 | img_appearance / img_clothing | Visual identity and clothing guidance for image handling |
 | positionInList | Ordering metadata; preserve existing values; use sequential integers for new lists |
 
-IW permits a character among both player choices and Other Characters under the same name. The selected player can retrieve information from that entry, but internal identity merging/exclusion is not visible. Author the intended relationship explicitly where it matters. PC/NPC conversion is available in Data mode: preserve the source and map relevant fields into the destination type, rather than relabeling the native object.
+IW permits a character among both player choices and Other Characters under the same name. The selected player can retrieve information from that entry, but internal identity merging/exclusion is not visible. Unchosen player options are not NPCs unless also added as Other Characters. Author the intended relationship explicitly where it matters. PC/NPC conversion is available in Data mode: preserve the source and map relevant fields into the destination type, rather than relabeling the native object.
 
-Only Name is required in the NPC editor. Storytelling and image information have independent optional sections; do not infer their serialized enable flags from the UI alone. The storytelling help states that the brief summary is the only character information available to the storyteller until the turn after the character or their location is first mentioned. Characters can activate by name with no location. Put essential information in one_liner and repeat it in detail. Location is a short starting location (editor asks for no more than two words). Full list of names accepts comma-separated variants in the editor; preserve the export's names representation. Image appearance/clothing guide the image AI and can be inspected using the wrench under a character image. Mentioning footwear can encourage full-body framing, per editor help.
+Only Name is required in the NPC editor. Storytelling and image information have independent optional sections; do not infer their serialized enable flags from the UI alone. The storytelling help states that the brief summary is the only character information available to the storyteller until the turn after the character or their location is first mentioned. Characters can activate by name with no location. Put essential information in one_liner and repeat it in detail. Detail retrieval is unreliable: a name-only mention did not surface an authored hobby on two turns, the narrator invented one, and history then repeated the invention. Put facts that must surface in the Summary or always-on text, and correct a wrong invented detail early by editing the turn. The narrator can also introduce named NPCs into an opening that says the player is alone. Location is a short starting location (editor asks for no more than two words). Full list of names accepts comma-separated variants in the editor; preserve the export's names representation. Image appearance/clothing guide the image AI and can be inspected using the wrench under a character image. Mentioning footwear can encourage full-body framing, per editor help.
 
 NPC activation and static character context are not exposed in World Debug. The editor help supplies the activation guidance above; debug cannot verify a card's activation window. Secret fields are not a guaranteed protection against narrative leaks.
 
@@ -547,7 +548,7 @@ Keyword entries have id, name, keywords (string array), and content. Choose dist
 
 Editor help says Evaluation outputs guide AI thinking; SUCCESS/FAILURE are not special control tokens. These are instructions, not executable hooks. Writing SUCCESS in Evaluation does not itself fire a custom trigger. Replacing a default request with a large custom framework can change its responsibilities; inspect dependencies rather than copying only one field.
 
-Longer-output requests, including strong priority-override language and richer lore, did not reliably reach the requested length. No guaranteed length recipe or hidden maximum is established.
+The default Description instructions ask for several paragraphs; check them first when brevity requests are ignored. Longer-output requests, including strong priority-override language and richer lore, did not reliably reach the requested length, and a one-sentence descriptionRequest did not shorten it. No reliable length recipe is established.
 
 Runtime names referenced by the sample library:
 
@@ -608,7 +609,7 @@ Story exports support a chosen turn range, optional background, character, secre
 
 The current image-style editor is a reusable style editor with Name, Model and prompt wrappers. With separate character/scenery prompts enabled, Characters—start/end and Scenery—start/end add text before/after their respective image prompts. With it disabled, Start/End apply to every image. The corresponding world export fields are imageStyleCharacterPre/Post and imageStyleNonCharacterPre/Post; shared Start/End are exported by duplicating the values into both character and non-character Pre/Post fields. No extra switch is needed to represent the shared prompt text in these exports. The imageStyle value is a generated bespoke identifier; preserve it rather than deriving it from the prompt text. This world export is not a complete standalone reusable-style library export.
 
-The old illustrationStyle*LowPriority/HighPriority fields still occur in exports, but there are no matching current controls. Preserve them in existing worlds; do not present them as active current editor controls or invent their precedence. Manticore is the current recommended model in editor help. The selected style can be overridden by the player. A cover prompt is separate from these wrappers. Current Pre/Post wrappers influenced character/scenery styles, but exact prompt assembly and universal precedence remain unknown.
+The old illustrationStyle*LowPriority/HighPriority fields still occur in exports, but there are no matching current controls. Preserve them in existing worlds; do not present them as active current editor controls or invent their precedence. Manticore is the current recommended model in editor help; its preset text includes IWBeautiful/IWUpscaleFace macros whose mechanism is undocumented. The selected style can be overridden by the player. A cover prompt is separate from these wrappers. Current Pre/Post wrappers influenced character/scenery styles, but exact prompt assembly and universal precedence remain unknown.
 
 Dedicated Other Character image appearance/clothing can populate image details independently of narrative appearance. Edits affect generated images and can be reversed; alias-related clothing drift is possible.
 
@@ -618,7 +619,7 @@ Resolve bracketed image-style slots as deliberate choices. Remove unselected cho
 
 videoPromptInstructions has videoPlan, videoImagePosition and videoPrompt strings. The library uses videoPlan to choose a beat, videoImagePosition to choose start/end anchoring, and videoPrompt to describe the clip. Its `$videoDuration` and `$videoStyle` references are video-context dependencies, not declared trackers in that library and not documented global PawScript roots. Confirm their availability through the video editor/debug context before adopting the sample unchanged. No video-enabled runnable example is claimed until that capture exists.
 
-Enable model selection per world under Show optional features > Misc advanced features > Enable AI-specific instruction blocks. Selected block models serialize in selectedAIProfiles. All-model blocks remain active while selected-model blocks follow the active model. The current authoring choices are listed in Current-AI-Profiles.json, dated October 17, 2026. This is a dated suggestion list, not a validator enum: accept arbitrary historical IDs and preserve imported selections.
+Enable model selection per world under Show optional features > Misc advanced features > Enable AI-specific instruction blocks. Selected block models serialize in selectedAIProfiles. All-model blocks remain active while selected-model blocks follow the active model. Current-AI-Profiles.json lists each storyteller model's ID, underlying real-world model, isCurrent flag and typical credits per turn, including retired models (dated October 26, 2026; the community wiki is the live source). It is not a validator enum: accept arbitrary historical IDs and preserve imported selections.
 
 Disabling this editor option removes selectedAIProfiles from exported blocks and hides their controls. The still-open editor temporarily remembers choices if re-enabled, but that memory does not survive closing it. Do not treat disabling as a durable reversible runtime switch or promise that exporting while disabled preserves selections. A block name alone does not select models. Whether the choices are fetched live is an inference; their exact source is unnecessary for authoring.
 
@@ -656,7 +657,7 @@ These are independent recipes. Select, adapt or omit them; none is a required wo
 
 **Player-optional block, with no repeated writes.** The companion optional example distills the supplied native demonstration:
 
-1. A player-only text preference has initialValueBasedOnPC player, initialValue On or Off, initialValueChoices [On, Off], autoUpdate false. The player can change this live.
+1. A player-only text preference has initialValueBasedOnPC player, initialValue On or Off, initialValueChoices [On, Off], autoUpdate false. The player picks it at startup; later changes need the Storyteller-mode tracker editor.
 2. A hidden non-AI-updated text tracker records which choice has actually been applied. It is a cache, not another player preference. hidden_boring is used by the source example.
 3. A repeatable enabling trigger requires preference On AND cache not Enabled. It writes the enabled block content, then records Enabled.
 4. A repeatable disabling trigger requires preference Off AND cache not Disabled. It writes empty content, or a deliberately chosen simpler fallback, then records Disabled.
@@ -688,11 +689,11 @@ Native block-modification effects substitute ordinary `<<...>>` templates when t
 
 In [recipe-request-commit.json](../examples/recipe-request-commit.json), the AI records the current requested event and turn stamp. The first trigger resets the receipt, not the unconsumed request. A later trigger checks freshness, then checks funds/ownership and commits a purchase or rejection. A following effect displays the receipt and clears the request; the receipt remains for next-turn continuity. Narration describes an attempt until the committed result is available. A freshness stamp prevents stale reuse, not incorrect classification. This pattern is optional: native choices, thresholds and timed effects do not need an AI request layer.
 
-The [example index](../examples/index.json) records each complete world's purpose and verification scope. [Payloads.md](../examples/Payloads.md) supplies smaller native shapes. Remap IDs when combining worlds and validate the result; structural checks do not certify gameplay. Select examples by feature rather than imposing the showcase's architecture on every world.
+The [example index](../examples/index.json) records each complete world's purpose and verification scope. [Payloads.md](../examples/Payloads.md) supplies smaller native shapes. Remap IDs when combining worlds and validate the result. Select examples by feature rather than imposing the showcase's architecture on every world.
 
 ## Guarded state patterns
 
-These optional complete worlds compose known primitives; their exact compositions have not been live-certified. Do not replace a world's design with them automatically.
+These optional complete worlds compose known primitives. Do not replace a world's design with them automatically.
 
 | Example | Intent and boundary |
 | --- | --- |
@@ -702,7 +703,7 @@ These optional complete worlds compose known primitives; their exact composition
 | [Cached random](../examples/recipe-cached-random.json) | One trigger samples once and both blocks read the stored roll. Before that trigger runs the initial value is 0; reset ready to 0 only when a new draw is intended. This is not a guarantee of same-turn narrative visibility. |
 | [Consumed milestone](../examples/recipe-consumed-timer.json) | Increment turn time before checking ticks >= 3; consume the crossing once. This counts ordinary eligible trigger cycles, not elapsed story time. Resetting only the consumed flag permits another award. |
 | [Choice domain](../examples/recipe-choice-domain.json) | Accept only Courier or Archivist at consumption. Blank offers the form again; unexpected manual/script values do not commit. Multiple selections need their own delimiter/representation validation. |
-| [Compiled plot](../examples/recipe-compiled-plot.json) | Literal Scenarios with ordered prerequisites and guarded awards. See [compiler contract](Engineering-Tools.md). |
+| [Compiled plot](../examples/recipe-compiled-plot.json) | Literal Scenarios with ordered prerequisites and guarded awards. See [plot compiler](Engineering-Tools.md). |
 
 The validator's review advisories cover repeat accumulation, separate script transaction boundaries, computed choice domains, multiple-choice storage and independently evaluated random expressions. They are prompts to inspect intent, never hard prohibitions or proof that a guard is missing. Existing guards can legitimately trigger a review notice. Choice menus and Enforce format do not validate all manual/script write paths.
 
@@ -729,10 +730,12 @@ The supplied single-choice world preserves its IDs and binding through a fresh i
 - Run the validator on that exact file. Resolve missing or duplicate IDs and mismatched target references.
 - Review native YAML paths against the tracker's declared initial structure and intended operation. The editor can accept unchecked paths without warning. Removing a nonexistent key or appending to a numeric path may be syntactically valid but semantically wrong. Dynamic paths may require runtime inspection rather than a blanket validation error.
 - Review script references separately: structural validation does not execute PawScript or prove its paths exist.
+- Give every tracker a `description` (it may be empty). Without it, import reports success and then the editor rebuild fails with a KeyError.
+- Convert legacy bare-array prerequisites/blockers and blank PawScript conditions to native object shape. Import drops them, and the trigger silently loses that gate.
 
 ## After import
 
-Save and inspect affected target controls. An invalid-value target is a binding failure even if the original JSON had consistent references. Export the imported world and validate that export when diagnosing discrepancies. Preserve the untouched export before repairing a suspect target so source and imported IDs can be compared.
+A round trip of well-formed native JSON is byte-identical, so any change after import points at a normalization (ID reminting, dropped gates, scope repair, registry population). Save and inspect affected target controls. An invalid-value target is a binding failure even if the original JSON had consistent references. Export the imported world and validate that export when diagnosing discrepancies. Preserve the untouched export before repairing a suspect target so source and imported IDs can be compared.
 
 For a native input, confirm the current target value after submitting an answer. Correctly bound single-answer Choice and Request Input effects update immediately, and subsequent ordered triggers can read the result in the same turn. Their follow-up messages can render above the question/answer receipt. The live-world editor's initialValue remains configuration, not the current runtime value.
 
@@ -770,29 +773,285 @@ That's all you need to do for the evaluation, which should be returned in the 'e
 
 ===== BEGIN FILE: reference/Current-AI-Profiles.json =====
 {
-  "asOf": "2026-10-17",
-  "source": "Editor model choices",
-  "purpose": "Authoring suggestions, not a validator allowlist",
-  "ids": [
-    "dolphin",
-    "puma",
-    "smilodon",
-    "lynx",
-    "massivecat",
-    "caracal",
-    "smilodon-thinking",
-    "grimalkin",
-    "leopard",
-    "massivecat-thinking",
-    "lynx-thinking",
-    "wampus",
-    "wildcat",
-    "leopard-2",
-    "smilodon-2-experimental",
-    "smilodon-2-experimental-thinking",
-    "galaxycat-experimental"
-  ],
-  "guidance": "IDs identify profiles, not capability rankings. Ask which profile the user plays on before adding profile-specific guidance; use only documented or user-reported quirks, and preserve unknown historical IDs."
+  "asOf": "2026-10-26",
+  "sources": {
+    "ids": "Editor model choices for AI-specific blocks (2026-10-17)",
+    "realModel, isCurrent, wikiCostRating, notes": "https://infiniteworlds.mywikis.wiki/wiki/Storyteller_AI (last edited 2026-10-19)",
+    "typicalCreditsPerTurn": "In-game model picker (2026-10-23)"
+  },
+  "purpose": "Authoring and testing convenience, not a validator allowlist. Models retire every few months; check the wiki for current information.",
+  "guidance": "Use id in selectedAIProfiles. IDs identify profiles, not capability rankings. Ask which profile the user plays on before adding profile-specific guidance; use only documented or user-reported quirks, and preserve unknown historical IDs. Retired IDs marked idSource 'derived from name' are not confirmed export values.",
+  "profiles": [
+    {
+      "id": "dolphin",
+      "name": "Dolphin",
+      "realModel": "Custom-trained model",
+      "isCurrent": true,
+      "thinking": false,
+      "typicalCreditsPerTurn": "45-75",
+      "notes": "Picker: quick, good instruction following, recommended."
+    },
+    {
+      "id": "puma",
+      "name": "Puma",
+      "realModel": "Gemini 3.8 Flash",
+      "isCurrent": true,
+      "thinking": false,
+      "typicalCreditsPerTurn": "55-80",
+      "notes": "Picker: all-rounder, alternative to Dolphin."
+    },
+    {
+      "id": "smilodon",
+      "name": "Smilodon",
+      "realModel": "Claude Sonnet 4.5",
+      "isCurrent": true,
+      "thinking": false,
+      "typicalCreditsPerTurn": "70-120",
+      "wikiCostRating": "3/5",
+      "notes": "Follows instructions well; verbose."
+    },
+    {
+      "id": "smilodon-thinking",
+      "name": "Smilodon-Thinking",
+      "realModel": "Claude Sonnet 4.5 (extended thinking)",
+      "isCurrent": true,
+      "thinking": true,
+      "typicalCreditsPerTurn": "95-140",
+      "wikiCostRating": "4/5",
+      "notes": "Highest instruction adherence; large Secret Info output."
+    },
+    {
+      "id": "lynx",
+      "name": "Lynx",
+      "realModel": "Claude Haiku 4.5",
+      "isCurrent": true,
+      "thinking": false,
+      "typicalCreditsPerTurn": "30-50",
+      "wikiCostRating": "1/5",
+      "notes": "Cheap but forgetful; may skip parts of long actions."
+    },
+    {
+      "id": "lynx-thinking",
+      "name": "Lynx-Thinking",
+      "realModel": "Claude Haiku 4.5 (extended thinking)",
+      "isCurrent": true,
+      "thinking": true,
+      "typicalCreditsPerTurn": "45-60"
+    },
+    {
+      "id": "massivecat",
+      "name": "Massivecat",
+      "realModel": "Claude Opus 4.6",
+      "isCurrent": true,
+      "thinking": false,
+      "typicalCreditsPerTurn": "100-175",
+      "wikiCostRating": "6/5 (off scale)",
+      "notes": "Picker: most powerful, expensive."
+    },
+    {
+      "id": "massivecat-thinking",
+      "name": "Massivecat-Thinking",
+      "realModel": "Claude Opus 4.6 (extended thinking)",
+      "isCurrent": true,
+      "thinking": true,
+      "typicalCreditsPerTurn": "160-235"
+    },
+    {
+      "id": "caracal",
+      "name": "Caracal",
+      "realModel": "Xiaomi MiMo-V2.5-Pro",
+      "isCurrent": true,
+      "thinking": true,
+      "typicalCreditsPerTurn": "45-65",
+      "wikiCostRating": "3/5",
+      "notes": "Thinking model; slow to start; good with NSFW content; occasional very expensive turns."
+    },
+    {
+      "id": "grimalkin",
+      "name": "Grimalkin",
+      "realModel": "GPT-4.1",
+      "isCurrent": true,
+      "thinking": false,
+      "typicalCreditsPerTurn": "55-95",
+      "wikiCostRating": "2/5",
+      "notes": "Mid-range; needs precise tracker instructions."
+    },
+    {
+      "id": "leopard",
+      "name": "Leopard",
+      "realModel": "Gemini 2.5 Pro",
+      "isCurrent": true,
+      "thinking": true,
+      "typicalCreditsPerTurn": "140-175",
+      "wikiCostRating": "4/5",
+      "notes": "Thinking model; darker tone; heavy on skill tests."
+    },
+    {
+      "id": "leopard-2",
+      "name": "Leopard-2",
+      "realModel": "Gemini 3.1 Pro",
+      "isCurrent": true,
+      "thinking": false,
+      "notes": "Not in the 2026-10-23 picker sample."
+    },
+    {
+      "id": "wampus",
+      "name": "Wampus",
+      "realModel": "Aion-2.0",
+      "isCurrent": true,
+      "thinking": false,
+      "wikiCostRating": "2/5",
+      "notes": "Cheap; suits short and NSFW games; can get wild. Not in the 2026-10-23 picker sample."
+    },
+    {
+      "id": "wildcat",
+      "name": "Wildcat",
+      "realModel": "Hermes 3 405B",
+      "isCurrent": true,
+      "thinking": false,
+      "wikiCostRating": "1/5",
+      "notes": "Cheap; very short output; weak with complex worlds. Not in the 2026-10-23 picker sample."
+    },
+    {
+      "id": "smilodon-2-experimental",
+      "name": "Smilodon-2 (experimental)",
+      "realModel": null,
+      "isCurrent": true,
+      "thinking": false,
+      "notes": "Editor block-model choice; underlying model not listed on the wiki."
+    },
+    {
+      "id": "smilodon-2-experimental-thinking",
+      "name": "Smilodon-2 Thinking (experimental)",
+      "realModel": null,
+      "isCurrent": true,
+      "thinking": true,
+      "notes": "Editor block-model choice; underlying model not listed on the wiki."
+    },
+    {
+      "id": "galaxycat-experimental",
+      "name": "Galaxycat (experimental)",
+      "realModel": null,
+      "isCurrent": true,
+      "thinking": false,
+      "notes": "Editor block-model choice; underlying model not listed on the wiki."
+    },
+    {
+      "id": "lion",
+      "name": "Lion",
+      "realModel": "Claude Sonnet 3.7",
+      "isCurrent": false,
+      "thinking": false,
+      "wikiCostRating": "3/5",
+      "notes": "Wiki lists it as retired but keeps an active section.",
+      "idSource": "derived from name"
+    },
+    {
+      "id": "lion-thinking",
+      "name": "Lion-Thinking",
+      "realModel": "Claude Sonnet 3.7 (extended thinking)",
+      "isCurrent": false,
+      "thinking": true,
+      "wikiCostRating": "4/5",
+      "notes": "Wiki lists it as retired but keeps an active section.",
+      "idSource": "derived from name"
+    },
+    {
+      "id": "panther",
+      "name": "Panther",
+      "realModel": "Grok 4",
+      "isCurrent": false,
+      "thinking": false,
+      "notes": "Wiki lists it as retired; sources conflict on the model.",
+      "idSource": "derived from name"
+    },
+    {
+      "id": "ocelot-new",
+      "name": "Ocelot-new",
+      "realModel": "DeepSeek R1 (0528)",
+      "isCurrent": false,
+      "thinking": false,
+      "wikiCostRating": "2/5",
+      "notes": "Wiki lists it as retired; frequent errors reported 2025-12.",
+      "idSource": "derived from name"
+    },
+    {
+      "id": "sabretooth",
+      "name": "Sabretooth",
+      "realModel": "Claude 4.0",
+      "isCurrent": false,
+      "thinking": false,
+      "wikiCostRating": "3/5",
+      "idSource": "derived from name"
+    },
+    {
+      "id": "sabretooth-thinking",
+      "name": "Sabretooth-Thinking",
+      "realModel": "Claude 4.0 (extended thinking)",
+      "isCurrent": false,
+      "thinking": true,
+      "wikiCostRating": "4/5",
+      "idSource": "derived from name"
+    },
+    {
+      "id": "tiger",
+      "name": "Tiger",
+      "realModel": "GPT-4o",
+      "isCurrent": false,
+      "thinking": false,
+      "idSource": "derived from name"
+    },
+    {
+      "id": "gryphon",
+      "name": "Gryphon",
+      "realModel": "Gemini 1.5",
+      "isCurrent": false,
+      "thinking": false,
+      "idSource": "derived from name"
+    },
+    {
+      "id": "shishi",
+      "name": "Shishi",
+      "realModel": "Qwen-2.5-Max",
+      "isCurrent": false,
+      "thinking": false,
+      "idSource": "derived from name"
+    },
+    {
+      "id": "ocelot",
+      "name": "Ocelot",
+      "realModel": "DeepSeek R1",
+      "isCurrent": false,
+      "thinking": false,
+      "idSource": "derived from name"
+    },
+    {
+      "id": "ocetoomuch",
+      "name": "Ocetoomuch",
+      "realModel": "DeepSeek R1 (less restricted)",
+      "isCurrent": false,
+      "thinking": false,
+      "idSource": "derived from name"
+    },
+    {
+      "id": "chimaera",
+      "name": "Chimaera",
+      "realModel": "Random per turn: Wildcat, Ocelot, Gryphon or Shishi",
+      "isCurrent": false,
+      "thinking": false,
+      "idSource": "derived from name"
+    },
+    {
+      "id": "tomcat",
+      "name": "Tomcat",
+      "realModel": null,
+      "isCurrent": false,
+      "thinking": false,
+      "wikiCostRating": "1/5",
+      "notes": "Underlying model not stated.",
+      "idSource": "derived from name"
+    }
+  ]
 }
 
 ===== END FILE: reference/Current-AI-Profiles.json =====

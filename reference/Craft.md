@@ -130,7 +130,7 @@ Use corroborating clues, ordinary intervals and independent channels of help. Ke
 | [Seven Nights](../examples/narrative-seven-nights.json) | Fantasy: central partner, foil, late rival | World-rules block; consent built into the fiction; non-human tells; player-visible promise ledger; minimal card for a minor character |
 | [Velvet Wager](../examples/narrative-velvet-wager.json) | High-heat erotica & power-exchange trio | Immediate heat from turn 1; escalation & control tracker instead of courtship gates; multi-turn sex pacing; kinetic body descriptions; light state triggers |
 
-For narrative worlds, read the example closest to the requested genre and relationship structure. Borrow structure, never content: do not reuse example names, premises or signature details. These are authoring patterns, not runtime-qualified benchmarks. The expedition and horror examples have structural validation only, not live playthrough certification.
+For narrative worlds, read the example closest to the requested genre and relationship structure. Borrow structure, never content: do not reuse example names, premises or signature details. These are authoring patterns; the expedition and horror examples are structurally validated only.
 
 ## Existing worlds
 

@@ -1,25 +1,281 @@
 {
-  "asOf": "2026-10-17",
-  "source": "Editor model choices",
-  "purpose": "Authoring suggestions, not a validator allowlist",
-  "ids": [
-    "dolphin",
-    "puma",
-    "smilodon",
-    "lynx",
-    "massivecat",
-    "caracal",
-    "smilodon-thinking",
-    "grimalkin",
-    "leopard",
-    "massivecat-thinking",
-    "lynx-thinking",
-    "wampus",
-    "wildcat",
-    "leopard-2",
-    "smilodon-2-experimental",
-    "smilodon-2-experimental-thinking",
-    "galaxycat-experimental"
-  ],
-  "guidance": "IDs identify profiles, not capability rankings. Ask which profile the user plays on before adding profile-specific guidance; use only documented or user-reported quirks, and preserve unknown historical IDs."
+  "asOf": "2026-10-26",
+  "sources": {
+    "ids": "Editor model choices for AI-specific blocks (2026-10-17)",
+    "realModel, isCurrent, wikiCostRating, notes": "https://infiniteworlds.mywikis.wiki/wiki/Storyteller_AI (last edited 2026-10-19)",
+    "typicalCreditsPerTurn": "In-game model picker (2026-10-23)"
+  },
+  "purpose": "Authoring and testing convenience, not a validator allowlist. Models retire every few months; check the wiki for current information.",
+  "guidance": "Use id in selectedAIProfiles. IDs identify profiles, not capability rankings. Ask which profile the user plays on before adding profile-specific guidance; use only documented or user-reported quirks, and preserve unknown historical IDs. Retired IDs marked idSource 'derived from name' are not confirmed export values.",
+  "profiles": [
+    {
+      "id": "dolphin",
+      "name": "Dolphin",
+      "realModel": "Custom-trained model",
+      "isCurrent": true,
+      "thinking": false,
+      "typicalCreditsPerTurn": "45-75",
+      "notes": "Picker: quick, good instruction following, recommended."
+    },
+    {
+      "id": "puma",
+      "name": "Puma",
+      "realModel": "Gemini 3.8 Flash",
+      "isCurrent": true,
+      "thinking": false,
+      "typicalCreditsPerTurn": "55-80",
+      "notes": "Picker: all-rounder, alternative to Dolphin."
+    },
+    {
+      "id": "smilodon",
+      "name": "Smilodon",
+      "realModel": "Claude Sonnet 4.5",
+      "isCurrent": true,
+      "thinking": false,
+      "typicalCreditsPerTurn": "70-120",
+      "wikiCostRating": "3/5",
+      "notes": "Follows instructions well; verbose."
+    },
+    {
+      "id": "smilodon-thinking",
+      "name": "Smilodon-Thinking",
+      "realModel": "Claude Sonnet 4.5 (extended thinking)",
+      "isCurrent": true,
+      "thinking": true,
+      "typicalCreditsPerTurn": "95-140",
+      "wikiCostRating": "4/5",
+      "notes": "Highest instruction adherence; large Secret Info output."
+    },
+    {
+      "id": "lynx",
+      "name": "Lynx",
+      "realModel": "Claude Haiku 4.5",
+      "isCurrent": true,
+      "thinking": false,
+      "typicalCreditsPerTurn": "30-50",
+      "wikiCostRating": "1/5",
+      "notes": "Cheap but forgetful; may skip parts of long actions."
+    },
+    {
+      "id": "lynx-thinking",
+      "name": "Lynx-Thinking",
+      "realModel": "Claude Haiku 4.5 (extended thinking)",
+      "isCurrent": true,
+      "thinking": true,
+      "typicalCreditsPerTurn": "45-60"
+    },
+    {
+      "id": "massivecat",
+      "name": "Massivecat",
+      "realModel": "Claude Opus 4.6",
+      "isCurrent": true,
+      "thinking": false,
+      "typicalCreditsPerTurn": "100-175",
+      "wikiCostRating": "6/5 (off scale)",
+      "notes": "Picker: most powerful, expensive."
+    },
+    {
+      "id": "massivecat-thinking",
+      "name": "Massivecat-Thinking",
+      "realModel": "Claude Opus 4.6 (extended thinking)",
+      "isCurrent": true,
+      "thinking": true,
+      "typicalCreditsPerTurn": "160-235"
+    },
+    {
+      "id": "caracal",
+      "name": "Caracal",
+      "realModel": "Xiaomi MiMo-V2.5-Pro",
+      "isCurrent": true,
+      "thinking": true,
+      "typicalCreditsPerTurn": "45-65",
+      "wikiCostRating": "3/5",
+      "notes": "Thinking model; slow to start; good with NSFW content; occasional very expensive turns."
+    },
+    {
+      "id": "grimalkin",
+      "name": "Grimalkin",
+      "realModel": "GPT-4.1",
+      "isCurrent": true,
+      "thinking": false,
+      "typicalCreditsPerTurn": "55-95",
+      "wikiCostRating": "2/5",
+      "notes": "Mid-range; needs precise tracker instructions."
+    },
+    {
+      "id": "leopard",
+      "name": "Leopard",
+      "realModel": "Gemini 2.5 Pro",
+      "isCurrent": true,
+      "thinking": true,
+      "typicalCreditsPerTurn": "140-175",
+      "wikiCostRating": "4/5",
+      "notes": "Thinking model; darker tone; heavy on skill tests."
+    },
+    {
+      "id": "leopard-2",
+      "name": "Leopard-2",
+      "realModel": "Gemini 3.1 Pro",
+      "isCurrent": true,
+      "thinking": false,
+      "notes": "Not in the 2026-10-23 picker sample."
+    },
+    {
+      "id": "wampus",
+      "name": "Wampus",
+      "realModel": "Aion-2.0",
+      "isCurrent": true,
+      "thinking": false,
+      "wikiCostRating": "2/5",
+      "notes": "Cheap; suits short and NSFW games; can get wild. Not in the 2026-10-23 picker sample."
+    },
+    {
+      "id": "wildcat",
+      "name": "Wildcat",
+      "realModel": "Hermes 3 405B",
+      "isCurrent": true,
+      "thinking": false,
+      "wikiCostRating": "1/5",
+      "notes": "Cheap; very short output; weak with complex worlds. Not in the 2026-10-23 picker sample."
+    },
+    {
+      "id": "smilodon-2-experimental",
+      "name": "Smilodon-2 (experimental)",
+      "realModel": null,
+      "isCurrent": true,
+      "thinking": false,
+      "notes": "Editor block-model choice; underlying model not listed on the wiki."
+    },
+    {
+      "id": "smilodon-2-experimental-thinking",
+      "name": "Smilodon-2 Thinking (experimental)",
+      "realModel": null,
+      "isCurrent": true,
+      "thinking": true,
+      "notes": "Editor block-model choice; underlying model not listed on the wiki."
+    },
+    {
+      "id": "galaxycat-experimental",
+      "name": "Galaxycat (experimental)",
+      "realModel": null,
+      "isCurrent": true,
+      "thinking": false,
+      "notes": "Editor block-model choice; underlying model not listed on the wiki."
+    },
+    {
+      "id": "lion",
+      "name": "Lion",
+      "realModel": "Claude Sonnet 3.7",
+      "isCurrent": false,
+      "thinking": false,
+      "wikiCostRating": "3/5",
+      "notes": "Wiki lists it as retired but keeps an active section.",
+      "idSource": "derived from name"
+    },
+    {
+      "id": "lion-thinking",
+      "name": "Lion-Thinking",
+      "realModel": "Claude Sonnet 3.7 (extended thinking)",
+      "isCurrent": false,
+      "thinking": true,
+      "wikiCostRating": "4/5",
+      "notes": "Wiki lists it as retired but keeps an active section.",
+      "idSource": "derived from name"
+    },
+    {
+      "id": "panther",
+      "name": "Panther",
+      "realModel": "Grok 4",
+      "isCurrent": false,
+      "thinking": false,
+      "notes": "Wiki lists it as retired; sources conflict on the model.",
+      "idSource": "derived from name"
+    },
+    {
+      "id": "ocelot-new",
+      "name": "Ocelot-new",
+      "realModel": "DeepSeek R1 (0528)",
+      "isCurrent": false,
+      "thinking": false,
+      "wikiCostRating": "2/5",
+      "notes": "Wiki lists it as retired; frequent errors reported 2025-12.",
+      "idSource": "derived from name"
+    },
+    {
+      "id": "sabretooth",
+      "name": "Sabretooth",
+      "realModel": "Claude 4.0",
+      "isCurrent": false,
+      "thinking": false,
+      "wikiCostRating": "3/5",
+      "idSource": "derived from name"
+    },
+    {
+      "id": "sabretooth-thinking",
+      "name": "Sabretooth-Thinking",
+      "realModel": "Claude 4.0 (extended thinking)",
+      "isCurrent": false,
+      "thinking": true,
+      "wikiCostRating": "4/5",
+      "idSource": "derived from name"
+    },
+    {
+      "id": "tiger",
+      "name": "Tiger",
+      "realModel": "GPT-4o",
+      "isCurrent": false,
+      "thinking": false,
+      "idSource": "derived from name"
+    },
+    {
+      "id": "gryphon",
+      "name": "Gryphon",
+      "realModel": "Gemini 1.5",
+      "isCurrent": false,
+      "thinking": false,
+      "idSource": "derived from name"
+    },
+    {
+      "id": "shishi",
+      "name": "Shishi",
+      "realModel": "Qwen-2.5-Max",
+      "isCurrent": false,
+      "thinking": false,
+      "idSource": "derived from name"
+    },
+    {
+      "id": "ocelot",
+      "name": "Ocelot",
+      "realModel": "DeepSeek R1",
+      "isCurrent": false,
+      "thinking": false,
+      "idSource": "derived from name"
+    },
+    {
+      "id": "ocetoomuch",
+      "name": "Ocetoomuch",
+      "realModel": "DeepSeek R1 (less restricted)",
+      "isCurrent": false,
+      "thinking": false,
+      "idSource": "derived from name"
+    },
+    {
+      "id": "chimaera",
+      "name": "Chimaera",
+      "realModel": "Random per turn: Wildcat, Ocelot, Gryphon or Shishi",
+      "isCurrent": false,
+      "thinking": false,
+      "idSource": "derived from name"
+    },
+    {
+      "id": "tomcat",
+      "name": "Tomcat",
+      "realModel": null,
+      "isCurrent": false,
+      "thinking": false,
+      "wikiCostRating": "1/5",
+      "notes": "Underlying model not stated.",
+      "idSource": "derived from name"
+    }
+  ]
 }

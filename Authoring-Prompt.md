@@ -42,7 +42,8 @@ The template or current export is required for construction. Files below are sel
 |Model-specific blocks|[reference/Current-AI-Profiles.json](https://iw-builder.github.io/reference/Current-AI-Profiles.json) and the model-block section of [reference/Capabilities.md](https://iw-builder.github.io/reference/Capabilities.md); ask which model(s) are common if needed|
 |Editing, combining or importing|[reference/Import-Integrity.md](https://iw-builder.github.io/reference/Import-Integrity.md)|
 |Editor workflows and terminology|[reference/Editor-UI.md](https://iw-builder.github.io/reference/Editor-UI.md)|
-|Consolidated results and research status|[reference/Verified-Behavior.md](https://iw-builder.github.io/reference/Verified-Behavior.md); [reference/Roadmap.md](https://iw-builder.github.io/reference/Roadmap.md)|
+|Review, Debug, or a quick check of likely world bugs|[reference/Notable-Findings.md](https://iw-builder.github.io/reference/Notable-Findings.md)|
+|Detailed tested behavior|[reference/Verified-Behavior.md](https://iw-builder.github.io/reference/Verified-Behavior.md)|
 |Uncertain platform behavior|[reference/Known-Limits.md](https://iw-builder.github.io/reference/Known-Limits.md); do not turn uncertainty into an invented rule|
 |Personal libraries, portable banks, bundles, PC/NPC conversion or full-content build reports|[reference/Portable-Banks.md](https://iw-builder.github.io/reference/Portable-Banks.md); [tools/data_bank.py](https://iw-builder.github.io/tools/data_bank.py) when execution is available|
 |Code-based validation or edit comparison|[tools/validate_iw_export.py](https://iw-builder.github.io/tools/validate_iw_export.py), [tools/iw-export.schema.json](https://iw-builder.github.io/tools/iw-export.schema.json) and [tools/Usage.md](https://iw-builder.github.io/tools/Usage.md)|

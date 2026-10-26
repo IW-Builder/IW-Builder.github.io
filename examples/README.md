@@ -78,7 +78,7 @@ These examples are useful when you know what you want to happen but are unsure w
 - [Modify Other Character](effect-effectChangeOtherCharacters-modify.json)
 - [Delete Other Character](effect-effectChangeOtherCharacters-delete.json)
 
-These examples preserve native payload shapes. Background replacement is observed in Start-only mode; first-action timing is not fully qualified. Other Character Add/Modify/Delete payloads are editor-verified, but live record mutation remains unresolved. An unchanged live-design export or a fired-trigger badge is not proof of effect failure or success.
+These examples preserve native payload shapes. Background replacement is observed in Start-only mode; first-action timing is not fully qualified. Other Character Add/Modify/Delete payloads are editor-verified, but live record mutation remains unresolved.
 
 ## Look under the hood
 
