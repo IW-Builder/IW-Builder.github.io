@@ -68,13 +68,28 @@ The database icon opens trackers; the nearby edit control edits their values. Th
 
 The bug icon opens debug. **Active instructions** is live rendered state, including post-narration trigger updates and live edits, not the full historical prompt. A trigger badge/list is not always exhaustive; inspect detailed history and actual state.
 
-**PawScript > Open in Sandbox** uses the historical data that script ran against. Its header names the script and says what it changed when it ran in the game. **Turn data** lists trackers plus the `$player` and `$game` roots (`$game` has seven keys, including turn_number, ai_model and skill_list); **Legacy turn data** holds older flat variables. In a short-circuited And/Or group, debug lists only the deciding condition. It can differ from current manually edited values. A run displays a result/diff; **Update Game** is separate. A collapsed summary can misrepresent nested structure; inspect actual values or supported reads.
-
 The live-design notice warns that Player/Other Character changes do not affect the current playthrough; live copies are covered in [Import-Integrity.md](Import-Integrity.md). Runtime block replacements and tracker changes can leave original content/initial values in design exports; those exports are not complete live-state snapshots.
 
 Story exports offer a turn range and optional background, character, secrets, trackers and hidden trackers, with text/PDF/image options. Select the relevant options. Secret Info is generated narrative data, not an authoritative character database. No live character-database or complete prompt viewer is available through these surfaces.
 
 An unchecked **Hide skill system** option may omit `hideSkillSystem` from the editor export. This is normal visible-skills state, not a missing setting to repair. Generated JSON may explicitly use `false`.
+
+## PawScript sandbox
+
+The sandbox (PawScript Expression Editor) runs a script or expression against editable tracker data. Nothing changed in it goes back to the editor or game; copy anything worth keeping.
+
+| Entry point | When it is available | Tracker data it starts with |
+| --- | --- | --- |
+| World editor: Paw icon beside a Run Script effect's script field | Always | All base trackers |
+| World editor: Paw icon beside other PawScript-capable fields | When **Show optional features > Misc advanced features > Show the PawScript Expression Editor button next to each expression field** is enabled for that world (`showPawScriptButtons: true`) | All base trackers |
+| In play: **View/edit world design** | Same Paw icons as the world editor | The game state of that turn |
+| In play: debug **PawScript > Open in Sandbox** | For a script that has run in this game; with the expression-editor option enabled, evaluated conditions also get an entry. The play screen has no other sandbox button | The game state of the turn it ran |
+
+From the world editor, a tracker with a fixed initial value shows that value; one with no initial value, or a player-chosen or character-dependent one, shows 0 or empty. With the option enabled, Paw icons were observed beside trigger conditions and tracker description and update instructions, but not beside initial value, authorStyle, specialist instructions, main or keyword instruction blocks, background, first action or objective.
+
+The sandbox matches the field it was opened from. A script field opens a multi-line **Your script** box with **Run script**. A single-line field, such as a trigger condition, opens a one-line **Your expression** box in **Expression** mode with **Evaluate**; a multi-line paste there is refused and does nothing. Its **Text** tab switches to a multi-line box that evaluates text containing `<<expressions>>`. To test a multi-line script, open the sandbox from a Run Script field.
+
+Trackers can be added, edited and deleted in the sandbox, and runs use those values. From debug, the header names the script and says what it changed when it ran in the game. **Turn data** lists trackers plus the `$player` and `$game` roots (`$game` has seven keys, including turn_number, ai_model and skill_list); **Legacy turn data** holds older flat variables. In a short-circuited And/Or group, debug lists only the deciding condition. Sandbox data can differ from current manually edited values. A run displays a result/diff; **Update Game** is separate. A collapsed summary can misrepresent nested structure; inspect actual values or supported reads.
 
 ## Credits and cost
 
@@ -96,7 +111,7 @@ Image style has a Model and Character/Scenery start/end prompts, mapped to `imag
 
 [DOCUMENTED] The default Description instructions ask for several paragraphs; to shorten narration, put the cap in authorStyle (see [Capabilities](Capabilities.md)). Video help describes `$videoDuration` and `$videoStyle` in video context (see below).
 
-Misc advanced features can show PawScript Expression Editor buttons. Missing icons do not prove lack of support: YAML Set a value supports template expressions according to help despite having no icon. This is not an exhaustive icon inventory.
+The expression-editor option shows a Paw icon beside some PawScript-capable fields (see [PawScript sandbox](#pawscript-sandbox)). Missing icons do not prove lack of support: YAML Set a value supports template expressions according to help despite having no icon. This is not an exhaustive icon inventory.
 
 Present choice enforces required selection and configured multiple-selection bounds. Required Request Input can leave Confirm enabled while empty, then reject submission with **Please enter a response**. Optional blank input clears its target. Single/multiline fields show counters of 600/3000 respectively, not universal tracker limits. Newline-delimited multiple selections remain text, not automatically a YAML list.
 
