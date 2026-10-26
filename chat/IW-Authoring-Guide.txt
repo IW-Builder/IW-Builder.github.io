@@ -522,7 +522,7 @@ Start + Mid Game + Repeat can execute before the opening and again during turn 1
 
 With Start false, Mid Game has no effect; a stored true value requires no warning or repair. A trigger with no conditions and Start false does not fire automatically, but can remain available for explicit dispatch.
 
-- Prerequisites/blockers with firedThisTurn true are this-turn checks that see a producer only when it is earlier in triggerEvents, and reset each turn. False uses game history, which sees a later-ordered producer from the next turn. The editor disallows requiring and blocking the same trigger; do not generate that conflict.
+- Prerequisites/blockers with firedThisTurn true are this-turn checks that see a producer only when it is earlier in triggerEvents, and reset each turn. False uses game history, which sees a later-ordered producer from the next turn. It also sees an earlier-ordered producer on the same turn, so false means "has fired, this turn or before" and cannot defer a consumer to the next turn. To defer, order the consumer above its producer, or gate it on a stored turn stamp such as `$game.turn_number > $x.stamp_turn`. The editor disallows requiring and blocking the same trigger; do not generate that conflict.
 - Defaults are not a contract: always serialize canTriggerMoreThanOnce and the timing flags intentionally. Use repeatable commit triggers with idempotent state guards where appropriate, and true one-shot events when required.
 - Restriction: Do not combine Start of Game with Scenario or minimum-turn conditions. The editor warns that these conditions are ignored; minimum-turn bypass is confirmed during both startup and mid-game execution. Use a separate startup trigger and leave Start off on the conditional trigger.
 

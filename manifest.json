@@ -1,6 +1,6 @@
 {
   "algorithm": "sha256",
-  "generatedAt": "2026-10-26T22:19:39+00:00",
+  "generatedAt": "2026-10-26T23:46:40+00:00",
   "files": [
     {
       "path": "Authoring-Prompt.md",
@@ -24,8 +24,8 @@
     },
     {
       "path": "chat/IW-Authoring-Guide.txt",
-      "bytes": 88965,
-      "sha256": "28d9f550340427c288c24caf99b7c9c483499eaf627dc90bdcdb44d6dcce5292"
+      "bytes": 89246,
+      "sha256": "2f3182bf413a53ac414bb70dc7fe4e5c7652b2ea0e947de52ad47fab10569e6c"
     },
     {
       "path": "chat/IW-Behavior.txt",
@@ -74,13 +74,13 @@
     },
     {
       "path": "chat/index.html",
-      "bytes": 92758,
-      "sha256": "3f7f3b35985af684376250e981c72cf968f73cb893aacd9d6592f9cf3d29835e"
+      "bytes": 93052,
+      "sha256": "f490108e2f8423f580ee7fbe794f052000d272e8df09f50181ac4a2fbf3dd536"
     },
     {
       "path": "chat/sources.json",
       "bytes": 3154,
-      "sha256": "8cded810aca5d1ca0d57f5d797826a8e344e7ea08dc9214abe58c6b3de8ed091"
+      "sha256": "02c09a2b33f81558c464799783a9cbab3cba803c722c75cc314a0127ff2458a8"
     },
     {
       "path": "checker/index.html",
@@ -439,8 +439,8 @@
     },
     {
       "path": "llms.txt",
-      "bytes": 25985,
-      "sha256": "f884ece2e914ac8d98e37d7b401cb2c247aee3b76c647cc419f49a08849532e9"
+      "bytes": 25986,
+      "sha256": "d093e59d3846bd9a25c3b2c7f835748c5fce5afa949292f937e654f023f287df"
     },
     {
       "path": "reference/Capabilities.md",
@@ -534,8 +534,8 @@
     },
     {
       "path": "reference/Triggers.md",
-      "bytes": 9521,
-      "sha256": "501bd956bc66453e7084cfcbeddc3b6f981f47a5af6d82e0b760ac9f5d9a9c76"
+      "bytes": 9802,
+      "sha256": "3de875512571f8d27e44a00ff95468a15f4bf69e29ece32fcebdafb04deae67a"
     },
     {
       "path": "reference/Verified-Behavior.md",
@@ -544,8 +544,8 @@
     },
     {
       "path": "reference/index.html",
-      "bytes": 5888,
-      "sha256": "e543c0905d0bf4f0ee04c54da3e48d450b5a4c72d47cb5fe7b9d845d53d415e2"
+      "bytes": 5889,
+      "sha256": "001f499fe2c52baf6a18bfe94cf4ffe57e35588be55335afca8fe328ba2789f2"
     },
     {
       "path": "tools/README.md",

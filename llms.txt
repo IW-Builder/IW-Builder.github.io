@@ -33,7 +33,7 @@ Read only what the task needs; Authoring-Prompt.md says which guide covers which
 - [reference/Story-Tools.md](https://iw-builder.github.io/reference/Story-Tools.md) (4 KB): Import comparison and story-text extraction/merge tools: commands and limits.
 - [reference/Trackers.md](https://iw-builder.github.io/reference/Trackers.md) (7 KB): Tracker fields, data types, visibility, update ownership, starting values and memory/context cost.
 - [reference/Trigger-Catalog.md](https://iw-builder.github.io/reference/Trigger-Catalog.md) (7 KB): Every identified trigger condition and effect type in one table. Check it before saying a trigger can't do something.
-- [reference/Triggers.md](https://iw-builder.github.io/reference/Triggers.md) (9 KB): Trigger timing flags, ordering, effect semantics, choosing native effects or PawScript, and start-of-game restrictions.
+- [reference/Triggers.md](https://iw-builder.github.io/reference/Triggers.md) (10 KB): Trigger timing flags, ordering, effect semantics, choosing native effects or PawScript, and start-of-game restrictions.
 - [reference/Notable-Findings.md](https://iw-builder.github.io/reference/Notable-Findings.md) (9 KB): Plain-language list of the behavior most likely to surprise an author or break a world, with what to do.
 - [reference/Verified-Behavior.md](https://iw-builder.github.io/reference/Verified-Behavior.md) (17 KB): Consolidated runtime findings: triggers, imports, PawScript, visibility, memory, forms, images and endings.
 
