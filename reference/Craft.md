@@ -100,7 +100,7 @@ authorStyle
 
 ## Prose and authorStyle
 
-authorStyle describes how sentences sound: POV and tense, sensory focus, scene length, how turns end, how characters stay distinct, and how to describe people (a detail or two at a time, through the player's attention). A style anchor ("closer to Angela Carter than a greeting card") can help.
+authorStyle describes how sentences sound: POV and tense, sensory focus, scene length, how turns end, how characters stay distinct, and how to describe people (a detail or two at a time, through the player's attention). A style anchor ("closer to Angela Carter than a greeting card") can help. Length rules belong here: a cap in authorStyle outweighs the same text in descriptionRequest.
 
 A short avoid-list counters common AI phrasing: 'a mix of X and Y', 'ministrations', 'barely above a whisper', 'eyes darkening', 'a testament to', 'something shifted'. Keep it short and always say what to do instead; long lists can prime the very phrases they ban in weaker storyteller models.
 

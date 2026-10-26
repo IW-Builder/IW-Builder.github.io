@@ -94,7 +94,7 @@ Image style has a Model and Character/Scenery start/end prompts, mapped to `imag
 
 ## Specialist instructions, forms and PawScript cues
 
-[DOCUMENTED] The default Description instructions ask for several paragraphs; exact length control remains unreliable. Video help describes `$videoDuration` and `$videoStyle` in video context (see below).
+[DOCUMENTED] The default Description instructions ask for several paragraphs; to shorten narration, put the cap in authorStyle (see [Capabilities](Capabilities.md)). Video help describes `$videoDuration` and `$videoStyle` in video context (see below).
 
 Misc advanced features can show PawScript Expression Editor buttons. Missing icons do not prove lack of support: YAML Set a value supports template expressions according to help despite having no icon. This is not an exhaustive icon inventory.
 

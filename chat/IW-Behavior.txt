@@ -74,7 +74,7 @@ The Infinite Worlds behavior most likely to surprise an author or break a world,
 
 ## Narration, images and play
 
-40. **Length requests do not reliably work**, in either direction. The default Description instructions ask for several paragraphs.
+40. **Shorten narration from authorStyle, not descriptionRequest.** A word-and-paragraph cap at the end of authorStyle held output near the stated number (often 10–20% over) even on story-beat turns; the same cap in descriptionRequest or an always-on block broke on those turns. Making narration longer is not established.
 41. **Raw HTML renders as literal text.** Use ordinary Markdown.
 42. **Short avoid-lists help, long ones backfire** on weaker models by priming the banned phrases.
 43. **Image style uses the start/end prompt fields.** The old illustrationStyle priority fields have no current controls and lost to the start/end prompts in testing. Saving Illustration details generates a new image (about 4 credits).
@@ -186,7 +186,7 @@ Image style has a Model and Character/Scenery start/end prompts, mapped to `imag
 
 ## Specialist instructions, forms and PawScript cues
 
-[DOCUMENTED] The default Description instructions ask for several paragraphs; exact length control remains unreliable. Video help describes `$videoDuration` and `$videoStyle` in video context (see below).
+[DOCUMENTED] The default Description instructions ask for several paragraphs; to shorten narration, put the cap in authorStyle (see [Capabilities](Capabilities.md)). Video help describes `$videoDuration` and `$videoStyle` in video context (see below).
 
 Misc advanced features can show PawScript Expression Editor buttons. Missing icons do not prove lack of support: YAML Set a value supports template expressions according to help despite having no icon. This is not an exhaustive icon inventory.
 
@@ -307,7 +307,8 @@ Results current through 2026-10-26. Labels and kit-wide caveats follow [Evidence
 - [RUNTIME] Secret Info and narration can disagree or misattribute knowledge. Characters can deny a fact just told to them, and hidden facts can become player knowledge in prose. A general provenance policy showed no clear benefit; explicit correction of the source chain did.
 - [RUNTIME] Once a secret reaches narration, removing or emptying its disclosure block does not remove it from later turns.
 - [DOCUMENTED, user-confirmed] Summary compression follows a six-turn cadence beginning at turn eight; the cost breakdown first shows LTM about then, as STM drops. Later recall is possible; summary contents remain hidden.
-- [RUNTIME/UNKNOWN] Paragraph-count requests and strong priority-overriding wording did not reliably lengthen narration, even with richer lore; a one-sentence descriptionRequest did not shorten it. No reliable length control is established.
+- [RUNTIME] Shortening (Dolphin, one world): a cap of at most 2 short paragraphs and 90 words, with priority-override framing, appended to authorStyle averaged 82 words (control 413) and held through a story-beat turn; a plain one-sentence version averaged 96. The same cap in descriptionRequest (mean 118, max 215) or an always-on block (max 226) broke on the story-beat turn. A per-turn Tell AI trigger held later turns but cannot reach the opening. The cap acts as a soft target; credits fell only about 10%.
+- [RUNTIME/UNKNOWN] Lengthening: paragraph-count requests and strong priority-overriding wording did not reliably lengthen narration, even with richer lore. A one-sentence descriptionRequest did not shorten it. Other models are untested for the authorStyle cap.
 
 ## Forms, images and endings
 
@@ -350,7 +351,7 @@ Current through 2026-10-26. This is the kit's single list of platform behavior t
 | Format and YAML | Manual and script writes can bypass expectations; coercions occur | Complete grammar, XML mutation, strict typing, hidden AI repair | Validate shape and meaning in scripts before accepting state |
 | Legacy list context | current() is rejected in Run Script | A supported List Update target/value context in the current editor | Use for-each loops and collection methods instead |
 | Memory | Summary compression every six turns from turn eight (user-confirmed); later recall occurs | Summary contents and how they weigh against persistent context | Use summaryRequest and trackers for facts that must persist |
-| Length | Strong override wording does not reliably lengthen narration | A reliable length recipe or hidden maximum | Describe the desired length in authorStyle; do not promise exact length |
+| Length | An authorStyle cap shortens narration (Dolphin); strong wording does not reliably lengthen it | A lengthening recipe; the cap on other models | Put length rules in authorStyle; promise a ceiling near the number, not an exact length |
 | Images and video | Current wrappers and dedicated image fields affect results | Full image prompt and cache, precedence, internal macros, video runtime | Author with current style controls and preserve imported legacy fields; avoid depending on video until checked |
 | Limits and permissions | Large text retention and separate startup customization established | Maximum field, loop or trigger sizes; account-role permission matrix | Treat observed sizes as working examples |
 | Recovery and forms | Interrupted generation can leave a turn unretained but charged; a turn with two input forms once failed to persist | Server-side cause and automated recovery | After an interruption, inspect retained history and the export's turn count before resubmitting; prefer one input form per turn |
