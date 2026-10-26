@@ -4,13 +4,13 @@ To use the tools, recreate files at their BEGIN FILE paths, excluding boundary l
 Editions and their contents:
 - IW-Authoring-Guide.txt: start here: prompt, template, narrative craft, trackers, triggers, data banks and library integration. Files: Authoring-Prompt.md, World-Template.json, reference/Evidence.md, reference/Craft.md, reference/Trackers.md, reference/Triggers.md, reference/Trigger-Catalog.md, reference/Portable-Banks.md, library/Integration.md
 - IW-Technical-Reference.txt: exact payloads, PawScript, capabilities, recipes and import integrity. Files: reference/Schema.md, reference/PawScript.md, reference/Capabilities.md, reference/Recipes.md, reference/Import-Integrity.md, reference/Default-Evaluation.txt, reference/Current-AI-Profiles.json
-- IW-Behavior.txt: editor/UI workflows, verified runtime behavior and known limits. Files: reference/Editor-UI.md, reference/Verified-Behavior.md, reference/Known-Limits.md
+- IW-Behavior.txt: notable findings, editor/UI workflows, verified runtime behavior and known limits. Files: reference/Notable-Findings.md, reference/Editor-UI.md, reference/Verified-Behavior.md, reference/Known-Limits.md
 - IW-Payloads.txt: exact native payload snippets for every condition and effect, plus the example index. Files: examples/Payloads.md, examples/index.json
 - IW-Mechanics-Examples.txt: complete mechanics example worlds: recipes, optional block, starting values and a showcase. Files: examples/recipe-request-commit.json, examples/recipe-completion-award.json, examples/recipe-candidate-acceptance.json, examples/recipe-archive-reactivate.json, examples/recipe-cached-random.json, examples/recipe-consumed-timer.json, examples/recipe-choice-domain.json, examples/recipe-compiled-plot.json, examples/recipe-choice-followup.json, examples/recipe-threshold-unlock.json, examples/optional-block.json, examples/character-starting-values.json, examples/showcase-glass-ledger.json
 - IW-Narrative-Examples.txt: complete narrative example worlds: ensemble romance, fantasy expedition and contained horror. Files: examples/narrative-vendemmia.json, examples/narrative-listening-road.json, examples/narrative-address-after-midnight.json
 - IW-Sample-Blocks.txt: optional library modules (read library/Integration.md first). Files: library/Sample-Blocks.json
 - IW-Storymaster.txt: the Storymaster narrative-direction framework (read library/Integration.md first). Files: library/Storymaster-Suite.json
-- IW-Tools.txt: Python tools and their guides, for models that can run code. Files: tools/Usage.md, reference/Story-Tools.md, reference/Engineering-Tools.md, tools/validate_iw_export.py, tools/static_checks.py, tools/iw-export.schema.json, tools/data_bank.py, tools/import_audit.py, tools/story_export.py, tools/iw_browser.py, tools/plot_compile.py
+- IW-Tools.txt: Python tools and their guides, for models that can run code. Files: tools/Usage.md, reference/Story-Tools.md, reference/Engineering-Tools.md, tools/validate_iw_export.py, tools/static_checks.py, tools/iw-export.schema.json, tools/data_bank.py, tools/import_audit.py, tools/story_export.py, tools/plot_compile.py
 Every file is also available individually: https://iw-builder.github.io/llms.txt
 
 ===== BEGIN FILE: tools/Usage.md =====
@@ -77,7 +77,7 @@ The builder updates visible EOF markers in AI-facing Markdown documents, generat
 
 Required sources are checked before output begins; a missing source or checker embedding stops the build with an error. Repeated builds with unchanged inputs preserve output bytes and the manifest timestamp. A write failure can leave partial outputs; fix it and rerun before publishing.
 
-`IW-Tools.txt` has an explicit authoring-tool list: this usage guide, the Story-Tools and Engineering-Tools guides, validator, static checks, JSON schema, data-bank utility, import audit, story-export tool, browser harness and plot compiler. Builders, regression tests and package reports remain in the repository but are omitted from that model-facing bundle. Human READMEs are also omitted from combined technical packages. No model needs the distribution builder to author a world.
+`IW-Tools.txt` has an explicit authoring-tool list: this usage guide, the Story-Tools and plot-compiler guides, validator, static checks, JSON schema, data-bank utility, import audit, story-export tool and plot compiler. Builders, regression tests and package reports remain in the repository but are omitted from that model-facing bundle. Human READMEs are also omitted from combined technical packages. No model needs the distribution builder to author a world.
 
 The root manifest records repository-relative paths, byte lengths and SHA-256 hashes. It covers the authoring sources and supported files under reference, library, examples, tools, chat and checker, plus the homepage and root guide/template/license. It excludes itself, ZIP archives, sample histories, hidden files and caches. It is separate from the files it hashes to avoid circular dependencies. Hash original bytes, never a browser's rendered/extracted text. A mismatch may mean the manifest is stale; investigate apparent missing content without treating every mismatch as damage. A match establishes the recorded bytes, not freshness or runtime correctness.
 
@@ -91,9 +91,9 @@ Use `python tools/story_export.py plan story.txt --world world.json --session NA
 
 Run all maintained regression checks with `python -m unittest discover -s tools -p "test_*.py"`. These are local tool checks, not IW execution.
 
-## Browser and plot tools
+## Plot compiler
 
-See [Engineering tools](../reference/Engineering-Tools.md) for `iw_browser.py` setup, capture/export/recovery contracts and `plot_compile.py` plan syntax. Browser support is optional and uses `requirements-browser.txt`. No tool here submits a game turn, imports a world or publishes content. Authenticated standalone capture and refresh-verified editor export are verified; gameplay recovery and server persistence remain outside that result.
+See [Plot compiler](../reference/Engineering-Tools.md) for `plot_compile.py` plan syntax. No tool here submits a game turn, imports a world or publishes content.
 
 ---
 
@@ -116,7 +116,7 @@ python tools/import_audit.py source.json imported.json
 
 The report includes source hashes, complete structural differences, possible tracker-ID changes and references still pointing at removed tracker targets. Possible identity changes require a unique Name/variable-handle candidate; ambiguity is reported, never automatically repaired. Array changes remain visible even when positional reordering makes them noisy. No input is modified.
 
-The validator supports native string turn thresholds, the editor-recognized first-action/Other Character effects, and the verified turn_number root. Other Character mutation remains runtime-unverified. Exact Scenario mismatches are errors when a registry is present; an absent registry produces migration guidance rather than pretending a legacy import cannot populate it. Non-alphanumeric tracker IDs produce an import-risk advisory. Findings identify the owning tracker/trigger Name where available; JSON paths remain technical coordinates.
+The validator supports native string turn thresholds, the editor-recognized first-action/Other Character effects, and the verified turn_number root. Exact Scenario mismatches are errors when a registry is present; an absent registry produces migration guidance, since import populates it. Non-alphanumeric tracker IDs, a tracker without `description` and a value effect without `replaceWith` produce import-risk advisories. Findings identify the owning tracker/trigger Name where available; JSON paths remain technical coordinates.
 
 ## Extract story text without silently resolving ambiguity
 
@@ -147,7 +147,7 @@ Supply multiple reviewed plans to build. Every plan must declare the same nonemp
 
 Select a single coherent branch/revision before building conflicting history; the tool offers no latest-file winner and does not combine downstream turns from divergent branches automatically. Complete histories require turn one and no gaps. --partial permits a contiguous later range and labels it partial; it does not permit holes or silently promote partial history to complete.
 
-The tool is a conservative IW-Builder implementation. It does not patch or certify the separate external parser. Standalone live-browser capture and recovery remain separate roadmap items.
+The tool is a conservative IW-Builder implementation. It does not patch the separate external parser.
 
 ---
 
@@ -156,45 +156,9 @@ END OF DOCUMENT: reference/Story-Tools.md
 ===== END FILE: reference/Story-Tools.md =====
 
 ===== BEGIN FILE: reference/Engineering-Tools.md =====
-# Browser capture and plot compilation
+# Plot compiler
 
-These are local authoring tools, not platform APIs. They never submit a turn or publish a world. See [Story tools](Story-Tools.md) for export parsing and import comparison.
-
-## Standalone browser harness
-
-`tools/iw_browser.py` uses an optional Playwright dependency and a dedicated local Chromium profile. The in-app browser's login is a separate session. Authenticated standalone connection, rendered-page capture and refresh-verified editor export were verified on 2026-10-23. Exported content matched the preserved original and passed structural validation. This establishes the observed capture/export workflow, not imports, gameplay automation, interrupted-turn recovery or server persistence. A command-runner sandbox may block local debugging sockets even when the browser is running; in that environment, run the harness from your own terminal.
-
-Install into a local virtual environment from the kit root:
-
-```text
-python -m venv .venv
-.venv/Scripts/python -m pip install -r tools/requirements-browser.txt
-.venv/Scripts/python -m playwright install chromium
-.venv/Scripts/python tools/iw_browser.py launch
-```
-
-Log in directly in the dedicated browser. Keep its launcher terminal open. The profile defaults to `.iw-builder-browser` under your home directory; keep it private. Debugging binds to loopback. The launcher opens a visible interactive browser for login. On non-Windows systems use `.venv/bin/python`.
-
-In a second terminal:
-
-```text
-.venv/Scripts/python tools/iw_browser.py status
-.venv/Scripts/python tools/iw_browser.py capture captures/before --tab 0
-.venv/Scripts/python tools/iw_browser.py export-current exports/world.json --tab 0 --expected-title "My World"
-.venv/Scripts/python tools/iw_browser.py inspect captures/before
-```
-
-`status` lists only Infinite Worlds hostnames. Multiple tabs require an explicit index. Open the intended editor/raw panel yourself and finish any import/rebuild before export. The exact title check concerns the raw buffer; it is not authentication or a server identity check.
-
-Export preserves the current raw buffer as `world.json.before.json`, then temporarily replaces only that raw text with a unique invalid-JSON marker and clicks Refresh raw JSON. Do not interact with the editor during this operation. It never clicks Import or Save. It requires the marker to be replaced by valid JSON of the expected title; unchanged final content is valid when regeneration was observed. A timeout is failure, not permission to reuse old raw text. A successful export has a hash/freshness receipt. This establishes editor regeneration, not server persistence or complete live state.
-
-After failure, the original raw text is restored only if the buffer still contains the tool's marker. If disconnected, the backup remains available; manually restore it after reconnecting if needed. A failed receipt write can leave the exported JSON without a receipt: treat it as incomplete and inspect it, then use a new output path. Existing export/backup/receipt names are never overwritten.
-
-Capture writes page text, accessibility text, metadata and hashes into a new directory. Partial capture staging is removed on failure; earlier captures remain untouched. `inspect` verifies listed files offline. Closed panels, historical prompts and live character records are outside its scope. Captures can contain story material; review before sharing.
-
-Recovery is observational: reconnect, run status, choose the intended tab and capture again. Check retained history and controls before deciding whether any action needs retrying. This harness never reloads, regenerates or resubmits a turn automatically. A future unattended gameplay runner needs a separate supported persistence/completion signal; streamed narration is insufficient.
-
-## Literal-Scenario plot compiler
+A local authoring tool, not a platform API. It never submits a turn or publishes a world. See [Story tools](Story-Tools.md) for export parsing and import comparison.
 
 `tools/plot_compile.py` accepts a deliberately bounded plan: title and nodes; each node has an internal lowercase identifier, a user-facing Name, a literal Scenario, optional all-of prerequisites and a nonnegative integer award. It builds a fresh world, never modifies an existing one. See [example plan](../tools/example-plot-plan.json).
 
@@ -353,7 +317,7 @@ def validate(doc, schema):
             elif t=='triggerOnTrackedItem' and isinstance(d,dict):
                 ref(d.get('trackedItemID'),'trackedItems',q+'/data/trackedItemID',condition=True)
                 if not isinstance(d.get('textComparison'),str) or not d['textComparison'].strip():
-                    add('warning','missing-native-comparator',q+'/data/textComparison','Native tracker comparisons retain textComparison even for numeric targets. Missing/blank values can be omitted or inactive on import; preserve the native nonempty field.')
+                    add('warning','missing-native-comparator',q+'/data/textComparison','Native tracker comparisons retain textComparison even for numeric targets. A missing/blank value drops the condition from the export and the trigger loses that gate; preserve the native nonempty field.')
             elif t in ['triggerPrereqs','triggerBlockers'] and isinstance(d,dict):
                 key='prereqs' if t=='triggerPrereqs' else 'blockers'
                 for j,x in enumerate(d.get(key,[]) if isinstance(d.get(key,[]),list) else []): ref(x,'triggerEvents',q+'/data/'+key+'/'+str(j))
@@ -400,6 +364,8 @@ def validate(doc, schema):
                 compare_wrapper(e,d,q)
                 if et in ['effectSetTrackedItemValue','effectModifyTrackedItemDetails']:
                     ref(d.get('trackedItemID'),'trackedItems',q+'/data/trackedItemID')
+                    if et=='effectSetTrackedItemValue' and 'replaceWith' not in d:
+                        add('warning','missing-replace-with',q+'/data','Native value effects carry replaceWith (empty string when unused). An effect without it was associated with the game failing at the opening.')
                 elif et in ['effectPresentChoice','effectRequestInput']:
                     ref(d.get('targetTrackedItemId'),'trackedItems',q+'/data/targetTrackedItemId')
                 elif et=='effectModifyInstructionBlock': ref(d.get('id'),'instructionBlocks',q+'/data/id')
@@ -418,6 +384,8 @@ def validate(doc, schema):
         ident=t.get('id')
         if isinstance(ident,str) and ident and not re.fullmatch(r'[A-Za-z0-9]+',ident):
             add('warning','tracker-id-import-risk',p+'/id','Tracker '+repr(t.get('name','Unnamed tracker'))+' has a non-ASCII-alphanumeric ID. Import may regenerate it without remapping references; inspect the imported targets. This is advisory, not a universal ID validity rule.')
+        if 'description' not in t:
+            add('warning','missing-tracker-description',p,'Tracker '+repr(t.get('name','Unnamed tracker'))+' has no description field. Import can report success and then fail while rebuilding the editor; include description, even as an empty string.')
         v=t.get('variableName')
         if isinstance(v,str) and v:
             if v in variables:add('warning','duplicate-variable',p+'/variableName','Repeated variable name; binding ambiguity not resolved.')
@@ -3062,212 +3030,6 @@ def main():
 if __name__=='__main__':main()
 
 ===== END FILE: tools/story_export.py =====
-
-===== BEGIN FILE: tools/iw_browser.py =====
-"""IW browser capture, refresh-verified export and recovery inspection. No import or play commands."""
-from __future__ import annotations
-
-import argparse
-import json
-import hashlib
-import uuid
-import tempfile
-import shutil
-from datetime import datetime, timezone
-from pathlib import Path
-from urllib.parse import urlparse
-
-
-def selected_page(browser, index):
-    pages = [p for c in browser.contexts for p in c.pages
-             if urlparse(p.url).hostname in {"infiniteworlds.app", "www.infiniteworlds.app"}]
-    if index is None:
-        if len(pages) != 1:
-            raise ValueError(f"Found {len(pages)} IW tabs. Run status, then supply --tab INDEX.")
-        return pages[0]
-    if index < 0 or index >= len(pages):
-        raise ValueError("Tab index is outside the IW tab list; run status again.")
-    return pages[index]
-
-
-def fresh_dir(path):
-    path = path.resolve()
-    path.mkdir(parents=True, exist_ok=False)
-    return path
-
-
-def capture(page, out):
-    """Publish complete evidence in a fresh directory; preserve previous captures."""
-    out = out.resolve()
-    if out.exists(): raise ValueError('Capture destination already exists')
-    out.parent.mkdir(parents=True, exist_ok=True)
-    stage = Path(tempfile.mkdtemp(prefix='.iw-capture-', dir=out.parent))
-    try:
-        (stage / 'page.txt').write_text(page.locator('body').inner_text(), encoding='utf8')
-        (stage / 'accessibility.yaml').write_text(page.locator('body').aria_snapshot(), encoding='utf8')
-        metadata = {'capturedAt': datetime.now(timezone.utc).isoformat(), 'url': page.url,
-                    'title': page.title(), 'scope': 'Rendered panels only; neither saved-turn proof nor a full prompt/character database.'}
-        (stage / 'capture.json').write_text(json.dumps(metadata, indent=2), encoding='utf8')
-        records = [{'path': p.name, 'sha256': hashlib.sha256(p.read_bytes()).hexdigest()} for p in sorted(stage.iterdir())]
-        (stage / 'manifest.json').write_text(json.dumps({'files': records}, indent=2), encoding='utf8')
-        if out.exists(): raise ValueError('Capture destination appeared during capture')
-        stage.rename(out)
-    finally:
-        # stage is allocated directly under the resolved output parent, never user input.
-        if stage.exists():
-            if stage.resolve().parent != out.parent or not stage.name.startswith('.iw-capture-'):
-                raise ValueError('Refusing cleanup outside staging directory')
-            shutil.rmtree(stage)
-    return out
-
-
-def world_boxes(page):
-    found = []
-    for box in page.locator('textarea').all():
-        if not box.is_visible(): continue
-        try:
-            text = box.input_value(); value = json.loads(text)
-        except (ValueError, TypeError): continue
-        if isinstance(value, dict) and isinstance(value.get('title'), str) and 'schemaVersion' in value:
-            found.append((box, text, value))
-    return found
-
-
-def export_current(page, out, expected_title, attempts=80):
-    """Back up raw text, invalidate only that buffer, then require regenerated JSON.
-
-    No import/save calls. The original buffer survives on disk even if disconnected.
-    Close/reopen/import operations must have finished before using this command.
-    """
-    out = out.resolve(); backup = out.with_name(out.name + '.before.json')
-    receipt = out.with_name(out.name + '.receipt.json')
-    if any(p.exists() for p in (out, backup, receipt)): raise ValueError('Output, backup or receipt already exists')
-    button = page.get_by_role('button', name='Refresh raw JSON', exact=True)
-    if button.count()!=1 or not button.is_visible(): raise ValueError('Open the intended raw JSON panel first')
-    found = world_boxes(page)
-    if len(found)!=1: raise ValueError('Expected exactly one visible world JSON buffer')
-    box, original, before = found[0]
-    if before['title']!=expected_title: raise ValueError('Raw world title does not match --expected-title')
-    out.parent.mkdir(parents=True, exist_ok=True)
-    with backup.open('x', encoding='utf8', newline='') as f: f.write(original)
-    sentinel = 'IW_REFRESH_PENDING_' + uuid.uuid4().hex
-    changed = False
-    try:
-        box.fill(sentinel); changed = True
-        if box.input_value()!=sentinel: raise ValueError('Could not establish refresh marker')
-        button.click()
-        for _ in range(attempts):
-            page.wait_for_timeout(250)
-            text = box.input_value()
-            if text == sentinel: continue
-            try: value = json.loads(text)
-            except (ValueError, TypeError): continue
-            if not isinstance(value,dict) or value.get('title')!=expected_title or 'schemaVersion' not in value:
-                raise ValueError('Refreshed data does not match the intended world')
-            found = world_boxes(page)
-            if len(found)!=1 or found[0][1]!=text: raise ValueError('Ambiguous refreshed raw buffers')
-            # Same content as original is legitimate: observing the marker replaced is the freshness evidence.
-            with out.open('x',encoding='utf8',newline='') as f: f.write(text)
-            with receipt.open('x',encoding='utf8') as f:
-                json.dump({'capturedAt':datetime.now(timezone.utc).isoformat(),'title':expected_title,
-                           'sha256':hashlib.sha256(out.read_bytes()).hexdigest(),
-                           'freshness':'Observed replacement of a unique marker after Refresh raw JSON.',
-                           'scope':'Editor regeneration only; not server persistence or live-state proof.',
-                           'backup':backup.name},f,indent=2)
-            return out
-        raise ValueError('Refresh did not replace the marker within the deadline; no export published')
-    finally:
-        # Restore only our marker. Never overwrite a newer UI value or retry after disconnection.
-        if changed:
-            try:
-                if box.input_value()==sentinel: box.fill(original)
-            except Exception:
-                pass  # The on-disk .before.json is the recovery source if detached/disconnected.
-
-
-def inspect_capture(directory):
-    root = directory.resolve()
-    m=json.loads((root/'manifest.json').read_text(encoding='utf8')); seen=set()
-    for entry in m['files']:
-        name=entry['path'];path=(root/name).resolve()
-        if not isinstance(name,str) or name in seen or Path(name).is_absolute() or not path.is_relative_to(root):
-            raise ValueError('Unsafe/duplicate capture path')
-        if hashlib.sha256(path.read_bytes()).hexdigest()!=entry['sha256']: raise ValueError('Capture hash mismatch')
-        seen.add(name)
-    if not {'page.txt','accessibility.yaml','capture.json'}<=seen:raise ValueError('Incomplete capture')
-    return {'verifiedFiles':len(seen),'capture':json.loads((root/'capture.json').read_text(encoding='utf8')),
-            'recovery':'Compare retained history and controls with the previous capture. Do not infer saved turns from streamed prose. This tool never resubmits, imports or reloads.'}
-
-
-def main():
-    ap = argparse.ArgumentParser(description=__doc__)
-    ap.add_argument("--port", type=int, default=9222)
-    commands = ap.add_subparsers(dest="command", required=True)
-    launch = commands.add_parser("launch", help="Open dedicated persistent Chromium; log in yourself")
-    launch.add_argument("--profile", type=Path, default=Path.home() / ".iw-builder-browser")
-    launch.add_argument("--offline", action="store_true", help="Open about:blank for local smoke testing")
-    launch.add_argument("--headless", action="store_true", help="For offline verification only")
-    inspect = commands.add_parser("inspect", help="Verify an earlier capture offline; no browser actions")
-    inspect.add_argument("directory", type=Path)
-    commands.add_parser("status", help="List IW tabs; does not navigate or submit anything")
-    for name in ("capture", "export-current"):
-        cmd = commands.add_parser(name)
-        cmd.add_argument("output", type=Path)
-        cmd.add_argument("--tab", type=int)
-        if name == "export-current": cmd.add_argument("--expected-title", required=True)
-    args = ap.parse_args()
-    if not 1024 <= args.port <= 65535:
-        ap.error("Use a local port between 1024 and 65535")
-    if args.command == "inspect":
-        try: print(json.dumps(inspect_capture(args.directory), indent=2)); return
-        except (ValueError, OSError, KeyError, TypeError) as exc: ap.exit(1, str(exc)+"\n")
-    try:
-        from playwright.sync_api import sync_playwright
-    except ImportError:
-        ap.exit(2, "Install dependencies first: python -m pip install -r requirements.txt\n")
-    try:
-        with sync_playwright() as pw:
-            if args.command == "launch":
-                if args.headless and not args.offline:
-                    ap.error("Headless launch is only supported with --offline")
-                # A fresh dedicated profile avoids disturbing the everyday browser.
-                context = pw.chromium.launch_persistent_context(
-                    str(args.profile.resolve()), headless=args.headless,
-                    args=[f"--remote-debugging-port={args.port}", "--remote-debugging-address=127.0.0.1"],
-                )
-                page = context.pages[0] if context.pages else context.new_page()
-                page.goto("about:blank" if args.offline else "https://infiniteworlds.app/",
-                          wait_until="domcontentloaded")
-                print(f"Browser ready at http://127.0.0.1:{args.port}", flush=True)
-                print("Keep this terminal open. Log in directly in the browser. Press Enter here to close.", flush=True)
-                try:
-                    input()
-                finally:
-                    context.close()
-                return
-            browser = pw.chromium.connect_over_cdp(f"http://127.0.0.1:{args.port}", timeout=10000)
-            if args.command == "status":
-                pages = [p for c in browser.contexts for p in c.pages
-                         if urlparse(p.url).hostname in {"infiniteworlds.app", "www.infiniteworlds.app"}]
-                for i, page in enumerate(pages):
-                    print(f"[{i}] {page.title()} — {page.url}")
-                if not pages:
-                    print("Connected; no IW tab is open.")
-                return
-            page = selected_page(browser, args.tab)
-            if args.command == "capture":
-                print(capture(page, args.output))
-            else:
-                print(export_current(page, args.output, args.expected_title))
-            # Stopping this client disconnects; do not close the persistent browser.
-    except Exception as exc:
-        ap.exit(1, f"{type(exc).__name__}: {exc}\nRun launch in another terminal; verify the selected panel and capture it if a selector failed.\n")
-
-
-if __name__ == "__main__":
-    main()
-
-===== END FILE: tools/iw_browser.py =====
 
 ===== BEGIN FILE: tools/plot_compile.py =====
 """Compile a literal-Scenario prerequisite DAG into a new IW world. No runtime inference."""

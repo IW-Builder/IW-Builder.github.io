@@ -4,13 +4,13 @@ Follow Authoring-Prompt.md (in IW-Authoring-Guide.txt). Load companion editions 
 Editions and their contents:
 - IW-Authoring-Guide.txt: start here: prompt, template, narrative craft, trackers, triggers, data banks and library integration. Files: Authoring-Prompt.md, World-Template.json, reference/Evidence.md, reference/Craft.md, reference/Trackers.md, reference/Triggers.md, reference/Trigger-Catalog.md, reference/Portable-Banks.md, library/Integration.md
 - IW-Technical-Reference.txt: exact payloads, PawScript, capabilities, recipes and import integrity. Files: reference/Schema.md, reference/PawScript.md, reference/Capabilities.md, reference/Recipes.md, reference/Import-Integrity.md, reference/Default-Evaluation.txt, reference/Current-AI-Profiles.json
-- IW-Behavior.txt: editor/UI workflows, verified runtime behavior and known limits. Files: reference/Editor-UI.md, reference/Verified-Behavior.md, reference/Known-Limits.md
+- IW-Behavior.txt: notable findings, editor/UI workflows, verified runtime behavior and known limits. Files: reference/Notable-Findings.md, reference/Editor-UI.md, reference/Verified-Behavior.md, reference/Known-Limits.md
 - IW-Payloads.txt: exact native payload snippets for every condition and effect, plus the example index. Files: examples/Payloads.md, examples/index.json
 - IW-Mechanics-Examples.txt: complete mechanics example worlds: recipes, optional block, starting values and a showcase. Files: examples/recipe-request-commit.json, examples/recipe-completion-award.json, examples/recipe-candidate-acceptance.json, examples/recipe-archive-reactivate.json, examples/recipe-cached-random.json, examples/recipe-consumed-timer.json, examples/recipe-choice-domain.json, examples/recipe-compiled-plot.json, examples/recipe-choice-followup.json, examples/recipe-threshold-unlock.json, examples/optional-block.json, examples/character-starting-values.json, examples/showcase-glass-ledger.json
 - IW-Narrative-Examples.txt: complete narrative example worlds: ensemble romance, fantasy expedition and contained horror. Files: examples/narrative-vendemmia.json, examples/narrative-listening-road.json, examples/narrative-address-after-midnight.json
 - IW-Sample-Blocks.txt: optional library modules (read library/Integration.md first). Files: library/Sample-Blocks.json
 - IW-Storymaster.txt: the Storymaster narrative-direction framework (read library/Integration.md first). Files: library/Storymaster-Suite.json
-- IW-Tools.txt: Python tools and their guides, for models that can run code. Files: tools/Usage.md, reference/Story-Tools.md, reference/Engineering-Tools.md, tools/validate_iw_export.py, tools/static_checks.py, tools/iw-export.schema.json, tools/data_bank.py, tools/import_audit.py, tools/story_export.py, tools/iw_browser.py, tools/plot_compile.py
+- IW-Tools.txt: Python tools and their guides, for models that can run code. Files: tools/Usage.md, reference/Story-Tools.md, reference/Engineering-Tools.md, tools/validate_iw_export.py, tools/static_checks.py, tools/iw-export.schema.json, tools/data_bank.py, tools/import_audit.py, tools/story_export.py, tools/plot_compile.py
 Every file is also available individually: https://iw-builder.github.io/llms.txt
 
 ===== BEGIN FILE: examples/Payloads.md =====
@@ -487,7 +487,7 @@ Guide subsequent narration. Full world: [effect-effectTellAIWhatToDo.json](effec
 
 ## Change background (effectChangeBackground)
 
-Native payload verified. Start-only background replacement is runtime-observed; ordinary and Start+Mid modes are not equivalent. This adapted example has structural validation, not a separate live-playthrough certification. Full world: [effect-effectChangeBackground.json](effect-effectChangeBackground.json).
+Native payload. Replacement is observed in Start-only mode; ordinary and Start+Mid modes are not equivalent. Full world: [effect-effectChangeBackground.json](effect-effectChangeBackground.json).
 
 ```json
 {
@@ -501,7 +501,7 @@ No tracker dependencies. Runs at startup.
 
 ## Change first action (effectChangeFirstAction)
 
-Native editor payload and startup picker availability verified. Ordinary use does not rewrite the opening; successful startup replacement is not separately certified here. This is a payload example, not a guarantee of narration or timing behavior. Full world: [effect-effectChangeFirstAction.json](effect-effectChangeFirstAction.json).
+Native editor payload; Start picker only. Ordinary use does not rewrite the opening; startup replacement timing is not fully established. Full world: [effect-effectChangeFirstAction.json](effect-effectChangeFirstAction.json).
 
 ```json
 {
@@ -515,7 +515,7 @@ No tracker dependencies. Runs at startup.
 
 ## Add Other Character (effectChangeOtherCharacters)
 
-Native editor payload verified; runtime character-record mutation unresolved. Startup picker availability is documented. Trigger firing, narration and the live-design NPC list do not establish that the live character record was added, modified or deleted. This adapted world is structurally validated only. Full world: [effect-effectChangeOtherCharacters-add.json](effect-effectChangeOtherCharacters-add.json).
+Native editor payload; Start picker only. Live character-record mutation is unresolved. Full world: [effect-effectChangeOtherCharacters-add.json](effect-effectChangeOtherCharacters-add.json).
 
 ```json
 {
@@ -546,7 +546,7 @@ For Add, character is null and npc contains a new character record with its own 
 
 ## Modify Other Character (effectChangeOtherCharacters)
 
-Native editor payload verified; runtime character-record mutation unresolved. Startup picker availability is documented. Trigger firing, narration and the live-design NPC list do not establish that the live character record was added, modified or deleted. This adapted world is structurally validated only. Full world: [effect-effectChangeOtherCharacters-modify.json](effect-effectChangeOtherCharacters-modify.json).
+Native editor payload; Start picker only. Live character-record mutation is unresolved. Full world: [effect-effectChangeOtherCharacters-modify.json](effect-effectChangeOtherCharacters-modify.json).
 
 ```json
 {
@@ -578,7 +578,7 @@ character targets the existing Other Character Name (Mara), not its ID. Preserve
 
 ## Delete Other Character (effectChangeOtherCharacters)
 
-Native editor payload verified; runtime character-record mutation unresolved. Startup picker availability is documented. Trigger firing, narration and the live-design NPC list do not establish that the live character record was added, modified or deleted. This adapted world is structurally validated only. Full world: [effect-effectChangeOtherCharacters-delete.json](effect-effectChangeOtherCharacters-delete.json).
+Native editor payload; Start picker only. Live character-record mutation is unresolved. Full world: [effect-effectChangeOtherCharacters-delete.json](effect-effectChangeOtherCharacters-delete.json).
 
 ```json
 {

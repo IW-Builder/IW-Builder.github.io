@@ -4,7 +4,7 @@ Read this overview before saying a trigger cannot do something. It lists all con
 
 ## Trigger gates and composition
 
-Start of game, Or mid-game, repeat eligibility and advanced logic are trigger settings, not additional effect types. Normal condition lists are And; nested groups support And, Or and None Of. Native And/Or and PawScript boolean expressions short-circuit. Empty ordinary condition lists do not run automatically. Start compatibility is effect-specific; see [Triggers](Triggers.md).
+Start of game, Or mid-game, repeat eligibility and advanced logic are trigger settings, not additional effect types. The effect picker changes with Start mode: Start offers background, first-action and Other Character changes and omits Give information and Fire random trigger. Normal condition lists are And; nested groups support And, Or and None Of. Native And/Or and PawScript boolean expressions short-circuit. Empty ordinary condition lists do not run automatically. Start compatibility is effect-specific; see [Triggers](Triggers.md).
 
 ## Conditions
 
@@ -15,7 +15,7 @@ Start of game, Or mid-game, repeat eligibility and advanced logic are trigger se
 | Random chance | `triggerOnRandomChance` | Success percentage; native string/expression payload. |
 | Turn at least | `triggerOnTurn` | Minimum turn threshold; native string or numeric representation. |
 | Chosen character | `triggerOnCharacter` | Selected source player character, independent of customized display Name. |
-| Tracked item / player action comparison | `triggerOnTrackedItem` | Native numeric/text comparisons; preserve hidden comparator fields. |
+| Tracked item / player action comparison | `triggerOnTrackedItem` | Native numeric/text comparisons; text Contains is ASCII case-insensitive. Preserve hidden comparator fields: a missing textComparison drops the condition. |
 | Prerequisite triggers | `triggerPrereqs` | Required trigger firing, this turn or historical. |
 | Blocking triggers | `triggerBlockers` | Exclude after specified trigger firing, this turn or historical. |
 
@@ -45,7 +45,7 @@ Start of game, Or mid-game, repeat eligibility and advanced logic are trigger se
 | Change defeat condition | `effectChangeDefeatCondition` | Change defeat definition. |
 | Change background | `effectChangeBackground` | Startup background replacement; ordinary/combined modes are not equivalent. |
 | Change first action | `effectChangeFirstAction` | Editor-recognized startup opening-action replacement; represented structurally in the schema. |
-| Change other characters | `effectChangeOtherCharacters` | Editor-recognized Add/Modify/Delete Character. Startup picker availability documented; authoritative runtime mutation unresolved. Represented structurally in the schema. |
+| Change other characters | `effectChangeOtherCharacters` | Add/Modify/Delete Character, offered only in the Start picker. Add uses `character: null`; Modify/Delete name the target by its current name. Runtime mutation unresolved. |
 | Ends game | `effectEndsGame` | End ordinary play; data true allows optional continuation, false does not. |
 
 Native startup payload examples: [background](../examples/effect-effectChangeBackground.json), [first action](../examples/effect-effectChangeFirstAction.json), and Other Character [Add](../examples/effect-effectChangeOtherCharacters-add.json), [Modify](../examples/effect-effectChangeOtherCharacters-modify.json), [Delete](../examples/effect-effectChangeOtherCharacters-delete.json). Their verification limits are stated in each example; the [payload cookbook](../examples/Payloads.md) includes the complete effect nodes.

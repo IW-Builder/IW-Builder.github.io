@@ -53,7 +53,7 @@ visibility values: everyone, player_only, ai_only, ai_only_boring, hidden, hidde
 |Character-defined script selection|Same per-PC entry with initialPCValue empty and initialPCValueChoicesScript string|Script generates that character's choices at startup|
 |Player-defined selection|Tracker initialValueBasedOnPC player, initialValue string, initialValueChoices array of strings|Player chooses a startup preference independently of PC-specific values|
 
-The optional-block export supplies the concrete player form: initialValue On, initialValueChoices [On, Off], player mode and autoUpdate false. Those are tracker-level fields; do not put this list into a per-PC initialTrackedItemValues entry unless the character-defined mode is intended. The player can change the live preference later to affect a following turn.
+The optional-block export supplies the concrete player form: initialValue On, initialValueChoices [On, Off], player mode and autoUpdate false. Those are tracker-level fields; do not put this list into a per-PC initialTrackedItemValues entry unless the character-defined mode is intended. A live change later (through the Storyteller-mode tracker editor) affects the following turn.
 
 Per the editor, script choices are evaluated at game start from initial tracker values, including that character's values and skills. Conflicting combinations of initialization fields, and player-mode controls for unconstrained input types, are not established; request a targeted export if that variation matters.
 
@@ -76,7 +76,7 @@ PawScript conditions are an option when useful, not a requirement to replace nat
 
 ## Comparator fields
 
-For Number trackers, `inequality` selects is_exactly, at_least, not_equal or at_most. For Text trackers, `textComparison` selects contains or does_not_contain. Do not extrapolate other comparison strings. Exports may retain both fields; they are not two simultaneous predicates. Native numeric and text controls are type-aware despite text-entry fields. Use PawScript for structured YAML field checks rather than text comparison over a whole document.
+For Number trackers, `inequality` selects is_exactly, at_least, not_equal or at_most. For Text trackers, `textComparison` selects contains or does_not_contain. Do not extrapolate other comparison strings. Exports may retain both fields; they are not two simultaneous predicates. Numeric conditions natively carry `textComparison: "contains"`; if it is missing or empty, the condition is dropped from the export and the trigger loses that gate. Text Contains matching is ASCII case-insensitive. Native numeric and text controls are type-aware despite text-entry fields. Use PawScript for structured YAML field checks rather than text comparison over a whole document.
 
 Native wrappers can repeat trackedItemID/inequality outside `data`. Precedence is not established and disagreement is an error: keep wrapper and payload consistent, following the supplied export's convention.
 
@@ -114,6 +114,7 @@ Other schema-defined effects change PC name/description, objective, main instruc
 |updateMode|`path` edits a selected path; `replace` replaces the whole YAML value|
 |action append|Add a value to the list at path; distinct from numeric/text add|
 |listExpression / targetExpression|Empty in current exports; preserve when importing, but do not use them to invent an unsupported editor workflow|
+|replaceWith|Always serialize, as "" when unused. An effect missing it was associated with the game failing at the opening|
 
 Text adds accumulate and preserve literal quotation marks; text removal removes all matching occurrences. Repeated numeric writes within one trigger behave differently ([Triggers.md](Triggers.md)). The cookbook supplies separate native text and number examples.
 

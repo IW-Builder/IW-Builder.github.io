@@ -12,7 +12,7 @@ python tools/import_audit.py source.json imported.json
 
 The report includes source hashes, complete structural differences, possible tracker-ID changes and references still pointing at removed tracker targets. Possible identity changes require a unique Name/variable-handle candidate; ambiguity is reported, never automatically repaired. Array changes remain visible even when positional reordering makes them noisy. No input is modified.
 
-The validator supports native string turn thresholds, the editor-recognized first-action/Other Character effects, and the verified turn_number root. Other Character mutation remains runtime-unverified. Exact Scenario mismatches are errors when a registry is present; an absent registry produces migration guidance rather than pretending a legacy import cannot populate it. Non-alphanumeric tracker IDs produce an import-risk advisory. Findings identify the owning tracker/trigger Name where available; JSON paths remain technical coordinates.
+The validator supports native string turn thresholds, the editor-recognized first-action/Other Character effects, and the verified turn_number root. Exact Scenario mismatches are errors when a registry is present; an absent registry produces migration guidance, since import populates it. Non-alphanumeric tracker IDs, a tracker without `description` and a value effect without `replaceWith` produce import-risk advisories. Findings identify the owning tracker/trigger Name where available; JSON paths remain technical coordinates.
 
 ## Extract story text without silently resolving ambiguity
 
@@ -43,7 +43,7 @@ Supply multiple reviewed plans to build. Every plan must declare the same nonemp
 
 Select a single coherent branch/revision before building conflicting history; the tool offers no latest-file winner and does not combine downstream turns from divergent branches automatically. Complete histories require turn one and no gaps. --partial permits a contiguous later range and labels it partial; it does not permit holes or silently promote partial history to complete.
 
-The tool is a conservative IW-Builder implementation. It does not patch or certify the separate external parser. Standalone live-browser capture and recovery remain separate roadmap items.
+The tool is a conservative IW-Builder implementation. It does not patch the separate external parser.
 
 ---
 

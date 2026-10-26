@@ -27,6 +27,5 @@ A clean report is useful, but it cannot guarantee how a world will play. Try the
 
 See [Story tools](../reference/Story-Tools.md) for commands and limits.
 
-- [iw_browser.py](iw_browser.py): optional standalone browser capture, refresh-verified export and offline integrity/recovery inspection.
 - [plot_compile.py](plot_compile.py): literal-Scenario prerequisite-DAG analysis and fresh-world generation; [example plan](example-plot-plan.json).
-- [Engineering tools](../reference/Engineering-Tools.md): contracts, setup and remaining live-integration boundary.
+- [Plot compiler guide](../reference/Engineering-Tools.md): plan syntax and limits.

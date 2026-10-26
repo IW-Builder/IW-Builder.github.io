@@ -471,7 +471,7 @@ Guide subsequent narration. Full world: [effect-effectTellAIWhatToDo.json](effec
 
 ## Change background (effectChangeBackground)
 
-Native payload verified. Start-only background replacement is runtime-observed; ordinary and Start+Mid modes are not equivalent. This adapted example has structural validation, not a separate live-playthrough certification. Full world: [effect-effectChangeBackground.json](effect-effectChangeBackground.json).
+Native payload. Replacement is observed in Start-only mode; ordinary and Start+Mid modes are not equivalent. Full world: [effect-effectChangeBackground.json](effect-effectChangeBackground.json).
 
 ```json
 {
@@ -485,7 +485,7 @@ No tracker dependencies. Runs at startup.
 
 ## Change first action (effectChangeFirstAction)
 
-Native editor payload and startup picker availability verified. Ordinary use does not rewrite the opening; successful startup replacement is not separately certified here. This is a payload example, not a guarantee of narration or timing behavior. Full world: [effect-effectChangeFirstAction.json](effect-effectChangeFirstAction.json).
+Native editor payload; Start picker only. Ordinary use does not rewrite the opening; startup replacement timing is not fully established. Full world: [effect-effectChangeFirstAction.json](effect-effectChangeFirstAction.json).
 
 ```json
 {
@@ -499,7 +499,7 @@ No tracker dependencies. Runs at startup.
 
 ## Add Other Character (effectChangeOtherCharacters)
 
-Native editor payload verified; runtime character-record mutation unresolved. Startup picker availability is documented. Trigger firing, narration and the live-design NPC list do not establish that the live character record was added, modified or deleted. This adapted world is structurally validated only. Full world: [effect-effectChangeOtherCharacters-add.json](effect-effectChangeOtherCharacters-add.json).
+Native editor payload; Start picker only. Live character-record mutation is unresolved. Full world: [effect-effectChangeOtherCharacters-add.json](effect-effectChangeOtherCharacters-add.json).
 
 ```json
 {
@@ -530,7 +530,7 @@ For Add, character is null and npc contains a new character record with its own 
 
 ## Modify Other Character (effectChangeOtherCharacters)
 
-Native editor payload verified; runtime character-record mutation unresolved. Startup picker availability is documented. Trigger firing, narration and the live-design NPC list do not establish that the live character record was added, modified or deleted. This adapted world is structurally validated only. Full world: [effect-effectChangeOtherCharacters-modify.json](effect-effectChangeOtherCharacters-modify.json).
+Native editor payload; Start picker only. Live character-record mutation is unresolved. Full world: [effect-effectChangeOtherCharacters-modify.json](effect-effectChangeOtherCharacters-modify.json).
 
 ```json
 {
@@ -562,7 +562,7 @@ character targets the existing Other Character Name (Mara), not its ID. Preserve
 
 ## Delete Other Character (effectChangeOtherCharacters)
 
-Native editor payload verified; runtime character-record mutation unresolved. Startup picker availability is documented. Trigger firing, narration and the live-design NPC list do not establish that the live character record was added, modified or deleted. This adapted world is structurally validated only. Full world: [effect-effectChangeOtherCharacters-delete.json](effect-effectChangeOtherCharacters-delete.json).
+Native editor payload; Start picker only. Live character-record mutation is unresolved. Full world: [effect-effectChangeOtherCharacters-delete.json](effect-effectChangeOtherCharacters-delete.json).
 
 ```json
 {

@@ -65,4 +65,12 @@ class NativeCompatibility(unittest.TestCase):
  def test_id_risk_only_tracker_advisory(self):
   w=copy.deepcopy(B);w['trackedItems']=[{'id':'a_b','name':'Balance'}];w['triggerEvents']=[{'id':'t_r','triggerEffects':[]}]
   hits=[f for f in v.validate(w,S) if f['code']=='tracker-id-import-risk'];self.assertEqual(len(hits),1);self.assertEqual(hits[0]['severity'],'warning')
+ def test_missing_description_and_replace_with_advisories(self):
+  w=copy.deepcopy(B);w['trackedItems']=[{'id':'CoinID','name':'Coins','dataType':'number'}]
+  w['triggerEvents']=[{'id':'T1','name':'Pay','triggerConditions':[],'triggerEffects':[{'id':'E1','type':'effectSetTrackedItemValue','data':{'trackedItemID':'CoinID','action':'set','newValue':'1','path':'','updateMode':'path','listExpression':'','targetExpression':''}}]}]
+  codes=[f['code'] for f in v.validate(w,S)]
+  self.assertIn('missing-tracker-description',codes);self.assertIn('missing-replace-with',codes)
+  w['trackedItems'][0]['description']='';w['triggerEvents'][0]['triggerEffects'][0]['data']['replaceWith']=''
+  codes=[f['code'] for f in v.validate(w,S)]
+  self.assertNotIn('missing-tracker-description',codes);self.assertNotIn('missing-replace-with',codes)
 if __name__=='__main__':unittest.main()
