@@ -4,7 +4,7 @@ Results current through 2026-10-26. Labels and kit-wide caveats follow [Evidence
 
 ## Triggers and Scenarios
 
-- [RUNTIME] Ordinary triggers with no conditions never fire automatically. Start-gated empty-condition triggers fire at startup. An eligible trigger with no effects still records firing and can satisfy prerequisites.
+- [RUNTIME] Ordinary triggers with no conditions never fire automatically. Start-gated empty-condition triggers fire at startup. [UNKNOWN] Whether an empty-condition Start+Mid+Repeat trigger also fires on ordinary turns; give every-turn triggers an always-true condition. An eligible trigger with no effects still records firing and can satisfy prerequisites.
 - [RUNTIME] Fire random trigger bypasses target conditions, including empty or false conditions. Consumed one-shot targets do not execute again, even on later turns; nested dispatch works. Editor help's "already fired this turn" wording understates this. Duplicate-pool weighting is unresolved.
 - [RUNTIME] A failing Run Script rolls back that script's writes. Separate earlier and later effects can commit. The trigger still counts as fired and consumes one-shot eligibility. Prerequisites mean firing, not successful completion.
 - [RUNTIME] This-turn prerequisites/blockers see a producer only when it is earlier in triggerEvents. History prerequisites see a later-ordered producer from the next turn. Current-turn gates reset each turn.

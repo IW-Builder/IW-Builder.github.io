@@ -39,7 +39,7 @@ Opening a world in the editor advances its version in the export (for example 1.
 
 ## Triggers and Scenarios
 
-An ordinary trigger with no conditions says it will never fire. This is not unconditional execution; Start-gated triggers and explicit random dispatch differ. Empty effects do no work but eligible triggers can still record firing.
+An ordinary trigger with no conditions says it will never fire. With Trigger at start of game checked, the condition box reads only "(No conditions added to this block yet)", with or without Or mid-game and Allow triggering multiple times; the missing warning reflects startup firing and does not show that the trigger runs on later turns. This is not unconditional execution; Start-gated triggers and explicit random dispatch differ. Empty effects do no work but eligible triggers can still record firing.
 
 Start mode changes the picker and compatibility warnings. Start-only disables Repeat in the editor; Or mid-game enables it. **Use advanced logic** adds Add logic block; new blocks default to Or. Switching a condition between types keeps hidden fields: Turn number to Player action keeps the old inequality and clears the required value. Trigger history lists Start-pass firings as turn 0. Stored unsupported combinations may survive import while effects are ignored. Read the [trigger capability catalog](Trigger-Catalog.md) before declaring an operation unavailable.
 
