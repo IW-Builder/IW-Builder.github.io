@@ -804,9 +804,9 @@ Tracker estimates below cover updateInstructions only; descriptions, schemas, st
 
 The source offers both small- and large-cast appearance trackers. Its appearance merge script targets `$npc_appearance`, which is not automatically the variableName of either variant. Normalize the chosen store&#x27;s variableName or rewrite all references. The large-cast updater depends on Relationship Tracker significance.
 
-The relationship/intimacy buffers and stores demonstrate an AI-proposed update followed by a script merge. The supplied scripts replace matching records; that is not automatically a field-level patch. Ensure the update contains the required full entry, or deliberately implement a field-preserving merge. This is an integration choice, not a new requirement for every world.
+The relationship, intimacy and appearance buffers demonstrate an AI-proposed update followed by a script merge. Each buffer is a record (`entries: []`) that asks for complete entries; the scripts read and clear `.entries` and replace matching records in the script-owned list stores. List roots and &quot;changed fields only&quot; lost updates in live testing (see ../reference/Verified-Behavior.md); only the relationship pair was tested directly. Keep instructions, root and script in agreement.
 
-Initial blank list-like trackers in the library are source examples. Where a chosen script requires an actual list, initialize `[]` or ensure the first-use initialization is correct; do not assume blank text and an empty YAML list are interchangeable. The schema checks field storage type but not the nested runtime reference or merge algorithm.
+Initial blank list-like stores in the library are source examples. Direct appearance trackers are AI-written lists with the same exposure; prefer the buffered setup. Where a chosen script requires an actual list, initialize `[]` or ensure the first-use initialization is correct; do not assume blank text and an empty YAML list are interchangeable. The schema checks field storage type but not the nested runtime reference or merge algorithm.
 
 ## Optional block recipe
 
