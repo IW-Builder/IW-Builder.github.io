@@ -87,7 +87,7 @@ The sandbox (PawScript Expression Editor) runs a script or expression against ed
 
 From the world editor, a tracker with a fixed initial value shows that value; one with no initial value, or a player-chosen or character-dependent one, shows 0 or empty. With the option enabled, Paw icons were observed beside trigger conditions and tracker description and update instructions, but not beside initial value, authorStyle, specialist instructions, main or keyword instruction blocks, background, first action or objective.
 
-The sandbox matches the field it was opened from. A script field opens a multi-line **Your script** box with **Run script**. A single-line field, such as a trigger condition, opens a one-line **Your expression** box in **Expression** mode with **Evaluate**; a multi-line paste there is refused and does nothing. Its **Text** tab switches to a multi-line box that evaluates text containing `<<expressions>>`. To test a multi-line script, open the sandbox from a Run Script field.
+The sandbox matches the field it was opened from. A script field opens a multi-line **Your script** box with **Run script**. A single-line field, such as a trigger condition, opens a one-line **Your expression** box in **Expression** mode with **Evaluate**; a multi-line paste there is refused and does nothing. Its **Text** tab switches to a multi-line box that evaluates text containing `<<expressions>>`. The standalone sandbox (Menu > PawScript Expression Sandbox) leaves `<=...=>` unchanged and rejects `<<=...=>>`; test deferred text in play. To test a multi-line script, open the sandbox from a Run Script field.
 
 Trackers can be added, edited and deleted in the sandbox, and runs use those values. From debug, the header names the script and says what it changed when it ran in the game. **Turn data** lists trackers plus the `$player` and `$game` roots (`$game` has seven keys, including turn_number, ai_model and skill_list); **Legacy turn data** holds older flat variables. In a short-circuited And/Or group, debug lists only the deciding condition. Sandbox data can differ from current manually edited values. A run displays a result/diff; **Update Game** is separate. A collapsed summary can misrepresent nested structure; inspect actual values or supported reads.
 
@@ -112,6 +112,8 @@ Image style has a Model and Character/Scenery start/end prompts, mapped to `imag
 [DOCUMENTED] The default Description instructions ask for several paragraphs; to shorten narration, put the cap in authorStyle (see [Capabilities](Capabilities.md)). Video help describes `$videoDuration` and `$videoStyle` in video context (see below).
 
 The expression-editor option shows a Paw icon beside some PawScript-capable fields (see [PawScript sandbox](#pawscript-sandbox)). Missing icons do not prove lack of support: YAML Set a value supports template expressions according to help despite having no icon. This is not an exhaustive icon inventory.
+
+Editor syntax highlighting misleads for deferred references. In instruction blocks and tracker descriptions it colors `<<=...=>>` as PawScript and shows the working `<=...=>` as plain text, while initial values show both as plain text. At runtime it is the other way round: `<=...=>` is evaluated and `<<=...=>>` stays literal. If a user cites the highlighting, explain that it is wrong for this syntax ([PawScript.md](PawScript.md)).
 
 Present choice enforces required selection and configured multiple-selection bounds. Required Request Input can leave Confirm enabled while empty, then reject submission with **Please enter a response**. Optional blank input clears its target. Single/multiline fields show counters of 600/3000 respectively, not universal tracker limits. Newline-delimited multiple selections remain text, not automatically a YAML list.
 
@@ -153,6 +155,7 @@ These mappings describe the observed editor controls, not an exhaustive account-
 | `TypeError: list indices must be integers or slices, not str` when opening a trigger | Legacy bare-array prerequisites/blockers; convert them to object shape. |
 | `TypeError: npc_added() missing 1 required argument: 'npc'` | Seen while authoring an Other Character template; it persists until dismissed. Re-export and check the characters. |
 | Narration appears without the expected form, and the turn is not kept | Two input forms in one turn once did this; move one form to another turn. |
+| Deferred `<<=...=>>` text shows up literally in play | Use `<=...=>`. The editor highlights `<<=...=>>` as code, but only `<=...=>` runs. |
 | Scenario trigger did not fire | Confirm the narrated outcome actually contains the event; the narrator can refuse or substitute the action. |
 
 Additional roles, full prompts, live character records and video runtime remain reference gaps.
