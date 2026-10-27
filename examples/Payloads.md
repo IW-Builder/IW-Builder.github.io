@@ -363,6 +363,8 @@ Change selected tracker settings through explicit override flags. Full world: [e
 
 Dependencies: trackedItems SRdpskbWh (Note).
 
+Takes effect from the next turn. Keep it out of any trigger that also has `effectRequestInput`: in that trigger the change is silently lost. Give it its own trigger with the same condition.
+
 ## effectPresentChoice
 
 Ask the player to select from defined options and store the result. Full world: [effect-effectPresentChoice.json](effect-effectPresentChoice.json).

@@ -52,6 +52,7 @@ Results current through 2026-10-26. Labels and kit-wide caveats follow [Evidence
 ## Instructions, visibility and memory
 
 - [RUNTIME] Modify tracked item details with overrideVisibility accepts everyone, player_only, ai_only, hidden, ai_only_boring and hidden_boring and applies the live player-visible/hidden grouping. Live-design exports can retain the original visibility.
+- [RUNTIME] Modify tracked item details switches automatic updating on and off at runtime, repeatedly, from the next turn (triggers run after the AI's tracker update in a turn). Re-sending update instructions is unnecessary. In the same trigger as a Request Input effect the change is lost (tracker never switched, three trackers across two probes); in a separate trigger on the same turn it works. Show Message and Run Script effects in that trigger are unaffected. Present Choice untested. Evidence: IW-Data testing/mechanics-probes/trackers-and-state/P37-autoupdate-toggle.
 - [RUNTIME] An unchecked Hide skill system option exports with hideSkillSystem omitted, including after importing false. Omission is normal visible-skills state.
 - [RUNTIME] Hidden and extra-hidden values remain script-accessible. Extra-hidden is display filtering, not protection from Storyteller inspection; the tracker editor shows them even with the debug override off.
 - [RUNTIME] Import normalizes automatic updating off for hidden, hidden_boring and player_only. Everyone, ai_only and ai_only_boring keep updates. Extra-hidden filtering does not stop updating.
