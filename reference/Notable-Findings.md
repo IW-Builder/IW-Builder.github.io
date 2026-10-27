@@ -66,7 +66,8 @@ The Infinite Worlds behavior most likely to surprise an author or break a world,
 45. **Ends game with continuation allowed offers Continue game at no cost.** Without it, the action box disappears but history and regeneration remain.
 46. **Reloading during generation can lose the turn and keep the charge.** Check the export's turn count before resubmitting.
 47. **Cost per turn grows with story length** and depends heavily on the model; see [Current-AI-Profiles.json](Current-AI-Profiles.json).
-48. **One input form per turn is safest.** A turn with two forms once showed narration without the forms and was not saved.
+48. **One input form per turn is safest.** A turn with two forms once showed narration without the forms and was not saved. (Two plain Request Input forms from separate triggers on one turn worked in a later probe; the earlier failure combined one with a malformed candidate.)
+49. **A tracker-detail change in the same trigger as Request Input is silently lost.** Modify tracked item details (for example switching automatic updating on) does nothing when its trigger also asks for input, while messages and scripts in that trigger still run. Put the change in its own trigger with the same condition. Switching automatic updating on and off otherwise works, from the next turn.
 
 ---
 
