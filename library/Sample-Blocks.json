@@ -71,7 +71,7 @@
       "triggerEffects": [
         {
           "id": "e173069b-d1fd-c09e-3f99-782f46815d4d",
-          "data": "#Relationship Updater\nfor each $char_update in $relationship_update\n  if $relationship_tracker.any(name.exists()) = false\n    $relationship_tracker = list()\n    $relationship_tracker.append($char_update)\n  else if $relationship_tracker.any(name = $char_update.name) or $relationship_tracker.any(aliases contains $char_update.name)\n    $relationship_tracker.where(name = $char_update.name or aliases contains $char_update.name) = $char_update\n  else\n    $relationship_tracker.append($char_update)\n  $relationship_update.remove($char_update)",
+          "data": "#Relationship Updater\nfor each $char_update in $relationship_update.entries\n  if $relationship_tracker.any(name.exists()) = false\n    $relationship_tracker = list()\n    $relationship_tracker.append($char_update)\n  else if $relationship_tracker.any(name = $char_update.name) or $relationship_tracker.any(aliases contains $char_update.name)\n    $relationship_tracker.where(name = $char_update.name or aliases contains $char_update.name) = $char_update\n  else\n    $relationship_tracker.append($char_update)\n  $relationship_update.entries.remove($char_update)",
           "type": "effectRunScript",
           "name": "Relationship Updater — Merge Updates"
         }
@@ -79,7 +79,7 @@
       "triggerConditions": [
         {
           "id": "4707d970-33ce-8026-ccf7-9468c43ac0fe",
-          "data": "$relationship_update.any(name.exists())",
+          "data": "$relationship_update.entries.any(name.exists())",
           "type": "triggerOnPawScript",
           "category": "condition"
         }
@@ -95,7 +95,7 @@
       "triggerEffects": [
         {
           "id": "d8876a85-6b68-66ea-de81-5f99a0a8ab7f",
-          "data": "#Intimacy Updater\nfor each $entry in $intimacy_update\n  if $intimacy_log.any(name.exists()) = false\n    $intimacy_log = list()\n    $intimacy_log.append($entry)\n  else if $intimacy_log.any(name = $entry.name)\n    $intimacy_log.where(name = $entry.name) = $entry\n  else\n    $intimacy_log.append($entry)\n  $intimacy_update.remove($entry)",
+          "data": "#Intimacy Updater\nfor each $entry in $intimacy_update.entries\n  if $intimacy_log.any(name.exists()) = false\n    $intimacy_log = list()\n    $intimacy_log.append($entry)\n  else if $intimacy_log.any(name = $entry.name)\n    $intimacy_log.where(name = $entry.name) = $entry\n  else\n    $intimacy_log.append($entry)\n  $intimacy_update.entries.remove($entry)",
           "type": "effectRunScript",
           "name": "Intimacy Updater — Merge Updates"
         }
@@ -103,7 +103,7 @@
       "triggerConditions": [
         {
           "id": "8ae7f42e-686e-56f1-4e19-bce9a88be161",
-          "data": "$intimacy_update.any(name.exists())",
+          "data": "$intimacy_update.entries.any(name.exists())",
           "type": "triggerOnPawScript",
           "category": "condition"
         }
@@ -118,7 +118,7 @@
       "triggerEffects": [
         {
           "id": "56984c3b-f62b-adf0-fac1-77caac124408",
-          "data": "#NPC Appearance Updater\nfor each $appear_update in $npc_appearance_update\n  if $npc_appearance.any(name.exists()) = false\n    $npc_appearance = list()\n    $npc_appearance.append($appear_update)\n  else if $npc_appearance.any(name = $appear_update.name)\n    $npc_appearance.where(name = $appear_update.name) = $appear_update\n  else\n    $npc_appearance.append($appear_update)\n  $npc_appearance_update.remove($appear_update)",
+          "data": "#NPC Appearance Updater\nfor each $appear_update in $npc_appearance_update.entries\n  if $npc_appearance.any(name.exists()) = false\n    $npc_appearance = list()\n    $npc_appearance.append($appear_update)\n  else if $npc_appearance.any(name = $appear_update.name)\n    $npc_appearance.where(name = $appear_update.name) = $appear_update\n  else\n    $npc_appearance.append($appear_update)\n  $npc_appearance_update.entries.remove($appear_update)",
           "type": "effectRunScript",
           "name": "NPC Appearance Updater — Merge Updates"
         }
@@ -126,7 +126,7 @@
       "triggerConditions": [
         {
           "id": "db471958-2a29-4720-bfa1-802bd9ffcca6",
-          "data": "$npc_appearance_update.any(name.exists())",
+          "data": "$npc_appearance_update.entries.any(name.exists())",
           "type": "triggerOnPawScript",
           "category": "condition"
         }
@@ -284,11 +284,11 @@
       "dataType": "yaml",
       "visibility": "ai_only_boring",
       "description": "Structured appearance and clothing data for significant NPCs, stored as discrete fields for image generation reference. Updated whenever a character's physical appearance or clothing changes.",
-      "updateInstructions": "<#Copy in either large cast or small cast NPC Appearance update instructions, and turn automatically update off in NPC Appearance#>",
-      "formatExample": "- name: Mara Voss\n  appearance: \n    apparent_age: 42\n    ethnicity: German\n    sex: female\n    species: human\n    height: 5'9\"\n    build: broad-shouldered, athletic, slightly thickened through the middle\n    hair: dark brown shot with grey, cropped close at sides, longer on top\n    skin: pale, weathered, deep lines around eyes and mouth\n    eyes: steel grey\n    face: strong jaw, fine lines around eyes and mouth\n    facial_hair: none\n    bust_chest: full bust larger than human average\n    waist: narrow defined waist\n    hips: softly flaring\n    rear: firm and rounded\n    distinguishing_features: cybernetic left arm, silver-grey from shoulder to fingertips\n    non_human_features: none\n  naked: false\n  clothing:\n    garments:\n      - black tactical trousers, reinforced knees\n      - dark grey henley, sleeves pushed up\n      - worn leather boots, knee height\n      - captain's coat, deep navy, brass buttons, rarely buttoned\n    permanent_marks:\n      - faded tattoo, anchor and rope, right forearm\n    state: clean but well-worn",
+      "updateInstructions": "<#Copy in either large cast or small cast NPC Appearance update instructions, and turn automatically update off in NPC Appearance#>\nBuffer format: keep the root key entries and write each item indented under it, as in the format example; write entries: [] when nothing changed. Write the complete entry (every field) for each character that changed; the merge script replaces the stored entry with it, so a partial entry loses the fields it leaves out. Include only characters that changed this turn.",
+      "formatExample": "entries:\n  - name: Mara Voss\n    appearance: \n      apparent_age: 42\n      ethnicity: German\n      sex: female\n      species: human\n      height: 5'9\"\n      build: broad-shouldered, athletic, slightly thickened through the middle\n      hair: dark brown shot with grey, cropped close at sides, longer on top\n      skin: pale, weathered, deep lines around eyes and mouth\n      eyes: steel grey\n      face: strong jaw, fine lines around eyes and mouth\n      facial_hair: none\n      bust_chest: full bust larger than human average\n      waist: narrow defined waist\n      hips: softly flaring\n      rear: firm and rounded\n      distinguishing_features: cybernetic left arm, silver-grey from shoulder to fingertips\n      non_human_features: none\n    naked: false\n    clothing:\n      garments:\n        - black tactical trousers, reinforced knees\n        - dark grey henley, sleeves pushed up\n        - worn leather boots, knee height\n        - captain's coat, deep navy, brass buttons, rarely buttoned\n      permanent_marks:\n        - faded tattoo, anchor and rope, right forearm\n      state: clean but well-worn",
       "enforceFormat": true,
-      "formatSchema": "- name: text\n  appearance:\n    apparent_age: number\n    ethnicity: text\n    sex: text\n    species: text\n    height: text\n    build: text\n    hair: text\n    skin: text\n    eyes: text\n    face: text\n    facial_hair: text\n    bust_chest: text\n    waist: text\n    hips: text\n    rear: text\n    distinguishing_features: text\n    non_human_features: text\n    ...:\n  naked:\n  clothing:\n    garments:\n      - text\n    permanent_marks:\n      - text\n    state: text\n    ...:\n  ...:",
-      "initialValue": "",
+      "formatSchema": "entries:\n  - name: text\n    appearance:\n      apparent_age: number\n      ethnicity: text\n      sex: text\n      species: text\n      height: text\n      build: text\n      hair: text\n      skin: text\n      eyes: text\n      face: text\n      facial_hair: text\n      bust_chest: text\n      waist: text\n      hips: text\n      rear: text\n      distinguishing_features: text\n      non_human_features: text\n      ...:\n    naked:\n    clothing:\n      garments:\n        - text\n      permanent_marks:\n        - text\n      state: text\n      ...:\n    ...:",
+      "initialValue": "entries: []\n",
       "initialValueBasedOnPC": "same",
       "autoUpdate": true,
       "variableName": "npc_appearance_update",
@@ -318,11 +318,11 @@
       "dataType": "yaml",
       "visibility": "ai_only_boring",
       "description": "<#Relationship Tracker#>\nNamed characters, their relationship tier to the player, and their connection.",
-      "updateInstructions": "<#Relationship Tracker#>\nAdd any named character on first meaningful interaction with player\nUpdate when relationship with player changes; update ONLY changed fields\nMatch by name field AND/OR aliases field when updating — NEVER by list position; FORBID: rewrite other entries; FORBID: update entry whose name/aliases != character being updated\nTwo tracked characters in relationship with each other: note in respective connection fields\nRemove entries ONLY if character permanently exits narrative\nName change/alias revealed: append to aliases; FORBID: update name field; FORBID: generate new entry\n\nRelationship tiers (ascending): acquaintance · colleague · co-worker · friend · close friend · romantic interest · partner · co-parent · rival · mentor · family\nsignificant: true — friend tier+ | rival | mentor | family regardless of tier\nsignificant: false — acquaintance | colleague | co-worker UNLESS narrative warrants\nconnection: one-line, 10 words maximum\n\ndescription of relationship to player, 10 words maximum.",
-      "formatExample": "#Relationship Tracker\n- name: Mara Voss\n  aliases: \n    - none\n  tier: close friend\n  significant: true\n  connection: captain of Probably Fine, earned trust through shared danger\n\n- name: Torsk\n  aliases: \n    - none\n  tier: close friend\n  significant: true\n  connection: navigator, philosophical sparring partner, running from Zhaal\n\n- name: Pip\n  aliases: \n    - Pipherazvn\n  tier: crew\n  significant: false\n  connection: communications officer, fiercely loyal, reads subspace frequencies\n\n- name: Dr Wen Azara\n  aliases: \n    - none\n  tier: friend\n  significant: true\n  connection: ship medic and cook, hiding something, paternal presence\n\n- name: Kess\n  aliases: \n    - Kestrel Stormhold\n  tier: friend\n  significant: true\n  connection: chief engineer, talks to the ship, brilliant and socially awkward\n\n- name: Overseer Zhaal\n  aliases: \n    - Zhaal bhar-Azzign\n  tier: rival\n  significant: true\n  connection: crime lord hunting Torsk, threat to entire crew",
+      "updateInstructions": "<#Relationship Tracker#>\nAdd any named character on first meaningful interaction with player\nWhen a relationship with the player changes, write that character's complete entry with the changed fields updated\nMatch by name field AND/OR aliases field when updating — NEVER by list position; FORBID: rewrite other entries; FORBID: update entry whose name/aliases != character being updated\nTwo tracked characters in relationship with each other: note in respective connection fields\nRemove entries ONLY if character permanently exits narrative\nName change/alias revealed: append to aliases; FORBID: update name field; FORBID: generate new entry\n\nRelationship tiers (ascending): acquaintance · colleague · co-worker · friend · close friend · romantic interest · partner · co-parent · rival · mentor · family\nsignificant: true — friend tier+ | rival | mentor | family regardless of tier\nsignificant: false — acquaintance | colleague | co-worker UNLESS narrative warrants\nconnection: one-line, 10 words maximum\n\ndescription of relationship to player, 10 words maximum.\nBuffer format: keep the root key entries and write each item indented under it, as in the format example; write entries: [] when nothing changed. Write the complete entry (every field) for each character that changed; the merge script replaces the stored entry with it, so a partial entry loses the fields it leaves out. Include only characters that changed this turn.",
+      "formatExample": "#Relationship Tracker\nentries:\n  - name: Mara Voss\n    aliases: \n      - none\n    tier: close friend\n    significant: true\n    connection: captain of Probably Fine, earned trust through shared danger\n\n  - name: Torsk\n    aliases: \n      - none\n    tier: close friend\n    significant: true\n    connection: navigator, philosophical sparring partner, running from Zhaal\n\n  - name: Pip\n    aliases: \n      - Pipherazvn\n    tier: crew\n    significant: false\n    connection: communications officer, fiercely loyal, reads subspace frequencies\n\n  - name: Dr Wen Azara\n    aliases: \n      - none\n    tier: friend\n    significant: true\n    connection: ship medic and cook, hiding something, paternal presence\n\n  - name: Kess\n    aliases: \n      - Kestrel Stormhold\n    tier: friend\n    significant: true\n    connection: chief engineer, talks to the ship, brilliant and socially awkward\n\n  - name: Overseer Zhaal\n    aliases: \n      - Zhaal bhar-Azzign\n    tier: rival\n    significant: true\n    connection: crime lord hunting Torsk, threat to entire crew",
       "enforceFormat": true,
-      "formatSchema": "- name: text\n  aliases:\n    - text\n  tier: text\n  significant:\n  connection: text",
-      "initialValue": "",
+      "formatSchema": "entries:\n  - name: text\n    aliases:\n      - text\n    tier: text\n    significant:\n    connection: text",
+      "initialValue": "entries: []\n",
       "initialValueBasedOnPC": "same",
       "autoUpdate": true,
       "variableName": "relationship_update",
@@ -352,11 +352,11 @@
       "dataType": "yaml",
       "visibility": "everyone",
       "description": "<#Intimacy Log#>\nA record of significant intimate encounters between the player character and other characters — emotional and physical milestones that the narrative should reference naturally going forward.",
-      "updateInstructions": "<#Intimacy Log#>\nOne entry per named character or named group; FORBID: multiple entries for same character/group\nSubsequent encounter: update encounter_count + current_register != append new entry; increment encounter_count by 1 != rewrite from scratch\nGroup encounter 3+ participants: single group entry listing all participants\nAdd entry ONLY after milestone fully + completely occurred in narrative; FORBID: log anticipated | imminent | in-progress events\n\nMilestones (ONLY these — FORBID: create or subdivide categories):\nfirst emotional vulnerability · first kiss · first sexual encounter · first transformation-related intimate encounter · first explicit acknowledgment of feelings · first serious conflict and resolution · first morning after · first coven bonding\n\nAdditional milestones: ONLY when genuine first-time relationship shift != covered by standard list\ncurrent_register: one line, 10 words maximum — current emotional + intimate register, updated to reflect most recent encounter",
-      "formatExample": "- name: Hermione Granger\n  first_encounter: Day 3, evening\n  encounter_count: 4\n  milestone: first sexual encounter\n  current_register: deeply bonded, coven resonance active, comfort and intensity both high\n- name: Full Coven — Hermione, Parvati, Daphne, Susan, Luna, Padma, Lavender\n  first_encounter: Day 7, September 6th\n  encounter_count: 2\n  milestone: first full coven bonding\n  current_register: magically resonant, power surge confirmed, bonds deepened collectively",
+      "updateInstructions": "<#Intimacy Log#>\nOne entry per named character or named group; FORBID: multiple entries for same character/group\nSubsequent encounter: write the complete entry with encounter_count one higher than in Intimacy Log and current_register updated; keep first_encounter and milestone unless a new milestone occurred; never a second entry for the same character/group\nGroup encounter 3+ participants: single group entry listing all participants\nAdd entry ONLY after milestone fully + completely occurred in narrative; FORBID: log anticipated | imminent | in-progress events\n\nMilestones (ONLY these — FORBID: create or subdivide categories):\nfirst emotional vulnerability · first kiss · first sexual encounter · first transformation-related intimate encounter · first explicit acknowledgment of feelings · first serious conflict and resolution · first morning after · first coven bonding\n\nAdditional milestones: ONLY when genuine first-time relationship shift != covered by standard list\ncurrent_register: one line, 10 words maximum — current emotional + intimate register, updated to reflect most recent encounter\nBuffer format: keep the root key entries and write each item indented under it, as in the format example; write entries: [] when nothing changed. Write the complete entry (every field) for each character that changed; the merge script replaces the stored entry with it, so a partial entry loses the fields it leaves out. Include only characters that changed this turn.",
+      "formatExample": "entries:\n  - name: Hermione Granger\n    first_encounter: Day 3, evening\n    encounter_count: 4\n    milestone: first sexual encounter\n    current_register: deeply bonded, coven resonance active, comfort and intensity both high\n  - name: Full Coven — Hermione, Parvati, Daphne, Susan, Luna, Padma, Lavender\n    first_encounter: Day 7, September 6th\n    encounter_count: 2\n    milestone: first full coven bonding\n    current_register: magically resonant, power surge confirmed, bonds deepened collectively",
       "enforceFormat": true,
-      "formatSchema": "- name: text\n  first_encounter: text\n  encounter_count: number\n  milestone: text\n  current_register: text\n  ...:",
-      "initialValue": "",
+      "formatSchema": "entries:\n  - name: text\n    first_encounter: text\n    encounter_count: number\n    milestone: text\n    current_register: text\n    ...:",
+      "initialValue": "entries: []\n",
       "initialValueBasedOnPC": "same",
       "autoUpdate": true,
       "variableName": "intimacy_update",
