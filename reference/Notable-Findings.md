@@ -39,7 +39,7 @@ The Infinite Worlds behavior most likely to surprise an author or break a world,
 24. **Hidden and player-only trackers cannot auto-update.** Import turns automatic updating off for them.
 25. **Enforce format does not reject bad data** written by scripts or by hand. Validate shape and values in scripts before accepting them.
 26. **Random expressions disagree with each other.** Two `random()` calls, even in one block, give different results. Store one roll in a tracker when several things must agree.
-27. **Text installed by a block effect freezes its values.** Use a deferred `<<=...=>>` reference to keep a value live.
+27. **Text installed by a block effect freezes its values.** Use a deferred `<=...=>` reference to keep a value live; `<<=...=>>` is inert text, although the editor highlights it as code and shows `<=...=>` as plain text. Saving the tracker editor by hand freezes any tracker holding `<<...>>` at its displayed value.
 28. **An unclosed `<<` can break the next instruction block too.** Check delimiters across neighboring blocks.
 29. **YAML types are loose.** `yes`/`no` are text, `"007"` counts as 7 in arithmetic, Boolean results are stored as quoted text, and appending to a list allows duplicates.
 30. **Reading a missing path stops a script.** Guard with `.exists()` first (`and`/`or` short-circuit), or use `try(...)`, `first_available(...)` or `item(key, fallback)`.

@@ -11,7 +11,7 @@
       "reference/Portable-Banks.md",
       "library/Integration.md"
     ],
-    "sha256": "2f3182bf413a53ac414bb70dc7fe4e5c7652b2ea0e947de52ad47fab10569e6c"
+    "sha256": "537c890cfdcd35bd1c0f9830c9eea3f56c44ff3af4e713ca57b4a470ac18bfdf"
   },
   "IW-Technical-Reference.txt": {
     "sourceFiles": [
@@ -23,7 +23,7 @@
       "reference/Default-Evaluation.txt",
       "reference/Current-AI-Profiles.json"
     ],
-    "sha256": "296042b792323eac2b3ce36be9100f94538c57269537c3171918e561f4159ac8"
+    "sha256": "f3764db3ee809de6fde9171bfabc69a714cd589a365259726b545828a3807933"
   },
   "IW-Behavior.txt": {
     "sourceFiles": [
@@ -32,7 +32,7 @@
       "reference/Verified-Behavior.md",
       "reference/Known-Limits.md"
     ],
-    "sha256": "9fa9bcac5ad4e1570606db277d035aa5505e730ce8d557abb58167ec6ce26144"
+    "sha256": "6def4c088577a34abb839ddd9e9ac83f988e2dd7597ef88ab3951130af2b6d3b"
   },
   "IW-Payloads.txt": {
     "sourceFiles": [
@@ -92,6 +92,6 @@
       "tools/story_export.py",
       "tools/plot_compile.py"
     ],
-    "sha256": "d0f5e77f9b354bfca2b7ddd81404b529c312bb58d9a64a527067ae3b5bfc2a6b"
+    "sha256": "e91118c4895a35cfa430d228307cd9e1bf36226bc4988c699fc45660c5e67bb3"
   }
 }
