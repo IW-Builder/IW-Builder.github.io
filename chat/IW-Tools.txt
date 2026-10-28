@@ -56,6 +56,24 @@ A diff proves what changed, not whether those changes are authorized or correct.
 
 `data_bank.py` exports selected native content or the entire world into a readable text bank with authoritative JSON and an integrity hash. It also packs/unpacks editable bank JSON and restores unchanged complete-world reports. It does not automatically integrate entries or infer their dependencies. See [Portable-Banks.md](../reference/Portable-Banks.md) for commands, tags, bundles, PC/NPC conversion and preservation rules. No third-party dependencies are required. Output files are never silently overwritten.
 
+## Sort characters, triggers and trackers
+
+`iw_sort.py` reorders a world's Player Characters, Other Characters, Triggers and Trackers through a plain text list, so you can sort them by cutting and pasting lines instead of dragging items in the editor. Standard library only.
+
+```sh
+python tools/iw_sort.py export WORLD.json
+python tools/iw_sort.py apply WORLD.json WORLD.order.txt
+```
+
+`export` writes `WORLD.order.txt`: a `[Player Characters]`, `[Other Characters]`, `[Triggers]` and `[Trackers]` section, each with one name per line. Move lines within their section, then `apply` writes `WORLD.sorted.json`. The input world is never changed. Use `-o` to name the output and `--force` to overwrite an existing one.
+
+- Nothing is dropped. An item left out of the list stays at the end of its section, with a warning. A line that matches nothing is reported and ignored, and a section left out is left as it is.
+- Duplicate names are matched in their original order. Blank names appear as `<unnamed>`. Lines starting with `#` are ignored.
+- `positionInList` is renumbered to the new order. Indentation and line endings follow the input, so an unedited list gives a byte-identical file.
+- Trigger order is execution order (see [Triggers](../reference/Triggers.md)), so moving triggers can change how a world plays. The tool warns when it does.
+
+Tested offline only: unedited round trips are byte-identical and shuffled worlds still pass the validator. Importing a sorted world into IW has not yet been checked; confirm the editor shows the new order.
+
 ## Maintainer commands
 
 These are repository maintenance tasks, not requirements for authoring worlds:
@@ -67,6 +85,7 @@ python tools/test_distribution.py
 python tools/test_engineering.py
 python tools/test_native_compat.py
 python tools/test_story_export.py
+python tools/test_iw_sort.py
 python tools/check_package.py
 python tools/build_distribution.py
 ```
@@ -77,7 +96,7 @@ The builder updates visible EOF markers in AI-facing Markdown documents, generat
 
 Required sources are checked before output begins; a missing source or checker embedding stops the build with an error. Repeated builds with unchanged inputs preserve output bytes and the manifest timestamp. A write failure can leave partial outputs; fix it and rerun before publishing.
 
-`IW-Tools.txt` has an explicit authoring-tool list: this usage guide, the Story-Tools and plot-compiler guides, validator, static checks, JSON schema, data-bank utility, import audit, story-export tool and plot compiler. Builders, regression tests and package reports remain in the repository but are omitted from that model-facing bundle. Human READMEs are also omitted from combined technical packages. No model needs the distribution builder to author a world.
+`IW-Tools.txt` has an explicit authoring-tool list: this usage guide, the Story-Tools and plot-compiler guides, validator, static checks, JSON schema, data-bank utility, import audit, story-export tool and plot compiler. Builders, regression tests, package reports and the world sorter (a hands-on editing tool, not an authoring one) remain in the repository but are omitted from that model-facing bundle. Human READMEs are also omitted from combined technical packages. No model needs the distribution builder to author a world.
 
 The root manifest records repository-relative paths, byte lengths and SHA-256 hashes. It covers the authoring sources and supported files under reference, library, examples, tools, chat and checker, plus the homepage and root guide/template/license. It excludes itself, ZIP archives, sample histories, hidden files and caches. It is separate from the files it hashes to avoid circular dependencies. Hash original bytes, never a browser's rendered/extracted text. A mismatch may mean the manifest is stale; investigate apparent missing content without treating every mismatch as damage. A match establishes the recorded bytes, not freshness or runtime correctness.
 

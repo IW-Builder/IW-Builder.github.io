@@ -1,16 +1,17 @@
-# Check worlds and manage your files
+# Check, edit and manage your worlds
 
 Most people can start with the [web checker](https://iw-builder.github.io/checker/). Paste your world there, check the results, and copy the report back to your AI if something needs fixing. It can also join numbered output chunks into one file.
 
-The files here provide the same kinds of checks locally, along with tools for saving reusable content and maintaining the kit. You only need them if you or your AI can run Python.
+The files here provide the same kinds of checks locally, along with tools for editing worlds, saving reusable content and maintaining the kit. You only need them if you or your AI can run Python.
 
 | Tool | What it helps you do |
 | --- | --- |
 | `validate_iw_export.py` | Check a world for formatting problems, broken references and likely mistakes; compare an edited world with the original. |
+| `iw_sort.py` | Sort characters, triggers and trackers by editing a plain text list of their names. |
 | `data_bank.py` | Save characters or other world content in a portable text bank, or create a full-content report. |
 | `build_distribution.py` | Rebuild the homepage, combined text packages, checker tools and file-integrity manifest in one step. |
 | `check_package.py` | Check the kit's example files and links. Primarily for maintaining the kit itself. |
-| `test_validator.py`, `test_data_bank.py`, `test_distribution.py`, `test_engineering.py`, `test_native_compat.py` and `test_story_export.py` | Run checks on the tools themselves. |
+| `test_validator.py`, `test_data_bank.py`, `test_distribution.py`, `test_engineering.py`, `test_native_compat.py`, `test_story_export.py` and `test_iw_sort.py` | Run checks on the tools themselves. |
 
 For commands, setup and detailed explanations of the results, see [Usage.md](Usage.md). For character banks and reusable bundles, see the [data-bank guide](../reference/Portable-Banks.md).
 
