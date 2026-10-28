@@ -10,7 +10,7 @@ These are independent recipes. Select, adapt or omit them; none is a required wo
 
 **Choice/input plus later effects.** Present a selection or text form targeting a real tracker, then respond with a later ordered trigger. Correctly bound single-answer forms update immediately. Inspect binding after import; use current tracker data rather than initialValue from the live-world editor export.
 
-**AI update buffer plus scripted merge.** The library's update trackers let the AI propose changed structured entries, while a script merges them into a persistent list. This is useful for large casts or expensive long-lived records. Root the buffer in a record (`entries: []`); list-rooted AI buffers lose updates. Match records by identity and ask for complete entries: the buffer is cleared after each merge, so field patches have nothing to apply to. Only use this extra layer when it serves the world.
+**AI update buffer plus scripted merge.** The library's update trackers let the AI propose changed structured entries, while a script merges them into a persistent list. This is useful for large casts or expensive long-lived records. Root the buffer in a record (`entries: []`); list-rooted AI buffers lose updates, even with "append-only" wording. A record root can still jam: the AI may write rows as one nested list (`entries: [[…]]`), and a merge gated on `.entries.any(name.exists())` then never fires again. Gate on a non-empty inbox, drop or unwrap non-record items, and flag an inbox still full after the merge. Match records by identity and ask for complete entries: the buffer is cleared after each merge, so field patches have nothing to apply to. Only use this extra layer when it serves the world.
 
 **Conditional instruction content.** Use a native block-modification effect to add/replace/clear instructions. The source may be fixed text in the effect or text prepared in a tracker by an earlier script trigger. This can control optional image guidance, pacing, prose detail, character behavior or any relevant block. A script changes tracker values; the native effect changes the instruction block. Keep the block ID stable when disabling content so later re-enabling still targets a real block.
 
@@ -37,12 +37,34 @@ secretInfo, outcomeDescription, whereWhen and option1_text/option2_text/option3_
 Use ordinary Markdown formatting where appropriate. Tests showed raw span HTML rendered literally, so do not promise arbitrary HTML/CSS styling. Header behavior and special output formatting should be tested in their actual display context. An inline-code style is a platform-rendered style, not a general color API.
 
 ## Dynamic content
-Native block-modification effects substitute ordinary `<<...>>` templates when the content is installed. For live values, write deferred `<=...=>` references in the installed text, use a separate permanent block, or reinstall content when the relevant values change. See Capabilities.md for the interpolation table.
+Native block-modification effects substitute ordinary `<<...>>` templates when the content is installed. For live values, write deferred `<=...=>` references in the installed text, use a separate permanent block, or reinstall content when the relevant values change. A block reinstalled every turn freezes values when its trigger runs, so values set by triggers below it arrive a turn late: order producers above the installer, or use `<=...=>`. See Capabilities.md for the interpolation table.
 
 **Player-selected layered openings.** Combine independent choices into meaningful variations using ordered text replacements, then install the result as background. This avoids authoring every full combination; keep fragments compatible and add combination-specific handling where needed. See [layered opening](../examples/recipe-layered-opening.json).
 
 **On-demand generation with retained results.** Install a substantial generation brief only when needed, store a compact result, and clear the brief after a matching completed request. Do not clear merely because a turn elapsed. Prefer infrequent event-driven requests; retained tracker context and AI updates can outweigh the omitted instructions. See [on-demand generation](../examples/recipe-on-demand-generation.json).
 
+
+## Turn-state patterns
+
+Optional patterns; trigger order is execution order.
+
+**Previous-value snapshot.** The last trigger (always true, repeat) copies watched values to script-only trackers: `$prev_lp = $lifepoints`. Triggers above it read this turn's change, such as `$lifepoints < $prev_lp` for a spend. AND a delta with an event condition when the story and the number must agree. Clamps (a maximum loss per turn) also go above the snapshot.
+
+**One-turn AI write window.** To let the AI rewrite a locked tracker once, a trigger switches its automatic updating on (optionally with new update instructions), stamps `$window = $game.turn_number` and tells the AI what to write. A relock trigger ordered above it, on `$window > 0 and $game.turn_number > $window`, switches updating off and zeroes the stamp. The switch applies from the next turn, so the AI writes exactly once, on the turn it receives the instruction. Keep the switch out of triggers with Request Input.
+
+**Periodic AI updates.** Unlock a large, slow-changing tracker on `$game.turn_number % N = k` and relock on `% N = k + 1`; it is rewritten one turn in N.
+
+**Cooldowns.** Stamp the turn in the effect and gate on `$last_x <= 0 or $game.turn_number > $last_x + 3`. A very large stamp disables the trigger for good.
+
+**Per-turn verdict tag.** An AI-updated text tracker asks for tags judging only this turn, or None. Text-contains conditions react to each tag, and a last trigger resets it to None (copy it first to keep a record). Tags stay turn-specific; the classification is still the AI's judgement.
+
+**Wait for a well-formed write.** Gate a follow-up on the shape of an AI-written value (contains `(`, no longer contains the placeholder), not mere change, so a malformed write just waits.
+
+**Per-model text.** `$game.ai_model` returns the display name (`Dolphin`, `Smilodon`) and text `=` is case-sensitive. Templates in a tracker's own update instructions are evaluated live, so `<<if($game.ai_model = "Dolphin", "…", "…")>>` there selects per model. Blocks can use selectedAIProfiles instead.
+
+**Start-up codes.** A player-only text tracker at character select holds typed codes; one one-shot Text-contains trigger (case-insensitive) per code applies each. List the codes in charSelectText.
+
+**Ordinal words.** `choose($e.intensity.lower(), "slight", 1, "mild", 2, "moderate", 3, 0) < 3` compares a word scale, for example to raise an entry to a minimum without lowering it.
 
 ## Request and commit example
 

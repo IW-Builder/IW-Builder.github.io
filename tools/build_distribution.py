@@ -33,7 +33,6 @@ GROUPS = {
         'reference/PawScript.md',
         'reference/Capabilities.md',
         'reference/Recipes.md',
-        'reference/Import-Integrity.md',
         'reference/Default-Evaluation.txt',
         'reference/Current-AI-Profiles.json',
     ],
@@ -42,6 +41,7 @@ GROUPS = {
         'reference/Editor-UI.md',
         'reference/Verified-Behavior.md',
         'reference/Known-Limits.md',
+        'reference/Import-Integrity.md',
     ],
     'IW-Payloads.txt': [
         'examples/Payloads.md',
@@ -78,8 +78,8 @@ GROUPS = {
 # one file knows which companion holds a given path.
 EDITION_PURPOSE = {
     'IW-Authoring-Guide.txt': 'start here: prompt, template, narrative craft, trackers, triggers, data banks and library integration',
-    'IW-Technical-Reference.txt': 'exact payloads, PawScript, capabilities, recipes and import integrity',
-    'IW-Behavior.txt': 'notable findings, editor/UI workflows, verified runtime behavior and known limits',
+    'IW-Technical-Reference.txt': 'exact payloads, PawScript, capabilities and recipes',
+    'IW-Behavior.txt': 'notable findings, editor/UI workflows, verified runtime behavior, known limits and import integrity',
     'IW-Payloads.txt': 'exact native payload snippets for every condition and effect, plus the example index',
     'IW-Mechanics-Examples.txt': 'complete mechanics example worlds: recipes, optional block, starting values and a showcase',
     'IW-Narrative-Examples.txt': 'complete narrative example worlds: ensemble romance, fantasy expedition and contained horror',
@@ -303,8 +303,8 @@ DESCRIPTIONS = {
     # Combined text editions
     'chat/index.html': 'HTML page containing IW-Authoring-Guide.txt, with links to the companion editions.',
     'chat/IW-Authoring-Guide.txt': 'Combined text, start here: prompt, template, Evidence, Craft, Trackers, Triggers, Trigger-Catalog, Portable-Banks and library Integration.',
-    'chat/IW-Technical-Reference.txt': 'Combined text: Schema, PawScript, Capabilities, Recipes, Import-Integrity, Default Evaluation and AI profile IDs.',
-    'chat/IW-Behavior.txt': 'Combined text: Notable-Findings, Editor-UI, Verified-Behavior and Known-Limits.',
+    'chat/IW-Technical-Reference.txt': 'Combined text: Schema, PawScript, Capabilities, Recipes, Default Evaluation and AI profile IDs.',
+    'chat/IW-Behavior.txt': 'Combined text: Notable-Findings, Editor-UI, Verified-Behavior, Known-Limits and Import-Integrity.',
     'chat/IW-Payloads.txt': 'Combined text: payload cookbook (every condition and effect) and the example index. Small and essential for mechanics.',
     'chat/IW-Mechanics-Examples.txt': 'Combined text: complete mechanics example worlds (recipes, optional block, starting values, showcase).',
     'chat/IW-Narrative-Examples.txt': 'Combined text: complete narrative example worlds (ensemble romance, fantasy expedition, contained horror).',
@@ -326,7 +326,7 @@ DESCRIPTIONS = {
     'reference/PawScript.md': 'PawScript language guide: syntax, collections, randomness, formatting, debugging, system roots and common mistakes.',
     'reference/Portable-Banks.md': 'Data mode: portable character/data bank format, dependencies, full-content build reports and data_bank.py commands.',
     'reference/README.md': 'Human-friendly index of the reference guides.',
-    'reference/Recipes.md': 'Ways to combine features: situation triggers, thresholds, choices, optional blocks, dynamic content, request/commit and guarded state patterns.',
+    'reference/Recipes.md': 'Ways to combine features: situation triggers, thresholds, choices, optional blocks, dynamic content, request/commit, guarded state and turn-state patterns.',
     'reference/Schema.md': 'Export structure: field groups, trackers, starting values, condition and effect payloads, comparators and value-effect operations.',
     'reference/Story-Tools.md': 'Import comparison and story-text extraction/merge tools: commands and limits.',
     'reference/Trackers.md': 'Tracker fields, data types, visibility, update ownership, starting values and memory/context cost.',

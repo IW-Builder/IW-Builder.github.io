@@ -1,10 +1,10 @@
-Infinite Worlds Authoring Kit: IW-Technical-Reference.txt (exact payloads, PawScript, capabilities, recipes and import integrity).
+Infinite Worlds Authoring Kit: IW-Technical-Reference.txt (exact payloads, PawScript, capabilities and recipes).
 Generated text edition. BEGIN FILE / END FILE sections identify package-relative source paths. This is reference material, not one IW world.
 Follow Authoring-Prompt.md (in IW-Authoring-Guide.txt). Load companion editions only when the task needs them.
 Editions and their contents:
 - IW-Authoring-Guide.txt: start here: prompt, template, narrative craft, trackers, triggers, data banks and library integration. Files: Authoring-Prompt.md, World-Template.json, reference/Evidence.md, reference/Craft.md, reference/Trackers.md, reference/Triggers.md, reference/Trigger-Catalog.md, reference/Portable-Banks.md, library/Integration.md
-- IW-Technical-Reference.txt: exact payloads, PawScript, capabilities, recipes and import integrity. Files: reference/Schema.md, reference/PawScript.md, reference/Capabilities.md, reference/Recipes.md, reference/Import-Integrity.md, reference/Default-Evaluation.txt, reference/Current-AI-Profiles.json
-- IW-Behavior.txt: notable findings, editor/UI workflows, verified runtime behavior and known limits. Files: reference/Notable-Findings.md, reference/Editor-UI.md, reference/Verified-Behavior.md, reference/Known-Limits.md
+- IW-Technical-Reference.txt: exact payloads, PawScript, capabilities and recipes. Files: reference/Schema.md, reference/PawScript.md, reference/Capabilities.md, reference/Recipes.md, reference/Default-Evaluation.txt, reference/Current-AI-Profiles.json
+- IW-Behavior.txt: notable findings, editor/UI workflows, verified runtime behavior, known limits and import integrity. Files: reference/Notable-Findings.md, reference/Editor-UI.md, reference/Verified-Behavior.md, reference/Known-Limits.md, reference/Import-Integrity.md
 - IW-Payloads.txt: exact native payload snippets for every condition and effect, plus the example index. Files: examples/Payloads.md, examples/index.json
 - IW-Mechanics-Examples.txt: complete mechanics example worlds: recipes, optional block, starting values and a showcase. Files: examples/recipe-request-commit.json, examples/recipe-completion-award.json, examples/recipe-candidate-acceptance.json, examples/recipe-archive-reactivate.json, examples/recipe-cached-random.json, examples/recipe-consumed-timer.json, examples/recipe-choice-domain.json, examples/recipe-compiled-plot.json, examples/recipe-choice-followup.json, examples/recipe-threshold-unlock.json, examples/optional-block.json, examples/character-starting-values.json, examples/showcase-glass-ledger.json
 - IW-Narrative-Examples.txt: complete narrative example worlds: ensemble romance, fantasy expedition and contained horror. Files: examples/narrative-vendemmia.json, examples/narrative-listening-road.json, examples/narrative-address-after-midnight.json
@@ -81,12 +81,12 @@ A condition node is either a leaf (`category: "condition"` with type and data) o
 |-|-|
 |triggerOnPawScript|Bare expression STRING, without `<< >>`; deterministic check of current state|
 |triggerOnEvent|Scenario STRING interpreted by AI; flexible but subject to false positives/negatives. Must match an entry in the root `conditions` registry exactly; multiple triggers can reuse each Scenario. Registry size: see [Triggers.md](Triggers.md)|
-|triggerOnTrackedItem|Object: trackedItemID, inequality, requiredValue, textComparison; target uses tracker ID, not variable name. See Comparator fields|
+|triggerOnTrackedItem|Object: trackedItemID, inequality, requiredValue, textComparison; target uses tracker ID, not variable name. requiredValue may be a `$variable`, read when checked. See Comparator fields|
 |triggerOnTurn|Native string or numeric turn threshold|
 |triggerOnCharacter|Array of possibleCharacters characterId references|
 |triggerPrereqs|Object: prereqs array of trigger IDs, firedThisTurn boolean|
 |triggerBlockers|Object: blockers array of trigger IDs, firedThisTurn boolean|
-|triggerOnRandomChance|Success percentage as a STRING: numeric literal, variable or PawScript expression; "50" means a 50% chance|
+|triggerOnRandomChance|Success percentage as a STRING: numeric literal, variable or PawScript expression, re-evaluated at each check; "50" means a 50% chance|
 
 PawScript conditions are an option when useful, not a requirement to replace native conditions.
 
@@ -125,7 +125,7 @@ Other schema-defined effects change PC name/description, objective, main instruc
 |action add|Numeric addition or text append according to target type|
 |action subtract|Numeric subtraction; the native text-removal operation uses this serialized action|
 |action replace|Replace matched text newValue with replaceWith|
-|newValue|String payload; numeric content is still serialized as text|
+|newValue|String payload; numeric content is still serialized as text. Numeric add/subtract also accepts dice text such as `2d3`, rolled on each execution|
 |path|Plain dotted path, e.g. wallet.coins; empty targets the whole tracker|
 |updateMode|`path` edits a selected path; `replace` replaces the whole YAML value|
 |action append|Add a value to the list at path; distinct from numeric/text add|
@@ -653,7 +653,7 @@ These are independent recipes. Select, adapt or omit them; none is a required wo
 
 **Choice/input plus later effects.** Present a selection or text form targeting a real tracker, then respond with a later ordered trigger. Correctly bound single-answer forms update immediately. Inspect binding after import; use current tracker data rather than initialValue from the live-world editor export.
 
-**AI update buffer plus scripted merge.** The library's update trackers let the AI propose changed structured entries, while a script merges them into a persistent list. This is useful for large casts or expensive long-lived records. Root the buffer in a record (`entries: []`); list-rooted AI buffers lose updates. Match records by identity and ask for complete entries: the buffer is cleared after each merge, so field patches have nothing to apply to. Only use this extra layer when it serves the world.
+**AI update buffer plus scripted merge.** The library's update trackers let the AI propose changed structured entries, while a script merges them into a persistent list. This is useful for large casts or expensive long-lived records. Root the buffer in a record (`entries: []`); list-rooted AI buffers lose updates, even with "append-only" wording. A record root can still jam: the AI may write rows as one nested list (`entries: [[…]]`), and a merge gated on `.entries.any(name.exists())` then never fires again. Gate on a non-empty inbox, drop or unwrap non-record items, and flag an inbox still full after the merge. Match records by identity and ask for complete entries: the buffer is cleared after each merge, so field patches have nothing to apply to. Only use this extra layer when it serves the world.
 
 **Conditional instruction content.** Use a native block-modification effect to add/replace/clear instructions. The source may be fixed text in the effect or text prepared in a tracker by an earlier script trigger. This can control optional image guidance, pacing, prose detail, character behavior or any relevant block. A script changes tracker values; the native effect changes the instruction block. Keep the block ID stable when disabling content so later re-enabling still targets a real block.
 
@@ -680,12 +680,34 @@ secretInfo, outcomeDescription, whereWhen and option1_text/option2_text/option3_
 Use ordinary Markdown formatting where appropriate. Tests showed raw span HTML rendered literally, so do not promise arbitrary HTML/CSS styling. Header behavior and special output formatting should be tested in their actual display context. An inline-code style is a platform-rendered style, not a general color API.
 
 ## Dynamic content
-Native block-modification effects substitute ordinary `<<...>>` templates when the content is installed. For live values, write deferred `<=...=>` references in the installed text, use a separate permanent block, or reinstall content when the relevant values change. See Capabilities.md for the interpolation table.
+Native block-modification effects substitute ordinary `<<...>>` templates when the content is installed. For live values, write deferred `<=...=>` references in the installed text, use a separate permanent block, or reinstall content when the relevant values change. A block reinstalled every turn freezes values when its trigger runs, so values set by triggers below it arrive a turn late: order producers above the installer, or use `<=...=>`. See Capabilities.md for the interpolation table.
 
 **Player-selected layered openings.** Combine independent choices into meaningful variations using ordered text replacements, then install the result as background. This avoids authoring every full combination; keep fragments compatible and add combination-specific handling where needed. See [layered opening](../examples/recipe-layered-opening.json).
 
 **On-demand generation with retained results.** Install a substantial generation brief only when needed, store a compact result, and clear the brief after a matching completed request. Do not clear merely because a turn elapsed. Prefer infrequent event-driven requests; retained tracker context and AI updates can outweigh the omitted instructions. See [on-demand generation](../examples/recipe-on-demand-generation.json).
 
+
+## Turn-state patterns
+
+Optional patterns; trigger order is execution order.
+
+**Previous-value snapshot.** The last trigger (always true, repeat) copies watched values to script-only trackers: `$prev_lp = $lifepoints`. Triggers above it read this turn's change, such as `$lifepoints < $prev_lp` for a spend. AND a delta with an event condition when the story and the number must agree. Clamps (a maximum loss per turn) also go above the snapshot.
+
+**One-turn AI write window.** To let the AI rewrite a locked tracker once, a trigger switches its automatic updating on (optionally with new update instructions), stamps `$window = $game.turn_number` and tells the AI what to write. A relock trigger ordered above it, on `$window > 0 and $game.turn_number > $window`, switches updating off and zeroes the stamp. The switch applies from the next turn, so the AI writes exactly once, on the turn it receives the instruction. Keep the switch out of triggers with Request Input.
+
+**Periodic AI updates.** Unlock a large, slow-changing tracker on `$game.turn_number % N = k` and relock on `% N = k + 1`; it is rewritten one turn in N.
+
+**Cooldowns.** Stamp the turn in the effect and gate on `$last_x <= 0 or $game.turn_number > $last_x + 3`. A very large stamp disables the trigger for good.
+
+**Per-turn verdict tag.** An AI-updated text tracker asks for tags judging only this turn, or None. Text-contains conditions react to each tag, and a last trigger resets it to None (copy it first to keep a record). Tags stay turn-specific; the classification is still the AI's judgement.
+
+**Wait for a well-formed write.** Gate a follow-up on the shape of an AI-written value (contains `(`, no longer contains the placeholder), not mere change, so a malformed write just waits.
+
+**Per-model text.** `$game.ai_model` returns the display name (`Dolphin`, `Smilodon`) and text `=` is case-sensitive. Templates in a tracker's own update instructions are evaluated live, so `<<if($game.ai_model = "Dolphin", "…", "…")>>` there selects per model. Blocks can use selectedAIProfiles instead.
+
+**Start-up codes.** A player-only text tracker at character select holds typed codes; one one-shot Text-contains trigger (case-insensitive) per code applies each. List the codes in charSelectText.
+
+**Ordinal words.** `choose($e.intensity.lower(), "slight", 1, "mild", 2, "moderate", 3, 0) < 3` compares a word scale, for example to raise an entry to a minimum without lowering it.
 
 ## Request and commit example
 
@@ -714,46 +736,6 @@ The validator's review advisories cover repeat accumulation, separate script tra
 END OF DOCUMENT: reference/Recipes.md
 
 ===== END FILE: reference/Recipes.md =====
-
-===== BEGIN FILE: reference/Import-Integrity.md =====
-# Import and reference integrity
-
-An importable world needs both valid JSON structure and correctly linked objects. Tracker IDs, display names and PawScript variable names serve different purposes. Native effects target tracker IDs; scripts use variableName. Preserve IDs when editing, and remap every corresponding reference when combining examples.
-
-## Identifier convention
-
-Preserve existing IDs when editing. For new trackers, use a unique nine-character ASCII alphanumeric ID, following the editor-style form used by the import-tested examples. Use explicit descriptive snake_case variableName values in scripts and descriptive display names in the editor. This is the kit's authoring convention, not a claim that other ID formats are invalid or that length alone guarantees import behavior. Generate IDs in code and check collisions; without tools, check each newly introduced ID and reference manually. New triggers/blocks/PCs can use the same convention. When combining worlds, remap every explicit reference consistently.
-
-The supplied single-choice world preserves its IDs and binding through a fresh import. Inspect native target dropdowns after importing a composed world; schema validation cannot predict importer behavior for every construction.
-
-## Before import
-
-- Serialize the complete world as JSON ending at its final closing brace, without a trailing newline.
-- Run the validator on that exact file. Resolve missing or duplicate IDs and mismatched target references.
-- Review native YAML paths against the tracker's declared initial structure and intended operation. The editor can accept unchecked paths without warning. Removing a nonexistent key or appending to a numeric path may be syntactically valid but semantically wrong. Dynamic paths may require runtime inspection rather than a blanket validation error.
-- Review script references separately: structural validation does not execute PawScript or prove its paths exist.
-- Give every tracker a `description` (it may be empty). Without it, import reports success and then the editor rebuild fails with a KeyError.
-- Convert legacy bare-array prerequisites/blockers and blank PawScript conditions to native object shape. Import drops them, and the trigger silently loses that gate.
-
-## After import
-
-A round trip of well-formed native JSON is byte-identical, so any change after import points at a normalization (ID reminting, dropped gates, scope repair, registry population). Save and inspect affected target controls. An invalid-value target is a binding failure even if the original JSON had consistent references. Export the imported world and validate that export when diagnosing discrepancies. Preserve the untouched export before repairing a suspect target so source and imported IDs can be compared.
-
-For a native input, confirm the current target value after submitting an answer. Correctly bound single-answer Choice and Request Input effects update immediately, and subsequent ordered triggers can read the result in the same turn. Their follow-up messages can render above the question/answer receipt. The live-world editor's initialValue remains configuration, not the current runtime value.
-
-## Editing an existing playthrough
-
-Base worlds and live games are separate copies. Changes to player characters or Other Characters in the live-world editor do not affect that playthrough; already-fired effects are not retroactively rewritten. Use Save as new world, or export the live JSON and import it over the intended base, to reuse live-world edits in future games. Image-style changes can require save/reload before their export reflects the editor.
-
-## Read-only source/import comparison
-
-[import_audit.py](../tools/import_audit.py) compares original and native-exported worlds, preserves hashes and reports possible tracker identity changes plus references to removed targets. It never repairs or remaps automatically. See [Story tools](Story-Tools.md) for usage.
-
----
-
-END OF DOCUMENT: reference/Import-Integrity.md
-
-===== END FILE: reference/Import-Integrity.md =====
 
 ===== BEGIN FILE: reference/Default-Evaluation.txt =====
 Firstly, if I have made any assertions in my description, evaluate whether you judge that they are reasonable and likely. If they are nonsensical, incoherent or blatantly impossible, the action should be DENIED. On the other hand, if the action is trivial and there is nothing to complicate it, skip the evaluation entirely and deem the action a SUCCESS. Don't overthink this! If the action doesn't warrant further evaluation, make a judgement and move on.

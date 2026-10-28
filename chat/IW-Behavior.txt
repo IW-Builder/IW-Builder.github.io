@@ -1,10 +1,10 @@
-Infinite Worlds Authoring Kit: IW-Behavior.txt (notable findings, editor/UI workflows, verified runtime behavior and known limits).
+Infinite Worlds Authoring Kit: IW-Behavior.txt (notable findings, editor/UI workflows, verified runtime behavior, known limits and import integrity).
 Generated text edition. BEGIN FILE / END FILE sections identify package-relative source paths. This is reference material, not one IW world.
 Follow Authoring-Prompt.md (in IW-Authoring-Guide.txt). Load companion editions only when the task needs them.
 Editions and their contents:
 - IW-Authoring-Guide.txt: start here: prompt, template, narrative craft, trackers, triggers, data banks and library integration. Files: Authoring-Prompt.md, World-Template.json, reference/Evidence.md, reference/Craft.md, reference/Trackers.md, reference/Triggers.md, reference/Trigger-Catalog.md, reference/Portable-Banks.md, library/Integration.md
-- IW-Technical-Reference.txt: exact payloads, PawScript, capabilities, recipes and import integrity. Files: reference/Schema.md, reference/PawScript.md, reference/Capabilities.md, reference/Recipes.md, reference/Import-Integrity.md, reference/Default-Evaluation.txt, reference/Current-AI-Profiles.json
-- IW-Behavior.txt: notable findings, editor/UI workflows, verified runtime behavior and known limits. Files: reference/Notable-Findings.md, reference/Editor-UI.md, reference/Verified-Behavior.md, reference/Known-Limits.md
+- IW-Technical-Reference.txt: exact payloads, PawScript, capabilities and recipes. Files: reference/Schema.md, reference/PawScript.md, reference/Capabilities.md, reference/Recipes.md, reference/Default-Evaluation.txt, reference/Current-AI-Profiles.json
+- IW-Behavior.txt: notable findings, editor/UI workflows, verified runtime behavior, known limits and import integrity. Files: reference/Notable-Findings.md, reference/Editor-UI.md, reference/Verified-Behavior.md, reference/Known-Limits.md, reference/Import-Integrity.md
 - IW-Payloads.txt: exact native payload snippets for every condition and effect, plus the example index. Files: examples/Payloads.md, examples/index.json
 - IW-Mechanics-Examples.txt: complete mechanics example worlds: recipes, optional block, starting values and a showcase. Files: examples/recipe-request-commit.json, examples/recipe-completion-award.json, examples/recipe-candidate-acceptance.json, examples/recipe-archive-reactivate.json, examples/recipe-cached-random.json, examples/recipe-consumed-timer.json, examples/recipe-choice-domain.json, examples/recipe-compiled-plot.json, examples/recipe-choice-followup.json, examples/recipe-threshold-unlock.json, examples/optional-block.json, examples/character-starting-values.json, examples/showcase-glass-ledger.json
 - IW-Narrative-Examples.txt: complete narrative example worlds: ensemble romance, fantasy expedition and contained horror. Files: examples/narrative-vendemmia.json, examples/narrative-listening-road.json, examples/narrative-address-after-midnight.json
@@ -84,7 +84,11 @@ The Infinite Worlds behavior most likely to surprise an author or break a world,
 47. **Cost per turn grows with story length** and depends heavily on the model; see [Current-AI-Profiles.json](Current-AI-Profiles.json).
 48. **One input form per turn is safest.** A turn with two forms once showed narration without the forms and was not saved. (Two plain Request Input forms from separate triggers on one turn worked in a later probe; the earlier failure combined one with a malformed candidate.)
 49. **A tracker-detail change in the same trigger as Request Input is silently lost.** Modify tracked item details (for example switching automatic updating on) does nothing when its trigger also asks for input, while messages and scripts in that trigger still run. Put the change in its own trigger with the same condition. Switching automatic updating on and off otherwise works, from the next turn.
-50. **An AI-written buffer whose whole value is a list loses updates.** Root it in a record (`entries: []`) and have scripts read and clear `.entries`. Ask for complete entries of changed characters, not "only changed fields": once the buffer is cleared, a field patch has nothing to apply to.
+50. **An AI-written buffer whose whole value is a list loses updates.** Root it in a record (`entries: []`) and have scripts read and clear `.entries`. Ask for complete entries of changed characters, not "only changed fields": once the buffer is cleared, a field patch has nothing to apply to. "Append-only" wording does not rescue a list root.
+51. **A record-rooted buffer can jam on one nested row.** If the AI writes rows as a list inside `entries`, a merge gated on `.entries.any(name.exists())` never fires again and every later update piles up. Gate on a non-empty inbox and drop or unwrap non-record items.
+52. **A block reinstalled every turn lags behind triggers below it.** Its `<<...>>` values freeze when its trigger runs. Order the triggers that compute those values above it, or write `<=...=>`.
+53. **`$game.ai_model` is the display name, and text `=` is case-sensitive.** On Dolphin, `= "Dolphin"` is true and `= "dolphin"` false.
+54. **Some native fields take live expressions.** A tracker condition's required value can be `$variable`, a random chance can be an expression, and numeric add/subtract accepts dice text such as `2d3`; each is evaluated every time. Templates in a tracker's update instructions are also evaluated live.
 
 ---
 
@@ -309,6 +313,9 @@ Results current through 2026-10-26. Labels and kit-wide caveats follow [Evidence
 - [RUNTIME] Enforce format is not a write-validation boundary: malformed manual/script values persist. Hidden AI repair is not inspectable. Validate shape and meaning explicitly.
 - [RUNTIME] Comparisons and arithmetic coerce YAML values (see [PawScript](PawScript.md#2-values-trackers-and-scope)), and Boolean-expression writes serialize as quoted text. Rendered values and collapsed summaries do not prove types. Duplicate inventory records are not prevented.
 - [RUNTIME] The PawScript sandbox matches the field it opens from: a script field gives a multi-line script box; a single-line field gives a one-line expression box that refuses a multi-line paste, with a Text tab for multi-line `<<expression>>` text. Sandbox trackers can be added, edited and deleted, and runs use those values; nothing changed goes back to the editor or game. From the world editor it loads all base trackers, at fixed initial values or 0/empty for unspecified, player-chosen or character-dependent ones; from debug or from View/edit world design during play, it loads the game state of that turn.
+- [RUNTIME] A native tracker condition with requiredValue `$limit` compared against the live value (changing `$limit` changed when it fired). A random-chance condition written as an expression (`$hi`, `$hi - $lo`) was re-evaluated each turn: 0 never fired, 100 always fired, and swapping the values swapped the pattern. Native numeric subtract with newValue `2d3` removed 2–6, varying by turn, over eight turns. One world, Dolphin.
+- [RUNTIME] `$game.ai_model` returns the display name (`Dolphin`, `Puma`, `Smilodon` observed); `$game.ai_model = "dolphin"` is false on Dolphin.
+- [RUNTIME] `<<...>>` in a tracker's own update instructions is evaluated each turn: the AI wrote the hidden tracker's value, not the template, and followed a change to it from the next turn.
 - [RUNTIME] Initial text of 10,014 characters and script-written text of 20,014 characters were retained exactly.
 - [PATTERN] Separate generated candidates from accepted state, immutable definitions from mutable state, and archive storage from active context. Validate identity and entry types before freezing; a list-length check is insufficient. Record assignment copies by value, so an archive is unaffected by later edits to the active record.
 - [PATTERN] Choose turn time, story time or hybrid clocks intentionally. Detect crossings (`previous < N and now >= N`), consume them, and guard rewards. Use inequalities for thresholds: a countdown of 1 reduced by 3 is -2, so `= 0` is false. Counter order changes the first firing turn. Shared locks favor the first eligible trigger; priority is authored, not automatic.
@@ -321,6 +328,9 @@ Results current through 2026-10-26. Labels and kit-wide caveats follow [Evidence
 - [RUNTIME] Hidden and extra-hidden values remain script-accessible. Extra-hidden is display filtering, not protection from Storyteller inspection; the tracker editor shows them even with the debug override off.
 - [RUNTIME] AI-updated buffers rooted in a YAML list lose updates; a record root (`entries: []`) does not. In one same-world comparison (three copies of the library relationship buffer, 14 turns on Dolphin and Puma), a list root that started as blank text landed 10 of 26 add/update events, a list root that started as `[]` landed 8 of 20, and the record root landed 23 of 26. List-only losses were whole turns with nothing written (Puma wrote nothing to either list buffer in any of 4 turns, with no debug message) and rejected list writes ("'$push' body must be an object mapping paths to values, got a list", "Cannot set 'value' - parent is a list"). Separately, a buffer instructed to "update only changed fields" received index patches ("$set at '3.tier'") against the already-cleared buffer; these failed in every shape, repairs dropped the change or appended an unnamed junk entry, and they caused all three record-root losses. Ask buffers for complete entries. The storyteller sometimes wrote `entries: []` followed by the items, leaving a stray key beside `entries`. One comparison; tracker order was not varied.
 - [RUNTIME] Import normalizes automatic updating off for hidden, hidden_boring and player_only. Everyone, ai_only and ai_only_boring keep updates. Extra-hidden filtering does not stop updating.
+- [RUNTIME] A block reinstalled every turn by Modify instruction block with `<<$v>>`, ordered above the trigger that sets `$v`, showed the value from two turn-ends earlier; the same text written `<=$v=>` showed the latest value. One world, eight turns, Dolphin.
+- [RUNTIME] A list-rooted buffer with "append-only inbox" wording and a library-style merge landed 5 of 11 expected changes in 12 turns (Dolphin), each only after IW's auto-repair ("Could not apply $push at 'entries' … parent is a list"). The record-rooted copy with the same wording landed 4 of 11: clean until the AI wrote two rows as one nested list item, after which its `.entries.any(name.exists())` merge never fired again.
+- [RUNTIME] An AI-updated text tag tracker ("judge only this turn; tags or None"), reset to None by a final script, carried no tag into later turns across eight turns.
 - [RUNTIME] Direct active templates reevaluate. Ordinary interpolation installed through Modify instruction block snapshots its value; deferred `<=...=>` references stay live. Nested expression text stored in a tracker is not evaluated recursively.
 - [RUNTIME] `<<=...=>>` stays literal in messages, installed blocks and trackers. A trigger that sets a tracker to `<=x=>` stores `<<x>>`, which the tracker panel and editor show evaluated each turn; block interpolation of that tracker inserts the raw `<<x>>`. Saving the tracker editor writes displayed values back, freezing such trackers. A hand-typed `<=x=>` becomes `<<x>>` after the next turn and is shown raw.
 - [DEVELOPER, unofficial] In an informal Discord comment (October 2026), not official documentation, the IW developer called `<=...=>` a *postponed evaluation expression*. Its intended use is a trigger that sets a tracker to it, as above. The developer also suggested that a tracker set by hand to `<=...=>` shows a different value on each client view; in testing, the panel, Show changes and the editor agreed within a turn.
@@ -390,5 +400,45 @@ The schema and validator are a partial compatibility profile.
 END OF DOCUMENT: reference/Known-Limits.md
 
 ===== END FILE: reference/Known-Limits.md =====
+
+===== BEGIN FILE: reference/Import-Integrity.md =====
+# Import and reference integrity
+
+An importable world needs both valid JSON structure and correctly linked objects. Tracker IDs, display names and PawScript variable names serve different purposes. Native effects target tracker IDs; scripts use variableName. Preserve IDs when editing, and remap every corresponding reference when combining examples.
+
+## Identifier convention
+
+Preserve existing IDs when editing. For new trackers, use a unique nine-character ASCII alphanumeric ID, following the editor-style form used by the import-tested examples. Use explicit descriptive snake_case variableName values in scripts and descriptive display names in the editor. This is the kit's authoring convention, not a claim that other ID formats are invalid or that length alone guarantees import behavior. Generate IDs in code and check collisions; without tools, check each newly introduced ID and reference manually. New triggers/blocks/PCs can use the same convention. When combining worlds, remap every explicit reference consistently.
+
+The supplied single-choice world preserves its IDs and binding through a fresh import. Inspect native target dropdowns after importing a composed world; schema validation cannot predict importer behavior for every construction.
+
+## Before import
+
+- Serialize the complete world as JSON ending at its final closing brace, without a trailing newline.
+- Run the validator on that exact file. Resolve missing or duplicate IDs and mismatched target references.
+- Review native YAML paths against the tracker's declared initial structure and intended operation. The editor can accept unchecked paths without warning. Removing a nonexistent key or appending to a numeric path may be syntactically valid but semantically wrong. Dynamic paths may require runtime inspection rather than a blanket validation error.
+- Review script references separately: structural validation does not execute PawScript or prove its paths exist.
+- Give every tracker a `description` (it may be empty). Without it, import reports success and then the editor rebuild fails with a KeyError.
+- Convert legacy bare-array prerequisites/blockers and blank PawScript conditions to native object shape. Import drops them, and the trigger silently loses that gate.
+
+## After import
+
+A round trip of well-formed native JSON is byte-identical, so any change after import points at a normalization (ID reminting, dropped gates, scope repair, registry population). Save and inspect affected target controls. An invalid-value target is a binding failure even if the original JSON had consistent references. Export the imported world and validate that export when diagnosing discrepancies. Preserve the untouched export before repairing a suspect target so source and imported IDs can be compared.
+
+For a native input, confirm the current target value after submitting an answer. Correctly bound single-answer Choice and Request Input effects update immediately, and subsequent ordered triggers can read the result in the same turn. Their follow-up messages can render above the question/answer receipt. The live-world editor's initialValue remains configuration, not the current runtime value.
+
+## Editing an existing playthrough
+
+Base worlds and live games are separate copies. Changes to player characters or Other Characters in the live-world editor do not affect that playthrough; already-fired effects are not retroactively rewritten. Use Save as new world, or export the live JSON and import it over the intended base, to reuse live-world edits in future games. Image-style changes can require save/reload before their export reflects the editor.
+
+## Read-only source/import comparison
+
+[import_audit.py](../tools/import_audit.py) compares original and native-exported worlds, preserves hashes and reports possible tracker identity changes plus references to removed targets. It never repairs or remaps automatically. See [Story tools](Story-Tools.md) for usage.
+
+---
+
+END OF DOCUMENT: reference/Import-Integrity.md
+
+===== END FILE: reference/Import-Integrity.md =====
 
 END OF DOCUMENT: chat/IW-Behavior.txt
