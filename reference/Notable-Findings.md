@@ -68,7 +68,11 @@ The Infinite Worlds behavior most likely to surprise an author or break a world,
 47. **Cost per turn grows with story length** and depends heavily on the model; see [Current-AI-Profiles.json](Current-AI-Profiles.json).
 48. **One input form per turn is safest.** A turn with two forms once showed narration without the forms and was not saved. (Two plain Request Input forms from separate triggers on one turn worked in a later probe; the earlier failure combined one with a malformed candidate.)
 49. **A tracker-detail change in the same trigger as Request Input is silently lost.** Modify tracked item details (for example switching automatic updating on) does nothing when its trigger also asks for input, while messages and scripts in that trigger still run. Put the change in its own trigger with the same condition. Switching automatic updating on and off otherwise works, from the next turn.
-50. **An AI-written buffer whose whole value is a list loses updates.** Root it in a record (`entries: []`) and have scripts read and clear `.entries`. Ask for complete entries of changed characters, not "only changed fields": once the buffer is cleared, a field patch has nothing to apply to.
+50. **An AI-written buffer whose whole value is a list loses updates.** Root it in a record (`entries: []`) and have scripts read and clear `.entries`. Ask for complete entries of changed characters, not "only changed fields": once the buffer is cleared, a field patch has nothing to apply to. "Append-only" wording does not rescue a list root.
+51. **A record-rooted buffer can jam on one nested row.** If the AI writes rows as a list inside `entries`, a merge gated on `.entries.any(name.exists())` never fires again and every later update piles up. Gate on a non-empty inbox and drop or unwrap non-record items.
+52. **A block reinstalled every turn lags behind triggers below it.** Its `<<...>>` values freeze when its trigger runs. Order the triggers that compute those values above it, or write `<=...=>`.
+53. **`$game.ai_model` is the display name, and text `=` is case-sensitive.** On Dolphin, `= "Dolphin"` is true and `= "dolphin"` false.
+54. **Some native fields take live expressions.** A tracker condition's required value can be `$variable`, a random chance can be an expression, and numeric add/subtract accepts dice text such as `2d3`; each is evaluated every time. Templates in a tracker's update instructions are also evaluated live.
 
 ---
 

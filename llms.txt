@@ -28,14 +28,14 @@ Read only what the task needs; Authoring-Prompt.md says which guide covers which
 - [reference/PawScript.md](https://iw-builder.github.io/reference/PawScript.md) (18 KB): PawScript language guide: syntax, collections, randomness, formatting, debugging, system roots and common mistakes.
 - [reference/Portable-Banks.md](https://iw-builder.github.io/reference/Portable-Banks.md) (8 KB): Data mode: portable character/data bank format, dependencies, full-content build reports and data_bank.py commands.
 - [reference/README.md](https://iw-builder.github.io/reference/README.md) (2 KB): Human-friendly index of the reference guides.
-- [reference/Recipes.md](https://iw-builder.github.io/reference/Recipes.md) (12 KB): Ways to combine features: situation triggers, thresholds, choices, optional blocks, dynamic content, request/commit and guarded state patterns.
+- [reference/Recipes.md](https://iw-builder.github.io/reference/Recipes.md) (15 KB): Ways to combine features: situation triggers, thresholds, choices, optional blocks, dynamic content, request/commit, guarded state and turn-state patterns.
 - [reference/Schema.md](https://iw-builder.github.io/reference/Schema.md) (17 KB): Export structure: field groups, trackers, starting values, condition and effect payloads, comparators and value-effect operations.
 - [reference/Story-Tools.md](https://iw-builder.github.io/reference/Story-Tools.md) (4 KB): Import comparison and story-text extraction/merge tools: commands and limits.
 - [reference/Trackers.md](https://iw-builder.github.io/reference/Trackers.md) (7 KB): Tracker fields, data types, visibility, update ownership, starting values and memory/context cost.
 - [reference/Trigger-Catalog.md](https://iw-builder.github.io/reference/Trigger-Catalog.md) (7 KB): Every identified trigger condition and effect type in one table. Check it before saying a trigger can't do something.
 - [reference/Triggers.md](https://iw-builder.github.io/reference/Triggers.md) (10 KB): Trigger timing flags, ordering, effect semantics, choosing native effects or PawScript, and start-of-game restrictions.
-- [reference/Notable-Findings.md](https://iw-builder.github.io/reference/Notable-Findings.md) (10 KB): Plain-language list of the behavior most likely to surprise an author or break a world, with what to do.
-- [reference/Verified-Behavior.md](https://iw-builder.github.io/reference/Verified-Behavior.md) (19 KB): Consolidated runtime findings: triggers, imports, PawScript, visibility, memory, forms, images and endings.
+- [reference/Notable-Findings.md](https://iw-builder.github.io/reference/Notable-Findings.md) (11 KB): Plain-language list of the behavior most likely to surprise an author or break a world, with what to do.
+- [reference/Verified-Behavior.md](https://iw-builder.github.io/reference/Verified-Behavior.md) (21 KB): Consolidated runtime findings: triggers, imports, PawScript, visibility, memory, forms, images and endings.
 
 ## Examples
 
@@ -148,8 +148,8 @@ Single-file bundles for chats without web access or with tool limits. Web-browsi
 
 - [chat/index.html](https://iw-builder.github.io/chat/) (92 KB): HTML page containing IW-Authoring-Guide.txt, with links to the companion editions.
 - [chat/IW-Authoring-Guide.txt](https://iw-builder.github.io/chat/IW-Authoring-Guide.txt) (88 KB): Combined text, start here: prompt, template, Evidence, Craft, Trackers, Triggers, Trigger-Catalog, Portable-Banks and library Integration.
-- [chat/IW-Technical-Reference.txt](https://iw-builder.github.io/chat/IW-Technical-Reference.txt) (88 KB): Combined text: Schema, PawScript, Capabilities, Recipes, Import-Integrity, Default Evaluation and AI profile IDs.
-- [chat/IW-Behavior.txt](https://iw-builder.github.io/chat/IW-Behavior.txt) (56 KB): Combined text: Notable-Findings, Editor-UI, Verified-Behavior and Known-Limits.
+- [chat/IW-Technical-Reference.txt](https://iw-builder.github.io/chat/IW-Technical-Reference.txt) (87 KB): Combined text: Schema, PawScript, Capabilities, Recipes, Default Evaluation and AI profile IDs.
+- [chat/IW-Behavior.txt](https://iw-builder.github.io/chat/IW-Behavior.txt) (62 KB): Combined text: Notable-Findings, Editor-UI, Verified-Behavior, Known-Limits and Import-Integrity.
 - [chat/IW-Payloads.txt](https://iw-builder.github.io/chat/IW-Payloads.txt) (40 KB): Combined text: payload cookbook (every condition and effect) and the example index. Small and essential for mechanics.
 - [chat/IW-Mechanics-Examples.txt](https://iw-builder.github.io/chat/IW-Mechanics-Examples.txt) (101 KB): Combined text: complete mechanics example worlds (recipes, optional block, starting values, showcase).
 - [chat/IW-Narrative-Examples.txt](https://iw-builder.github.io/chat/IW-Narrative-Examples.txt) (102 KB): Combined text: complete narrative example worlds (ensemble romance, fantasy expedition, contained horror).

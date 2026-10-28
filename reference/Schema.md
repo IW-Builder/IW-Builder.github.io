@@ -65,12 +65,12 @@ A condition node is either a leaf (`category: "condition"` with type and data) o
 |-|-|
 |triggerOnPawScript|Bare expression STRING, without `<< >>`; deterministic check of current state|
 |triggerOnEvent|Scenario STRING interpreted by AI; flexible but subject to false positives/negatives. Must match an entry in the root `conditions` registry exactly; multiple triggers can reuse each Scenario. Registry size: see [Triggers.md](Triggers.md)|
-|triggerOnTrackedItem|Object: trackedItemID, inequality, requiredValue, textComparison; target uses tracker ID, not variable name. See Comparator fields|
+|triggerOnTrackedItem|Object: trackedItemID, inequality, requiredValue, textComparison; target uses tracker ID, not variable name. requiredValue may be a `$variable`, read when checked. See Comparator fields|
 |triggerOnTurn|Native string or numeric turn threshold|
 |triggerOnCharacter|Array of possibleCharacters characterId references|
 |triggerPrereqs|Object: prereqs array of trigger IDs, firedThisTurn boolean|
 |triggerBlockers|Object: blockers array of trigger IDs, firedThisTurn boolean|
-|triggerOnRandomChance|Success percentage as a STRING: numeric literal, variable or PawScript expression; "50" means a 50% chance|
+|triggerOnRandomChance|Success percentage as a STRING: numeric literal, variable or PawScript expression, re-evaluated at each check; "50" means a 50% chance|
 
 PawScript conditions are an option when useful, not a requirement to replace native conditions.
 
@@ -109,7 +109,7 @@ Other schema-defined effects change PC name/description, objective, main instruc
 |action add|Numeric addition or text append according to target type|
 |action subtract|Numeric subtraction; the native text-removal operation uses this serialized action|
 |action replace|Replace matched text newValue with replaceWith|
-|newValue|String payload; numeric content is still serialized as text|
+|newValue|String payload; numeric content is still serialized as text. Numeric add/subtract also accepts dice text such as `2d3`, rolled on each execution|
 |path|Plain dotted path, e.g. wallet.coins; empty targets the whole tracker|
 |updateMode|`path` edits a selected path; `replace` replaces the whole YAML value|
 |action append|Add a value to the list at path; distinct from numeric/text add|
