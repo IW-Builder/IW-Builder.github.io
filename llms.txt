@@ -151,7 +151,7 @@ Single-file bundles for chats without web access or with tool limits. Web-browsi
 - [chat/index.html](https://iw-builder.github.io/chat/) (92 KB): HTML page containing IW-Authoring-Guide.txt, with links to the companion editions.
 - [chat/IW-Authoring-Guide.txt](https://iw-builder.github.io/chat/IW-Authoring-Guide.txt) (88 KB): Combined text, start here: prompt, template, Evidence, Craft, Trackers, Triggers, Trigger-Catalog, Portable-Banks and library Integration.
 - [chat/IW-Technical-Reference.txt](https://iw-builder.github.io/chat/IW-Technical-Reference.txt) (87 KB): Combined text: Schema, PawScript, Capabilities, Recipes, Default Evaluation and AI profile IDs.
-- [chat/IW-Behavior.txt](https://iw-builder.github.io/chat/IW-Behavior.txt) (62 KB): Combined text: Notable-Findings, Editor-UI, Verified-Behavior, Known-Limits and Import-Integrity.
+- [chat/IW-Behavior.txt](https://iw-builder.github.io/chat/IW-Behavior.txt) (63 KB): Combined text: Notable-Findings, Editor-UI, Verified-Behavior, Known-Limits and Import-Integrity.
 - [chat/IW-Payloads.txt](https://iw-builder.github.io/chat/IW-Payloads.txt) (40 KB): Combined text: payload cookbook (every condition and effect) and the example index. Small and essential for mechanics.
 - [chat/IW-Mechanics-Examples.txt](https://iw-builder.github.io/chat/IW-Mechanics-Examples.txt) (101 KB): Combined text: complete mechanics example worlds (recipes, optional block, starting values, showcase).
 - [chat/IW-Narrative-Examples.txt](https://iw-builder.github.io/chat/IW-Narrative-Examples.txt) (102 KB): Combined text: complete narrative example worlds (ensemble romance, fantasy expedition, contained horror).
