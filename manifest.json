@@ -1,6 +1,6 @@
 {
   "algorithm": "sha256",
-  "generatedAt": "2026-10-28T23:59:52+00:00",
+  "generatedAt": "2026-10-29T03:31:50+00:00",
   "files": [
     {
       "path": "Authoring-Prompt.md",
@@ -29,8 +29,8 @@
     },
     {
       "path": "chat/IW-Behavior.txt",
-      "bytes": 63921,
-      "sha256": "8a3201aff0b155028152432e26f1963136d823c8a5483e426205763e0a7e5da3"
+      "bytes": 64361,
+      "sha256": "bde8d9197c97382cd662dee445bb299f093aef1d31394cfaf96d9baa7f6676f7"
     },
     {
       "path": "chat/IW-Mechanics-Examples.txt",
@@ -80,7 +80,7 @@
     {
       "path": "chat/sources.json",
       "bytes": 3154,
-      "sha256": "cc5e13237fd7e3c3e9b0cf9f5c81b1bdb5e419c5e5b278f8b69257da455822e1"
+      "sha256": "c1c768b70d9914de8cac438c838fe5717335c5ec6631af7780785be3cfa02301"
     },
     {
       "path": "checker/index.html",
@@ -440,7 +440,7 @@
     {
       "path": "llms.txt",
       "bytes": 26324,
-      "sha256": "ac9a18308d96f326fac16d16955dc3db0b506a9896d1e9518556ed86f2d83fa6"
+      "sha256": "2c3280d2d9bfc2bb0c46bce8d8fe13c3f96063a741bbd47e56ce9e71a59b698c"
     },
     {
       "path": "reference/Capabilities.md",
@@ -464,8 +464,8 @@
     },
     {
       "path": "reference/Editor-UI.md",
-      "bytes": 19523,
-      "sha256": "fa0de0d8ebaec9e36f9e60a4324b73924435e20ef24a7689d3b92bc89c496bda"
+      "bytes": 19963,
+      "sha256": "c6bac926696f2247259f78ca5baa98dda0818a74f3ea3d59fb8eabdac88b9086"
     },
     {
       "path": "reference/Engineering-Tools.md",
