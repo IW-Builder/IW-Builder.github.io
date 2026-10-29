@@ -6,6 +6,7 @@ import json
 import os
 import tempfile
 import unittest
+from unittest import mock
 
 import iw_sort
 
@@ -93,6 +94,63 @@ class SortTest(unittest.TestCase):
             iw_sort.main(["export", self.world_path])
         with self.assertRaises(SystemExit):
             iw_sort.main(["apply", self.world_path, self.path("w.order.txt"), "-o", self.world_path])
+
+
+class AutoTest(unittest.TestCase):
+    """Running with no arguments picks the mode from the files in the folder."""
+
+    def setUp(self):
+        self.dir = tempfile.TemporaryDirectory()
+        self.old_cwd = os.getcwd()
+        os.chdir(self.dir.name)
+
+    def tearDown(self):
+        os.chdir(self.old_cwd)
+        self.dir.cleanup()
+
+    def write_world(self, name):
+        with open(name, "w", encoding="utf-8") as f:
+            json.dump(make_world(), f, indent=2)
+
+    def run_auto(self, answers=()):
+        answers = iter(answers)
+        with mock.patch("builtins.input", lambda prompt="": next(answers, "")), \
+                contextlib.redirect_stdout(io.StringIO()) as out, \
+                contextlib.redirect_stderr(io.StringIO()) as err, \
+                self.assertRaises(SystemExit) as exit_:
+            iw_sort.main([])
+        return exit_.exception.code, out.getvalue() + err.getvalue()
+
+    def test_one_world_exports_then_sorts(self):
+        self.write_world("w.json")
+        code, _ = self.run_auto()
+        self.assertEqual(code, 0)
+        self.assertTrue(os.path.exists("w.order.txt"))
+        # The second run finds the text file and sorts; its own output is not a candidate.
+        code, _ = self.run_auto()
+        self.assertEqual(code, 0)
+        self.assertTrue(os.path.exists("w.sorted.json"))
+        code, out = self.run_auto(["n"])
+        self.assertIn("nothing written", out)
+
+    def test_world_with_text_file_wins_and_plain_txt_matches(self):
+        self.write_world("a.json")
+        self.write_world("b.json")
+        with open("b.txt", "w", encoding="utf-8") as f:
+            f.write("[Trackers]\nY\nX\n")
+        self.run_auto()
+        with open("b.sorted.json", encoding="utf-8") as f:
+            self.assertEqual([t["id"] for t in json.load(f)["trackedItems"]], ["k2", "k1"])
+
+    def test_several_worlds_ask(self):
+        self.write_world("a.json")
+        self.write_world("b.json")
+        with open("notes.json", "w") as f:
+            f.write("[1, 2]")
+        code, out = self.run_auto(["2"])
+        self.assertNotIn("notes.json", out)
+        self.assertTrue(os.path.exists("b.order.txt"))
+        self.assertFalse(os.path.exists("a.order.txt"))
 
 
 if __name__ == "__main__":

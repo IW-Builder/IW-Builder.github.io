@@ -44,12 +44,18 @@ A diff proves what changed, not whether those changes are authorized or correct.
 
 `iw_sort.py` reorders a world's Player Characters, Other Characters, Triggers and Trackers through a plain text list, so you can sort them by cutting and pasting lines instead of dragging items in the editor. Standard library only.
 
+The simplest way is to copy `iw_sort.py` into the folder with your world JSON and double-click it, or run `python iw_sort.py` there with no arguments. The first run writes `WORLD.order.txt`: a `[Player Characters]`, `[Other Characters]`, `[Triggers]` and `[Trackers]` section, each with one name per line. Move lines within their section and save, then run it again: it finds the world and its text file and writes `WORLD.sorted.json`. The input world is never changed.
+
+With no arguments it sorts a world that has a matching `WORLD.order.txt` or `WORLD.txt`, otherwise exports a lone world, and otherwise lists the worlds and asks (a path can also be typed or dragged in). It skips its own `.sorted.json` outputs and asks before replacing an existing output. Delete the text file to export afresh.
+
+The modes can also be named:
+
 ```sh
 python tools/iw_sort.py export WORLD.json
 python tools/iw_sort.py apply WORLD.json WORLD.order.txt
 ```
 
-`export` writes `WORLD.order.txt`: a `[Player Characters]`, `[Other Characters]`, `[Triggers]` and `[Trackers]` section, each with one name per line. Move lines within their section, then `apply` writes `WORLD.sorted.json`. The input world is never changed. Use `-o` to name the output and `--force` to overwrite an existing one.
+Use `-o` to name the output and `--force` to overwrite an existing one; without `--force` these never overwrite.
 
 - Nothing is dropped. An item left out of the list stays at the end of its section, with a warning. A line that matches nothing is reported and ignored, and a section left out is left as it is.
 - Duplicate names are matched in their original order. Blank names appear as `<unnamed>`. Lines starting with `#` are ignored.

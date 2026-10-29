@@ -1,6 +1,6 @@
 {
   "algorithm": "sha256",
-  "generatedAt": "2026-10-28T23:50:40+00:00",
+  "generatedAt": "2026-10-28T23:59:52+00:00",
   "files": [
     {
       "path": "Authoring-Prompt.md",
@@ -64,8 +64,8 @@
     },
     {
       "path": "chat/IW-Tools.txt",
-      "bytes": 135362,
-      "sha256": "dce5d77132dbc6bec5b16e22421b95df6899ed26e92716147bfae846b50e48fb"
+      "bytes": 135975,
+      "sha256": "90b5d06df155da31bc0cee19e77af71ca45ddb13ecadc7de1e8b9091e658c879"
     },
     {
       "path": "chat/README.md",
@@ -80,7 +80,7 @@
     {
       "path": "chat/sources.json",
       "bytes": 3154,
-      "sha256": "c0ad41909515c635b0e7ef48ac8f2ccfb551efdf07ce321f43ccb910ffdac01c"
+      "sha256": "cc5e13237fd7e3c3e9b0cf9f5c81b1bdb5e419c5e5b278f8b69257da455822e1"
     },
     {
       "path": "checker/index.html",
@@ -439,8 +439,8 @@
     },
     {
       "path": "llms.txt",
-      "bytes": 26323,
-      "sha256": "e64c2cc95409a2d53ff4ebb220343b74982510e22c026d242a2b16d408826fc1"
+      "bytes": 26324,
+      "sha256": "ac9a18308d96f326fac16d16955dc3db0b506a9896d1e9518556ed86f2d83fa6"
     },
     {
       "path": "reference/Capabilities.md",
@@ -554,8 +554,8 @@
     },
     {
       "path": "tools/Usage.md",
-      "bytes": 9442,
-      "sha256": "1c4fc022b9e1d92e00dfe140026476634dacae346b7421f4dea55c284aa01625"
+      "bytes": 10055,
+      "sha256": "ed6f1fa33dd51bbfdbdda30e292aa45c18fc75401f72d2962b962040ec992738"
     },
     {
       "path": "tools/Validation-Report.json",
@@ -589,8 +589,8 @@
     },
     {
       "path": "tools/index.html",
-      "bytes": 5336,
-      "sha256": "40da915f7162b9db1fef12d58c39d0cd68840f6209fb8fff9ad024df5ef25ad4"
+      "bytes": 5337,
+      "sha256": "9cc6ce85f3134023af6c9080f37be41ca428951426b7e09183b1cca4fdddc63a"
     },
     {
       "path": "tools/iw-export.schema.json",
@@ -599,8 +599,8 @@
     },
     {
       "path": "tools/iw_sort.py",
-      "bytes": 10949,
-      "sha256": "262d50ada70ee0f526a31fe3ba6c1e01b2beeb6f6e4d231dd0d6bbc4b3744577"
+      "bytes": 15297,
+      "sha256": "f640a1b944b67920254975a590e3176a8141c720570b4f2fc65cc6ceee118350"
     },
     {
       "path": "tools/plot_compile.py",
@@ -634,8 +634,8 @@
     },
     {
       "path": "tools/test_iw_sort.py",
-      "bytes": 4205,
-      "sha256": "06b921b822c0a43ddd6176cec58d237005c94204693837ce0a3e203e1467db3a"
+      "bytes": 6449,
+      "sha256": "0abbe0b16999398e4d4c471e3de0b120f0071bd9bff9c68fc2fb4c0ebce8a364"
     },
     {
       "path": "tools/test_native_compat.py",

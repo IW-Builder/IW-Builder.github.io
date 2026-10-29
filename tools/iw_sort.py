@@ -1,7 +1,15 @@
 #!/usr/bin/env python3
 """Fast custom sorting for Infinite Worlds world JSON files.
 
-Two modes:
+Run it with no arguments (or double-click it) in the folder that holds your
+world, and it works out what to do:
+
+  - a world JSON with a matching text file (MyWorld.order.txt or
+    MyWorld.txt) next to it: apply that order;
+  - otherwise one world JSON: export its names;
+  - anything else: ask which world to use.
+
+Or name the mode yourself:
 
   export  world.json [-o order.txt]
       Write a plain text file listing the names in each sortable category:
@@ -20,9 +28,11 @@ Standard library only. Python 3.8 or later.
 """
 
 import argparse
+import glob
 import json
 import os
 import sys
+import traceback
 from collections import defaultdict, deque
 
 # (section header in the text file, key in the world JSON)
@@ -41,7 +51,8 @@ INTRO = """\
 # Sort order for: {title}
 #
 # Move names up and down inside their [section] by cutting and pasting
-# whole lines. Then run:  python iw_sort.py apply <world.json> <this file>
+# whole lines. Then run iw_sort.py again in this folder (or double-click it)
+# to write the sorted world.
 #
 # Lines starting with # are ignored, as are blank lines.
 # Names left out are kept at the end of their section. A name that appears
@@ -248,11 +259,12 @@ def default_path(world_path, suffix):
     return base + suffix
 
 
-def main(argv=None):
+def build_parser():
     parser = argparse.ArgumentParser(
         description="Sort an Infinite Worlds world's Player Characters, Other Characters, "
-                    "Triggers and Trackers through an editable text file.")
-    sub = parser.add_subparsers(dest="mode", required=True)
+                    "Triggers and Trackers through an editable text file. "
+                    "Run with no arguments to pick the world in the current folder.")
+    sub = parser.add_subparsers(dest="mode")
 
     p = sub.add_parser("export", help="write the names in a world to a text file")
     p.add_argument("world", help="world JSON exported from Infinite Worlds")
@@ -264,15 +276,130 @@ def main(argv=None):
     p.add_argument("order", help="text file made by export, then edited")
     p.add_argument("-o", "--output", help="world JSON to write (default: <world>.sorted.json)")
     p.add_argument("--force", action="store_true", help="overwrite the output if it exists")
+    return parser
 
-    args = parser.parse_args(argv)
+
+def run_apply(world, order, output, force):
+    out = output or default_path(world, ".sorted.json")
+    if os.path.abspath(out) == os.path.abspath(world):
+        sys.exit("error: the output would replace the input world; choose another -o")
+    apply(world, order, out, force)
+
+
+# ---------------------------------------------------------------- no arguments
+
+def ask(prompt):
+    try:
+        return input(prompt).strip()
+    except EOFError:
+        return ""
+
+
+def is_world(path):
+    try:
+        with open(path, encoding="utf-8-sig") as f:
+            data = json.load(f)
+    except (OSError, ValueError):
+        return False
+    return isinstance(data, dict) and any(key in data for _, key in CATEGORIES)
+
+
+def find_worlds(folder):
+    """World JSONs in a folder, leaving out this script's own .sorted.json outputs."""
+    paths = sorted(glob.glob(os.path.join(folder, "*.json")))
+    return [p for p in paths if not p.lower().endswith(".sorted.json") and is_world(p)]
+
+
+def find_order(world):
+    """The text file that goes with a world, if there is one."""
+    for suffix in (".order.txt", ".txt"):
+        path = default_path(world, suffix)
+        if os.path.isfile(path):
+            return path
+    return None
+
+
+def choose_world(worlds):
+    if worlds:
+        print("World files here:")
+        for number, path in enumerate(worlds, 1):
+            mark = "  (has a text file: will sort)" if find_order(path) else ""
+            print("  {}. {}{}".format(number, os.path.basename(path), mark))
+        answer = ask("Pick a number, or type a path to another world: ")
+        if answer.isdigit() and 1 <= int(answer) <= len(worlds):
+            return worlds[int(answer) - 1]
+    else:
+        print("No world JSON found in {}.".format(os.getcwd()))
+        answer = ask("Type or drag in the path to your world JSON: ")
+    path = answer.strip().strip('"').strip("'")
+    if not path:
+        sys.exit("No world chosen.")
+    if not os.path.isfile(path):
+        sys.exit("error: {} not found".format(path))
+    return path
+
+
+def confirm_overwrite(path):
+    if not os.path.exists(path):
+        return False
+    answer = ask("{} already exists. Replace it? [Y/n] ".format(os.path.basename(path)))
+    if answer.lower() in ("n", "no"):
+        sys.exit("Stopped; nothing written.")
+    return True
+
+
+def auto():
+    """Pick the mode from the files in the current folder (or the script's)."""
+    folder = os.getcwd()
+    worlds = find_worlds(folder)
+    script_folder = os.path.dirname(os.path.abspath(__file__))
+    if not worlds and os.path.abspath(script_folder) != os.path.abspath(folder):
+        folder, worlds = script_folder, find_worlds(script_folder)
+
+    # Sorting comes first: a world with its text file means the edit is done.
+    with_order = [w for w in worlds if find_order(w)]
+    if len(with_order) == 1:
+        world = with_order[0]
+    elif len(worlds) == 1:
+        world = worlds[0]
+    else:
+        world = choose_world(worlds)
+
+    order = find_order(world)
+    if order:
+        out = default_path(world, ".sorted.json")
+        print("Sorting {} to match {}".format(os.path.basename(world), os.path.basename(order)))
+        run_apply(world, order, out, confirm_overwrite(out))
+    else:
+        out = default_path(world, ".order.txt")
+        print("Exporting names from {}".format(os.path.basename(world)))
+        export(world, out, confirm_overwrite(out))
+        print("Edit {} and run this again to sort the world.".format(os.path.basename(out)))
+
+
+def main(argv=None):
+    args = build_parser().parse_args(argv)
     if args.mode == "export":
         export(args.world, args.output or default_path(args.world, ".order.txt"), args.force)
+    elif args.mode == "apply":
+        run_apply(args.world, args.order, args.output, args.force)
     else:
-        out = args.output or default_path(args.world, ".sorted.json")
-        if os.path.abspath(out) == os.path.abspath(args.world):
-            sys.exit("error: the output would replace the input world; choose another -o")
-        apply(args.world, args.order, out, args.force)
+        code = 0
+        try:
+            auto()
+        except SystemExit as e:
+            if isinstance(e.code, str):
+                print(e.code, file=sys.stderr)
+                code = 1
+            else:
+                code = e.code or 0
+        except Exception:
+            traceback.print_exc()
+            code = 1
+        # Keep a double-clicked console window open long enough to read.
+        if sys.stdin is not None and sys.stdin.isatty():
+            ask("Press Enter to close.")
+        sys.exit(code)
 
 
 if __name__ == "__main__":
