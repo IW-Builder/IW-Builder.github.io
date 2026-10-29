@@ -354,6 +354,7 @@ DESCRIPTIONS = {
     'tools/story_export.py': 'Plan, build and verify reviewed extractions of IW story exports; merges only non-conflicting histories.',
     'tools/plot_compile.py': 'Builds a fresh world from a literal-Scenario prerequisite plan.',
     'tools/example-plot-plan.json': 'Sample input for plot_compile.py.',
+    'tools/iw_sort.py': 'Exports PC, NPC, trigger and tracker names to a text list and reorders a world to match the edited list. Standard library only.',
     'tools/Validation-Report.json': 'Latest package check results (maintainer output).',
     'tools/build_distribution.py': 'Maintainer: rebuilds the homepage, combined text files, folder pages, llms.txt, checker and manifest.',
     'tools/check_package.py': 'Maintainer: validates every example world and local link; writes Validation-Report.json.',
@@ -363,6 +364,7 @@ DESCRIPTIONS = {
     'tools/test_engineering.py': 'Maintainer tests for the browser harness and plot compiler.',
     'tools/test_native_compat.py': 'Maintainer tests for native export compatibility.',
     'tools/test_story_export.py': 'Maintainer tests for story_export.py.',
+    'tools/test_iw_sort.py': 'Maintainer tests for iw_sort.py.',
     # Checker
     'checker/index.html': "Browser validator: paste a world or a model's whole reply; runs validate_iw_export.py locally, joins numbered chunks and copies a report for the AI.",
 }
