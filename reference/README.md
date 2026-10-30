@@ -26,6 +26,7 @@ You do not need to read these guides before making a world. They are here when y
 ## Current behavior, limits and editor help
 
 - [Notable findings](Notable-Findings.md): The behavior most likely to surprise you or break a world, in plain language.
+- [Estimating cost](Cost.md): What a turn costs on each model, why players' costs differ, and how to estimate a world's cost.
 - [Editor and UI reference](Editor-UI.md): Labels, menus, visibility, import and troubleshooting.
 - [Consolidated behavior](Verified-Behavior.md): What has been tested in IW and the results.
 - [Known limits](Known-Limits.md): See what remains uncertain or needs checking in play.

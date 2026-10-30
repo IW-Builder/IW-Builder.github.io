@@ -1,11 +1,11 @@
 {
   "algorithm": "sha256",
-  "generatedAt": "2026-10-29T03:31:50+00:00",
+  "generatedAt": "2026-10-30T16:24:13+00:00",
   "files": [
     {
       "path": "Authoring-Prompt.md",
-      "bytes": 21697,
-      "sha256": "83ca22632c76caf811edd20a74511c663ef5d1e55c5716f80ce4050b216f268f"
+      "bytes": 21687,
+      "sha256": "63df952cc3e1e2e6215302b06137d21e1d91612a6237488dacbc353c5d96c44f"
     },
     {
       "path": "LICENSE",
@@ -14,8 +14,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 9921,
-      "sha256": "ac9c94a7774a0906086fa0bbbcefb97e2196254fc23c51b7031bdea6cfd0d30a"
+      "bytes": 10017,
+      "sha256": "8c2cacab371c1c96ad284779e889108fd3b201dec6ea782abda149cf5342bf1e"
     },
     {
       "path": "World-Template.json",
@@ -24,63 +24,63 @@
     },
     {
       "path": "chat/IW-Authoring-Guide.txt",
-      "bytes": 89982,
-      "sha256": "e6c5e76eb86f61e907ea8d7574d58711ac7172daea2345cdc3177dd2e0b1e159"
+      "bytes": 89991,
+      "sha256": "a458b2f7d032a24f2fb0b2b3627a12fd5cdfa1d215b13c2189536cb5ce2e83a6"
     },
     {
       "path": "chat/IW-Behavior.txt",
-      "bytes": 64361,
-      "sha256": "bde8d9197c97382cd662dee445bb299f093aef1d31394cfaf96d9baa7f6676f7"
+      "bytes": 74677,
+      "sha256": "e721e9a27a89afaa93d052ec17a21aa721bfa41c9a2ea885cf84748b1c538afb"
     },
     {
       "path": "chat/IW-Mechanics-Examples.txt",
-      "bytes": 103774,
-      "sha256": "86235f626d44bf7981cdfe0051f34da61c5dc66b28fcfcaafeb262386bba0beb"
+      "bytes": 103793,
+      "sha256": "3779de07d3479c4f669cb8e11aece50be6e7ce263e0e147583404838d763bbf0"
     },
     {
       "path": "chat/IW-Narrative-Examples.txt",
-      "bytes": 103975,
-      "sha256": "f22159e1287d86cd23d7cf3fa384ce4b1e5fe5bf4de8847fda1273667dcf7721"
+      "bytes": 103994,
+      "sha256": "347445c63d598171ba988eec5760ab18df02b9c9d2c7c954cfb9558918577e13"
     },
     {
       "path": "chat/IW-Payloads.txt",
-      "bytes": 41343,
-      "sha256": "46c94ae6e1bbe35fc66edc14ea571258f8d1d569efb229279b42b28c5b100822"
+      "bytes": 41362,
+      "sha256": "00ad664601c4b861097b15f75175526160a1f59403f3a1b5cb5e6f8b14d1de47"
     },
     {
       "path": "chat/IW-Sample-Blocks.txt",
-      "bytes": 62517,
-      "sha256": "f6b83f2f9818db9e1fa3c6e2efafc4f25b47848d403a0dcb5e0d9d51fc94db2b"
+      "bytes": 62536,
+      "sha256": "3aed90637e38b9d6333387edaa06dcc72e5048f1b512b58e3271bebdd4d3c0a1"
     },
     {
       "path": "chat/IW-Storymaster.txt",
-      "bytes": 38169,
-      "sha256": "1b0887a715c89366d2ff52600193932e84ea97eef7fb4ce3d4ff1c80a767e159"
+      "bytes": 38188,
+      "sha256": "c4dfa6aa659f2828a5b8adc65555a0e8c4705e5bb2e90d89909445ea59d25d48"
     },
     {
       "path": "chat/IW-Technical-Reference.txt",
-      "bytes": 88919,
-      "sha256": "99c3cc331d351e0cadea3dc5982e7122188cba61e89fe01bc023b67aacb61468"
+      "bytes": 88938,
+      "sha256": "b318ca45a276ce438e0d2e56fb6ebc34ec633e713c70c105bfaf9e0b9bccf979"
     },
     {
       "path": "chat/IW-Tools.txt",
-      "bytes": 135975,
-      "sha256": "90b5d06df155da31bc0cee19e77af71ca45ddb13ecadc7de1e8b9091e658c879"
+      "bytes": 135994,
+      "sha256": "0b5cc0e761d31519584c996cd71f11ce7b5f4cddb0c497a8c7111d79bcbfbb98"
     },
     {
       "path": "chat/README.md",
-      "bytes": 2418,
-      "sha256": "2080409e3be517a1f2c73887be96fce023fb8ca7810c486ebd79ac5abba86d7c"
+      "bytes": 2435,
+      "sha256": "1a84cc01f67dd3e42b402b68f4683e647d88f0b0960ad6b9eb00911b530192a7"
     },
     {
       "path": "chat/index.html",
-      "bytes": 93797,
-      "sha256": "4d5432ac3c4d8964c2fdabf58ea0ac1d63c68e7a5fe8fea321e5435bea8e91ea"
+      "bytes": 93806,
+      "sha256": "f59f8a18fb63a7290f44bfd2f412fc6bf4d75f9c518fbf13c7dd752554bf6c01"
     },
     {
       "path": "chat/sources.json",
-      "bytes": 3154,
-      "sha256": "c1c768b70d9914de8cac438c838fe5717335c5ec6631af7780785be3cfa02301"
+      "bytes": 3181,
+      "sha256": "d43a96543184eb6d8900845384b414874a2c8e3ce5f32991839f7361edef2f57"
     },
     {
       "path": "checker/index.html",
@@ -409,8 +409,8 @@
     },
     {
       "path": "index.html",
-      "bytes": 23357,
-      "sha256": "5c3a90ddd719c204bec8ecc5a1bf7368d5180729c8c9e7ee31cc5075860a1aaf"
+      "bytes": 23347,
+      "sha256": "4c173c41140647ed815bb5d7a2821f86c79ade475ea0bcd319a166fe50265350"
     },
     {
       "path": "library/Integration.md",
@@ -439,13 +439,18 @@
     },
     {
       "path": "llms.txt",
-      "bytes": 26324,
-      "sha256": "2c3280d2d9bfc2bb0c46bce8d8fe13c3f96063a741bbd47e56ce9e71a59b698c"
+      "bytes": 26571,
+      "sha256": "c8a172d5a8dac6a9beff9b55195f987b7c9a042d6b56b1fbca81ecb812226edc"
     },
     {
       "path": "reference/Capabilities.md",
       "bytes": 23278,
       "sha256": "af79071d530799d9935f235623296dacbca91756cda0f124532bf92ecca56d3a"
+    },
+    {
+      "path": "reference/Cost.md",
+      "bytes": 10125,
+      "sha256": "ad40a170ac5a91077ae935a0cef0c6065aa46999072200c720e21eb445f88052"
     },
     {
       "path": "reference/Craft.md",
@@ -464,8 +469,8 @@
     },
     {
       "path": "reference/Editor-UI.md",
-      "bytes": 19963,
-      "sha256": "c6bac926696f2247259f78ca5baa98dda0818a74f3ea3d59fb8eabdac88b9086"
+      "bytes": 20051,
+      "sha256": "f5872e84e989f292bf4159dc8b24ef8dbc8a1e264a4044ccefd13ebd2b73a345"
     },
     {
       "path": "reference/Engineering-Tools.md",
@@ -504,8 +509,8 @@
     },
     {
       "path": "reference/README.md",
-      "bytes": 2371,
-      "sha256": "66777edf9820a95ede014e16fbeae333bcf9d0b4eef246ff10b3cf5092acae4e"
+      "bytes": 2497,
+      "sha256": "cb89f0895fd8caffc4e1e1fad824af2b156b87d259a4fb619bc44cb7357a11a7"
     },
     {
       "path": "reference/Recipes.md",
@@ -544,8 +549,8 @@
     },
     {
       "path": "reference/index.html",
-      "bytes": 5902,
-      "sha256": "cd4b23776648c506e05a9be04b125a3c5decc87c9e0c29fbad53acba4f00e997"
+      "bytes": 6194,
+      "sha256": "d6ae6c2c0a88a2bfaba33e6b3b23c4016a128b7eeae7bf0116fc31521b60bec6"
     },
     {
       "path": "tools/README.md",
@@ -564,8 +569,8 @@
     },
     {
       "path": "tools/build_distribution.py",
-      "bytes": 29366,
-      "sha256": "c041aaf6876a9f8dcc193479387f29643f8500d47a882b1f5f59e85ff334c88d"
+      "bytes": 29591,
+      "sha256": "21238bad50a6b5b281c9acefaaf3159ef06abe5f8ca0f1a5f8d75b754f3b84fd"
     },
     {
       "path": "tools/check_package.py",

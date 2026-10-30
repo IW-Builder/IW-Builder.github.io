@@ -97,7 +97,7 @@ Trackers can be added, edited and deleted in the sandbox, and runs use those val
 
 The header shows the credit balance and the remaining daily free turns (3 per day observed). **Credits > Credit activity >** a turn **> Cost breakdown** splits Inputs and Outputs into instructions, trackers, STM (recent story), LTM (summaries) and other; thinking models add an output category. LTM first appears after the first summary compression, as STM drops. Breakdown values are rounded decimals: the list can differ from the balance change by a credit.
 
-Cost per turn depends on the model (the picker shows a typical range; see [Current-AI-Profiles.json](Current-AI-Profiles.json)) and rises with story length: Lynx turns went from about 20 to about 40 credits over nine turns. Saving Illustration details generates an image for about 4 credits. A failed opening is refunded. Continue game after an ending costs nothing. A turn interrupted by reload can stay charged without being kept.
+Cost per turn depends on the model (the picker shows a typical range; see [Current-AI-Profiles.json](Current-AI-Profiles.json)) and rises with story length: Lynx turns went from about 20 to about 40 credits over nine turns. Saving Illustration details generates an image for about 4 credits. A failed opening is refunded. Continue game after an ending costs nothing. A turn interrupted by reload can stay charged without being kept. For per-model rates and how to estimate a world's cost, see [Estimating cost](Cost.md).
 
 ## Characters, images and models
 

@@ -39,6 +39,7 @@ GROUPS = {
     'IW-Behavior.txt': [
         'reference/Notable-Findings.md',
         'reference/Editor-UI.md',
+        'reference/Cost.md',
         'reference/Verified-Behavior.md',
         'reference/Known-Limits.md',
         'reference/Import-Integrity.md',
@@ -304,7 +305,7 @@ DESCRIPTIONS = {
     'chat/index.html': 'HTML page containing IW-Authoring-Guide.txt, with links to the companion editions.',
     'chat/IW-Authoring-Guide.txt': 'Combined text, start here: prompt, template, Evidence, Craft, Trackers, Triggers, Trigger-Catalog, Portable-Banks and library Integration.',
     'chat/IW-Technical-Reference.txt': 'Combined text: Schema, PawScript, Capabilities, Recipes, Default Evaluation and AI profile IDs.',
-    'chat/IW-Behavior.txt': 'Combined text: Notable-Findings, Editor-UI, Verified-Behavior, Known-Limits and Import-Integrity.',
+    'chat/IW-Behavior.txt': 'Combined text: Notable-Findings, Editor-UI, Cost, Verified-Behavior, Known-Limits and Import-Integrity.',
     'chat/IW-Payloads.txt': 'Combined text: payload cookbook (every condition and effect) and the example index. Small and essential for mechanics.',
     'chat/IW-Mechanics-Examples.txt': 'Combined text: complete mechanics example worlds (recipes, optional block, starting values, showcase).',
     'chat/IW-Narrative-Examples.txt': 'Combined text: complete narrative example worlds (ensemble romance, fantasy expedition, contained horror).',
@@ -315,6 +316,7 @@ DESCRIPTIONS = {
     'chat/sources.json': 'Which source files make up each combined text file, with hashes.',
     # Reference
     'reference/Capabilities.md': 'Turn lifecycle, Skills, NPC cards and keyword blocks, specialist requests, template timing, endings, images, video and model-specific blocks.',
+    'reference/Cost.md': 'Estimating credits: per-model cost table (words, credits per 1k chars, thinking), what is billed, how play style changes cost, and rough estimates by world size.',
     'reference/Craft.md': 'Narrative design: what goes in each field, openings, character cards, romance and adult worlds, prose style, names, example worlds by genre.',
     'reference/Current-AI-Profiles.json': 'Storyteller models, current and retired: block IDs, underlying real-world model, isCurrent flag and typical credits per turn.',
     'reference/Default-Evaluation.txt': "IW's built-in Evaluation instructions, verbatim; the baseline for a custom Evaluation.",
