@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>IW Cost Exporter</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Spectral:wght@500;700&family=Source+Sans+3:wght@400;600&family=JetBrains+Mono:wght@400&display=swap">
+<style>
+/* Layout: one narrow column, an install card for the bookmark, then numbered steps (a real sequence). */
+:root{
+  --bg:#f6f4fb; --surface:#ffffff; --fg:#22203a; --muted:#5d5878; --line:#dcd7ee;
+  --accent:#5b4bc4; --accent-fg:#ffffff; --gold:#a8761c;
+  --display:"Spectral", Georgia, serif; --body:"Source Sans 3", system-ui, sans-serif; --mono:"JetBrains Mono", ui-monospace, monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#14121f; --surface:#1d1a2e; --fg:#ebe8f7; --muted:#a7a1c4; --line:#352f52;
+  --accent:#9d8ff0; --accent-fg:#14121f; --gold:#e0b45a; color-scheme:dark }}
+:root[data-theme="dark"]{
+  --bg:#14121f; --surface:#1d1a2e; --fg:#ebe8f7; --muted:#a7a1c4; --line:#352f52;
+  --accent:#9d8ff0; --accent-fg:#14121f; --gold:#e0b45a; color-scheme:dark }
+body{background:var(--bg);color:var(--fg);font:16px/1.6 var(--body)}
+main{max-width:640px;margin:0 auto;padding-block:40px 56px;padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px));display:grid;gap:28px}
+h1{font:700 2.1rem/1.15 var(--display);margin:0;text-wrap:balance}
+h2{font:700 1.25rem/1.3 var(--display);margin:0 0 10px}
+p{margin:0}
+.lede{color:var(--muted);max-width:60ch}
+.install{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:22px;display:grid;gap:14px}
+.bm{justify-self:start;display:inline-flex;align-items:center;gap:10px;padding:12px 18px;border-radius:999px;background:var(--accent);color:var(--accent-fg);font-weight:600;text-decoration:none;cursor:grab;border:2px dashed transparent}
+.bm:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+.coin{width:18px;height:18px;border-radius:50%;background:var(--gold);box-shadow:inset 0 0 0 3px rgba(0,0,0,.18)}
+.hint{color:var(--muted);font-size:.95rem}
+details{border-top:1px solid var(--line);padding-top:12px}
+summary{cursor:pointer;font-weight:600}
+summary:focus-visible,button:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.alt{display:grid;gap:10px;margin-top:10px}
+button{justify-self:start;font:600 .95rem var(--body);padding:8px 14px;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--fg);cursor:pointer}
+textarea{width:100%;box-sizing:border-box;height:90px;font:12px/1.4 var(--mono);background:var(--bg);color:var(--fg);border:1px solid var(--line);border-radius:8px;padding:8px}
+ol{margin:0;padding-left:1.4em;display:grid;gap:10px}
+li::marker{color:var(--accent);font-weight:700}
+.files{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;font-size:.95rem}
+.files code,code{font:.88em var(--mono);background:var(--surface);border:1px solid var(--line);border-radius:4px;padding:1px 5px}
+.note{font-size:.93rem;color:var(--muted);display:grid;gap:8px}
+</style>
+<style>html{color-scheme:light}body{margin:0}</style>
+</head>
+<body>
+
+<main>
+  <header style="display:grid;gap:10px">
+    <h1>IW Cost Exporter</h1>
+    <p class="lede">Downloads your whole Infinite Worlds credit history (every turn, its cost breakdown, model, world and timestamp) as a spreadsheet-ready CSV and a JSON file.</p>
+  </header>
+
+  <section class="install" aria-labelledby="install-h">
+    <h2 id="install-h">Install</h2>
+    <p>Drag this button onto your browser's bookmarks bar:</p>
+    <a class="bm" id="bm" href="#"><span class="coin" aria-hidden="true"></span>IW Cost Export</a>
+    <p class="hint">Bookmarks bar hidden? Press Ctrl+Shift+B (Cmd+Shift+B on Mac) to show it. Clicking the button here does nothing; it only works from your bookmarks on the Infinite Worlds site.</p>
+    <details>
+      <summary>Can't drag it? Add it by hand</summary>
+      <div class="alt">
+        <p>Copy the code, create a new bookmark named "IW Cost Export", and paste the code into its URL or address field.</p>
+        <button id="copy" type="button">Copy bookmark code</button>
+        <textarea id="code" readonly aria-label="Bookmark code"></textarea>
+      </div>
+    </details>
+  </section>
+
+  <section aria-labelledby="use-h">
+    <h2 id="use-h">Use</h2>
+    <ol>
+      <li>Open <a href="https://infiniteworlds.app/" style="color:var(--accent)">infiniteworlds.app</a> and sign in.</li>
+      <li>Click your credit balance at the top right, then <strong>Credit activity</strong>.</li>
+      <li>With that list open, click the <strong>IW Cost Export</strong> bookmark. A status box appears in the bottom-right corner and counts the transactions as it collects them.</li>
+      <li>When it says <em>Done</em>, two files download.</li>
+    </ol>
+  </section>
+
+  <section aria-labelledby="files-h">
+    <h2 id="files-h">What you get</h2>
+    <div class="files">
+      <code>.csv</code><span>One row per transaction, newest first. Columns include <code>datetime</code> (UTC), <code>world_name</code>, <code>turn_number</code>, <code>ai_profile</code>, <code>total_cost</code>, <code>new_credit_balance</code> and the input/output cost breakdown.</span>
+      <code>.json</code><span>The same records unflattened, for scripts.</span>
+    </div>
+  </section>
+
+  <section class="note" aria-label="Notes">
+    <p>It only reads your own credit history through the connection the site already has open. It sends nothing anywhere else and doesn't take game actions.</p>
+    <p>A large history takes a minute or two. Leave the tab open until it finishes; <strong>Stop and save</strong> in the status box stops early and downloads what it has so far. If IW is slow it retries on its own; if it still can&#39;t get a reply it saves what it has and says why.</p>
+  </section>
+</main>
+
+<script>
+const BOOKMARK = "javascript:%2F*%20IW%20Cost%20Exporter%20-%20bookmarklet%20edition%20(readable%20source).%0A%20*%20Use%20on%20infiniteworlds.app%3A%20open%20Credit%20activity%2C%20then%20click%20the%20bookmark.%0A%20*%20Collects%20your%20full%20credit%20history%20and%20downloads%20CSV%20%2B%20JSON.%20Read-only.%0A%20*%2F%0A(()%20%3D%3E%20%7B%0A%20%20if%20(window.__iwCostsRunning)%20%7B%20alert('IW%20Cost%20Exporter%20is%20already%20running.')%3B%20return%3B%20%7D%0A%20%20if%20(!%2Finfiniteworlds%5C.app%24%2F.test(location.hostname))%20%7B%20alert('Open%20infiniteworlds.app%20first%2C%20then%20click%20the%20bookmark.')%3B%20return%3B%20%7D%0A%20%20window.__iwCostsRunning%20%3D%20true%3B%0A%0A%20%20%2F%2F%20Status%20box%0A%20%20const%20box%20%3D%20document.createElement('div')%3B%0A%20%20box.style.cssText%20%3D%20'position%3Afixed%3Bz-index%3A2147483647%3Bright%3A16px%3Bbottom%3A16px%3Bmax-width%3A320px%3Bpadding%3A12px%2014px%3Bborder-radius%3A10px%3Bbackground%3A%231b1830%3Bcolor%3A%23eee%3Bfont%3A14px%2F1.4%20system-ui%2Csans-serif%3Bbox-shadow%3A0%204px%2020px%20rgba(0%2C0%2C0%2C.5)%3Bborder%3A1px%20solid%20%236b5fb5'%3B%0A%20%20const%20text%20%3D%20document.createElement('div')%3B%0A%20%20const%20close%20%3D%20document.createElement('button')%3B%0A%20%20close.textContent%20%3D%20'Stop%20and%20save'%3B%0A%20%20close.style.cssText%20%3D%20'margin-top%3A8px%3Bpadding%3A3px%2010px%3Bborder-radius%3A6px%3Bborder%3A1px%20solid%20%23888%3Bbackground%3A%232a2645%3Bcolor%3A%23eee%3Bcursor%3Apointer'%3B%0A%20%20box.append(text%2C%20close)%3B%0A%20%20document.body.appendChild(box)%3B%0A%20%20const%20say%20%3D%20msg%20%3D%3E%20%7B%20text.textContent%20%3D%20'IW%20Cost%20Exporter%3A%20'%20%2B%20msg%3B%20%7D%3B%0A%0A%20%20const%20originalSend%20%3D%20WebSocket.prototype.send%3B%0A%20%20const%20pending%20%3D%20new%20Map()%2C%20late%20%3D%20new%20Set()%3B%0A%20%20let%20socket%2C%20template%2C%20stopped%20%3D%20false%2C%20wrapped%20%3D%20null%2C%20original%20%3D%20null%3B%0A%20%20const%20records%20%3D%20%5B%5D%3B%0A%0A%20%20function%20finish(msg)%20%7B%0A%20%20%20%20stopped%20%3D%20true%3B%0A%20%20%20%20if%20(WebSocket.prototype.send%20%3D%3D%3D%20hookedSend)%20WebSocket.prototype.send%20%3D%20originalSend%3B%0A%20%20%20%20if%20(socket%20%26%26%20wrapped%20%26%26%20socket.onmessage%20%3D%3D%3D%20wrapped)%20socket.onmessage%20%3D%20original%3B%0A%20%20%20%20for%20(const%20w%20of%20pending.values())%20clearTimeout(w.timer)%3B%0A%20%20%20%20pending.clear()%3B%0A%20%20%20%20delete%20window.__iwCostsRunning%3B%0A%20%20%20%20say(msg)%3B%0A%20%20%20%20close.textContent%20%3D%20'Close'%3B%0A%20%20%20%20close.onclick%20%3D%20()%20%3D%3E%20box.remove()%3B%0A%20%20%7D%0A%20%20%2F%2F%20Stop%20now%20and%20download%20whatever%20has%20been%20collected%20so%20far.%0A%20%20close.onclick%20%3D%20()%20%3D%3E%20%7B%0A%20%20%20%20if%20(stopped)%20return%3B%0A%20%20%20%20if%20(!records.length)%20return%20finish('Stopped.%20Nothing%20had%20been%20collected%20yet.')%3B%0A%20%20%20%20save(false%2C%20'Stopped.%20')%3B%0A%20%20%7D%3B%0A%0A%20%20%2F%2F%20DateTime%20values%20arrive%20beside%20the%20response%20in%20message.objects.%0A%20%20function%20applyObjects(message)%20%7B%0A%20%20%20%20for%20(const%20o%20of%20message.objects%20%7C%7C%20%5B%5D)%20%7B%0A%20%20%20%20%20%20const%20p%20%3D%20o.path%20%7C%7C%20%5B%5D%3B%0A%20%20%20%20%20%20if%20(p%5B0%5D%20!%3D%3D%20'response'%20%7C%7C%20p.length%20%3C%202)%20continue%3B%0A%20%20%20%20%20%20let%20t%20%3D%20message.response%3B%0A%20%20%20%20%20%20for%20(let%20i%20%3D%201%3B%20i%20%3C%20p.length%20-%201%20%26%26%20t%20!%3D%20null%3B%20i%2B%2B)%20t%20%3D%20t%5Bp%5Bi%5D%5D%3B%0A%20%20%20%20%20%20if%20(t%20%3D%3D%20null%20%7C%7C%20typeof%20t%20!%3D%3D%20'object')%20continue%3B%0A%20%20%20%20%20%20const%20key%20%3D%20p%5Bp.length%20-%201%5D%3B%0A%20%20%20%20%20%20const%20type%20%3D%20Array.isArray(o.type)%20%3F%20o.type%5B0%5D%20%3A%20o.type%3B%0A%20%20%20%20%20%20if%20(type%20%3D%3D%3D%20'DateTime'%20%26%26%20typeof%20o.value%20%3D%3D%3D%20'string')%20%7B%0A%20%20%20%20%20%20%20%20const%20d%20%3D%20new%20Date(o.value.replace('%20'%2C%20'T').replace(%2F(%5C.%5Cd%7B3%7D)%5Cd*%2F%2C%20'%241').replace(%2F(%5B%2B-%5D%5Cd%7B2%7D)(%5Cd%7B2%7D)%24%2F%2C%20'%241%3A%242'))%3B%0A%20%20%20%20%20%20%20%20t%5Bkey%5D%20%3D%20isNaN(d)%20%3F%20o.value%20%3A%20d.toISOString()%3B%0A%20%20%20%20%20%20%7D%20else%20if%20(t%5Bkey%5D%20%3D%3D%20null)%20t%5Bkey%5D%20%3D%20o.value%3B%0A%20%20%20%20%7D%0A%20%20%7D%0A%20%20%2F%2F%20Consume%20replies%20to%20our%20own%20requests%20so%20IW%20never%20sees%20them.%0A%20%20function%20receive(data)%20%7B%0A%20%20%20%20if%20(typeof%20data%20!%3D%3D%20'string'%20%7C%7C%20!(pending.size%20%7C%7C%20late.size))%20return%20false%3B%0A%20%20%20%20let%20m%3B%20try%20%7B%20m%20%3D%20JSON.parse(data)%3B%20%7D%20catch%20%7B%20return%20false%3B%20%7D%0A%20%20%20%20if%20(late.delete(m.id))%20return%20true%3B%20%2F%2F%20reply%20to%20a%20request%20that%20already%20timed%20out%0A%20%20%20%20const%20w%20%3D%20pending.get(m.id)%3B%0A%20%20%20%20if%20(!w)%20return%20false%3B%0A%20%20%20%20pending.delete(m.id)%3B%20clearTimeout(w.timer)%3B%0A%20%20%20%20if%20(Array.isArray(m.response))%20%7B%20applyObjects(m)%3B%20w.resolve(m.response)%3B%20%7D%0A%20%20%20%20else%20w.reject(new%20Error('Unexpected%20reply%20from%20IW.'))%3B%0A%20%20%20%20return%20true%3B%0A%20%20%7D%0A%20%20function%20wrap(ws)%20%7B%0A%20%20%20%20if%20(ws.onmessage%20%3D%3D%3D%20wrapped%20%26%26%20wrapped)%20return%3B%0A%20%20%20%20original%20%3D%20ws.onmessage%3B%0A%20%20%20%20wrapped%20%3D%20function%20(e)%20%7B%20if%20(receive(e.data))%20return%3B%20if%20(typeof%20original%20%3D%3D%3D%20'function')%20return%20original.call(this%2C%20e)%3B%20%7D%3B%0A%20%20%20%20ws.onmessage%20%3D%20wrapped%3B%0A%20%20%7D%0A%20%20function%20hookedSend(data)%20%7B%0A%20%20%20%20if%20(!template%20%26%26%20typeof%20data%20%3D%3D%3D%20'string')%20%7B%0A%20%20%20%20%20%20try%20%7B%0A%20%20%20%20%20%20%20%20const%20m%20%3D%20JSON.parse(data)%3B%0A%20%20%20%20%20%20%20%20if%20(m.type%20%3D%3D%3D%20'CALL'%20%26%26%20m.command%20%3D%3D%3D%20'getRecentCreditTransactions')%20%7B%0A%20%20%20%20%20%20%20%20%20%20socket%20%3D%20this%3B%20template%20%3D%20m%3B%20wrap(this)%3B%0A%20%20%20%20%20%20%20%20%20%20setTimeout(run%2C%200)%3B%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%7D%20catch%20%7B%20%2F*%20other%20traffic%20*%2F%20%7D%0A%20%20%20%20%7D%0A%20%20%20%20return%20originalSend.call(this%2C%20data)%3B%0A%20%20%7D%0A%20%20WebSocket.prototype.send%20%3D%20hookedSend%3B%0A%0A%20%20function%20request(offset%2C%20limit)%20%7B%0A%20%20%20%20return%20new%20Promise((resolve%2C%20reject)%20%3D%3E%20%7B%0A%20%20%20%20%20%20if%20(stopped)%20return%20reject(new%20Error('Cancelled.'))%3B%0A%20%20%20%20%20%20if%20(socket.readyState%20!%3D%3D%20WebSocket.OPEN)%20return%20reject(new%20Error('Connection%20to%20IW%20closed.%20Reload%20the%20page%20and%20try%20again.'))%3B%0A%20%20%20%20%20%20wrap(socket)%3B%0A%20%20%20%20%20%20const%20id%20%3D%20crypto.randomUUID()%3B%0A%20%20%20%20%20%20const%20timer%20%3D%20setTimeout(()%20%3D%3E%20%7B%20pending.delete(id)%3B%20late.add(id)%3B%20reject(new%20Error('IW%20did%20not%20answer%20in%20time.'))%3B%20%7D%2C%2045000)%3B%0A%20%20%20%20%20%20pending.set(id%2C%20%7Bresolve%2C%20reject%2C%20timer%7D)%3B%0A%20%20%20%20%20%20originalSend.call(socket%2C%20JSON.stringify(%7B...template%2C%20id%2C%20kwargs%3A%20%7B...template.kwargs%2C%20offset%2C%20limit%2C%20transaction_type%3A%20null%7D%7D))%3B%0A%20%20%20%20%7D)%3B%0A%20%20%7D%0A%0A%20%20function%20flatten(v%2C%20prefix%20%3D%20''%2C%20out%20%3D%20%7B%7D)%20%7B%0A%20%20%20%20for%20(const%20%5Bk%2C%20item%5D%20of%20Object.entries(v))%20%7B%0A%20%20%20%20%20%20const%20name%20%3D%20prefix%20%3F%20prefix%20%2B%20'.'%20%2B%20k%20%3A%20k%3B%0A%20%20%20%20%20%20if%20(item%20!%3D%3D%20null%20%26%26%20typeof%20item%20%3D%3D%3D%20'object'%20%26%26%20!Array.isArray(item))%20flatten(item%2C%20name%2C%20out)%3B%0A%20%20%20%20%20%20else%20out%5Bname%5D%20%3D%20Array.isArray(item)%20%3F%20JSON.stringify(item)%20%3A%20item%3B%0A%20%20%20%20%7D%0A%20%20%20%20return%20out%3B%0A%20%20%7D%0A%20%20function%20csv()%20%7B%0A%20%20%20%20const%20rows%20%3D%20records.map((r%2C%20i)%20%3D%3E%20flatten(%7Bhistory_index%3A%20i%2C%20...r%7D))%3B%0A%20%20%20%20const%20cols%20%3D%20%5B...new%20Set(rows.flatMap(r%20%3D%3E%20Object.keys(r)))%5D%3B%0A%20%20%20%20if%20(cols.includes('datetime'))%20%7B%20cols.splice(cols.indexOf('datetime')%2C%201)%3B%20cols.splice(1%2C%200%2C%20'datetime')%3B%20%7D%0A%20%20%20%20const%20cell%20%3D%20v%20%3D%3E%20%7B%0A%20%20%20%20%20%20let%20s%20%3D%20v%20%3D%3D%20null%20%3F%20''%20%3A%20String(v)%3B%0A%20%20%20%20%20%20if%20(typeof%20v%20%3D%3D%3D%20'string'%20%26%26%20%2F%5E%5B%3D%2B%5C-%40%5Ct%5Cr%5Cn%5D%2F.test(s))%20s%20%3D%20%22'%22%20%2B%20s%3B%0A%20%20%20%20%20%20return%20'%22'%20%2B%20s.replaceAll('%22'%2C%20'%22%22')%20%2B%20'%22'%3B%0A%20%20%20%20%7D%3B%0A%20%20%20%20return%20'%EF%BB%BF'%20%2B%20%5Bcols.map(cell).join('%2C')%2C%20...rows.map(r%20%3D%3E%20cols.map(c%20%3D%3E%20cell(r%5Bc%5D)).join('%2C'))%5D.join('%5Cr%5Cn')%3B%0A%20%20%7D%0A%20%20function%20download(content%2C%20ext%2C%20mime)%20%7B%0A%20%20%20%20const%20url%20%3D%20URL.createObjectURL(new%20Blob(%5Bcontent%5D%2C%20%7Btype%3A%20mime%7D))%3B%0A%20%20%20%20const%20a%20%3D%20document.createElement('a')%3B%0A%20%20%20%20a.href%20%3D%20url%3B%20a.download%20%3D%20'IW-Cost-History-'%20%2B%20new%20Date().toISOString().replaceAll('%3A'%2C%20'-').slice(0%2C%2019)%20%2B%20ext%3B%0A%20%20%20%20document.body.appendChild(a)%3B%20a.click()%3B%20a.remove()%3B%0A%20%20%20%20setTimeout(()%20%3D%3E%20URL.revokeObjectURL(url)%2C%2030000)%3B%0A%20%20%7D%0A%0A%20%20async%20function%20run()%20%7B%0A%20%20%20%20let%20offset%20%3D%200%2C%20previous%20%3D%20null%2C%20complete%20%3D%20false%2C%20reason%20%3D%20''%3B%0A%20%20%20%20%2F%2F%20A%20slow%20or%20dropped%20reply%20is%20retried%20up%20to%204%20times%2C%20with%20smaller%20batches%20and%20a%20pause.%0A%20%20%20%20async%20function%20fetchBatch()%20%7B%0A%20%20%20%20%20%20let%20size%20%3D%2050%3B%0A%20%20%20%20%20%20for%20(let%20attempt%20%3D%201%3B%20%3B%20attempt%2B%2B)%20%7B%0A%20%20%20%20%20%20%20%20try%20%7B%20return%20await%20request(offset%2C%20size)%3B%20%7D%0A%20%20%20%20%20%20%20%20catch%20(e)%20%7B%0A%20%20%20%20%20%20%20%20%20%20if%20(stopped%20%7C%7C%20attempt%20%3E%204%20%7C%7C%20%2Fclosed%7CUnexpected%2F.test(e.message))%20throw%20e%3B%0A%20%20%20%20%20%20%20%20%20%20size%20%3D%20Math.max(10%2C%20Math.floor(size%20%2F%202))%3B%0A%20%20%20%20%20%20%20%20%20%20say('IW%20is%20slow%20to%20answer%3B%20retrying%20('%20%2B%20attempt%20%2B%20'%2F4)%20at%20'%20%2B%20records.length%20%2B%20'%20transactions...')%3B%0A%20%20%20%20%20%20%20%20%20%20await%20new%20Promise(r%20%3D%3E%20setTimeout(r%2C%203000%20*%20attempt))%3B%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%7D%0A%20%20%20%20try%20%7B%0A%20%20%20%20%20%20while%20(!stopped)%20%7B%0A%20%20%20%20%20%20%20%20const%20batch%20%3D%20await%20fetchBatch()%3B%0A%20%20%20%20%20%20%20%20if%20(!batch.length)%20%7B%20complete%20%3D%20true%3B%20break%3B%20%7D%0A%20%20%20%20%20%20%20%20const%20sig%20%3D%20JSON.stringify(batch)%3B%0A%20%20%20%20%20%20%20%20if%20(sig%20%3D%3D%3D%20previous)%20throw%20new%20Error('IW%20repeated%20a%20batch%3B%20stopping.')%3B%0A%20%20%20%20%20%20%20%20previous%20%3D%20sig%3B%0A%20%20%20%20%20%20%20%20records.push(...batch)%3B%0A%20%20%20%20%20%20%20%20offset%20%2B%3D%20batch.length%3B%0A%20%20%20%20%20%20%20%20say('collected%20'%20%2B%20records.length%20%2B%20'%20transactions...')%3B%0A%20%20%20%20%20%20%20%20await%20new%20Promise(r%20%3D%3E%20setTimeout(r%2C%20300))%3B%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%7D%20catch%20(e)%20%7B%0A%20%20%20%20%20%20if%20(stopped)%20return%3B%0A%20%20%20%20%20%20if%20(!records.length)%20return%20finish('Failed%3A%20'%20%2B%20e.message)%3B%0A%20%20%20%20%20%20reason%20%3D%20e.message%3B%0A%20%20%20%20%7D%0A%20%20%20%20if%20(stopped)%20return%3B%0A%20%20%20%20save(complete%2C%20complete%20%3F%20'Done.%20'%20%3A%20'Partial%20export%20('%20%2B%20reason%20%2B%20'%20Click%20the%20bookmark%20again%20to%20retry).%20')%3B%0A%20%20%7D%0A%20%20function%20save(complete%2C%20prefix)%20%7B%0A%20%20%20%20finish('saving...')%3B%20%2F%2F%20stops%20collection%20first%2C%20so%20no%20more%20records%20arrive%0A%20%20%20%20download(csv()%2C%20'.csv'%2C%20'text%2Fcsv%3Bcharset%3Dutf-8')%3B%0A%20%20%20%20download(JSON.stringify(%7Bexported_at%3A%20new%20Date().toISOString()%2C%20complete%2C%20records%7D%2C%20null%2C%202)%2C%20'.json'%2C%20'application%2Fjson')%3B%0A%20%20%20%20say(prefix%20%2B%20records.length%20%2B%20'%20transactions%20downloaded%20as%20CSV%20and%20JSON.')%3B%0A%20%20%7D%0A%0A%20%20%2F%2F%20Trigger%20IW's%20own%20request%3A%20click%20Show%20more%20if%20the%20dialog%20is%20open.%0A%20%20const%20more%20%3D%20%5B...document.querySelectorAll('a%2Cbutton%2Cspan%2Cdiv')%5D.find(e%20%3D%3E%20e.children.length%20%3D%3D%3D%200%20%26%26%20e.textContent.trim()%20%3D%3D%3D%20'Show%20more'%20%26%26%20e.offsetParent)%3B%0A%20%20if%20(more)%20%7B%20say('starting...')%3B%20more.click()%3B%20%7D%0A%20%20else%20say('open%20Credit%20activity%20(click%20your%20credits%20balance%20at%20the%20top)%2C%20then%20click%20Show%20more.')%3B%0A%7D)()%3B%0A";
+const link = document.getElementById('bm');
+link.href = BOOKMARK;
+link.addEventListener('click', e => { e.preventDefault(); });
+const code = document.getElementById('code');
+code.value = BOOKMARK;
+document.getElementById('copy').addEventListener('click', async e => {
+  const b = e.currentTarget;
+  try { await navigator.clipboard.writeText(BOOKMARK); b.textContent = 'Copied'; }
+  catch { code.focus(); code.select(); b.textContent = 'Press Ctrl+C (Cmd+C) to copy'; }
+  setTimeout(() => { b.textContent = 'Copy bookmark code'; }, 2500);
+});
+</script>
+
+</body>
+</html>
