@@ -4,7 +4,7 @@ Follow Authoring-Prompt.md (in IW-Authoring-Guide.txt). Load companion editions 
 Editions and their contents:
 - IW-Authoring-Guide.txt: start here: prompt, template, narrative craft, trackers, triggers, data banks and library integration. Files: Authoring-Prompt.md, World-Template.json, reference/Evidence.md, reference/Craft.md, reference/Trackers.md, reference/Triggers.md, reference/Trigger-Catalog.md, reference/Portable-Banks.md, library/Integration.md
 - IW-Technical-Reference.txt: exact payloads, PawScript, capabilities and recipes. Files: reference/Schema.md, reference/PawScript.md, reference/Capabilities.md, reference/Recipes.md, reference/Default-Evaluation.txt, reference/Current-AI-Profiles.json
-- IW-Behavior.txt: notable findings, editor/UI workflows, verified runtime behavior, known limits and import integrity. Files: reference/Notable-Findings.md, reference/Editor-UI.md, reference/Verified-Behavior.md, reference/Known-Limits.md, reference/Import-Integrity.md
+- IW-Behavior.txt: notable findings, editor/UI workflows, verified runtime behavior, known limits and import integrity. Files: reference/Notable-Findings.md, reference/Editor-UI.md, reference/Cost.md, reference/Verified-Behavior.md, reference/Known-Limits.md, reference/Import-Integrity.md
 - IW-Payloads.txt: exact native payload snippets for every condition and effect, plus the example index. Files: examples/Payloads.md, examples/index.json
 - IW-Mechanics-Examples.txt: complete mechanics example worlds: recipes, optional block, starting values and a showcase. Files: examples/recipe-request-commit.json, examples/recipe-completion-award.json, examples/recipe-candidate-acceptance.json, examples/recipe-archive-reactivate.json, examples/recipe-cached-random.json, examples/recipe-consumed-timer.json, examples/recipe-choice-domain.json, examples/recipe-compiled-plot.json, examples/recipe-choice-followup.json, examples/recipe-threshold-unlock.json, examples/optional-block.json, examples/character-starting-values.json, examples/showcase-glass-ledger.json
 - IW-Narrative-Examples.txt: complete narrative example worlds: ensemble romance, fantasy expedition and contained horror. Files: examples/narrative-vendemmia.json, examples/narrative-listening-road.json, examples/narrative-address-after-midnight.json
@@ -39,14 +39,14 @@ Teach IW or PawScript = Consult mode. Establish programming familiarity if uncle
 
 ## 2. Load only what the task needs
 
-Start with the supplied document; skip README/index pages, duplicate editions, unrelated references and routine manifest retrieval. Fetch only missing material needed for the task. Design conversations in `samples/` are optional examples, not platform documentation. To find a file not listed below, use the file index at https://iw-builder.github.io/llms.txt: every published file with its direct URL, size and purpose.
+Start with the supplied document; skip README/index pages, duplicate editions, unrelated references and routine manifest retrieval. Fetch only missing material needed for the task. Design conversations in `samples/` are optional examples, not platform documentation. To find a file not listed below, use the file index at https://iw-builder.github.io/llms.txt: every published file with its URL, size and purpose.
 
-The template or current export is required for construction. Files below are selected by feature, not all loaded automatically. Compatibility and the shared evidence legend live in reference/Evidence.md.
+The template or current export is required for construction. Load the files below only for the features in use. Compatibility and the shared evidence legend live in reference/Evidence.md.
 
 |Task needs|Read|
 |-|-|
 |New world|[World-Template.json](https://iw-builder.github.io/World-Template.json); [reference/Craft.md](https://iw-builder.github.io/reference/Craft.md) for narrative design|
-|Narrative examples|Choose only the relevant pattern: [platonic fantasy expedition](https://iw-builder.github.io/examples/narrative-listening-road.json), [contained horror](https://iw-builder.github.io/examples/narrative-address-after-midnight.json), or [ensemble romance](https://iw-builder.github.io/examples/narrative-vendemmia.json). See the example table in Craft.md for other relationship structures.|
+|Narrative examples|Pick the relevant one: [platonic fantasy expedition](https://iw-builder.github.io/examples/narrative-listening-road.json), [contained horror](https://iw-builder.github.io/examples/narrative-address-after-midnight.json), or [ensemble romance](https://iw-builder.github.io/examples/narrative-vendemmia.json). See the example table in Craft.md for other relationship structures.|
 |Tracker ownership, visibility, memory or initialization|[reference/Trackers.md](https://iw-builder.github.io/reference/Trackers.md)|
 |Trigger timing, sequencing and effects|[reference/Trigger-Catalog.md](https://iw-builder.github.io/reference/Trigger-Catalog.md) for the capability overview; [reference/Triggers.md](https://iw-builder.github.io/reference/Triggers.md)|
 |Exact native payloads|[reference/Schema.md](https://iw-builder.github.io/reference/Schema.md) and matching snippets in [examples/Payloads.md](https://iw-builder.github.io/examples/Payloads.md); load a complete example only when useful|
@@ -57,8 +57,9 @@ The template or current export is required for construction. Files below are sel
 |Custom Evaluation|[reference/Default-Evaluation.txt](https://iw-builder.github.io/reference/Default-Evaluation.txt) and the Skills section of [reference/Capabilities.md](https://iw-builder.github.io/reference/Capabilities.md)|
 |Model-specific blocks|[reference/Current-AI-Profiles.json](https://iw-builder.github.io/reference/Current-AI-Profiles.json) and the model-block section of [reference/Capabilities.md](https://iw-builder.github.io/reference/Capabilities.md); ask which model(s) are common if needed|
 |Editing, combining or importing|[reference/Import-Integrity.md](https://iw-builder.github.io/reference/Import-Integrity.md)|
+|Credit cost estimates|reference/Cost.md|
 |Editor workflows and terminology|[reference/Editor-UI.md](https://iw-builder.github.io/reference/Editor-UI.md)|
-|Review, Debug, or a quick check of likely world bugs|[reference/Notable-Findings.md](https://iw-builder.github.io/reference/Notable-Findings.md)|
+|Review, Debug or likely world bugs|[reference/Notable-Findings.md](https://iw-builder.github.io/reference/Notable-Findings.md)|
 |Detailed tested behavior|[reference/Verified-Behavior.md](https://iw-builder.github.io/reference/Verified-Behavior.md)|
 |Uncertain platform behavior|[reference/Known-Limits.md](https://iw-builder.github.io/reference/Known-Limits.md); do not turn uncertainty into an invented rule|
 |Personal libraries, portable banks, bundles, PC/NPC conversion or full-content build reports|[reference/Portable-Banks.md](https://iw-builder.github.io/reference/Portable-Banks.md); [tools/data_bank.py](https://iw-builder.github.io/tools/data_bank.py) when execution is available|

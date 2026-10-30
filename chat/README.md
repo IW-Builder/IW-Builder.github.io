@@ -10,7 +10,7 @@ For attachments, start by uploading [IW-Authoring-Guide.txt](IW-Authoring-Guide.
 | --- | --- |
 | [Authoring Guide](IW-Authoring-Guide.txt) | The main prompt, starting template, core guides to creating worlds, and how to choose library modules. Start here. |
 | [Technical Reference](IW-Technical-Reference.txt) | Exact world-file structure, PawScript, platform capabilities and feature recipes. |
-| [IW Behavior](IW-Behavior.txt) | Editor and UI workflows, tested platform behavior, known limits and import checks. Useful for debugging. |
+| [IW Behavior](IW-Behavior.txt) | Editor and UI workflows, cost estimating, tested platform behavior, known limits and import checks. Useful for debugging. |
 | [Payloads](IW-Payloads.txt) | The exact building block for every trigger condition and effect, plus an index of all example worlds. Small; useful for any world with mechanics. |
 | [Mechanics Examples](IW-Mechanics-Examples.txt) | Complete worlds showing purchases, unlocks, choices, timers, optional settings and other mechanics. |
 | [Narrative Examples](IW-Narrative-Examples.txt) | Complete story worlds: ensemble romance, a platonic fantasy expedition and contained horror. Large; use the one closest to your idea. |

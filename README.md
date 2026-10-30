@@ -104,6 +104,6 @@ Install jsonschema for full schema checks (`python -m pip install jsonschema`). 
 
 ## Current behavior and editor help
 
-Start with [notable findings](reference/Notable-Findings.md) for the behavior most likely to surprise you or break a world. Use the [editor/UI reference](reference/Editor-UI.md) for workflows and terminology, the [trigger capability catalog](reference/Trigger-Catalog.md) to discover operations, [consolidated behavior](reference/Verified-Behavior.md) for detailed results and [known limits](reference/Known-Limits.md) for what remains unresolved.
+Start with [notable findings](reference/Notable-Findings.md) for the behavior most likely to surprise you or break a world. Use the [editor/UI reference](reference/Editor-UI.md) for workflows and terminology, the [trigger capability catalog](reference/Trigger-Catalog.md) to discover operations, [consolidated behavior](reference/Verified-Behavior.md) for detailed results and [known limits](reference/Known-Limits.md) for what remains unresolved. To see what a world will cost to play on each model, read [estimating cost](reference/Cost.md).
 
 The local [plot compiler](reference/Engineering-Tools.md) builds literal-Scenario prerequisite plots.
