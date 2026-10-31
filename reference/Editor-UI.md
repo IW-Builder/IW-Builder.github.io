@@ -12,7 +12,7 @@ Use tracker and trigger **Names**, not IDs, unless the user requests IDs. Distin
 | Trigger Name | `triggerEvents[].name`; not `id` |
 | Scenarios; Triggering situation / Manage Situations in the selector | Root `conditions`; referenced by `triggerOnEvent` |
 | Trigger conditions | `triggerConditions`; gates within a trigger |
-| Summary; Brief summary in Other Characters | `one_liner` in current exports; do not invent a `oneLiner` alias |
+| Summary; Brief summary in Other Characters | `one_liner` (the only spelling in exports) |
 | Character detail | `detail` |
 | Extra instruction blocks | `instructionBlocks`; explain before abbreviating EIB |
 | Give information to AI | `effectGiveInfo` |
@@ -45,7 +45,7 @@ Opening a world in the editor advances its version in the export (for example 1.
 
 **After import**
 
-A round trip of well-formed native JSON is byte-identical, so any change after import points at a normalization (ID reminting, dropped gates, scope repair, registry population). Tracker IDs can be regenerated without remapping their references. Save and inspect affected target dropdowns and Scenario bindings; preserved text is not proof of valid references. An invalid-value target is a binding failure even if the original JSON had consistent references. Export the imported world and validate that export when diagnosing discrepancies; keep the untouched source so source and imported IDs can be compared with `tools/import_audit.py` ([tools/Usage.md](../tools/Usage.md)).
+A round trip of well-formed native JSON is byte-identical, so any change after import points at a normalization (ID reminting, dropped gates, scope repair, registry population). Tracker IDs can be regenerated without remapping their references. Save and inspect affected target dropdowns and Scenario bindings, since preserved text can be unbound. An invalid-value target is a binding failure even if the original JSON had consistent references. Export the imported world and validate that export when diagnosing discrepancies; keep the untouched source so source and imported IDs can be compared with `tools/import_audit.py` ([tools/Usage.md](../tools/Usage.md)).
 
 For a native input, confirm the current target value after submitting an answer. Correctly bound single-answer Choice and Request Input effects update immediately, and subsequent ordered triggers can read the result in the same turn. Their follow-up messages can render above the question/answer receipt. The live-world editor's initialValue remains configuration, not the current runtime value.
 
@@ -84,9 +84,9 @@ Rename warnings offer **Update** and **Ignore** for a variable-name mismatch; Ig
 
 The database icon opens trackers; the nearby edit control edits their values. The pencil opens action/outcome editing and **View/edit world design**. Regenerate turn opens modification of an existing turn. These operations have different purposes.
 
-The bug icon opens debug. **Active instructions** is live rendered state, including post-narration trigger updates and live edits, not the full historical prompt. A trigger badge/list is not always exhaustive; inspect detailed history and actual state.
+The bug icon (beside the tracked-items icon) opens debug, which needs Storyteller mode. It shows the current turn's active instruction blocks including trigger updates, the triggers fired this turn, all-trigger history with first/last turn and counts, model thinking when available, Evaluation, and PawScript conditions, execution results, output, warnings and errors (including automatic tracker format repair and failed path updates). **Active instructions** is live rendered state, including post-narration trigger updates and live edits, not the full historical prompt or the exact context the already-generated narration used. The fired-trigger list is not always exhaustive; inspect detailed history and actual state.
 
-The live-design notice warns that Player/Other Character changes do not affect the current playthrough (see Live copies above). Runtime block replacements and tracker changes can leave original content/initial values in design exports; those exports are not complete live-state snapshots.
+The live-design notice warns that Player/Other Character changes do not affect the current playthrough (see Live copies above). Runtime block replacements and tracker changes can leave original content/initial values in design exports; those exports show configuration, not the current live state.
 
 Story exports offer a turn range and optional background, character, secrets, trackers and hidden trackers, with text/PDF/image options. Select the relevant options. Secret Info is generated narrative data, not an authoritative character database. No live character-database or complete prompt viewer is available through these surfaces.
 
@@ -129,9 +129,9 @@ Image style has a Model and Character/Scenery start/end prompts, mapped to `imag
 
 ## Specialist instructions, forms and PawScript cues
 
-[DOCUMENTED] The default Description instructions ask for several paragraphs; to shorten narration, put the cap in authorStyle (see [Capabilities](Capabilities.md)). Video help describes `$videoDuration` and `$videoStyle` in video context (see below).
+[DOCUMENTED] The default Description instructions ask for several paragraphs; to shorten narration, put the cap in authorStyle (see [Runtime](Runtime.md#specialist-requests-and-runtime-outputs)). Video help describes `$videoDuration` and `$videoStyle` in video context (see below).
 
-The expression-editor option shows a Paw icon beside some PawScript-capable fields (see [PawScript sandbox](#pawscript-sandbox)). Missing icons do not prove lack of support: YAML Set a value supports template expressions according to help despite having no icon. This is not an exhaustive icon inventory.
+The expression-editor option shows a Paw icon beside some PawScript-capable fields (see [PawScript sandbox](#pawscript-sandbox)). A field without an icon can still take expressions: YAML Set a value supports template expressions according to help despite having no icon.
 
 Editor syntax highlighting misleads for deferred references. In instruction blocks and tracker descriptions it colors `<<=...=>>` as PawScript and shows the working `<=...=>` as plain text, while initial values show both as plain text. At runtime it is the other way round: `<=...=>` is evaluated and `<<=...=>>` stays literal. If a user cites the highlighting, explain that it is wrong for this syntax ([PawScript.md](PawScript.md)).
 
@@ -141,7 +141,7 @@ Trigger-provided next-turn guidance can disable the Storyteller guidance box whi
 
 ## Permissions and specialist destinations
 
-These mappings describe the observed editor controls, not an exhaustive account-role entitlement matrix.
+These are the character-customization controls; account-role permissions are a separate, uncharacterized matter.
 
 | Editor control | JSON field | Scope |
 | --- | --- | --- |
@@ -152,11 +152,11 @@ These mappings describe the observed editor controls, not an exhaustive account-
 | Create a new portrait | allowChangeCharacterNewPortrait | New portrait creation permission |
 | Change starting values of Tracked Items | allowChangeCharacterItemValues | Applicable character-scoped starting values |
 
-[DOCUMENTED] These switches belong to character customization. They are distinct from `permissionsOnceShared.sharing` and `.editing`, and from Storyteller mode. Cross-account author/recipient permission enforcement has not been verified; do not infer that sharing or editing grants live-state access. Keep these settings separate when diagnosing a missing control.
+[DOCUMENTED] These switches belong to character customization. They are distinct from `permissionsOnceShared.sharing` and `.editing`, and from Storyteller mode. Cross-account author/recipient permission enforcement is unverified, so a missing control may come from any of the three; keep them separate when diagnosing.
 
 [DOCUMENTED] Custom Evaluation guides the AI's interpretation of the attempted action. The default includes skill/difficulty reasoning and labels such as SUCCESS and PARTIAL_SUCCESS; those labels are generated evaluation content, not direct state-changing commands. Custom Description guides narrated results. Custom Summarisation guides what the memory summary retains; it is not a viewer of the actual summary. Native specialist placeholders are context-specific and are not all PawScript tracker handles.
 
-[DOCUMENTED] Video prompt instructions are under the optional specialist settings. From an illustration's Generate video dialog, prompt preparation has three destinations: scene plan, first/last-frame decision and video-AI prompt. Editor help says each can be overridden independently, a blank field retains its default, and expressions are evaluated before sending. `$videoDuration` and `$videoStyle` are documented in this destination. No current JSON key mapping or runtime precedence is certified for these controls; inspect a native export before editing them programmatically. Video creation and cross-role access remain unverified.
+[DOCUMENTED] Video prompt instructions are under the optional specialist settings. From an illustration's Generate video dialog, prompt preparation has three destinations: scene plan, first/last-frame decision and video-AI prompt. Editor help says each can be overridden independently, a blank field retains its default, and expressions are evaluated before sending. `$videoDuration` and `$videoStyle` are documented in this destination. Inspect a native export before editing these programmatically; their JSON key mapping and runtime precedence are unverified, as are video creation and cross-role access.
 
 ## Troubleshooting by visible symptom
 
@@ -169,7 +169,7 @@ These mappings describe the observed editor controls, not an exhaustive account-
 | Extra-hidden item appears unexpectedly | Distinguish the display panel override from the tracker editing dialog, which still exposes it in Storyteller mode. |
 | Form answer exists but later values are blank | Check trigger order and the answer's stored type/domain; consuming triggers must follow the form. |
 | Trigger history shows firing but accepted state is unchanged | Inspect script failure/rollback and an explicit completion flag; firing is not successful commit. |
-| Reload shows an earlier turn | Inspect retained history/export and controls before retrying; streamed output does not prove persistence. Credit activity can list a charge for the lost turn, and the balance can stay stale until a second reload; the export dialog's turn count is authoritative. |
+| Reload shows an earlier turn | Inspect retained history/export and controls before retrying; a turn that streamed can still be lost. Credit activity can list a charge for the lost turn, and the balance can stay stale until a second reload; the export dialog's turn count is authoritative. |
 | Opening fails with a generic streaming error | Check for effects missing `replaceWith` or other malformed payloads; failed openings are refunded. |
 | Import succeeds, then the editor errors (KeyError) while rebuilding | A tracker is missing `description`. |
 | `TypeError: list indices must be integers or slices, not str` when opening a trigger | Legacy bare-array prerequisites/blockers; convert them to object shape. |

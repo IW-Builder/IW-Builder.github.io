@@ -43,6 +43,19 @@ def no_previews(x):
  elif isinstance(x,list):
   for v in x:no_previews(v)
 no_previews(sample)
-report={'kitVersion':KIT_VERSION,'schemaProfileVersion':schema['x-profileVersion'],'structuralValidation':results,'negativeChecks':negative,'localMarkdownLinks':'passed','nativeRuntimeExecutedByChecker':False,'scope':'Structural and explicit-reference validation; runtime status is listed separately in examples/index.json.'}
+# Hedge density: a kit-wide caveat belongs in one place (the top of reference/Verified-Behavior.md), not re-attached to
+# individual sentences. Count the phrase families that do that and warn when a document leans on them.
+HEDGES=[r"\bnot (?:a |an )?(?:guarantee|proof|evidence|substitute|promise)\b",r"\b(?:does|do|did) not (?:prove|certify|establish|guarantee|automatically)\b",
+ r"\b(?:do|does) not (?:invent|infer|assume|claim|promise|treat|present|turn|read)\b",r"\bnever (?:invent|assume|claim)\b",r"\bnot established\b",
+ r"\bremains? (?:unresolved|unverified|unknown)\b",r"\bnot (?:a |an )?(?:contract|requirement|mandatory)\b",r"\bnot (?:a |an )?(?:official|exhaustive|complete) \w+"]
+HEDGE_CEILING=3.0  # per 1,000 words
+hedges={};hedge_warnings=[]
+from build_distribution import document_paths
+for rel in document_paths():
+ text=(ROOT/rel).read_text(encoding='utf-8');words=max(1,len(text.split()))
+ hits=sum(len(re.findall(h,text,re.I)) for h in HEDGES);density=round(hits/words*1000,1)
+ hedges[rel]={'hedgePhrases':hits,'perThousandWords':density}
+ if density>HEDGE_CEILING:hedge_warnings.append(rel+' ('+str(density)+'/1k words)')
+report={'kitVersion':KIT_VERSION,'hedgeDensity':hedges,'hedgeWarnings':hedge_warnings,'schemaProfileVersion':schema['x-profileVersion'],'structuralValidation':results,'negativeChecks':negative,'localMarkdownLinks':'passed','nativeRuntimeExecutedByChecker':False,'scope':'Structural and explicit-reference validation; runtime status is listed separately in examples/index.json.'}
 (ROOT/'tools/Validation-Report.json').write_text(json.dumps(report,indent=2)+'\n',encoding='utf-8')
-print(json.dumps({'worldFilesChecked':len(results),'structuralErrors':0,'localLinks':'passed','negativeChecks':len(negative),'nativeRuntimeExecuted':False}))
+print(json.dumps({'worldFilesChecked':len(results),'structuralErrors':0,'localLinks':'passed','negativeChecks':len(negative),'hedgeWarnings':hedge_warnings,'nativeRuntimeExecuted':False}))

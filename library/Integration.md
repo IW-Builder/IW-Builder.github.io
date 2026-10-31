@@ -76,7 +76,7 @@ An optional cosmetic block can clear its content when disabled. A director such 
 
 The library is a menu of adaptable parts, not a runnable showcase like ../examples/showcase-glass-ledger.json. Its updater triggers explicitly use Start false, Mid false and repeat true, so these conditional update jobs run in ordinary play rather than being assumed to perform initial setup. Their scripts have descriptive names.
 
-The image-style fields contain selectable alternatives and genre-specific defaults. Resolve all editing brackets, keep only compatible choices, and remove sexualized styling unless requested. The video template depends on video-context variables; see ../reference/Capabilities.md before adopting it. These are intentional adaptation dependencies, not finished-world settings.
+The image-style fields contain selectable alternatives and genre-specific defaults. Resolve all editing brackets, keep only compatible choices, and remove sexualized styling unless requested. The video template depends on video-context variables; see ../reference/Images-and-Models.md before adopting it. These are intentional adaptation dependencies, not finished-world settings.
 
 Storymaster as a player toggle is an advanced bundle. A simpler off state must replace its dependent main/style/specialist rules, not merely hide the Storymaster block. For example, ordinary narration can use the premise, current facts, character motivations and player input directly, with summary instructions that preserve facts instead of referring to smPlan. Since there are no characterized native change effects for every specialist field, prefer a static coherent conditional instruction design or an always-compatible specialist override; do not invent effects to switch those fields.
 
@@ -100,7 +100,7 @@ When using the Storymaster VARIABLE BLOCK, supply ALL of:
 - Pacing: intended overall length or ongoing format, major/minor scene estimates, and any relevant specialized scene estimates. For an ongoing story, state that plainly rather than inventing a fixed total.
 
 Obtain these from the description or ask targeted creative questions where needed. Keep them coherent with authorStyle, story_metadata and any reader-profile instructions. Do not remove the variable section merely because it contains placeholders.
-For template substitution timing, see ../reference/Capabilities.md. For generic optional-block composition, see ../reference/Recipes.md.
+For template substitution timing, see ../reference/Runtime.md. For generic optional-block composition, see ../reference/Recipes.md.
 
 ---
 

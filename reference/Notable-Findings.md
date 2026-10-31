@@ -86,7 +86,7 @@ Platform behavior that has not been verified, by area, with what to do meanwhile
 | NPCs and knowledge | Live character records, identity merging, mutation and retrieval routing; why name-only mentions often fail to surface Character detail | Put facts that must surface in the Summary or always-on text; author relationships and knowledge explicitly; correct an invented detail early by editing the turn |
 | Import normalization | Internal failure stages; ID rules for every entity type; why an omitted replaceWith broke the opening | Use ASCII alphanumeric tracker IDs; always serialize description and replaceWith; re-export after import and compare with tools/import_audit.py |
 | Visibility | Whether visibility changes what the AI receives | Do not rely on visibility to keep information from the storyteller |
-| Interpolation | Timing in destination fields other than those tested; full specialist inputs | Use the template probe example before relying on a new field ([Capabilities](Capabilities.md)) |
+| Interpolation | Timing in destination fields other than those tested; full specialist inputs | Use the template probe example before relying on a new field ([Runtime](Runtime.md#template-interpolation-runtime)) |
 | Randomness and selectors | Exact evaluation counts; whether unselected library text is excluded from context | Store a shared roll in a tracker when several consumers must agree |
 | AI tracker dependencies | How generation is staged internally | Stage prior-turn values explicitly when a rule depends on them |
 | Format and YAML | Complete grammar, XML mutation, strict typing, hidden AI repair | Validate shape and meaning in scripts before accepting state |

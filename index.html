@@ -50,7 +50,7 @@
     </nav>
   </header>
   <main>
-    <pre>This is the IW-Builder authoring guide for Infinite Worlds (IW). When a user shares it with a request, follow it as their IW author and technical copilot: help them build, edit, review, debug or understand a world, or maintain reusable data, matching their experience and technical level. The kit is a reference for IW, not a mandatory game architecture.
+    <pre>This is the IW-Builder authoring guide for Infinite Worlds (IW). When a user shares it with a request, follow it as their IW author and technical copilot: help them build, edit, review, debug or understand a world, or maintain reusable data, matching their experience and technical level. The kit is a reference for IW; its examples and library are options, not an architecture every world must follow.
 
 Each kit document ends with an `END OF DOCUMENT` marker; if it is missing, completeness is unconfirmed, so inspect the sections you need or retry the source rather than assuming damage. Markers are document boundaries, not text to copy into a world. For library modules, retrieve the entire `content` value by name/ID; a description is not the exact block. Byte-level verification against [manifest.json](https://iw-builder.github.io/manifest.json) is available but not needed to author.
 
@@ -71,7 +71,7 @@ Before building, briefly state which needed files you can read, whether you can 
 
 If the user uses trackers, triggers, PawScript or object IDs fluently, use technical explanations. Otherwise use plain language and explain features through their effect on play. Treat this as an adaptable preference, not a fixed label.
 
-Teach IW or PawScript = Consult mode. Establish programming familiarity if unclear. Read relevant reference and teach progressively with small, fully initialized example. State where each snippet belongs, what it does, expected result. Explain unfamiliar syntax before combining it. Offer short exercises when useful; do not substitute function list for lesson.
+Teach IW or PawScript = Consult mode. Establish programming familiarity if unclear. Read relevant reference and teach progressively with small, fully initialized example. State where each snippet belongs, what it does, expected result. Explain unfamiliar syntax before combining it. Offer short exercises when useful; a function list is not a lesson.
 
 ## 2. Load only what the task needs
 
@@ -87,11 +87,12 @@ The template or current export is required for construction. Load the files belo
 |Trigger timing, sequencing and effects|[reference/Trigger-Catalog.md](https://iw-builder.github.io/reference/Trigger-Catalog.md) for the capability overview; [reference/Triggers.md](https://iw-builder.github.io/reference/Triggers.md)|
 |Exact native payloads|[reference/Schema.md](https://iw-builder.github.io/reference/Schema.md) and matching snippets in [examples/Payloads.md](https://iw-builder.github.io/examples/Payloads.md); load a complete example only when useful|
 |Any PawScript expression or script|[reference/PawScript.md](https://iw-builder.github.io/reference/PawScript.md)|
-|Lifecycle, Skills, NPC/keyword activation, templates, images or runtime fields|[reference/Capabilities.md](https://iw-builder.github.io/reference/Capabilities.md)|
+|Turn lifecycle, template timing, specialist requests, endings or runtime output names|[reference/Runtime.md](https://iw-builder.github.io/reference/Runtime.md)|
+|Skills, player characters, NPC cards or keyword activation|[reference/Characters.md](https://iw-builder.github.io/reference/Characters.md)|
+|Images, portraits, video or model-specific blocks|[reference/Images-and-Models.md](https://iw-builder.github.io/reference/Images-and-Models.md); [reference/Current-AI-Profiles.json](https://iw-builder.github.io/reference/Current-AI-Profiles.json) for model IDs, asking which model(s) are common if needed|
 |Combined mechanics, optional blocks or request/commit|[reference/Recipes.md](https://iw-builder.github.io/reference/Recipes.md) and the relevant example in [examples/index.json](https://iw-builder.github.io/examples/index.json)|
 |Library modules or Storymaster|[library/Integration.md](https://iw-builder.github.io/library/Integration.md), then only relevant portions of [Sample-Blocks.json](https://iw-builder.github.io/library/Sample-Blocks.json) or [Storymaster-Suite.json](https://iw-builder.github.io/library/Storymaster-Suite.json)|
-|Custom Evaluation|[reference/Default-Evaluation.txt](https://iw-builder.github.io/reference/Default-Evaluation.txt) and the Skills section of [reference/Capabilities.md](https://iw-builder.github.io/reference/Capabilities.md)|
-|Model-specific blocks|[reference/Current-AI-Profiles.json](https://iw-builder.github.io/reference/Current-AI-Profiles.json) and the model-block section of [reference/Capabilities.md](https://iw-builder.github.io/reference/Capabilities.md); ask which model(s) are common if needed|
+|Custom Evaluation|[reference/Default-Evaluation.txt](https://iw-builder.github.io/reference/Default-Evaluation.txt) and the Evaluation section of [reference/Characters.md](https://iw-builder.github.io/reference/Characters.md)|
 |Editing, combining or importing; editor workflows and terminology|[reference/Editor-UI.md](https://iw-builder.github.io/reference/Editor-UI.md); ID conventions in the Identifiers section of [reference/Schema.md](https://iw-builder.github.io/reference/Schema.md)|
 |Credit cost estimates|[reference/Cost.md](https://iw-builder.github.io/reference/Cost.md)|
 |Review, Debug or likely world bugs; uncertain platform behavior|[reference/Notable-Findings.md](https://iw-builder.github.io/reference/Notable-Findings.md), including its list of what is still unknown; do not turn uncertainty into an invented rule|
@@ -101,15 +102,15 @@ The template or current export is required for construction. Load the files belo
 
 ## 3. Agree the experience, not implementation trivia
 
-Minimum creative brief: premise, player role, tone/content boundaries, and ending versus ongoing play. Infer reasonable defaults from the request; batch any necessary questions and offer defaults. Respect decisions already supplied. For mechanics, briefly show a Feature Plan: player experience; persistent state and update owner; consequences and feedback; presentation; and essential checks. Proceed when the request authorizes building; this is not a mandatory approval gate.
+Minimum creative brief: premise, player role, tone/content boundaries, and ending versus ongoing play. Infer reasonable defaults from the request; batch any necessary questions and offer defaults. Respect decisions already supplied. For mechanics, briefly show a Feature Plan: player experience; persistent state and update owner; consequences and feedback; presentation; and essential checks. Proceed when the request authorizes building; the plan is for the user&#x27;s information, not an approval gate.
 
 Choose the lightest useful features: prose and NPC cards for narrative; keywords for occasional lore; AI trackers for bounded narrative memory; native conditions/effects for simple mechanics; scripts for exact accounting; player choices for constrained decisions. Use the same general tools for arbitrary genres and systems. In any mode, notice reusable characters or cohesive mechanics and offer extraction as entries or dependency-aware bundles when useful; do not copy them into a bank without the user choosing it.
 
-Default new worlds to allowing sharing and editing; change this on request and preserve existing preferences during edits. Set mature/nsfw and content boundaries deliberately for the brief; the template sets both content flags true, so change them to false for worlds without mature content. These flags do not substitute for creative instructions.
+Default new worlds to allowing sharing and editing; change this on request and preserve existing preferences during edits. Set mature/nsfw and content boundaries deliberately for the brief; the template sets both content flags true, so change them to false for worlds without mature content. The flags set the audience; the creative boundaries go in instructions.
 
 For new worlds, specifically discuss Storymaster and naming unless preferences are already supplied. Storymaster is popular in the IW community and substantial: explain its direction/planning role and approximate block plus supporting costs before the user chooses it, a smaller selection of modules, or ordinary storytelling. Never silently include or skip this choice. Offer the five-candidate naming technique in reference/Craft.md as a soft default; if accepted, use it while authoring and include a separate Naming block for play. Batch these with other initial questions. Treat whereWhen as a soft default, and offer other modules only when they suit the brief. Share approximate module token costs from library/Integration.md, noting tokenizer variation.
 
-Preserve requested mature themes and tone within your content limits. Never silently sanitize, omit or dilute them. Identify specific portions you cannot provide, briefly explain the limitation and discuss acceptable alternatives while continuing unaffected work. When proceeding with substitutions, mark and report them using reference/Craft.md; preserve their narrative/mechanical role where possible and disclose any differences. Do not claim equivalence or full compliance where it is absent.
+Preserve requested mature themes and tone within your content limits. Never silently sanitize, omit or dilute them. Identify specific portions you cannot provide, briefly explain the limitation and discuss acceptable alternatives while continuing unaffected work. When proceeding with substitutions, mark and report them using reference/Craft.md; preserve their narrative/mechanical role where possible and disclose any differences. Say plainly where the result differs from what was asked.
 
 Write background as useful context, firstInput as a concrete opening, and objective as an appropriate direction. All three feed the storyteller. Give the opening a place, present concern, reason to act and meaningful alternatives. Give recurring characters distinct wants, voices and relationships. For romance or adult briefs, give each love interest an orientation, an attraction gate, intimacy behavior and aftermath; see reference/Craft.md. Keep authorStyle about prose; durable mechanics belong in instructions/blocks/trackers.
 
@@ -183,7 +184,7 @@ For debugging: enable Menu &gt; Settings &gt; Storyteller Mode and use the bug i
 * Match the creative brief and requested mode; preserve unrelated content on edits.
 * Recurring NPCs have a want, a sample voice line, tells and a stance toward the player.
 * Adult worlds state ages and the explicitness level.
-* Read required references or request their exact paths; do not invent unavailable syntax.
+* Read required references or request their exact paths; unfamiliar syntax comes from the reference, never from memory.
 * Keep at least one skill and matching PC entries. For generated JSON, use hideSkillSystem: false when Skills should be visible. In the editor, leave Hide skill system unchecked; omission in its export is normal and needs no repair.
 * initialValue is a string; distinguish IDs, display names and variableName.
 * Resolve targets, script roots, initialization paths and intended data types.

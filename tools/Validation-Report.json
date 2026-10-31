@@ -1,5 +1,84 @@
 {
   "kitVersion": "1.6.0",
+  "hedgeDensity": {
+    "Authoring-Prompt.md": {
+      "hedgePhrases": 2,
+      "perThousandWords": 0.7
+    },
+    "examples/Payloads.md": {
+      "hedgePhrases": 0,
+      "perThousandWords": 0.0
+    },
+    "library/Integration.md": {
+      "hedgePhrases": 4,
+      "perThousandWords": 2.4
+    },
+    "reference/Characters.md": {
+      "hedgePhrases": 0,
+      "perThousandWords": 0.0
+    },
+    "reference/Cost.md": {
+      "hedgePhrases": 0,
+      "perThousandWords": 0.0
+    },
+    "reference/Craft.md": {
+      "hedgePhrases": 0,
+      "perThousandWords": 0.0
+    },
+    "reference/Editor-UI.md": {
+      "hedgePhrases": 0,
+      "perThousandWords": 0.0
+    },
+    "reference/Images-and-Models.md": {
+      "hedgePhrases": 0,
+      "perThousandWords": 0.0
+    },
+    "reference/Notable-Findings.md": {
+      "hedgePhrases": 5,
+      "perThousandWords": 2.2
+    },
+    "reference/PawScript.md": {
+      "hedgePhrases": 6,
+      "perThousandWords": 2.1
+    },
+    "reference/Portable-Banks.md": {
+      "hedgePhrases": 0,
+      "perThousandWords": 0.0
+    },
+    "reference/Recipes.md": {
+      "hedgePhrases": 0,
+      "perThousandWords": 0.0
+    },
+    "reference/Runtime.md": {
+      "hedgePhrases": 1,
+      "perThousandWords": 0.8
+    },
+    "reference/Schema.md": {
+      "hedgePhrases": 1,
+      "perThousandWords": 0.4
+    },
+    "reference/Trackers.md": {
+      "hedgePhrases": 1,
+      "perThousandWords": 1.0
+    },
+    "reference/Trigger-Catalog.md": {
+      "hedgePhrases": 0,
+      "perThousandWords": 0.0
+    },
+    "reference/Triggers.md": {
+      "hedgePhrases": 0,
+      "perThousandWords": 0.0
+    },
+    "reference/Verified-Behavior.md": {
+      "hedgePhrases": 8,
+      "perThousandWords": 2.4
+    },
+    "tools/Usage.md": {
+      "hedgePhrases": 4,
+      "perThousandWords": 1.9
+    }
+  },
+  "hedgeWarnings": [],
   "schemaProfileVersion": "1.2.0",
   "structuralValidation": {
     "World-Template.json": {
