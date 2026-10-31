@@ -27,11 +27,11 @@ Read only what the task needs; Authoring-Prompt.md says which guide covers which
 - [reference/README.md](https://iw-builder.github.io/reference/README.md) (2 KB): Human-friendly index of the reference guides.
 - [reference/Recipes.md](https://iw-builder.github.io/reference/Recipes.md) (13 KB): Ways to combine features: situation triggers, thresholds, choices, optional blocks, dynamic content, request/commit, guarded state and turn-state patterns.
 - [reference/Schema.md](https://iw-builder.github.io/reference/Schema.md) (17 KB): Export structure: identifier conventions, field groups, trackers, starting values, condition and effect payloads, comparators and value-effect operations.
-- [reference/Trackers.md](https://iw-builder.github.io/reference/Trackers.md) (6 KB): Tracker fields, data types, visibility, update ownership, starting values and memory/context cost.
+- [reference/Trackers.md](https://iw-builder.github.io/reference/Trackers.md) (7 KB): Tracker fields, data types, visibility, update ownership, starting values and memory/context cost.
 - [reference/Trigger-Catalog.md](https://iw-builder.github.io/reference/Trigger-Catalog.md) (6 KB): Every identified trigger condition and effect type in one table. Check it before saying a trigger can't do something.
 - [reference/Triggers.md](https://iw-builder.github.io/reference/Triggers.md) (10 KB): Trigger timing flags, ordering, effect semantics, choosing native effects or PawScript, start-of-game restrictions and changing a tracker definition during play.
 - [reference/Notable-Findings.md](https://iw-builder.github.io/reference/Notable-Findings.md) (14 KB): Plain-language list of the behavior most likely to surprise an author or break a world, with what to do, and the list of what is still unknown.
-- [reference/Verified-Behavior.md](https://iw-builder.github.io/reference/Verified-Behavior.md) (22 KB): Compatibility baseline, evidence labels and consolidated runtime findings: triggers, imports, PawScript, visibility, memory, forms, images and endings.
+- [reference/Verified-Behavior.md](https://iw-builder.github.io/reference/Verified-Behavior.md) (23 KB): Compatibility baseline, evidence labels and consolidated runtime findings: triggers, imports, PawScript, visibility, memory, forms, images and endings.
 
 ## Examples
 

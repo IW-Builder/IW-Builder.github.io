@@ -494,7 +494,7 @@ flowchart TD
 - Scenario judgments must be available for their trigger checks, but their exact stage relative to Evaluation, narration and tracker updates is not mapped.
 - Messages belong to their effects; they need not be a single final batch after all triggers. Choice/input effects can suspend for a player answer. Correctly bound single-answer forms update immediately and permit later triggers to read the answer in the same turn.
 - Guidance and block changes do not rewrite already-generated narration. Updates supply context for subsequent generation. When guidance effects conflict, the first tends to win; generate one coherent directive instead.
-- Summary generation is a separate context-maintenance process (compression from about turn eight, then every six turns); its ordering relative to other turn stages is not established.
+- Summary generation is a separate context-maintenance process (compression after turn 8 and every six turns after that, leaving the 2–7 most recent turns uncompressed); its ordering relative to other turn stages is not established.
 
 Timing flags (Start, Mid Game, repeat), prerequisites and blockers are covered in [Triggers.md](Triggers.md).
 
