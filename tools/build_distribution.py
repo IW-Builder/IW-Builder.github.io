@@ -78,9 +78,15 @@ GROUPS = {
         'library/Storymaster-Suite.json',
     ],
 }
+# The reference editions in reading order. IW-Complete-Reference.txt is their
+# concatenation: one attachment for chats whose model has room for ~75k tokens.
+REFERENCE_EDITIONS = ['IW-Authoring-Guide.txt', 'IW-Technical-Reference.txt', 'IW-Behavior.txt', 'IW-Payloads.txt']
+COMPLETE_EDITION = 'IW-Complete-Reference.txt'
+
 # Purpose of each edition, used in every edition's header so a model with only
 # one file knows which companion holds a given path.
 EDITION_PURPOSE = {
+    COMPLETE_EDITION: 'the whole reference in one file: everything in the four reference editions below',
     'IW-Authoring-Guide.txt': 'start here: prompt, template, narrative craft, trackers, triggers, data banks and library integration',
     'IW-Technical-Reference.txt': 'exact payloads, PawScript, runtime, characters, images/models and recipes',
     'IW-Behavior.txt': 'notable findings and open questions, editor/UI workflows with import checks, cost and verified runtime behavior',
@@ -209,18 +215,27 @@ def edition_header(name):
                      'separator newlines, and preserve indentation and escaping. See tools/Usage.md for dependencies '
                      'and commands. Distribution builders and maintainer tests are omitted. Reading these sources is '
                      'not running them; report validation only after execution.')
+    elif name == COMPLETE_EDITION:
+        lines.append('Follow Authoring-Prompt.md (the first file below). This edition holds every reference document; the '
+                     'example, library and tools editions are the only companions, and only when the task needs one.')
     else:
         lines.append('Follow Authoring-Prompt.md (in IW-Authoring-Guide.txt). Load companion editions only when the task needs them.')
     lines.append('Editions and their contents:')
-    editions = {**GROUPS, 'IW-Tools.txt': TOOL_SOURCES}
+    editions = all_editions()
     for other, purpose in EDITION_PURPOSE.items():
-        lines.append('- ' + other + ': ' + purpose + '. Files: ' + ', '.join(editions[other]))
+        files = 'the ' + ', '.join(REFERENCE_EDITIONS) + ' files' if other == COMPLETE_EDITION else ', '.join(editions[other])
+        lines.append('- ' + other + ': ' + purpose + '. Files: ' + files)
     lines.append('Every file is also available individually: https://iw-builder.github.io/llms.txt')
     return '\n'.join(lines) + '\n'
 
+def all_editions():
+    """Every edition with its source paths; the complete edition repeats the reference sources."""
+    complete = [p for name in REFERENCE_EDITIONS for p in GROUPS[name]]
+    return {COMPLETE_EDITION: complete, **GROUPS, 'IW-Tools.txt': TOOL_SOURCES}
+
 def build_chat():
     source_manifest = {}
-    groups = {**GROUPS, 'IW-Tools.txt': TOOL_SOURCES}
+    groups = all_editions()
     for name, paths in groups.items():
         parts = [edition_header(name)]
         for path in paths:
@@ -244,7 +259,7 @@ def build_chat():
 </head>
 <body>
   <h1>IW Builder Authoring Guide</h1>
-  <p>Start here. This page contains IW-Authoring-Guide.txt: the prompt, template and core references. Companion editions, only when needed:
+  <p>Start here. This page contains IW-Authoring-Guide.txt: the prompt, template and core references. Companion editions, only when needed (IW-Complete-Reference.txt is every reference document in one file, for attaching to a chat):
     __LINKS__.
     Individual files: <a href="https://iw-builder.github.io/llms.txt">llms.txt</a>.</p>
   <main><pre>__GUIDE_CONTENT__</pre></main>
@@ -306,6 +321,7 @@ DESCRIPTIONS = {
     'LICENSE': 'MIT license.',
     # Combined text editions
     'chat/index.html': 'HTML page containing IW-Authoring-Guide.txt, with links to the companion editions.',
+    'chat/IW-Complete-Reference.txt': 'Combined text, all reference in one attachment (about 75k tokens): the prompt, template, every reference guide, Payloads and the example index. Too large for most URL fetchers; attach it.',
     'chat/IW-Authoring-Guide.txt': 'Combined text, start here: prompt, template, Evidence, Craft, Trackers, Triggers, Trigger-Catalog, Portable-Banks and library Integration.',
     'chat/IW-Technical-Reference.txt': 'Combined text: Schema, PawScript, Runtime, Characters, Images-and-Models, Recipes, Default Evaluation and AI profile IDs.',
     'chat/IW-Behavior.txt': 'Combined text: Notable-Findings (with open questions), Editor-UI, Cost and Verified-Behavior.',
@@ -468,7 +484,7 @@ INDEX_SECTIONS = [
     ('tools', 'Tools', 'Python tools for models or users that can run code. Without Python, use the checker.'),
     ('checker', 'Browser checker', None),
     ('cost', 'Cost exporter', 'Downloads your own credit history from IW; see reference/Cost.md for estimating.'),
-    ('chat', 'Combined text editions', 'Single-file bundles for chats without web access or with tool limits. Web-browsing models should prefer the individual files above.'),
+    ('chat', 'Combined text editions', 'Single-file bundles for chats without web access or with tool limits: the whole reference in one file, or split into four for size-limited tools, plus examples, library and tools to attach only when asked for. Web-browsing models should prefer the individual files above.'),
     ('samples', 'Sample worlds', 'Worlds made with the kit, with the conversations that produced them. Not documentation.'),
 ]
 

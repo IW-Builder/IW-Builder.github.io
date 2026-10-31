@@ -60,9 +60,16 @@ class DistributionTests(unittest.TestCase):
 
     def test_reference_editions_are_split_and_bounded(self):
         sources = {k: v['sourceFiles'] for k, v in json.loads((self.root/'chat/sources.json').read_text()).items()}
-        self.assertEqual(set(sources), {'IW-Authoring-Guide.txt', 'IW-Technical-Reference.txt', 'IW-Behavior.txt',
-                                        'IW-Payloads.txt', 'IW-Mechanics-Examples.txt', 'IW-Narrative-Examples.txt',
+        self.assertEqual(set(sources), {'IW-Complete-Reference.txt', 'IW-Authoring-Guide.txt', 'IW-Technical-Reference.txt',
+                                        'IW-Behavior.txt', 'IW-Payloads.txt', 'IW-Mechanics-Examples.txt', 'IW-Narrative-Examples.txt',
                                         'IW-Sample-Blocks.txt', 'IW-Storymaster.txt', 'IW-Tools.txt'})
+        reference = ['IW-Authoring-Guide.txt', 'IW-Technical-Reference.txt', 'IW-Behavior.txt', 'IW-Payloads.txt']
+        self.assertEqual(sources['IW-Complete-Reference.txt'], [p for n in reference for p in sources[n]])
+        complete = (self.root/'chat/IW-Complete-Reference.txt').read_text()
+        for n in reference:
+            self.assertIn('===== BEGIN FILE: ' + sources[n][0] + ' =====', complete)
+        self.assertLess((self.root/'chat/IW-Complete-Reference.txt').stat().st_size, 350_000)
+        del sources['IW-Complete-Reference.txt']
         self.assertIn('library/Integration.md', sources['IW-Authoring-Guide.txt'])
         self.assertFalse((self.root/'chat/IW-Sample-Library.txt').exists())
         self.assertLess((self.root/'chat/IW-Payloads.txt').stat().st_size, 60_000)
