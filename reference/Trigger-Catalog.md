@@ -1,6 +1,6 @@
 # Trigger capability catalog
 
-Read this overview before saying a trigger cannot do something. It lists all condition/effect kinds currently identified in the kit and observed editor, not a guarantee about future additions. User-facing labels describe purpose; exact picker wording can vary. Use tracker/trigger Names with users, reserving the JSON identifiers below for implementation or requested technical detail.
+Read this overview before saying a trigger cannot do something. It lists every condition and effect kind in the current editor. User-facing labels describe purpose; exact picker wording can vary. Use tracker/trigger Names with users, reserving the JSON identifiers below for implementation or requested technical detail.
 
 ## Trigger gates and composition
 
@@ -52,7 +52,7 @@ Native startup payload examples: [background](../examples/effect-effectChangeBac
 
 ## Scope of this catalog
 
-Everything listed is represented in the schema and has a native example under ../examples/; read [Schema](Schema.md) and the specific payload only when implementing. **Modify tracked item details** changes a tracker's definition (Name, description, visibility, automatic updating, update instructions) rather than its value; its rules and the Request Input restriction are in [Triggers](Triggers.md#changing-a-trackers-definition-during-play). The schema is a partial compatibility profile, not the definition of all platform capabilities. Do not infer nonexistent Evaluation, Summary or image-change effects from similarly named effects.
+Everything listed is represented in the schema and has a native example under ../examples/; read [Schema](Schema.md) and the specific payload only when implementing. **Modify tracked item details** changes a tracker's definition (Name, description, visibility, automatic updating, update instructions) rather than its value; its rules and the Request Input restriction are in [Triggers](Triggers.md#changing-a-trackers-definition-during-play). There is no effect that changes Evaluation, Summary or image settings; Change Description instructions is the only specialist-request effect.
 
 ---
 

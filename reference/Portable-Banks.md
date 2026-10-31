@@ -12,7 +12,7 @@ In Build, Edit, Review or Debug, recognize cohesive reusable content and offer e
 
 ## Authoritative data and readable presentation
 
-The `.txt` bank has a generated readable index followed by one authoritative JSON section. Summaries and [tags] make it easy to browse, but never reconstruct native data from summaries. The section is delimited by full lines `<!-- BEGIN IW DATA BANK -->` and `<!-- END IW DATA BANK -->`, contains one `json` code fence, and ends with `SHA256: <hash>` on the following line, or `SHA256: UNVERIFIED` when no code-based hash was computed. The hash covers the canonical authoritative data, not the index. This is transport integrity, not proof of provenance or gameplay correctness.
+The `.txt` bank has a generated readable index followed by one authoritative JSON section. Summaries and [tags] make it easy to browse, but never reconstruct native data from summaries. The section is delimited by full lines `<!-- BEGIN IW DATA BANK -->` and `<!-- END IW DATA BANK -->`, contains one `json` code fence, and ends with `SHA256: <hash>` on the following line, or `SHA256: UNVERIFIED` when no code-based hash was computed. The hash covers the canonical authoritative data, not the index, and checks that the data arrived intact.
 
 The authoritative object has `format: "iw-data-bank"`, integer `version: 1`, and an `entries` array. Other metadata is preserved. Each entry contains:
 
@@ -28,11 +28,11 @@ The authoritative object has `format: "iw-data-bank"`, integer `version: 1`, and
 
 `payload` stores the original JSON value, including unknown keys and nested content. A standalone script can use a string payload and metadata identifying its context (Run Script, predicate or template) and required variables. An NPC or tracker stores its complete native object. A bundle stores multiple components; its `kind` is `bundle`. Keep sourcePath as an escaped JSON Pointer when extracted, such as `/NPCs/0` or `/triggerEvents/2`. Paths record provenance, not a command to overwrite that position in another world.
 
-Retain the original native payload during PC/NPC conversion. Create the requested counterpart as a distinct component or entry, mapping appropriate identity, appearance and narrative information into its native fields. PC skills/selection fields and NPC activation/image fields are not interchangeable. Report newly supplied defaults and preserve unmapped source information; do not claim the conversion is a lossless relabeling. IW can offer the same canonical name as both PC and NPC without exclusion prose.
+Retain the original native payload during PC/NPC conversion. Create the requested counterpart as a distinct component or entry, mapping appropriate identity, appearance and narrative information into its native fields. PC skills/selection fields and NPC activation/image fields are not interchangeable. Report newly supplied defaults and preserve unmapped source information; the conversion maps fields and is not lossless. IW can offer the same canonical name as both PC and NPC without exclusion prose.
 
 ## Dependencies and application
 
-Record dependencies as included, external or unresolved. Native IDs can be checked statically; variable roots, prose references and dynamic paths require review. The export helper does not automatically infer them and marks dependency review as unresolved. A physically complete export is not proof of a self-contained mechanic.
+Record dependencies as included, external or unresolved. Native IDs can be checked statically; variable roots, prose references and dynamic paths need a reader, so the export helper marks dependency review as unresolved until someone does it. A complete export can still depend on content it does not contain.
 
 To apply entries, inspect the destination and preserve its unrelated content. Resolve native IDs, variable names, skills, activation requirements, ordering, starting values and referenced blocks. Remap collisions consistently; never run a blind global string replacement. Keep bank IDs unchanged. Report adaptations, additions and unresolved dependencies, and validate the complete destination world. A source bank remains unchanged unless its update was requested.
 
@@ -67,7 +67,7 @@ Output paths must be new; the tool refuses silent overwrite. Check the updated b
 
 The helper rejects duplicate JSON keys, checks bank structure and included-entry targets, and verifies hashes for text banks. It preserves arbitrary-precision integers and decimal numbers without float rounding. Its hash check does not validate IW payload schemas, semantic dependencies, tags or prose summaries; use the world validator after integration. Unknown bank metadata is preserved.
 
-Without code execution, use the same `.txt` format with `SHA256: UNVERIFIED`, or return the authoritative `.json` bank source with readable discussion separately. Never fabricate a hash or claim round-trip verification. The helper accepts either form, explicitly distinguishes an absent hash from verified integrity, and computes a hash when packing. Large edits should preserve untouched payloads and be checked with tools before claiming losslessness. An upload does not guarantee persistent storage: keep the latest returned bank for future sessions.
+Without code execution, use the same `.txt` format with `SHA256: UNVERIFIED`, or return the authoritative `.json` bank source with readable discussion separately. Never fabricate a hash or claim round-trip verification. The helper accepts either form, explicitly distinguishes an absent hash from verified integrity, and computes a hash when packing. Large edits should preserve untouched payloads and be checked with tools before being called lossless. Keep the latest returned bank for future sessions; an uploaded attachment may not be writable or remembered in another session.
 
 ---
 

@@ -3,7 +3,7 @@ Generated text edition. BEGIN FILE / END FILE sections identify package-relative
 Follow Authoring-Prompt.md (in IW-Authoring-Guide.txt). Load companion editions only when the task needs them.
 Editions and their contents:
 - IW-Authoring-Guide.txt: start here: prompt, template, narrative craft, trackers, triggers, data banks and library integration. Files: Authoring-Prompt.md, World-Template.json, reference/Craft.md, reference/Trackers.md, reference/Triggers.md, reference/Trigger-Catalog.md, reference/Portable-Banks.md, library/Integration.md
-- IW-Technical-Reference.txt: exact payloads, PawScript, capabilities and recipes. Files: reference/Schema.md, reference/PawScript.md, reference/Capabilities.md, reference/Recipes.md, reference/Default-Evaluation.txt, reference/Current-AI-Profiles.json
+- IW-Technical-Reference.txt: exact payloads, PawScript, runtime, characters, images/models and recipes. Files: reference/Schema.md, reference/PawScript.md, reference/Runtime.md, reference/Characters.md, reference/Images-and-Models.md, reference/Recipes.md, reference/Default-Evaluation.txt, reference/Current-AI-Profiles.json
 - IW-Behavior.txt: notable findings and open questions, editor/UI workflows with import checks, cost and verified runtime behavior. Files: reference/Notable-Findings.md, reference/Editor-UI.md, reference/Cost.md, reference/Verified-Behavior.md
 - IW-Payloads.txt: exact native payload snippets for every condition and effect, plus the example index. Files: examples/Payloads.md, examples/index.json
 - IW-Mechanics-Examples.txt: complete mechanics example worlds: recipes, optional block, starting values, layered opening, on-demand generation and a showcase. Files: examples/recipe-request-commit.json, examples/recipe-completion-award.json, examples/recipe-candidate-acceptance.json, examples/recipe-archive-reactivate.json, examples/recipe-cached-random.json, examples/recipe-consumed-timer.json, examples/recipe-choice-domain.json, examples/recipe-compiled-plot.json, examples/recipe-choice-followup.json, examples/recipe-threshold-unlock.json, examples/optional-block.json, examples/character-starting-values.json, examples/recipe-layered-opening.json, examples/recipe-on-demand-generation.json, examples/showcase-glass-ledger.json
@@ -14,7 +14,7 @@ Editions and their contents:
 Every file is also available individually: https://iw-builder.github.io/llms.txt
 
 ===== BEGIN FILE: Authoring-Prompt.md =====
-This is the IW-Builder authoring guide for Infinite Worlds (IW). When a user shares it with a request, follow it as their IW author and technical copilot: help them build, edit, review, debug or understand a world, or maintain reusable data, matching their experience and technical level. The kit is a reference for IW, not a mandatory game architecture.
+This is the IW-Builder authoring guide for Infinite Worlds (IW). When a user shares it with a request, follow it as their IW author and technical copilot: help them build, edit, review, debug or understand a world, or maintain reusable data, matching their experience and technical level. The kit is a reference for IW; its examples and library are options, not an architecture every world must follow.
 
 Each kit document ends with an `END OF DOCUMENT` marker; if it is missing, completeness is unconfirmed, so inspect the sections you need or retry the source rather than assuming damage. Markers are document boundaries, not text to copy into a world. For library modules, retrieve the entire `content` value by name/ID; a description is not the exact block. Byte-level verification against [manifest.json](https://iw-builder.github.io/manifest.json) is available but not needed to author.
 
@@ -35,7 +35,7 @@ Before building, briefly state which needed files you can read, whether you can 
 
 If the user uses trackers, triggers, PawScript or object IDs fluently, use technical explanations. Otherwise use plain language and explain features through their effect on play. Treat this as an adaptable preference, not a fixed label.
 
-Teach IW or PawScript = Consult mode. Establish programming familiarity if unclear. Read relevant reference and teach progressively with small, fully initialized example. State where each snippet belongs, what it does, expected result. Explain unfamiliar syntax before combining it. Offer short exercises when useful; do not substitute function list for lesson.
+Teach IW or PawScript = Consult mode. Establish programming familiarity if unclear. Read relevant reference and teach progressively with small, fully initialized example. State where each snippet belongs, what it does, expected result. Explain unfamiliar syntax before combining it. Offer short exercises when useful; a function list is not a lesson.
 
 ## 2. Load only what the task needs
 
@@ -51,11 +51,12 @@ The template or current export is required for construction. Load the files belo
 |Trigger timing, sequencing and effects|[reference/Trigger-Catalog.md](https://iw-builder.github.io/reference/Trigger-Catalog.md) for the capability overview; [reference/Triggers.md](https://iw-builder.github.io/reference/Triggers.md)|
 |Exact native payloads|[reference/Schema.md](https://iw-builder.github.io/reference/Schema.md) and matching snippets in [examples/Payloads.md](https://iw-builder.github.io/examples/Payloads.md); load a complete example only when useful|
 |Any PawScript expression or script|[reference/PawScript.md](https://iw-builder.github.io/reference/PawScript.md)|
-|Lifecycle, Skills, NPC/keyword activation, templates, images or runtime fields|[reference/Capabilities.md](https://iw-builder.github.io/reference/Capabilities.md)|
+|Turn lifecycle, template timing, specialist requests, endings or runtime output names|[reference/Runtime.md](https://iw-builder.github.io/reference/Runtime.md)|
+|Skills, player characters, NPC cards or keyword activation|[reference/Characters.md](https://iw-builder.github.io/reference/Characters.md)|
+|Images, portraits, video or model-specific blocks|[reference/Images-and-Models.md](https://iw-builder.github.io/reference/Images-and-Models.md); [reference/Current-AI-Profiles.json](https://iw-builder.github.io/reference/Current-AI-Profiles.json) for model IDs, asking which model(s) are common if needed|
 |Combined mechanics, optional blocks or request/commit|[reference/Recipes.md](https://iw-builder.github.io/reference/Recipes.md) and the relevant example in [examples/index.json](https://iw-builder.github.io/examples/index.json)|
 |Library modules or Storymaster|[library/Integration.md](https://iw-builder.github.io/library/Integration.md), then only relevant portions of [Sample-Blocks.json](https://iw-builder.github.io/library/Sample-Blocks.json) or [Storymaster-Suite.json](https://iw-builder.github.io/library/Storymaster-Suite.json)|
-|Custom Evaluation|[reference/Default-Evaluation.txt](https://iw-builder.github.io/reference/Default-Evaluation.txt) and the Skills section of [reference/Capabilities.md](https://iw-builder.github.io/reference/Capabilities.md)|
-|Model-specific blocks|[reference/Current-AI-Profiles.json](https://iw-builder.github.io/reference/Current-AI-Profiles.json) and the model-block section of [reference/Capabilities.md](https://iw-builder.github.io/reference/Capabilities.md); ask which model(s) are common if needed|
+|Custom Evaluation|[reference/Default-Evaluation.txt](https://iw-builder.github.io/reference/Default-Evaluation.txt) and the Evaluation section of [reference/Characters.md](https://iw-builder.github.io/reference/Characters.md)|
 |Editing, combining or importing; editor workflows and terminology|[reference/Editor-UI.md](https://iw-builder.github.io/reference/Editor-UI.md); ID conventions in the Identifiers section of [reference/Schema.md](https://iw-builder.github.io/reference/Schema.md)|
 |Credit cost estimates|[reference/Cost.md](https://iw-builder.github.io/reference/Cost.md)|
 |Review, Debug or likely world bugs; uncertain platform behavior|[reference/Notable-Findings.md](https://iw-builder.github.io/reference/Notable-Findings.md), including its list of what is still unknown; do not turn uncertainty into an invented rule|
@@ -65,15 +66,15 @@ The template or current export is required for construction. Load the files belo
 
 ## 3. Agree the experience, not implementation trivia
 
-Minimum creative brief: premise, player role, tone/content boundaries, and ending versus ongoing play. Infer reasonable defaults from the request; batch any necessary questions and offer defaults. Respect decisions already supplied. For mechanics, briefly show a Feature Plan: player experience; persistent state and update owner; consequences and feedback; presentation; and essential checks. Proceed when the request authorizes building; this is not a mandatory approval gate.
+Minimum creative brief: premise, player role, tone/content boundaries, and ending versus ongoing play. Infer reasonable defaults from the request; batch any necessary questions and offer defaults. Respect decisions already supplied. For mechanics, briefly show a Feature Plan: player experience; persistent state and update owner; consequences and feedback; presentation; and essential checks. Proceed when the request authorizes building; the plan is for the user's information, not an approval gate.
 
 Choose the lightest useful features: prose and NPC cards for narrative; keywords for occasional lore; AI trackers for bounded narrative memory; native conditions/effects for simple mechanics; scripts for exact accounting; player choices for constrained decisions. Use the same general tools for arbitrary genres and systems. In any mode, notice reusable characters or cohesive mechanics and offer extraction as entries or dependency-aware bundles when useful; do not copy them into a bank without the user choosing it.
 
-Default new worlds to allowing sharing and editing; change this on request and preserve existing preferences during edits. Set mature/nsfw and content boundaries deliberately for the brief; the template sets both content flags true, so change them to false for worlds without mature content. These flags do not substitute for creative instructions.
+Default new worlds to allowing sharing and editing; change this on request and preserve existing preferences during edits. Set mature/nsfw and content boundaries deliberately for the brief; the template sets both content flags true, so change them to false for worlds without mature content. The flags set the audience; the creative boundaries go in instructions.
 
 For new worlds, specifically discuss Storymaster and naming unless preferences are already supplied. Storymaster is popular in the IW community and substantial: explain its direction/planning role and approximate block plus supporting costs before the user chooses it, a smaller selection of modules, or ordinary storytelling. Never silently include or skip this choice. Offer the five-candidate naming technique in reference/Craft.md as a soft default; if accepted, use it while authoring and include a separate Naming block for play. Batch these with other initial questions. Treat whereWhen as a soft default, and offer other modules only when they suit the brief. Share approximate module token costs from library/Integration.md, noting tokenizer variation.
 
-Preserve requested mature themes and tone within your content limits. Never silently sanitize, omit or dilute them. Identify specific portions you cannot provide, briefly explain the limitation and discuss acceptable alternatives while continuing unaffected work. When proceeding with substitutions, mark and report them using reference/Craft.md; preserve their narrative/mechanical role where possible and disclose any differences. Do not claim equivalence or full compliance where it is absent.
+Preserve requested mature themes and tone within your content limits. Never silently sanitize, omit or dilute them. Identify specific portions you cannot provide, briefly explain the limitation and discuss acceptable alternatives while continuing unaffected work. When proceeding with substitutions, mark and report them using reference/Craft.md; preserve their narrative/mechanical role where possible and disclose any differences. Say plainly where the result differs from what was asked.
 
 Write background as useful context, firstInput as a concrete opening, and objective as an appropriate direction. All three feed the storyteller. Give the opening a place, present concern, reason to act and meaningful alternatives. Give recurring characters distinct wants, voices and relationships. For romance or adult briefs, give each love interest an orientation, an attraction gate, intimacy behavior and aftermath; see reference/Craft.md. Keep authorStyle about prose; durable mechanics belong in instructions/blocks/trackers.
 
@@ -147,7 +148,7 @@ For debugging: enable Menu > Settings > Storyteller Mode and use the bug icon be
 * Match the creative brief and requested mode; preserve unrelated content on edits.
 * Recurring NPCs have a want, a sample voice line, tells and a stance toward the player.
 * Adult worlds state ages and the explicitness level.
-* Read required references or request their exact paths; do not invent unavailable syntax.
+* Read required references or request their exact paths; unfamiliar syntax comes from the reference, never from memory.
 * Keep at least one skill and matching PC entries. For generated JSON, use hideSkillSystem: false when Skills should be visible. In the editor, leave Hide skill system unchecked; omission in its export is normal and needs no repair.
 * initialValue is a string; distinguish IDs, display names and variableName.
 * Resolve targets, script roots, initialization paths and intended data types.
@@ -284,6 +285,7 @@ When effort is limited, spend it here first, in this order: NPC one_liners; one 
 | Keyword lore | Optional depth behind distinctive words | Essential opening facts |
 | Instruction blocks | Persistent rules: time header, world laws, intimate-scene craft | Duplicated main instructions |
 | AI trackers | Bounded memory of what changes: stance, agreements, outfits, promises | Unbounded journals |
+| mature / nsfw / contentWarnings | Content settings matching the audience; the template sets both flags true | Treating them as the prose policy: write the boundaries in instructions |
 
 ## Opening
 
@@ -413,11 +415,11 @@ Trackers: `name` is the display label, `id` connects native references, and `var
 
 ## Storage, visibility and ownership
 
-Use the dataType vocabulary `text`, `number`, `yaml`, `xml`; do not emit an invented boolean/list dataType. Structured booleans/lists can live inside YAML. UI terminology and storage types are not automatically identical.
+The dataType vocabulary is `text`, `number`, `yaml` and `xml`; booleans and lists live inside YAML. `xml` holds an XML representation; XPath support and YAML-style path mutation are not established for it, so check a small export before structured XML manipulation.
 
 Tracker `initialValue` is a JSON STRING even for numbers and YAML: `"10"`, or `"held: 0\nuses: 3\n"`. YAML content inside that string has its own parsed numbers, strings, lists and records. IW text entry does not enforce numeric-only input, but a mathematical tracker should start from an actual numeric literal. This does NOT make the entire export string-valued: JSON booleans, arrays and numeric fields elsewhere retain schema types.
 
-Initialize every mechanical path explicitly. Distinguish 0, false, empty text, an empty list, an absent key and null. Define each value's meaning consistently; numeric 0/1 is one practical flag convention. Narration must not reinterpret a stored value to justify a conflicting story. Treat missing required data as malformed/denied unless the design explicitly defines a fallback. Enforce format does not stop malformed manual/script writes; its schema is a readable YAML-like notation, not JSON Schema. Use explicit shape and semantic checks before accepting generated state. Native path adjustment and script assignment have different missing-path behavior, and independent random expressions can disagree, so cache shared choices.
+Initialize every mechanical path explicitly. Distinguish 0, false, empty text, an empty list, an absent key and null. Define each value's meaning consistently; numeric 0/1 is one practical flag convention. Narration must not reinterpret a stored value to justify a conflicting story. Treat missing required data as malformed/denied unless the design explicitly defines a fallback. Enforce format does not stop malformed manual/script writes, so use explicit shape and semantic checks before accepting generated state. `formatSchema` is the library's readable notation, not JSON Schema: text/number describe leaf values, `field?: text` marks an optional key, and `...:` permits additional content; its full grammar is unspecified. `formatExample` shows an intended value and should not double as a starting fact. Native path adjustment and script assignment have different missing-path behavior, and independent random expressions can disagree, so cache shared choices.
 
 Ownership:
 
@@ -430,9 +432,9 @@ Ownership:
 
 Do not let the AI and scripts compete to rewrite the same mechanical YAML document. Consolidating related flags in a YAML tracker reduces editor clutter; it does not by itself reduce trigger count or guarantee lower token cost. Large AI-visible YAML and duplicative logs still cost context. Keep hidden cache text out of the storyteller unless needed.
 
-Visibility values include everyone (player and AI), ai_only and ai_only_boring (AI-only), player_only, hidden and hidden_boring (hidden from player and AI in supplied uses). Do not infer additional UI highlighting behavior from the suffix alone. The editor clears "Hide in Storyteller mode" when player visibility is enabled. Do not invent contradictory UI combinations. Exports can include hidden trackers and secret information when Storyteller Mode is enabled; select those export options when collecting diagnostics. Visibility is not script access control: hidden values remain script-usable at runtime.
+Visibility values are everyone (player and AI), ai_only and ai_only_boring (AI-only), player_only, hidden and hidden_boring (hidden from player and AI). The `_boring` suffix is the editor's "Hide this item even in Storyteller Mode", a display filter. The editor clears it when player visibility is enabled, so player_only_boring is not a combination. Exports can include hidden trackers and secret information when Storyteller Mode is enabled; select those export options when collecting diagnostics. Visibility is not script access control: hidden values remain script-usable at runtime.
 
-Import normalizes automatic updating off for hidden, hidden_boring and player_only; everyone, ai_only and ai_only_boring can retain automatic updates. Extra-hidden values remain visible in the Storyteller tracker editor. UI visibility does not establish full AI prompt inclusion.
+Import normalizes automatic updating off for hidden, hidden_boring and player_only; everyone, ai_only and ai_only_boring can retain automatic updates. Extra-hidden values remain visible in the Storyteller tracker editor. What the AI receives is not shown by any visibility setting.
 
 A trigger can change a tracker's visibility or automatic updating during play with Modify tracked item details; see [Triggers](Triggers.md#changing-a-trackers-definition-during-play).
 
@@ -489,13 +491,13 @@ Start + Mid Game + Repeat can execute before the opening and again during turn 1
 With Start false, Mid Game has no effect; a stored true value requires no warning or repair. A trigger with no conditions and Start false does not fire automatically, but can remain available for explicit dispatch.
 
 - Prerequisites/blockers with firedThisTurn true are this-turn checks that see a producer only when it is earlier in triggerEvents, and reset each turn. False uses game history, which sees a later-ordered producer from the next turn. It also sees an earlier-ordered producer on the same turn, so false means "has fired, this turn or before" and cannot defer a consumer to the next turn. To defer, order the consumer above its producer, or gate it on a stored turn stamp such as `$game.turn_number > $x.stamp_turn`. The editor disallows requiring and blocking the same trigger; do not generate that conflict.
-- Defaults are not a contract: always serialize canTriggerMoreThanOnce and the timing flags intentionally. Use repeatable commit triggers with idempotent state guards where appropriate, and true one-shot events when required.
+- Always serialize canTriggerMoreThanOnce and the timing flags explicitly rather than relying on defaults. Use repeatable commit triggers with idempotent state guards where appropriate, and true one-shot events when required.
 - Restriction: Do not combine Start of Game with Scenario or minimum-turn conditions. The editor warns that these conditions are ignored; minimum-turn bypass is confirmed during both startup and mid-game execution. Use a separate startup trigger and leave Start off on the conditional trigger.
 
 ### Execution order and effect semantics:
 
 1. Later triggers see earlier committed writes, including that turn's AI tracker updates and correctly bound Present Choice/Request Input answers. This does not describe every internal generation stage.
-2. Native numeric Set/Add effects within one trigger overwrite rather than accumulate (add 2 then add 3 ends at 3). Reads can nevertheless see changed values. Do not assume a later native effect's expression sees an earlier native write merely because it appears lower in the same trigger.
+2. Native numeric Set/Add effects within one trigger overwrite rather than accumulate (add 2 then add 3 ends at 3). Reads can nevertheless see changed values, so a later native effect's expression may or may not see an earlier native write in the same trigger.
 3. Run Script is different: sequential arithmetic accumulates, nested YAML changes preserve unrelated keys, and a failing script rolls back only its own writes, not earlier successful effects. For dependent operations prefer one script; otherwise put preparation in one trigger and consumption in a following trigger.
 4. Native text additions stack; removal removes all matches and literal quotes are retained. Do not apply numeric overwrite behavior to text or script statements.
 5. When guidance effects conflict, the first tends to win. Generate one coherent, mutually exclusive guidance outcome rather than contradictory directives whose priority you hope to control.
@@ -522,7 +524,7 @@ Consolidate repeated logic when it improves clarity, but preserve meaningful exe
 - **Change background** replaces the opening background in Start-only mode, not with Start+Mid; ordinary-play background or first-action changes do not rewrite an opening already shown.
 - **Fire random trigger** dispatches in ordinary play, not with Start enabled.
 
-A trigger counting as fired does not guarantee that every stored effect executed.
+A trigger counting as fired means its conditions passed, not that every stored effect executed.
 
 ## Changing a tracker's definition during play
 
@@ -550,7 +552,7 @@ END OF DOCUMENT: reference/Triggers.md
 ===== BEGIN FILE: reference/Trigger-Catalog.md =====
 # Trigger capability catalog
 
-Read this overview before saying a trigger cannot do something. It lists all condition/effect kinds currently identified in the kit and observed editor, not a guarantee about future additions. User-facing labels describe purpose; exact picker wording can vary. Use tracker/trigger Names with users, reserving the JSON identifiers below for implementation or requested technical detail.
+Read this overview before saying a trigger cannot do something. It lists every condition and effect kind in the current editor. User-facing labels describe purpose; exact picker wording can vary. Use tracker/trigger Names with users, reserving the JSON identifiers below for implementation or requested technical detail.
 
 ## Trigger gates and composition
 
@@ -602,7 +604,7 @@ Native startup payload examples: [background](../examples/effect-effectChangeBac
 
 ## Scope of this catalog
 
-Everything listed is represented in the schema and has a native example under ../examples/; read [Schema](Schema.md) and the specific payload only when implementing. **Modify tracked item details** changes a tracker's definition (Name, description, visibility, automatic updating, update instructions) rather than its value; its rules and the Request Input restriction are in [Triggers](Triggers.md#changing-a-trackers-definition-during-play). The schema is a partial compatibility profile, not the definition of all platform capabilities. Do not infer nonexistent Evaluation, Summary or image-change effects from similarly named effects.
+Everything listed is represented in the schema and has a native example under ../examples/; read [Schema](Schema.md) and the specific payload only when implementing. **Modify tracked item details** changes a tracker's definition (Name, description, visibility, automatic updating, update instructions) rather than its value; its rules and the Request Input restriction are in [Triggers](Triggers.md#changing-a-trackers-definition-during-play). There is no effect that changes Evaluation, Summary or image settings; Change Description instructions is the only specialist-request effect.
 
 ---
 
@@ -625,7 +627,7 @@ In Build, Edit, Review or Debug, recognize cohesive reusable content and offer e
 
 ## Authoritative data and readable presentation
 
-The `.txt` bank has a generated readable index followed by one authoritative JSON section. Summaries and [tags] make it easy to browse, but never reconstruct native data from summaries. The section is delimited by full lines `<!-- BEGIN IW DATA BANK -->` and `<!-- END IW DATA BANK -->`, contains one `json` code fence, and ends with `SHA256: <hash>` on the following line, or `SHA256: UNVERIFIED` when no code-based hash was computed. The hash covers the canonical authoritative data, not the index. This is transport integrity, not proof of provenance or gameplay correctness.
+The `.txt` bank has a generated readable index followed by one authoritative JSON section. Summaries and [tags] make it easy to browse, but never reconstruct native data from summaries. The section is delimited by full lines `<!-- BEGIN IW DATA BANK -->` and `<!-- END IW DATA BANK -->`, contains one `json` code fence, and ends with `SHA256: <hash>` on the following line, or `SHA256: UNVERIFIED` when no code-based hash was computed. The hash covers the canonical authoritative data, not the index, and checks that the data arrived intact.
 
 The authoritative object has `format: "iw-data-bank"`, integer `version: 1`, and an `entries` array. Other metadata is preserved. Each entry contains:
 
@@ -641,11 +643,11 @@ The authoritative object has `format: "iw-data-bank"`, integer `version: 1`, and
 
 `payload` stores the original JSON value, including unknown keys and nested content. A standalone script can use a string payload and metadata identifying its context (Run Script, predicate or template) and required variables. An NPC or tracker stores its complete native object. A bundle stores multiple components; its `kind` is `bundle`. Keep sourcePath as an escaped JSON Pointer when extracted, such as `/NPCs/0` or `/triggerEvents/2`. Paths record provenance, not a command to overwrite that position in another world.
 
-Retain the original native payload during PC/NPC conversion. Create the requested counterpart as a distinct component or entry, mapping appropriate identity, appearance and narrative information into its native fields. PC skills/selection fields and NPC activation/image fields are not interchangeable. Report newly supplied defaults and preserve unmapped source information; do not claim the conversion is a lossless relabeling. IW can offer the same canonical name as both PC and NPC without exclusion prose.
+Retain the original native payload during PC/NPC conversion. Create the requested counterpart as a distinct component or entry, mapping appropriate identity, appearance and narrative information into its native fields. PC skills/selection fields and NPC activation/image fields are not interchangeable. Report newly supplied defaults and preserve unmapped source information; the conversion maps fields and is not lossless. IW can offer the same canonical name as both PC and NPC without exclusion prose.
 
 ## Dependencies and application
 
-Record dependencies as included, external or unresolved. Native IDs can be checked statically; variable roots, prose references and dynamic paths require review. The export helper does not automatically infer them and marks dependency review as unresolved. A physically complete export is not proof of a self-contained mechanic.
+Record dependencies as included, external or unresolved. Native IDs can be checked statically; variable roots, prose references and dynamic paths need a reader, so the export helper marks dependency review as unresolved until someone does it. A complete export can still depend on content it does not contain.
 
 To apply entries, inspect the destination and preserve its unrelated content. Resolve native IDs, variable names, skills, activation requirements, ordering, starting values and referenced blocks. Remap collisions consistently; never run a blind global string replacement. Keep bank IDs unchanged. Report adaptations, additions and unresolved dependencies, and validate the complete destination world. A source bank remains unchanged unless its update was requested.
 
@@ -680,7 +682,7 @@ Output paths must be new; the tool refuses silent overwrite. Check the updated b
 
 The helper rejects duplicate JSON keys, checks bank structure and included-entry targets, and verifies hashes for text banks. It preserves arbitrary-precision integers and decimal numbers without float rounding. Its hash check does not validate IW payload schemas, semantic dependencies, tags or prose summaries; use the world validator after integration. Unknown bank metadata is preserved.
 
-Without code execution, use the same `.txt` format with `SHA256: UNVERIFIED`, or return the authoritative `.json` bank source with readable discussion separately. Never fabricate a hash or claim round-trip verification. The helper accepts either form, explicitly distinguishes an absent hash from verified integrity, and computes a hash when packing. Large edits should preserve untouched payloads and be checked with tools before claiming losslessness. An upload does not guarantee persistent storage: keep the latest returned bank for future sessions.
+Without code execution, use the same `.txt` format with `SHA256: UNVERIFIED`, or return the authoritative `.json` bank source with readable discussion separately. Never fabricate a hash or claim round-trip verification. The helper accepts either form, explicitly distinguishes an absent hash from verified integrity, and computes a hash when packing. Large edits should preserve untouched payloads and be checked with tools before being called lossless. Keep the latest returned bank for future sessions; an uploaded attachment may not be writable or remembered in another session.
 
 ---
 
@@ -767,7 +769,7 @@ An optional cosmetic block can clear its content when disabled. A director such 
 
 The library is a menu of adaptable parts, not a runnable showcase like ../examples/showcase-glass-ledger.json. Its updater triggers explicitly use Start false, Mid false and repeat true, so these conditional update jobs run in ordinary play rather than being assumed to perform initial setup. Their scripts have descriptive names.
 
-The image-style fields contain selectable alternatives and genre-specific defaults. Resolve all editing brackets, keep only compatible choices, and remove sexualized styling unless requested. The video template depends on video-context variables; see ../reference/Capabilities.md before adopting it. These are intentional adaptation dependencies, not finished-world settings.
+The image-style fields contain selectable alternatives and genre-specific defaults. Resolve all editing brackets, keep only compatible choices, and remove sexualized styling unless requested. The video template depends on video-context variables; see ../reference/Images-and-Models.md before adopting it. These are intentional adaptation dependencies, not finished-world settings.
 
 Storymaster as a player toggle is an advanced bundle. A simpler off state must replace its dependent main/style/specialist rules, not merely hide the Storymaster block. For example, ordinary narration can use the premise, current facts, character motivations and player input directly, with summary instructions that preserve facts instead of referring to smPlan. Since there are no characterized native change effects for every specialist field, prefer a static coherent conditional instruction design or an always-compatible specialist override; do not invent effects to switch those fields.
 
@@ -791,7 +793,7 @@ When using the Storymaster VARIABLE BLOCK, supply ALL of:
 - Pacing: intended overall length or ongoing format, major/minor scene estimates, and any relevant specialized scene estimates. For an ongoing story, state that plainly rather than inventing a fixed total.
 
 Obtain these from the description or ask targeted creative questions where needed. Keep them coherent with authorStyle, story_metadata and any reader-profile instructions. Do not remove the variable section merely because it contains placeholders.
-For template substitution timing, see ../reference/Capabilities.md. For generic optional-block composition, see ../reference/Recipes.md.
+For template substitution timing, see ../reference/Runtime.md. For generic optional-block composition, see ../reference/Recipes.md.
 
 ---
 

@@ -6,11 +6,11 @@ Trackers: `name` is the display label, `id` connects native references, and `var
 
 ## Storage, visibility and ownership
 
-Use the dataType vocabulary `text`, `number`, `yaml`, `xml`; do not emit an invented boolean/list dataType. Structured booleans/lists can live inside YAML. UI terminology and storage types are not automatically identical.
+The dataType vocabulary is `text`, `number`, `yaml` and `xml`; booleans and lists live inside YAML. `xml` holds an XML representation; XPath support and YAML-style path mutation are not established for it, so check a small export before structured XML manipulation.
 
 Tracker `initialValue` is a JSON STRING even for numbers and YAML: `"10"`, or `"held: 0\nuses: 3\n"`. YAML content inside that string has its own parsed numbers, strings, lists and records. IW text entry does not enforce numeric-only input, but a mathematical tracker should start from an actual numeric literal. This does NOT make the entire export string-valued: JSON booleans, arrays and numeric fields elsewhere retain schema types.
 
-Initialize every mechanical path explicitly. Distinguish 0, false, empty text, an empty list, an absent key and null. Define each value's meaning consistently; numeric 0/1 is one practical flag convention. Narration must not reinterpret a stored value to justify a conflicting story. Treat missing required data as malformed/denied unless the design explicitly defines a fallback. Enforce format does not stop malformed manual/script writes; its schema is a readable YAML-like notation, not JSON Schema. Use explicit shape and semantic checks before accepting generated state. Native path adjustment and script assignment have different missing-path behavior, and independent random expressions can disagree, so cache shared choices.
+Initialize every mechanical path explicitly. Distinguish 0, false, empty text, an empty list, an absent key and null. Define each value's meaning consistently; numeric 0/1 is one practical flag convention. Narration must not reinterpret a stored value to justify a conflicting story. Treat missing required data as malformed/denied unless the design explicitly defines a fallback. Enforce format does not stop malformed manual/script writes, so use explicit shape and semantic checks before accepting generated state. `formatSchema` is the library's readable notation, not JSON Schema: text/number describe leaf values, `field?: text` marks an optional key, and `...:` permits additional content; its full grammar is unspecified. `formatExample` shows an intended value and should not double as a starting fact. Native path adjustment and script assignment have different missing-path behavior, and independent random expressions can disagree, so cache shared choices.
 
 Ownership:
 
@@ -23,9 +23,9 @@ Ownership:
 
 Do not let the AI and scripts compete to rewrite the same mechanical YAML document. Consolidating related flags in a YAML tracker reduces editor clutter; it does not by itself reduce trigger count or guarantee lower token cost. Large AI-visible YAML and duplicative logs still cost context. Keep hidden cache text out of the storyteller unless needed.
 
-Visibility values include everyone (player and AI), ai_only and ai_only_boring (AI-only), player_only, hidden and hidden_boring (hidden from player and AI in supplied uses). Do not infer additional UI highlighting behavior from the suffix alone. The editor clears "Hide in Storyteller mode" when player visibility is enabled. Do not invent contradictory UI combinations. Exports can include hidden trackers and secret information when Storyteller Mode is enabled; select those export options when collecting diagnostics. Visibility is not script access control: hidden values remain script-usable at runtime.
+Visibility values are everyone (player and AI), ai_only and ai_only_boring (AI-only), player_only, hidden and hidden_boring (hidden from player and AI). The `_boring` suffix is the editor's "Hide this item even in Storyteller Mode", a display filter. The editor clears it when player visibility is enabled, so player_only_boring is not a combination. Exports can include hidden trackers and secret information when Storyteller Mode is enabled; select those export options when collecting diagnostics. Visibility is not script access control: hidden values remain script-usable at runtime.
 
-Import normalizes automatic updating off for hidden, hidden_boring and player_only; everyone, ai_only and ai_only_boring can retain automatic updates. Extra-hidden values remain visible in the Storyteller tracker editor. UI visibility does not establish full AI prompt inclusion.
+Import normalizes automatic updating off for hidden, hidden_boring and player_only; everyone, ai_only and ai_only_boring can retain automatic updates. Extra-hidden values remain visible in the Storyteller tracker editor. What the AI receives is not shown by any visibility setting.
 
 A trigger can change a tracker's visibility or automatic updating during play with Modify tracked item details; see [Triggers](Triggers.md#changing-a-trackers-definition-during-play).
 

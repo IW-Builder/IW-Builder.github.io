@@ -11,7 +11,7 @@ PawScript reads game data, computes values and updates trackers. It is its own l
 | PawScript trigger condition | `$coins >= 5` | Return true/false; no mutation |
 | Run Script trigger effect | `$coins -= 5` | Execute statements, save changes |
 
-An **expression** returns a value. A **statement** performs work, such as assignment or a loop. Script conditions are still expressions: the test after `if` decides whether its indented statements run. Use bare code in trigger conditions and Run Script, without `<<...>>` or Markdown fences. Text that a block-modification effect installs is a snapshot of its `<<...>>` values; a deferred `<=...=>` reference stays live in that destination. See [Capabilities.md](Capabilities.md) for template timing.
+An **expression** returns a value. A **statement** performs work, such as assignment or a loop. Script conditions are still expressions: the test after `if` decides whether its indented statements run. Use bare code in trigger conditions and Run Script, without `<<...>>` or Markdown fences. Text that a block-modification effect installs is a snapshot of its `<<...>>` values; a deferred `<=...=>` reference stays live in that destination. See [Runtime.md](Runtime.md#template-interpolation-runtime) for template timing.
 
 Example, in the content of a Modify instruction block effect:
 
@@ -25,7 +25,7 @@ When the effect installs this text, the deferred reference is kept rather than r
 
 PawScript cannot write arbitrary world fields, including background or instruction-block content, or invoke native trigger effects. Calculate or assemble content in trackers, then use native effects to install it or display messages. Templates do not expand write permissions. `$player` and `$game` are read-only; do not infer writability from a field being readable.
 
-A script changes state only when it executes. It does not automatically enforce what the storyteller narrates. Trigger timing and template installation timing are described in [Triggers.md](Triggers.md) and [Capabilities.md](Capabilities.md).
+A script changes state only when it executes. It does not automatically enforce what the storyteller narrates. Trigger timing and template installation timing are described in [Triggers.md](Triggers.md) and [Runtime.md](Runtime.md).
 
 ## 2. Values, trackers and scope
 
@@ -219,7 +219,7 @@ else
   $result = "Failure"
 ```
 
-Declare `roll` and `result` first. An inline block can instead say `Encounter roll: <<dice_roll(6)>>`, but that only supplies a number; instructions or deterministic effects must define its consequences. Permanent block templates and templates installed through block effects can evaluate at different times; see [Capabilities.md](Capabilities.md).
+Declare `roll` and `result` first. An inline block can instead say `Encounter roll: <<dice_roll(6)>>`, but that only supplies a number; instructions or deterministic effects must define its consequences. Permanent block templates and templates installed through block effects evaluate at different times; see [Runtime.md](Runtime.md#template-interpolation-runtime).
 
 Inside `format_each`, `{name}` reads the current member's field, `{$coins}` reads an outer tracker, and `{value()}` reads a plain list member. `index()` supplies a 1-based position. These braces belong to formatting functions; they are not a replacement for outer `<<...>>` template delimiters.
 
@@ -237,7 +237,7 @@ Statements in one script execute sequentially. Later triggers see earlier commit
 
 Use `log("Coins: {$coins}")` for diagnostics in the PawScript Log. Logs are not player narration; messages logged before a failure remain useful for locating the problem. "Ran successfully, with no output" is normal for assignments. Writing a key that does not yet exist in a record succeeds but logs `created a new entry 'x' in $tracker - did you mean 'y'?`; treat it as a typo check. A model saying PASS is not runtime verification.
 
-Enable Menu > Settings > Storyteller Mode, then open the bug icon beside tracked items. Inspect tracker state, evaluated conditions and script errors; use Open in Sandbox to isolate a script. See [Capabilities.md](Capabilities.md) for wider debug coverage.
+Enable Menu > Settings > Storyteller Mode, then open the bug icon beside tracked items. Inspect tracker state, evaluated conditions and script errors; use Open in Sandbox to isolate a script. See [Editor-UI.md](Editor-UI.md#play-debug-and-live-design) for what debug shows.
 
 The validator's lint is heuristic, not a PawScript interpreter. It checks likely mistakes, roots and locals with limited static analysis; passing it does not prove runtime behavior. When teaching or reporting tests, distinguish documented syntax from compositions actually run in IW. [Verified-Behavior](Verified-Behavior.md) lists the runtime-tested PawScript results.
 
