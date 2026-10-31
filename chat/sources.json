@@ -10,18 +10,20 @@
       "reference/Portable-Banks.md",
       "library/Integration.md"
     ],
-    "sha256": "3ae79675d3eac8271bce5a157cee999ec81c7c086d1f3fbb5245a021f65a0fc2"
+    "sha256": "8d88d64afb33cf3d88025c2714f422920f05d038224d3a12774a37e692c76248"
   },
   "IW-Technical-Reference.txt": {
     "sourceFiles": [
       "reference/Schema.md",
       "reference/PawScript.md",
-      "reference/Capabilities.md",
+      "reference/Runtime.md",
+      "reference/Characters.md",
+      "reference/Images-and-Models.md",
       "reference/Recipes.md",
       "reference/Default-Evaluation.txt",
       "reference/Current-AI-Profiles.json"
     ],
-    "sha256": "91bc27255273f7cdefa832f03a95599a3cfe4689320ea4cb6b07a5ce12f2a879"
+    "sha256": "048205ccb54977d3d07ac5d2f8cad0a5e18cac5fed654d8f7f3b692500a705c8"
   },
   "IW-Behavior.txt": {
     "sourceFiles": [
@@ -30,14 +32,14 @@
       "reference/Cost.md",
       "reference/Verified-Behavior.md"
     ],
-    "sha256": "59c649ed5db1d9871ff4cbd9e24cd782dc8d0d9f483c708713699d7aab76431b"
+    "sha256": "80cbfac7aa0593bcc33a0db5144014fa47bdc954821e222559416a2e463288e7"
   },
   "IW-Payloads.txt": {
     "sourceFiles": [
       "examples/Payloads.md",
       "examples/index.json"
     ],
-    "sha256": "6466e30585d596bd96c4b19f4c91931637b33c27c8f6aee87e8fa990281d8e94"
+    "sha256": "0356f7f8bc1010ef6cab1b06b75e707ba83ba5711d378ab3fb15e2e91cd9c73f"
   },
   "IW-Mechanics-Examples.txt": {
     "sourceFiles": [
@@ -57,7 +59,7 @@
       "examples/recipe-on-demand-generation.json",
       "examples/showcase-glass-ledger.json"
     ],
-    "sha256": "44b479b7ba2af9fc3752adc5a06c668074ce7856efa90523cc42a7946f5943ce"
+    "sha256": "d59f81df166eb87cca2618a82df662d9a8227ba3c53776ec9a31c5d763ddff77"
   },
   "IW-Narrative-Examples.txt": {
     "sourceFiles": [
@@ -67,19 +69,19 @@
       "examples/narrative-seven-nights.json",
       "examples/narrative-velvet-wager.json"
     ],
-    "sha256": "4292933eeda3d712439e61e00b1129c15784d9f800cc14b45994e025d68081ce"
+    "sha256": "e62489636fee1ac660aa0bdc2d3e17b6d80ab3f43e0f8a2161fa4518b901cd89"
   },
   "IW-Sample-Blocks.txt": {
     "sourceFiles": [
       "library/Sample-Blocks.json"
     ],
-    "sha256": "8e68ad72ae7c20fc6a56b9c68226f92e3350ee126d807efc70447f7feb4244d3"
+    "sha256": "f58f8447470e490649538611f957b3f070262317d435d5edeee24df2401ca4dc"
   },
   "IW-Storymaster.txt": {
     "sourceFiles": [
       "library/Storymaster-Suite.json"
     ],
-    "sha256": "b84b3b824fd8b57c0c8c9889bab4d204d7d2b5c3ffb22cf9fd54652b24dbe25d"
+    "sha256": "3aaf8674059400f35d5ee8e3ec9032a0e333cd9814bcbf41fe082042dd0361ef"
   },
   "IW-Tools.txt": {
     "sourceFiles": [
@@ -92,6 +94,6 @@
       "tools/story_export.py",
       "tools/plot_compile.py"
     ],
-    "sha256": "92b2b3be41d8efce70dedafb57737dffb70d6843df997e4aceba6550c7df247e"
+    "sha256": "f712846a20c6962ea232d632093605f96ddc4c79ddd5edcb417db2249bbaeb7a"
   }
 }

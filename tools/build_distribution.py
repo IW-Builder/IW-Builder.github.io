@@ -30,7 +30,9 @@ GROUPS = {
     'IW-Technical-Reference.txt': [
         'reference/Schema.md',
         'reference/PawScript.md',
-        'reference/Capabilities.md',
+        'reference/Runtime.md',
+        'reference/Characters.md',
+        'reference/Images-and-Models.md',
         'reference/Recipes.md',
         'reference/Default-Evaluation.txt',
         'reference/Current-AI-Profiles.json',
@@ -80,7 +82,7 @@ GROUPS = {
 # one file knows which companion holds a given path.
 EDITION_PURPOSE = {
     'IW-Authoring-Guide.txt': 'start here: prompt, template, narrative craft, trackers, triggers, data banks and library integration',
-    'IW-Technical-Reference.txt': 'exact payloads, PawScript, capabilities and recipes',
+    'IW-Technical-Reference.txt': 'exact payloads, PawScript, runtime, characters, images/models and recipes',
     'IW-Behavior.txt': 'notable findings and open questions, editor/UI workflows with import checks, cost and verified runtime behavior',
     'IW-Payloads.txt': 'exact native payload snippets for every condition and effect, plus the example index',
     'IW-Mechanics-Examples.txt': 'complete mechanics example worlds: recipes, optional block, starting values, layered opening, on-demand generation and a showcase',
@@ -305,7 +307,7 @@ DESCRIPTIONS = {
     # Combined text editions
     'chat/index.html': 'HTML page containing IW-Authoring-Guide.txt, with links to the companion editions.',
     'chat/IW-Authoring-Guide.txt': 'Combined text, start here: prompt, template, Evidence, Craft, Trackers, Triggers, Trigger-Catalog, Portable-Banks and library Integration.',
-    'chat/IW-Technical-Reference.txt': 'Combined text: Schema, PawScript, Capabilities, Recipes, Default Evaluation and AI profile IDs.',
+    'chat/IW-Technical-Reference.txt': 'Combined text: Schema, PawScript, Runtime, Characters, Images-and-Models, Recipes, Default Evaluation and AI profile IDs.',
     'chat/IW-Behavior.txt': 'Combined text: Notable-Findings (with open questions), Editor-UI, Cost and Verified-Behavior.',
     'chat/IW-Payloads.txt': 'Combined text: Payloads.md (every condition and effect) and the example index. Small and essential for mechanics.',
     'chat/IW-Mechanics-Examples.txt': 'Combined text: complete mechanics example worlds (recipes, optional block, starting values, layered opening, on-demand generation, showcase).',
@@ -316,7 +318,9 @@ DESCRIPTIONS = {
     'chat/README.md': 'Human guide to the combined text files.',
     'chat/sources.json': 'Which source files make up each combined text file, with hashes.',
     # Reference
-    'reference/Capabilities.md': 'Turn lifecycle, Skills, NPC cards and keyword blocks, specialist requests, template timing, endings, images, video and model-specific blocks.',
+    'reference/Characters.md': 'Skills, Evaluation, player characters, NPC card fields and activation, keyword-block matching and retention.',
+    'reference/Images-and-Models.md': 'Image style fields and controls, portraits and cover, video prompt instructions, model-specific instruction blocks.',
+    'reference/Runtime.md': 'Turn lifecycle, template interpolation timing, specialist requests and runtime output names, endings, debug boundaries.',
     'reference/Cost.md': 'Estimating credits: per-model cost table (words, credits per 1k chars, thinking), what is billed, how play style changes cost, and rough estimates by world size.',
     'reference/Craft.md': 'Narrative design: what goes in each field, openings, character cards, romance and adult worlds, prose style, names, example worlds by genre.',
     'reference/Current-AI-Profiles.json': 'Storyteller models, current and retired: block IDs, underlying real-world model, isCurrent flag and typical credits per turn.',

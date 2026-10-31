@@ -60,7 +60,7 @@ These are reading selections, not mandatory extra downloads. The AI can request 
 
 | Bundle | Files |
 | --- | --- |
-| Narrative | Prompt + template/current world; Craft, Trackers, Capabilities; narrative example as needed |
+| Narrative | Prompt + template/current world; Craft, Characters, Trackers; narrative example as needed |
 | Mechanics | Narrative selection plus Schema, Triggers, PawScript, Recipes, Payloads and relevant full examples; tools when execution is available |
 | Library | Relevant selection plus library/Integration.md and chosen Sample-Blocks modules |
 
@@ -81,6 +81,10 @@ These are reading selections, not mandatory extra downloads. The AI can request 
 | [samples/](https://github.com/IW-Builder/IW-Builder.github.io/tree/main/samples) | Finished worlds and the conversations that created them |
 
 Use [examples/README.md](examples/README.md) to find a feature. See [reference/Editor-UI.md](reference/Editor-UI.md) for import checks and live-world limitations.
+
+## Contact
+
+Questions, corrections and test results: @OnlyMurdersSometimes on Discord or iwbuilderapp@gmail.com.
 
 ## Sample-module source
 

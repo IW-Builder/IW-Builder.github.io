@@ -54,7 +54,7 @@ The Infinite Worlds behavior most likely to surprise an author or break a world,
 36. **Keyword blocks match whole words, any case, and stay active for the matching turn plus three.** Substrings and plurals do not match.
 37. **NPCs get knowledge wrong.** They deny facts they were just told, credit the wrong source, or know secrets they should not. Secret Info can contradict the narration. Anti-omniscience instructions alone do not fix this.
 38. **Once a secret is narrated it stays in the story**, even if you remove the block that revealed it.
-39. **Memory summaries start at turn 8 and repeat every six turns.** Their contents are hidden. Keep facts that must persist in trackers.
+39. **Memory compression runs after turn 8 and every six turns after that** (after turns 8, 14, 20, …). So when a turn is written, short-term memory holds the 2–7 most recent turns uncompressed; everything older is in the summary, whose contents are hidden. Keep facts that must persist in trackers.
 40. **A player character with the same name as an Other Character can draw on that card.** Unchosen player options are not NPCs unless added as Other Characters.
 
 ## Narration, images and play
@@ -86,7 +86,7 @@ Platform behavior that has not been verified, by area, with what to do meanwhile
 | NPCs and knowledge | Live character records, identity merging, mutation and retrieval routing; why name-only mentions often fail to surface Character detail | Put facts that must surface in the Summary or always-on text; author relationships and knowledge explicitly; correct an invented detail early by editing the turn |
 | Import normalization | Internal failure stages; ID rules for every entity type; why an omitted replaceWith broke the opening | Use ASCII alphanumeric tracker IDs; always serialize description and replaceWith; re-export after import and compare with tools/import_audit.py |
 | Visibility | Whether visibility changes what the AI receives | Do not rely on visibility to keep information from the storyteller |
-| Interpolation | Timing in destination fields other than those tested; full specialist inputs | Use the template probe example before relying on a new field ([Capabilities](Capabilities.md)) |
+| Interpolation | Timing in destination fields other than those tested; full specialist inputs | Use the template probe example before relying on a new field ([Runtime](Runtime.md#template-interpolation-runtime)) |
 | Randomness and selectors | Exact evaluation counts; whether unselected library text is excluded from context | Store a shared roll in a tracker when several consumers must agree |
 | AI tracker dependencies | How generation is staged internally | Stage prior-turn values explicitly when a rule depends on them |
 | Format and YAML | Complete grammar, XML mutation, strict typing, hidden AI repair | Validate shape and meaning in scripts before accepting state |

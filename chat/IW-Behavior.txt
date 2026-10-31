@@ -3,7 +3,7 @@ Generated text edition. BEGIN FILE / END FILE sections identify package-relative
 Follow Authoring-Prompt.md (in IW-Authoring-Guide.txt). Load companion editions only when the task needs them.
 Editions and their contents:
 - IW-Authoring-Guide.txt: start here: prompt, template, narrative craft, trackers, triggers, data banks and library integration. Files: Authoring-Prompt.md, World-Template.json, reference/Craft.md, reference/Trackers.md, reference/Triggers.md, reference/Trigger-Catalog.md, reference/Portable-Banks.md, library/Integration.md
-- IW-Technical-Reference.txt: exact payloads, PawScript, capabilities and recipes. Files: reference/Schema.md, reference/PawScript.md, reference/Capabilities.md, reference/Recipes.md, reference/Default-Evaluation.txt, reference/Current-AI-Profiles.json
+- IW-Technical-Reference.txt: exact payloads, PawScript, runtime, characters, images/models and recipes. Files: reference/Schema.md, reference/PawScript.md, reference/Runtime.md, reference/Characters.md, reference/Images-and-Models.md, reference/Recipes.md, reference/Default-Evaluation.txt, reference/Current-AI-Profiles.json
 - IW-Behavior.txt: notable findings and open questions, editor/UI workflows with import checks, cost and verified runtime behavior. Files: reference/Notable-Findings.md, reference/Editor-UI.md, reference/Cost.md, reference/Verified-Behavior.md
 - IW-Payloads.txt: exact native payload snippets for every condition and effect, plus the example index. Files: examples/Payloads.md, examples/index.json
 - IW-Mechanics-Examples.txt: complete mechanics example worlds: recipes, optional block, starting values, layered opening, on-demand generation and a showcase. Files: examples/recipe-request-commit.json, examples/recipe-completion-award.json, examples/recipe-candidate-acceptance.json, examples/recipe-archive-reactivate.json, examples/recipe-cached-random.json, examples/recipe-consumed-timer.json, examples/recipe-choice-domain.json, examples/recipe-compiled-plot.json, examples/recipe-choice-followup.json, examples/recipe-threshold-unlock.json, examples/optional-block.json, examples/character-starting-values.json, examples/recipe-layered-opening.json, examples/recipe-on-demand-generation.json, examples/showcase-glass-ledger.json
@@ -70,7 +70,7 @@ The Infinite Worlds behavior most likely to surprise an author or break a world,
 36. **Keyword blocks match whole words, any case, and stay active for the matching turn plus three.** Substrings and plurals do not match.
 37. **NPCs get knowledge wrong.** They deny facts they were just told, credit the wrong source, or know secrets they should not. Secret Info can contradict the narration. Anti-omniscience instructions alone do not fix this.
 38. **Once a secret is narrated it stays in the story**, even if you remove the block that revealed it.
-39. **Memory summaries start at turn 8 and repeat every six turns.** Their contents are hidden. Keep facts that must persist in trackers.
+39. **Memory compression runs after turn 8 and every six turns after that** (after turns 8, 14, 20, …). So when a turn is written, short-term memory holds the 2–7 most recent turns uncompressed; everything older is in the summary, whose contents are hidden. Keep facts that must persist in trackers.
 40. **A player character with the same name as an Other Character can draw on that card.** Unchosen player options are not NPCs unless added as Other Characters.
 
 ## Narration, images and play
@@ -102,7 +102,7 @@ Platform behavior that has not been verified, by area, with what to do meanwhile
 | NPCs and knowledge | Live character records, identity merging, mutation and retrieval routing; why name-only mentions often fail to surface Character detail | Put facts that must surface in the Summary or always-on text; author relationships and knowledge explicitly; correct an invented detail early by editing the turn |
 | Import normalization | Internal failure stages; ID rules for every entity type; why an omitted replaceWith broke the opening | Use ASCII alphanumeric tracker IDs; always serialize description and replaceWith; re-export after import and compare with tools/import_audit.py |
 | Visibility | Whether visibility changes what the AI receives | Do not rely on visibility to keep information from the storyteller |
-| Interpolation | Timing in destination fields other than those tested; full specialist inputs | Use the template probe example before relying on a new field ([Capabilities](Capabilities.md)) |
+| Interpolation | Timing in destination fields other than those tested; full specialist inputs | Use the template probe example before relying on a new field ([Runtime](Runtime.md#template-interpolation-runtime)) |
 | Randomness and selectors | Exact evaluation counts; whether unselected library text is excluded from context | Store a shared roll in a tracker when several consumers must agree |
 | AI tracker dependencies | How generation is staged internally | Stage prior-turn values explicitly when a rule depends on them |
 | Format and YAML | Complete grammar, XML mutation, strict typing, hidden AI repair | Validate shape and meaning in scripts before accepting state |
@@ -136,7 +136,7 @@ Use tracker and trigger **Names**, not IDs, unless the user requests IDs. Distin
 | Trigger Name | `triggerEvents[].name`; not `id` |
 | Scenarios; Triggering situation / Manage Situations in the selector | Root `conditions`; referenced by `triggerOnEvent` |
 | Trigger conditions | `triggerConditions`; gates within a trigger |
-| Summary; Brief summary in Other Characters | `one_liner` in current exports; do not invent a `oneLiner` alias |
+| Summary; Brief summary in Other Characters | `one_liner` (the only spelling in exports) |
 | Character detail | `detail` |
 | Extra instruction blocks | `instructionBlocks`; explain before abbreviating EIB |
 | Give information to AI | `effectGiveInfo` |
@@ -169,7 +169,7 @@ Opening a world in the editor advances its version in the export (for example 1.
 
 **After import**
 
-A round trip of well-formed native JSON is byte-identical, so any change after import points at a normalization (ID reminting, dropped gates, scope repair, registry population). Tracker IDs can be regenerated without remapping their references. Save and inspect affected target dropdowns and Scenario bindings; preserved text is not proof of valid references. An invalid-value target is a binding failure even if the original JSON had consistent references. Export the imported world and validate that export when diagnosing discrepancies; keep the untouched source so source and imported IDs can be compared with `tools/import_audit.py` ([tools/Usage.md](../tools/Usage.md)).
+A round trip of well-formed native JSON is byte-identical, so any change after import points at a normalization (ID reminting, dropped gates, scope repair, registry population). Tracker IDs can be regenerated without remapping their references. Save and inspect affected target dropdowns and Scenario bindings, since preserved text can be unbound. An invalid-value target is a binding failure even if the original JSON had consistent references. Export the imported world and validate that export when diagnosing discrepancies; keep the untouched source so source and imported IDs can be compared with `tools/import_audit.py` ([tools/Usage.md](../tools/Usage.md)).
 
 For a native input, confirm the current target value after submitting an answer. Correctly bound single-answer Choice and Request Input effects update immediately, and subsequent ordered triggers can read the result in the same turn. Their follow-up messages can render above the question/answer receipt. The live-world editor's initialValue remains configuration, not the current runtime value.
 
@@ -208,9 +208,9 @@ Rename warnings offer **Update** and **Ignore** for a variable-name mismatch; Ig
 
 The database icon opens trackers; the nearby edit control edits their values. The pencil opens action/outcome editing and **View/edit world design**. Regenerate turn opens modification of an existing turn. These operations have different purposes.
 
-The bug icon opens debug. **Active instructions** is live rendered state, including post-narration trigger updates and live edits, not the full historical prompt. A trigger badge/list is not always exhaustive; inspect detailed history and actual state.
+The bug icon (beside the tracked-items icon) opens debug, which needs Storyteller mode. It shows the current turn's active instruction blocks including trigger updates, the triggers fired this turn, all-trigger history with first/last turn and counts, model thinking when available, Evaluation, and PawScript conditions, execution results, output, warnings and errors (including automatic tracker format repair and failed path updates). **Active instructions** is live rendered state, including post-narration trigger updates and live edits, not the full historical prompt or the exact context the already-generated narration used. The fired-trigger list is not always exhaustive; inspect detailed history and actual state.
 
-The live-design notice warns that Player/Other Character changes do not affect the current playthrough (see Live copies above). Runtime block replacements and tracker changes can leave original content/initial values in design exports; those exports are not complete live-state snapshots.
+The live-design notice warns that Player/Other Character changes do not affect the current playthrough (see Live copies above). Runtime block replacements and tracker changes can leave original content/initial values in design exports; those exports show configuration, not the current live state.
 
 Story exports offer a turn range and optional background, character, secrets, trackers and hidden trackers, with text/PDF/image options. Select the relevant options. Secret Info is generated narrative data, not an authoritative character database. No live character-database or complete prompt viewer is available through these surfaces.
 
@@ -253,9 +253,9 @@ Image style has a Model and Character/Scenery start/end prompts, mapped to `imag
 
 ## Specialist instructions, forms and PawScript cues
 
-[DOCUMENTED] The default Description instructions ask for several paragraphs; to shorten narration, put the cap in authorStyle (see [Capabilities](Capabilities.md)). Video help describes `$videoDuration` and `$videoStyle` in video context (see below).
+[DOCUMENTED] The default Description instructions ask for several paragraphs; to shorten narration, put the cap in authorStyle (see [Runtime](Runtime.md#specialist-requests-and-runtime-outputs)). Video help describes `$videoDuration` and `$videoStyle` in video context (see below).
 
-The expression-editor option shows a Paw icon beside some PawScript-capable fields (see [PawScript sandbox](#pawscript-sandbox)). Missing icons do not prove lack of support: YAML Set a value supports template expressions according to help despite having no icon. This is not an exhaustive icon inventory.
+The expression-editor option shows a Paw icon beside some PawScript-capable fields (see [PawScript sandbox](#pawscript-sandbox)). A field without an icon can still take expressions: YAML Set a value supports template expressions according to help despite having no icon.
 
 Editor syntax highlighting misleads for deferred references. In instruction blocks and tracker descriptions it colors `<<=...=>>` as PawScript and shows the working `<=...=>` as plain text, while initial values show both as plain text. At runtime it is the other way round: `<=...=>` is evaluated and `<<=...=>>` stays literal. If a user cites the highlighting, explain that it is wrong for this syntax ([PawScript.md](PawScript.md)).
 
@@ -265,7 +265,7 @@ Trigger-provided next-turn guidance can disable the Storyteller guidance box whi
 
 ## Permissions and specialist destinations
 
-These mappings describe the observed editor controls, not an exhaustive account-role entitlement matrix.
+These are the character-customization controls; account-role permissions are a separate, uncharacterized matter.
 
 | Editor control | JSON field | Scope |
 | --- | --- | --- |
@@ -276,11 +276,11 @@ These mappings describe the observed editor controls, not an exhaustive account-
 | Create a new portrait | allowChangeCharacterNewPortrait | New portrait creation permission |
 | Change starting values of Tracked Items | allowChangeCharacterItemValues | Applicable character-scoped starting values |
 
-[DOCUMENTED] These switches belong to character customization. They are distinct from `permissionsOnceShared.sharing` and `.editing`, and from Storyteller mode. Cross-account author/recipient permission enforcement has not been verified; do not infer that sharing or editing grants live-state access. Keep these settings separate when diagnosing a missing control.
+[DOCUMENTED] These switches belong to character customization. They are distinct from `permissionsOnceShared.sharing` and `.editing`, and from Storyteller mode. Cross-account author/recipient permission enforcement is unverified, so a missing control may come from any of the three; keep them separate when diagnosing.
 
 [DOCUMENTED] Custom Evaluation guides the AI's interpretation of the attempted action. The default includes skill/difficulty reasoning and labels such as SUCCESS and PARTIAL_SUCCESS; those labels are generated evaluation content, not direct state-changing commands. Custom Description guides narrated results. Custom Summarisation guides what the memory summary retains; it is not a viewer of the actual summary. Native specialist placeholders are context-specific and are not all PawScript tracker handles.
 
-[DOCUMENTED] Video prompt instructions are under the optional specialist settings. From an illustration's Generate video dialog, prompt preparation has three destinations: scene plan, first/last-frame decision and video-AI prompt. Editor help says each can be overridden independently, a blank field retains its default, and expressions are evaluated before sending. `$videoDuration` and `$videoStyle` are documented in this destination. No current JSON key mapping or runtime precedence is certified for these controls; inspect a native export before editing them programmatically. Video creation and cross-role access remain unverified.
+[DOCUMENTED] Video prompt instructions are under the optional specialist settings. From an illustration's Generate video dialog, prompt preparation has three destinations: scene plan, first/last-frame decision and video-AI prompt. Editor help says each can be overridden independently, a blank field retains its default, and expressions are evaluated before sending. `$videoDuration` and `$videoStyle` are documented in this destination. Inspect a native export before editing these programmatically; their JSON key mapping and runtime precedence are unverified, as are video creation and cross-role access.
 
 ## Troubleshooting by visible symptom
 
@@ -293,7 +293,7 @@ These mappings describe the observed editor controls, not an exhaustive account-
 | Extra-hidden item appears unexpectedly | Distinguish the display panel override from the tracker editing dialog, which still exposes it in Storyteller mode. |
 | Form answer exists but later values are blank | Check trigger order and the answer's stored type/domain; consuming triggers must follow the form. |
 | Trigger history shows firing but accepted state is unchanged | Inspect script failure/rollback and an explicit completion flag; firing is not successful commit. |
-| Reload shows an earlier turn | Inspect retained history/export and controls before retrying; streamed output does not prove persistence. Credit activity can list a charge for the lost turn, and the balance can stay stale until a second reload; the export dialog's turn count is authoritative. |
+| Reload shows an earlier turn | Inspect retained history/export and controls before retrying; a turn that streamed can still be lost. Credit activity can list a charge for the lost turn, and the balance can stay stale until a second reload; the export dialog's turn count is authoritative. |
 | Opening fails with a generic streaming error | Check for effects missing `replaceWith` or other malformed payloads; failed openings are refunded. |
 | Import succeeds, then the editor errors (KeyError) while rebuilding | A tracker is missing `description`. |
 | `TypeError: list indices must be integers or slices, not str` when opening a trigger | Legacy bare-array prerequisites/blockers; convert them to object shape. |
@@ -373,7 +373,7 @@ The world sets the starting point; the player decides most of the rest.
 - **How many turns they take.** This matters most, because a game's total is turns × cost per turn. A player who talks through every scene, explores side paths or makes small moves may take several times as many turns as one who pushes the story along. One long adventure world took about 125 turns to finish, at about 100 credits a turn on Dolphin.
 - **Where they go and who they talk about.** Lore entries and NPC cards load when their keywords appear in the story and stay active for a few turns, so a player in a lore-heavy city or a crowded court pays more per turn than one on an empty road. On one large world, active lore cost 17–29 credits a turn on Dolphin.
 - **Which route or phase they reach.** Worlds that install blocks or show trackers for a route make that route cost more or less than others. Story luck can change the route: in two otherwise identical games, one player was captured a turn earlier and moved to a different route.
-- **How long the game has run.** Recent story is re-sent every turn, so turns get dearer as the game goes on, until IW compresses older story into a summary (from about turn 8, then every six turns; see [Trackers](Trackers.md#memory-continuity-and-context-cost)). After that the cost levels off. A small world can double between its first turns and turn 8 or 9; a large one rises less in proportion (about 30% over its first six turns on one 50k-character world).
+- **How long the game has run.** Recent story is re-sent every turn, so turns get dearer as the game goes on, until IW compresses older story into a summary (after turn 8, then every six turns; see [Trackers](Trackers.md#memory-continuity-and-context-cost)). After that the cost levels off, cycling as short-term memory grows from 2 to 7 turns between compressions. A small world can double between its first turns and turn 8; a large one rises less in proportion (about 30% over its first six turns on one 50k-character world).
 - **How much the narration runs.** The same model on the same world wrote 451 to 638 words a turn. Big scenes, dialogue-heavy turns and players who ask for detail produce longer replies, which cost more now and again in recent story later.
 - **Which model they pick.** Players can switch model mid-game. The table above is the biggest single multiplier.
 - **Free turns.** IW gives 3 free turns a day, shared across the whole account rather than per world or per model.
@@ -384,7 +384,7 @@ The world sets the starting point; the player decides most of the rest.
 
 1. **Start from the model's small-world turn** in the table.
 2. **Add standing text:** K × the thousands of characters of standing text the world sends each turn (instructions, authorStyle, always-on blocks, AI-visible tracker definitions and values, typical active lore). Subtract about 1k for the text the small world already had.
-3. **Allow for memory:** add about 30% for a large world, and up to double for a small one, once the game is 6–8 turns in.
+3. **Allow for memory:** add about 30% for a large world, and up to double for a small one, from about turn 8.
 4. **Adjust for narration** if the world asks for much more or less than the model's natural length: (words asked − words in the table) ÷ 100 × the narration rate. This is the smallest of the four.
 
 Example (an estimate, not a measurement): a world with 18k characters of standing text, played on Smilodon. 70 + 1.99 × 17 ≈ 104 credits a turn early on, about 115–140 once memory builds up, so about 4,500–5,500 credits for a 40-turn game.
@@ -513,7 +513,7 @@ Kit-wide caveats, not repeated per entry:
 - [RUNTIME] Character detail retrieval is unreliable. A selected player sharing an Other Character name used that entry's facts, but a name-only mention did not surface an authored hobby on two turns; the narrator invented one, and history then reinforced it. The narrator can also introduce named NPCs into an opening that says the player is alone. Internal identity merging and exclusion are unresolved.
 - [RUNTIME] Secret Info and narration can disagree or misattribute knowledge. Characters can deny a fact just told to them, and hidden facts can become player knowledge in prose. A general provenance policy showed no clear benefit; explicit correction of the source chain did.
 - [RUNTIME] Once a secret reaches narration, removing or emptying its disclosure block does not remove it from later turns.
-- [DOCUMENTED] Summary compression follows a six-turn cadence beginning at turn eight (user-confirmed); the cost breakdown first shows LTM about then, as STM drops. Later recall is possible; summary contents remain hidden.
+- [RUNTIME] Summary compression runs after turn 8 and every six turns after that (after turns 8, 14, 20, …), so the turn being written has the 2–7 most recent turns in uncompressed short-term memory (from turn 2 on). The cost breakdown shows LTM from the first compression as STM drops; short and long term memory can be watched turn by turn in any game. Later recall of compressed material is possible; summary contents remain hidden.
 - [RUNTIME] Shortening (Dolphin, one world): a cap of at most 2 short paragraphs and 90 words, with priority-override framing, appended to authorStyle averaged 82 words (control 413) and held through a story-beat turn; a plain one-sentence version averaged 96. The same cap in descriptionRequest (mean 118, max 215) or an always-on block (max 226) broke on the story-beat turn. A per-turn Tell AI trigger held later turns but cannot reach the opening. The cap acts as a soft target; credits fell only about 10%.
 - [RUNTIME] Lengthening: paragraph-count requests and strong priority-overriding wording did not reliably lengthen narration, even with richer lore. A one-sentence descriptionRequest did not shorten it. [UNKNOWN] Other models for the authorStyle cap.
 

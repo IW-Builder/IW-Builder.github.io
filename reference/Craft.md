@@ -22,6 +22,7 @@ When effort is limited, spend it here first, in this order: NPC one_liners; one 
 | Keyword lore | Optional depth behind distinctive words | Essential opening facts |
 | Instruction blocks | Persistent rules: time header, world laws, intimate-scene craft | Duplicated main instructions |
 | AI trackers | Bounded memory of what changes: stance, agreements, outfits, promises | Unbounded journals |
+| mature / nsfw / contentWarnings | Content settings matching the audience; the template sets both flags true | Treating them as the prose policy: write the boundaries in instructions |
 
 ## Opening
 

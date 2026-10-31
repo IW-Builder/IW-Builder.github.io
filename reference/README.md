@@ -14,7 +14,9 @@ You do not need to read these guides before making a world. They are here when y
 - [Triggers](Triggers.md): Make something happen when a condition is met.
 - [Trigger capability catalog](Trigger-Catalog.md): Every identified trigger condition and effect in one table.
 - [PawScript](PawScript.md): Learn to read and change game data with scripts and expressions.
-- [Capabilities](Capabilities.md): Explore Skills, character information, images, timing and other IW behavior.
+- [Runtime](Runtime.md): How a turn is processed, when templates are evaluated, specialist requests and endings.
+- [Characters](Characters.md): Skills, Evaluation, player characters, Other Character cards and keyword lore.
+- [Images and models](Images-and-Models.md): Image style, portraits, video and model-specific blocks.
 
 ## Check the details
 

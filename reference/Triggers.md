@@ -28,13 +28,13 @@ Start + Mid Game + Repeat can execute before the opening and again during turn 1
 With Start false, Mid Game has no effect; a stored true value requires no warning or repair. A trigger with no conditions and Start false does not fire automatically, but can remain available for explicit dispatch.
 
 - Prerequisites/blockers with firedThisTurn true are this-turn checks that see a producer only when it is earlier in triggerEvents, and reset each turn. False uses game history, which sees a later-ordered producer from the next turn. It also sees an earlier-ordered producer on the same turn, so false means "has fired, this turn or before" and cannot defer a consumer to the next turn. To defer, order the consumer above its producer, or gate it on a stored turn stamp such as `$game.turn_number > $x.stamp_turn`. The editor disallows requiring and blocking the same trigger; do not generate that conflict.
-- Defaults are not a contract: always serialize canTriggerMoreThanOnce and the timing flags intentionally. Use repeatable commit triggers with idempotent state guards where appropriate, and true one-shot events when required.
+- Always serialize canTriggerMoreThanOnce and the timing flags explicitly rather than relying on defaults. Use repeatable commit triggers with idempotent state guards where appropriate, and true one-shot events when required.
 - Restriction: Do not combine Start of Game with Scenario or minimum-turn conditions. The editor warns that these conditions are ignored; minimum-turn bypass is confirmed during both startup and mid-game execution. Use a separate startup trigger and leave Start off on the conditional trigger.
 
 ### Execution order and effect semantics:
 
 1. Later triggers see earlier committed writes, including that turn's AI tracker updates and correctly bound Present Choice/Request Input answers. This does not describe every internal generation stage.
-2. Native numeric Set/Add effects within one trigger overwrite rather than accumulate (add 2 then add 3 ends at 3). Reads can nevertheless see changed values. Do not assume a later native effect's expression sees an earlier native write merely because it appears lower in the same trigger.
+2. Native numeric Set/Add effects within one trigger overwrite rather than accumulate (add 2 then add 3 ends at 3). Reads can nevertheless see changed values, so a later native effect's expression may or may not see an earlier native write in the same trigger.
 3. Run Script is different: sequential arithmetic accumulates, nested YAML changes preserve unrelated keys, and a failing script rolls back only its own writes, not earlier successful effects. For dependent operations prefer one script; otherwise put preparation in one trigger and consumption in a following trigger.
 4. Native text additions stack; removal removes all matches and literal quotes are retained. Do not apply numeric overwrite behavior to text or script statements.
 5. When guidance effects conflict, the first tends to win. Generate one coherent, mutually exclusive guidance outcome rather than contradictory directives whose priority you hope to control.
@@ -61,7 +61,7 @@ Consolidate repeated logic when it improves clarity, but preserve meaningful exe
 - **Change background** replaces the opening background in Start-only mode, not with Start+Mid; ordinary-play background or first-action changes do not rewrite an opening already shown.
 - **Fire random trigger** dispatches in ordinary play, not with Start enabled.
 
-A trigger counting as fired does not guarantee that every stored effect executed.
+A trigger counting as fired means its conditions passed, not that every stored effect executed.
 
 ## Changing a tracker's definition during play
 
