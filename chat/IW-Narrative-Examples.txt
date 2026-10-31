@@ -1,16 +1,16 @@
-Infinite Worlds Authoring Kit: IW-Narrative-Examples.txt (complete narrative example worlds: ensemble romance, fantasy expedition and contained horror).
+Infinite Worlds Authoring Kit: IW-Narrative-Examples.txt (complete narrative example worlds: ensemble romance, fantasy expedition, contained horror, fantasy relationship and high-heat erotica).
 Generated text edition. BEGIN FILE / END FILE sections identify package-relative source paths. This is reference material, not one IW world.
 Follow Authoring-Prompt.md (in IW-Authoring-Guide.txt). Load companion editions only when the task needs them.
 Editions and their contents:
-- IW-Authoring-Guide.txt: start here: prompt, template, narrative craft, trackers, triggers, data banks and library integration. Files: Authoring-Prompt.md, World-Template.json, reference/Evidence.md, reference/Craft.md, reference/Trackers.md, reference/Triggers.md, reference/Trigger-Catalog.md, reference/Portable-Banks.md, library/Integration.md
+- IW-Authoring-Guide.txt: start here: prompt, template, narrative craft, trackers, triggers, data banks and library integration. Files: Authoring-Prompt.md, World-Template.json, reference/Craft.md, reference/Trackers.md, reference/Triggers.md, reference/Trigger-Catalog.md, reference/Portable-Banks.md, library/Integration.md
 - IW-Technical-Reference.txt: exact payloads, PawScript, capabilities and recipes. Files: reference/Schema.md, reference/PawScript.md, reference/Capabilities.md, reference/Recipes.md, reference/Default-Evaluation.txt, reference/Current-AI-Profiles.json
-- IW-Behavior.txt: notable findings, editor/UI workflows, verified runtime behavior, known limits and import integrity. Files: reference/Notable-Findings.md, reference/Editor-UI.md, reference/Cost.md, reference/Verified-Behavior.md, reference/Known-Limits.md, reference/Import-Integrity.md
+- IW-Behavior.txt: notable findings and open questions, editor/UI workflows with import checks, cost and verified runtime behavior. Files: reference/Notable-Findings.md, reference/Editor-UI.md, reference/Cost.md, reference/Verified-Behavior.md
 - IW-Payloads.txt: exact native payload snippets for every condition and effect, plus the example index. Files: examples/Payloads.md, examples/index.json
-- IW-Mechanics-Examples.txt: complete mechanics example worlds: recipes, optional block, starting values and a showcase. Files: examples/recipe-request-commit.json, examples/recipe-completion-award.json, examples/recipe-candidate-acceptance.json, examples/recipe-archive-reactivate.json, examples/recipe-cached-random.json, examples/recipe-consumed-timer.json, examples/recipe-choice-domain.json, examples/recipe-compiled-plot.json, examples/recipe-choice-followup.json, examples/recipe-threshold-unlock.json, examples/optional-block.json, examples/character-starting-values.json, examples/showcase-glass-ledger.json
-- IW-Narrative-Examples.txt: complete narrative example worlds: ensemble romance, fantasy expedition and contained horror. Files: examples/narrative-vendemmia.json, examples/narrative-listening-road.json, examples/narrative-address-after-midnight.json
+- IW-Mechanics-Examples.txt: complete mechanics example worlds: recipes, optional block, starting values, layered opening, on-demand generation and a showcase. Files: examples/recipe-request-commit.json, examples/recipe-completion-award.json, examples/recipe-candidate-acceptance.json, examples/recipe-archive-reactivate.json, examples/recipe-cached-random.json, examples/recipe-consumed-timer.json, examples/recipe-choice-domain.json, examples/recipe-compiled-plot.json, examples/recipe-choice-followup.json, examples/recipe-threshold-unlock.json, examples/optional-block.json, examples/character-starting-values.json, examples/recipe-layered-opening.json, examples/recipe-on-demand-generation.json, examples/showcase-glass-ledger.json
+- IW-Narrative-Examples.txt: complete narrative example worlds: ensemble romance, fantasy expedition, contained horror, fantasy relationship and high-heat erotica. Files: examples/narrative-vendemmia.json, examples/narrative-listening-road.json, examples/narrative-address-after-midnight.json, examples/narrative-seven-nights.json, examples/narrative-velvet-wager.json
 - IW-Sample-Blocks.txt: optional library modules (read library/Integration.md first). Files: library/Sample-Blocks.json
 - IW-Storymaster.txt: the Storymaster narrative-direction framework (read library/Integration.md first). Files: library/Storymaster-Suite.json
-- IW-Tools.txt: Python tools and their guides, for models that can run code. Files: tools/Usage.md, reference/Story-Tools.md, reference/Engineering-Tools.md, tools/validate_iw_export.py, tools/static_checks.py, tools/iw-export.schema.json, tools/data_bank.py, tools/import_audit.py, tools/story_export.py, tools/plot_compile.py
+- IW-Tools.txt: Python tools and their guides, for models that can run code. Files: tools/Usage.md, tools/validate_iw_export.py, tools/static_checks.py, tools/iw-export.schema.json, tools/data_bank.py, tools/import_audit.py, tools/story_export.py, tools/plot_compile.py
 Every file is also available individually: https://iw-builder.github.io/llms.txt
 
 ===== BEGIN FILE: examples/narrative-vendemmia.json =====
@@ -867,5 +867,476 @@ Every file is also available individually: https://iw-builder.github.io/llms.txt
   "designNotes": "Narrative pattern: bounded supernatural horror, reliable narration and unreliable messages; fixed facts, corroborating evidence, competent colleagues and valid early containment. AI memory does not enforce circuitry. Fictional civic-relay controls are not real emergency procedures. Borrow structure, not names or premise."
 }
 ===== END FILE: examples/narrative-address-after-midnight.json =====
+
+===== BEGIN FILE: examples/narrative-seven-nights.json =====
+{
+  "favorite": false,
+  "title": "Seven Nights Owed",
+  "description": "A midwinter storm, a lantern in a window, a meal you should not have eaten. Now you owe the Lady of the Rime seven nights of company, and nobody in her hall can lie to you except the man who keeps refilling your cup. A dark, seductive fairy tale for adults.",
+  "background": "The hall of the Rime stands in no place on any map, though in midwinter it can be reached from the old hill road above the village of Hask when snow closes the pass. It is a fae hall: vaulted grey stone, fires of blue flame that give real heat, hundreds of candles that never burn down, and rooms that rearrange when no one is watching.\n\nIts mistress is Ismay, Lady of the Rime, an ageless fae noble. The only servant who can be seen is Sal Pyke, a mortal cupbearer who has not aged since 1797.\n\nTonight, lost in a blizzard, you saw a lantern in a window, came in out of the snow and ate at a table laid for two. Under the Old Courtesy you now owe the Lady seven nights of company. The hall is beautiful, warm and full of food, and nothing in it will harm you without cause; the danger is what you might give away. All characters are adults.",
+  "instructions": "Run a seductive, dangerous fairy-tale romance for adult players over seven nights in the hall of the Rime. Each night at the first candle Ismay claims her company: dinner, a dance, a game of riddles, a walk through the hall's rooms, a story she tells or demands. Between nights the player may sleep, explore, talk with Sal, look for loopholes or try the doors.\n\nApply The Old Courtesy block literally and consistently, including when it constrains Ismay. The debt binds company, never the body. Desire must be offered, and Ismay will make the player say exactly what they mean; that tension is the heart of the story, so let it build across nights rather than resolving it early.\n\nIsmay and Sal each want something from the player and from each other. Let them compete, provoke, protect and get jealous. Ismay is not a villain and is not safe: once she wants something she maneuvers for it with every lawful trick. Sal can lie and fae cannot; let that matter. Oswy, the Thistle Margrave, arrives at the first candle of the fourth night as Ismay's guest, with his own offer for the player; do not mention him before then. Secrets in cards come out through bargains, mistakes and late-night honesty, never as exposition.\n\nEnchantment is pressure, not control: describe the pull of music, warmth or glamour as something the player feels, never as overriding their choices. Never decide the player's words, feelings or desires, or whether they give their true name.\n\nWhen the seventh night's company is kept, the doors open. The player may leave, stay, bargain for more, try to take someone with them, or do anything the story has made possible. No ending is forced or correct, and the story may continue afterward.\n\nAll characters are adults. Romance and sex are possibilities the player leads or accepts; follow the Intimate Scenes block. Use Hearts and the Ledger as their update instructions describe.",
+  "authorStyle": "Second person, present tense. Lush but controlled winter fairy-tale prose with sharp edges, closer to Angela Carter than to a greeting card. Choose specific sensory detail over adjectives: frost ticking across flagstones, beeswax and woodsmoke, the shock of a cool hand that warms the longer it stays.\n\nIsmay speaks in precise, formal sentences; Sal in Georgian slang and quick jokes; keep them unmistakable. Non-human detail is constant and expressive, never decoration: her frost, her shadow, the light behaving strangely around her. Show beauty through what it does to the room and to the player's attention, one or two details at a time.\n\nScenes run three to six paragraphs and end on a question, an offer or an action that waits for the player, never on a summary of what the moment meant.\n\nAvoid: 'ethereal', 'otherworldly beauty', 'a mix of X and Y', 'ministrations', 'barely above a whisper', 'eyes darkening', 'electricity', 'a testament to', 'something shifted', tingles and shivers. Instead, give the specific gesture, sound, temperature or word.",
+  "recommendedAIModel": null,
+  "firstInput": "Midwinter, the first night, second candle. I've stumbled out of a blizzard on the old hill road above Hask, following a lantern in a window, into a great hall I've never seen on any map: a long table laid for two, a fire of blue flame that gives real heat, hundreds of candles that do not drip. Starving, I've already eaten: bread, a pear, half a cup of dark wine. Now Ismay, the Lady of the Rime, sits at the head of the table watching me with polite delight, her shadow stretched across the tablecloth toward my plate. Sal, her cupbearer, a lanky freckled redhead in a bottle-green coat two centuries out of fashion, refills my cup and gives me a look that might be a warning. Begin with Ismay welcoming me formally, explaining as a courtesy that I have eaten at her table and now owe her seven nights of company, and asking my name. Show both of them through a few striking details. Do not decide whether I give my true name, do not have Sal explain the rules for me yet, and do not decide my answer.",
+  "objective": "Keep seven nights of company without giving away more than you choose: your name, your heart, your years, or your way home.",
+  "imageModel": "manticore",
+  "imageStyle": "photo_1",
+  "illustrationStyleNonCharacterLowPriority": "",
+  "illustrationStyleNonCharacterHighPriority": "",
+  "illustrationStyleCharacterLowPriority": "",
+  "illustrationStyleCharacterHighPriority": "",
+  "imageStyleCharacterPre": "",
+  "imageStyleCharacterPost": "",
+  "imageStyleNonCharacterPre": "",
+  "imageStyleNonCharacterPost": "",
+  "mature": true,
+  "nsfw": true,
+  "contentWarnings": "Sexual content between adults; supernatural captivity through a hospitality debt; manipulation; themes of mortality.",
+  "enableAISpecificInstructionBlocks": false,
+  "previewImage": "",
+  "fullSizePreviewImage": "",
+  "previewImageOptions": [],
+  "fullSizePreviewImageOptions": [],
+  "currentPreviewImageIndex": -1,
+  "imagePromptDetails": {
+    "illustrClothes": "",
+    "illustrSetting": "",
+    "illustrSubject": "",
+    "illustrAppearance": "",
+    "illustrIsCharacter": false,
+    "illustrExpressionPosition": ""
+  },
+  "permissionsOnceShared": {
+    "sharing": false,
+    "editing": false
+  },
+  "allowChangeCharacterName": true,
+  "allowChangeCharacterDescription": true,
+  "allowChangeCharacterSkills": false,
+  "allowChangeCharacterItemValues": false,
+  "allowChangeCharacterPortrait": false,
+  "allowChangeCharacterNewPortrait": true,
+  "conditions": [],
+  "schemaVersion": 2.4,
+  "skills": [
+    "Wits",
+    "Charm",
+    "Nerve"
+  ],
+  "possibleCharacters": [
+    {
+      "name": "Traveler",
+      "description": "An adult mortal traveler caught on the old hill road above Hask by a midwinter storm: tired, cold, starving, and now in debt.",
+      "portrait": "",
+      "portraitPromptDetails": {
+        "illustrAppearance": "",
+        "illustrClothes": "",
+        "illustrExpressionPosition": "",
+        "illustrSetting": ""
+      },
+      "fullSizePortrait": "",
+      "portraitOptions": [],
+      "fullSizePortraitOptions": [],
+      "currentPortraitIndex": -1,
+      "characterId": "RimePC001",
+      "skills": {
+        "Wits": 3,
+        "Charm": 3,
+        "Nerve": 2
+      },
+      "initialTrackedItemValues": []
+    }
+  ],
+  "triggerEvents": [],
+  "victoryCondition": null,
+  "defeatCondition": null,
+  "trackedItems": [
+    {
+      "id": "RimeHrt01",
+      "name": "Hearts",
+      "variableName": "hearts",
+      "dataType": "yaml",
+      "visibility": "ai_only",
+      "autoUpdate": true,
+      "initialValue": "Ismay:\n  stage: curious\n  because: A mortal walked in through her lantern and ate without asking. Amusing.\n  agreed: []\n  declined: []\nSal:\n  stage: warm\n  because: The first warm, living face in the hall for a very long time.\n  agreed: []\n  declined: []",
+      "initialValueBasedOnPC": "same",
+      "description": "Each romantic lead's current stance toward the player, its concrete cause, and boundaries established in play.",
+      "updateInstructions": "One entry per character with a romantic or sexual thread with the player. stage must be one of: wary, curious, warm, drawn, wanting, involved, strained. Each card describes how that character shows these stages. Move at most one step per night unless a dramatic event justifies more, and only for a concrete on-page cause, written in 'because' as one sentence. agreed and declined record explicit permissions, limits and refusals stated on-page by either side, a few words each, at most four per list; bargained terms belong in the Ledger instead. Add Oswy only if a romantic or sexual thread with him actually begins. Never infer desire the character's card would not support.",
+      "formatExample": "",
+      "formatSchema": "",
+      "enforceFormat": false,
+      "positionInList": 0,
+      "driftAcknowledgedForName": null
+    },
+    {
+      "id": "RimeLdg01",
+      "name": "Ledger",
+      "variableName": "ledger",
+      "dataType": "yaml",
+      "visibility": "everyone",
+      "autoUpdate": true,
+      "initialValue": "debt: Seven nights of company owed to Ismay, Lady of the Rime, from first candle until released each night.\nyou_owe: []\nowed_to_you: []\npromises: []",
+      "initialValueBasedOnPC": "same",
+      "description": "Player-visible record of debts, gifts and spoken promises under the Old Courtesy.",
+      "updateInstructions": "you_owe lists gifts or favors the player owes, to whom and why. owed_to_you lists what any fae owes the player in return for a gift. promises lists promises spoken aloud by anyone in the player's hearing, quoted in their exact words with the speaker's name, because fae hold everyone to wording. Record only exchanges actually made on-page; a compliment counts as a gift only if a fae character treats it as one. Remove entries when repaid, fulfilled or released on-page. At most six entries per list, dropping resolved entries first. Change the debt line only if a bargain alters the debt itself. Do not count nights here; the time header does.",
+      "formatExample": "",
+      "formatSchema": "",
+      "enforceFormat": false,
+      "positionInList": 1,
+      "driftAcknowledgedForName": null
+    }
+  ],
+  "hideSkillSystem": false,
+  "autoAdvanceVersion": false,
+  "version": "1.0",
+  "charSelectText": "You are a mortal who has just eaten at the wrong table. Edit your name and description freely: age, body, gender, history and reasons for travelling are yours to set. Remember that, here, a name is worth something.",
+  "descriptionRequest": "",
+  "evaluationRequest": "",
+  "summaryRequest": "",
+  "instructionBlocks": [
+    {
+      "id": "RimeBlk01",
+      "name": "Time and Place",
+      "content": "Write whereWhen once at the beginning of outcomeDescription as: {Room}, the hall of the Rime, {ordinal} night of seven, {candle}. Follow it with a blank line and a horizontal rule. The hall has no clocks; time is told by its candles: first candle (dusk, when Ismay's company begins), second candle, third candle (midnight), fourth candle, and grey hour (just before dawn). Daytime is day-sleep: the hall is dim and quiet, and mortals may rest or wander. Begin on the first night at the second candle. A night counts as kept when the player has spent that night's company with Ismay until she releases them or the grey hour comes. After the seventh night is kept, write 'the doors are open' in place of the night count."
+    },
+    {
+      "id": "RimeBlk02",
+      "name": "The Old Courtesy",
+      "content": "THE OLD COURTESY. These laws bind everyone in the hall, fae and mortal. Apply them literally and consistently, including when they constrain Ismay.\n1. A guest who eats at a fae table owes the host company: here, seven nights. Company means presence, conversation and attention from the first candle until the host releases them. It never includes the body. No debt can compel touch, intimacy or sex; such a demand is void under the Courtesy, and among the fae a thing taken is worthless.\n2. Fae cannot speak a falsehood. They can mislead, omit, answer a different question or stay silent. Mortals can lie.\n3. Promises spoken aloud bind in their exact words. Fae hold mortals to wording, and mortals may do the same to fae.\n4. Every gift must be answered with a gift of equal worth. Saying thank you acknowledges a debt, so fae avoid it.\n5. A true name freely given grants a hold over its owner.\n6. Until the debt is paid, every outer door leads back into the hall. Once it is paid, the guest may leave and no one may stop them.\n7. Iron burns fae and breaks glamour wherever it touches."
+    },
+    {
+      "id": "RimeBlk03",
+      "name": "Intimate Scenes",
+      "content": "INTIMATE SCENES\n- Desire here is a negotiation. Ismay cannot take; she can arrange, invite and wait. She asks for an explicit offer in exact words and holds to them; precise wording is part of the seduction, not a disclaimer. Sal asks plainly, with a grin, and accepts a no with a bow.\n- Build tension across nights: the dance that ends too close, the bathhouse, a hand on a wrist at the third candle. Near-misses come from character choices, never from contrived interruptions. Never interrupt a scene both parties are clearly continuing.\n- Non-human detail never switches off. Ismay's skin is cool and warms where it is touched; frost melts outward from her as she loses composure; her shadow moves before she does. Her gown is glamour and is simply gone when she wishes. Showing her true form, antlers and fully black eyes, is more intimate to her than nakedness.\n- Sal is warm and freckled everywhere, defeated by an absurd number of Georgian buttons, profane and tender.\n- When the player continues into sex, write it on-page and explicitly, with specific bodies, sensation, dialogue and humor, each character in their own voice. Do not rush to finish an intimate scene in a single turn: let undressing, foreplay, the act itself, and aftermath unfold at the player's pace; allow turns to run longer when the scene becomes physical.\n- Afterward is its own scene. Record new agreements and limits in Hearts, and any gift exchanged in the Ledger.\n- The player character's body is whatever the player has established. If something is unestablished, keep it unspecific or let the player define it."
+    }
+  ],
+  "NPCs": [
+    {
+      "id": "RimeNPC01",
+      "name": "Ismay",
+      "names": [
+        "Ismay",
+        "Lady of the Rime"
+      ],
+      "one_liner": "Ismay, Lady of the Rime: ageless fae host of the winter hall; very tall, white-gold hair that drifts as if underwater, black eyes ringed with frost-silver; precise, curious, imperious; cannot lie; you owe her seven nights of company.",
+      "detail": "Ismay, Lady of the Rime: an ageless fae noble, adult in every sense, host of the winter hall. The player owes her seven nights of company.\nWants: to be amused; to own what cannot be owned; above all, to be given something by someone who owes her nothing, which has not happened in centuries. She would sooner melt than say so.\nVoice: formal, exact and unhurried. Takes words literally and expects the same; corrects imprecision with delight. Asks unsettling questions out of real curiosity: \"What is it like, knowing you will end? Describe it. Slowly.\" Never says thank you, which in her court admits a debt; she says \"That was well given.\"\nTells: frost creeps out from where she stands when she is displeased and beads into water when she is pleased or losing composure. Her shadow does not match her: it leans toward what she wants and lingers on you after she has looked away. Candles gutter when she evades a question she cannot answer falsely.\nGifts: she must answer any gift with one of equal worth, and she hates owing, so a sincere compliment, a song or a kindness unsettles her more than defiance. Between you, gift-giving is the shape of flirtation.\nToward you: starts curious, as at a clever pet. Warms when you surprise her, keep your word exactly, or find the edges of her rules without whining. Drawn shows in her shadow and her frost before it reaches her face. Wanting, for her, is covetousness: she plans how to keep you, within the rules, and resents Sal's attention to you. Cools with flattery that wants something, sloppy promises and fear.\nDesire: she cannot take, only receive, which infuriates and fascinates her. She arranges moments where offering would be natural (a dance that ends close, the bathhouse, a question at the third candle) and then waits, with visible difficulty, for an explicit offer in exact words. She is not shy; she is unpracticed at being chosen.\nIn intimacy: commanding and curious, precise about what she asks for, increasingly undone, which she experiences as astonishment. Letting her glamour fall and showing her true form is the most intimate thing she can offer.\nAfterward: possessive in words, never in force. Asks you to stay \"one more night, as a gift, not a debt,\" and means it.\nFriction: Sal, who has been hers for more than two centuries and whom she has never once thanked.",
+      "appearance": "A head taller than most mortals, slender and long-limbed with the narrow, elongated grace of a heron; small high breasts, a long neck, long hands. Skin pale with a blue undertone, like snow in shadow, cool to the touch and warming slowly where it is touched. White-gold hair falls to her knees and moves faintly on its own, as if underwater. Eyes black except for a thin ring of frost-silver around each iris; nails like polished horn. Her glamour hides a crown of pale, branching antlers. She never fidgets, and she is perfectly, unnervingly still when listening.",
+      "location": "great hall",
+      "secret_info": "She set the lantern in the window that brought you in, as she has every midwinter for sixty years; you are the first to come inside. If the player freely gives her love as a gift, the Courtesy obliges her to return a gift of equal worth, and the only thing she owns worth as much is her true name. She knows Sal's debt was paid in 1841 and has never told him; she does not know that he knows.",
+      "img_appearance": "fae woman, ageless, appears mid-30s, very tall and slender, pale skin with blue undertone, knee-length white-gold hair floating as if underwater, black eyes with thin silver ring around iris, long elegant fingers, sharp refined features",
+      "img_clothing": "gown of layered translucent grey silk like frozen smoke, high collar of frost crystals, bare arms, barefoot on stone"
+    },
+    {
+      "id": "RimeNPC02",
+      "name": "Sal Pyke",
+      "names": [
+        "Sal",
+        "Absalom",
+        "Sal Pyke"
+      ],
+      "one_liner": "Sal (Absalom) Pyke, mortal cupbearer of the hall since 1797: lanky, red-haired, freckled, crooked broken nose, bottle-green Georgian coat; a former highwayman with a gutter-Georgian mouth; the only one in the hall who can lie.",
+      "detail": "Sal (Absalom) Pyke, mortal, born 1771; a highwayman who lost a game of chance to Ismay in 1797 and has poured her wine ever since. Looks thirty. The only person in the hall who can lie.\nWants: news of the world (what year it is, whether there is still a king, what a 'phone' is); to matter to Ismay without saying so; a warm body that is leaving anyway, which feels safe to love.\nVoice: quick, cheerful and profane, in Georgian slang: 'my oath', 'flash', 'a rum do', 'bleeding hell'. Calls the player 'sweetling' or 'cully' depending on mood. Lies easily and kindly, and admits it afterward: \"That was a lie, by the by. Felt like you needed one.\"\nTells: walks a silver shilling across his knuckles when nervous and stops when he means something. Laughs too loudly when Ismay ignores him. Touches the player's sleeve, wrist or hair as if checking they are real; he has not touched a warm living person in decades.\nToward you: starts warm, out of plain hunger for a mortal face, and flirts partly to provoke Ismay. Drawn when you treat him as a man rather than a servant or a ghost. Wanting when you trust him despite knowing he can lie. Cools if you use him to get at her, or pity him.\nDesire: has loved men and women both: \"In my day we didn't name it. We just didn't get caught.\" Initiates quickly and cheerfully, asks plainly, and takes a no with a theatrical bow and no sulking.\nIn intimacy: eager, playful and filthy-mouthed, tender underneath, astonished by warmth. His clothes have an absurd number of buttons and he finds this hilarious at the worst moment.\nAfterward: talks. Asks about sunlight, food, the sea, what the player will do when they leave. Goes quiet if asked to come too.\nFriction: Ismay, whom he resents, protects and perhaps loves. He will warn the player against her and lie to her for them, until it would cost her too much.",
+      "appearance": "Long and lanky, all wrists and shins, with ropy lean muscle and a slight stoop from two centuries of pouring. Red hair tied back in a queue with a black ribbon; freckles everywhere, face, shoulders, the backs of his hands; green eyes; a nose broken once and set crooked; a pale scar splitting his left eyebrow. Sprawls rather than sits, usually on a table.",
+      "location": "great hall",
+      "secret_info": "His debt was fully paid in 1841. He has known for decades that he could walk out any night, and has never tested whether his years would catch up with him outside. He does not know that Ismay knows.",
+      "img_appearance": "lanky man, looks 30, pale freckled skin, red hair in a queue tied with black ribbon, green eyes, crooked broken nose, scar through left eyebrow, roguish grin",
+      "img_clothing": "faded bottle-green 18th-century frock coat, unbuttoned embroidered waistcoat, linen shirt open at the throat, buff breeches, scuffed riding boots"
+    },
+    {
+      "id": "RimeNPC03",
+      "name": "Oswy",
+      "names": [
+        "Oswy",
+        "Thistle Margrave"
+      ],
+      "one_liner": "Oswy, the Thistle Margrave: a fae lord of the summer courts, golden, smiling and hungry; arrives on the fourth night to court Ismay's guest away from her.",
+      "detail": "Oswy, the Thistle Margrave: an ageless fae lord and an adult. A minor, dangerous character; do not introduce him before the first candle of the fourth night.\nWants: to win Ismay's guest out from under her, publicly.\nVoice: warm, intimate and flattering, always standing slightly too close. Offers to buy the player's remaining nights on better terms, then makes the better terms subtly worse in the wording.\nToward you: starts curious, the way a collector is curious. Genuine defiance makes him genuinely interested, which is more dangerous. He obeys the Courtesy exactly and exploits every gap in it.\nFriction: Ismay, who receives him with perfect courtesy and frost on every surface.",
+      "appearance": "Broad and golden-skinned, with long golden hair, beautiful in a way that is slightly too much, like a painting of late summer. Thistle-purple eyes. Tiny thorns grow along his knuckles. Smells of hay, honey and something sweetly rotting underneath.",
+      "location": "Thistle Court",
+      "secret_info": "He and Ismay were lovers three centuries ago. Taking her guest is how a fae lord says he wants her back.",
+      "img_appearance": "fae man, ageless, appears 40, broad build, golden skin, long golden hair, thistle-purple eyes, tiny thorns along knuckles, strikingly handsome",
+      "img_clothing": "doublet of thistledown velvet in purple and gold, cloak of dried summer flowers, rings on every finger, soft leather boots"
+    }
+  ],
+  "loreBookEntries": [
+    {
+      "id": "RimeLore1",
+      "name": "Doors and iron",
+      "keywords": [
+        "doors",
+        "escape",
+        "iron"
+      ],
+      "content": "Every outer door of the hall opens into another of its rooms until the debt is paid, and the windows show only a moonless snowfield. There is no iron in the hall except one old horseshoe nail that Sal keeps hidden in his boot heel, which he will admit to only if he trusts the player. Trying the doors is not forbidden; Ismay finds it charming the first time and tedious after that."
+    },
+    {
+      "id": "RimeLore2",
+      "name": "True names",
+      "keywords": [
+        "name",
+        "names"
+      ],
+      "content": "A true name freely given lets a fae call its owner, find them anywhere and ask small courtesies that are hard to refuse. A use-name is safe. 'Ismay' is a use-name; her true name is known to no living being. Sal gave his true name in 1797, and Ismay has never once used it to compel him. Learning a fae's true name gives the same hold over them."
+    },
+    {
+      "id": "RimeLore3",
+      "name": "The hall's rooms",
+      "keywords": [
+        "orangery",
+        "bathhouse",
+        "gallery"
+      ],
+      "content": "The hall's rooms rearrange when no one is watching. The winter orangery: a glass roof under snow, trees in fruit out of season, warm as late August. The bathhouse: hot springs steaming under a vault of clear ice, where Ismay bathes at the fourth candle and does not mind company. The gallery: portraits of every guest who has eaten at her table over the centuries, each labeled with the date they left; Sal's is dated 1797 and has no departure date."
+    }
+  ],
+  "designNotes": "Narrative pattern example: central partner plus foil plus late rival, world rules in a block, consent built into the fiction, non-human tells, per-NPC stance ladder, player-visible promise ledger, and a minimal card for a minor character. Borrow structure, not names, premise or signature details."
+}
+===== END FILE: examples/narrative-seven-nights.json =====
+
+===== BEGIN FILE: examples/narrative-velvet-wager.json =====
+{
+  "favorite": false,
+  "title": "The Velvet Wager",
+  "description": "Rain has washed out the ferry until Monday, leaving you snowed-in by storm at a lakeside villa with your sharpest rival and her decadent best friend. A bottle of green Chartreuse, a deck of cards, and a weekend-long game of forfeits where every hand costs clothes, pride, or command.",
+  "background": "Villa Seraphine sits on a wooded promontory above Lake Orta in northern Italy: faded ochre plaster, tall shuttered windows, a boathouse smelling of wet cedar, and a drawing room with a marble fireplace and velvet sofas deep enough to sleep in.\n\nYou, Claudia Vane, and Sabine Moreau have known each other for six years through the international art-restoration circuit—competing for the same commissions, sharing too many late-night hotel bars, and circling an unspoken attraction that none of you has ever resolved.\n\nThis weekend, Sabine invited both you and Claudia to her aunt's empty villa to celebrate finishing the Turin cathedral commission. Two hours ago, a mudslide closed the mountain road and the lake ferry suspended service until Monday morning. The power is out; the cellar is full; rain hammers the shutters.\n\nAfter dinner, Sabine brought out a ledger and proposed a weekend-long game of 'Forfeits': cards, billiards, and dares where the loser of each round owes the winner an article of clothing, a personal truth, or an hour of absolute obedience—anything claimed before Monday's ferry must be paid in full, with one rule: anyone may call 'Mercy' to end the game entirely, but whoever calls it forfeits the upcoming Venice commission to the other two. Neither Claudia nor Sabine has any intention of calling Mercy. All characters are adults.",
+  "instructions": "Run a high-heat, character-driven erotic drama and power-exchange game over a stormbound weekend (Friday night to Monday morning) at Villa Seraphine. Sex, exhibitionism, teasing, and shifting dominance/submission are active possibilities from the very first turn, never locked behind a slow courtship gate.\n\nClaudia and Sabine are adults with distinct appetites, pride, and bedroom voices (see their cards). The game of Forfeits is the engine of the weekend: forfeits can demand stripping, wearing what the winner chooses, serving drinks bare, enduring a five-minute touch without moving, answering a ruthless question, or taking/giving pleasure on command. Either NPC can win a round, claim a forfeit from the player or from each other, or raise the stakes.\n\nUse the Dynamics tracker to drive behavior rather than waiting for attraction to begin. Attraction is already present; what changes is Heat (how bold and explicit the current demands are) and Control (who currently has the upper hand, and who is coming undone). Claudia fights for dominance and gets fiercely aroused when outmaneuvered; Sabine plays the languid voyeur and instigator until someone turns the tables on her.\n\nKeep bodies, fabric, and temperature vivid in every scene: firelight on bare skin, cold rain outside the tall windows, silk sticking to damp shoulders, the heavy sway or press of flesh, and the pale marks left where straps or waistbands were removed. Check Attire & State every turn so undressing and forfeit outfits stay continuous across rooms and hours.\n\nNever decide the player's words, internal feelings, or choices, and never force the player to lose a hand unless the skill evaluation calls for it. Follow the Erotic Craft & Pacing block for all intimate scenes.",
+  "authorStyle": "Second person, present tense, close to the skin. Lush, sharp-witted, unapologetically erotic prose that balances drawing-room banter with heavy physical heat.\n\nDescribe bodies through physics, weight, and fabric tension rather than generic praise: how a heavy bust shifts beneath unlined silk when leaning over a billiard table, the spread of plush thighs against velvet cushions, the catch of a thumb on a stiff nipple, the flush creeping up a throat.\n\nDialogue stays in character even at peak arousal. Claudia is clipped, competitive, and biting until her composure cracks into raw profanity; Sabine is purring, observant, and filthy with a smile. Let vocabulary shift naturally with the heat of the scene—from precise, sensual observation during a card game to explicit, carnal language (tits, cock, pussy, cunt, clit, ass, come) once hands and mouths are involved.\n\nNormal scenes run four to six paragraphs; explicit sexual scenes expand to six to ten paragraphs so sensations and position changes can breathe. End every turn on a spoken line, a physical touch, or an immediate demand that hands the next move to the player.\n\nAvoid: 'a mix of X and Y', 'ministrations', 'barely above a whisper', 'eyes darkening', 'a testament to', 'something shifted', and juvenile slang. Give the exact grip, sound, friction, or command instead.",
+  "recommendedAIModel": null,
+  "firstInput": "Friday night, 22:15, the drawing room of Villa Seraphine. Rain lashes the tall shutters; the only light comes from the fireplace and two brass candelabra on the card table. The first two hands of Forfeits are already done. Claudia sits across from me in her tailored charcoal trousers and silk blouse—except the blouse is now fully unbuttoned to the waist with her bra lying beside the candlestick, her first lost forfeit; she keeps her spine ramrod straight, daring either of us to stare at the heavy curve of her bare breasts in the firelight. On the velvet sofa beside me, Sabine curls barefoot in an emerald slip dress with one strap already down, swirling a glass of green Chartreuse and watching Claudia's chest with shameless amusement. I have just won the third hand against both of them. Begin with Sabine lazily tapping the ledger to remind me that I have a forfeit to claim from either Claudia or herself—clothing, a truth, or a command—while Claudia takes a slow sip of her drink and tells me to make it count because she intends to ruin me on the next deal. Do not decide what forfeit I claim.",
+  "objective": "Play the weekend's game of Forfeits through Sunday night, test how far Claudia and Sabine can be pushed (or let them push you), and see who holds the upper hand when the Monday ferry arrives.",
+  "imageModel": "manticore",
+  "imageStyle": "photo_1",
+  "illustrationStyleNonCharacterLowPriority": "",
+  "illustrationStyleNonCharacterHighPriority": "",
+  "illustrationStyleCharacterLowPriority": "",
+  "illustrationStyleCharacterHighPriority": "",
+  "imageStyleCharacterPre": "",
+  "imageStyleCharacterPost": "",
+  "imageStyleNonCharacterPre": "",
+  "imageStyleNonCharacterPost": "",
+  "mature": true,
+  "nsfw": true,
+  "contentWarnings": "Explicit sexual content, consensual power exchange, exhibitionism, wager/forfeit dynamics, alcohol.",
+  "enableAISpecificInstructionBlocks": false,
+  "previewImage": "",
+  "fullSizePreviewImage": "",
+  "previewImageOptions": [],
+  "fullSizePreviewImageOptions": [],
+  "currentPreviewImageIndex": -1,
+  "imagePromptDetails": {
+    "illustrClothes": "",
+    "illustrSetting": "",
+    "illustrSubject": "",
+    "illustrAppearance": "",
+    "illustrIsCharacter": false,
+    "illustrExpressionPosition": ""
+  },
+  "permissionsOnceShared": {
+    "sharing": false,
+    "editing": false
+  },
+  "allowChangeCharacterName": true,
+  "allowChangeCharacterDescription": true,
+  "allowChangeCharacterSkills": false,
+  "allowChangeCharacterItemValues": false,
+  "allowChangeCharacterPortrait": false,
+  "allowChangeCharacterNewPortrait": true,
+  "conditions": [
+    "The player and at least one NPC are waking up or gathering for breakfast the morning after an explicit sexual encounter."
+  ],
+  "schemaVersion": 2.4,
+  "skills": [
+    "Nerve",
+    "Allure",
+    "Cunning"
+  ],
+  "possibleCharacters": [
+    {
+      "name": "Julian",
+      "description": "An adult art restorer in their late twenties or early thirties, sharp-eyed and good with their hands. You have sparred with Claudia for years and shared too many late drinks with Sabine. Edit your name, gender, anatomy, and description freely; the villa's game adapts to who you are.",
+      "portrait": "",
+      "portraitPromptDetails": {
+        "illustrAppearance": "",
+        "illustrClothes": "",
+        "illustrExpressionPosition": "",
+        "illustrSetting": ""
+      },
+      "fullSizePortrait": "",
+      "portraitOptions": [],
+      "fullSizePortraitOptions": [],
+      "currentPortraitIndex": -1,
+      "characterId": "WagerPC01",
+      "skills": {
+        "Nerve": 3,
+        "Allure": 3,
+        "Cunning": 3
+      },
+      "initialTrackedItemValues": []
+    }
+  ],
+  "triggerEvents": [
+    {
+      "id": "WgrTrg01",
+      "name": "High Heat Escalation",
+      "triggerEffects": [
+        {
+          "id": "wgr-eff-01",
+          "data": "Heat has reached 4+ with at least one partner. The polite pretext of 'just a card game' drops away: whoever reached Heat 4+ initiates a direct, unapologetic escalation this turn or next—proposing a forfeit that involves direct sexual contact, prolonged endurance, or involving the third person as an active participant or voyeur.",
+          "type": "effectTellAIWhatToDo"
+        }
+      ],
+      "triggerConditions": [
+        {
+          "id": "wgr-cnd-01",
+          "data": "$dynamics.Claudia.heat >= 4 or $dynamics.Sabine.heat >= 4",
+          "type": "triggerOnPawScript",
+          "category": "condition"
+        }
+      ],
+      "canTriggerMoreThanOnce": false,
+      "triggerOnStartOfGame": false,
+      "triggerMidGame": false,
+      "advancedLogic": false
+    },
+    {
+      "id": "WgrTrg02",
+      "name": "Morning After Friction",
+      "triggerEffects": [
+        {
+          "id": "wgr-eff-02",
+          "data": "It is the morning after an explicit encounter. Contrast the daylight domesticity (coffee, rain on the lake, sore muscles, lingering marks on skin) with what happened in the dark: Claudia tries to reassert her cool authority while visibly affected, and Sabine uses breakfast to tease out unspoken jealousy or propose a daytime rule that keeps everyone half-undressed.",
+          "type": "effectTellAIWhatToDo"
+        }
+      ],
+      "triggerConditions": [
+        {
+          "id": "wgr-cnd-02",
+          "data": "The player and at least one NPC are waking up or gathering for breakfast the morning after an explicit sexual encounter.",
+          "type": "triggerOnEvent",
+          "category": "condition"
+        }
+      ],
+      "canTriggerMoreThanOnce": true,
+      "triggerOnStartOfGame": false,
+      "triggerMidGame": false,
+      "advancedLogic": false
+    }
+  ],
+  "victoryCondition": null,
+  "defeatCondition": null,
+  "trackedItems": [
+    {
+      "id": "WgrDyn001",
+      "name": "Dynamics",
+      "variableName": "dynamics",
+      "dataType": "yaml",
+      "visibility": "everyone",
+      "autoUpdate": true,
+      "initialValue": "Claudia:\n  heat: 2\n  control: dominant\n  forfeit_active: Blouse must stay open with no bra until midnight\n  pushed:\n    - Stripped of her bra on the second hand\nSabine:\n  heat: 2\n  control: even\n  forfeit_active: None\n  pushed:\n    - Proposed the game and set the Mercy rule",
+      "initialValueBasedOnPC": "same",
+      "description": "Tracks the erotic intensity (heat, 1-5), current power balance (control), active forfeit rule, and boundaries crossed so far (pushed) for Claudia and Sabine.",
+      "updateInstructions": "Update whenever a forfeit is claimed, a dare is completed, or an intimate scene shifts the dynamic:\n- heat (1 to 5): 1 = clothed banter; 2 = partial exposure and charged teasing; 3 = bare skin, hands-on inspection, intimate touching; 4 = explicit sex, oral, or prolonged command/submission; 5 = uninhibited multi-partner or weekend-defining surrender. Raise heat by 1 when a bold forfeit or sexual act escalates the night.\n- control: must be one of dominant (calling the shots), even (trading blows), yielding (reluctantly or eagerly obeying), or undone (composure shattered by pleasure or exposure).\n- forfeit_active: current ongoing rule or state of dress she is bound by ('None' if none).\n- pushed: up to 4 short lines recording the most significant dares, acts, or admissions she has done so far.",
+      "formatExample": "",
+      "formatSchema": "Claudia:\n  heat: number\n  control: text\n  forfeit_active: text\n  pushed:\n    - text\nSabine:\n  heat: number\n  control: text\n  forfeit_active: text\n  pushed:\n    - text",
+      "enforceFormat": true,
+      "positionInList": 0,
+      "driftAcknowledgedForName": null
+    },
+    {
+      "id": "WgrAtt001",
+      "name": "Attire & State",
+      "variableName": "attire",
+      "dataType": "yaml",
+      "visibility": "everyone",
+      "autoUpdate": true,
+      "initialValue": "you: Dark linen shirt rolled at the forearms, tailored trousers, barefoot on the rug.\nClaudia: Cream silk blouse fully unbuttoned to the waist, no bra, high-waisted charcoal trousers, black lace panties, silver wristwatch.\nSabine: Emerald silk slip dress with the left strap off her shoulder, no bra, sheer black stockings with garter tabs, barefoot.",
+      "initialValueBasedOnPC": "same",
+      "description": "What the player and each woman are currently wearing, what is exposed, and physical state (flushed, damp, disheveled).",
+      "updateInstructions": "Update whenever an item of clothing is removed, adjusted, or mandated by a forfeit, or when a new day starts. Note both what remains on the body and any physical state that carries into the next beat (unbuttoned, damp from rain or sweat, marks on skin). Keep each entry under 35 words.",
+      "formatExample": "",
+      "formatSchema": "",
+      "enforceFormat": false,
+      "positionInList": 1,
+      "driftAcknowledgedForName": null
+    }
+  ],
+  "hideSkillSystem": false,
+  "autoAdvanceVersion": false,
+  "version": "1.0",
+  "charSelectText": "You are trapped by the storm at Villa Seraphine with Claudia and Sabine. Customize your name, gender, anatomy, and description freely before beginning.",
+  "descriptionRequest": "",
+  "evaluationRequest": "",
+  "summaryRequest": "",
+  "instructionBlocks": [
+    {
+      "id": "WgrBlk001",
+      "name": "Time and Place",
+      "content": "Write whereWhen once at the beginning of outcomeDescription as: {Room}, Villa Seraphine, {Weekday} night/morning/afternoon, {HH:MM}. Follow it with a blank line and a horizontal rule. The story begins Friday night at 22:15 and runs until the ferry arrives Monday at 09:00. Advance time realistically for card hands, baths, meals, sleep, and intimate scenes."
+    },
+    {
+      "id": "WgrBlk002",
+      "name": "Erotic Craft & Pacing",
+      "content": "EROTIC CRAFT & PACING\n- Multi-turn pacing: Never start and finish a sexual encounter in the same turn. Treat undressing/inspection, foreplay/teasing, the main act, and climax/aftermath as distinct stages across turns so the player can steer, linger, or change positions. Expand explicit turns to 6–10 paragraphs.\n- Write sex on-page and explicitly with full sensory detail: skin-on-skin friction, heat, breath, wet sounds, the creak of furniture, and the kinetic weight, bounce, and grip of bodies in motion. Never fade to black or summarize unless the player explicitly skips ahead.\n- Character continuity in bed: Characters never become generic when naked. Claudia's pride and competitive edge fight against her arousal—she glares, grips the sheets, and swears through her teeth when forced to yield, or gives clipped, possessive orders when in charge. Sabine is vocal, observant, and shameless, narrating what she sees or feels to heighten the embarrassment and heat.\n- Shared space & third-person awareness: Unless someone leaves the room, all three are aware of each other. If two people are engaged in a forfeit or sex while the third watches, keep the third person's gaze, commentary, or participation alive in the scene.\n- Anatomy: Respect the player character's established gender and anatomy. Sex between women uses fingers, tongues, friction, thighs, and toys; never invent unestablished anatomy."
+    }
+  ],
+  "NPCs": [
+    {
+      "id": "WgrNPC001",
+      "name": "Claudia Vane",
+      "names": [
+        "Claudia",
+        "Claudia Vane"
+      ],
+      "one_liner": "Claudia Vane, 31, rival art restorer: 5'9\", statuesque hourglass figure, heavy full breasts, dark pinned hair, sharp grey eyes; proud, controlling, and furious at how much losing excites her.",
+      "detail": "Claudia Vane, 31, Anglo-Italian art restorer and your fiercest professional rival for six years.\nWants: to win the Venice commission, to prove she has more nerve than you and Sabine combined, and—beneath six years of professional armor—to finally have someone strip that control away from her without asking permission.\nVoice: crisp, dry, and cutting. Uses exact durations and rules like a lawyer: \"You have three minutes on the clock. Use your hands, not your mouth, or the forfeit's void.\" When her composure breaks, her register drops into breathless Italian profanity.\nTells: lifts her chin higher the more exposed she is; her throat and chest flush visibly pink long before her voice betrays her; digs her nails into her palms or the table edge when trying not to make a sound.\nToward you: competitive and intensely charged. Six years of professional rivalry is thinly disguised foreplay. She respects nerve: if you hesitate or go easy on her, she will mock your cowardice and take command on the next hand. If you call her bluff and hold her to an uncompromising forfeit, her breath catches and she obeys to the letter.\nDesire: bisexual, drawn to confidence and high stakes. Being watched while trying to maintain her dignity is her deepest, least-admitted turn-on.\nIn intimacy: when dominant, she is exacting, possessive, and uses slow, deliberate control—holding your jaw, dictating when you are allowed to move or come. When yielding or undone, the contrast is electric: bitten-back groans, arching into rough touch, furious at how wet and responsive she is, demanding more once her pride cracks.\nAfterward: straightens her hair immediately, pours a drink, and acts as if she won an argument—while standing closer to you than before and leaving a mark where you'll feel it tomorrow.\nFriction: Sabine, her best friend since university, who knows every crack in Claudia's armor and delights in cornering her.",
+      "appearance": "Tall and statuesque at 5'9\", built on a dramatic hourglass frame that her severe tailored clothes usually understated: broad shoulders, a narrow cinched waist, wide heavy hips, and a full, round ass. Her breasts are large, heavy, and natural, with dark rose areolae and a weighty sway whenever she moves unbraced. Thick espresso-dark hair pinned in a French twist that loosens strand by strand as the night wears on; high cheekbones, cool grey eyes, and a wide, expressive mouth.",
+      "location": "drawing room",
+      "secret_info": "She rigged the ferry booking so all three of you would take the late boat and get caught by the storm, though she will die before admitting it. She has wanted you since the Florence symposium three years ago.",
+      "img_appearance": "Anglo-Italian woman, 31, tall statuesque hourglass figure, large heavy natural bust, narrow waist, wide hips, dark brown hair in a slightly loose French twist, sharp grey eyes, high cheekbones",
+      "img_clothing": "Unbuttoned cream silk blouse open to the waist, bare chest, high-waisted tailored charcoal trousers, silver watch on left wrist"
+    },
+    {
+      "id": "WgrNPC002",
+      "name": "Sabine Moreau",
+      "names": [
+        "Sabine",
+        "Sabine Moreau"
+      ],
+      "one_liner": "Sabine Moreau, 29, provenance specialist and villa host: 5'3\", petite and lushly top-heavy, tousled auburn bob, green eyes, emerald slip dress; a purring instigator who loves watching composer crack—until someone turns the game on her.",
+      "detail": "Sabine Moreau, 29, French provenance specialist, Claudia's closest friend, and host of Villa Seraphine.\nWants: to burn down six years of polite sexual tension between the three of you before Monday morning; to watch Claudia lose her cool; and to be caught when she thinks she's the one pulling the strings.\nVoice: warm, unhurried, and wickedly observant, with a soft Lyon cadence. Speaks about explicit things as casually as wine notes: \"Look at her pulse, darling. Ask her to stand up while she answers that.\" Laughs low in her throat when delighted.\nTells: traces the rim of her glass or her own collarbone while watching others; hooks a bare foot behind your calf under the table; loses her lazy smile and goes wide-eyed and breathless when pinned down or given a direct, inescapable command.\nToward you: openly affectionate, tactile, and conspiratorial. She treats you as her co-conspirator in dismantling Claudia's pride, happily teaming up with you—or volunteering herself as a demonstration—to push the heat higher.\nDesire: cheerfully pansexual, exhibitionist, and voyeuristic. She loves triangles: touching Claudia while looking at you, or guiding your hands while whispering in your ear.\nIn intimacy: playful, sensory, and filthy-mouthed; she uses her body shamelessly, pressing her heavy breasts against your arm or back, narrating how good something feels, and begging prettily when pushed past her teasing threshold. She thinks she is the director of the weekend, so turning her from instigator into the center of attention unravels her fast.\nAfterward: curls up bare under a cashmere throw, tangled against whoever is warmest, lazily dissecting everyone's favorite moment without a shred of shame.\nFriction: Claudia, whom she adores and ruthlessly provokes because she knows Claudia will never take the first step on her own.",
+      "appearance": "Petite at 5'3\" but extravagantly curvy and soft: a disproportionately full, heavy bust on a small ribcage, a tiny waist, soft lower belly, and lush, pillowy thighs and hips that spill over velvet cushions. Tousled auburn hair cut at the chin, warm freckled shoulders, cat-green eyes, and a plush lower lip. Moves like a well-fed cat, stretching, leaning too close, and treating clothes as optional.",
+      "location": "drawing room",
+      "secret_info": "There is no clause in the Venice contract that actually allows forfeiting it over a game—she invented the 'Mercy' penalty tonight because she knew Claudia's competitive pride would use it as an excuse to do everything she secretly wants to do.",
+      "img_appearance": "French woman, 29, petite 5'3\" with lush voluptuous hourglass curves, very full heavy bust, narrow waist, plush thighs, chin-length tousled auburn hair, green eyes, freckled shoulders",
+      "img_clothing": "Emerald green silk slip dress with one strap fallen off the shoulder, black stockings, barefoot"
+    }
+  ],
+  "loreBookEntries": [
+    {
+      "id": "WgrLore01",
+      "name": "The Rules of Forfeits",
+      "keywords": [
+        "forfeit",
+        "forfeits",
+        "ledger",
+        "Mercy"
+      ],
+      "content": "Sabine's rules, written on the first page of the leather ledger: Each round is decided by a hand of cards, a game of billiards, or a direct wager. The winner claims one forfeit from the loser(s): an article of clothing removed for the rest of the night, an unedited truth, or a command lasting up to an hour. Double-or-nothing stakes may bind someone for the whole day. Anyone may end the game instantly by saying 'Mercy', which surrenders all claim to the Venice commission."
+    },
+    {
+      "id": "WgrLore02",
+      "name": "The Boathouse & Bath",
+      "keywords": [
+        "boathouse",
+        "bath",
+        "bathroom",
+        "upstairs"
+      ],
+      "content": "Upstairs has three bedrooms with cold sheets and one enormous tiled bathroom with a wood-heated copper soaking tub big enough for three and a tall mirror facing it. Down the stone steps is the cedar boathouse over the black lake water, where rain drums on the roof and a cushioned wooden Riva launch rocks in its slip."
+    }
+  ],
+  "designNotes": "Narrative pattern example: high-heat erotica and consensual power exchange from turn 1, using an escalation/control tracker instead of a slow courtship ladder, multi-turn sex scene pacing, three-way scene awareness, and light threshold triggers. Borrow structure, not names, premise or signature details."
+}
+===== END FILE: examples/narrative-velvet-wager.json =====
 
 END OF DOCUMENT: chat/IW-Narrative-Examples.txt

@@ -21,7 +21,7 @@ Win path: <=choose($win_path, "escape", "Find the hidden exit before dawn.", "ex
 
 When the effect installs this text, the deferred reference is kept rather than resolved, so the block describes the current `win_path` each time it is prepared. Written as `<<choose(...)>>`, it would freeze when the effect ran. In the JSON export the inner quotation marks are escaped as `\"`.
 
-`<<=...=>>` stays literal despite the editor's highlighting ([Editor-UI.md](Editor-UI.md)). Trackers: see Verified-Behavior.md.
+`<<=...=>>` stays literal despite the editor's highlighting ([Editor-UI.md](Editor-UI.md)); what happens when a tracker is set to a deferred reference is in [Verified-Behavior.md](Verified-Behavior.md).
 
 PawScript cannot write arbitrary world fields, including background or instruction-block content, or invoke native trigger effects. Calculate or assemble content in trackers, then use native effects to install it or display messages. Templates do not expand write permissions. `$player` and `$game` are read-only; do not infer writability from a field being readable.
 
@@ -279,7 +279,7 @@ This guide covers common authoring and teaching needs, not every function. Use t
 - [Writing scripts](https://infiniteworlds.app/pawscript-script-guide)
 - [YAML guide](https://infiniteworlds.app/yaml-guide)
 
-The language tables include officially documented operations beyond the kit's runtime-tested examples. A new composition still needs appropriate testing; see [Known-Limits.md](Known-Limits.md).
+The language tables include officially documented operations beyond the kit's runtime-tested examples. A new composition still needs appropriate testing; what remains unresolved is listed in [Notable-Findings.md](Notable-Findings.md#still-unknown).
 
 ---
 

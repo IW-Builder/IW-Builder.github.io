@@ -1,6 +1,6 @@
 # Notable findings
 
-The Infinite Worlds behavior most likely to surprise an author or break a world, in plain language. Each entry says what happens and what to do. Details and evidence labels are in [Verified behavior](Verified-Behavior.md); open questions are in [Known limits](Known-Limits.md). Use this page as a checklist when reviewing or debugging a world.
+The Infinite Worlds behavior most likely to surprise an author or break a world, in plain language. Each entry says what happens and what to do. Details and evidence labels are in [Verified behavior](Verified-Behavior.md). The last section lists what remains unknown. Use this page as a checklist when reviewing or debugging a world.
 
 ## Triggers
 
@@ -66,13 +66,38 @@ The Infinite Worlds behavior most likely to surprise an author or break a world,
 45. **Ends game with continuation allowed offers Continue game at no cost.** Without it, the action box disappears but history and regeneration remain.
 46. **Reloading during generation can lose the turn and keep the charge.** Check the export's turn count before resubmitting.
 47. **Cost per turn grows with story length** and depends heavily on the model; see [Current-AI-Profiles.json](Current-AI-Profiles.json).
-48. **One input form per turn is safest.** A turn with two forms once showed narration without the forms and was not saved. (Two plain Request Input forms from separate triggers on one turn worked in a later probe; the earlier failure combined one with a malformed candidate.)
+48. **One input form per turn is safest.** A turn that combined a malformed-candidate input with a Request Input form showed narration without the forms and was not saved, though it was charged. Two plain Request Input forms from separate triggers on one turn did work.
 49. **A tracker-detail change in the same trigger as Request Input is silently lost.** Modify tracked item details (for example switching automatic updating on) does nothing when its trigger also asks for input, while messages and scripts in that trigger still run. Put the change in its own trigger with the same condition. Switching automatic updating on and off otherwise works, from the next turn.
 50. **An AI-written buffer whose whole value is a list loses updates.** Root it in a record (`entries: []`) and have scripts read and clear `.entries`. Ask for complete entries of changed characters, not "only changed fields": once the buffer is cleared, a field patch has nothing to apply to. "Append-only" wording does not rescue a list root.
 51. **A record-rooted buffer can jam on one nested row.** If the AI writes rows as a list inside `entries`, a merge gated on `.entries.any(name.exists())` never fires again and every later update piles up. Gate on a non-empty inbox and drop or unwrap non-record items.
 52. **A block reinstalled every turn lags behind triggers below it.** Its `<<...>>` values freeze when its trigger runs. Order the triggers that compute those values above it, or write `<=...=>`.
 53. **`$game.ai_model` is the display name, and text `=` is case-sensitive.** On Dolphin, `= "Dolphin"` is true and `= "dolphin"` false.
 54. **Some native fields take live expressions.** A tracker condition's required value can be `$variable`, a random chance can be an expression, and numeric add/subtract accepts dice text such as `2d3`; each is evaluated every time. Templates in a tracker's update instructions are also evaluated live.
+
+## Still unknown
+
+Platform behavior that has not been verified, by area, with what to do meanwhile. Elsewhere the kit states only what is established; do not turn any of these into an invented rule.
+
+| Area | Still unknown | What to do meanwhile |
+| --- | --- | --- |
+| Prompt construction | Full historical storyteller/specialist prompts, hidden wrappers, exact inclusion and timing | Put essential facts in fields known to reach the storyteller (background, firstInput, instructions, always-on blocks); treat UI visibility as display, not proof of what the AI receives |
+| Empty-condition triggers | Whether a Start+Mid+Repeat trigger with no conditions fires on ordinary turns | Give every-turn triggers an always-true condition such as `$game.turn_number >= 0` |
+| Scenarios | Why dynamic multi-slot, cyclic and parallel arrangements fail; any runtime maximum | Use literal Scenarios with explicit state gates ([Triggers](Triggers.md#scenarios)) |
+| NPCs and knowledge | Live character records, identity merging, mutation and retrieval routing; why name-only mentions often fail to surface Character detail | Put facts that must surface in the Summary or always-on text; author relationships and knowledge explicitly; correct an invented detail early by editing the turn |
+| Import normalization | Internal failure stages; ID rules for every entity type; why an omitted replaceWith broke the opening | Use ASCII alphanumeric tracker IDs; always serialize description and replaceWith; re-export after import and compare with tools/import_audit.py |
+| Visibility | Whether visibility changes what the AI receives | Do not rely on visibility to keep information from the storyteller |
+| Interpolation | Timing in destination fields other than those tested; full specialist inputs | Use the template probe example before relying on a new field ([Capabilities](Capabilities.md)) |
+| Randomness and selectors | Exact evaluation counts; whether unselected library text is excluded from context | Store a shared roll in a tracker when several consumers must agree |
+| AI tracker dependencies | How generation is staged internally | Stage prior-turn values explicitly when a rule depends on them |
+| Format and YAML | Complete grammar, XML mutation, strict typing, hidden AI repair | Validate shape and meaning in scripts before accepting state |
+| Legacy list context | A supported List Update target/value context in the current editor | Use for-each loops and collection methods instead of `current()` |
+| Memory | Summary contents and how they weigh against persistent context | Use summaryRequest and trackers for facts that must persist |
+| Length | A lengthening recipe; the authorStyle cap on models other than Dolphin | Put length rules in authorStyle; promise a ceiling near the number, not an exact length |
+| Images and video | Full image prompt and cache, precedence, internal macros, video runtime | Author with current style controls and preserve imported legacy fields; avoid depending on video until checked |
+| Limits and permissions | Maximum field, loop or trigger sizes; account-role permission matrix | Treat observed sizes as working examples |
+| Recovery and forms | Server-side cause of a lost-but-charged turn; automated recovery | After an interruption, inspect retained history and the export's turn count before resubmitting; prefer one input form per turn |
+
+The schema and validator are a partial compatibility profile, not a statement of every importer-required field or future vocabulary.
 
 ---
 

@@ -76,9 +76,11 @@ These are reading selections, not mandatory extra downloads. The AI can request 
 | [library/](https://github.com/IW-Builder/IW-Builder.github.io/tree/main/library) | Optional additions for storytelling and continuity |
 | [tools/](https://github.com/IW-Builder/IW-Builder.github.io/tree/main/tools) | World checks, reusable-content tools and kit-building scripts |
 | [chat/](https://github.com/IW-Builder/IW-Builder.github.io/tree/main/chat) | Combined text files to attach to your chat |
+| [checker/](https://iw-builder.github.io/checker/) | Browser validator, no Python needed |
+| [cost/](https://iw-builder.github.io/cost/) | Bookmarklet that downloads your IW credit history |
 | [samples/](https://github.com/IW-Builder/IW-Builder.github.io/tree/main/samples) | Finished worlds and the conversations that created them |
 
-Use [examples/README.md](examples/README.md) to find a feature. See [reference/Import-Integrity.md](reference/Import-Integrity.md) for identifiers, path checks and live-world limitations.
+Use [examples/README.md](examples/README.md) to find a feature. See [reference/Editor-UI.md](reference/Editor-UI.md) for import checks and live-world limitations.
 
 ## Sample-module source
 
@@ -104,6 +106,6 @@ Install jsonschema for full schema checks (`python -m pip install jsonschema`). 
 
 ## Current behavior and editor help
 
-Start with [notable findings](reference/Notable-Findings.md) for the behavior most likely to surprise you or break a world. Use the [editor/UI reference](reference/Editor-UI.md) for workflows and terminology, the [trigger capability catalog](reference/Trigger-Catalog.md) to discover operations, [consolidated behavior](reference/Verified-Behavior.md) for detailed results and [known limits](reference/Known-Limits.md) for what remains unresolved. To see what a world will cost to play on each model, read [estimating cost](reference/Cost.md).
+Start with [notable findings](reference/Notable-Findings.md) for the behavior most likely to surprise you or break a world. Use the [editor/UI reference](reference/Editor-UI.md) for workflows and terminology, the [trigger capability catalog](reference/Trigger-Catalog.md) to discover operations, and [consolidated behavior](reference/Verified-Behavior.md) for detailed results; the notable findings page ends with what remains unresolved. To see what a world will cost to play on each model, read [estimating cost](reference/Cost.md).
 
-The local [plot compiler](reference/Engineering-Tools.md) builds literal-Scenario prerequisite plots.
+The local plot compiler in [tools/Usage.md](tools/Usage.md) builds literal-Scenario prerequisite plots.

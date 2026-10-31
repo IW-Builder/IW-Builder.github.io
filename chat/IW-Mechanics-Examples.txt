@@ -1,16 +1,16 @@
-Infinite Worlds Authoring Kit: IW-Mechanics-Examples.txt (complete mechanics example worlds: recipes, optional block, starting values and a showcase).
+Infinite Worlds Authoring Kit: IW-Mechanics-Examples.txt (complete mechanics example worlds: recipes, optional block, starting values, layered opening, on-demand generation and a showcase).
 Generated text edition. BEGIN FILE / END FILE sections identify package-relative source paths. This is reference material, not one IW world.
 Follow Authoring-Prompt.md (in IW-Authoring-Guide.txt). Load companion editions only when the task needs them.
 Editions and their contents:
-- IW-Authoring-Guide.txt: start here: prompt, template, narrative craft, trackers, triggers, data banks and library integration. Files: Authoring-Prompt.md, World-Template.json, reference/Evidence.md, reference/Craft.md, reference/Trackers.md, reference/Triggers.md, reference/Trigger-Catalog.md, reference/Portable-Banks.md, library/Integration.md
+- IW-Authoring-Guide.txt: start here: prompt, template, narrative craft, trackers, triggers, data banks and library integration. Files: Authoring-Prompt.md, World-Template.json, reference/Craft.md, reference/Trackers.md, reference/Triggers.md, reference/Trigger-Catalog.md, reference/Portable-Banks.md, library/Integration.md
 - IW-Technical-Reference.txt: exact payloads, PawScript, capabilities and recipes. Files: reference/Schema.md, reference/PawScript.md, reference/Capabilities.md, reference/Recipes.md, reference/Default-Evaluation.txt, reference/Current-AI-Profiles.json
-- IW-Behavior.txt: notable findings, editor/UI workflows, verified runtime behavior, known limits and import integrity. Files: reference/Notable-Findings.md, reference/Editor-UI.md, reference/Cost.md, reference/Verified-Behavior.md, reference/Known-Limits.md, reference/Import-Integrity.md
+- IW-Behavior.txt: notable findings and open questions, editor/UI workflows with import checks, cost and verified runtime behavior. Files: reference/Notable-Findings.md, reference/Editor-UI.md, reference/Cost.md, reference/Verified-Behavior.md
 - IW-Payloads.txt: exact native payload snippets for every condition and effect, plus the example index. Files: examples/Payloads.md, examples/index.json
-- IW-Mechanics-Examples.txt: complete mechanics example worlds: recipes, optional block, starting values and a showcase. Files: examples/recipe-request-commit.json, examples/recipe-completion-award.json, examples/recipe-candidate-acceptance.json, examples/recipe-archive-reactivate.json, examples/recipe-cached-random.json, examples/recipe-consumed-timer.json, examples/recipe-choice-domain.json, examples/recipe-compiled-plot.json, examples/recipe-choice-followup.json, examples/recipe-threshold-unlock.json, examples/optional-block.json, examples/character-starting-values.json, examples/showcase-glass-ledger.json
-- IW-Narrative-Examples.txt: complete narrative example worlds: ensemble romance, fantasy expedition and contained horror. Files: examples/narrative-vendemmia.json, examples/narrative-listening-road.json, examples/narrative-address-after-midnight.json
+- IW-Mechanics-Examples.txt: complete mechanics example worlds: recipes, optional block, starting values, layered opening, on-demand generation and a showcase. Files: examples/recipe-request-commit.json, examples/recipe-completion-award.json, examples/recipe-candidate-acceptance.json, examples/recipe-archive-reactivate.json, examples/recipe-cached-random.json, examples/recipe-consumed-timer.json, examples/recipe-choice-domain.json, examples/recipe-compiled-plot.json, examples/recipe-choice-followup.json, examples/recipe-threshold-unlock.json, examples/optional-block.json, examples/character-starting-values.json, examples/recipe-layered-opening.json, examples/recipe-on-demand-generation.json, examples/showcase-glass-ledger.json
+- IW-Narrative-Examples.txt: complete narrative example worlds: ensemble romance, fantasy expedition, contained horror, fantasy relationship and high-heat erotica. Files: examples/narrative-vendemmia.json, examples/narrative-listening-road.json, examples/narrative-address-after-midnight.json, examples/narrative-seven-nights.json, examples/narrative-velvet-wager.json
 - IW-Sample-Blocks.txt: optional library modules (read library/Integration.md first). Files: library/Sample-Blocks.json
 - IW-Storymaster.txt: the Storymaster narrative-direction framework (read library/Integration.md first). Files: library/Storymaster-Suite.json
-- IW-Tools.txt: Python tools and their guides, for models that can run code. Files: tools/Usage.md, reference/Story-Tools.md, reference/Engineering-Tools.md, tools/validate_iw_export.py, tools/static_checks.py, tools/iw-export.schema.json, tools/data_bank.py, tools/import_audit.py, tools/story_export.py, tools/plot_compile.py
+- IW-Tools.txt: Python tools and their guides, for models that can run code. Files: tools/Usage.md, tools/validate_iw_export.py, tools/static_checks.py, tools/iw-export.schema.json, tools/data_bank.py, tools/import_audit.py, tools/story_export.py, tools/plot_compile.py
 Every file is also available individually: https://iw-builder.github.io/llms.txt
 
 ===== BEGIN FILE: examples/recipe-request-commit.json =====
@@ -2481,6 +2481,693 @@ Every file is also available individually: https://iw-builder.github.io/llms.txt
   "designNotes": "Authoring example. See the example index for scope and verification status."
 }
 ===== END FILE: examples/character-starting-values.json =====
+
+===== BEGIN FILE: examples/recipe-layered-opening.json =====
+{
+  "favorite": false,
+  "title": "Crossroads: A Chosen Beginning",
+  "description": "Choose a destination, a disruption and your role to create a distinct adventure opening.",
+  "background": "",
+  "instructions": "Continue from the assembled background and the selected destination, incident and role. Choices materially shape opportunities and obligations. Offer several plausible responses; do not decide the player response. Opening choices are fixed for this playthrough.",
+  "authorStyle": "Concrete, lively adventure prose with concise dialogue.",
+  "recommendedAIModel": null,
+  "firstInput": "I take stock of the disruption and decide whom to approach first.",
+  "objective": "Resolve the local disruption using the opportunities and obligations of your chosen role.",
+  "imageModel": "manticore",
+  "imageStyle": "photo_1",
+  "illustrationStyleNonCharacterLowPriority": "",
+  "illustrationStyleNonCharacterHighPriority": "",
+  "illustrationStyleCharacterLowPriority": "",
+  "illustrationStyleCharacterHighPriority": "",
+  "imageStyleCharacterPre": "",
+  "imageStyleCharacterPost": "",
+  "imageStyleNonCharacterPre": "",
+  "imageStyleNonCharacterPost": "",
+  "mature": false,
+  "nsfw": false,
+  "contentWarnings": "",
+  "enableAISpecificInstructionBlocks": false,
+  "previewImage": "",
+  "fullSizePreviewImage": "",
+  "previewImageOptions": [],
+  "fullSizePreviewImageOptions": [],
+  "currentPreviewImageIndex": -1,
+  "imagePromptDetails": {
+    "illustrClothes": "",
+    "illustrSetting": "",
+    "illustrSubject": "",
+    "illustrAppearance": "",
+    "illustrIsCharacter": false,
+    "illustrExpressionPosition": ""
+  },
+  "permissionsOnceShared": {
+    "sharing": true,
+    "editing": true
+  },
+  "allowChangeCharacterName": false,
+  "allowChangeCharacterDescription": false,
+  "allowChangeCharacterSkills": false,
+  "allowChangeCharacterItemValues": true,
+  "allowChangeCharacterPortrait": false,
+  "allowChangeCharacterNewPortrait": false,
+  "conditions": [],
+  "schemaVersion": 2.4,
+  "skills": [
+    "Generic skill"
+  ],
+  "possibleCharacters": [
+    {
+      "name": "Traveler",
+      "description": "An adult traveler with curiosity and practical judgment.",
+      "portrait": "",
+      "portraitPromptDetails": {
+        "illustrAppearance": "",
+        "illustrClothes": "",
+        "illustrExpressionPosition": "",
+        "illustrSetting": ""
+      },
+      "fullSizePortrait": "",
+      "portraitOptions": [],
+      "fullSizePortraitOptions": [],
+      "currentPortraitIndex": -1,
+      "characterId": "c7038c97-b50f-57be-9e33-9ce2914d80ef",
+      "skills": {
+        "Generic skill": 3
+      },
+      "initialTrackedItemValues": []
+    }
+  ],
+  "triggerEvents": [
+    {
+      "id": "2170586f2",
+      "name": "Opening: Seed",
+      "advancedLogic": false,
+      "triggerOnStartOfGame": true,
+      "triggerMidGame": false,
+      "canTriggerMoreThanOnce": false,
+      "triggerConditions": [],
+      "triggerEffects": [
+        {
+          "id": "d739b3e1d",
+          "type": "effectSetTrackedItemValue",
+          "data": {
+            "trackedItemID": "5971aa36e",
+            "action": "set",
+            "newValue": "[[PLACE]]\n\n[[INCIDENT]]\n\n[[ROLE]]",
+            "replaceWith": "",
+            "path": "",
+            "updateMode": "path",
+            "listExpression": "",
+            "targetExpression": ""
+          }
+        }
+      ]
+    },
+    {
+      "id": "4696d226c",
+      "name": "Opening: Harbor",
+      "advancedLogic": false,
+      "triggerOnStartOfGame": true,
+      "triggerMidGame": false,
+      "canTriggerMoreThanOnce": false,
+      "triggerConditions": [
+        {
+          "id": "ad1067590",
+          "category": "condition",
+          "type": "triggerOnTrackedItem",
+          "data": {
+            "trackedItemID": "b60ecf98c",
+            "inequality": "is_exactly",
+            "requiredValue": "Harbor",
+            "textComparison": "contains"
+          }
+        }
+      ],
+      "triggerEffects": [
+        {
+          "id": "71df7ec19",
+          "type": "effectSetTrackedItemValue",
+          "data": {
+            "trackedItemID": "5971aa36e",
+            "action": "replace",
+            "newValue": "[[PLACE]]",
+            "replaceWith": "You reach a harbor town as the tide turns. Dockworkers crowd the customs office; a public noticeboard and a moored supply boat offer different sources of information.",
+            "path": "",
+            "updateMode": "path",
+            "listExpression": "",
+            "targetExpression": ""
+          }
+        }
+      ]
+    },
+    {
+      "id": "9868312ae",
+      "name": "Opening: Observatory",
+      "advancedLogic": false,
+      "triggerOnStartOfGame": true,
+      "triggerMidGame": false,
+      "canTriggerMoreThanOnce": false,
+      "triggerConditions": [
+        {
+          "id": "f0755e63f",
+          "category": "condition",
+          "type": "triggerOnTrackedItem",
+          "data": {
+            "trackedItemID": "b60ecf98c",
+            "inequality": "is_exactly",
+            "requiredValue": "Observatory",
+            "textComparison": "contains"
+          }
+        }
+      ],
+      "triggerEffects": [
+        {
+          "id": "cb22700e2",
+          "type": "effectSetTrackedItemValue",
+          "data": {
+            "trackedItemID": "5971aa36e",
+            "action": "replace",
+            "newValue": "[[PLACE]]",
+            "replaceWith": "You reach a mountain observatory before nightfall. Researchers gather in the common hall; the instrument workshop and a sheltered service road offer different leads.",
+            "path": "",
+            "updateMode": "path",
+            "listExpression": "",
+            "targetExpression": ""
+          }
+        }
+      ]
+    },
+    {
+      "id": "36d0698b7",
+      "name": "Opening: Missing delivery",
+      "advancedLogic": false,
+      "triggerOnStartOfGame": true,
+      "triggerMidGame": false,
+      "canTriggerMoreThanOnce": false,
+      "triggerConditions": [
+        {
+          "id": "22d28120e",
+          "category": "condition",
+          "type": "triggerOnTrackedItem",
+          "data": {
+            "trackedItemID": "a0dae4fac",
+            "inequality": "is_exactly",
+            "requiredValue": "Missing delivery",
+            "textComparison": "contains"
+          }
+        }
+      ],
+      "triggerEffects": [
+        {
+          "id": "33d924776",
+          "type": "effectSetTrackedItemValue",
+          "data": {
+            "trackedItemID": "5971aa36e",
+            "action": "replace",
+            "newValue": "[[INCIDENT]]",
+            "replaceWith": "A promised delivery of essential parts has vanished. The receiver has a signed receipt, but the carrier denies arriving. Following the route or comparing their accounts could expose the discrepancy.",
+            "path": "",
+            "updateMode": "path",
+            "listExpression": "",
+            "targetExpression": ""
+          }
+        }
+      ]
+    },
+    {
+      "id": "eb75c79c3",
+      "name": "Opening: Power failure",
+      "advancedLogic": false,
+      "triggerOnStartOfGame": true,
+      "triggerMidGame": false,
+      "canTriggerMoreThanOnce": false,
+      "triggerConditions": [
+        {
+          "id": "2bdebe485",
+          "category": "condition",
+          "type": "triggerOnTrackedItem",
+          "data": {
+            "trackedItemID": "a0dae4fac",
+            "inequality": "is_exactly",
+            "requiredValue": "Power failure",
+            "textComparison": "contains"
+          }
+        }
+      ],
+      "triggerEffects": [
+        {
+          "id": "a3ff2cf6e",
+          "type": "effectSetTrackedItemValue",
+          "data": {
+            "trackedItemID": "5971aa36e",
+            "action": "replace",
+            "newValue": "[[INCIDENT]]",
+            "replaceWith": "The local power system fails during your arrival. A technician proposes isolating the fault while an organizer wants temporary lighting for the crowd. Helping either changes what can happen next.",
+            "path": "",
+            "updateMode": "path",
+            "listExpression": "",
+            "targetExpression": ""
+          }
+        }
+      ]
+    },
+    {
+      "id": "ef3a6001f",
+      "name": "Opening: Courier",
+      "advancedLogic": false,
+      "triggerOnStartOfGame": true,
+      "triggerMidGame": false,
+      "canTriggerMoreThanOnce": false,
+      "triggerConditions": [
+        {
+          "id": "23cdd1ff5",
+          "category": "condition",
+          "type": "triggerOnTrackedItem",
+          "data": {
+            "trackedItemID": "f9643661b",
+            "inequality": "is_exactly",
+            "requiredValue": "Courier",
+            "textComparison": "contains"
+          }
+        }
+      ],
+      "triggerEffects": [
+        {
+          "id": "1c5b04658",
+          "type": "effectSetTrackedItemValue",
+          "data": {
+            "trackedItemID": "5971aa36e",
+            "action": "replace",
+            "newValue": "[[ROLE]]",
+            "replaceWith": "You are a courier carrying a sealed dispatch for the local coordinator. Your delivery credentials grant access to records, but you are expected to account for your movements.",
+            "path": "",
+            "updateMode": "path",
+            "listExpression": "",
+            "targetExpression": ""
+          }
+        }
+      ]
+    },
+    {
+      "id": "d66f153d8",
+      "name": "Opening: Mediator",
+      "advancedLogic": false,
+      "triggerOnStartOfGame": true,
+      "triggerMidGame": false,
+      "canTriggerMoreThanOnce": false,
+      "triggerConditions": [
+        {
+          "id": "8af653f73",
+          "category": "condition",
+          "type": "triggerOnTrackedItem",
+          "data": {
+            "trackedItemID": "f9643661b",
+            "inequality": "is_exactly",
+            "requiredValue": "Mediator",
+            "textComparison": "contains"
+          }
+        }
+      ],
+      "triggerEffects": [
+        {
+          "id": "8782e241a",
+          "type": "effectSetTrackedItemValue",
+          "data": {
+            "trackedItemID": "5971aa36e",
+            "action": "replace",
+            "newValue": "[[ROLE]]",
+            "replaceWith": "You are a mediator invited to settle a local dispute. Both sides will speak with you, but each expects you to hear them before taking action.",
+            "path": "",
+            "updateMode": "path",
+            "listExpression": "",
+            "targetExpression": ""
+          }
+        }
+      ]
+    },
+    {
+      "id": "57a97caf6",
+      "name": "Opening: Install Background",
+      "advancedLogic": false,
+      "triggerOnStartOfGame": true,
+      "triggerMidGame": false,
+      "canTriggerMoreThanOnce": false,
+      "triggerConditions": [],
+      "triggerEffects": [
+        {
+          "id": "5a4026dd9",
+          "type": "effectChangeBackground",
+          "data": "<<$opening_assembly>>"
+        }
+      ]
+    }
+  ],
+  "victoryCondition": null,
+  "defeatCondition": null,
+  "trackedItems": [
+    {
+      "id": "b60ecf98c",
+      "name": "Destination",
+      "variableName": "destination",
+      "positionInList": 0,
+      "dataType": "text",
+      "visibility": "everyone",
+      "description": "",
+      "updateInstructions": "",
+      "formatExample": "",
+      "enforceFormat": false,
+      "formatSchema": "",
+      "initialValue": "Harbor",
+      "initialValueBasedOnPC": "player",
+      "autoUpdate": false,
+      "driftAcknowledgedForName": "Destination",
+      "initialValueChoices": [
+        "Harbor",
+        "Observatory"
+      ]
+    },
+    {
+      "id": "a0dae4fac",
+      "name": "Incident",
+      "variableName": "incident",
+      "positionInList": 1,
+      "dataType": "text",
+      "visibility": "everyone",
+      "description": "",
+      "updateInstructions": "",
+      "formatExample": "",
+      "enforceFormat": false,
+      "formatSchema": "",
+      "initialValue": "Missing delivery",
+      "initialValueBasedOnPC": "player",
+      "autoUpdate": false,
+      "driftAcknowledgedForName": "Incident",
+      "initialValueChoices": [
+        "Missing delivery",
+        "Power failure"
+      ]
+    },
+    {
+      "id": "f9643661b",
+      "name": "Role",
+      "variableName": "role",
+      "positionInList": 2,
+      "dataType": "text",
+      "visibility": "everyone",
+      "description": "",
+      "updateInstructions": "",
+      "formatExample": "",
+      "enforceFormat": false,
+      "formatSchema": "",
+      "initialValue": "Courier",
+      "initialValueBasedOnPC": "player",
+      "autoUpdate": false,
+      "driftAcknowledgedForName": "Role",
+      "initialValueChoices": [
+        "Courier",
+        "Mediator"
+      ]
+    },
+    {
+      "id": "5971aa36e",
+      "name": "Opening Assembly",
+      "variableName": "opening_assembly",
+      "positionInList": 3,
+      "dataType": "text",
+      "visibility": "hidden",
+      "description": "",
+      "updateInstructions": "",
+      "formatExample": "",
+      "enforceFormat": false,
+      "formatSchema": "",
+      "initialValue": "",
+      "initialValueBasedOnPC": "same",
+      "autoUpdate": false,
+      "driftAcknowledgedForName": "Opening Assembly"
+    }
+  ],
+  "hideSkillSystem": true,
+  "autoAdvanceVersion": false,
+  "version": "1.0",
+  "charSelectText": "Choose the destination, incident and role for this adventure.",
+  "descriptionRequest": "",
+  "evaluationRequest": "",
+  "summaryRequest": "",
+  "instructionBlocks": [],
+  "NPCs": [],
+  "loreBookEntries": [],
+  "designNotes": ""
+}
+===== END FILE: examples/recipe-layered-opening.json =====
+
+===== BEGIN FILE: examples/recipe-on-demand-generation.json =====
+{
+  "favorite": false,
+  "title": "Wayfarer: Local Rumors",
+  "description": "Explore a settlement using a compact set of persistent rumors. Change the Destination preference to request a new local set.",
+  "background": "You arrive at a quiet travelers lodge. A host offers directions while local gossip is gathered.",
+  "instructions": "Destination is a player-controlled settlement preference. Treat changing it as travel to that settlement; do not move to another settlement solely because narration suggested one. Use only a Rumor Batch whose settlement matches Destination. Reports are hearsay, not established truth. Preserve their identities while they remain relevant. While no matching batch is ready, ordinary conversation and exploration remain possible. Do not narrate generation bookkeeping or invent a replacement rumor list.",
+  "authorStyle": "Grounded travel adventure. Brief scenes, distinctive voices, meaningful choices.",
+  "recommendedAIModel": null,
+  "firstInput": "I greet the host and ask what travelers can do nearby.",
+  "objective": "Follow local leads and decide which reports deserve investigation.",
+  "imageModel": "manticore",
+  "imageStyle": "photo_1",
+  "illustrationStyleNonCharacterLowPriority": "",
+  "illustrationStyleNonCharacterHighPriority": "",
+  "illustrationStyleCharacterLowPriority": "",
+  "illustrationStyleCharacterHighPriority": "",
+  "imageStyleCharacterPre": "",
+  "imageStyleCharacterPost": "",
+  "imageStyleNonCharacterPre": "",
+  "imageStyleNonCharacterPost": "",
+  "mature": false,
+  "nsfw": false,
+  "contentWarnings": "",
+  "enableAISpecificInstructionBlocks": false,
+  "previewImage": "",
+  "fullSizePreviewImage": "",
+  "previewImageOptions": [],
+  "fullSizePreviewImageOptions": [],
+  "currentPreviewImageIndex": -1,
+  "imagePromptDetails": {
+    "illustrClothes": "",
+    "illustrSetting": "",
+    "illustrSubject": "",
+    "illustrAppearance": "",
+    "illustrIsCharacter": false,
+    "illustrExpressionPosition": ""
+  },
+  "permissionsOnceShared": {
+    "sharing": true,
+    "editing": true
+  },
+  "allowChangeCharacterName": false,
+  "allowChangeCharacterDescription": false,
+  "allowChangeCharacterSkills": false,
+  "allowChangeCharacterItemValues": true,
+  "allowChangeCharacterPortrait": false,
+  "allowChangeCharacterNewPortrait": false,
+  "conditions": [],
+  "schemaVersion": 2.4,
+  "skills": [
+    "Generic skill"
+  ],
+  "possibleCharacters": [
+    {
+      "name": "Traveler",
+      "description": "An adult traveler with curiosity and practical judgment.",
+      "portrait": "",
+      "portraitPromptDetails": {
+        "illustrAppearance": "",
+        "illustrClothes": "",
+        "illustrExpressionPosition": "",
+        "illustrSetting": ""
+      },
+      "fullSizePortrait": "",
+      "portraitOptions": [],
+      "fullSizePortraitOptions": [],
+      "currentPortraitIndex": -1,
+      "characterId": "c7038c97-b50f-57be-9e33-9ce2914d80ef",
+      "skills": {
+        "Generic skill": 3
+      },
+      "initialTrackedItemValues": []
+    }
+  ],
+  "triggerEvents": [
+    {
+      "id": "d90fc495a",
+      "name": "Rumors: Prepare Request",
+      "advancedLogic": false,
+      "triggerOnStartOfGame": false,
+      "triggerMidGame": false,
+      "canTriggerMoreThanOnce": true,
+      "triggerConditions": [
+        {
+          "id": "3d8c26c95",
+          "category": "condition",
+          "type": "triggerOnPawScript",
+          "data": "$destination != $generation.settlement"
+        }
+      ],
+      "triggerEffects": [
+        {
+          "id": "930f0cb8e",
+          "type": "effectRunScript",
+          "data": "$generation.request_id += 1\n$generation.settlement = $destination\n$generation.installed_turn = $game.turn_number\n$generation.pending = 1",
+          "name": "Prepare Rumor Request"
+        }
+      ]
+    },
+    {
+      "id": "c8577610c",
+      "name": "Rumors: Install Generation Brief",
+      "advancedLogic": false,
+      "triggerOnStartOfGame": false,
+      "triggerMidGame": false,
+      "canTriggerMoreThanOnce": true,
+      "triggerConditions": [
+        {
+          "id": "85a168c23",
+          "category": "condition",
+          "type": "triggerPrereqs",
+          "data": {
+            "prereqs": [
+              "d90fc495a"
+            ],
+            "firedThisTurn": true
+          }
+        }
+      ],
+      "triggerEffects": [
+        {
+          "id": "04b4649d9",
+          "type": "effectModifyInstructionBlock",
+          "data": {
+            "id": "b34ff1473",
+            "content": "Generate one local rumor batch for <<$generation.settlement>> with request_id <<$generation.request_id>>. Write Rumor Batch as YAML with exactly request_id, settlement and rumors; rumors is a list of exactly three short text entries. Each entry is one sentence, at most 25 words. Replace the previous batch, never append.\nDesign one practical opportunity, one social mystery and one uncertain warning. Anchor each to a distinct local person, place or institution. Give a concrete lead a traveler could pursue, not a full quest synopsis. Vary the stakes and speakers; avoid three missing-person or missing-object plots. Treat allegations as reports whose truth has not been established. Keep ordinary locals fallible rather than secretly omniscient. Do not introduce an unavoidable disaster, mandatory countdown or world-spanning conspiracy. Fit existing geography and established facts, retaining continuity with anything the player has already learned. A new settlement needs new leads, not merely renamed copies of the old entries. Avoid copying the instructions into the result. Record only compact rumors, not planning commentary, evidence tables or proposed solutions. Do not claim the player investigated or accepted any lead. Write the request identifier and settlement only alongside the completed three-entry list. During the scene, the host may share one matching rumor naturally; the whole list need not be repeated in narration."
+          }
+        }
+      ]
+    },
+    {
+      "id": "2f7d0ad05",
+      "name": "Rumors: Accept Completed Batch",
+      "advancedLogic": false,
+      "triggerOnStartOfGame": false,
+      "triggerMidGame": false,
+      "canTriggerMoreThanOnce": true,
+      "triggerConditions": [
+        {
+          "id": "499aee316",
+          "category": "condition",
+          "type": "triggerOnPawScript",
+          "data": "$generation.pending = 1 and $game.turn_number > $generation.installed_turn and $rumor_batch.request_id = $generation.request_id and $rumor_batch.settlement = $generation.settlement and $rumor_batch.rumors.count() = 3"
+        }
+      ],
+      "triggerEffects": [
+        {
+          "id": "d42f8d3ad",
+          "type": "effectModifyInstructionBlock",
+          "data": {
+            "id": "b34ff1473",
+            "content": ""
+          }
+        },
+        {
+          "id": "946f77517",
+          "type": "effectRunScript",
+          "data": "$generation.pending = 0",
+          "name": "Finish Rumor Request"
+        },
+        {
+          "id": "cc3fd365e",
+          "type": "effectShowMessage",
+          "data": "Local leads for <<$rumor_batch.settlement>> are ready."
+        }
+      ]
+    }
+  ],
+  "victoryCondition": null,
+  "defeatCondition": null,
+  "trackedItems": [
+    {
+      "id": "26588fc96",
+      "name": "Destination",
+      "variableName": "destination",
+      "positionInList": 0,
+      "dataType": "text",
+      "visibility": "everyone",
+      "description": "",
+      "updateInstructions": "",
+      "formatExample": "",
+      "enforceFormat": false,
+      "formatSchema": "",
+      "initialValue": "Harbor",
+      "initialValueBasedOnPC": "player",
+      "autoUpdate": false,
+      "driftAcknowledgedForName": "Destination",
+      "initialValueChoices": [
+        "Harbor",
+        "Hillmarket",
+        "Glassford"
+      ]
+    },
+    {
+      "id": "c51383518",
+      "name": "Generation Control",
+      "variableName": "generation",
+      "positionInList": 1,
+      "dataType": "yaml",
+      "visibility": "hidden",
+      "description": "",
+      "updateInstructions": "",
+      "formatExample": "",
+      "enforceFormat": false,
+      "formatSchema": "",
+      "initialValue": "request_id: 0\nsettlement: \"\"\ninstalled_turn: 0\npending: 0",
+      "initialValueBasedOnPC": "same",
+      "autoUpdate": false,
+      "driftAcknowledgedForName": "Generation Control"
+    },
+    {
+      "id": "b7097bd3f",
+      "name": "Rumor Batch",
+      "variableName": "rumor_batch",
+      "positionInList": 2,
+      "dataType": "yaml",
+      "visibility": "everyone",
+      "description": "Compact local hearsay retained between generation requests.",
+      "updateInstructions": "Retain this entire value unchanged unless Temporary Rumor Generation explicitly requests a new batch. Follow that block when present; write its request_id and settlement with the completed list.",
+      "formatExample": "",
+      "enforceFormat": false,
+      "formatSchema": "",
+      "initialValue": "request_id: 0\nsettlement: \"\"\nrumors: []",
+      "initialValueBasedOnPC": "same",
+      "autoUpdate": true,
+      "driftAcknowledgedForName": "Rumor Batch"
+    }
+  ],
+  "hideSkillSystem": true,
+  "autoAdvanceVersion": false,
+  "version": "1.0",
+  "charSelectText": "Choose an initial settlement. Later, edit Destination to request a fresh batch for another settlement.",
+  "descriptionRequest": "",
+  "evaluationRequest": "",
+  "summaryRequest": "",
+  "instructionBlocks": [
+    {
+      "id": "b34ff1473",
+      "name": "Temporary Rumor Generation",
+      "content": ""
+    }
+  ],
+  "NPCs": [],
+  "loreBookEntries": [],
+  "designNotes": ""
+}
+===== END FILE: examples/recipe-on-demand-generation.json =====
 
 ===== BEGIN FILE: examples/showcase-glass-ledger.json =====
 {

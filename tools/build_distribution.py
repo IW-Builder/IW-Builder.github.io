@@ -12,7 +12,7 @@ import re
 from urllib.parse import quote
 
 ROOT = Path(__file__).resolve().parent.parent
-KIT_VERSION = '1.6.0'  # also stated in reference/Evidence.md (checked by tests)
+KIT_VERSION = '1.6.0'  # also stated in reference/Verified-Behavior.md (checked by tests)
 
 # Combined text editions for chats without web access. Each stays well under
 # common fetch/attachment limits; models load companions only when needed.
@@ -20,7 +20,6 @@ GROUPS = {
     'IW-Authoring-Guide.txt': [
         'Authoring-Prompt.md',
         'World-Template.json',
-        'reference/Evidence.md',
         'reference/Craft.md',
         'reference/Trackers.md',
         'reference/Triggers.md',
@@ -41,8 +40,6 @@ GROUPS = {
         'reference/Editor-UI.md',
         'reference/Cost.md',
         'reference/Verified-Behavior.md',
-        'reference/Known-Limits.md',
-        'reference/Import-Integrity.md',
     ],
     'IW-Payloads.txt': [
         'examples/Payloads.md',
@@ -61,12 +58,16 @@ GROUPS = {
         'examples/recipe-threshold-unlock.json',
         'examples/optional-block.json',
         'examples/character-starting-values.json',
+        'examples/recipe-layered-opening.json',
+        'examples/recipe-on-demand-generation.json',
         'examples/showcase-glass-ledger.json',
     ],
     'IW-Narrative-Examples.txt': [
         'examples/narrative-vendemmia.json',
         'examples/narrative-listening-road.json',
         'examples/narrative-address-after-midnight.json',
+        'examples/narrative-seven-nights.json',
+        'examples/narrative-velvet-wager.json',
     ],
     'IW-Sample-Blocks.txt': [
         'library/Sample-Blocks.json',
@@ -80,10 +81,10 @@ GROUPS = {
 EDITION_PURPOSE = {
     'IW-Authoring-Guide.txt': 'start here: prompt, template, narrative craft, trackers, triggers, data banks and library integration',
     'IW-Technical-Reference.txt': 'exact payloads, PawScript, capabilities and recipes',
-    'IW-Behavior.txt': 'notable findings, editor/UI workflows, verified runtime behavior, known limits and import integrity',
+    'IW-Behavior.txt': 'notable findings and open questions, editor/UI workflows with import checks, cost and verified runtime behavior',
     'IW-Payloads.txt': 'exact native payload snippets for every condition and effect, plus the example index',
-    'IW-Mechanics-Examples.txt': 'complete mechanics example worlds: recipes, optional block, starting values and a showcase',
-    'IW-Narrative-Examples.txt': 'complete narrative example worlds: ensemble romance, fantasy expedition and contained horror',
+    'IW-Mechanics-Examples.txt': 'complete mechanics example worlds: recipes, optional block, starting values, layered opening, on-demand generation and a showcase',
+    'IW-Narrative-Examples.txt': 'complete narrative example worlds: ensemble romance, fantasy expedition, contained horror, fantasy relationship and high-heat erotica',
     'IW-Sample-Blocks.txt': 'optional library modules (read library/Integration.md first)',
     'IW-Storymaster.txt': 'the Storymaster narrative-direction framework (read library/Integration.md first)',
     'IW-Tools.txt': 'Python tools and their guides, for models that can run code',
@@ -148,7 +149,7 @@ PAGE = """<!doctype html>
 """
 
 TOOL_SOURCES = [
-    'tools/Usage.md', 'reference/Story-Tools.md', 'reference/Engineering-Tools.md',
+    'tools/Usage.md',
     'tools/validate_iw_export.py', 'tools/static_checks.py',
     'tools/iw-export.schema.json', 'tools/data_bank.py',
     'tools/import_audit.py', 'tools/story_export.py',
@@ -256,7 +257,7 @@ def manifest_paths():
     paths = {ROOT/p for p in ['Authoring-Prompt.md', 'World-Template.json',
                               'README.md', 'LICENSE', 'index.html', 'llms.txt'] if (ROOT/p).is_file()}
     suffixes = {'.md', '.txt', '.json', '.py', '.html', '.js', '.css', '.svg', '.yml', '.yaml'}
-    for folder in ['reference', 'library', 'examples', 'tools', 'chat', 'checker']:
+    for folder in ['reference', 'library', 'examples', 'tools', 'chat', 'checker', 'cost']:
         for p in (ROOT/folder).rglob('*'):
             rel = p.relative_to(ROOT)
             if (p.is_file() and not p.is_symlink() and p.suffix.lower() in suffixes
@@ -305,13 +306,13 @@ DESCRIPTIONS = {
     'chat/index.html': 'HTML page containing IW-Authoring-Guide.txt, with links to the companion editions.',
     'chat/IW-Authoring-Guide.txt': 'Combined text, start here: prompt, template, Evidence, Craft, Trackers, Triggers, Trigger-Catalog, Portable-Banks and library Integration.',
     'chat/IW-Technical-Reference.txt': 'Combined text: Schema, PawScript, Capabilities, Recipes, Default Evaluation and AI profile IDs.',
-    'chat/IW-Behavior.txt': 'Combined text: Notable-Findings, Editor-UI, Cost, Verified-Behavior, Known-Limits and Import-Integrity.',
-    'chat/IW-Payloads.txt': 'Combined text: payload cookbook (every condition and effect) and the example index. Small and essential for mechanics.',
-    'chat/IW-Mechanics-Examples.txt': 'Combined text: complete mechanics example worlds (recipes, optional block, starting values, showcase).',
-    'chat/IW-Narrative-Examples.txt': 'Combined text: complete narrative example worlds (ensemble romance, fantasy expedition, contained horror).',
+    'chat/IW-Behavior.txt': 'Combined text: Notable-Findings (with open questions), Editor-UI, Cost and Verified-Behavior.',
+    'chat/IW-Payloads.txt': 'Combined text: Payloads.md (every condition and effect) and the example index. Small and essential for mechanics.',
+    'chat/IW-Mechanics-Examples.txt': 'Combined text: complete mechanics example worlds (recipes, optional block, starting values, layered opening, on-demand generation, showcase).',
+    'chat/IW-Narrative-Examples.txt': 'Combined text: all five complete narrative example worlds.',
     'chat/IW-Sample-Blocks.txt': 'Combined text: library modules (Sample-Blocks.json). Integration guide is in IW-Authoring-Guide.txt.',
     'chat/IW-Storymaster.txt': 'Combined text: the Storymaster framework (Storymaster-Suite.json). Integration guide is in IW-Authoring-Guide.txt.',
-    'chat/IW-Tools.txt': 'Combined text: tool usage guide, Story-Tools and plot-compiler guides, plus validator, schema and helper sources to recreate locally.',
+    'chat/IW-Tools.txt': 'Combined text: the tool usage guide plus validator, schema and helper sources to recreate locally.',
     'chat/README.md': 'Human guide to the combined text files.',
     'chat/sources.json': 'Which source files make up each combined text file, with hashes.',
     # Reference
@@ -320,22 +321,17 @@ DESCRIPTIONS = {
     'reference/Craft.md': 'Narrative design: what goes in each field, openings, character cards, romance and adult worlds, prose style, names, example worlds by genre.',
     'reference/Current-AI-Profiles.json': 'Storyteller models, current and retired: block IDs, underlying real-world model, isCurrent flag and typical credits per turn.',
     'reference/Default-Evaluation.txt': "IW's built-in Evaluation instructions, verbatim; the baseline for a custom Evaluation.",
-    'reference/Editor-UI.md': 'Editor labels and their JSON fields, import/export steps, debug tools, visibility, permissions and troubleshooting by symptom.',
-    'reference/Engineering-Tools.md': 'Literal-Scenario plot compiler: commands and limits.',
-    'reference/Evidence.md': 'Platform baseline, version numbers and the evidence labels used across the kit.',
-    'reference/Import-Integrity.md': 'ID conventions, checks before and after import, editing live copies, and the import audit tool.',
-    'reference/Known-Limits.md': 'Platform behavior that remains unverified, by area.',
+    'reference/Editor-UI.md': 'Editor labels and their JSON fields, import/export steps with before/after checks, live copies, debug tools, visibility, permissions and troubleshooting by symptom.',
     'reference/PawScript.md': 'PawScript language guide: syntax, collections, randomness, formatting, debugging, system roots and common mistakes.',
     'reference/Portable-Banks.md': 'Data mode: portable character/data bank format, dependencies, full-content build reports and data_bank.py commands.',
     'reference/README.md': 'Human-friendly index of the reference guides.',
     'reference/Recipes.md': 'Ways to combine features: situation triggers, thresholds, choices, optional blocks, dynamic content, request/commit, guarded state and turn-state patterns.',
-    'reference/Schema.md': 'Export structure: field groups, trackers, starting values, condition and effect payloads, comparators and value-effect operations.',
-    'reference/Story-Tools.md': 'Import comparison and story-text extraction/merge tools: commands and limits.',
+    'reference/Schema.md': 'Export structure: identifier conventions, field groups, trackers, starting values, condition and effect payloads, comparators and value-effect operations.',
     'reference/Trackers.md': 'Tracker fields, data types, visibility, update ownership, starting values and memory/context cost.',
     'reference/Trigger-Catalog.md': "Every identified trigger condition and effect type in one table. Check it before saying a trigger can't do something.",
-    'reference/Triggers.md': 'Trigger timing flags, ordering, effect semantics, choosing native effects or PawScript, and start-of-game restrictions.',
-    'reference/Notable-Findings.md': 'Plain-language list of the behavior most likely to surprise an author or break a world, with what to do.',
-    'reference/Verified-Behavior.md': 'Consolidated runtime findings: triggers, imports, PawScript, visibility, memory, forms, images and endings.',
+    'reference/Triggers.md': 'Trigger timing flags, ordering, effect semantics, choosing native effects or PawScript, start-of-game restrictions and changing a tracker definition during play.',
+    'reference/Notable-Findings.md': 'Plain-language list of the behavior most likely to surprise an author or break a world, with what to do, and the list of what is still unknown.',
+    'reference/Verified-Behavior.md': 'Compatibility baseline, evidence labels and consolidated runtime findings: triggers, imports, PawScript, visibility, memory, forms, images and endings.',
     # Library
     'library/Integration.md': 'How to choose and adapt library modules: Storymaster versus lightweight direction, token costs, dependency checklists. Read before using the library JSON.',
     'library/README.md': 'Human-friendly overview of the library.',
@@ -347,7 +343,7 @@ DESCRIPTIONS = {
     'examples/index.json': 'Machine index of every example world: purpose, evidence label and verification scope.',
     # Tools
     'tools/README.md': 'Human overview of the tools.',
-    'tools/Usage.md': 'Commands, checks, warning meanings and limits for the validator and other tools.',
+    'tools/Usage.md': 'Commands, checks, warning meanings and limits for the validator, import audit, data banks, sorter, story extractor and plot compiler.',
     'tools/validate_iw_export.py': 'World validator: schema, references and lint; --diff compares with an original. The main tool to run.',
     'tools/iw-export.schema.json': 'JSON Schema (Draft 2020-12) profile of the IW export format, used by the validator.',
     'tools/static_checks.py': 'Lint and reference checks used by the validator.',
@@ -363,10 +359,14 @@ DESCRIPTIONS = {
     'tools/test_validator.py': 'Maintainer tests for the validator.',
     'tools/test_data_bank.py': 'Maintainer tests for data_bank.py.',
     'tools/test_distribution.py': 'Maintainer tests for the distribution build.',
-    'tools/test_engineering.py': 'Maintainer tests for the browser harness and plot compiler.',
+    'tools/test_engineering.py': 'Maintainer tests for the plot compiler.',
     'tools/test_native_compat.py': 'Maintainer tests for native export compatibility.',
     'tools/test_story_export.py': 'Maintainer tests for story_export.py.',
     'tools/test_iw_sort.py': 'Maintainer tests for iw_sort.py.',
+    # Cost exporter
+    'cost/index.html': 'IW Cost Exporter: install page for a bookmarklet that downloads your IW credit history as CSV and JSON.',
+    'cost/IW-Cost-Exporter-bookmarklet.js': 'Readable source of the cost-exporter bookmarklet.',
+    'cost/README.md': 'Human guide to the cost exporter: install, use, how it works, spreadsheet tips.',
     # Checker
     'checker/index.html': "Browser validator: paste a world or a model's whole reply; runs validate_iw_export.py locally, joins numbered chunks and copies a report for the AI.",
 }
@@ -463,6 +463,7 @@ INDEX_SECTIONS = [
     ('library', 'Sample library', 'Optional modules to adapt into worlds.'),
     ('tools', 'Tools', 'Python tools for models or users that can run code. Without Python, use the checker.'),
     ('checker', 'Browser checker', None),
+    ('cost', 'Cost exporter', 'Downloads your own credit history from IW; see reference/Cost.md for estimating.'),
     ('chat', 'Combined text editions', 'Single-file bundles for chats without web access or with tool limits. Web-browsing models should prefer the individual files above.'),
     ('samples', 'Sample worlds', 'Worlds made with the kit, with the conversations that produced them. Not documentation.'),
 ]

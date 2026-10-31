@@ -1,6 +1,6 @@
 # Adapting the sample library
 
-`Sample-Blocks.json` is adapted from the unaffiliated [The Script Library](https://infiniteworlds.app/shared/Dxb2ko), world code Dxb2ko. The packaged modules include Time and Location (whereWhen). The source snapshot is identified in ../reference/Evidence.md. The shared world includes additional image-style, content and character blocks and is frequently updated; check whether desired blocks have newer versions before adopting them. It is a collection of reusable instructions, tracker alternatives, examples and updater scripts, not an instruction to copy its entire world into every new story. Use this guide as the dependency reference when selecting modules.
+`Sample-Blocks.json` is adapted from the unaffiliated [The Script Library](https://infiniteworlds.app/shared/Dxb2ko), world code Dxb2ko. The packaged modules include Time and Location (whereWhen). The source snapshot is version 3.16, October 16, 2026. The shared world includes additional image-style, content and character blocks and is frequently updated; check whether desired blocks have newer versions before adopting them. It is a collection of reusable instructions, tracker alternatives, examples and updater scripts, not an instruction to copy its entire world into every new story. Use this guide as the dependency reference when selecting modules.
 
 ## Feature selection
 
@@ -62,7 +62,7 @@ Tracker estimates below cover updateInstructions only; descriptions, schemas, st
 
 The source offers both small- and large-cast appearance trackers. Its appearance merge script targets `$npc_appearance`, which is not automatically the variableName of either variant. Normalize the chosen store's variableName or rewrite all references. The large-cast updater depends on Relationship Tracker significance.
 
-The relationship, intimacy and appearance buffers demonstrate an AI-proposed update followed by a script merge. Each buffer is a record (`entries: []`) that asks for complete entries; the scripts read and clear `.entries` and replace matching records in the script-owned list stores. List roots and "changed fields only" lost updates in live testing (see ../reference/Verified-Behavior.md); only the relationship pair was tested directly. Keep instructions, root and script in agreement.
+The relationship, intimacy and appearance buffers demonstrate an AI-proposed update followed by a script merge. Each buffer is a record (`entries: []`) that asks for complete entries; the scripts read and clear `.entries` and replace matching records in the script-owned list stores. List roots and "changed fields only" wording lose updates (see ../reference/Verified-Behavior.md; the relationship pair is the one measured directly). Keep instructions, root and script in agreement.
 
 Initial blank list-like stores in the library are source examples. Direct appearance trackers are AI-written lists with the same exposure; prefer the buffered setup. Where a chosen script requires an actual list, initialize `[]` or ensure the first-use initialization is correct; do not assume blank text and an empty YAML list are interchangeable. The schema checks field storage type but not the nested runtime reference or merge algorithm.
 
@@ -74,7 +74,7 @@ An optional cosmetic block can clear its content when disabled. A director such 
 
 ## Module configuration
 
-The library is a menu of adaptable parts, not the cookbook's runnable showcase. Its updater triggers explicitly use Start false, Mid false and repeat true, so these conditional update jobs run in ordinary play rather than being assumed to perform initial setup. Their scripts have descriptive names.
+The library is a menu of adaptable parts, not a runnable showcase like ../examples/showcase-glass-ledger.json. Its updater triggers explicitly use Start false, Mid false and repeat true, so these conditional update jobs run in ordinary play rather than being assumed to perform initial setup. Their scripts have descriptive names.
 
 The image-style fields contain selectable alternatives and genre-specific defaults. Resolve all editing brackets, keep only compatible choices, and remove sexualized styling unless requested. The video template depends on video-context variables; see ../reference/Capabilities.md before adopting it. These are intentional adaptation dependencies, not finished-world settings.
 

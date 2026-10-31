@@ -2,21 +2,21 @@ Infinite Worlds Authoring Kit: IW-Technical-Reference.txt (exact payloads, PawSc
 Generated text edition. BEGIN FILE / END FILE sections identify package-relative source paths. This is reference material, not one IW world.
 Follow Authoring-Prompt.md (in IW-Authoring-Guide.txt). Load companion editions only when the task needs them.
 Editions and their contents:
-- IW-Authoring-Guide.txt: start here: prompt, template, narrative craft, trackers, triggers, data banks and library integration. Files: Authoring-Prompt.md, World-Template.json, reference/Evidence.md, reference/Craft.md, reference/Trackers.md, reference/Triggers.md, reference/Trigger-Catalog.md, reference/Portable-Banks.md, library/Integration.md
+- IW-Authoring-Guide.txt: start here: prompt, template, narrative craft, trackers, triggers, data banks and library integration. Files: Authoring-Prompt.md, World-Template.json, reference/Craft.md, reference/Trackers.md, reference/Triggers.md, reference/Trigger-Catalog.md, reference/Portable-Banks.md, library/Integration.md
 - IW-Technical-Reference.txt: exact payloads, PawScript, capabilities and recipes. Files: reference/Schema.md, reference/PawScript.md, reference/Capabilities.md, reference/Recipes.md, reference/Default-Evaluation.txt, reference/Current-AI-Profiles.json
-- IW-Behavior.txt: notable findings, editor/UI workflows, verified runtime behavior, known limits and import integrity. Files: reference/Notable-Findings.md, reference/Editor-UI.md, reference/Cost.md, reference/Verified-Behavior.md, reference/Known-Limits.md, reference/Import-Integrity.md
+- IW-Behavior.txt: notable findings and open questions, editor/UI workflows with import checks, cost and verified runtime behavior. Files: reference/Notable-Findings.md, reference/Editor-UI.md, reference/Cost.md, reference/Verified-Behavior.md
 - IW-Payloads.txt: exact native payload snippets for every condition and effect, plus the example index. Files: examples/Payloads.md, examples/index.json
-- IW-Mechanics-Examples.txt: complete mechanics example worlds: recipes, optional block, starting values and a showcase. Files: examples/recipe-request-commit.json, examples/recipe-completion-award.json, examples/recipe-candidate-acceptance.json, examples/recipe-archive-reactivate.json, examples/recipe-cached-random.json, examples/recipe-consumed-timer.json, examples/recipe-choice-domain.json, examples/recipe-compiled-plot.json, examples/recipe-choice-followup.json, examples/recipe-threshold-unlock.json, examples/optional-block.json, examples/character-starting-values.json, examples/showcase-glass-ledger.json
-- IW-Narrative-Examples.txt: complete narrative example worlds: ensemble romance, fantasy expedition and contained horror. Files: examples/narrative-vendemmia.json, examples/narrative-listening-road.json, examples/narrative-address-after-midnight.json
+- IW-Mechanics-Examples.txt: complete mechanics example worlds: recipes, optional block, starting values, layered opening, on-demand generation and a showcase. Files: examples/recipe-request-commit.json, examples/recipe-completion-award.json, examples/recipe-candidate-acceptance.json, examples/recipe-archive-reactivate.json, examples/recipe-cached-random.json, examples/recipe-consumed-timer.json, examples/recipe-choice-domain.json, examples/recipe-compiled-plot.json, examples/recipe-choice-followup.json, examples/recipe-threshold-unlock.json, examples/optional-block.json, examples/character-starting-values.json, examples/recipe-layered-opening.json, examples/recipe-on-demand-generation.json, examples/showcase-glass-ledger.json
+- IW-Narrative-Examples.txt: complete narrative example worlds: ensemble romance, fantasy expedition, contained horror, fantasy relationship and high-heat erotica. Files: examples/narrative-vendemmia.json, examples/narrative-listening-road.json, examples/narrative-address-after-midnight.json, examples/narrative-seven-nights.json, examples/narrative-velvet-wager.json
 - IW-Sample-Blocks.txt: optional library modules (read library/Integration.md first). Files: library/Sample-Blocks.json
 - IW-Storymaster.txt: the Storymaster narrative-direction framework (read library/Integration.md first). Files: library/Storymaster-Suite.json
-- IW-Tools.txt: Python tools and their guides, for models that can run code. Files: tools/Usage.md, reference/Story-Tools.md, reference/Engineering-Tools.md, tools/validate_iw_export.py, tools/static_checks.py, tools/iw-export.schema.json, tools/data_bank.py, tools/import_audit.py, tools/story_export.py, tools/plot_compile.py
+- IW-Tools.txt: Python tools and their guides, for models that can run code. Files: tools/Usage.md, tools/validate_iw_export.py, tools/static_checks.py, tools/iw-export.schema.json, tools/data_bank.py, tools/import_audit.py, tools/story_export.py, tools/plot_compile.py
 Every file is also available individually: https://iw-builder.github.io/llms.txt
 
 ===== BEGIN FILE: reference/Schema.md =====
 # Infinite Worlds export reference
 
-Compatibility and evidence scope: [Evidence.md](Evidence.md). For an overview of every identified condition and effect, including Change first action and Change other characters, read [Trigger-Catalog](Trigger-Catalog.md) first; this file gives their payloads.
+Compatibility baseline and evidence labels: [Verified-Behavior.md](Verified-Behavior.md). For an overview of every identified condition and effect, including Change first action and Change other characters, read [Trigger-Catalog](Trigger-Catalog.md) first; this file gives their payloads.
 
 This reference describes arbitrary IW worlds. The schema and validator contain no required action engine, region graph, game-specific trackers, inventory rules, scores or narrative-control framework. Optional features remain optional. The authoring prompt explains how to choose features for the user's idea.
 
@@ -49,6 +49,10 @@ Structural errors are returned before reference traversal; fix them and rerun. E
 
 These groups map purpose; not every UI label corresponds one-to-one to a field. `recommendedAIModel` is obsolete/export-only with no current editor selector; keep it null if retained. `driftAcknowledgedForName` is editor metadata for the variable-name mismatch alert, not a script alias; see [Trackers.md](Trackers.md). Metadata is not story context: put necessary instructions in AI-facing fields. schemaVersion is visible in raw JSON; it is not an application release number.
 
+## Identifiers
+
+Tracker IDs, display names and PawScript variable names serve different purposes: native effects and conditions target the tracker `id`, scripts use `variableName`, and users see `name`. Preserve existing IDs when editing. For new trackers, use a unique nine-character ASCII alphanumeric ID, the editor-style form used by the import-tested examples; IDs containing punctuation, spaces or accents are regenerated on import while their references are not remapped. Use explicit descriptive snake_case variableName values in scripts and descriptive display names in the editor. This is the kit's authoring convention, not a claim that other ID formats are invalid. Generate IDs in code and check collisions; without tools, check each newly introduced ID and reference manually. New triggers, blocks and PCs can use the same convention. When combining worlds, remap every explicit reference consistently and validate the result.
+
 ## Trackers
 
 Tracker definitions use an ID, display name, explicit variableName, dataType, visibility, initial-value fields and optional AI-update/format instructions. Use unique IDs and variable names; a variable name is not a target ID. Ownership, visibility behavior, memory and name/handle drift are covered in [Trackers.md](Trackers.md).
@@ -69,13 +73,13 @@ visibility values: everyone, player_only, ai_only, ai_only_boring, hidden, hidde
 |Character-defined script selection|Same per-PC entry with initialPCValue empty and initialPCValueChoicesScript string|Script generates that character's choices at startup|
 |Player-defined selection|Tracker initialValueBasedOnPC player, initialValue string, initialValueChoices array of strings|Player chooses a startup preference independently of PC-specific values|
 
-The optional-block export supplies the concrete player form: initialValue On, initialValueChoices [On, Off], player mode and autoUpdate false. Those are tracker-level fields; do not put this list into a per-PC initialTrackedItemValues entry unless the character-defined mode is intended. A live change later (through the Storyteller-mode tracker editor) affects the following turn.
+The optional-block example (../examples/optional-block.json) shows the player form: initialValue On, initialValueChoices [On, Off], player mode and autoUpdate false. Those are tracker-level fields; do not put this list into a per-PC initialTrackedItemValues entry unless the character-defined mode is intended. A live change later (through the Storyteller-mode tracker editor) affects the following turn.
 
 Per the editor, script choices are evaluated at game start from initial tracker values, including that character's values and skills. Conflicting combinations of initialization fields, and player-mode controls for unconstrained input types, are not established; request a targeted export if that variation matters.
 
 ## Conditions
 
-A condition node is either a leaf (`category: "condition"` with type and data) or a logic group (`category: "logic"`, operator and a data array of child nodes; operators and, or, none_of). Normal condition lists are AND. Every node needs category, type and id. IDs are opaque, and importer preservation is entity-specific: use ASCII alphanumeric IDs for new trackers ([Import-Integrity.md](Import-Integrity.md)). Field case matters: trackedItemID, targetTrackedItemId and characterId are different native spellings.
+A condition node is either a leaf (`category: "condition"` with type and data) or a logic group (`category: "logic"`, operator and a data array of child nodes; operators and, or, none_of). Normal condition lists are AND. Every node needs category, type and id. IDs are opaque, and importer preservation is entity-specific: use ASCII alphanumeric IDs for new trackers (see Identifiers above). Field case matters: trackedItemID, targetTrackedItemId and characterId are different native spellings.
 
 |type|data shape and intent|
 |-|-|
@@ -94,7 +98,7 @@ PawScript conditions are an option when useful, not a requirement to replace nat
 
 For Number trackers, `inequality` selects is_exactly, at_least, not_equal or at_most. For Text trackers, `textComparison` selects contains or does_not_contain. Do not extrapolate other comparison strings. Exports may retain both fields; they are not two simultaneous predicates. Numeric conditions natively carry `textComparison: "contains"`; if it is missing or empty, the condition is dropped from the export and the trigger loses that gate. Text Contains matching is ASCII case-insensitive. Native numeric and text controls are type-aware despite text-entry fields. Use PawScript for structured YAML field checks rather than text comparison over a whole document.
 
-Native wrappers can repeat trackedItemID/inequality outside `data`. Precedence is not established and disagreement is an error: keep wrapper and payload consistent, following the supplied export's convention.
+Native wrappers can repeat trackedItemID/inequality outside `data`. Precedence is not established and disagreement is an error: keep wrapper and payload consistent, following the convention of the export you are editing.
 
 ## Effects
 
@@ -105,7 +109,7 @@ Native wrappers can repeat trackedItemID/inequality outside `data`. Precedence i
 |effectTellAIWhatToDo|Guidance STRING influencing subsequent narration; not a state mutation or guaranteed repair|
 |effectGiveInfo|AI background-information STRING; distinct from player output. Ignored with Start of Game enabled ([Triggers.md](Triggers.md))|
 |effectSetTrackedItemValue|Object with trackedItemID, action, newValue, replaceWith, path, updateMode, listExpression, targetExpression; see Native value effects|
-|effectModifyTrackedItemDetails|Changes Name, description, visibility, automatic updating and update instructions; a value changes only when its matching override boolean is true. See [Trigger-Catalog.md](Trigger-Catalog.md#changing-automatic-updating)|
+|effectModifyTrackedItemDetails|Changes Name, description, visibility, automatic updating and update instructions; a value changes only when its matching override boolean is true. See [Triggers.md](Triggers.md#changing-a-trackers-definition-during-play)|
 |effectModifyInstructionBlock|`{id: instruction-block-ID, content: text}`; template timing in [Capabilities.md](Capabilities.md)|
 |effectModifyKeywordBlock|`{id: keyword-block-ID, keywords: string-array, content: text}`|
 |effectPresentChoice / effectRequestInput|Native forms; see Choice and input forms|
@@ -132,9 +136,9 @@ Other schema-defined effects change PC name/description, objective, main instruc
 |listExpression / targetExpression|Empty in current exports; preserve when importing, but do not use them to invent an unsupported editor workflow|
 |replaceWith|Always serialize, as "" when unused. An effect missing it was associated with the game failing at the opening|
 
-Text adds accumulate and preserve literal quotation marks; text removal removes all matching occurrences. Repeated numeric writes within one trigger behave differently ([Triggers.md](Triggers.md)). The cookbook supplies separate native text and number examples.
+Text adds accumulate and preserve literal quotation marks; text removal removes all matching occurrences. Repeated numeric writes within one trigger behave differently ([Triggers.md](Triggers.md)). [Payloads.md](../examples/Payloads.md) has separate native text and number examples.
 
-The YAML editor offers Replace Value, Path, and "Do Something Complicated" (which directs authors to Run Script); there is no separate List Update workflow. Path offers Set a Value, Remove Value, Add to a list and Change Number By. Set uses YAML text with optional `<<...>>` interpolation, including whole-structure injection. Add to a list exports action append, Remove Value action remove, and Change Number By action adjust, all with updateMode path. Do not confuse these YAML operations with native text subtract or numeric add/subtract. Path fields are unchecked editor inputs: review target structure and operation together ([Import-Integrity.md](Import-Integrity.md)).
+The YAML editor offers Replace Value, Path, and "Do Something Complicated" (which directs authors to Run Script); there is no separate List Update workflow. Path offers Set a Value, Remove Value, Add to a list and Change Number By. Set uses YAML text with optional `<<...>>` interpolation, including whole-structure injection. Add to a list exports action append, Remove Value action remove, and Change Number By action adjust, all with updateMode path. Do not confuse these YAML operations with native text subtract or numeric add/subtract. Path fields are unchecked editor inputs: review target structure and operation together ([Editor-UI.md](Editor-UI.md#import-export-and-preserving-work)).
 
 Adding one list member is different from updating every member. To refill each character's HP, use a script:
 
@@ -153,7 +157,7 @@ Request Input uses requestText, targetTrackedItemId, inputMode (single or multi)
 
 [RUNTIME] Correctly bound single-answer forms work: narration streams, the inline form waits for submission, the target tracker updates immediately, and following triggers can fire in the same turn. The tested follow-up message renders above the question/answer receipt; placement does not imply execution before submission. Required forms offer no cancellation. Multiple-choice bounds constrain selection, and newline-delimited answers are stored as text, not a YAML list. Optional blank input clears its destination while preserving sibling keys; required blank input is rejected. Multiline and nested-path writes preserve line breaks. Other delimiter variants are untested.
 
-Binding must be correct: targetTrackedItemId must name the intended tracker, using an empty path for whole-value targeting. The supplied single-choice world keeps its IDs and binding through a fresh import. Check bindings after import ([Import-Integrity.md](Import-Integrity.md)).
+Binding must be correct: targetTrackedItemId must name the intended tracker, using an empty path for whole-value targeting. Check bindings after import ([Editor-UI.md](Editor-UI.md#import-export-and-preserving-work)).
 
 ## Authoring context
 
@@ -165,11 +169,9 @@ Skill levels in possibleCharacters are integers from 0 through 5. The editor-pro
 
 Do not invent image URLs, data-URI support or preset identifiers. Image style fields can require editor save/reload before their export reflects changes. Preview strings can persist with no attached image; empty settings can auto-populate. Preserve intentional whitespace rather than inventing default strings. Nonempty portrait metadata has string fields for appearance, clothes, expression/position and setting.
 
-Import/export steps are in [Editor-UI.md](Editor-UI.md); the trailing-newline issue is an importer quirk, not invalid JSON. Base worlds and live games are separate copies ([Import-Integrity.md](Import-Integrity.md)).
+Import/export steps and live copies are in [Editor-UI.md](Editor-UI.md); the trailing-newline issue is an importer quirk, not invalid JSON.
 
-## Remaining limits
-
-The profile does not establish every importer-required field, future vocabularies or presets, all path/list-expression targeting modes, initialization-field precedence, random-dispatch duplicate weighting, skill slug normalization, or a general performance/trigger limit. Collect targeted evidence only when a design needs one of these. None of this requires imposing a restrictive architecture on ordinary worlds.
+The profile does not establish every importer-required field, all path/list-expression targeting modes, initialization-field precedence, random-dispatch duplicate weighting or skill slug normalization; see the unresolved list in [Notable-Findings.md](Notable-Findings.md#still-unknown).
 
 ---
 
@@ -201,7 +203,7 @@ Win path: <=choose($win_path, "escape", "Find the hidden exit before dawn.", "ex
 
 When the effect installs this text, the deferred reference is kept rather than resolved, so the block describes the current `win_path` each time it is prepared. Written as `<<choose(...)>>`, it would freeze when the effect ran. In the JSON export the inner quotation marks are escaped as `\"`.
 
-`<<=...=>>` stays literal despite the editor's highlighting ([Editor-UI.md](Editor-UI.md)). Trackers: see Verified-Behavior.md.
+`<<=...=>>` stays literal despite the editor's highlighting ([Editor-UI.md](Editor-UI.md)); what happens when a tracker is set to a deferred reference is in [Verified-Behavior.md](Verified-Behavior.md).
 
 PawScript cannot write arbitrary world fields, including background or instruction-block content, or invoke native trigger effects. Calculate or assemble content in trackers, then use native effects to install it or display messages. Templates do not expand write permissions. `$player` and `$game` are read-only; do not infer writability from a field being readable.
 
@@ -459,7 +461,7 @@ This guide covers common authoring and teaching needs, not every function. Use t
 - [Writing scripts](https://infiniteworlds.app/pawscript-script-guide)
 - [YAML guide](https://infiniteworlds.app/yaml-guide)
 
-The language tables include officially documented operations beyond the kit's runtime-tested examples. A new composition still needs appropriate testing; see [Known-Limits.md](Known-Limits.md).
+The language tables include officially documented operations beyond the kit's runtime-tested examples. A new composition still needs appropriate testing; what remains unresolved is listed in [Notable-Findings.md](Notable-Findings.md#still-unknown).
 
 ---
 
@@ -470,7 +472,7 @@ END OF DOCUMENT: reference/PawScript.md
 ===== BEGIN FILE: reference/Capabilities.md =====
 # IW capability reference
 
-Use Evidence.md for the shared evidence legend and compatibility baseline. Known-Limits.md lists the remaining platform boundaries.
+Evidence labels and the compatibility baseline are in [Verified-Behavior.md](Verified-Behavior.md); what remains unresolved is listed in [Notable-Findings.md](Notable-Findings.md#still-unknown).
 
 ## Turn lifecycle [RUNTIME]
 
@@ -492,7 +494,7 @@ flowchart TD
 - Scenario judgments must be available for their trigger checks, but their exact stage relative to Evaluation, narration and tracker updates is not mapped.
 - Messages belong to their effects; they need not be a single final batch after all triggers. Choice/input effects can suspend for a player answer. Correctly bound single-answer forms update immediately and permit later triggers to read the answer in the same turn.
 - Guidance and block changes do not rewrite already-generated narration. Updates supply context for subsequent generation. When guidance effects conflict, the first tends to win; generate one coherent directive instead.
-- Summary generation is a separate context-maintenance process. Compression follows a six-turn cadence beginning at turn eight (user-confirmed); its ordering relative to other turn stages is not established.
+- Summary generation is a separate context-maintenance process (compression from about turn eight, then every six turns); its ordering relative to other turn stages is not established.
 
 Timing flags (Start, Mid Game, repeat), prerequisites and blockers are covered in [Triggers.md](Triggers.md).
 
@@ -504,7 +506,7 @@ Keep at least one skill. For generated JSON, use `hideSkillSystem: false` when S
 
 PawScript exposes `$player.skills`, `$player.skills_and_levels`, `$game.skill_map`, `$game.skill_list`, `$game.skill_example`, `$game.difficulty_list` and `$game.difficulty_example`. The skill map connects runtime slugs to display names. The documented difficulty names are Trivial, Easy, Medium, Hard and Legendary; use the supplied runtime list when rendering prompts rather than inventing numerical modifiers. Official documentation describes a default level of 3 for skills not raised. Explicitly initialize authored PC levels rather than depending on that fallback. Do not invent slug normalization for punctuation-heavy names. [PawScript reference](https://infiniteworlds.app/pawscript-reference)
 
-Native `effectChangePCSkill` uses the declared display name. `amount` is an integer magnitude; `increase: true` increases toward `minmax` as an upper cap; false decreases toward it as a lower bound. Two successive triggers increasing a level initially 2 by 2 up to 4, then by 1 up to 4, finish at 4. This differs from adding both increments and applying no intermediate cap. The included probe also checks decreases and boundary cases.
+Native `effectChangePCSkill` uses the declared display name. `amount` is an integer magnitude; `increase: true` increases toward `minmax` as an upper cap; false decreases toward it as a lower bound. Two successive triggers increasing a level initially 2 by 2 up to 4, then by 1 up to 4, finish at 4: each effect caps, rather than both increments adding before one cap. ../examples/probe-skills.json exercises increases, decreases and boundary cases.
 
 Skill levels are fixed integers from 0 through 5. The AI selects the available skill whose name best matches the attempted action; name skills so their scope is clear.
 
@@ -512,7 +514,7 @@ Skill levels are fixed integers from 0 through 5. The AI selects the available s
 
 Use actual numeric skill values for mechanical checks. Generated skill labels and Evaluation descriptions can disagree with those values; a prose description is not authoritative numeric state.
 
-The baseline was captured from the custom-Evaluation editor's prefilled text. The test used that text explicitly. The Script Library's Storymaster override defines its own caveat labels; keep it distinct from the baseline.
+The baseline is the custom-Evaluation editor's prefilled text. The Script Library's Storymaster override defines its own caveat labels; keep it distinct from the baseline.
 
 ## NPC cards and keyword blocks
 
@@ -533,11 +535,11 @@ NPC field/activation guidance is [DOCUMENTED]; the stated plain-word keyword mat
 
 IW permits a character among both player choices and Other Characters under the same name. The selected player can retrieve information from that entry, but internal identity merging/exclusion is not visible. Unchosen player options are not NPCs unless also added as Other Characters. Author the intended relationship explicitly where it matters. PC/NPC conversion is available in Data mode: preserve the source and map relevant fields into the destination type, rather than relabeling the native object.
 
-Only Name is required in the NPC editor. Storytelling and image information have independent optional sections; do not infer their serialized enable flags from the UI alone. The storytelling help states that the brief summary is the only character information available to the storyteller until the turn after the character or their location is first mentioned. Characters can activate by name with no location. Put essential information in one_liner and repeat it in detail. Detail retrieval is unreliable: a name-only mention did not surface an authored hobby on two turns, the narrator invented one, and history then repeated the invention. Put facts that must surface in the Summary or always-on text, and correct a wrong invented detail early by editing the turn. The narrator can also introduce named NPCs into an opening that says the player is alone. Location is a short starting location (editor asks for no more than two words). Full list of names accepts comma-separated variants in the editor; preserve the export's names representation. Image appearance/clothing guide the image AI and can be inspected using the wrench under a character image. Mentioning footwear can encourage full-body framing, per editor help.
+Only Name is required in the NPC editor. Storytelling and image information have independent optional sections; do not infer their serialized enable flags from the UI alone. The storytelling help states that the brief summary is the only character information available to the storyteller until the turn after the character or their location is first mentioned. Characters can activate by name with no location. Detail retrieval is unreliable even then, and the narrator can invent a substitute that history then repeats, or introduce named NPCs into an opening that says the player is alone. Put facts that must surface in one_liner or always-on text and repeat them in detail; correct a wrong invented detail early by editing the turn. For an opening scene, do not depend on keyword or card activation at all: there may be no prior context to activate them, so put essential opening facts in firstInput or always-on instructions and give starting NPCs useful brief summaries without duplicating their entire cards. Location is a short starting location (editor asks for no more than two words). Full list of names accepts comma-separated variants in the editor; preserve the export's names representation. Image appearance/clothing guide the image AI and can be inspected using the wrench under a character image. Mentioning footwear can encourage full-body framing, per editor help.
 
 NPC activation and static character context are not exposed in World Debug. The editor help supplies the activation guidance above; debug cannot verify a card's activation window. Secret fields are not a guaranteed protection against narrative leaks.
 
-Keyword entries have id, name, keywords (string array), and content. Choose distinct phrases and relevant aliases; broad terms such as "man" can activate irrelevant lore. They load through mention/context matching, rather than deterministic location checks. Matching is case-insensitive and whole-word: quartzbadger and QUARTZBADGER match; prequartzbadgerpost does not. A match keeps the block active on the matching turn and three additional turns: a turn-3 match remains active on turn 6 and is inactive on turn 7 unless another match occurs. These input cases and retention were checked through debug. Surrounding punctuation and alternate authored keywords can match; embedded substrings and a simple plural did not. Completed narration and Secret Info can contribute to later activation. The complete tokenizer, arbitrary multiword behavior and full set of scanned fields remain unresolved. Do not invent matching operators or regex syntax. A short persistent rule can be always-on while its detailed lore remains keyword-triggered.
+Keyword entries have id, name, keywords (string array), and content. Choose distinct phrases and relevant aliases; broad terms such as "man" can activate irrelevant lore. They load through mention/context matching, rather than deterministic location checks. Matching is case-insensitive and whole-word: quartzbadger and QUARTZBADGER match; prequartzbadgerpost does not. A match keeps the block active on the matching turn and three additional turns: a turn-3 match remains active on turn 6 and is inactive on turn 7 unless another match occurs. Surrounding punctuation and alternate authored keywords can match; embedded substrings and a simple plural do not. Completed narration and Secret Info can contribute to later activation. The complete tokenizer, arbitrary multiword behavior and full set of scanned fields remain unresolved. Do not invent matching operators or regex syntax. A short persistent rule can be always-on while its detailed lore remains keyword-triggered. Choose NPC cards, keyword blocks and always-on blocks by intended activation, not by habit: do not make every location or character dynamically loaded unless the world benefits, and remember that native character/image bookkeeping may matter even when the narrative could be described in an ordinary block.
 
 ## Specialist requests and runtime outputs
 
@@ -550,7 +552,7 @@ Keyword entries have id, name, keywords (string array), and content. Choose dist
 
 Editor help says Evaluation outputs guide AI thinking; SUCCESS/FAILURE are not special control tokens. These are instructions, not executable hooks. Writing SUCCESS in Evaluation does not itself fire a custom trigger. Replacing a default request with a large custom framework can change its responsibilities; inspect dependencies rather than copying only one field.
 
-To shorten narration, append to authorStyle: "The outcomeDescription must be at most 2 short paragraphs and no more than 90 words. This is a maximum, not a target, and overrides any other length instruction." Output lands near the number, sometimes 10–20% over. The same text in descriptionRequest is weaker. Lengthening is not established.
+To shorten narration, append to authorStyle: "The outcomeDescription must be at most 2 short paragraphs and no more than 90 words. This is a maximum, not a target, and overrides any other length instruction." Output lands near the number, sometimes 10–20% over. The same text in descriptionRequest is weaker. Lengthening is not established. Narration renders ordinary Markdown; raw HTML renders as literal text, so do not promise HTML/CSS styling, and test headers or special formatting in their actual display context.
 
 Runtime names referenced by the sample library:
 
@@ -567,7 +569,7 @@ Runtime names referenced by the sample library:
 | illustrAppearance / illustrClothes / illustrExpressionPosition / illustrSetting | Visual descriptors |
 | stateVariablesUpdates | Tracker-update output concept; do not hand-invent its native wire format |
 
-This is a useful inventory from the supplied library, not a complete public output schema. Fields mentioned in instructions are not automatically template variables, writable script roots, or valid new export keys. Model instructions can influence output but cannot create engine capabilities.
+This is an inventory of names the sample library refers to, not a complete public output schema. Fields mentioned in instructions are not automatically template variables, writable script roots, or valid new export keys; secretInfo, outcomeDescription, whereWhen and the option texts are runtime output concepts, not new root export fields. Their intended use can be described in instructions and specialist requests: secretInfo can legitimately hold secrets, planning and off-screen developments, and the Storymaster family structures it explicitly, so do not impose an empty-secretInfo policy or a reset system unless a world's design asks for it. Its contents remain generated text, not direct access to an engine memory store. Model instructions can influence output but cannot create engine capabilities.
 
 ## Template interpolation [RUNTIME]
 
@@ -615,22 +617,21 @@ The old illustrationStyle*LowPriority/HighPriority fields still occur in exports
 
 Dedicated Other Character image appearance/clothing can populate image details independently of narrative appearance. Edits affect generated images and can be reversed; alias-related clothing drift is possible.
 
-PC portraitPromptDetails holds four strings: illustrAppearance, illustrClothes, illustrExpressionPosition and illustrSetting. The cookbook supplies an example. Image generation/upload produces asset references; those references belong in portrait/preview fields. Cover Image script produces a **prompt**, not an asset URL. Use it in the image workflow, then select/upload the result as the world preview and export the resulting metadata. Do not paste a prose prompt into previewImage.
+PC portraitPromptDetails holds four strings: illustrAppearance, illustrClothes, illustrExpressionPosition and illustrSetting. [Payloads.md](../examples/Payloads.md) has an example. Image generation/upload produces asset references; those references belong in portrait/preview fields. Cover Image script produces a **prompt**, not an asset URL. Use it in the image workflow, then select/upload the result as the world preview and export the resulting metadata. Do not paste a prose prompt into previewImage.
 
 Resolve bracketed image-style slots as deliberate choices. Remove unselected choices and incidental sexualized defaults unless they match the requested audience/style. Preserve neutral medium, composition, lighting and identity guidance. Avoid mixing contradictory medium/style lists simply because the source offers them.
 
-videoPromptInstructions has videoPlan, videoImagePosition and videoPrompt strings. The library uses videoPlan to choose a beat, videoImagePosition to choose start/end anchoring, and videoPrompt to describe the clip. Its `$videoDuration` and `$videoStyle` references are video-context dependencies, not declared trackers in that library and not documented global PawScript roots. Confirm their availability through the video editor/debug context before adopting the sample unchanged. No video-enabled runnable example is claimed until that capture exists.
+videoPromptInstructions has videoPlan, videoImagePosition and videoPrompt strings. The library uses videoPlan to choose a beat, videoImagePosition to choose start/end anchoring, and videoPrompt to describe the clip. Its `$videoDuration` and `$videoStyle` references are video-context dependencies, not declared trackers in that library and not documented global PawScript roots. Confirm their availability through the video editor/debug context before adopting the sample unchanged; the kit has no video-enabled runnable example.
 
-Enable model selection per world under Show optional features > Misc advanced features > Enable AI-specific instruction blocks. Selected block models serialize in selectedAIProfiles. All-model blocks remain active while selected-model blocks follow the active model. Current-AI-Profiles.json lists each storyteller model's ID, underlying real-world model, isCurrent flag and typical credits per turn, including retired models (dated October 26, 2026; the community wiki is the live source). It is not a validator enum: accept arbitrary historical IDs and preserve imported selections.
+Enable model selection per world under Show optional features > Misc advanced features > Enable AI-specific instruction blocks. Selected block models serialize in selectedAIProfiles. All-model blocks remain active while selected-model blocks follow the active model. Current-AI-Profiles.json lists each storyteller model's ID, underlying real-world model, isCurrent flag and typical credits per turn, including retired models, as of the date it records; models retire every few months. It is not a validator enum: accept arbitrary historical IDs and preserve imported selections.
 
 Disabling this editor option removes selectedAIProfiles from exported blocks and hides their controls. The still-open editor temporarily remembers choices if re-enabled, but that memory does not survive closing it. Do not treat disabling as a durable reversible runtime switch or promise that exporting while disabled preserves selections. A block name alone does not select models. Whether the choices are fetched live is an inference; their exact source is unnecessary for authoring.
 
 ## Current-game editing and debug boundaries
-Live copies and what editing them changes are covered in [Import-Integrity.md](Import-Integrity.md). Debug shows keyword-block active/inactive state and its keywords, but not the matched keyword, activation turn or remaining retention. It does not expose NPC activation or static character information. A live-world JSON export can retain the tracker's initialValue despite a successful runtime change; inspect current tracker data for current values.
 
+Live copies and what editing them changes are covered in [Editor-UI.md](Editor-UI.md#import-export-and-preserving-work). Debug shows keyword-block active/inactive state and its keywords, but not the matched keyword, activation turn or remaining retention. It does not expose NPC activation or static character information. A live-world JSON export can retain the tracker's initialValue despite a successful runtime change; inspect current tracker data for current values.
 
-For temporary instruction-block installation with a retained result, see [on-demand generation](Recipes.md#dynamic-content). Generation happens after installation; cleanup checks the request identity and completion rather than assuming the next turn succeeded. This pattern is useful only when omitted instruction context justifies result-storage and update costs.
-
+For temporary instruction-block installation with a retained result, see [on-demand generation](Recipes.md#dynamic-content).
 
 [Editor-UI](Editor-UI.md) contains exact workflow distinctions; [Verified-Behavior](Verified-Behavior.md) consolidates tested results.
 
@@ -657,10 +658,10 @@ These are independent recipes. Select, adapt or omit them; none is a required wo
 
 **Conditional instruction content.** Use a native block-modification effect to add/replace/clear instructions. The source may be fixed text in the effect or text prepared in a tracker by an earlier script trigger. This can control optional image guidance, pacing, prose detail, character behavior or any relevant block. A script changes tracker values; the native effect changes the instruction block. Keep the block ID stable when disabling content so later re-enabling still targets a real block.
 
-**Player-optional block, with no repeated writes.** The companion optional example distills the supplied native demonstration:
+**Player-optional block, with no repeated writes.** The pattern in ../examples/optional-block.json:
 
 1. A player-only text preference has initialValueBasedOnPC player, initialValue On or Off, initialValueChoices [On, Off], autoUpdate false. The player picks it at startup; later changes need the Storyteller-mode tracker editor.
-2. A hidden non-AI-updated text tracker records which choice has actually been applied. It is a cache, not another player preference. hidden_boring is used by the source example.
+2. A hidden non-AI-updated text tracker (hidden_boring in the example) records which choice has actually been applied. It is a cache, not another player preference.
 3. A repeatable enabling trigger requires preference On AND cache not Enabled. It writes the enabled block content, then records Enabled.
 4. A repeatable disabling trigger requires preference Off AND cache not Disabled. It writes empty content, or a deliberately chosen simpler fallback, then records Disabled.
 5. Enable opening and later execution where needed. Initialize the cache empty so the selected startup choice gets applied. Once synchronized, neither trigger fires until the preference changes.
@@ -673,13 +674,10 @@ Player-visible preference trackers may be hidden from the storyteller; the trigg
 
 **Time and location: a soft default.** Offer the sample's Time and Location (whereWhen) block unless the premise makes a clock/location header unhelpful. Writing the current place and time each turn helps IW maintain chronology and gives the player a reference. Adapt the geography, calendar and precision to the setting; omit irrelevant levels rather than inventing a country or continent. Put exactly one header at the beginning of outcomeDescription, not a second competing heading. This is guidance for runtime output, not a new JSON root field.
 
-**NPCs and keyword blocks.** Native NPC cards provide structured character data and name activation. Keyword blocks load relevant lore based on mentions and recent context. Always-on blocks provide universal guidance. Choose by intended activation, not by habit; do not make all locations or characters dynamically loaded unless the world benefits. Native character/image bookkeeping may matter even when the narrative could be described in a normal block. For an opening scene, do not depend solely on keyword activation: there may be no prior context to activate a card or block. Put essential opening facts in firstInput or always-on instructions and give starting NPCs useful brief summaries. Avoid duplicating their entire cards.
-
-secretInfo, outcomeDescription, whereWhen and option1_text/option2_text/option3_text are runtime output concepts, not arbitrary new root export fields. Their intended use can be described in instructions and specialist requests. secretInfo can legitimately contain secrets, planning and off-screen developments in narrative worlds; the Storymaster family explicitly structures it. Do not impose an empty-secretInfo policy or a reset system unless requested by that world's design. Its contents and purported "memory dumps" remain generated text, not direct access to an engine memory store.
-
-Use ordinary Markdown formatting where appropriate. Tests showed raw span HTML rendered literally, so do not promise arbitrary HTML/CSS styling. Header behavior and special output formatting should be tested in their actual display context. An inline-code style is a platform-rendered style, not a general color API.
+**NPCs, keyword blocks and always-on blocks** are chosen by intended activation; see the NPC and keyword section of [Capabilities.md](Capabilities.md#npc-cards-and-keyword-blocks).
 
 ## Dynamic content
+
 Native block-modification effects substitute ordinary `<<...>>` templates when the content is installed. For live values, write deferred `<=...=>` references in the installed text, use a separate permanent block, or reinstall content when the relevant values change. A block reinstalled every turn freezes values when its trigger runs, so values set by triggers below it arrive a turn late: order producers above the installer, or use `<=...=>`. See Capabilities.md for the interpolation table.
 
 **Player-selected layered openings.** Combine independent choices into meaningful variations using ordered text replacements, then install the result as background. This avoids authoring every full combination; keep fragments compatible and add combination-specific handling where needed. See [layered opening](../examples/recipe-layered-opening.json).
@@ -727,9 +725,9 @@ These optional complete worlds compose known primitives. Do not replace a world'
 | [Cached random](../examples/recipe-cached-random.json) | One trigger samples once and both blocks read the stored roll. Before that trigger runs the initial value is 0; reset ready to 0 only when a new draw is intended. This is not a guarantee of same-turn narrative visibility. |
 | [Consumed milestone](../examples/recipe-consumed-timer.json) | Increment turn time before checking ticks >= 3; consume the crossing once. This counts ordinary eligible trigger cycles, not elapsed story time. Resetting only the consumed flag permits another award. |
 | [Choice domain](../examples/recipe-choice-domain.json) | Accept only Courier or Archivist at consumption. Blank offers the form again; unexpected manual/script values do not commit. Multiple selections need their own delimiter/representation validation. |
-| [Compiled plot](../examples/recipe-compiled-plot.json) | Literal Scenarios with ordered prerequisites and guarded awards. See [plot compiler](Engineering-Tools.md). |
+| [Compiled plot](../examples/recipe-compiled-plot.json) | Literal Scenarios with ordered prerequisites and guarded awards. See the plot compiler in [tools/Usage.md](../tools/Usage.md#plot-compiler). |
 
-The validator's review advisories cover repeat accumulation, separate script transaction boundaries, computed choice domains, multiple-choice storage and independently evaluated random expressions. They are prompts to inspect intent, never hard prohibitions or proof that a guard is missing. Existing guards can legitimately trigger a review notice. Choice menus and Enforce format do not validate all manual/script write paths.
+The validator's review advisories (repeat accumulation, script transaction boundaries, choice domains, multiple-choice storage, independent random expressions) are prompts to inspect intent, not proof that a guard is missing; see [tools/Usage.md](../tools/Usage.md). Choice menus and Enforce format do not validate all manual/script write paths.
 
 ---
 

@@ -1,6 +1,6 @@
 # IW capability reference
 
-Use Evidence.md for the shared evidence legend and compatibility baseline. Known-Limits.md lists the remaining platform boundaries.
+Evidence labels and the compatibility baseline are in [Verified-Behavior.md](Verified-Behavior.md); what remains unresolved is listed in [Notable-Findings.md](Notable-Findings.md#still-unknown).
 
 ## Turn lifecycle [RUNTIME]
 
@@ -22,7 +22,7 @@ flowchart TD
 - Scenario judgments must be available for their trigger checks, but their exact stage relative to Evaluation, narration and tracker updates is not mapped.
 - Messages belong to their effects; they need not be a single final batch after all triggers. Choice/input effects can suspend for a player answer. Correctly bound single-answer forms update immediately and permit later triggers to read the answer in the same turn.
 - Guidance and block changes do not rewrite already-generated narration. Updates supply context for subsequent generation. When guidance effects conflict, the first tends to win; generate one coherent directive instead.
-- Summary generation is a separate context-maintenance process. Compression follows a six-turn cadence beginning at turn eight (user-confirmed); its ordering relative to other turn stages is not established.
+- Summary generation is a separate context-maintenance process (compression from about turn eight, then every six turns); its ordering relative to other turn stages is not established.
 
 Timing flags (Start, Mid Game, repeat), prerequisites and blockers are covered in [Triggers.md](Triggers.md).
 
@@ -34,7 +34,7 @@ Keep at least one skill. For generated JSON, use `hideSkillSystem: false` when S
 
 PawScript exposes `$player.skills`, `$player.skills_and_levels`, `$game.skill_map`, `$game.skill_list`, `$game.skill_example`, `$game.difficulty_list` and `$game.difficulty_example`. The skill map connects runtime slugs to display names. The documented difficulty names are Trivial, Easy, Medium, Hard and Legendary; use the supplied runtime list when rendering prompts rather than inventing numerical modifiers. Official documentation describes a default level of 3 for skills not raised. Explicitly initialize authored PC levels rather than depending on that fallback. Do not invent slug normalization for punctuation-heavy names. [PawScript reference](https://infiniteworlds.app/pawscript-reference)
 
-Native `effectChangePCSkill` uses the declared display name. `amount` is an integer magnitude; `increase: true` increases toward `minmax` as an upper cap; false decreases toward it as a lower bound. Two successive triggers increasing a level initially 2 by 2 up to 4, then by 1 up to 4, finish at 4. This differs from adding both increments and applying no intermediate cap. The included probe also checks decreases and boundary cases.
+Native `effectChangePCSkill` uses the declared display name. `amount` is an integer magnitude; `increase: true` increases toward `minmax` as an upper cap; false decreases toward it as a lower bound. Two successive triggers increasing a level initially 2 by 2 up to 4, then by 1 up to 4, finish at 4: each effect caps, rather than both increments adding before one cap. ../examples/probe-skills.json exercises increases, decreases and boundary cases.
 
 Skill levels are fixed integers from 0 through 5. The AI selects the available skill whose name best matches the attempted action; name skills so their scope is clear.
 
@@ -42,7 +42,7 @@ Skill levels are fixed integers from 0 through 5. The AI selects the available s
 
 Use actual numeric skill values for mechanical checks. Generated skill labels and Evaluation descriptions can disagree with those values; a prose description is not authoritative numeric state.
 
-The baseline was captured from the custom-Evaluation editor's prefilled text. The test used that text explicitly. The Script Library's Storymaster override defines its own caveat labels; keep it distinct from the baseline.
+The baseline is the custom-Evaluation editor's prefilled text. The Script Library's Storymaster override defines its own caveat labels; keep it distinct from the baseline.
 
 ## NPC cards and keyword blocks
 
@@ -63,11 +63,11 @@ NPC field/activation guidance is [DOCUMENTED]; the stated plain-word keyword mat
 
 IW permits a character among both player choices and Other Characters under the same name. The selected player can retrieve information from that entry, but internal identity merging/exclusion is not visible. Unchosen player options are not NPCs unless also added as Other Characters. Author the intended relationship explicitly where it matters. PC/NPC conversion is available in Data mode: preserve the source and map relevant fields into the destination type, rather than relabeling the native object.
 
-Only Name is required in the NPC editor. Storytelling and image information have independent optional sections; do not infer their serialized enable flags from the UI alone. The storytelling help states that the brief summary is the only character information available to the storyteller until the turn after the character or their location is first mentioned. Characters can activate by name with no location. Put essential information in one_liner and repeat it in detail. Detail retrieval is unreliable: a name-only mention did not surface an authored hobby on two turns, the narrator invented one, and history then repeated the invention. Put facts that must surface in the Summary or always-on text, and correct a wrong invented detail early by editing the turn. The narrator can also introduce named NPCs into an opening that says the player is alone. Location is a short starting location (editor asks for no more than two words). Full list of names accepts comma-separated variants in the editor; preserve the export's names representation. Image appearance/clothing guide the image AI and can be inspected using the wrench under a character image. Mentioning footwear can encourage full-body framing, per editor help.
+Only Name is required in the NPC editor. Storytelling and image information have independent optional sections; do not infer their serialized enable flags from the UI alone. The storytelling help states that the brief summary is the only character information available to the storyteller until the turn after the character or their location is first mentioned. Characters can activate by name with no location. Detail retrieval is unreliable even then, and the narrator can invent a substitute that history then repeats, or introduce named NPCs into an opening that says the player is alone. Put facts that must surface in one_liner or always-on text and repeat them in detail; correct a wrong invented detail early by editing the turn. For an opening scene, do not depend on keyword or card activation at all: there may be no prior context to activate them, so put essential opening facts in firstInput or always-on instructions and give starting NPCs useful brief summaries without duplicating their entire cards. Location is a short starting location (editor asks for no more than two words). Full list of names accepts comma-separated variants in the editor; preserve the export's names representation. Image appearance/clothing guide the image AI and can be inspected using the wrench under a character image. Mentioning footwear can encourage full-body framing, per editor help.
 
 NPC activation and static character context are not exposed in World Debug. The editor help supplies the activation guidance above; debug cannot verify a card's activation window. Secret fields are not a guaranteed protection against narrative leaks.
 
-Keyword entries have id, name, keywords (string array), and content. Choose distinct phrases and relevant aliases; broad terms such as "man" can activate irrelevant lore. They load through mention/context matching, rather than deterministic location checks. Matching is case-insensitive and whole-word: quartzbadger and QUARTZBADGER match; prequartzbadgerpost does not. A match keeps the block active on the matching turn and three additional turns: a turn-3 match remains active on turn 6 and is inactive on turn 7 unless another match occurs. These input cases and retention were checked through debug. Surrounding punctuation and alternate authored keywords can match; embedded substrings and a simple plural did not. Completed narration and Secret Info can contribute to later activation. The complete tokenizer, arbitrary multiword behavior and full set of scanned fields remain unresolved. Do not invent matching operators or regex syntax. A short persistent rule can be always-on while its detailed lore remains keyword-triggered.
+Keyword entries have id, name, keywords (string array), and content. Choose distinct phrases and relevant aliases; broad terms such as "man" can activate irrelevant lore. They load through mention/context matching, rather than deterministic location checks. Matching is case-insensitive and whole-word: quartzbadger and QUARTZBADGER match; prequartzbadgerpost does not. A match keeps the block active on the matching turn and three additional turns: a turn-3 match remains active on turn 6 and is inactive on turn 7 unless another match occurs. Surrounding punctuation and alternate authored keywords can match; embedded substrings and a simple plural do not. Completed narration and Secret Info can contribute to later activation. The complete tokenizer, arbitrary multiword behavior and full set of scanned fields remain unresolved. Do not invent matching operators or regex syntax. A short persistent rule can be always-on while its detailed lore remains keyword-triggered. Choose NPC cards, keyword blocks and always-on blocks by intended activation, not by habit: do not make every location or character dynamically loaded unless the world benefits, and remember that native character/image bookkeeping may matter even when the narrative could be described in an ordinary block.
 
 ## Specialist requests and runtime outputs
 
@@ -80,7 +80,7 @@ Keyword entries have id, name, keywords (string array), and content. Choose dist
 
 Editor help says Evaluation outputs guide AI thinking; SUCCESS/FAILURE are not special control tokens. These are instructions, not executable hooks. Writing SUCCESS in Evaluation does not itself fire a custom trigger. Replacing a default request with a large custom framework can change its responsibilities; inspect dependencies rather than copying only one field.
 
-To shorten narration, append to authorStyle: "The outcomeDescription must be at most 2 short paragraphs and no more than 90 words. This is a maximum, not a target, and overrides any other length instruction." Output lands near the number, sometimes 10–20% over. The same text in descriptionRequest is weaker. Lengthening is not established.
+To shorten narration, append to authorStyle: "The outcomeDescription must be at most 2 short paragraphs and no more than 90 words. This is a maximum, not a target, and overrides any other length instruction." Output lands near the number, sometimes 10–20% over. The same text in descriptionRequest is weaker. Lengthening is not established. Narration renders ordinary Markdown; raw HTML renders as literal text, so do not promise HTML/CSS styling, and test headers or special formatting in their actual display context.
 
 Runtime names referenced by the sample library:
 
@@ -97,7 +97,7 @@ Runtime names referenced by the sample library:
 | illustrAppearance / illustrClothes / illustrExpressionPosition / illustrSetting | Visual descriptors |
 | stateVariablesUpdates | Tracker-update output concept; do not hand-invent its native wire format |
 
-This is a useful inventory from the supplied library, not a complete public output schema. Fields mentioned in instructions are not automatically template variables, writable script roots, or valid new export keys. Model instructions can influence output but cannot create engine capabilities.
+This is an inventory of names the sample library refers to, not a complete public output schema. Fields mentioned in instructions are not automatically template variables, writable script roots, or valid new export keys; secretInfo, outcomeDescription, whereWhen and the option texts are runtime output concepts, not new root export fields. Their intended use can be described in instructions and specialist requests: secretInfo can legitimately hold secrets, planning and off-screen developments, and the Storymaster family structures it explicitly, so do not impose an empty-secretInfo policy or a reset system unless a world's design asks for it. Its contents remain generated text, not direct access to an engine memory store. Model instructions can influence output but cannot create engine capabilities.
 
 ## Template interpolation [RUNTIME]
 
@@ -145,22 +145,21 @@ The old illustrationStyle*LowPriority/HighPriority fields still occur in exports
 
 Dedicated Other Character image appearance/clothing can populate image details independently of narrative appearance. Edits affect generated images and can be reversed; alias-related clothing drift is possible.
 
-PC portraitPromptDetails holds four strings: illustrAppearance, illustrClothes, illustrExpressionPosition and illustrSetting. The cookbook supplies an example. Image generation/upload produces asset references; those references belong in portrait/preview fields. Cover Image script produces a **prompt**, not an asset URL. Use it in the image workflow, then select/upload the result as the world preview and export the resulting metadata. Do not paste a prose prompt into previewImage.
+PC portraitPromptDetails holds four strings: illustrAppearance, illustrClothes, illustrExpressionPosition and illustrSetting. [Payloads.md](../examples/Payloads.md) has an example. Image generation/upload produces asset references; those references belong in portrait/preview fields. Cover Image script produces a **prompt**, not an asset URL. Use it in the image workflow, then select/upload the result as the world preview and export the resulting metadata. Do not paste a prose prompt into previewImage.
 
 Resolve bracketed image-style slots as deliberate choices. Remove unselected choices and incidental sexualized defaults unless they match the requested audience/style. Preserve neutral medium, composition, lighting and identity guidance. Avoid mixing contradictory medium/style lists simply because the source offers them.
 
-videoPromptInstructions has videoPlan, videoImagePosition and videoPrompt strings. The library uses videoPlan to choose a beat, videoImagePosition to choose start/end anchoring, and videoPrompt to describe the clip. Its `$videoDuration` and `$videoStyle` references are video-context dependencies, not declared trackers in that library and not documented global PawScript roots. Confirm their availability through the video editor/debug context before adopting the sample unchanged. No video-enabled runnable example is claimed until that capture exists.
+videoPromptInstructions has videoPlan, videoImagePosition and videoPrompt strings. The library uses videoPlan to choose a beat, videoImagePosition to choose start/end anchoring, and videoPrompt to describe the clip. Its `$videoDuration` and `$videoStyle` references are video-context dependencies, not declared trackers in that library and not documented global PawScript roots. Confirm their availability through the video editor/debug context before adopting the sample unchanged; the kit has no video-enabled runnable example.
 
-Enable model selection per world under Show optional features > Misc advanced features > Enable AI-specific instruction blocks. Selected block models serialize in selectedAIProfiles. All-model blocks remain active while selected-model blocks follow the active model. Current-AI-Profiles.json lists each storyteller model's ID, underlying real-world model, isCurrent flag and typical credits per turn, including retired models (dated October 26, 2026; the community wiki is the live source). It is not a validator enum: accept arbitrary historical IDs and preserve imported selections.
+Enable model selection per world under Show optional features > Misc advanced features > Enable AI-specific instruction blocks. Selected block models serialize in selectedAIProfiles. All-model blocks remain active while selected-model blocks follow the active model. Current-AI-Profiles.json lists each storyteller model's ID, underlying real-world model, isCurrent flag and typical credits per turn, including retired models, as of the date it records; models retire every few months. It is not a validator enum: accept arbitrary historical IDs and preserve imported selections.
 
 Disabling this editor option removes selectedAIProfiles from exported blocks and hides their controls. The still-open editor temporarily remembers choices if re-enabled, but that memory does not survive closing it. Do not treat disabling as a durable reversible runtime switch or promise that exporting while disabled preserves selections. A block name alone does not select models. Whether the choices are fetched live is an inference; their exact source is unnecessary for authoring.
 
 ## Current-game editing and debug boundaries
-Live copies and what editing them changes are covered in [Import-Integrity.md](Import-Integrity.md). Debug shows keyword-block active/inactive state and its keywords, but not the matched keyword, activation turn or remaining retention. It does not expose NPC activation or static character information. A live-world JSON export can retain the tracker's initialValue despite a successful runtime change; inspect current tracker data for current values.
 
+Live copies and what editing them changes are covered in [Editor-UI.md](Editor-UI.md#import-export-and-preserving-work). Debug shows keyword-block active/inactive state and its keywords, but not the matched keyword, activation turn or remaining retention. It does not expose NPC activation or static character information. A live-world JSON export can retain the tracker's initialValue despite a successful runtime change; inspect current tracker data for current values.
 
-For temporary instruction-block installation with a retained result, see [on-demand generation](Recipes.md#dynamic-content). Generation happens after installation; cleanup checks the request identity and completion rather than assuming the next turn succeeded. This pattern is useful only when omitted instruction context justifies result-storage and update costs.
-
+For temporary instruction-block installation with a retained result, see [on-demand generation](Recipes.md#dynamic-content).
 
 [Editor-UI](Editor-UI.md) contains exact workflow distinctions; [Verified-Behavior](Verified-Behavior.md) consolidates tested results.
 

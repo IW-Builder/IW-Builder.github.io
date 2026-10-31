@@ -33,12 +33,13 @@ With Start false, Mid Game has no effect; a stored true value requires no warnin
 
 ### Execution order and effect semantics:
 
-1. Later triggers see earlier committed writes. AI-updated request trackers were available to that turn's trigger checks. Correctly bound Present Choice/Request Input results are available to subsequent triggers in the same turn. This does not describe every internal generation stage.
-2. Native numeric Set/Add effects within ONE trigger do not accumulate normally: starting at 0, add 2 then add 3 ended at 3; starting at 1, set 5 then add 2 ended at 3. Reads can nevertheless see changed values. Do not "explain" this with a universal snapshot rule; internals are unproven.
-3. Run Script is different: sequential set/add and repeated arithmetic DID accumulate, nested YAML changes preserved unrelated keys, and separate script effects writing different YAML paths preserved both. Tested script failures rolled back that script's changes. Do not claim a whole-trigger rollback covering earlier successful effects.
-4. For dependent operations prefer one script. Otherwise put preparation in one trigger and consumption in a following trigger. Do not assume a later native effect's expression sees an earlier native write merely because it appears lower in the same trigger.
-5. Native text additions stacked; removal removed all matches and literal quotes are retained. Do not apply numeric overwrite behavior to text or script statements.
-6. First guidance appeared to dominate in limited narrative-only tests. Generate one coherent, mutually exclusive guidance outcome rather than contradictory directives whose priority you hope to control.
+1. Later triggers see earlier committed writes, including that turn's AI tracker updates and correctly bound Present Choice/Request Input answers. This does not describe every internal generation stage.
+2. Native numeric Set/Add effects within one trigger overwrite rather than accumulate (add 2 then add 3 ends at 3). Reads can nevertheless see changed values. Do not assume a later native effect's expression sees an earlier native write merely because it appears lower in the same trigger.
+3. Run Script is different: sequential arithmetic accumulates, nested YAML changes preserve unrelated keys, and a failing script rolls back only its own writes, not earlier successful effects. For dependent operations prefer one script; otherwise put preparation in one trigger and consumption in a following trigger.
+4. Native text additions stack; removal removes all matches and literal quotes are retained. Do not apply numeric overwrite behavior to text or script statements.
+5. When guidance effects conflict, the first tends to win. Generate one coherent, mutually exclusive guidance outcome rather than contradictory directives whose priority you hope to control.
+
+Detail and evidence for each of these is in [Verified-Behavior.md](Verified-Behavior.md).
 
 ## Choosing Implementation:
 
@@ -57,21 +58,27 @@ Consolidate repeated logic when it improves clarity, but preserve meaningful exe
 [RUNTIME] Some effects behave differently when Start of Game is enabled:
 
 - **Give information to AI** (`effectGiveInfo`) is ignored with Start enabled, including later ordinary activations of a Start+Mid trigger. Put opening context in background or an instruction block, or use a separate ordinary-play trigger. Tell the AI what should happen next turn (`effectTellAIWhatToDo`) is a different effect and is not covered by this restriction. The validator warns for `effectGiveInfo` whenever Start is enabled.
-- **Change background** replaces the opening background in Start-only mode. With Start+Mid it did not apply, and ordinary-play background or first-action changes do not rewrite an opening already shown.
-- **Fire random trigger** dispatches in ordinary play but did not dispatch with Start enabled.
+- **Change background** replaces the opening background in Start-only mode, not with Start+Mid; ordinary-play background or first-action changes do not rewrite an opening already shown.
+- **Fire random trigger** dispatches in ordinary play, not with Start enabled.
 
 A trigger counting as fired does not guarantee that every stored effect executed.
+
+## Changing a tracker's definition during play
+
+**Modify tracked item details** (`effectModifyTrackedItemDetails`) changes a tracker's definition rather than its value: Name, description, visibility, automatic updating and update instructions. Set the matching override flag for each field to change (`overrideAutoUpdate: true` with the desired `autoUpdate`, `overrideVisibility: true` with one of everyone, player_only, ai_only, hidden, ai_only_boring, hidden_boring, and so on); a field without its override is not applied.
+
+Switching automatic updating on or off works repeatedly, from the next turn: triggers run after the AI's tracker update, so a switch on turn N affects the AI from turn N+1. It does not undo a write already made in the current turn, so plan an explicit handoff point between AI and script ownership and inspect the next turn. Re-sending update instructions is unnecessary. **Never put this effect in a trigger that also has Request Input**: the change is silently lost while messages and scripts in that trigger still run. Give it its own trigger with the same condition, which works on the same turn; treat Present Choice the same way until checked. Visibility changes apply the live player-visible/hidden grouping and can reveal a hidden tracker. Payload: [Schema](Schema.md); example: [effect-effectModifyTrackedItemDetails.json](../examples/effect-effectModifyTrackedItemDetails.json); turn-state patterns that use the switch: [Recipes](Recipes.md#turn-state-patterns).
 
 
 ## Capability discovery and reliable gating
 
-Read [Trigger-Catalog](Trigger-Catalog.md) for every identified condition and effect, including **Modify tracked item details**, which changes a tracker's definition (Name, description, visibility, automatic updating, update instructions) rather than its value.
+Read [Trigger-Catalog](Trigger-Catalog.md) for every identified condition and effect before saying a trigger cannot do something.
 
-Eligible no-effect triggers record firing. Random dispatch bypasses target conditions but not a consumed one-shot. A failing script can still consume its containing one-shot and satisfy prerequisites; explicit successful-completion flags are therefore distinct from firing history. Native And/Or groups and PawScript expressions short-circuit in order. See [consolidated behavior](Verified-Behavior.md) for supported boundaries.
+Eligible no-effect triggers record firing. Random dispatch bypasses target conditions but not a consumed one-shot. A failing script can still consume its containing one-shot and satisfy prerequisites; explicit successful-completion flags are therefore distinct from firing history. Native And/Or groups and PawScript expressions short-circuit in order.
 
 ### Scenarios
 
-Say Scenarios when talking to users; the root JSON field is `conditions`, referenced by `triggerOnEvent`. Binding requires an exact registry string, including case, spaces and punctuation; preserved JSON can still be unbound, so check the selector after import. A Scenario fires only when the event actually happens in the narrated outcome; the narrator can refuse or substitute a requested action. Unused registry entries and duplicate references are tolerated, and import fills an absent registry from the trigger references. Use literal Scenarios with explicit state gates. Dynamic Scenario text works in some single-slot arrangements but fails in multi-slot, cyclic and parallel ones, and blank slot text is not dependable deactivation. The editor stops adding Scenarios at ten entries, but imported registries of twelve were retained and all fired in one turn.
+Say Scenarios when talking to users; the root JSON field is `conditions`, referenced by `triggerOnEvent`. Binding requires an exact registry string, including case, spaces and punctuation; preserved JSON can still be unbound, so check the selector after import. A Scenario fires only when the event actually happens in the narrated outcome; the narrator can refuse or substitute a requested action. Unused registry entries and duplicate references are tolerated, and import fills an absent registry from the trigger references. Use literal Scenarios with explicit state gates; dynamic Scenario text (`<<$slot>>`) is unreliable beyond a single slot, and blank slot text is not dependable deactivation. The editor stops adding Scenarios at ten entries, but imported registries of twelve or more work.
 
 ---
 

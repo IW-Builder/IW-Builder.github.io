@@ -33,7 +33,25 @@ Use tracker and trigger **Names**, not IDs, unless the user requests IDs. Distin
 
 Opening a world in the editor advances its version in the export (for example 1.01 to 1.02), even if changes are then discarded.
 
-[RUNTIME] Import can persist independently of a later Discard changes action. Keep a backup. Check target dropdowns and Scenario bindings after import; preserved text is not proof of valid references. Tracker IDs can be regenerated without remapping their references.
+[RUNTIME] Import can persist independently of a later Discard changes action. Keep a backup.
+
+**Before import**
+
+- Serialize the complete world as JSON ending at its final closing brace, without a trailing newline. Do not paste Markdown fences.
+- Run the validator on that exact file. Resolve missing or duplicate IDs and mismatched target references.
+- Review native YAML paths against the tracker's declared initial structure and intended operation. The editor accepts unchecked paths without warning: removing a nonexistent key or appending to a numeric path may be syntactically valid but semantically wrong. Review script references separately; structural validation does not execute PawScript or prove its paths exist.
+- Give every tracker a `description` (it may be empty). Without it, import reports success and then the editor rebuild fails with a KeyError.
+- Convert legacy bare-array prerequisites/blockers and blank PawScript conditions to native object shape. Import drops them, and the trigger silently loses that gate.
+
+**After import**
+
+A round trip of well-formed native JSON is byte-identical, so any change after import points at a normalization (ID reminting, dropped gates, scope repair, registry population). Tracker IDs can be regenerated without remapping their references. Save and inspect affected target dropdowns and Scenario bindings; preserved text is not proof of valid references. An invalid-value target is a binding failure even if the original JSON had consistent references. Export the imported world and validate that export when diagnosing discrepancies; keep the untouched source so source and imported IDs can be compared with `tools/import_audit.py` ([tools/Usage.md](../tools/Usage.md)).
+
+For a native input, confirm the current target value after submitting an answer. Correctly bound single-answer Choice and Request Input effects update immediately, and subsequent ordered triggers can read the result in the same turn. Their follow-up messages can render above the question/answer receipt. The live-world editor's initialValue remains configuration, not the current runtime value.
+
+**Live copies**
+
+Base worlds and live games are separate copies. Starting play creates a live copy; editing the base, its starting values or its characters does not update an existing playthrough, and already-fired effects are not retroactively rewritten. Use Save as new world, or export the live JSON and import it over the intended base, to reuse live-world edits in future games. Image-style changes can require save/reload before their export reflects the editor.
 
 [RUNTIME] Narration can stream before background work finishes. Following interruption, inspect retained state and controls before submitting again; a temporary turn number is not a saved-turn guarantee.
 
@@ -68,7 +86,7 @@ The database icon opens trackers; the nearby edit control edits their values. Th
 
 The bug icon opens debug. **Active instructions** is live rendered state, including post-narration trigger updates and live edits, not the full historical prompt. A trigger badge/list is not always exhaustive; inspect detailed history and actual state.
 
-The live-design notice warns that Player/Other Character changes do not affect the current playthrough; live copies are covered in [Import-Integrity.md](Import-Integrity.md). Runtime block replacements and tracker changes can leave original content/initial values in design exports; those exports are not complete live-state snapshots.
+The live-design notice warns that Player/Other Character changes do not affect the current playthrough (see Live copies above). Runtime block replacements and tracker changes can leave original content/initial values in design exports; those exports are not complete live-state snapshots.
 
 Story exports offer a turn range and optional background, character, secrets, trackers and hidden trackers, with text/PDF/image options. Select the relevant options. Secret Info is generated narrative data, not an authoritative character database. No live character-database or complete prompt viewer is available through these surfaces.
 

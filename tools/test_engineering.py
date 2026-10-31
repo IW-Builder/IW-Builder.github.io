@@ -1,4 +1,4 @@
-"""Offline contract tests. No claims about authenticated Playwright/IW integration."""
+"""Offline contract tests for the plot compiler and static lint."""
 import copy,json,tempfile,unittest
 from pathlib import Path
 from plot_compile import analyze,compile_world
