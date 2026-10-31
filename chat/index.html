@@ -10,10 +10,10 @@
   <h1>IW Builder Authoring Guide</h1>
   <p>Start here. This page contains IW-Authoring-Guide.txt: the prompt, template and core references. Companion editions, only when needed:
     <a href="IW-Technical-Reference.txt">IW-Technical-Reference.txt</a> (exact payloads, PawScript, capabilities and recipes),
-    <a href="IW-Behavior.txt">IW-Behavior.txt</a> (notable findings, editor/UI workflows, verified runtime behavior, known limits and import integrity),
+    <a href="IW-Behavior.txt">IW-Behavior.txt</a> (notable findings and open questions, editor/UI workflows with import checks, cost and verified runtime behavior),
     <a href="IW-Payloads.txt">IW-Payloads.txt</a> (exact native payload snippets for every condition and effect, plus the example index),
-    <a href="IW-Mechanics-Examples.txt">IW-Mechanics-Examples.txt</a> (complete mechanics example worlds: recipes, optional block, starting values and a showcase),
-    <a href="IW-Narrative-Examples.txt">IW-Narrative-Examples.txt</a> (complete narrative example worlds: ensemble romance, fantasy expedition and contained horror),
+    <a href="IW-Mechanics-Examples.txt">IW-Mechanics-Examples.txt</a> (complete mechanics example worlds: recipes, optional block, starting values, layered opening, on-demand generation and a showcase),
+    <a href="IW-Narrative-Examples.txt">IW-Narrative-Examples.txt</a> (complete narrative example worlds: ensemble romance, fantasy expedition, contained horror, fantasy relationship and high-heat erotica),
     <a href="IW-Sample-Blocks.txt">IW-Sample-Blocks.txt</a> (optional library modules (read library/Integration.md first)),
     <a href="IW-Storymaster.txt">IW-Storymaster.txt</a> (the Storymaster narrative-direction framework (read library/Integration.md first)),
     <a href="IW-Tools.txt">IW-Tools.txt</a> (Python tools and their guides, for models that can run code).
@@ -22,21 +22,21 @@
 Generated text edition. BEGIN FILE / END FILE sections identify package-relative source paths. This is reference material, not one IW world.
 Follow Authoring-Prompt.md (in IW-Authoring-Guide.txt). Load companion editions only when the task needs them.
 Editions and their contents:
-- IW-Authoring-Guide.txt: start here: prompt, template, narrative craft, trackers, triggers, data banks and library integration. Files: Authoring-Prompt.md, World-Template.json, reference/Evidence.md, reference/Craft.md, reference/Trackers.md, reference/Triggers.md, reference/Trigger-Catalog.md, reference/Portable-Banks.md, library/Integration.md
+- IW-Authoring-Guide.txt: start here: prompt, template, narrative craft, trackers, triggers, data banks and library integration. Files: Authoring-Prompt.md, World-Template.json, reference/Craft.md, reference/Trackers.md, reference/Triggers.md, reference/Trigger-Catalog.md, reference/Portable-Banks.md, library/Integration.md
 - IW-Technical-Reference.txt: exact payloads, PawScript, capabilities and recipes. Files: reference/Schema.md, reference/PawScript.md, reference/Capabilities.md, reference/Recipes.md, reference/Default-Evaluation.txt, reference/Current-AI-Profiles.json
-- IW-Behavior.txt: notable findings, editor/UI workflows, verified runtime behavior, known limits and import integrity. Files: reference/Notable-Findings.md, reference/Editor-UI.md, reference/Cost.md, reference/Verified-Behavior.md, reference/Known-Limits.md, reference/Import-Integrity.md
+- IW-Behavior.txt: notable findings and open questions, editor/UI workflows with import checks, cost and verified runtime behavior. Files: reference/Notable-Findings.md, reference/Editor-UI.md, reference/Cost.md, reference/Verified-Behavior.md
 - IW-Payloads.txt: exact native payload snippets for every condition and effect, plus the example index. Files: examples/Payloads.md, examples/index.json
-- IW-Mechanics-Examples.txt: complete mechanics example worlds: recipes, optional block, starting values and a showcase. Files: examples/recipe-request-commit.json, examples/recipe-completion-award.json, examples/recipe-candidate-acceptance.json, examples/recipe-archive-reactivate.json, examples/recipe-cached-random.json, examples/recipe-consumed-timer.json, examples/recipe-choice-domain.json, examples/recipe-compiled-plot.json, examples/recipe-choice-followup.json, examples/recipe-threshold-unlock.json, examples/optional-block.json, examples/character-starting-values.json, examples/showcase-glass-ledger.json
-- IW-Narrative-Examples.txt: complete narrative example worlds: ensemble romance, fantasy expedition and contained horror. Files: examples/narrative-vendemmia.json, examples/narrative-listening-road.json, examples/narrative-address-after-midnight.json
+- IW-Mechanics-Examples.txt: complete mechanics example worlds: recipes, optional block, starting values, layered opening, on-demand generation and a showcase. Files: examples/recipe-request-commit.json, examples/recipe-completion-award.json, examples/recipe-candidate-acceptance.json, examples/recipe-archive-reactivate.json, examples/recipe-cached-random.json, examples/recipe-consumed-timer.json, examples/recipe-choice-domain.json, examples/recipe-compiled-plot.json, examples/recipe-choice-followup.json, examples/recipe-threshold-unlock.json, examples/optional-block.json, examples/character-starting-values.json, examples/recipe-layered-opening.json, examples/recipe-on-demand-generation.json, examples/showcase-glass-ledger.json
+- IW-Narrative-Examples.txt: complete narrative example worlds: ensemble romance, fantasy expedition, contained horror, fantasy relationship and high-heat erotica. Files: examples/narrative-vendemmia.json, examples/narrative-listening-road.json, examples/narrative-address-after-midnight.json, examples/narrative-seven-nights.json, examples/narrative-velvet-wager.json
 - IW-Sample-Blocks.txt: optional library modules (read library/Integration.md first). Files: library/Sample-Blocks.json
 - IW-Storymaster.txt: the Storymaster narrative-direction framework (read library/Integration.md first). Files: library/Storymaster-Suite.json
-- IW-Tools.txt: Python tools and their guides, for models that can run code. Files: tools/Usage.md, reference/Story-Tools.md, reference/Engineering-Tools.md, tools/validate_iw_export.py, tools/static_checks.py, tools/iw-export.schema.json, tools/data_bank.py, tools/import_audit.py, tools/story_export.py, tools/plot_compile.py
+- IW-Tools.txt: Python tools and their guides, for models that can run code. Files: tools/Usage.md, tools/validate_iw_export.py, tools/static_checks.py, tools/iw-export.schema.json, tools/data_bank.py, tools/import_audit.py, tools/story_export.py, tools/plot_compile.py
 Every file is also available individually: https://iw-builder.github.io/llms.txt
 
 ===== BEGIN FILE: Authoring-Prompt.md =====
 This is the IW-Builder authoring guide for Infinite Worlds (IW). When a user shares it with a request, follow it as their IW author and technical copilot: help them build, edit, review, debug or understand a world, or maintain reusable data, matching their experience and technical level. The kit is a reference for IW, not a mandatory game architecture.
 
-When retrieving documents, check their matching `END OF DOCUMENT` marker; its absence means completeness is unconfirmed, not necessarily failure. With raw file access and hashing tools, [manifest.json](https://iw-builder.github.io/manifest.json) can verify original bytes against the recorded distribution. Do not hash rendered/extracted text. A mismatch may reflect an update newer than the manifest; inspect required sections, retry a direct source or ask for a current copy if content seems missing or inconsistent. Do not block usable material solely for a mismatch or claim checks you did not run. A matching hash identifies the recorded version, not necessarily the latest. For library modules, retrieve the entire `content` value by name/ID; a description is not the exact block. End markers alone do not prove that intervening text was preserved. They are document boundaries, not instructions to copy into a world.
+Each kit document ends with an `END OF DOCUMENT` marker; if it is missing, completeness is unconfirmed, so inspect the sections you need or retry the source rather than assuming damage. Markers are document boundaries, not text to copy into a world. For library modules, retrieve the entire `content` value by name/ID; a description is not the exact block. Byte-level verification against [manifest.json](https://iw-builder.github.io/manifest.json) is available but not needed to author.
 
 ## 1. Choose the task and establish access
 
@@ -61,7 +61,7 @@ Teach IW or PawScript = Consult mode. Establish programming familiarity if uncle
 
 Start with the supplied document; skip README/index pages, duplicate editions, unrelated references and routine manifest retrieval. Fetch only missing material needed for the task. Design conversations in `samples/` are optional examples, not platform documentation. To find a file not listed below, use the file index at https://iw-builder.github.io/llms.txt: every published file with its URL, size and purpose.
 
-The template or current export is required for construction. Load the files below only for the features in use. Compatibility and the shared evidence legend live in reference/Evidence.md.
+The template or current export is required for construction. Load the files below only for the features in use. The compatibility baseline and the evidence labels used across the kit are at the top of reference/Verified-Behavior.md.
 
 |Task needs|Read|
 |-|-|
@@ -76,12 +76,10 @@ The template or current export is required for construction. Load the files belo
 |Library modules or Storymaster|[library/Integration.md](https://iw-builder.github.io/library/Integration.md), then only relevant portions of [Sample-Blocks.json](https://iw-builder.github.io/library/Sample-Blocks.json) or [Storymaster-Suite.json](https://iw-builder.github.io/library/Storymaster-Suite.json)|
 |Custom Evaluation|[reference/Default-Evaluation.txt](https://iw-builder.github.io/reference/Default-Evaluation.txt) and the Skills section of [reference/Capabilities.md](https://iw-builder.github.io/reference/Capabilities.md)|
 |Model-specific blocks|[reference/Current-AI-Profiles.json](https://iw-builder.github.io/reference/Current-AI-Profiles.json) and the model-block section of [reference/Capabilities.md](https://iw-builder.github.io/reference/Capabilities.md); ask which model(s) are common if needed|
-|Editing, combining or importing|[reference/Import-Integrity.md](https://iw-builder.github.io/reference/Import-Integrity.md)|
-|Credit cost estimates|reference/Cost.md|
-|Editor workflows and terminology|[reference/Editor-UI.md](https://iw-builder.github.io/reference/Editor-UI.md)|
-|Review, Debug or likely world bugs|[reference/Notable-Findings.md](https://iw-builder.github.io/reference/Notable-Findings.md)|
+|Editing, combining or importing; editor workflows and terminology|[reference/Editor-UI.md](https://iw-builder.github.io/reference/Editor-UI.md); ID conventions in the Identifiers section of [reference/Schema.md](https://iw-builder.github.io/reference/Schema.md)|
+|Credit cost estimates|[reference/Cost.md](https://iw-builder.github.io/reference/Cost.md)|
+|Review, Debug or likely world bugs; uncertain platform behavior|[reference/Notable-Findings.md](https://iw-builder.github.io/reference/Notable-Findings.md), including its list of what is still unknown; do not turn uncertainty into an invented rule|
 |Detailed tested behavior|[reference/Verified-Behavior.md](https://iw-builder.github.io/reference/Verified-Behavior.md)|
-|Uncertain platform behavior|[reference/Known-Limits.md](https://iw-builder.github.io/reference/Known-Limits.md); do not turn uncertainty into an invented rule|
 |Personal libraries, portable banks, bundles, PC/NPC conversion or full-content build reports|[reference/Portable-Banks.md](https://iw-builder.github.io/reference/Portable-Banks.md); [tools/data_bank.py](https://iw-builder.github.io/tools/data_bank.py) when execution is available|
 |Code-based validation or edit comparison|[tools/validate_iw_export.py](https://iw-builder.github.io/tools/validate_iw_export.py), [tools/iw-export.schema.json](https://iw-builder.github.io/tools/iw-export.schema.json) and [tools/Usage.md](https://iw-builder.github.io/tools/Usage.md)|
 
@@ -125,7 +123,7 @@ With limited tools or context, prefer small dependency sets and short scripts. D
 
 With tools, parse the export and apply changes programmatically; serialize with a JSON library. Do not retype a large world. Compare before/after values and IDs, inspect removed objects and cross-references, and explain intentional collateral changes. Use --diff for reporting, not as proof that changes match user intent.
 
-Build in dependency order: world context and PC/Skills; trackers; blocks/NPCs/keywords; triggers; specialist rules/endings/media. Preserve existing IDs. For new trackers use unique nine-character ASCII alphanumeric IDs, following the kit convention; keep readable variableName and display names separate. This is an authoring convention, not a schema restriction. See reference/Import-Integrity.md.
+Build in dependency order: world context and PC/Skills; trackers; blocks/NPCs/keywords; triggers; specialist rules/endings/media. Preserve existing IDs. For new trackers use unique nine-character ASCII alphanumeric IDs, following the kit convention; keep readable variableName and display names separate. This is an authoring convention, not a schema restriction. See the Identifiers section of reference/Schema.md.
 
 Normal capitalization and separator differences (Win Path / win_path) do not require drift acknowledgement. Use driftAcknowledgedForName for an intentionally different handle when the editor reports a mismatch; preserve existing metadata during unrelated edits.
 
@@ -280,39 +278,6 @@ END OF DOCUMENT: Authoring-Prompt.md
   &quot;designNotes&quot;: &quot;&quot;
 }
 ===== END FILE: World-Template.json =====
-
-===== BEGIN FILE: reference/Evidence.md =====
-# Compatibility and evidence
-
-This is an independent, unaffiliated kit. Platform baseline: Infinite Worlds&#x27; October 8, 2026 &quot;Save/load system, Image style system and Pawscript update,&quot; with editor/runtime information consolidated through October 26, 2026. Export schemaVersion is 2.4. Kit version is 1.6.0; the structural profile is 1.2.0. Neither is an IW application version. The unaffiliated Script Library source snapshot is version 3.16, October 16, 2026; source details and updating advice are in ../library/Integration.md.
-
-Use four evidence labels when a distinction matters. Ordinary reference sentences do not need a repeated tag.
-
-| Label | Meaning |
-| --- | --- |
-| [DOCUMENTED] | Supported by editor help, a native export shape or cited language documentation. Does not alone establish runtime behavior. |
-| [RUNTIME] | The stated behavior was exercised in IW within the described scope. |
-| [PATTERN] | An optional authoring design assembled from supported features; not a platform requirement. |
-| [UNKNOWN] | A concrete behavior remains unresolved; avoid depending on it without a focused check. |
-
-These rules apply throughout the kit and are not repeated in each entry:
-
-- Observed sizes, counts and caps (text lengths, Scenario counts, input counters) are working examples, not platform maxima.
-- A tested feature does not certify every composition built from it; test new combinations in play.
-- Rendered panels (Active instructions, debug, Secret Info, narration) show what IW displays, not the complete prompt or hidden engine state.
-- Credits are not token counts.
-
-Structural validation is a separate status, not a fifth evidence label. It checks export structure and explicit references. Static lint reports likely mistakes; neither executes PawScript or certifies a story. The example index records structural and runtime scope separately. Do not present generated prose as evidence of tracker state.
-
-## Current result hierarchy
-
-[Notable-Findings](Notable-Findings.md) is the plain-language summary. [Verified-Behavior](Verified-Behavior.md) consolidates detailed conclusions, [Editor-UI](Editor-UI.md) separates editor guidance from observed behavior, and [Known-Limits](Known-Limits.md) records unresolved boundaries. User-confirmed behavior is identified where it is the basis. Do not promote an unknown mechanism to fact or repeat superseded open questions from older examples as current conclusions.
-
----
-
-END OF DOCUMENT: reference/Evidence.md
-
-===== END FILE: reference/Evidence.md =====
 
 ===== BEGIN FILE: reference/Craft.md =====
 # Narrative craft
@@ -487,9 +452,9 @@ Do not let the AI and scripts compete to rewrite the same mechanical YAML docume
 
 Visibility values include everyone (player and AI), ai_only and ai_only_boring (AI-only), player_only, hidden and hidden_boring (hidden from player and AI in supplied uses). Do not infer additional UI highlighting behavior from the suffix alone. The editor clears &quot;Hide in Storyteller mode&quot; when player visibility is enabled. Do not invent contradictory UI combinations. Exports can include hidden trackers and secret information when Storyteller Mode is enabled; select those export options when collecting diagnostics. Visibility is not script access control: hidden values remain script-usable at runtime.
 
-[RUNTIME] Extra-hidden values remain visible in the Storyteller tracker editor even when Include Extra-hidden is off. Import normalizes automatic updating off for hidden, hidden_boring and player_only; everyone, ai_only and ai_only_boring can retain automatic updates. UI visibility does not establish full AI prompt inclusion.
+Import normalizes automatic updating off for hidden, hidden_boring and player_only; everyone, ai_only and ai_only_boring can retain automatic updates. Extra-hidden values remain visible in the Storyteller tracker editor. UI visibility does not establish full AI prompt inclusion.
 
-A trigger can change a tracker&#x27;s visibility or automatic updating during play with Modify tracked item details; see [Trigger-Catalog](Trigger-Catalog.md#changing-automatic-updating). The live player-visible/hidden lists reflect a visibility change even when the live-design export retains the original visibility.
+A trigger can change a tracker&#x27;s visibility or automatic updating during play with Modify tracked item details; see [Triggers](Triggers.md#changing-a-trackers-definition-during-play).
 
 Starting values: a tracker&#x27;s value can be the same for all characters, set per player character (fixed, a fixed choice list, or script-generated choices), or chosen by the player at startup. Exact shapes are in the [Schema](Schema.md) starting-values table, with worked examples in ../examples/character-starting-values.json and ../examples/optional-block.json. For a player-chosen preference, set autoUpdate false so the AI cannot rewrite it. The player sets it at startup; changing it later needs the Storyteller-mode tracker editor, since Storyteller mode off shows no live tracker-edit control. Use one mode per tracker; do not combine modes and guess precedence.
 
@@ -503,7 +468,7 @@ If a bad turn establishes a false fact, adding an instruction may leave conflict
 
 Native trigger changes can affect runtime instructions without changing the base editor definition. Inspect active instruction contents and trigger/debug results when troubleshooting; a base-world export alone does not show everything the model received. Base and live worlds are separate copies.
 
-Keep loaded instructions and AI-visible tracker names, descriptions, update rules and values purposeful. Prefer concise shared rules over repetition, keyword activation for occasional lore, and PawScript for exact calculations. Large AI-updated records can be expensive to rewrite. Summary compression follows a six-turn cadence beginning at turn eight (user-confirmed); exact summary contents are not visible.
+Keep loaded instructions and AI-visible tracker names, descriptions, update rules and values purposeful. Prefer concise shared rules over repetition, keyword activation for occasional lore, and PawScript for exact calculations. Large AI-updated records can be expensive to rewrite. Summary compression begins around turn eight and repeats every six turns; its contents are not visible.
 
 See [Editor-UI](Editor-UI.md) for current-value editing and [Verified-Behavior](Verified-Behavior.md) for forms, initialization and retention results.
 
@@ -549,12 +514,13 @@ With Start false, Mid Game has no effect; a stored true value requires no warnin
 
 ### Execution order and effect semantics:
 
-1. Later triggers see earlier committed writes. AI-updated request trackers were available to that turn&#x27;s trigger checks. Correctly bound Present Choice/Request Input results are available to subsequent triggers in the same turn. This does not describe every internal generation stage.
-2. Native numeric Set/Add effects within ONE trigger do not accumulate normally: starting at 0, add 2 then add 3 ended at 3; starting at 1, set 5 then add 2 ended at 3. Reads can nevertheless see changed values. Do not &quot;explain&quot; this with a universal snapshot rule; internals are unproven.
-3. Run Script is different: sequential set/add and repeated arithmetic DID accumulate, nested YAML changes preserved unrelated keys, and separate script effects writing different YAML paths preserved both. Tested script failures rolled back that script&#x27;s changes. Do not claim a whole-trigger rollback covering earlier successful effects.
-4. For dependent operations prefer one script. Otherwise put preparation in one trigger and consumption in a following trigger. Do not assume a later native effect&#x27;s expression sees an earlier native write merely because it appears lower in the same trigger.
-5. Native text additions stacked; removal removed all matches and literal quotes are retained. Do not apply numeric overwrite behavior to text or script statements.
-6. First guidance appeared to dominate in limited narrative-only tests. Generate one coherent, mutually exclusive guidance outcome rather than contradictory directives whose priority you hope to control.
+1. Later triggers see earlier committed writes, including that turn&#x27;s AI tracker updates and correctly bound Present Choice/Request Input answers. This does not describe every internal generation stage.
+2. Native numeric Set/Add effects within one trigger overwrite rather than accumulate (add 2 then add 3 ends at 3). Reads can nevertheless see changed values. Do not assume a later native effect&#x27;s expression sees an earlier native write merely because it appears lower in the same trigger.
+3. Run Script is different: sequential arithmetic accumulates, nested YAML changes preserve unrelated keys, and a failing script rolls back only its own writes, not earlier successful effects. For dependent operations prefer one script; otherwise put preparation in one trigger and consumption in a following trigger.
+4. Native text additions stack; removal removes all matches and literal quotes are retained. Do not apply numeric overwrite behavior to text or script statements.
+5. When guidance effects conflict, the first tends to win. Generate one coherent, mutually exclusive guidance outcome rather than contradictory directives whose priority you hope to control.
+
+Detail and evidence for each of these is in [Verified-Behavior.md](Verified-Behavior.md).
 
 ## Choosing Implementation:
 
@@ -573,21 +539,27 @@ Consolidate repeated logic when it improves clarity, but preserve meaningful exe
 [RUNTIME] Some effects behave differently when Start of Game is enabled:
 
 - **Give information to AI** (`effectGiveInfo`) is ignored with Start enabled, including later ordinary activations of a Start+Mid trigger. Put opening context in background or an instruction block, or use a separate ordinary-play trigger. Tell the AI what should happen next turn (`effectTellAIWhatToDo`) is a different effect and is not covered by this restriction. The validator warns for `effectGiveInfo` whenever Start is enabled.
-- **Change background** replaces the opening background in Start-only mode. With Start+Mid it did not apply, and ordinary-play background or first-action changes do not rewrite an opening already shown.
-- **Fire random trigger** dispatches in ordinary play but did not dispatch with Start enabled.
+- **Change background** replaces the opening background in Start-only mode, not with Start+Mid; ordinary-play background or first-action changes do not rewrite an opening already shown.
+- **Fire random trigger** dispatches in ordinary play, not with Start enabled.
 
 A trigger counting as fired does not guarantee that every stored effect executed.
+
+## Changing a tracker&#x27;s definition during play
+
+**Modify tracked item details** (`effectModifyTrackedItemDetails`) changes a tracker&#x27;s definition rather than its value: Name, description, visibility, automatic updating and update instructions. Set the matching override flag for each field to change (`overrideAutoUpdate: true` with the desired `autoUpdate`, `overrideVisibility: true` with one of everyone, player_only, ai_only, hidden, ai_only_boring, hidden_boring, and so on); a field without its override is not applied.
+
+Switching automatic updating on or off works repeatedly, from the next turn: triggers run after the AI&#x27;s tracker update, so a switch on turn N affects the AI from turn N+1. It does not undo a write already made in the current turn, so plan an explicit handoff point between AI and script ownership and inspect the next turn. Re-sending update instructions is unnecessary. **Never put this effect in a trigger that also has Request Input**: the change is silently lost while messages and scripts in that trigger still run. Give it its own trigger with the same condition, which works on the same turn; treat Present Choice the same way until checked. Visibility changes apply the live player-visible/hidden grouping and can reveal a hidden tracker. Payload: [Schema](Schema.md); example: [effect-effectModifyTrackedItemDetails.json](../examples/effect-effectModifyTrackedItemDetails.json); turn-state patterns that use the switch: [Recipes](Recipes.md#turn-state-patterns).
 
 
 ## Capability discovery and reliable gating
 
-Read [Trigger-Catalog](Trigger-Catalog.md) for every identified condition and effect, including **Modify tracked item details**, which changes a tracker&#x27;s definition (Name, description, visibility, automatic updating, update instructions) rather than its value.
+Read [Trigger-Catalog](Trigger-Catalog.md) for every identified condition and effect before saying a trigger cannot do something.
 
-Eligible no-effect triggers record firing. Random dispatch bypasses target conditions but not a consumed one-shot. A failing script can still consume its containing one-shot and satisfy prerequisites; explicit successful-completion flags are therefore distinct from firing history. Native And/Or groups and PawScript expressions short-circuit in order. See [consolidated behavior](Verified-Behavior.md) for supported boundaries.
+Eligible no-effect triggers record firing. Random dispatch bypasses target conditions but not a consumed one-shot. A failing script can still consume its containing one-shot and satisfy prerequisites; explicit successful-completion flags are therefore distinct from firing history. Native And/Or groups and PawScript expressions short-circuit in order.
 
 ### Scenarios
 
-Say Scenarios when talking to users; the root JSON field is `conditions`, referenced by `triggerOnEvent`. Binding requires an exact registry string, including case, spaces and punctuation; preserved JSON can still be unbound, so check the selector after import. A Scenario fires only when the event actually happens in the narrated outcome; the narrator can refuse or substitute a requested action. Unused registry entries and duplicate references are tolerated, and import fills an absent registry from the trigger references. Use literal Scenarios with explicit state gates. Dynamic Scenario text works in some single-slot arrangements but fails in multi-slot, cyclic and parallel ones, and blank slot text is not dependable deactivation. The editor stops adding Scenarios at ten entries, but imported registries of twelve were retained and all fired in one turn.
+Say Scenarios when talking to users; the root JSON field is `conditions`, referenced by `triggerOnEvent`. Binding requires an exact registry string, including case, spaces and punctuation; preserved JSON can still be unbound, so check the selector after import. A Scenario fires only when the event actually happens in the narrated outcome; the narrator can refuse or substitute a requested action. Unused registry entries and duplicate references are tolerated, and import fills an absent registry from the trigger references. Use literal Scenarios with explicit state gates; dynamic Scenario text (`&lt;&lt;$slot&gt;&gt;`) is unreliable beyond a single slot, and blank slot text is not dependable deactivation. The editor stops adding Scenarios at ten entries, but imported registries of twelve or more work.
 
 ---
 
@@ -626,7 +598,7 @@ Start of game, Or mid-game, repeat eligibility and advanced logic are trigger se
 | Tell AI what should happen next turn | `effectTellAIWhatToDo` | Narrative guidance, not guaranteed state mutation. |
 | Give information to AI | `effectGiveInfo` | Information distinct from next-turn guidance; ignored with Start enabled. |
 | Set/change tracked item value | `effectSetTrackedItemValue` | Numeric/text updates, whole YAML replacement, path set/remove/append/adjust. |
-| Modify tracked item details | `effectModifyTrackedItemDetails` | Change Name, description, visibility, automatic updating and update instructions using matching override flags. Yes: autoUpdate can change, from the next turn; not alongside Request Input (below). |
+| Modify tracked item details | `effectModifyTrackedItemDetails` | Change Name, description, visibility, automatic updating and update instructions using matching override flags; applies from the next turn; not in the same trigger as Request Input ([Triggers](Triggers.md#changing-a-trackers-definition-during-play)). |
 | Modify extra instruction block | `effectModifyInstructionBlock` | Replace block content; template installation timing matters. |
 | Modify keyword instruction block | `effectModifyKeywordBlock` | Change keywords and content. |
 | Present choice | `effectPresentChoice` | Single/multiple selection, limits, delimiter and target/path. |
@@ -646,15 +618,11 @@ Start of game, Or mid-game, repeat eligibility and advanced logic are trigger se
 | Change other characters | `effectChangeOtherCharacters` | Add/Modify/Delete Character, offered only in the Start picker. Add uses `character: null`; Modify/Delete name the target by its current name. Runtime mutation unresolved. |
 | Ends game | `effectEndsGame` | End ordinary play; data true allows optional continuation, false does not. |
 
-Native startup payload examples: [background](../examples/effect-effectChangeBackground.json), [first action](../examples/effect-effectChangeFirstAction.json), and Other Character [Add](../examples/effect-effectChangeOtherCharacters-add.json), [Modify](../examples/effect-effectChangeOtherCharacters-modify.json), [Delete](../examples/effect-effectChangeOtherCharacters-delete.json). Their verification limits are stated in each example; the [payload cookbook](../examples/Payloads.md) includes the complete effect nodes.
+Native startup payload examples: [background](../examples/effect-effectChangeBackground.json), [first action](../examples/effect-effectChangeFirstAction.json), and Other Character [Add](../examples/effect-effectChangeOtherCharacters-add.json), [Modify](../examples/effect-effectChangeOtherCharacters-modify.json), [Delete](../examples/effect-effectChangeOtherCharacters-delete.json). Their verification limits are stated in each example; [Payloads.md](../examples/Payloads.md) includes the complete effect nodes.
 
-## Changing automatic updating
+## Scope of this catalog
 
-**Modify tracked item details** can turn automatic updating on or off. Set `overrideAutoUpdate: true` and the desired `autoUpdate` value. Equivalent override flags select changes to Name, description, visibility and update instructions. Changing a field without its matching override does not apply it. This changes future update behavior; it does not undo an earlier write in the current turn, so plan an explicit handoff point between AI and script ownership and inspect the next turn.
-
-Verified live (probe P37): on and off both work, repeatedly. A switch on turn N affects the AI from turn N+1, because triggers run after the AI&#x27;s tracker update. Re-sending update instructions is unnecessary. **Never put this effect in a trigger that also has Request Input**: the change is silently lost while messages and scripts there still run. Give it its own trigger with the same condition (works on the same turn). Present Choice is untested; treat it the same. It can also reveal a hidden tracker. Visibility restrictions still matter. With `overrideVisibility: true`, the observed visibility values are everyone, player_only, ai_only, hidden, ai_only_boring and hidden_boring. They survive editor import, and live effects apply the expected player-visible/hidden grouping.
-
-This capability is already represented by the schema and [native example](../examples/effect-effectModifyTrackedItemDetails.json); no example needs to be read merely to discover that it exists. Read [Schema](Schema.md) and the specific payload only when implementing. The schema is a partial compatibility profile, not the definition of all platform capabilities. Do not infer nonexistent Evaluation, Summary or image-change effects from similarly named effects.
+Everything listed is represented in the schema and has a native example under ../examples/; read [Schema](Schema.md) and the specific payload only when implementing. **Modify tracked item details** changes a tracker&#x27;s definition (Name, description, visibility, automatic updating, update instructions) rather than its value; its rules and the Request Input restriction are in [Triggers](Triggers.md#changing-a-trackers-definition-during-play). The schema is a partial compatibility profile, not the definition of all platform capabilities. Do not infer nonexistent Evaluation, Summary or image-change effects from similarly named effects.
 
 ---
 
@@ -743,7 +711,7 @@ END OF DOCUMENT: reference/Portable-Banks.md
 ===== BEGIN FILE: library/Integration.md =====
 # Adapting the sample library
 
-`Sample-Blocks.json` is adapted from the unaffiliated [The Script Library](https://infiniteworlds.app/shared/Dxb2ko), world code Dxb2ko. The packaged modules include Time and Location (whereWhen). The source snapshot is identified in ../reference/Evidence.md. The shared world includes additional image-style, content and character blocks and is frequently updated; check whether desired blocks have newer versions before adopting them. It is a collection of reusable instructions, tracker alternatives, examples and updater scripts, not an instruction to copy its entire world into every new story. Use this guide as the dependency reference when selecting modules.
+`Sample-Blocks.json` is adapted from the unaffiliated [The Script Library](https://infiniteworlds.app/shared/Dxb2ko), world code Dxb2ko. The packaged modules include Time and Location (whereWhen). The source snapshot is version 3.16, October 16, 2026. The shared world includes additional image-style, content and character blocks and is frequently updated; check whether desired blocks have newer versions before adopting them. It is a collection of reusable instructions, tracker alternatives, examples and updater scripts, not an instruction to copy its entire world into every new story. Use this guide as the dependency reference when selecting modules.
 
 ## Feature selection
 
@@ -805,7 +773,7 @@ Tracker estimates below cover updateInstructions only; descriptions, schemas, st
 
 The source offers both small- and large-cast appearance trackers. Its appearance merge script targets `$npc_appearance`, which is not automatically the variableName of either variant. Normalize the chosen store&#x27;s variableName or rewrite all references. The large-cast updater depends on Relationship Tracker significance.
 
-The relationship, intimacy and appearance buffers demonstrate an AI-proposed update followed by a script merge. Each buffer is a record (`entries: []`) that asks for complete entries; the scripts read and clear `.entries` and replace matching records in the script-owned list stores. List roots and &quot;changed fields only&quot; lost updates in live testing (see ../reference/Verified-Behavior.md); only the relationship pair was tested directly. Keep instructions, root and script in agreement.
+The relationship, intimacy and appearance buffers demonstrate an AI-proposed update followed by a script merge. Each buffer is a record (`entries: []`) that asks for complete entries; the scripts read and clear `.entries` and replace matching records in the script-owned list stores. List roots and &quot;changed fields only&quot; wording lose updates (see ../reference/Verified-Behavior.md; the relationship pair is the one measured directly). Keep instructions, root and script in agreement.
 
 Initial blank list-like stores in the library are source examples. Direct appearance trackers are AI-written lists with the same exposure; prefer the buffered setup. Where a chosen script requires an actual list, initialize `[]` or ensure the first-use initialization is correct; do not assume blank text and an empty YAML list are interchangeable. The schema checks field storage type but not the nested runtime reference or merge algorithm.
 
@@ -817,7 +785,7 @@ An optional cosmetic block can clear its content when disabled. A director such 
 
 ## Module configuration
 
-The library is a menu of adaptable parts, not the cookbook&#x27;s runnable showcase. Its updater triggers explicitly use Start false, Mid false and repeat true, so these conditional update jobs run in ordinary play rather than being assumed to perform initial setup. Their scripts have descriptive names.
+The library is a menu of adaptable parts, not a runnable showcase like ../examples/showcase-glass-ledger.json. Its updater triggers explicitly use Start false, Mid false and repeat true, so these conditional update jobs run in ordinary play rather than being assumed to perform initial setup. Their scripts have descriptive names.
 
 The image-style fields contain selectable alternatives and genre-specific defaults. Resolve all editing brackets, keep only compatible choices, and remove sexualized styling unless requested. The video template depends on video-context variables; see ../reference/Capabilities.md before adopting it. These are intentional adaptation dependencies, not finished-world settings.
 

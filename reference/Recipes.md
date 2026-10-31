@@ -14,10 +14,10 @@ These are independent recipes. Select, adapt or omit them; none is a required wo
 
 **Conditional instruction content.** Use a native block-modification effect to add/replace/clear instructions. The source may be fixed text in the effect or text prepared in a tracker by an earlier script trigger. This can control optional image guidance, pacing, prose detail, character behavior or any relevant block. A script changes tracker values; the native effect changes the instruction block. Keep the block ID stable when disabling content so later re-enabling still targets a real block.
 
-**Player-optional block, with no repeated writes.** The companion optional example distills the supplied native demonstration:
+**Player-optional block, with no repeated writes.** The pattern in ../examples/optional-block.json:
 
 1. A player-only text preference has initialValueBasedOnPC player, initialValue On or Off, initialValueChoices [On, Off], autoUpdate false. The player picks it at startup; later changes need the Storyteller-mode tracker editor.
-2. A hidden non-AI-updated text tracker records which choice has actually been applied. It is a cache, not another player preference. hidden_boring is used by the source example.
+2. A hidden non-AI-updated text tracker (hidden_boring in the example) records which choice has actually been applied. It is a cache, not another player preference.
 3. A repeatable enabling trigger requires preference On AND cache not Enabled. It writes the enabled block content, then records Enabled.
 4. A repeatable disabling trigger requires preference Off AND cache not Disabled. It writes empty content, or a deliberately chosen simpler fallback, then records Disabled.
 5. Enable opening and later execution where needed. Initialize the cache empty so the selected startup choice gets applied. Once synchronized, neither trigger fires until the preference changes.
@@ -30,13 +30,10 @@ Player-visible preference trackers may be hidden from the storyteller; the trigg
 
 **Time and location: a soft default.** Offer the sample's Time and Location (whereWhen) block unless the premise makes a clock/location header unhelpful. Writing the current place and time each turn helps IW maintain chronology and gives the player a reference. Adapt the geography, calendar and precision to the setting; omit irrelevant levels rather than inventing a country or continent. Put exactly one header at the beginning of outcomeDescription, not a second competing heading. This is guidance for runtime output, not a new JSON root field.
 
-**NPCs and keyword blocks.** Native NPC cards provide structured character data and name activation. Keyword blocks load relevant lore based on mentions and recent context. Always-on blocks provide universal guidance. Choose by intended activation, not by habit; do not make all locations or characters dynamically loaded unless the world benefits. Native character/image bookkeeping may matter even when the narrative could be described in a normal block. For an opening scene, do not depend solely on keyword activation: there may be no prior context to activate a card or block. Put essential opening facts in firstInput or always-on instructions and give starting NPCs useful brief summaries. Avoid duplicating their entire cards.
-
-secretInfo, outcomeDescription, whereWhen and option1_text/option2_text/option3_text are runtime output concepts, not arbitrary new root export fields. Their intended use can be described in instructions and specialist requests. secretInfo can legitimately contain secrets, planning and off-screen developments in narrative worlds; the Storymaster family explicitly structures it. Do not impose an empty-secretInfo policy or a reset system unless requested by that world's design. Its contents and purported "memory dumps" remain generated text, not direct access to an engine memory store.
-
-Use ordinary Markdown formatting where appropriate. Tests showed raw span HTML rendered literally, so do not promise arbitrary HTML/CSS styling. Header behavior and special output formatting should be tested in their actual display context. An inline-code style is a platform-rendered style, not a general color API.
+**NPCs, keyword blocks and always-on blocks** are chosen by intended activation; see the NPC and keyword section of [Capabilities.md](Capabilities.md#npc-cards-and-keyword-blocks).
 
 ## Dynamic content
+
 Native block-modification effects substitute ordinary `<<...>>` templates when the content is installed. For live values, write deferred `<=...=>` references in the installed text, use a separate permanent block, or reinstall content when the relevant values change. A block reinstalled every turn freezes values when its trigger runs, so values set by triggers below it arrive a turn late: order producers above the installer, or use `<=...=>`. See Capabilities.md for the interpolation table.
 
 **Player-selected layered openings.** Combine independent choices into meaningful variations using ordered text replacements, then install the result as background. This avoids authoring every full combination; keep fragments compatible and add combination-specific handling where needed. See [layered opening](../examples/recipe-layered-opening.json).
@@ -84,9 +81,9 @@ These optional complete worlds compose known primitives. Do not replace a world'
 | [Cached random](../examples/recipe-cached-random.json) | One trigger samples once and both blocks read the stored roll. Before that trigger runs the initial value is 0; reset ready to 0 only when a new draw is intended. This is not a guarantee of same-turn narrative visibility. |
 | [Consumed milestone](../examples/recipe-consumed-timer.json) | Increment turn time before checking ticks >= 3; consume the crossing once. This counts ordinary eligible trigger cycles, not elapsed story time. Resetting only the consumed flag permits another award. |
 | [Choice domain](../examples/recipe-choice-domain.json) | Accept only Courier or Archivist at consumption. Blank offers the form again; unexpected manual/script values do not commit. Multiple selections need their own delimiter/representation validation. |
-| [Compiled plot](../examples/recipe-compiled-plot.json) | Literal Scenarios with ordered prerequisites and guarded awards. See [plot compiler](Engineering-Tools.md). |
+| [Compiled plot](../examples/recipe-compiled-plot.json) | Literal Scenarios with ordered prerequisites and guarded awards. See the plot compiler in [tools/Usage.md](../tools/Usage.md#plot-compiler). |
 
-The validator's review advisories cover repeat accumulation, separate script transaction boundaries, computed choice domains, multiple-choice storage and independently evaluated random expressions. They are prompts to inspect intent, never hard prohibitions or proof that a guard is missing. Existing guards can legitimately trigger a review notice. Choice menus and Enforce format do not validate all manual/script write paths.
+The validator's review advisories (repeat accumulation, script transaction boundaries, choice domains, multiple-choice storage, independent random expressions) are prompts to inspect intent, not proof that a guard is missing; see [tools/Usage.md](../tools/Usage.md). Choice menus and Enforce format do not validate all manual/script write paths.
 
 ---
 

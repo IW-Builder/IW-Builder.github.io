@@ -160,9 +160,9 @@ for p in ['validate_iw_export.py','static_checks.py','iw-export.schema.json']:
 </main>
 
 <!-- ================================================================
-     EMBEDDED KIT TOOLS — verbatim copies, kit 1.1.0 / profile 1.1.0.
-     If you update these files in tools/, replace the matching block
-     below (paste the new file contents between the script tags).
+     EMBEDDED KIT TOOLS — verbatim copies of tools/validate_iw_export.py,
+     tools/static_checks.py and tools/iw-export.schema.json, kept in sync
+     by tools/build_distribution.py. Do not edit the blocks by hand.
      The footer hash lets users confirm the page matches the package.
      ================================================================ -->
 
@@ -2566,7 +2566,7 @@ def pattern_advisories(doc):
   "x-iwCompatibility": {
     "updateName": "Save/load system, Image style system and Pawscript update",
     "updateDate": "2026-10-08",
-    "source": "User identification of the Discord announcement; not an application version number."
+    "note": "The platform update this profile was checked against; not an application version number."
   }
 }
 </script>

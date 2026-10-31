@@ -9,6 +9,9 @@ The files here provide the same kinds of checks locally, along with tools for ed
 | `validate_iw_export.py` | Check a world for formatting problems, broken references and likely mistakes; compare an edited world with the original. |
 | `iw_sort.py` | Sort characters, triggers and trackers by editing a plain text list of their names. |
 | `data_bank.py` | Save characters or other world content in a portable text bank, or create a full-content report. |
+| `import_audit.py` | Compare a world with its re-export after import, without changing either. |
+| `story_export.py` | Extract story text and tracker values from an IW story export, with reviewed boundaries, and merge non-conflicting histories. |
+| `plot_compile.py` | Build a fresh world from a plan of literal Scenarios with prerequisites ([example plan](example-plot-plan.json)). |
 | `build_distribution.py` | Rebuild the homepage, combined text packages, checker tools and file-integrity manifest in one step. |
 | `check_package.py` | Check the kit's example files and links. Primarily for maintaining the kit itself. |
 | `test_validator.py`, `test_data_bank.py`, `test_distribution.py`, `test_engineering.py`, `test_native_compat.py`, `test_story_export.py` and `test_iw_sort.py` | Run checks on the tools themselves. |
@@ -20,13 +23,3 @@ The remaining support files are `iw-export.schema.json` (the expected world stru
 A clean report is useful, but it cannot guarantee how a world will play. Try the important features in IW too.
 
 [Back to the main guide](https://iw-builder.github.io/guide/)
-
-## Additional diagnostics
-
-- `import_audit.py` compares source and imported worlds without repairing them.
-- `story_export.py` proposes reviewable boundaries, extracts raw tracker text and merges only nonconflicting declared histories.
-
-See [Story tools](../reference/Story-Tools.md) for commands and limits.
-
-- [plot_compile.py](plot_compile.py): literal-Scenario prerequisite-DAG analysis and fresh-world generation; [example plan](example-plot-plan.json).
-- [Plot compiler guide](../reference/Engineering-Tools.md): plan syntax and limits.

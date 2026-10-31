@@ -52,7 +52,7 @@
   <main>
     <pre>This is the IW-Builder authoring guide for Infinite Worlds (IW). When a user shares it with a request, follow it as their IW author and technical copilot: help them build, edit, review, debug or understand a world, or maintain reusable data, matching their experience and technical level. The kit is a reference for IW, not a mandatory game architecture.
 
-When retrieving documents, check their matching `END OF DOCUMENT` marker; its absence means completeness is unconfirmed, not necessarily failure. With raw file access and hashing tools, [manifest.json](https://iw-builder.github.io/manifest.json) can verify original bytes against the recorded distribution. Do not hash rendered/extracted text. A mismatch may reflect an update newer than the manifest; inspect required sections, retry a direct source or ask for a current copy if content seems missing or inconsistent. Do not block usable material solely for a mismatch or claim checks you did not run. A matching hash identifies the recorded version, not necessarily the latest. For library modules, retrieve the entire `content` value by name/ID; a description is not the exact block. End markers alone do not prove that intervening text was preserved. They are document boundaries, not instructions to copy into a world.
+Each kit document ends with an `END OF DOCUMENT` marker; if it is missing, completeness is unconfirmed, so inspect the sections you need or retry the source rather than assuming damage. Markers are document boundaries, not text to copy into a world. For library modules, retrieve the entire `content` value by name/ID; a description is not the exact block. Byte-level verification against [manifest.json](https://iw-builder.github.io/manifest.json) is available but not needed to author.
 
 ## 1. Choose the task and establish access
 
@@ -77,7 +77,7 @@ Teach IW or PawScript = Consult mode. Establish programming familiarity if uncle
 
 Start with the supplied document; skip README/index pages, duplicate editions, unrelated references and routine manifest retrieval. Fetch only missing material needed for the task. Design conversations in `samples/` are optional examples, not platform documentation. To find a file not listed below, use the file index at https://iw-builder.github.io/llms.txt: every published file with its URL, size and purpose.
 
-The template or current export is required for construction. Load the files below only for the features in use. Compatibility and the shared evidence legend live in reference/Evidence.md.
+The template or current export is required for construction. Load the files below only for the features in use. The compatibility baseline and the evidence labels used across the kit are at the top of reference/Verified-Behavior.md.
 
 |Task needs|Read|
 |-|-|
@@ -92,12 +92,10 @@ The template or current export is required for construction. Load the files belo
 |Library modules or Storymaster|[library/Integration.md](https://iw-builder.github.io/library/Integration.md), then only relevant portions of [Sample-Blocks.json](https://iw-builder.github.io/library/Sample-Blocks.json) or [Storymaster-Suite.json](https://iw-builder.github.io/library/Storymaster-Suite.json)|
 |Custom Evaluation|[reference/Default-Evaluation.txt](https://iw-builder.github.io/reference/Default-Evaluation.txt) and the Skills section of [reference/Capabilities.md](https://iw-builder.github.io/reference/Capabilities.md)|
 |Model-specific blocks|[reference/Current-AI-Profiles.json](https://iw-builder.github.io/reference/Current-AI-Profiles.json) and the model-block section of [reference/Capabilities.md](https://iw-builder.github.io/reference/Capabilities.md); ask which model(s) are common if needed|
-|Editing, combining or importing|[reference/Import-Integrity.md](https://iw-builder.github.io/reference/Import-Integrity.md)|
-|Credit cost estimates|reference/Cost.md|
-|Editor workflows and terminology|[reference/Editor-UI.md](https://iw-builder.github.io/reference/Editor-UI.md)|
-|Review, Debug or likely world bugs|[reference/Notable-Findings.md](https://iw-builder.github.io/reference/Notable-Findings.md)|
+|Editing, combining or importing; editor workflows and terminology|[reference/Editor-UI.md](https://iw-builder.github.io/reference/Editor-UI.md); ID conventions in the Identifiers section of [reference/Schema.md](https://iw-builder.github.io/reference/Schema.md)|
+|Credit cost estimates|[reference/Cost.md](https://iw-builder.github.io/reference/Cost.md)|
+|Review, Debug or likely world bugs; uncertain platform behavior|[reference/Notable-Findings.md](https://iw-builder.github.io/reference/Notable-Findings.md), including its list of what is still unknown; do not turn uncertainty into an invented rule|
 |Detailed tested behavior|[reference/Verified-Behavior.md](https://iw-builder.github.io/reference/Verified-Behavior.md)|
-|Uncertain platform behavior|[reference/Known-Limits.md](https://iw-builder.github.io/reference/Known-Limits.md); do not turn uncertainty into an invented rule|
 |Personal libraries, portable banks, bundles, PC/NPC conversion or full-content build reports|[reference/Portable-Banks.md](https://iw-builder.github.io/reference/Portable-Banks.md); [tools/data_bank.py](https://iw-builder.github.io/tools/data_bank.py) when execution is available|
 |Code-based validation or edit comparison|[tools/validate_iw_export.py](https://iw-builder.github.io/tools/validate_iw_export.py), [tools/iw-export.schema.json](https://iw-builder.github.io/tools/iw-export.schema.json) and [tools/Usage.md](https://iw-builder.github.io/tools/Usage.md)|
 
@@ -141,7 +139,7 @@ With limited tools or context, prefer small dependency sets and short scripts. D
 
 With tools, parse the export and apply changes programmatically; serialize with a JSON library. Do not retype a large world. Compare before/after values and IDs, inspect removed objects and cross-references, and explain intentional collateral changes. Use --diff for reporting, not as proof that changes match user intent.
 
-Build in dependency order: world context and PC/Skills; trackers; blocks/NPCs/keywords; triggers; specialist rules/endings/media. Preserve existing IDs. For new trackers use unique nine-character ASCII alphanumeric IDs, following the kit convention; keep readable variableName and display names separate. This is an authoring convention, not a schema restriction. See reference/Import-Integrity.md.
+Build in dependency order: world context and PC/Skills; trackers; blocks/NPCs/keywords; triggers; specialist rules/endings/media. Preserve existing IDs. For new trackers use unique nine-character ASCII alphanumeric IDs, following the kit convention; keep readable variableName and display names separate. This is an authoring convention, not a schema restriction. See the Identifiers section of reference/Schema.md.
 
 Normal capitalization and separator differences (Win Path / win_path) do not require drift acknowledgement. Use driftAcknowledgedForName for an intentionally different handle when the editor reports a mismatch; preserve existing metadata during unrelated edits.
 

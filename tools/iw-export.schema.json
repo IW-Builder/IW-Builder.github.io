@@ -1940,6 +1940,6 @@
   "x-iwCompatibility": {
     "updateName": "Save/load system, Image style system and Pawscript update",
     "updateDate": "2026-10-08",
-    "source": "User identification of the Discord announcement; not an application version number."
+    "note": "The platform update this profile was checked against; not an application version number."
   }
 }

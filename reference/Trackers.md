@@ -25,9 +25,9 @@ Do not let the AI and scripts compete to rewrite the same mechanical YAML docume
 
 Visibility values include everyone (player and AI), ai_only and ai_only_boring (AI-only), player_only, hidden and hidden_boring (hidden from player and AI in supplied uses). Do not infer additional UI highlighting behavior from the suffix alone. The editor clears "Hide in Storyteller mode" when player visibility is enabled. Do not invent contradictory UI combinations. Exports can include hidden trackers and secret information when Storyteller Mode is enabled; select those export options when collecting diagnostics. Visibility is not script access control: hidden values remain script-usable at runtime.
 
-[RUNTIME] Extra-hidden values remain visible in the Storyteller tracker editor even when Include Extra-hidden is off. Import normalizes automatic updating off for hidden, hidden_boring and player_only; everyone, ai_only and ai_only_boring can retain automatic updates. UI visibility does not establish full AI prompt inclusion.
+Import normalizes automatic updating off for hidden, hidden_boring and player_only; everyone, ai_only and ai_only_boring can retain automatic updates. Extra-hidden values remain visible in the Storyteller tracker editor. UI visibility does not establish full AI prompt inclusion.
 
-A trigger can change a tracker's visibility or automatic updating during play with Modify tracked item details; see [Trigger-Catalog](Trigger-Catalog.md#changing-automatic-updating). The live player-visible/hidden lists reflect a visibility change even when the live-design export retains the original visibility.
+A trigger can change a tracker's visibility or automatic updating during play with Modify tracked item details; see [Triggers](Triggers.md#changing-a-trackers-definition-during-play).
 
 Starting values: a tracker's value can be the same for all characters, set per player character (fixed, a fixed choice list, or script-generated choices), or chosen by the player at startup. Exact shapes are in the [Schema](Schema.md) starting-values table, with worked examples in ../examples/character-starting-values.json and ../examples/optional-block.json. For a player-chosen preference, set autoUpdate false so the AI cannot rewrite it. The player sets it at startup; changing it later needs the Storyteller-mode tracker editor, since Storyteller mode off shows no live tracker-edit control. Use one mode per tracker; do not combine modes and guess precedence.
 
@@ -41,7 +41,7 @@ If a bad turn establishes a false fact, adding an instruction may leave conflict
 
 Native trigger changes can affect runtime instructions without changing the base editor definition. Inspect active instruction contents and trigger/debug results when troubleshooting; a base-world export alone does not show everything the model received. Base and live worlds are separate copies.
 
-Keep loaded instructions and AI-visible tracker names, descriptions, update rules and values purposeful. Prefer concise shared rules over repetition, keyword activation for occasional lore, and PawScript for exact calculations. Large AI-updated records can be expensive to rewrite. Summary compression follows a six-turn cadence beginning at turn eight (user-confirmed); exact summary contents are not visible.
+Keep loaded instructions and AI-visible tracker names, descriptions, update rules and values purposeful. Prefer concise shared rules over repetition, keyword activation for occasional lore, and PawScript for exact calculations. Large AI-updated records can be expensive to rewrite. Summary compression begins around turn eight and repeats every six turns; its contents are not visible.
 
 See [Editor-UI](Editor-UI.md) for current-value editing and [Verified-Behavior](Verified-Behavior.md) for forms, initialization and retention results.
 

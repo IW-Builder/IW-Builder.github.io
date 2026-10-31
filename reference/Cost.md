@@ -51,7 +51,7 @@ Turns took about 35–70 seconds on the models that were timed (Dolphin, Massive
 
 [RUNTIME] One small sample world per model, one game each, played on 2026-10-30 with the same four fixed inputs. The averages come from **three turns** per model (turns 2–4; the opening is left out), and K rests on two of those turns. So treat every figure as a rough guide, not a price list: a second game, another world or another day could move a model's numbers by tens of percent, and thinking costs could move more.
 
-Two checks agree with it. Dolphin's and Massivecat's K match earlier separate measurements (1.6 and 2.7). On a long adventure world measured over 14 turns per model, Puma cost 0.85×, Smilodon 1.5× and Massivecat 2.0× Dolphin, close to the ratios above.
+Two independent checks agree with it. Dolphin's and Massivecat's K match separate measurements on other worlds (1.6 and 2.7). On a long adventure world measured over 14 turns per model, Puma cost 0.85×, Smilodon 1.5× and Massivecat 2.0× Dolphin, close to the ratios above.
 
 ## Why the same world costs different players different amounts
 
@@ -60,7 +60,7 @@ The world sets the starting point; the player decides most of the rest.
 - **How many turns they take.** This matters most, because a game's total is turns × cost per turn. A player who talks through every scene, explores side paths or makes small moves may take several times as many turns as one who pushes the story along. One long adventure world took about 125 turns to finish, at about 100 credits a turn on Dolphin.
 - **Where they go and who they talk about.** Lore entries and NPC cards load when their keywords appear in the story and stay active for a few turns, so a player in a lore-heavy city or a crowded court pays more per turn than one on an empty road. On one large world, active lore cost 17–29 credits a turn on Dolphin.
 - **Which route or phase they reach.** Worlds that install blocks or show trackers for a route make that route cost more or less than others. Story luck can change the route: in two otherwise identical games, one player was captured a turn earlier and moved to a different route.
-- **How long the game has run.** Recent story is re-sent every turn, so turns get dearer as the game goes on, until IW compresses older story into a summary (from about turn 8, then every six turns). After that the cost levels off. A small world can double between its first turns and turn 8 or 9; a large one rises less in proportion (about 30% over its first six turns on one 50k-character world).
+- **How long the game has run.** Recent story is re-sent every turn, so turns get dearer as the game goes on, until IW compresses older story into a summary (from about turn 8, then every six turns; see [Trackers](Trackers.md#memory-continuity-and-context-cost)). After that the cost levels off. A small world can double between its first turns and turn 8 or 9; a large one rises less in proportion (about 30% over its first six turns on one 50k-character world).
 - **How much the narration runs.** The same model on the same world wrote 451 to 638 words a turn. Big scenes, dialogue-heavy turns and players who ask for detail produce longer replies, which cost more now and again in recent story later.
 - **Which model they pick.** Players can switch model mid-game. The table above is the biggest single multiplier.
 - **Free turns.** IW gives 3 free turns a day, shared across the whole account rather than per world or per model.

@@ -39,6 +39,7 @@ class DistributionTests(unittest.TestCase):
             self.assertEqual(entry['bytes'], len(data))
             self.assertEqual(entry['sha256'], hashlib.sha256(data).hexdigest())
         self.assertIn('checker/index.html', paths)
+        self.assertIn('cost/index.html', paths)
         self.assertIn('chat/IW-Tools.txt', paths)
         self.assertNotIn('manifest.json', paths)
         self.assertFalse(any(p.startswith('samples/') or p.endswith('.zip') for p in paths))
@@ -69,9 +70,8 @@ class DistributionTests(unittest.TestCase):
         for name in ['IW-Authoring-Guide.txt', 'IW-Technical-Reference.txt', 'IW-Behavior.txt']:
             self.assertLess((self.root/'chat'/name).stat().st_size, 90_000, name)
         every = [p for files in sources.values() for p in files]
-        self.assertNotIn('reference/Roadmap.md', every)
-        self.assertIn('reference/Story-Tools.md', sources['IW-Tools.txt'])
-        self.assertIn('reference/Engineering-Tools.md', sources['IW-Tools.txt'])
+        self.assertIn('tools/Usage.md', sources['IW-Tools.txt'])
+        self.assertIn('tools/plot_compile.py', sources['IW-Tools.txt'])
         self.assertEqual(len(every), len(set(every)), 'a source appears in two editions')
         guide = (self.root/'chat/IW-Authoring-Guide.txt').read_text()
         for name in sources:
@@ -80,7 +80,7 @@ class DistributionTests(unittest.TestCase):
     def test_kit_version_consistent(self):
         spec = importlib.util.spec_from_file_location('bd', self.root/'tools/build_distribution.py')
         bd = importlib.util.module_from_spec(spec); spec.loader.exec_module(bd)
-        self.assertIn('Kit version is ' + bd.KIT_VERSION + ';', (self.root/'reference/Evidence.md').read_text())
+        self.assertIn('Kit version is ' + bd.KIT_VERSION + ';', (self.root/'reference/Verified-Behavior.md').read_text())
         self.assertIn('Kit ' + bd.KIT_VERSION, (self.root/'index.html').read_text())
         self.assertTrue((self.root/'llms.txt').read_text().startswith('# IW-Builder: Infinite Worlds Authoring Kit ' + bd.KIT_VERSION))
 
@@ -115,7 +115,6 @@ class DistributionTests(unittest.TestCase):
         self.assertNotIn('===== BEGIN FILE: tools/test_validator.py =====', text)
         self.assertTrue(text.endswith('END OF DOCUMENT: chat/IW-Tools.txt\n'))
         self.assertEqual((self.root/'Authoring-Prompt.md').read_text().count('END OF DOCUMENT: Authoring-Prompt.md'), 1)
-        self.assertFalse((self.root/'prompt.txt').exists())
 
     def test_checker_matches_tools(self):
         page = (self.root/'checker/index.html').read_text()

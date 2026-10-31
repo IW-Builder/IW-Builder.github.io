@@ -2,21 +2,21 @@ Infinite Worlds Authoring Kit: IW-Tools.txt (Python tools and their guides, for 
 Generated text edition. BEGIN FILE / END FILE sections identify package-relative source paths. This is reference material, not one IW world.
 To use the tools, recreate files at their BEGIN FILE paths, excluding boundary lines and separator newlines, and preserve indentation and escaping. See tools/Usage.md for dependencies and commands. Distribution builders and maintainer tests are omitted. Reading these sources is not running them; report validation only after execution.
 Editions and their contents:
-- IW-Authoring-Guide.txt: start here: prompt, template, narrative craft, trackers, triggers, data banks and library integration. Files: Authoring-Prompt.md, World-Template.json, reference/Evidence.md, reference/Craft.md, reference/Trackers.md, reference/Triggers.md, reference/Trigger-Catalog.md, reference/Portable-Banks.md, library/Integration.md
+- IW-Authoring-Guide.txt: start here: prompt, template, narrative craft, trackers, triggers, data banks and library integration. Files: Authoring-Prompt.md, World-Template.json, reference/Craft.md, reference/Trackers.md, reference/Triggers.md, reference/Trigger-Catalog.md, reference/Portable-Banks.md, library/Integration.md
 - IW-Technical-Reference.txt: exact payloads, PawScript, capabilities and recipes. Files: reference/Schema.md, reference/PawScript.md, reference/Capabilities.md, reference/Recipes.md, reference/Default-Evaluation.txt, reference/Current-AI-Profiles.json
-- IW-Behavior.txt: notable findings, editor/UI workflows, verified runtime behavior, known limits and import integrity. Files: reference/Notable-Findings.md, reference/Editor-UI.md, reference/Cost.md, reference/Verified-Behavior.md, reference/Known-Limits.md, reference/Import-Integrity.md
+- IW-Behavior.txt: notable findings and open questions, editor/UI workflows with import checks, cost and verified runtime behavior. Files: reference/Notable-Findings.md, reference/Editor-UI.md, reference/Cost.md, reference/Verified-Behavior.md
 - IW-Payloads.txt: exact native payload snippets for every condition and effect, plus the example index. Files: examples/Payloads.md, examples/index.json
-- IW-Mechanics-Examples.txt: complete mechanics example worlds: recipes, optional block, starting values and a showcase. Files: examples/recipe-request-commit.json, examples/recipe-completion-award.json, examples/recipe-candidate-acceptance.json, examples/recipe-archive-reactivate.json, examples/recipe-cached-random.json, examples/recipe-consumed-timer.json, examples/recipe-choice-domain.json, examples/recipe-compiled-plot.json, examples/recipe-choice-followup.json, examples/recipe-threshold-unlock.json, examples/optional-block.json, examples/character-starting-values.json, examples/showcase-glass-ledger.json
-- IW-Narrative-Examples.txt: complete narrative example worlds: ensemble romance, fantasy expedition and contained horror. Files: examples/narrative-vendemmia.json, examples/narrative-listening-road.json, examples/narrative-address-after-midnight.json
+- IW-Mechanics-Examples.txt: complete mechanics example worlds: recipes, optional block, starting values, layered opening, on-demand generation and a showcase. Files: examples/recipe-request-commit.json, examples/recipe-completion-award.json, examples/recipe-candidate-acceptance.json, examples/recipe-archive-reactivate.json, examples/recipe-cached-random.json, examples/recipe-consumed-timer.json, examples/recipe-choice-domain.json, examples/recipe-compiled-plot.json, examples/recipe-choice-followup.json, examples/recipe-threshold-unlock.json, examples/optional-block.json, examples/character-starting-values.json, examples/recipe-layered-opening.json, examples/recipe-on-demand-generation.json, examples/showcase-glass-ledger.json
+- IW-Narrative-Examples.txt: complete narrative example worlds: ensemble romance, fantasy expedition, contained horror, fantasy relationship and high-heat erotica. Files: examples/narrative-vendemmia.json, examples/narrative-listening-road.json, examples/narrative-address-after-midnight.json, examples/narrative-seven-nights.json, examples/narrative-velvet-wager.json
 - IW-Sample-Blocks.txt: optional library modules (read library/Integration.md first). Files: library/Sample-Blocks.json
 - IW-Storymaster.txt: the Storymaster narrative-direction framework (read library/Integration.md first). Files: library/Storymaster-Suite.json
-- IW-Tools.txt: Python tools and their guides, for models that can run code. Files: tools/Usage.md, reference/Story-Tools.md, reference/Engineering-Tools.md, tools/validate_iw_export.py, tools/static_checks.py, tools/iw-export.schema.json, tools/data_bank.py, tools/import_audit.py, tools/story_export.py, tools/plot_compile.py
+- IW-Tools.txt: Python tools and their guides, for models that can run code. Files: tools/Usage.md, tools/validate_iw_export.py, tools/static_checks.py, tools/iw-export.schema.json, tools/data_bank.py, tools/import_audit.py, tools/story_export.py, tools/plot_compile.py
 Every file is also available individually: https://iw-builder.github.io/llms.txt
 
 ===== BEGIN FILE: tools/Usage.md =====
 # Tool usage and validation reference
 
-Run commands from the package root. Python reads and writes package files explicitly as UTF-8.
+Run commands from the package root. Python reads and writes package files explicitly as UTF-8. No tool here submits a game turn, imports a world or publishes content; none executes IW or PawScript.
 
 ## Validate an authored world
 
@@ -33,7 +33,7 @@ python -m pip install jsonschema
 
 Without jsonschema, the validator reports schema-validation-unavailable and uses limited type/requiredness guards before checking references and lint. This is deliberately reduced coverage, not a substitute implementation of JSON Schema. Read the coverage object in JSON output. Exit status is 0 when no errors were found (warnings may remain), 1 for validation errors, and 2 for unreadable files/invalid JSON. No output certifies import or gameplay success.
 
-## What it checks
+### What it checks
 
 - Full structural types/constraints when jsonschema is present.
 - Explicit tracker, block, trigger, PC and skill references; duplicate IDs and wrapper/payload mismatches.
@@ -42,15 +42,26 @@ Without jsonschema, the validator reports schema-validation-unavailable and uses
 - Recognizable library editing placeholders. Generic comments and intentional runtime notation should not be removed just to silence warnings.
 - Searchable content-substitution markers, reported as review warnings rather than import errors; reconcile them with the separate Authoring report.
 - A trailing newline in the actual input file.
+- Native string turn thresholds, the editor-recognized first-action/Other Character effects and the turn_number root are accepted. Exact Scenario mismatches are errors when a registry is present; an absent registry produces migration guidance, since import populates it. Non-alphanumeric tracker IDs, a tracker without `description` and a value effect without `replaceWith` produce import-risk advisories. Findings identify the owning tracker/trigger Name where available; JSON paths remain technical coordinates.
 - In --diff mode, added/removed/changed object IDs, ordering changes and changed field paths. Long string values are summarized with length and hash; the files remain the authoritative complete values.
 
-## Limitations and warning review
+### Limitations and warning review
 
 Static lint is heuristic. It does not parse all PawScript, resolve arbitrary dynamic paths, model control flow, evaluate templates, or validate the full formatSchema language. Script locals are recognized lexically; declaration order and every branch scope are not proven. A root warning can expose a missing tracker or a context-specific engine variable; investigate it rather than inventing a tracker automatically. New syntax can produce false positives.
 
 The module library deliberately contains authoring slots and alternative dependency sets, so placeholder/root warnings there are expected until the selected modules are adapted. Finished worlds should have no unexplained warnings. A native YAML path can be semantically wrong even when all static checks pass; compare it with the intended runtime structure.
 
-A diff proves what changed, not whether those changes are authorized or correct. Reordered arrays can generate positional changes while the object-ID summary remains easier to read. The tool does not execute scripts or verify runtime behavior.
+The validator's review advisories cover repeat accumulation, separate script transaction boundaries, computed choice domains, multiple-choice storage and independently evaluated random expressions. They are prompts to inspect intent, never hard prohibitions or proof that a guard is missing; an existing guard can legitimately trigger a review notice.
+
+A diff proves what changed, not whether those changes are authorized or correct. Reordered arrays can generate positional changes while the object-ID summary remains easier to read.
+
+## Compare a source world with its native re-export
+
+```sh
+python tools/import_audit.py source.json imported.json
+```
+
+The report includes source hashes, complete structural differences, possible tracker-ID changes and references still pointing at removed tracker targets. Possible identity changes require a unique Name/variable-handle candidate; ambiguity is reported, never automatically repaired. Array changes remain visible even when positional reordering makes them noisy. No input is modified. Full schema coverage depends on jsonschema; source hashes and comparison do not. Import normalization and what to check afterwards are described in [Editor and UI](../reference/Editor-UI.md#import-export-and-preserving-work).
 
 ## Portable data and full-content reports
 
@@ -78,74 +89,11 @@ Use `-o` to name the output and `--force` to overwrite an existing one; without 
 - `positionInList` is renumbered to the new order. Indentation and line endings follow the input, so an unedited list gives a byte-identical file.
 - Trigger order is execution order (see [Triggers](../reference/Triggers.md)), so moving triggers can change how a world plays. The tool warns when it does.
 
-Tested offline only: unedited round trips are byte-identical and shuffled worlds still pass the validator. Importing a sorted world into IW has not yet been checked; confirm the editor shows the new order.
-
-## Maintainer commands
-
-These are repository maintenance tasks, not requirements for authoring worlds:
-
-```sh
-python tools/test_validator.py
-python tools/test_data_bank.py
-python tools/test_distribution.py
-python tools/test_engineering.py
-python tools/test_native_compat.py
-python tools/test_story_export.py
-python tools/test_iw_sort.py
-python tools/check_package.py
-python tools/build_distribution.py
-```
-
-`build_distribution.py` uses its own location in `/tools` to find the repository, so it needs no arguments and works from any working directory. It uses only Python's standard library. Run validation before building when publishing changed worlds or tools.
-
-The builder updates visible EOF markers in AI-facing Markdown documents, generates `index.html` from `Authoring-Prompt.md`, synchronizes the checker's embedded validator/schema, writes the combined chat TXT files and `chat/sources.json`, generates `llms.txt` and the folder index pages from the descriptions table in `build_distribution.py`, then hashes the finished files into root `manifest.json`. It does not produce a separate `prompt.txt`, run validation or rebuild ZIP archives. Repackage `full-package.zip` after the build when distributing a new archive.
-
-Required sources are checked before output begins; a missing source or checker embedding stops the build with an error. Repeated builds with unchanged inputs preserve output bytes and the manifest timestamp. A write failure can leave partial outputs; fix it and rerun before publishing.
-
-`IW-Tools.txt` has an explicit authoring-tool list: this usage guide, the Story-Tools and plot-compiler guides, validator, static checks, JSON schema, data-bank utility, import audit, story-export tool and plot compiler. Builders, regression tests, package reports and the world sorter (a hands-on editing tool, not an authoring one) remain in the repository but are omitted from that model-facing bundle. Human READMEs are also omitted from combined technical packages. No model needs the distribution builder to author a world.
-
-The root manifest records repository-relative paths, byte lengths and SHA-256 hashes. It covers the authoring sources and supported files under reference, library, examples, tools, chat and checker, plus the homepage and root guide/template/license. It excludes itself, ZIP archives, sample histories, hidden files and caches. It is separate from the files it hashes to avoid circular dependencies. Hash original bytes, never a browser's rendered/extracted text. A mismatch may mean the manifest is stale; investigate apparent missing content without treating every mismatch as damage. A match establishes the recorded bytes, not freshness or runtime correctness.
-
-EOF markers are added only to AI-facing Markdown and the generated chat documents. They are not added to JSON, scripts, the native default Evaluation text or other directly reusable content. They are documentation boundaries, not world instructions to copy into a story.
-
-## Import audit and story exports
-
-Use `python tools/import_audit.py source.json imported.json` for possible tracker reminting, stale references and a loss-aware structural diff. It never rewrites the worlds. Full schema coverage depends on jsonschema; source hashes and comparison do not.
-
-Use `python tools/story_export.py plan story.txt --world world.json --session NAME --branch NAME` to propose a layout. After source review, `build plan.json --output NEW_DIRECTORY` extracts/merges it; `verify NEW_DIRECTORY` checks manifest hashes. These subcommands follow `python tools/story_export.py`. It requires a new output directory and explicit reviewed boundaries/session/branch declarations. It preserves raw source and tracker strings, rejects conflicts/gaps, and never selects by timestamps. See [Story tools](../reference/Story-Tools.md) for partial histories and ambiguous delimiters.
-
-Run all maintained regression checks with `python -m unittest discover -s tools -p "test_*.py"`. These are local tool checks, not IW execution.
-
-## Plot compiler
-
-See [Plot compiler](../reference/Engineering-Tools.md) for `plot_compile.py` plan syntax. No tool here submits a game turn, imports a world or publishes content.
-
----
-
-END OF DOCUMENT: tools/Usage.md
-
-===== END FILE: tools/Usage.md =====
-
-===== BEGIN FILE: reference/Story-Tools.md =====
-# Story extraction and import diagnostics
-
-These local tools operate on files, not the live game. They do not infer hidden character records, run PawScript or certify narrative consistency.
-
-## Compare a source world with its native re-export
-
-Run:
-
-```sh
-python tools/import_audit.py source.json imported.json
-```
-
-The report includes source hashes, complete structural differences, possible tracker-ID changes and references still pointing at removed tracker targets. Possible identity changes require a unique Name/variable-handle candidate; ambiguity is reported, never automatically repaired. Array changes remain visible even when positional reordering makes them noisy. No input is modified.
-
-The validator supports native string turn thresholds, the editor-recognized first-action/Other Character effects, and the verified turn_number root. Exact Scenario mismatches are errors when a registry is present; an absent registry produces migration guidance, since import populates it. Non-alphanumeric tracker IDs, a tracker without `description` and a value effect without `replaceWith` produce import-risk advisories. Findings identify the owning tracker/trigger Name where available; JSON paths remain technical coordinates.
+Unedited round trips are byte-identical and shuffled worlds pass the validator. After importing a sorted world, confirm that the editor shows the new order.
 
 ## Extract story text without silently resolving ambiguity
 
-Run:
+These commands operate on files, not the live game. They do not infer hidden character records or certify narrative consistency.
 
 ```sh
 python tools/story_export.py plan story.txt --world world.json --session my-session --branch main > plan.json
@@ -166,28 +114,17 @@ Output includes original source bytes, reviewed plans, story.json and a SHA-256 
 
 The output path must be new. Publication uses a fresh sibling staging directory, validates its hashes and renames the completed directory into place. Existing output is never reused or deleted, preventing stale files from masquerading as new state. Read only manifest-listed files; verify checks their hashes and ignores unrelated files.
 
-## Merge only an explicitly selected history
+### Merge only an explicitly selected history
 
 Supply multiple reviewed plans to build. Every plan must declare the same nonempty session and branch. Neither title, player Name, timestamp nor overlap proves identity. Identical overlapping turn content and extraction can deduplicate, retaining all source provenance. Any conflicting overlap is rejected, independent of file modification time or input order.
 
-Select a single coherent branch/revision before building conflicting history; the tool offers no latest-file winner and does not combine downstream turns from divergent branches automatically. Complete histories require turn one and no gaps. --partial permits a contiguous later range and labels it partial; it does not permit holes or silently promote partial history to complete.
+Select a single coherent branch before building conflicting history; the tool offers no latest-file winner and does not combine downstream turns from divergent branches automatically. Complete histories require turn one and no gaps. --partial permits a contiguous later range and labels it partial; it does not permit holes or silently promote partial history to complete.
 
-The tool is a conservative IW-Builder implementation. It does not patch the separate external parser.
+## Plot compiler
 
----
+`tools/plot_compile.py` is a local authoring tool, not a platform API. It accepts a deliberately bounded plan: title and nodes; each node has an internal lowercase identifier, a user-facing Name, a literal Scenario, optional all-of prerequisites and a nonnegative integer award. It builds a fresh world, never modifies an existing one. See [example plan](example-plot-plan.json).
 
-END OF DOCUMENT: reference/Story-Tools.md
-
-===== END FILE: reference/Story-Tools.md =====
-
-===== BEGIN FILE: reference/Engineering-Tools.md =====
-# Plot compiler
-
-A local authoring tool, not a platform API. It never submits a turn or publishes a world. See [Story tools](Story-Tools.md) for export parsing and import comparison.
-
-`tools/plot_compile.py` accepts a deliberately bounded plan: title and nodes; each node has an internal lowercase identifier, a user-facing Name, a literal Scenario, optional all-of prerequisites and a nonnegative integer award. It builds a fresh world, never modifies an existing one. See [example plan](../tools/example-plot-plan.json).
-
-```text
+```sh
 python tools/plot_compile.py tools/example-plot-plan.json
 python tools/plot_compile.py tools/example-plot-plan.json --output new-world.json
 ```
@@ -198,11 +135,29 @@ Generation puts prerequisite triggers before their dependents. A single script g
 
 Unknown prerequisites, cycles, duplicate identifiers, dynamic Scenario templates and unsupported plan fields are rejected. This compiler supports prerequisite DAGs, not arbitrary cyclic plots, mutually exclusive branches or all possible IW worlds. Independent nodes retain author order. It does not infer events from prose or prove that the AI will recognize a Scenario, that a scene is achievable, or that every player's route is possible. Connectivity is not narrative satisfiability. The generated composition is structurally checked, not live-certified.
 
+## Maintainer commands
+
+These are repository maintenance tasks, not requirements for authoring worlds:
+
+```sh
+python -m unittest discover -s tools -p "test_*.py"
+python tools/check_package.py
+python tools/build_distribution.py
+```
+
+`build_distribution.py` uses its own location in `/tools` to find the repository, so it needs no arguments and works from any working directory. It uses only Python's standard library. It updates the END OF DOCUMENT markers in AI-facing Markdown documents, generates `index.html` from `Authoring-Prompt.md`, synchronizes the checker's embedded validator/schema, writes the combined chat TXT files and `chat/sources.json`, generates `llms.txt` and the folder index pages from its descriptions table, then hashes the finished files into root `manifest.json`. It does not run validation or rebuild ZIP archives: run `check_package.py` before building when worlds or tools changed, and repackage `full-package.zip` after the build when distributing a new archive. Required sources are checked before output begins; a missing source or checker embedding stops the build with an error. Repeated builds with unchanged inputs preserve output bytes and the manifest timestamp.
+
+`IW-Tools.txt` carries the authoring tools only: this usage guide, the validator, static checks, JSON schema, data-bank utility, import audit, story-export tool and plot compiler. Builders, regression tests, package reports, human READMEs and the world sorter (a hands-on editing tool) stay in the repository but are omitted from that model-facing bundle.
+
+The root manifest records repository-relative paths, byte lengths and SHA-256 hashes for the authoring sources and supported files under reference, library, examples, tools, chat, cost and checker, plus the homepage and root guide/template/license. It excludes itself, ZIP archives, sample histories, hidden files and caches. Hash original bytes, never a browser's rendered/extracted text. A mismatch may mean the manifest is stale; investigate apparent missing content without treating every mismatch as damage. A match establishes the recorded bytes, not freshness or runtime correctness.
+
+END OF DOCUMENT markers are added only to AI-facing Markdown and the generated chat documents, not to JSON, scripts, the native default Evaluation text or other directly reusable content. They are documentation boundaries, not world instructions to copy into a story.
+
 ---
 
-END OF DOCUMENT: reference/Engineering-Tools.md
+END OF DOCUMENT: tools/Usage.md
 
-===== END FILE: reference/Engineering-Tools.md =====
+===== END FILE: tools/Usage.md =====
 
 ===== BEGIN FILE: tools/validate_iw_export.py =====
 #!/usr/bin/env python3
@@ -2606,7 +2561,7 @@ def pattern_advisories(doc):
   "x-iwCompatibility": {
     "updateName": "Save/load system, Image style system and Pawscript update",
     "updateDate": "2026-10-08",
-    "source": "User identification of the Discord announcement; not an application version number."
+    "note": "The platform update this profile was checked against; not an application version number."
   }
 }
 

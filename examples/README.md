@@ -82,8 +82,6 @@ These examples preserve native payload shapes. Background replacement is observe
 
 ## Look under the hood
 
-The [feature recipes](../reference/Recipes.md) explain how these approaches work and when to use them. [Payloads.md](Payloads.md) contains smaller technical snippets, and [index.json](index.json) records the scope and testing status of the examples.
+The [feature recipes](../reference/Recipes.md) explain how these approaches work and when to use them, including the guarded-state worlds (completion awards, candidate acceptance, archive/reactivation, cached randomness, consumed timers, choice-domain checks and a compiled prerequisite graph), which are structurally checked patterns rather than live-certified worlds. [Payloads.md](Payloads.md) contains smaller technical snippets, and [index.json](index.json) records the scope and testing status of the examples.
 
 [Back to the main guide](https://iw-builder.github.io/guide/)
-
-The [guarded state recipes](../reference/Recipes.md) include completion awards, candidate acceptance, archive/reactivation, cached randomness, consumed timers, choice-domain checks and a compiled prerequisite graph. Their exact compositions are structurally checked patterns, not newly live-certified worlds.

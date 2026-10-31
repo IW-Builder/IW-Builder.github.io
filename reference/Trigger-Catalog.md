@@ -28,7 +28,7 @@ Start of game, Or mid-game, repeat eligibility and advanced logic are trigger se
 | Tell AI what should happen next turn | `effectTellAIWhatToDo` | Narrative guidance, not guaranteed state mutation. |
 | Give information to AI | `effectGiveInfo` | Information distinct from next-turn guidance; ignored with Start enabled. |
 | Set/change tracked item value | `effectSetTrackedItemValue` | Numeric/text updates, whole YAML replacement, path set/remove/append/adjust. |
-| Modify tracked item details | `effectModifyTrackedItemDetails` | Change Name, description, visibility, automatic updating and update instructions using matching override flags. Yes: autoUpdate can change, from the next turn; not alongside Request Input (below). |
+| Modify tracked item details | `effectModifyTrackedItemDetails` | Change Name, description, visibility, automatic updating and update instructions using matching override flags; applies from the next turn; not in the same trigger as Request Input ([Triggers](Triggers.md#changing-a-trackers-definition-during-play)). |
 | Modify extra instruction block | `effectModifyInstructionBlock` | Replace block content; template installation timing matters. |
 | Modify keyword instruction block | `effectModifyKeywordBlock` | Change keywords and content. |
 | Present choice | `effectPresentChoice` | Single/multiple selection, limits, delimiter and target/path. |
@@ -48,15 +48,11 @@ Start of game, Or mid-game, repeat eligibility and advanced logic are trigger se
 | Change other characters | `effectChangeOtherCharacters` | Add/Modify/Delete Character, offered only in the Start picker. Add uses `character: null`; Modify/Delete name the target by its current name. Runtime mutation unresolved. |
 | Ends game | `effectEndsGame` | End ordinary play; data true allows optional continuation, false does not. |
 
-Native startup payload examples: [background](../examples/effect-effectChangeBackground.json), [first action](../examples/effect-effectChangeFirstAction.json), and Other Character [Add](../examples/effect-effectChangeOtherCharacters-add.json), [Modify](../examples/effect-effectChangeOtherCharacters-modify.json), [Delete](../examples/effect-effectChangeOtherCharacters-delete.json). Their verification limits are stated in each example; the [payload cookbook](../examples/Payloads.md) includes the complete effect nodes.
+Native startup payload examples: [background](../examples/effect-effectChangeBackground.json), [first action](../examples/effect-effectChangeFirstAction.json), and Other Character [Add](../examples/effect-effectChangeOtherCharacters-add.json), [Modify](../examples/effect-effectChangeOtherCharacters-modify.json), [Delete](../examples/effect-effectChangeOtherCharacters-delete.json). Their verification limits are stated in each example; [Payloads.md](../examples/Payloads.md) includes the complete effect nodes.
 
-## Changing automatic updating
+## Scope of this catalog
 
-**Modify tracked item details** can turn automatic updating on or off. Set `overrideAutoUpdate: true` and the desired `autoUpdate` value. Equivalent override flags select changes to Name, description, visibility and update instructions. Changing a field without its matching override does not apply it. This changes future update behavior; it does not undo an earlier write in the current turn, so plan an explicit handoff point between AI and script ownership and inspect the next turn.
-
-Verified live (probe P37): on and off both work, repeatedly. A switch on turn N affects the AI from turn N+1, because triggers run after the AI's tracker update. Re-sending update instructions is unnecessary. **Never put this effect in a trigger that also has Request Input**: the change is silently lost while messages and scripts there still run. Give it its own trigger with the same condition (works on the same turn). Present Choice is untested; treat it the same. It can also reveal a hidden tracker. Visibility restrictions still matter. With `overrideVisibility: true`, the observed visibility values are everyone, player_only, ai_only, hidden, ai_only_boring and hidden_boring. They survive editor import, and live effects apply the expected player-visible/hidden grouping.
-
-This capability is already represented by the schema and [native example](../examples/effect-effectModifyTrackedItemDetails.json); no example needs to be read merely to discover that it exists. Read [Schema](Schema.md) and the specific payload only when implementing. The schema is a partial compatibility profile, not the definition of all platform capabilities. Do not infer nonexistent Evaluation, Summary or image-change effects from similarly named effects.
+Everything listed is represented in the schema and has a native example under ../examples/; read [Schema](Schema.md) and the specific payload only when implementing. **Modify tracked item details** changes a tracker's definition (Name, description, visibility, automatic updating, update instructions) rather than its value; its rules and the Request Input restriction are in [Triggers](Triggers.md#changing-a-trackers-definition-during-play). The schema is a partial compatibility profile, not the definition of all platform capabilities. Do not infer nonexistent Evaluation, Summary or image-change effects from similarly named effects.
 
 ---
 
