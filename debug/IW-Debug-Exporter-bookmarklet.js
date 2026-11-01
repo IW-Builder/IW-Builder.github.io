@@ -108,8 +108,24 @@
       pawscript_errors: evals.filter(s => s.error || /error|fail/i.test(s.status || '')),
       world_debug_log: d.world_debug_log || [],
       narration: v.narration, secret_info: v.secret_info, tracked_items: v.tracked_items,
-      raw_debug: d
+      // Per-turn raw fields only; world-wide definitions go once at the top of the JSON.
+      raw_debug: {fired_triggers: d.fired_triggers, completed_triggers: d.completed_triggers, script_evaluations: d.script_evaluations, world_debug_log: d.world_debug_log, matched_lorebook_entries: d.matched_lorebook_entries}
     };
+  }
+  function definitions(v) {
+    const d = (v && v.debug) || {};
+    return {trigger_definitions: d.trigger_definitions || [], main_instructions: d.main_instructions ?? null,
+      lorebook_entries: (d.lorebook_entries || []).map(e => ({name: e.name, keywords: e.keywords})),
+      instruction_block_names: (d.instruction_blocks || []).map(b => b.name)};
+  }
+  // In the JSON, a block's rendered content is kept only on turns where it changed.
+  function compactTurns() {
+    let prev = {};
+    return turns.map(t => {
+      const blocks = t.active_instruction_blocks.map(b => prev[b.name] === b.content && b.content != null ? {name: b.name, unchanged: true} : b);
+      prev = Object.fromEntries(t.active_instruction_blocks.map(b => [b.name, b.content]));
+      return {...t, active_instruction_blocks: blocks};
+    });
   }
 
   function txt() {
@@ -152,7 +168,7 @@
   function save(prefix) {
     finish('saving...');
     download(txt(), '.txt', 'text/plain;charset=utf-8');
-    download(JSON.stringify({exported_at: new Date().toISOString(), ...meta, turns}, null, 2), '.json', 'application/json');
+    download(JSON.stringify({exported_at: new Date().toISOString(), ...meta, turns: compactTurns()}, null, 2), '.json', 'application/json');
     say(prefix + turns.length + ' turns downloaded as TXT and JSON.');
   }
 
@@ -173,6 +189,7 @@
       if (v.turn !== 1) throw new Error('Could not reach turn 1 (got turn ' + v.turn + ').');
       for (;;) {
         turns.push(record(v));
+        meta.definitions = definitions(v); // keeps the latest turn's definitions
         say('collected turn ' + v.turn + ' of ' + v.max + '...');
         if (stopRequested) { reason = 'stopped by you'; break; }
         if (v.turn >= v.max) { meta.complete = true; break; }
