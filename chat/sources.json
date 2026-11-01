@@ -24,7 +24,7 @@
       "examples/Payloads.md",
       "examples/index.json"
     ],
-    "sha256": "2bb0ad1ad5665aab8c8a7ff92aa26bcf19bf0ef11e6c1eea8e93ac8e06caaf13"
+    "sha256": "797403724ee34d7520eaa428649c6c616a7860a264b9537a1a9a9d9a410e1874"
   },
   "IW-Authoring-Guide.txt": {
     "sourceFiles": [
@@ -37,7 +37,7 @@
       "reference/Portable-Banks.md",
       "library/Integration.md"
     ],
-    "sha256": "6065ac939f4441cc889fe3c5625a3f46f739fe27d3bd86e52eb5d16dcc9f9926"
+    "sha256": "8a12bddc5c591c11680b81f5c4e8e97989bc5394fc63020d2b308af73f59e3df"
   },
   "IW-Technical-Reference.txt": {
     "sourceFiles": [
@@ -59,7 +59,7 @@
       "reference/Cost.md",
       "reference/Verified-Behavior.md"
     ],
-    "sha256": "8391a6c519edf19699f97e3d10bd0b732b8c77e3966efb365549dc64e9a9b8c2"
+    "sha256": "b2c841eb4f651db88aa4bcb9e1a45ceb1fbaf53b75034765b91cd5922af1c01d"
   },
   "IW-Payloads.txt": {
     "sourceFiles": [

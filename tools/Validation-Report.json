@@ -35,7 +35,7 @@
     },
     "reference/Notable-Findings.md": {
       "hedgePhrases": 5,
-      "perThousandWords": 2.2
+      "perThousandWords": 2.1
     },
     "reference/PawScript.md": {
       "hedgePhrases": 6,
@@ -71,7 +71,7 @@
     },
     "reference/Verified-Behavior.md": {
       "hedgePhrases": 8,
-      "perThousandWords": 2.4
+      "perThousandWords": 2.3
     },
     "tools/Usage.md": {
       "hedgePhrases": 4,

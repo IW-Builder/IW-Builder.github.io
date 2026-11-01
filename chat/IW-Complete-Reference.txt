@@ -542,7 +542,7 @@ Eligible no-effect triggers record firing. Random dispatch bypasses target condi
 
 ### Scenarios
 
-Say Scenarios when talking to users; the root JSON field is `conditions`, referenced by `triggerOnEvent`. Binding requires an exact registry string, including case, spaces and punctuation; preserved JSON can still be unbound, so check the selector after import. A Scenario fires only when the event actually happens in the narrated outcome; the narrator can refuse or substitute a requested action. Unused registry entries and duplicate references are tolerated, and import fills an absent registry from the trigger references. Use literal Scenarios with explicit state gates; dynamic Scenario text (`<<$slot>>`) is unreliable beyond a single slot, and blank slot text is not dependable deactivation. The editor stops adding Scenarios at ten entries, but imported registries of twelve or more work.
+Say Scenarios when talking to users; the root JSON field is `conditions`, referenced by `triggerOnEvent`. Binding requires an exact registry string, including case, spaces and punctuation; preserved JSON can still be unbound, so check the selector after import. A Scenario fires only when the event actually happens in the narrated outcome; the narrator can refuse or substitute a requested action. Unused registry entries and duplicate references are tolerated, and import fills an absent registry from the trigger references. Use literal Scenarios with explicit state gates; dynamic Scenario text (`<<$slot>>`) did not fire at all when retested on 2026-11-01, even as a single slot, and blank slot text is not dependable deactivation. The editor stops adding Scenarios at ten entries, but imported registries of twelve or more work.
 
 ---
 
@@ -1858,7 +1858,7 @@ The Infinite Worlds behavior most likely to surprise an author or break a world,
 
 13. **Scenario text must match the registry exactly**: case, spaces and punctuation. A mismatch keeps the text in JSON but the selector shows "Select a situation" and the trigger never fires.
 14. **A Scenario fires only when the event really happens in the narration.** The narrator can refuse or alter a requested action.
-15. **Dynamic Scenario text (`<<$slot>>`) is unreliable** beyond a single slot: multi-slot, cyclic and parallel setups silently fail. Use literal Scenarios plus state conditions.
+15. **Dynamic Scenario text (`<<$slot>>`) doesn't fire.** In a 2026-11-01 retest (one model, Lynx), a Scenario that is a tracker template never fired, even as the only slot and with literal text in front of it (`1: <<$slot>>`). Earlier tests (2026-10) saw single slots fire once, so this changed on IW's side and may change again. Write each step as a literal Scenario with a stage-tracker condition.
 16. **The editor's ten-Scenario limit is an editor limit.** Imported worlds with twelve or more work.
 
 ## Import and editing
@@ -1919,7 +1919,7 @@ Platform behavior that has not been verified, by area, with what to do meanwhile
 | --- | --- | --- |
 | Prompt construction | Full historical storyteller/specialist prompts, hidden wrappers, exact inclusion and timing | Put essential facts in fields known to reach the storyteller (background, firstInput, instructions, always-on blocks); treat UI visibility as display, not proof of what the AI receives |
 | Empty-condition triggers | Whether a Start+Mid+Repeat trigger with no conditions fires on ordinary turns | Give every-turn triggers an always-true condition such as `$game.turn_number >= 0` |
-| Scenarios | Why dynamic multi-slot, cyclic and parallel arrangements fail; any runtime maximum | Use literal Scenarios with explicit state gates ([Triggers](Triggers.md#scenarios)) |
+| Scenarios | Why dynamic Scenario text stopped firing (single slots fired in 2026-10 tests); any runtime maximum | Use literal Scenarios with explicit state gates ([Triggers](Triggers.md#scenarios)) |
 | NPCs and knowledge | Live character records, identity merging, mutation and retrieval routing; why name-only mentions often fail to surface Character detail | Put facts that must surface in the Summary or always-on text; author relationships and knowledge explicitly; correct an invented detail early by editing the turn |
 | Import normalization | Internal failure stages; ID rules for every entity type; why an omitted replaceWith broke the opening | Use ASCII alphanumeric tracker IDs; always serialize description and replaceWith; re-export after import and compare with tools/import_audit.py |
 | Visibility | Whether visibility changes what the AI receives | Do not rely on visibility to keep information from the storyteller |
@@ -2276,7 +2276,7 @@ Kit-wide caveats, not repeated per entry:
 - [RUNTIME] Scenario binding requires exact registry strings, including case, spaces and punctuation. Preserved JSON can still be unbound. Say Scenarios in prose; the top-level JSON field is `conditions`.
 - [RUNTIME] A Scenario fires only when the event actually occurs in the narrated outcome. The narrator can refuse or substitute a requested action, and then the trigger does not fire. An already-satisfied Scenario does not refire on quiet turns.
 - [RUNTIME] Add Scenario stops at ten entries in the editor. Imported registries of twelve bound Scenarios persisted through save/reopen and all fired in one turn; a fourteen-entry registry with unused entries and duplicate references also ran.
-- [RUNTIME] Dynamic Scenario text works in some single-slot arrangements but fails in multi-slot, cyclic and parallel arrangements where literal Scenarios work. Adding the resolved literal strings to the registry does not repair it. Blank slot text is not reliable deactivation. Prefer literal Scenarios with explicit state gates; [UNKNOWN] the cause.
+- [RUNTIME] Dynamic Scenario text (`<<$slot>>`) did not fire in a 2026-11-01 retest on Lynx: not as a single slot, not with a literal prefix (`1: <<$slot>>`), and not as two fixed slots, while literal Scenarios with stage gates advanced every time. In 2026-10 tests single slots fired on their first step and multi-slot, cyclic and parallel arrangements failed, so the behaviour has changed at least once. Adding the resolved literal strings to the registry does not repair it. Blank slot text is not reliable deactivation. Prefer literal Scenarios with explicit state gates; [UNKNOWN] the cause.
 - [RUNTIME] Independent plot gates can advance together; a shared gate serializes them according to authored policy. Character-specific conditions follow the selected source character, not its customized display name.
 
 ## Import and native payloads

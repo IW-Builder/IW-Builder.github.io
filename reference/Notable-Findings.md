@@ -21,7 +21,7 @@ The Infinite Worlds behavior most likely to surprise an author or break a world,
 
 13. **Scenario text must match the registry exactly**: case, spaces and punctuation. A mismatch keeps the text in JSON but the selector shows "Select a situation" and the trigger never fires.
 14. **A Scenario fires only when the event really happens in the narration.** The narrator can refuse or alter a requested action.
-15. **Dynamic Scenario text (`<<$slot>>`) is unreliable** beyond a single slot: multi-slot, cyclic and parallel setups silently fail. Use literal Scenarios plus state conditions.
+15. **Dynamic Scenario text (`<<$slot>>`) doesn't fire.** In a 2026-11-01 retest (one model, Lynx), a Scenario that is a tracker template never fired, even as the only slot and with literal text in front of it (`1: <<$slot>>`). Earlier tests (2026-10) saw single slots fire once, so this changed on IW's side and may change again. Write each step as a literal Scenario with a stage-tracker condition.
 16. **The editor's ten-Scenario limit is an editor limit.** Imported worlds with twelve or more work.
 
 ## Import and editing
@@ -82,7 +82,7 @@ Platform behavior that has not been verified, by area, with what to do meanwhile
 | --- | --- | --- |
 | Prompt construction | Full historical storyteller/specialist prompts, hidden wrappers, exact inclusion and timing | Put essential facts in fields known to reach the storyteller (background, firstInput, instructions, always-on blocks); treat UI visibility as display, not proof of what the AI receives |
 | Empty-condition triggers | Whether a Start+Mid+Repeat trigger with no conditions fires on ordinary turns | Give every-turn triggers an always-true condition such as `$game.turn_number >= 0` |
-| Scenarios | Why dynamic multi-slot, cyclic and parallel arrangements fail; any runtime maximum | Use literal Scenarios with explicit state gates ([Triggers](Triggers.md#scenarios)) |
+| Scenarios | Why dynamic Scenario text stopped firing (single slots fired in 2026-10 tests); any runtime maximum | Use literal Scenarios with explicit state gates ([Triggers](Triggers.md#scenarios)) |
 | NPCs and knowledge | Live character records, identity merging, mutation and retrieval routing; why name-only mentions often fail to surface Character detail | Put facts that must surface in the Summary or always-on text; author relationships and knowledge explicitly; correct an invented detail early by editing the turn |
 | Import normalization | Internal failure stages; ID rules for every entity type; why an omitted replaceWith broke the opening | Use ASCII alphanumeric tracker IDs; always serialize description and replaceWith; re-export after import and compare with tools/import_audit.py |
 | Visibility | Whether visibility changes what the AI receives | Do not rely on visibility to keep information from the storyteller |

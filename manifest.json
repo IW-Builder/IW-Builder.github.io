@@ -1,6 +1,6 @@
 {
   "algorithm": "sha256",
-  "generatedAt": "2026-10-31T16:36:36+00:00",
+  "generatedAt": "2026-11-01T14:02:30+00:00",
   "files": [
     {
       "path": "Authoring-Prompt.md",
@@ -24,18 +24,18 @@
     },
     {
       "path": "chat/IW-Authoring-Guide.txt",
-      "bytes": 87782,
-      "sha256": "6065ac939f4441cc889fe3c5625a3f46f739fe27d3bd86e52eb5d16dcc9f9926"
+      "bytes": 87818,
+      "sha256": "8a12bddc5c591c11680b81f5c4e8e97989bc5394fc63020d2b308af73f59e3df"
     },
     {
       "path": "chat/IW-Behavior.txt",
-      "bytes": 74563,
-      "sha256": "8391a6c519edf19699f97e3d10bd0b732b8c77e3966efb365549dc64e9a9b8c2"
+      "bytes": 75047,
+      "sha256": "b2c841eb4f651db88aa4bcb9e1a45ceb1fbaf53b75034765b91cd5922af1c01d"
     },
     {
       "path": "chat/IW-Complete-Reference.txt",
-      "bytes": 279885,
-      "sha256": "2bb0ad1ad5665aab8c8a7ff92aa26bcf19bf0ef11e6c1eea8e93ac8e06caaf13"
+      "bytes": 280405,
+      "sha256": "797403724ee34d7520eaa428649c6c616a7860a264b9537a1a9a9d9a410e1874"
     },
     {
       "path": "chat/IW-Mechanics-Examples.txt",
@@ -79,13 +79,13 @@
     },
     {
       "path": "chat/index.html",
-      "bytes": 91960,
-      "sha256": "3b071453d6c78cad606ff0ee4b3ba5945837983af351f287b9ac95570e38bd48"
+      "bytes": 91996,
+      "sha256": "a88cfd55962bdf1a12326d7509f8b2accca95cdeb209501e7faa8faaae675593"
     },
     {
       "path": "chat/sources.json",
       "bytes": 4137,
-      "sha256": "68b7e67a88b6f766ee68c6c9731924712b297fe6e4b00b858a4383838ebbd58d"
+      "sha256": "a9ac634b88eb800fd9bf93a8f35f9fca7632a2887d674aef59beec5052f37936"
     },
     {
       "path": "checker/index.html",
@@ -460,7 +460,7 @@
     {
       "path": "llms.txt",
       "bytes": 27330,
-      "sha256": "6ebb7a9aec397f0781f16d1adb11e1438c84bc473eecf12a76d95d253307833a"
+      "sha256": "36e3eff5974691d02f3a1652df8dd3c6df7f682913b2f249da2b9e86cd463e4a"
     },
     {
       "path": "reference/Characters.md",
@@ -499,8 +499,8 @@
     },
     {
       "path": "reference/Notable-Findings.md",
-      "bytes": 14525,
-      "sha256": "5bf9b1a8f05eae247443361ab5edf018984d807102c318377e0098ba0ac44dc8"
+      "bytes": 14764,
+      "sha256": "f548e8a993a164f3651161871c5217015f1cf151dd032aad7db4caf40f8c1c83"
     },
     {
       "path": "reference/PawScript.md",
@@ -544,13 +544,13 @@
     },
     {
       "path": "reference/Triggers.md",
-      "bytes": 10693,
-      "sha256": "27b4386901a819bce51af869f1fb287e56b4ea22fe88dcb8a01318f2a8789605"
+      "bytes": 10729,
+      "sha256": "466bb4fbfc215bd85bf40a9983b9d80754b5533430216b71d41d92944e332136"
     },
     {
       "path": "reference/Verified-Behavior.md",
-      "bytes": 23214,
-      "sha256": "cde2d80a703c6621a40a0b38eddbc31f37ca061ebd515fdd0bf68c4aec974b33"
+      "bytes": 23459,
+      "sha256": "80cd61bd5499dea7e4cf5fd754ec13ed4c81a94169096b58a9e34909a9c0f32a"
     },
     {
       "path": "reference/index.html",
