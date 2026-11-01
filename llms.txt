@@ -148,6 +148,8 @@ Downloads your own credit history from IW; see reference/Cost.md for estimating.
 
 - [cost/index.html](https://iw-builder.github.io/cost/) (20 KB): IW Cost Exporter: install page for a bookmarklet that downloads your IW credit history as CSV and JSON.
 - [cost/IW-Cost-Exporter-bookmarklet.js](https://iw-builder.github.io/cost/IW-Cost-Exporter-bookmarklet.js) (8 KB): Readable source of the cost-exporter bookmarklet.
+- [debug/index.html](https://iw-builder.github.io/debug/) (32 KB): IW Debug Exporter: install page for a bookmarklet that exports each turn's World debug tools data (evaluation, thinking, triggers fired, active instruction blocks, PawScript results and errors) as TXT and JSON.
+- [debug/IW-Debug-Exporter-bookmarklet.js](https://iw-builder.github.io/debug/IW-Debug-Exporter-bookmarklet.js) (12 KB): Readable source of the debug-exporter bookmarklet.
 - [cost/README.md](https://iw-builder.github.io/cost/README.md) (2 KB): Human guide to the cost exporter: install, use, how it works, spreadsheet tips.
 
 ## Combined text editions
