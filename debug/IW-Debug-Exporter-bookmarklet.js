@@ -107,7 +107,7 @@
       pawscript: evals,
       pawscript_errors: evals.filter(s => s.error || /error|fail/i.test(s.status || '')),
       world_debug_log: d.world_debug_log || [],
-      narration: v.narration, secret_info: v.secret_info, tracked_items: v.tracked_items,
+      // Narration, Secret Info and tracker values are left to IW's own Export story.
       // Per-turn raw fields only; world-wide definitions go once at the top of the JSON.
       raw_debug: {fired_triggers: d.fired_triggers, completed_triggers: d.completed_triggers, script_evaluations: d.script_evaluations, world_debug_log: d.world_debug_log, matched_lorebook_entries: d.matched_lorebook_entries}
     };

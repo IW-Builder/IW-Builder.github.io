@@ -78,6 +78,7 @@ These are reading selections, not mandatory extra downloads. The AI can request 
 | [chat/](https://github.com/IW-Builder/IW-Builder.github.io/tree/main/chat) | Combined text files to attach to your chat |
 | [checker/](https://iw-builder.github.io/checker/) | Browser validator, no Python needed |
 | [cost/](https://iw-builder.github.io/cost/) | Bookmarklet that downloads your IW credit history |
+| [debug/](https://iw-builder.github.io/debug/) | Bookmarklet that exports every turn's debug data (evaluation, thinking, triggers fired, active blocks, PawScript results) for the open game |
 | [samples/](https://github.com/IW-Builder/IW-Builder.github.io/tree/main/samples) | Finished worlds and the conversations that created them |
 
 Use [examples/README.md](examples/README.md) to find a feature. See [reference/Editor-UI.md](reference/Editor-UI.md) for import checks and live-world limitations.

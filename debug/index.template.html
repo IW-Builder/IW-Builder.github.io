@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>IW Debug Exporter</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Spectral:wght@500;700&family=Source+Sans+3:wght@400;600&family=JetBrains+Mono:wght@400&display=swap">
+<style>
+/* Layout: one narrow column, an install card for the bookmark, then numbered steps (a real sequence). */
+:root{
+  --bg:#f6f4fb; --surface:#ffffff; --fg:#22203a; --muted:#5d5878; --line:#dcd7ee;
+  --accent:#5b4bc4; --accent-fg:#ffffff; --gold:#a8761c;
+  --display:"Spectral", Georgia, serif; --body:"Source Sans 3", system-ui, sans-serif; --mono:"JetBrains Mono", ui-monospace, monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#14121f; --surface:#1d1a2e; --fg:#ebe8f7; --muted:#a7a1c4; --line:#352f52;
+  --accent:#9d8ff0; --accent-fg:#14121f; --gold:#e0b45a; color-scheme:dark }}
+:root[data-theme="dark"]{
+  --bg:#14121f; --surface:#1d1a2e; --fg:#ebe8f7; --muted:#a7a1c4; --line:#352f52;
+  --accent:#9d8ff0; --accent-fg:#14121f; --gold:#e0b45a; color-scheme:dark }
+body{background:var(--bg);color:var(--fg);font:16px/1.6 var(--body)}
+main{max-width:640px;margin:0 auto;padding-block:40px 56px;padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px));display:grid;gap:28px}
+h1{font:700 2.1rem/1.15 var(--display);margin:0;text-wrap:balance}
+h2{font:700 1.25rem/1.3 var(--display);margin:0 0 10px}
+p{margin:0}
+.lede{color:var(--muted);max-width:60ch}
+.install{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:22px;display:grid;gap:14px}
+.bm{justify-self:start;display:inline-flex;align-items:center;gap:10px;padding:12px 18px;border-radius:999px;background:var(--accent);color:var(--accent-fg);font-weight:600;text-decoration:none;cursor:grab;border:2px dashed transparent}
+.bm:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+.coin{width:18px;height:18px;border-radius:50%;background:var(--gold);box-shadow:inset 0 0 0 3px rgba(0,0,0,.18)}
+.hint{color:var(--muted);font-size:.95rem}
+details{border-top:1px solid var(--line);padding-top:12px}
+summary{cursor:pointer;font-weight:600}
+summary:focus-visible,button:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.alt{display:grid;gap:10px;margin-top:10px}
+button{justify-self:start;font:600 .95rem var(--body);padding:8px 14px;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--fg);cursor:pointer}
+textarea{width:100%;box-sizing:border-box;height:90px;font:12px/1.4 var(--mono);background:var(--bg);color:var(--fg);border:1px solid var(--line);border-radius:8px;padding:8px}
+ol{margin:0;padding-left:1.4em;display:grid;gap:10px}
+li::marker{color:var(--accent);font-weight:700}
+.files{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;font-size:.95rem}
+.files code,code{font:.88em var(--mono);background:var(--surface);border:1px solid var(--line);border-radius:4px;padding:1px 5px}
+.note{font-size:.93rem;color:var(--muted);display:grid;gap:8px}
+</style>
+<style>html{color-scheme:light}body{margin:0}</style>
+</head>
+<body>
+
+<main>
+  <header style="display:grid;gap:10px">
+    <h1>IW Debug Exporter</h1>
+    <p class="lede">The debug counterpart of Export story. For every turn of the game you have open, it saves what World debug tools shows: the evaluation, thinking (on models that think), triggers fired, active instruction blocks, matched lore, and PawScript results and errors. You get a readable text file and a JSON file.</p>
+  </header>
+  <section class="install" aria-labelledby="install-h">
+    <h2 id="install-h">Install</h2>
+    <p>Drag this button onto your browser's bookmarks bar:</p>
+    <a class="bm" id="bm" href="#"><span class="coin" aria-hidden="true"></span>IW Debug Export</a>
+    <p class="hint">Bookmarks bar hidden? Press Ctrl+Shift+B (Cmd+Shift+B on Mac) to show it. Clicking the button here does nothing; it only works from your bookmarks on the Infinite Worlds site.</p>
+    <details>
+      <summary>Can't drag it? Add it by hand</summary>
+      <div class="alt">
+        <p>Copy the code, create a new bookmark named "IW Debug Export", and paste the code into its URL or address field.</p>
+        <button id="copy" type="button">Copy bookmark code</button>
+        <textarea id="code" readonly aria-label="Bookmark code"></textarea>
+      </div>
+    </details>
+  </section>
+  <section aria-labelledby="use-h">
+    <h2 id="use-h">Use</h2>
+    <ol>
+      <li>Open <a href="https://infiniteworlds.app/" style="color:var(--accent)">infiniteworlds.app</a>, sign in, and open or load the game. Wait until no turn is generating.</li>
+      <li>Click the <strong>IW Debug Export</strong> bookmark. A status box appears in the bottom-right corner.</li>
+      <li>It waits up to 30 seconds for the site's next keep-alive message, then steps through the game one turn at a time. Each turn takes about a second, sometimes more when IW is busy.</li>
+      <li>When it says <em>Done</em>, two files download, and the game is back on the turn you were viewing.</li>
+    </ol>
+  </section>
+  <section aria-labelledby="files-h">
+    <h2 id="files-h">What you get</h2>
+    <div class="files">
+      <code>.txt</code><span>One section per turn: the action, evaluation, thinking, triggers fired, active instruction blocks (rendered text, printed in full only when a block changed since the previous turn), lore matched, every PawScript condition and effect with its status, and the error count.</span>
+      <code>.json</code><span>The same per turn, plus each script result's error field and IW's raw per-turn debug fields. World-wide definitions (trigger names, main instructions, lore keywords) appear once at the top.</span>
+    </div>
+  </section>
+  <section class="note" aria-label="Notes">
+    <p>It reads the same data the <strong>Previous turn</strong> and <strong>Next turn</strong> buttons load, over the connection the site already has open. It takes no game actions and sends nothing anywhere else.</p>
+    <p>Narration, Secret Info and tracker values aren't repeated here; use IW's own <strong>Export story</strong> for those. Don't take a turn while the exporter is running. <strong>Stop and save</strong> stops early and downloads what it has. If it can't put you back on your turn, it says so; reload the page before you play on.</p>
+  </section>
+</main>
+<script>
+const BOOKMARK = "__BOOKMARK__";
+const link = document.getElementById('bm');
+link.href = BOOKMARK;
+link.addEventListener('click', e => { e.preventDefault(); });
+const code = document.getElementById('code');
+code.value = BOOKMARK;
+document.getElementById('copy').addEventListener('click', async e => {
+  const b = e.currentTarget;
+  try { await navigator.clipboard.writeText(BOOKMARK); b.textContent = 'Copied'; }
+  catch { code.focus(); code.select(); b.textContent = 'Press Ctrl+C (Cmd+C) to copy'; }
+  setTimeout(() => { b.textContent = 'Copy bookmark code'; }, 2500);
+});
+</script>
+
+</body>
+</html>
