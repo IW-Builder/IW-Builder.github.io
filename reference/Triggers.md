@@ -58,7 +58,7 @@ Consolidate repeated logic when it improves clarity, but preserve meaningful exe
 [RUNTIME] Some effects behave differently when Start of Game is enabled:
 
 - **Give information to AI** (`effectGiveInfo`) is ignored with Start enabled, including later ordinary activations of a Start+Mid trigger. Put opening context in background or an instruction block, or use a separate ordinary-play trigger. Tell the AI what should happen next turn (`effectTellAIWhatToDo`) is a different effect and is not covered by this restriction. The validator warns for `effectGiveInfo` whenever Start is enabled.
-- **Change background** replaces the opening background in Start-only mode, not with Start+Mid; ordinary-play background or first-action changes do not rewrite an opening already shown.
+- **Change background** replaces the opening background in Start-only mode, not with Start+Mid; ordinary-play background or first-action changes do not rewrite an opening already shown. A template in any change effect's text is rendered once, when the effect runs; write it in the world field itself to keep it live ([Runtime](Runtime.md#template-interpolation-runtime)).
 - **Fire random trigger** dispatches in ordinary play, not with Start enabled.
 
 A trigger counting as fired means its conditions passed, not that every stored effect executed.

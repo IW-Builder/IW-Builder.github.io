@@ -88,7 +88,7 @@ The bug icon (beside the tracked-items icon) opens debug, which needs Storytelle
 
 The live-design notice warns that Player/Other Character changes do not affect the current playthrough (see Live copies above). Runtime block replacements and tracker changes can leave original content/initial values in design exports; those exports show configuration, not the current live state.
 
-Story exports offer a turn range and optional background, character, secrets, trackers and hidden trackers, with text/PDF/image options. Select the relevant options. Secret Info is generated narrative data, not an authoritative character database. No live character-database or complete prompt viewer is available through these surfaces.
+Story exports offer a turn range and optional background, character, secrets, trackers and hidden trackers, with text/PDF/image options. Select the relevant options. The background and character pages print the world as authored: templates appear raw, and Change background or Change PC effects are not reflected; the turn text and tracker values are as played. Secret Info is generated narrative data, not an authoritative character database. No live character-database or complete prompt viewer is available through these surfaces.
 
 [RUNTIME] Some turn inputs are not kept anywhere you can see later (observed in play, not a controlled test). For past turns, the options the player did not pick cannot be viewed: that is two of the three, or all three when a custom action was typed instead. The text typed into the Storyteller guidance box is not shown either, and nothing marks that a turn used it. If a test or a design review needs these, write them down at the time.
 
