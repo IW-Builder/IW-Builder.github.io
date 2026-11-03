@@ -20,7 +20,7 @@ The Infinite Worlds behavior most likely to surprise an author or break a world,
 ## Scenarios
 
 13. **Scenario text must match the registry exactly**: case, spaces and punctuation. A mismatch keeps the text in JSON but the selector shows "Select a situation" and the trigger never fires.
-14. **A Scenario fires only when the event really happens in the narration.** The narrator can refuse or alter a requested action.
+14. **A Scenario fires only when the event really happens in the narration.** The narrator can refuse or alter a requested action. It also works the other way: an event the narrator invents fires the Scenario, including an action the player didn't take or a stated purpose the narrator rewrote. When the player's intent must decide, gate on an AI request field judged from the player's own words instead ([Recipes](Recipes.md#request-and-commit-example)).
 15. **Dynamic Scenario text (`<<$slot>>`) doesn't fire.** In a 2026-11-01 retest (one model, Lynx), a Scenario that is a tracker template never fired, even as the only slot and with literal text in front of it (`1: <<$slot>>`). Earlier tests (2026-10) saw single slots fire once, so this changed on IW's side and may change again. Write each step as a literal Scenario with a stage-tracker condition.
 16. **The editor's ten-Scenario limit is an editor limit.** Imported worlds with twelve or more work.
 
