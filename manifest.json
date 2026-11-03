@@ -1,6 +1,6 @@
 {
   "algorithm": "sha256",
-  "generatedAt": "2026-11-03T01:48:01+00:00",
+  "generatedAt": "2026-11-03T01:58:20+00:00",
   "files": [
     {
       "path": "Authoring-Prompt.md",
@@ -24,18 +24,18 @@
     },
     {
       "path": "chat/IW-Authoring-Guide.txt",
-      "bytes": 89682,
-      "sha256": "b3b878992675779008ca85f99cdade8735b0f4737591b4444dbf20314cbc8f74"
+      "bytes": 89777,
+      "sha256": "b44dcf24e7acc7bbae584feae3deb1be8bdb7aa874a3da00cb4c6b9ffa0d950b"
     },
     {
       "path": "chat/IW-Behavior.txt",
-      "bytes": 77879,
-      "sha256": "14b744f05272868e8fab693dd97514bd220d863b1e8151e721e4b077d5c883ef"
+      "bytes": 78879,
+      "sha256": "8e683e4d3c473d595aeca8b635c789b56c60760f5014d031984f4386ee2a7bee"
     },
     {
       "path": "chat/IW-Complete-Reference.txt",
-      "bytes": 288256,
-      "sha256": "9a17eab84cb2a641a8883e4b4f450bbc788ede9fa27cc151d1fb784ca1367c92"
+      "bytes": 289654,
+      "sha256": "8c6731b5c85f590958f361e009ecef05dfc6bb273b1bce9b1b70aed33dc88523"
     },
     {
       "path": "chat/IW-Mechanics-Examples.txt",
@@ -64,8 +64,8 @@
     },
     {
       "path": "chat/IW-Technical-Reference.txt",
-      "bytes": 89222,
-      "sha256": "4b7322d78e9efa01ddb01eb1c614d4e5b85aa1cd7e1c700697ae62a44d172502"
+      "bytes": 89525,
+      "sha256": "f63a194b2f2b93c5e80c670d682ea1e88f90ac83e9e620baed974d53b15a5301"
     },
     {
       "path": "chat/IW-Tools.txt",
@@ -79,13 +79,13 @@
     },
     {
       "path": "chat/index.html",
-      "bytes": 93945,
-      "sha256": "159dcba3436b2a3b43abf09f8c69f269a2acaa1d26d32fe7fee62a09ed9b4ede"
+      "bytes": 94045,
+      "sha256": "7bbcdd317e1a212c4c5c5e81657836827c142fa71482102b04f6313d80703f84"
     },
     {
       "path": "chat/sources.json",
       "bytes": 4137,
-      "sha256": "4c84af89097942e677601c16d049640124bad23b54a00b1d32510260e409b8b5"
+      "sha256": "985242c5ac4b73770c19231931b30a23a77f9d2d4669e1e206d12ba088212483"
     },
     {
       "path": "checker/index.html",
@@ -460,7 +460,7 @@
     {
       "path": "llms.txt",
       "bytes": 27331,
-      "sha256": "8bdb015cf541dcf401616efa9bc4643a8a2a063197427916e337dcf9a25392f6"
+      "sha256": "e591e80b3f58c53ef24d18b84007afbd16961e22d787a271d4e312155e892052"
     },
     {
       "path": "reference/Characters.md",
@@ -499,8 +499,8 @@
     },
     {
       "path": "reference/Notable-Findings.md",
-      "bytes": 14978,
-      "sha256": "0f2c9a892f47494867c922888e757b660ed1265ee970deb31c38c4e3efbf2a86"
+      "bytes": 15303,
+      "sha256": "bb3ed14e296f429e9f64c3e006237c4dd3a9c8352f27cdf7accd95f928231e95"
     },
     {
       "path": "reference/PawScript.md",
@@ -519,8 +519,8 @@
     },
     {
       "path": "reference/Recipes.md",
-      "bytes": 15193,
-      "sha256": "d9806dafb091fd8a59c7da3095988daacaf05daef253da22ed57c103b7a70ef0"
+      "bytes": 15496,
+      "sha256": "841eaea38e37dacd93944bf75c40fe86c895e4127d6417d7d72b17e863be1ae6"
     },
     {
       "path": "reference/Runtime.md",
@@ -544,18 +544,18 @@
     },
     {
       "path": "reference/Triggers.md",
-      "bytes": 10915,
-      "sha256": "2c3febb7150ef8940cafe88a207231ecb84bd3b2ddbc6ad77720107c8668b232"
+      "bytes": 11010,
+      "sha256": "7e70c414ccd59e5d084087dd01ab00b86174215b0ab1d40815616616301e439a"
     },
     {
       "path": "reference/Verified-Behavior.md",
-      "bytes": 25631,
-      "sha256": "5ed5e9d60864ec39cbdfb45307a193fefe1572697d823571195da010268c04de"
+      "bytes": 26306,
+      "sha256": "56d65fbda0e6cf31c6268d90c0d3bbf82a6ee5448b2dd005175711a0c4d5938d"
     },
     {
       "path": "reference/index.html",
       "bytes": 5778,
-      "sha256": "3fa9332589046962562c0d77912c1d0d5143b54fcac29b7ee425455193a259e1"
+      "sha256": "a3983a01de9876617ebd12efd10711bfaac35c90c4ab9c08a62bb8c6a03bd23b"
     },
     {
       "path": "tools/README.md",
@@ -570,7 +570,7 @@
     {
       "path": "tools/Validation-Report.json",
       "bytes": 10011,
-      "sha256": "d322aa6b43ee24246c94dabdfd25a54dd7de7c5d283ea3aa6e4e32c8762002b3"
+      "sha256": "f8a1ce7c506de58613c33e2cf5819ae41a93256cf5342f1d37698fd0141338bd"
     },
     {
       "path": "tools/build_distribution.py",
