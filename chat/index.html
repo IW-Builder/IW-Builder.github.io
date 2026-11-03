@@ -313,7 +313,7 @@ When effort is limited, spend it here first, in this order: NPC one_liners; one 
 
 A strong opening gives the player an immediate, legible situation rather than an encyclopedia. firstInput names the place and time, who is present and one or two things the player notices about each, the immediate situation, and what the storyteller must not decide. Introduce two or three people at most; let the rest arrive through play. Define what is interesting about success, failure and doing nothing.
 
-For a mystery, track who knows each clue; for a social story, give relationships room to change; for a simulation, make recurring decisions and their consequences legible. Describe setting-specific deviations from common knowledge, not every ordinary object. Test the first turn as carefully as the machinery: does it introduce the right player, place, people and options without resolving the premise?
+For a mystery, see Mysteries and controlled reveals; for a social story, give relationships room to change; for a simulation, make recurring decisions and their consequences legible. Describe setting-specific deviations from common knowledge, not every ordinary object. Test the first turn as carefully as the machinery: does it introduce the right player, place, people and options without resolving the premise?
 
 ## Characters
 
@@ -405,6 +405,19 @@ For an expedition, establish spatial relationships, available tools and visible 
 Separate fixed underlying facts from testimony, interpretation and unresolved meaning. Define what a threat can perceive and affect, and how the player can discover those limits. Escalate only when events enable it; do not grant new powers merely because the player found a sensible solution.
 
 Use corroborating clues, ordinary intervals and independent channels of help. Keep descriptions reliable even when speakers lie or imitate others. A failed investigation should leave another route to essential evidence. Preserve successful containment; uncertainty can survive in the meaning of events without making every practical success false. AI-managed trackers support continuity but do not mechanically enforce these rules.
+
+## Mysteries and controlled reveals
+
+A fact the storyteller cannot see is a gap, and it fills gaps: hide the culprit and it invents one, and truth added later is grafted onto the invention, not swapped in. Instead:
+
+- Put the whole truth in an always-on block from turn 1, with &quot;what is believed&quot; and &quot;what actually happened&quot; as separate lists. Give each discoverable fact a short label used everywhere (THE SKIM).
+- List each fact&#x27;s routes, what each takes and what it does not show (&quot;the ledgers show the skim, not who signed it off&quot;).
+- Gate on what the player has learned, never on turns: &quot;It is a fundamental and inviolable rule that I cannot learn THE PARTNERSHIP until I have learned both THE SKIM and THE VISIT.&quot; Tie each reveal to its own action; &quot;once I know it, he tells me&quot; releases the next fact in the same reply.
+- For a place a search can reach before its gate, say what it holds until then (&quot;until THE KILLING is learned, the cabinet holds only charts in plain canvas sleeves; describe it exactly that way&quot;). A ban alone does not stop the narrator furnishing it from the truth. Or keep the evidence out of reach.
+- Name the spoilers in descriptionRequest and have it present what the player believes as fact; state the player&#x27;s starting belief in firstInput; ask summaryRequest to record each fact learned and how.
+- Tell Secret Info to leave undiscovered facts out (this reduces leaks there, not stops them). Mark anything the story needs that is not in the truth &quot;not yet decided; do not name or hint at it&quot;.
+
+An optional AI-updated Case File tracker (each label `not known` or `known: how`) for the gates to read matched prose gates in one test.
 
 ## Examples
 

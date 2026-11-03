@@ -292,7 +292,7 @@ When effort is limited, spend it here first, in this order: NPC one_liners; one 
 
 A strong opening gives the player an immediate, legible situation rather than an encyclopedia. firstInput names the place and time, who is present and one or two things the player notices about each, the immediate situation, and what the storyteller must not decide. Introduce two or three people at most; let the rest arrive through play. Define what is interesting about success, failure and doing nothing.
 
-For a mystery, track who knows each clue; for a social story, give relationships room to change; for a simulation, make recurring decisions and their consequences legible. Describe setting-specific deviations from common knowledge, not every ordinary object. Test the first turn as carefully as the machinery: does it introduce the right player, place, people and options without resolving the premise?
+For a mystery, see Mysteries and controlled reveals; for a social story, give relationships room to change; for a simulation, make recurring decisions and their consequences legible. Describe setting-specific deviations from common knowledge, not every ordinary object. Test the first turn as carefully as the machinery: does it introduce the right player, place, people and options without resolving the premise?
 
 ## Characters
 
@@ -384,6 +384,19 @@ For an expedition, establish spatial relationships, available tools and visible 
 Separate fixed underlying facts from testimony, interpretation and unresolved meaning. Define what a threat can perceive and affect, and how the player can discover those limits. Escalate only when events enable it; do not grant new powers merely because the player found a sensible solution.
 
 Use corroborating clues, ordinary intervals and independent channels of help. Keep descriptions reliable even when speakers lie or imitate others. A failed investigation should leave another route to essential evidence. Preserve successful containment; uncertainty can survive in the meaning of events without making every practical success false. AI-managed trackers support continuity but do not mechanically enforce these rules.
+
+## Mysteries and controlled reveals
+
+A fact the storyteller cannot see is a gap, and it fills gaps: hide the culprit and it invents one, and truth added later is grafted onto the invention, not swapped in. Instead:
+
+- Put the whole truth in an always-on block from turn 1, with "what is believed" and "what actually happened" as separate lists. Give each discoverable fact a short label used everywhere (THE SKIM).
+- List each fact's routes, what each takes and what it does not show ("the ledgers show the skim, not who signed it off").
+- Gate on what the player has learned, never on turns: "It is a fundamental and inviolable rule that I cannot learn THE PARTNERSHIP until I have learned both THE SKIM and THE VISIT." Tie each reveal to its own action; "once I know it, he tells me" releases the next fact in the same reply.
+- For a place a search can reach before its gate, say what it holds until then ("until THE KILLING is learned, the cabinet holds only charts in plain canvas sleeves; describe it exactly that way"). A ban alone does not stop the narrator furnishing it from the truth. Or keep the evidence out of reach.
+- Name the spoilers in descriptionRequest and have it present what the player believes as fact; state the player's starting belief in firstInput; ask summaryRequest to record each fact learned and how.
+- Tell Secret Info to leave undiscovered facts out (this reduces leaks there, not stops them). Mark anything the story needs that is not in the truth "not yet decided; do not name or hint at it".
+
+An optional AI-updated Case File tracker (each label `not known` or `known: how`) for the gates to read matched prose gates in one test.
 
 ## Examples
 
@@ -1896,7 +1909,7 @@ The Infinite Worlds behavior most likely to surprise an author or break a world,
 35. **Keyword and character cards cannot activate on the opening turn** without prior context. Put opening facts in firstInput or always-on instructions.
 36. **Keyword blocks match whole words, any case, and stay active for the matching turn plus three.** Substrings and plurals do not match.
 37. **NPCs get knowledge wrong.** They deny facts they were just told, credit the wrong source, or know secrets they should not. Secret Info can contradict the narration. Anti-omniscience instructions alone do not fix this.
-38. **Once a secret is narrated it stays in the story**, even if you remove the block that revealed it.
+38. **Once a secret is narrated it stays in the story**, even if you remove the block that revealed it. A mystery fact withheld from the storyteller gets invented, and supplying it later does not undo the invention. Use truth plus prerequisite gates ([Craft](Craft.md#mysteries-and-controlled-reveals)).
 39. **Memory compression runs after turn 8 and every six turns after that** (after turns 8, 14, 20, …). So when a turn is written, short-term memory holds the 2–7 most recent turns uncompressed; everything older is in the summary, whose contents are hidden. Keep facts that must persist in trackers.
 40. **A player character with the same name as an Other Character can draw on that card.** Unchosen player options are not NPCs unless added as Other Characters.
 
@@ -2341,6 +2354,7 @@ Kit-wide caveats, not repeated per entry:
 - [RUNTIME] Character detail retrieval is unreliable. A selected player sharing an Other Character name used that entry's facts, but a name-only mention did not surface an authored hobby on two turns; the narrator invented one, and history then reinforced it. The narrator can also introduce named NPCs into an opening that says the player is alone. Internal identity merging and exclusion are unresolved.
 - [RUNTIME] Secret Info and narration can disagree or misattribute knowledge. Characters can deny a fact just told to them, and hidden facts can become player knowledge in prose. A general provenance policy showed no clear benefit; explicit correction of the source chain did.
 - [RUNTIME] Once a secret reaches narration, removing or emptying its disclosure block does not remove it from later turns.
+- [RUNTIME] Mystery reveals (one small mystery, one game per check, one model): with the truth withheld and only "reveal it slowly", the storyteller committed to four contradicting facts in five turns, and a truth block installed afterwards was grafted on (the invented confession stayed). With the truth in an always-on block and prose prerequisite gates on what the player had learned, characters refused a direct question, an accusation, a correct guess and a bribe, and the gated fact came once its prerequisites were met. A search of the hiding place was narrated with details from the truth despite a descriptionRequest ban naming them; a positive description of what the place holds before the gate stopped it. A Secret Info rule cut but did not stop truth in Secret Info. An AI-updated case-file tracker marked each fact on the turn it was learned, never early, with the same gate timing as prose.
 - [RUNTIME] Summary compression runs after turn 8 and every six turns after that (after turns 8, 14, 20, …), so the turn being written has the 2–7 most recent turns in uncompressed short-term memory (from turn 2 on). The cost breakdown shows LTM from the first compression as STM drops; short and long term memory can be watched turn by turn in any game. Later recall of compressed material is possible; summary contents remain hidden.
 - [RUNTIME] Shortening (Dolphin, one world): a cap of at most 2 short paragraphs and 90 words, with priority-override framing, appended to authorStyle averaged 82 words (control 413) and held through a story-beat turn; a plain one-sentence version averaged 96. The same cap in descriptionRequest (mean 118, max 215) or an always-on block (max 226) broke on the story-beat turn. A per-turn Tell AI trigger held later turns but cannot reach the opening. The cap acts as a soft target; credits fell only about 10%.
 - [RUNTIME] Lengthening: paragraph-count requests and strong priority-overriding wording did not reliably lengthen narration, even with richer lore. A one-sentence descriptionRequest did not shorten it. [UNKNOWN] Other models for the authorStyle cap.
