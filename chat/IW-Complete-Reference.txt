@@ -1239,7 +1239,7 @@ Read Skills with `$player.skills.<slug>` and display them with `$player.skills_a
 | Host-language object literals or arrow functions | `record()`, field assignments and supported collection methods |
 | Writing background, blocks or system roots | Use the supported native effect |
 
-Escaping has three layers: JSON serialization, PawScript string literals, and rendered text/YAML. Use a JSON serializer. A physical newline separates script statements; the two-character `\n` inside a script string represents an intended text newline. For example, the decoded script:
+Escaping has three layers: JSON serialization, PawScript string literals, and rendered text/YAML. Use a JSON serializer. A physical newline separates script statements; the two-character `\n` inside a script string represents an intended text newline. A string inside a `<<...>>` template may span lines; it evaluates correctly, though the highlighter shows each line break ending it ([Editor-UI.md](Editor-UI.md)). For example, the decoded script:
 
 ```text
 $message = "Ready\nProceed"
@@ -2106,6 +2106,18 @@ Image style has a Model and Character/Scenery start/end prompts, mapped to `imag
 The expression-editor option shows a Paw icon beside some PawScript-capable fields (see [PawScript sandbox](#pawscript-sandbox)). A field without an icon can still take expressions: YAML Set a value supports template expressions according to help despite having no icon.
 
 Editor syntax highlighting misleads for deferred references. In instruction blocks and tracker descriptions it colors `<<=...=>>` as PawScript and shows the working `<=...=>` as plain text, while initial values show both as plain text. At runtime it is the other way round: `<=...=>` is evaluated and `<<=...=>>` stays literal. If a user cites the highlighting, explain that it is wrong for this syntax ([PawScript.md](PawScript.md)).
+
+Highlighting also misreads multi-line strings. A quoted string, in single or double quotes, may span lines inside a `<<...>>` template, and it evaluates correctly. With `$flag` true, this renders the three test lines on their own lines between Before script and After script:
+
+```text
+Before script
+<<if($flag, 'Test line 1.
+Test line 2' & '
+Test line 3', '')>>
+After script
+```
+
+The highlighter treats each line break as the end of the string, so it colors the string's later lines as code and the ` & ` between the strings as string. It is display only. This was seen in the sandbox's Text tab (an author's report, not a probe), and it has been reported to the IW developer with no timeline for a fix. Whether a Run Script string can span lines is not confirmed: there a physical newline separates statements, so write `\n` ([PawScript.md](PawScript.md)). Authors have asked for multi-line strings in scripts too.
 
 Present choice enforces required selection and configured multiple-selection bounds. Required Request Input can leave Confirm enabled while empty, then reject submission with **Please enter a response**. Optional blank input clears its target. Single/multiline fields show counters of 600/3000 respectively, not universal tracker limits. Newline-delimited multiple selections remain text, not automatically a YAML list.
 
