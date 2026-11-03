@@ -24,7 +24,7 @@
       "examples/Payloads.md",
       "examples/index.json"
     ],
-    "sha256": "8c6731b5c85f590958f361e009ecef05dfc6bb273b1bce9b1b70aed33dc88523"
+    "sha256": "a8f184a5814633a00e46bfb17f54b4125a7b1fecb2e856af93067556641580e8"
   },
   "IW-Authoring-Guide.txt": {
     "sourceFiles": [
@@ -50,7 +50,7 @@
       "reference/Default-Evaluation.txt",
       "reference/Current-AI-Profiles.json"
     ],
-    "sha256": "f63a194b2f2b93c5e80c670d682ea1e88f90ac83e9e620baed974d53b15a5301"
+    "sha256": "87c64186f3264e26a6450828803cf54f47219c6a647708b3779c9ec6c5777ff5"
   },
   "IW-Behavior.txt": {
     "sourceFiles": [
@@ -59,7 +59,7 @@
       "reference/Cost.md",
       "reference/Verified-Behavior.md"
     ],
-    "sha256": "8e683e4d3c473d595aeca8b635c789b56c60760f5014d031984f4386ee2a7bee"
+    "sha256": "8e7e87acb85c1c00cfdcaae1fe7787d95f425cb347563768e5e79020f1d6f8c4"
   },
   "IW-Payloads.txt": {
     "sourceFiles": [

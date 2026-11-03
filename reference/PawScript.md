@@ -257,7 +257,7 @@ Read Skills with `$player.skills.<slug>` and display them with `$player.skills_a
 | Host-language object literals or arrow functions | `record()`, field assignments and supported collection methods |
 | Writing background, blocks or system roots | Use the supported native effect |
 
-Escaping has three layers: JSON serialization, PawScript string literals, and rendered text/YAML. Use a JSON serializer. A physical newline separates script statements; the two-character `\n` inside a script string represents an intended text newline. For example, the decoded script:
+Escaping has three layers: JSON serialization, PawScript string literals, and rendered text/YAML. Use a JSON serializer. A physical newline separates script statements; the two-character `\n` inside a script string represents an intended text newline. A string inside a `<<...>>` template may span lines; it evaluates correctly, though the highlighter shows each line break ending it ([Editor-UI.md](Editor-UI.md)). For example, the decoded script:
 
 ```text
 $message = "Ready\nProceed"
