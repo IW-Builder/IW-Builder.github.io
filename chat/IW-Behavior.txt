@@ -236,6 +236,8 @@ The sandbox matches the field it was opened from. A script field opens a multi-l
 
 Trackers can be added, edited and deleted in the sandbox, and runs use those values. From debug, the header names the script and says what it changed when it ran in the game. **Turn data** lists trackers plus the `$player` and `$game` roots (`$game` has seven keys, including turn_number, ai_model and skill_list); **Legacy turn data** holds older flat variables. In a short-circuited And/Or group, debug lists only the deciding condition. Sandbox data can differ from current manually edited values. A run displays a result/diff; **Update Game** is separate. A collapsed summary can misrepresent nested structure; inspect actual values or supported reads.
 
+Community-reported sandbox results, not tested by the kit [UNKNOWN]: a gate testing membership in an empty list is false, so emptying a lookup list switches its gated sections off; and `in` compares whole values ("minotaur" is not in a list holding "minotaur girl"), so synonym lists should carry every form the AI may write.
+
 ## Credits and cost
 
 The header shows the credit balance and the remaining daily free turns (3 per day observed). **Credits > Credit activity >** a turn **> Cost breakdown** splits Inputs and Outputs into instructions, trackers, STM (recent story), LTM (summaries) and other; thinking models add an output category. LTM first appears after the first summary compression, as STM drops. Breakdown values are rounded decimals: the list can differ from the balance change by a credit.
@@ -251,6 +253,14 @@ The illustration wrench opens **Illustration details**. Character fields: Appear
 Image style has a Model and Character/Scenery start/end prompts, mapped to `imageStyleCharacterPre/Post` and `imageStyleNonCharacterPre/Post`. Retained `illustrationStyle*` fields are not current controls. Full image prompts and cache identities are hidden.
 
 **Misc advanced features > Enable AI-specific instruction blocks** exposes block model choices mapped to `selectedAIProfiles`. All-model blocks remain active during model switches; filtered blocks follow the selected model. Availability changes; imported unfamiliar IDs are not automatically invalid.
+
+**Picture prompt wording.** Reported by a community template author from rendering on Manticore; not tested by the kit [PATTERN]:
+
+- The image model tends to draw whatever the prompt names, even after "no", "without" or "rather than". Describe what should be there ("clothing on the upper body only", "long hair over the sides of the head") instead of what should not.
+- Describe a whole-body colour or covering (skin tone, fur, scales, plating) only on the parts the camera sees. Listing body parts that clothing covers can make the model show them uncovered.
+- Strongly sensual style words in the wrappers carry into every picture and can override described clothing. Keep a toned-down wrapper for clothed scenes and switch it by script.
+- Leave out illustrator lines that depend on seeing the result ("regenerate if…", "after three attempts…"). The AI that writes the prompt never sees the image, so they only cost words.
+- For an anime look, realism words ("lifelike", "subsurface scattering", "painterly realism") push toward a semi-real render; use illustration terms (clean lineart, cel-shading).
 
 ## Specialist instructions, forms and PawScript cues
 
