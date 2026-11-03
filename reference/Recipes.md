@@ -41,13 +41,21 @@ Native block-modification effects substitute ordinary `<<...>>` templates when t
 **On-demand generation with retained results.** Install a substantial generation brief only when needed, store a compact result, and clear the brief after a matching completed request. Do not clear merely because a turn elapsed. Prefer infrequent event-driven requests; retained tracker context and AI updates can outweigh the omitted instructions. See [on-demand generation](../examples/recipe-on-demand-generation.json).
 
 
+**Scene-gated sections.** For large reference text (creature guides, image rules, rule tiers), keep one always-on block and wrap each section in a live `<<if(flag, '…', "")>>` (no `'` inside the section). A script high in the trigger list sets the flags from scene state, for example AI-written tags matched against synonym lists in a hidden tracker, with a cap on how many count. Only rendered text bills, at the full instructions rate; a false section costs nothing [RUNTIME, Dolphin]. Gates read the previous turn's end, so check turn 1 against the start-of-game state: default-on gates or a "load everything" seed make the opening expensive.
+
+**Lookahead.** Also gate on an AI-written list of who or what is expected next turn. For an unannounced arrival, tell the narrator to end the turn on the arrival and describe them next turn.
+
+**Self-configuring setup.** A hidden tracker with empty fields. A start-of-game trigger copies any author-filled fields to a hidden seed, then sets the tracker ai_only with updates on; its update instructions say fill only empty fields, once. The AI fills it on turn 1 [RUNTIME, Dolphin]. A mid-game Keep trigger (turns 1–3) restores seeded fields; a one-shot Lock (all filled, or turn 3) hides it with updates off. Blocks read it by template, so it bills once, as instructions.
+
+**Offstage archive.** A script moves records of characters unseen for N turns (script-set lastSeenTurn) to a hidden tracker and restores them when the name returns in an update or the lookahead list. List archived names in the update instructions by template so spellings are reused.
+
 ## Turn-state patterns
 
 Optional patterns; trigger order is execution order.
 
 **Previous-value snapshot.** The last trigger (always true, repeat) copies watched values to script-only trackers: `$prev_lp = $lifepoints`. Triggers above it read this turn's change, such as `$lifepoints < $prev_lp` for a spend. AND a delta with an event condition when the story and the number must agree. Clamps (a maximum loss per turn) also go above the snapshot.
 
-**One-turn AI write window.** To let the AI rewrite a locked tracker once, a trigger switches its automatic updating on (optionally with new update instructions), stamps `$window = $game.turn_number` and tells the AI what to write. A relock trigger ordered above it, on `$window > 0 and $game.turn_number > $window`, switches updating off and zeroes the stamp. The switch applies from the next turn, so the AI writes exactly once, on the turn it receives the instruction. Keep the switch out of triggers with Request Input.
+**One-turn AI write window.** To let the AI rewrite a locked tracker once, a trigger switches its automatic updating on (optionally with new update instructions), stamps `$window = $game.turn_number` and tells the AI what to write. A relock trigger ordered above it, on `$window > 0 and $game.turn_number > $window`, switches updating off and zeroes the stamp. A mid-game switch applies from the next turn (a start-of-game one is live on turn 1), so the AI writes exactly once, on the turn it receives the instruction. Keep the switch out of triggers with Request Input.
 
 **Periodic AI updates.** Unlock a large, slow-changing tracker on `$game.turn_number % N = k` and relock on `% N = k + 1`; it is rewritten one turn in N.
 
