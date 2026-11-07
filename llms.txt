@@ -31,7 +31,7 @@ Read only what the task needs; Authoring-Prompt.md says which guide covers which
 - [reference/Schema.md](https://iw-builder.github.io/reference/Schema.md) (18 KB): Export structure: identifier conventions, field groups, trackers, starting values, condition and effect payloads, comparators and value-effect operations.
 - [reference/Trackers.md](https://iw-builder.github.io/reference/Trackers.md) (7 KB): Tracker fields, data types, visibility, update ownership, starting values and memory/context cost.
 - [reference/Trigger-Catalog.md](https://iw-builder.github.io/reference/Trigger-Catalog.md) (6 KB): Every identified trigger condition and effect type in one table. Check it before saying a trigger can't do something.
-- [reference/Triggers.md](https://iw-builder.github.io/reference/Triggers.md) (10 KB): Trigger timing flags, ordering, effect semantics, choosing native effects or PawScript, start-of-game restrictions and changing a tracker definition during play.
+- [reference/Triggers.md](https://iw-builder.github.io/reference/Triggers.md) (11 KB): Trigger timing flags, ordering, effect semantics, choosing native effects or PawScript, start-of-game restrictions and changing a tracker definition during play.
 - [reference/Notable-Findings.md](https://iw-builder.github.io/reference/Notable-Findings.md) (15 KB): Plain-language list of the behavior most likely to surprise an author or break a world, with what to do, and the list of what is still unknown.
 - [reference/Verified-Behavior.md](https://iw-builder.github.io/reference/Verified-Behavior.md) (26 KB): Compatibility baseline, evidence labels and consolidated runtime findings: triggers, imports, PawScript, visibility, memory, forms, images and endings.
 
@@ -155,7 +155,7 @@ Downloads your own credit history from IW; see reference/Cost.md for estimating.
 Single-file bundles for chats without web access or with tool limits: the whole reference in one file, or split into four for size-limited tools, plus examples, library and tools to attach only when asked for. Web-browsing models should prefer the individual files above.
 
 - [chat/index.html](https://iw-builder.github.io/chat/) (90 KB): HTML page containing IW-Authoring-Guide.txt, with links to the companion editions.
-- [chat/IW-Complete-Reference.txt](https://iw-builder.github.io/chat/IW-Complete-Reference.txt) (287 KB): Combined text, all reference in one attachment (about 75k tokens): the prompt, template, every reference guide, Payloads and the example index. Too large for most URL fetchers; attach it.
+- [chat/IW-Complete-Reference.txt](https://iw-builder.github.io/chat/IW-Complete-Reference.txt) (288 KB): Combined text, all reference in one attachment (about 75k tokens): the prompt, template, every reference guide, Payloads and the example index. Too large for most URL fetchers; attach it.
 - [chat/IW-Authoring-Guide.txt](https://iw-builder.github.io/chat/IW-Authoring-Guide.txt) (86 KB): Combined text, start here: prompt, template, Evidence, Craft, Trackers, Triggers, Trigger-Catalog, Portable-Banks and library Integration.
 - [chat/IW-Technical-Reference.txt](https://iw-builder.github.io/chat/IW-Technical-Reference.txt) (87 KB): Combined text: Schema, PawScript, Runtime, Characters, Images-and-Models, Recipes and AI profile IDs.
 - [chat/IW-Behavior.txt](https://iw-builder.github.io/chat/IW-Behavior.txt) (84 KB): Combined text: Notable-Findings (with open questions), Editor-UI, Cost, Verified-Behavior and Default Evaluation.
