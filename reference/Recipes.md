@@ -69,6 +69,8 @@ Optional patterns; trigger order is execution order.
 
 **Per-turn verdict tag.** An AI-updated text tracker asks for tags judging only this turn, or None. Text-contains conditions react to each tag, and a last trigger resets it to None (copy it first to keep a record). Tags stay turn-specific; the classification is still the AI's judgement.
 
+**Situation catalog.** For more situations than the editor's ten Scenarios, or ones a script adds mid-game (dynamic Scenarios no longer fire), keep an AI-visible, read-only YAML catalog (`id: {when: …, once: true}`) beside a per-turn tag tracker for the ids whose `when` happened. One trigger per id reacts to its tag; the last removes used one-shots from the catalog and clears the tags. Triggers must exist in advance; a script-added id wakes its dormant trigger. Use the text tag form above or a record root, not a bare YAML list (untested for ids), with lowercase ids that don't contain one another. Mis-tags burn one-shots, so script what must be exact. The catalog's `when` text bills every turn. Adapted from a [community wiki design](https://infiniteworlds.mywikis.wiki/wiki/Morwen%27s_Situation_State_Machine).
+
 **Wait for a well-formed write.** Gate a follow-up on the shape of an AI-written value (contains `(`, no longer contains the placeholder), not mere change, so a malformed write just waits.
 
 **Per-model text.** `$game.ai_model` returns the display name (`Dolphin`, `Smilodon`) and text `=` is case-sensitive. Templates in a tracker's own update instructions are evaluated live, so `<<if($game.ai_model = "Dolphin", "…", "…")>>` there selects per model. Blocks can use selectedAIProfiles instead.
