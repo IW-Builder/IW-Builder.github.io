@@ -4,8 +4,8 @@ Follow Authoring-Prompt.md (the first file below). This edition holds every refe
 Editions and their contents:
 - IW-Complete-Reference.txt: the whole reference in one file: everything in the four reference editions below. Files: the IW-Authoring-Guide.txt, IW-Technical-Reference.txt, IW-Behavior.txt, IW-Payloads.txt files
 - IW-Authoring-Guide.txt: start here: prompt, template, narrative craft, trackers, triggers, data banks and library integration. Files: Authoring-Prompt.md, World-Template.json, reference/Craft.md, reference/Trackers.md, reference/Triggers.md, reference/Trigger-Catalog.md, reference/Portable-Banks.md, library/Integration.md
-- IW-Technical-Reference.txt: exact payloads, PawScript, runtime, characters, images/models and recipes. Files: reference/Schema.md, reference/PawScript.md, reference/Runtime.md, reference/Characters.md, reference/Images-and-Models.md, reference/Recipes.md, reference/Default-Evaluation.txt, reference/Current-AI-Profiles.json
-- IW-Behavior.txt: notable findings and open questions, editor/UI workflows with import checks, cost and verified runtime behavior. Files: reference/Notable-Findings.md, reference/Editor-UI.md, reference/Cost.md, reference/Verified-Behavior.md
+- IW-Technical-Reference.txt: exact payloads, PawScript, runtime, characters, images/models and recipes. Files: reference/Schema.md, reference/PawScript.md, reference/Runtime.md, reference/Characters.md, reference/Images-and-Models.md, reference/Recipes.md, reference/Current-AI-Profiles.json
+- IW-Behavior.txt: notable findings and open questions, editor/UI workflows with import checks, cost, verified runtime behavior and the default Evaluation. Files: reference/Notable-Findings.md, reference/Editor-UI.md, reference/Cost.md, reference/Verified-Behavior.md, reference/Default-Evaluation.txt
 - IW-Payloads.txt: exact native payload snippets for every condition and effect, plus the example index. Files: examples/Payloads.md, examples/index.json
 - IW-Mechanics-Examples.txt: complete mechanics example worlds: recipes, optional block, starting values, layered opening, on-demand generation and a showcase. Files: examples/recipe-request-commit.json, examples/recipe-completion-award.json, examples/recipe-candidate-acceptance.json, examples/recipe-archive-reactivate.json, examples/recipe-cached-random.json, examples/recipe-consumed-timer.json, examples/recipe-choice-domain.json, examples/recipe-compiled-plot.json, examples/recipe-choice-followup.json, examples/recipe-threshold-unlock.json, examples/optional-block.json, examples/character-starting-values.json, examples/recipe-layered-opening.json, examples/recipe-on-demand-generation.json, examples/showcase-glass-ledger.json
 - IW-Narrative-Examples.txt: complete narrative example worlds: ensemble romance, fantasy expedition, contained horror, fantasy relationship and high-heat erotica. Files: examples/narrative-vendemmia.json, examples/narrative-listening-road.json, examples/narrative-address-after-midnight.json, examples/narrative-seven-nights.json, examples/narrative-velvet-wager.json
@@ -1508,6 +1508,12 @@ Native block-modification effects substitute ordinary `<<...>>` templates when t
 
 **Offstage archive.** A script moves records of characters unseen for N turns (script-set lastSeenTurn) to a hidden tracker and restores them when the name returns in an update or the lookahead list. List archived names in the update instructions by template so spellings are reused.
 
+**Large library, drawn by template.** Keep hundreds or thousands of items (snacks, cards, encounters) as records in hidden YAML trackers: hidden values are not sent, so storage is free. An always-on block draws with `$lib.random(n).format_each("…").join("\n")`, and only the drawn lines bill. A template draw re-rolls on every render, so store it. Prefer a script: when a restock signal changes (a day counter, a button flag), a trigger writes the drawn names to a hidden tracker and the block lists `$lib.where(name in $drawn)`. If the AI copies the names into a tracker instead, a retyped or re-punctuated name drops out silently, an empty copy draws a new set next turn, and the new draw first shows a turn after the signal [PATTERN, one community world; failure modes read from the file, not measured].
+
+**Rules gated on what is present.** Render each category's rules only while one of its items is in play, `<<if($dolls.any(name in $present), "DOLL RULES…", "")>>`, and a combo line when two categories are both present. Rules for an effect that outlasts its item (a week-long change, a permanent trigger word) must also be gated on that effect's state, a progress tracker or the name in an effects log, or they leave with the item while the effect runs.
+
+**Setup dropdowns with a Custom checklist.** Player-chosen dropdown trackers (initialValueChoices, initialValueBasedOnPC player) are read by templates and Start triggers; compare each with its exact choice strings. A Custom choice opens a multi-select Present Choice into a hidden tracker; start each line with a unique prefix ("Angels:") and test `$picked contains "Angels:"`, checking no prefix appears inside another line. The AI needs only the rendered consequences, so the dropdown trackers can be player_only.
+
 ## Turn-state patterns
 
 Optional patterns; trigger order is execution order.
@@ -1557,24 +1563,6 @@ The validator's review advisories (repeat accumulation, script transaction bound
 END OF DOCUMENT: reference/Recipes.md
 
 ===== END FILE: reference/Recipes.md =====
-
-===== BEGIN FILE: reference/Default-Evaluation.txt =====
-Firstly, if I have made any assertions in my description, evaluate whether you judge that they are reasonable and likely. If they are nonsensical, incoherent or blatantly impossible, the action should be DENIED. On the other hand, if the action is trivial and there is nothing to complicate it, skip the evaluation entirely and deem the action a SUCCESS. Don't overthink this! If the action doesn't warrant further evaluation, make a judgement and move on.
-
-Assuming the action is not a trivial SUCCESS or DENIED, I would like you to evaluate what skill would be needed to succeed in this action, and how difficult it would be to do so. Please indicate which skill which is needed to succeed.
-If applicable use this list: (<<skill_list>>) and a difficulty (from the list: <<difficulty_list>>). For example: {<<skill_example>>: <<difficulty_example>>}. Consider the difficulties carefully, evaluating what might be feasible in the situation. Identifying the skill and difficulty is very important!
-
-Then, evaluate whether I would succeed in the action. To evaluate, consider my proficiency in various skills using either (<<skills_and_levels>>) or logical application of other skills. By comparing these difficulties to the stated difficulty of the action, you should conclusively decide whether the action is a SUCCESS or a FAILURE.
-
-Base your decision on player character description, past, rest of the instructions and common sense - for example, if my skill is low but you know that I am able to perform the given action due to past events, treat me as more competent in this case. Again, don't overthink this - just make a sensible judgement given the information available to you and based on what makes sense for the story.
-
-In some situations, you may wish to evaluate the action as a PARTIAL_SUCCESS instead - this is for something where my abilities are sufficient that I don't simply fail completely (or where failing completely would make for a boring story) but I also don't success. Either I achieve some but not all of what I wanted, I fail but have some silver lining, or I succeed but there are drawbacks or side-effects rather than a "clean" success.
-
-In total, your evaluation should consist of an extremely brief discussion of your thinking (just a single sentence), a skill and difficulty, and then either DENIED, SUCCESS, FAILURE, or PARTIAL_SUCCESS (along with any clarifying remarks).
-
-That's all you need to do for the evaluation, which should be returned in the 'evaluation' argument. Remember to conclude with one of DENIED, SUCCESS, FAILURE, or PARTIAL_SUCCESS.
-
-===== END FILE: reference/Default-Evaluation.txt =====
 
 ===== BEGIN FILE: reference/Current-AI-Profiles.json =====
 {
@@ -2416,6 +2404,24 @@ See [Editor and UI](Editor-UI.md) for workflows and [Notable findings](Notable-F
 END OF DOCUMENT: reference/Verified-Behavior.md
 
 ===== END FILE: reference/Verified-Behavior.md =====
+
+===== BEGIN FILE: reference/Default-Evaluation.txt =====
+Firstly, if I have made any assertions in my description, evaluate whether you judge that they are reasonable and likely. If they are nonsensical, incoherent or blatantly impossible, the action should be DENIED. On the other hand, if the action is trivial and there is nothing to complicate it, skip the evaluation entirely and deem the action a SUCCESS. Don't overthink this! If the action doesn't warrant further evaluation, make a judgement and move on.
+
+Assuming the action is not a trivial SUCCESS or DENIED, I would like you to evaluate what skill would be needed to succeed in this action, and how difficult it would be to do so. Please indicate which skill which is needed to succeed.
+If applicable use this list: (<<skill_list>>) and a difficulty (from the list: <<difficulty_list>>). For example: {<<skill_example>>: <<difficulty_example>>}. Consider the difficulties carefully, evaluating what might be feasible in the situation. Identifying the skill and difficulty is very important!
+
+Then, evaluate whether I would succeed in the action. To evaluate, consider my proficiency in various skills using either (<<skills_and_levels>>) or logical application of other skills. By comparing these difficulties to the stated difficulty of the action, you should conclusively decide whether the action is a SUCCESS or a FAILURE.
+
+Base your decision on player character description, past, rest of the instructions and common sense - for example, if my skill is low but you know that I am able to perform the given action due to past events, treat me as more competent in this case. Again, don't overthink this - just make a sensible judgement given the information available to you and based on what makes sense for the story.
+
+In some situations, you may wish to evaluate the action as a PARTIAL_SUCCESS instead - this is for something where my abilities are sufficient that I don't simply fail completely (or where failing completely would make for a boring story) but I also don't success. Either I achieve some but not all of what I wanted, I fail but have some silver lining, or I succeed but there are drawbacks or side-effects rather than a "clean" success.
+
+In total, your evaluation should consist of an extremely brief discussion of your thinking (just a single sentence), a skill and difficulty, and then either DENIED, SUCCESS, FAILURE, or PARTIAL_SUCCESS (along with any clarifying remarks).
+
+That's all you need to do for the evaluation, which should be returned in the 'evaluation' argument. Remember to conclude with one of DENIED, SUCCESS, FAILURE, or PARTIAL_SUCCESS.
+
+===== END FILE: reference/Default-Evaluation.txt =====
 
 ===== BEGIN FILE: examples/Payloads.md =====
 # Compact native payload cookbook
