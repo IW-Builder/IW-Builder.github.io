@@ -1,6 +1,6 @@
 {
   "algorithm": "sha256",
-  "generatedAt": "2026-11-07T15:50:34+00:00",
+  "generatedAt": "2026-11-07T17:02:21+00:00",
   "files": [
     {
       "path": "Authoring-Prompt.md",
@@ -24,18 +24,18 @@
     },
     {
       "path": "chat/IW-Authoring-Guide.txt",
-      "bytes": 88194,
-      "sha256": "ea3aa5065530d069fc135add340e9bcc7fc8428ff6d0c0681c8b7b7d99cf77d8"
+      "bytes": 88173,
+      "sha256": "d4bf74f115bbbb0baa6a81eb856ee61d34540ede7913626ae25cec9dd46c232e"
     },
     {
       "path": "chat/IW-Behavior.txt",
-      "bytes": 85682,
-      "sha256": "827e6ac345d0ce8816ef736ae7a4d01de6d3642d40722d25fc2bedbb3563c867"
+      "bytes": 85931,
+      "sha256": "5b816e7709427d1b2c2f05ab0926eb1fc547106b8f67423d833fab023a2d9377"
     },
     {
       "path": "chat/IW-Complete-Reference.txt",
-      "bytes": 294512,
-      "sha256": "a84782db4b684d3c29b5a266d1563e93fbbbfe70b81f388ac8f4394cf94ce7f4"
+      "bytes": 294740,
+      "sha256": "a263c6d0ec3b9f6e19bc947cea701c22cee7324960ae3b3c694d42ab6ddf8e5a"
     },
     {
       "path": "chat/IW-Mechanics-Examples.txt",
@@ -79,13 +79,13 @@
     },
     {
       "path": "chat/index.html",
-      "bytes": 92481,
-      "sha256": "0278634f8949614a63f795b3e9017b7175b68004b47a9445197ce3d32d27d640"
+      "bytes": 92460,
+      "sha256": "d390476783fb412fd7a24ba2a893f8919cab4f98b579fe597b86cc55fe4a8a18"
     },
     {
       "path": "chat/sources.json",
       "bytes": 4137,
-      "sha256": "d725b527e67486d6d41ff838504d22e8e045d86cada3a92fa48bac8f2c1369da"
+      "sha256": "508767ba906f26bd9c9b048e26028278c97e0dbe850f21052d6486ad83537069"
     },
     {
       "path": "checker/index.html",
@@ -544,13 +544,13 @@
     },
     {
       "path": "reference/Triggers.md",
-      "bytes": 10832,
-      "sha256": "24cd29983989096267507a3aa14f87826f02c0187c1953af8882785478309cb8"
+      "bytes": 10811,
+      "sha256": "18e6613c4b4bc7b8a19c90344e0f7dfc2d5ed08665ac4eb63021334d1d7fe82c"
     },
     {
       "path": "reference/Verified-Behavior.md",
-      "bytes": 26184,
-      "sha256": "7b6c93d795aadc8a7ceb178ec1f6c70dd2b2e0ef4bed8ced723439e900df4037"
+      "bytes": 26433,
+      "sha256": "98e6e1376e5df2361b34f722b71992caf88825a9e7f6f64e684cbc77504ff4bc"
     },
     {
       "path": "reference/index.html",
