@@ -501,7 +501,7 @@ No tracker dependencies. Runs at startup.
 
 ## Add Other Character (effectChangeOtherCharacters)
 
-Native editor payload; Start picker only. Live character-record mutation is unresolved. Full world: [effect-effectChangeOtherCharacters-add.json](effect-effectChangeOtherCharacters-add.json).
+Native editor payload; Start picker only. It applies only in a trigger ordered above every Start Request Input or Present Choice, and an add needs at least one premade Other Character ([Verified-Behavior](../reference/Verified-Behavior.md)). Full world: [effect-effectChangeOtherCharacters-add.json](effect-effectChangeOtherCharacters-add.json).
 
 ```json
 {
@@ -532,7 +532,7 @@ For Add, character is null and npc contains a new character record with its own 
 
 ## Modify Other Character (effectChangeOtherCharacters)
 
-Native editor payload; Start picker only. Live character-record mutation is unresolved. Full world: [effect-effectChangeOtherCharacters-modify.json](effect-effectChangeOtherCharacters-modify.json).
+Native editor payload; Start picker only. It applies only in a trigger ordered above every Start Request Input or Present Choice, and an add needs at least one premade Other Character ([Verified-Behavior](../reference/Verified-Behavior.md)). Full world: [effect-effectChangeOtherCharacters-modify.json](effect-effectChangeOtherCharacters-modify.json).
 
 ```json
 {
@@ -564,7 +564,7 @@ character targets the existing Other Character Name (Mara), not its ID. Preserve
 
 ## Delete Other Character (effectChangeOtherCharacters)
 
-Native editor payload; Start picker only. Live character-record mutation is unresolved. Full world: [effect-effectChangeOtherCharacters-delete.json](effect-effectChangeOtherCharacters-delete.json).
+Native editor payload; Start picker only. It applies only in a trigger ordered above every Start Request Input or Present Choice, and an add needs at least one premade Other Character ([Verified-Behavior](../reference/Verified-Behavior.md)). Full world: [effect-effectChangeOtherCharacters-delete.json](effect-effectChangeOtherCharacters-delete.json).
 
 ```json
 {

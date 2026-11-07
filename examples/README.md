@@ -78,7 +78,7 @@ These examples are useful when you know what you want to happen but are unsure w
 - [Modify Other Character](effect-effectChangeOtherCharacters-modify.json)
 - [Delete Other Character](effect-effectChangeOtherCharacters-delete.json)
 
-These examples preserve native payload shapes. Background replacement is observed in Start-only mode; first-action timing is not fully qualified. Other Character Add/Modify/Delete payloads are editor-verified, but live record mutation remains unresolved.
+These examples preserve native payload shapes. Background replacement is observed in Start-only mode; first-action timing is not fully qualified. Other Character Add/Modify/Delete apply at startup only in triggers ordered above any Start form (Request Input or Present Choice), and an add needs at least one premade Other Character.
 
 ## Look under the hood
 

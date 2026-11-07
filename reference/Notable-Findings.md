@@ -73,6 +73,7 @@ The Infinite Worlds behavior most likely to surprise an author or break a world,
 52. **A block reinstalled every turn lags behind triggers below it.** Its `<<...>>` values freeze when its trigger runs. Order the triggers that compute those values above it, or write `<=...=>`.
 53. **`$game.ai_model` is the display name, and text `=` is case-sensitive.** On Dolphin, `= "Dolphin"` is true and `= "dolphin"` false.
 54. **Some native fields take live expressions.** A tracker condition's required value can be `$variable`, a random chance can be an expression, and numeric add/subtract accepts dice text such as `2d3`; each is evaluated every time. Templates in a tracker's update instructions are also evaluated live.
+55. **Start Other Character changes stop below a form.** Add, modify and delete do nothing in a Start trigger ordered below one that asks for input or a choice, though the trigger fires. Order them above every form, and give the world at least one premade Other Character: a Start add in a world with none gives no character.
 
 ## Still unknown
 
@@ -83,7 +84,7 @@ Platform behavior that has not been verified, by area, with what to do meanwhile
 | Prompt construction | Full historical storyteller/specialist prompts, hidden wrappers, exact inclusion and timing | Put essential facts in fields known to reach the storyteller (background, firstInput, instructions, always-on blocks); treat UI visibility as display, not proof of what the AI receives |
 | Empty-condition triggers | Whether a Start+Mid+Repeat trigger with no conditions fires on ordinary turns | Give every-turn triggers an always-true condition such as `$game.turn_number >= 0` |
 | Scenarios | Why dynamic Scenario text stopped firing (single slots fired in 2026-10 tests); any runtime maximum | Use literal Scenarios with explicit state gates ([Triggers](Triggers.md#scenarios)) |
-| NPCs and knowledge | Live character records, identity merging, mutation and retrieval routing; why name-only mentions often fail to surface Character detail | Put facts that must surface in the Summary or always-on text; author relationships and knowledge explicitly; correct an invented detail early by editing the turn |
+| NPCs and knowledge | Live character records, identity merging, mid-game mutation and retrieval routing; why name-only mentions often fail to surface Character detail | Put facts that must surface in the Summary or always-on text; author relationships and knowledge explicitly; correct an invented detail early by editing the turn |
 | Import normalization | Internal failure stages; ID rules for every entity type; why an omitted replaceWith broke the opening | Use ASCII alphanumeric tracker IDs; always serialize description and replaceWith; re-export after import and compare with tools/import_audit.py |
 | Visibility | Whether visibility changes what the AI receives | Do not rely on visibility to keep information from the storyteller |
 | Interpolation | NPC card detail, image fields and other untested destinations; `<=...=>` in change effects | Use the template probe example before relying on a new field ([Runtime](Runtime.md#template-interpolation-runtime)) |

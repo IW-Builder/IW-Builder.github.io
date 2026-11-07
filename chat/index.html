@@ -619,7 +619,7 @@ Start of game, Or mid-game, repeat eligibility and advanced logic are trigger se
 | Change defeat condition | `effectChangeDefeatCondition` | Change defeat definition. |
 | Change background | `effectChangeBackground` | Startup background replacement; ordinary/combined modes are not equivalent. |
 | Change first action | `effectChangeFirstAction` | Editor-recognized startup opening-action replacement; represented structurally in the schema. |
-| Change other characters | `effectChangeOtherCharacters` | Add/Modify/Delete Character, offered only in the Start picker. Add uses `character: null`; Modify/Delete name the target by its current name. Runtime mutation unresolved. |
+| Change other characters | `effectChangeOtherCharacters` | Add/Modify/Delete Character, offered only in the Start picker. Add uses `character: null`; Modify/Delete name the target by its current name. Order these triggers above any Start Request Input or Present Choice: below one they do nothing. A Start add gives no character in a world with no premade Other Characters ([Verified-Behavior](Verified-Behavior.md)). |
 | Ends game | `effectEndsGame` | End ordinary play; data true allows optional continuation, false does not. |
 
 Native startup payload examples: [background](../examples/effect-effectChangeBackground.json), [first action](../examples/effect-effectChangeFirstAction.json), and Other Character [Add](../examples/effect-effectChangeOtherCharacters-add.json), [Modify](../examples/effect-effectChangeOtherCharacters-modify.json), [Delete](../examples/effect-effectChangeOtherCharacters-delete.json). Their verification limits are stated in each example; [Payloads.md](../examples/Payloads.md) includes the complete effect nodes.
