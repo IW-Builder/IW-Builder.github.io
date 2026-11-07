@@ -1,6 +1,6 @@
 {
   "algorithm": "sha256",
-  "generatedAt": "2026-11-07T14:16:23+00:00",
+  "generatedAt": "2026-11-07T15:50:34+00:00",
   "files": [
     {
       "path": "Authoring-Prompt.md",
@@ -24,18 +24,18 @@
     },
     {
       "path": "chat/IW-Authoring-Guide.txt",
-      "bytes": 88161,
-      "sha256": "a12b3d9e76388e0d9642c19895448113ca0d1aeda2602c582104b643da682f01"
+      "bytes": 88194,
+      "sha256": "ea3aa5065530d069fc135add340e9bcc7fc8428ff6d0c0681c8b7b7d99cf77d8"
     },
     {
       "path": "chat/IW-Behavior.txt",
-      "bytes": 85785,
-      "sha256": "1afd1cba3f602db266483257495f722b578e77e59e43ec0a495d98c04f472dd5"
+      "bytes": 85682,
+      "sha256": "827e6ac345d0ce8816ef736ae7a4d01de6d3642d40722d25fc2bedbb3563c867"
     },
     {
       "path": "chat/IW-Complete-Reference.txt",
-      "bytes": 294485,
-      "sha256": "b3b1052ee7e3e1881585d40d424361942d874d1fd1c7d31992305d9353d81be1"
+      "bytes": 294512,
+      "sha256": "a84782db4b684d3c29b5a266d1563e93fbbbfe70b81f388ac8f4394cf94ce7f4"
     },
     {
       "path": "chat/IW-Mechanics-Examples.txt",
@@ -64,8 +64,8 @@
     },
     {
       "path": "chat/IW-Technical-Reference.txt",
-      "bytes": 89138,
-      "sha256": "1f3d53052f25f4f9c52c28f4c50040313123ed4963a76595b969501e11cbfe9e"
+      "bytes": 89235,
+      "sha256": "221a4df1a401c1f8d07a7afa8dc95e88bb92d5ea3a505bf777b7e0e66de23df5"
     },
     {
       "path": "chat/IW-Tools.txt",
@@ -79,13 +79,13 @@
     },
     {
       "path": "chat/index.html",
-      "bytes": 92453,
-      "sha256": "b8254137823d4c12a1019834a13cec8d75f73f2bf5ad07ede012d420ccdf3ab0"
+      "bytes": 92481,
+      "sha256": "0278634f8949614a63f795b3e9017b7175b68004b47a9445197ce3d32d27d640"
     },
     {
       "path": "chat/sources.json",
       "bytes": 4137,
-      "sha256": "a570649b8a9cc9dd62fc6e6986f78b5dacf462d6bbcca5a2fed630c30befe58e"
+      "sha256": "d725b527e67486d6d41ff838504d22e8e045d86cada3a92fa48bac8f2c1369da"
     },
     {
       "path": "checker/index.html",
@@ -499,8 +499,8 @@
     },
     {
       "path": "reference/Notable-Findings.md",
-      "bytes": 15385,
-      "sha256": "5f87042135987da7cc8145cc84cf2774dcb22ce96e880dcc1f1a38040208953c"
+      "bytes": 15386,
+      "sha256": "02428e25675bed1dc34b9d154b02ee390f85bde8179150d1bab43a9927f4b8c2"
     },
     {
       "path": "reference/PawScript.md",
@@ -519,8 +519,8 @@
     },
     {
       "path": "reference/Recipes.md",
-      "bytes": 18047,
-      "sha256": "033739829335c5c2ab06cbae25332f98b82f527342d74c027cdc48cafc412c15"
+      "bytes": 18144,
+      "sha256": "f69838037b62202ec151a74a9286e97f07133277911ff146a7b50d506dd3c889"
     },
     {
       "path": "reference/Runtime.md",
@@ -544,13 +544,13 @@
     },
     {
       "path": "reference/Triggers.md",
-      "bytes": 10799,
-      "sha256": "ede3355ada5062d8bc5dc048f477c8720d05da5b4af009572ecdbe0a67215164"
+      "bytes": 10832,
+      "sha256": "24cd29983989096267507a3aa14f87826f02c0187c1953af8882785478309cb8"
     },
     {
       "path": "reference/Verified-Behavior.md",
-      "bytes": 26288,
-      "sha256": "ac0c5aeac6fce45865b587f903cfbab5d08f5ca7ae492ca99e91edead31d97ec"
+      "bytes": 26184,
+      "sha256": "7b6c93d795aadc8a7ceb178ec1f6c70dd2b2e0ef4bed8ced723439e900df4037"
     },
     {
       "path": "reference/index.html",
