@@ -12,16 +12,7 @@ A one-time reward can require quest_complete = 1 AND reward_claimed = 0. Its eff
 
 ### Timing guidance:
 
-| Intent | Start | Mid Game | Repeat | Conditions |
-| --- | --- | --- | --- | --- |
-| One-time setup before opening | true | false | false | None, or a setup predicate |
-| Setup and every ordinary turn | true | true | true | None, or predicates checked on each pass |
-| Fire once when eligible, including setup | true | true | false | Required predicates |
-| Fire once when eligible after opening | false | false | false | Required predicates |
-| Fire repeatedly when eligible after opening | false | false | true | Required predicates; add state guards where needed |
-| Saved/inactive trigger | false | false | As intended | None; explicit dispatch is separate |
-
-Start enables pre-opening evaluation; additional conditions still apply except for the incompatible condition types noted below. Mid Game extends a Start-enabled trigger to ordinary turns. With Start disabled, ordinary conditional triggers do not require Mid Game.
+The intent-to-flags table (one-time setup, setup plus every turn, once when eligible, repeat when eligible, saved trigger) is in section 6 of the Authoring Prompt. Start enables pre-opening evaluation; additional conditions still apply except for the incompatible condition types noted below. Mid Game extends a Start-enabled trigger to ordinary turns. With Start disabled, ordinary conditional triggers do not require Mid Game.
 
 Start + Mid Game + Repeat can execute before the opening and again during turn 1, so guard counters and other effects that should run only once per turn.
 
@@ -35,7 +26,7 @@ With Start false, Mid Game has no effect; a stored true value requires no warnin
 
 1. Later triggers see earlier committed writes, including that turn's AI tracker updates and correctly bound Present Choice/Request Input answers. This does not describe every internal generation stage.
 2. Native numeric Set/Add effects within one trigger overwrite rather than accumulate (add 2 then add 3 ends at 3). Reads can nevertheless see changed values, so a later native effect's expression may or may not see an earlier native write in the same trigger.
-3. Run Script is different: sequential arithmetic accumulates, nested YAML changes preserve unrelated keys, and a failing script rolls back only its own writes, not earlier successful effects. For dependent operations prefer one script; otherwise put preparation in one trigger and consumption in a following trigger.
+3. Run Script is different: sequential arithmetic accumulates, nested YAML changes preserve unrelated keys, and a failing script rolls back only its own writes, not earlier successful effects. The trigger still counts as fired, consumes its one-shot and satisfies prerequisites, so an explicit completion flag set inside the script is distinct from firing history. For dependent operations prefer one script; otherwise put preparation in one trigger and consumption in a following trigger.
 4. Native text additions stack; removal removes all matches and literal quotes are retained. Do not apply numeric overwrite behavior to text or script statements.
 5. When guidance effects conflict, the first tends to win. Generate one coherent, mutually exclusive guidance outcome rather than contradictory directives whose priority you hope to control.
 
@@ -74,7 +65,7 @@ Switching automatic updating on or off works repeatedly, from the next turn: tri
 
 Read [Trigger-Catalog](Trigger-Catalog.md) for every identified condition and effect before saying a trigger cannot do something.
 
-Eligible no-effect triggers record firing. Random dispatch bypasses target conditions but not a consumed one-shot. A failing script can still consume its containing one-shot and satisfy prerequisites; explicit successful-completion flags are therefore distinct from firing history. Native And/Or groups and PawScript expressions short-circuit in order.
+Eligible no-effect triggers record firing. Random dispatch bypasses target conditions but not a consumed one-shot. Native And/Or groups and PawScript expressions short-circuit in order.
 
 ### Scenarios
 

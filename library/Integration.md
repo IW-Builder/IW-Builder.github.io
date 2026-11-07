@@ -20,7 +20,7 @@
 | Model-named bugfixes | The relevant model/behavior is actually targeted | These are user-authored workarounds, not universal official defaults |
 | Cover Image script | Preparing the game's cover prompt | Run/adapt as an authoring step; replace title/blurb and keep style separate |
 
-Discuss Storymaster's benefits, supporting instructions and approximate costs before selection. whereWhen remains a soft default; other modules are offered according to the brief. Removing an unused module from one world does not remove it from a personal library. Library maintenance and dependency-aware bundles use Data mode; see [Portable-Banks.md](../reference/Portable-Banks.md).
+Library maintenance and dependency-aware bundles use Data mode; see [Portable-Banks.md](../reference/Portable-Banks.md).
 
 ## Choosing Narrative Direction: Lightweight vs. Storymaster Suite
 
@@ -32,7 +32,7 @@ For new worlds, explain the trade-off between **Lightweight Direction** (in `Sam
 | **Full Storymaster Suite** | [Storymaster-Suite.json](https://iw-builder.github.io/library/Storymaster-Suite.json) | ~5,200+ tokens across `instructions`, `SecretInfo + Storymaster`, 17-step `evaluationRequest`, `descriptionRequest`, `summaryRequest`, `[MODE]` craft blocks, plus generated `secretInfo` planning | Implements a user-created dual-mode persona (`[MODE: SIMULATION ENGINE]` / `[MODE: NARRATIVE AUTHOR]`) with per-turn `[npcAction]`, `[worldAction]`, `[smPlan]`, and optional `Reader Profile` / `Story Metadata` calibration. |
 
 ### Rules for Storymaster Setups
-- Populate Genres, Core Appeals of Genres, Appeals of this Specific Narrative, Element of Novelty, Tone, Themes, Conflicts and Pacing. Pacing includes ongoing versus bounded length and appropriate scene estimates. These are creative inputs; derive them from the user description or ask targeted questions. The pacing line can include specialized scenes only when relevant.
+- Populate every line of the Storymaster VARIABLE BLOCK (the list is in the dependency checklist below). These are creative inputs; derive them from the user description or ask targeted questions.
 - The source's `[npcAction]`, `[worldAction]`, `[smPlan]` and other output labels are intentional runtime notation. They are not the same as `[LIST GENRES]`, `[DESCRIBE TONE]`, `[Author Style]` or `[title]` editing slots. Resolve nested pacing brackets thoughtfully instead of deleting everything between square brackets.
 - `<#...#>` are native IW comment delimiters. Resolve sample editing slots into world-specific text or ordinary headings; genuine comments may remain. Execute instructions such as selecting an appearance variant and copying its instructions to the buffer tracker; do not leave those comments for the live storyteller to interpret.
 
@@ -70,7 +70,7 @@ Initial blank list-like stores in the library are source examples. Direct appear
 
 The optional-block recipe is `../examples/optional-block.json`: a player-only On/Off preference, a hidden applied-state cache, and repeatable On/Off triggers. Enabling writes instructions and marks Enabled; disabling clears content and marks Disabled. No trigger runs again while the cached state matches the preference.
 
-An optional cosmetic block can clear its content when disabled. A director such as Storymaster needs fallback instructions and authorStyle appropriate to the disabled state. Choose the behavior required by the selected module. Retain block IDs rather than deleting target entries.
+An optional cosmetic block can clear its content when disabled; a director such as Storymaster needs a fallback bundle instead (see Module configuration below). Retain block IDs rather than deleting target entries.
 
 ## Module configuration
 
@@ -82,7 +82,6 @@ Storymaster as a player toggle is an advanced bundle. A simpler off state must r
 
 
 ## Storymaster dependency checklist
-
 
 The sample's root instructions, authorStyle ("Written by Storymaster"), Evaluation, Description and Summarization are written around its author/director vocabulary. Evaluation refers to npcAction, worldAction, smPlan, genres/core appeals, reader_profile and story_metadata. Summary refers to particular secretInfo sections. Some craft blocks use Simulation Engine/Narrative Author mode labels or cross-reference other blocks.
 
@@ -99,7 +98,8 @@ When using the Storymaster VARIABLE BLOCK, supply ALL of:
 - Conflicts.
 - Pacing: intended overall length or ongoing format, major/minor scene estimates, and any relevant specialized scene estimates. For an ongoing story, state that plainly rather than inventing a fixed total.
 
-Obtain these from the description or ask targeted creative questions where needed. Keep them coherent with authorStyle, story_metadata and any reader-profile instructions. Do not remove the variable section merely because it contains placeholders.
+Keep them coherent with authorStyle, story_metadata and any reader-profile instructions. Do not remove the variable section merely because it contains placeholders.
+
 For template substitution timing, see ../reference/Runtime.md. For generic optional-block composition, see ../reference/Recipes.md.
 
 ---

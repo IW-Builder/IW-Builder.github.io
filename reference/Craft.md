@@ -146,10 +146,6 @@ An optional AI-updated Case File tracker (each label `not known` or `known: how`
 
 For narrative worlds, read the example closest to the requested genre and relationship structure. Borrow structure, never content: do not reuse example names, premises or signature details. These are authoring patterns; the expedition and horror examples are structurally validated only.
 
-## Existing worlds
-
-Preserve IDs and unrelated fields, report intended changes, validate the complete output and test the affected behavior. A live copy and its base world are separate. When diagnosing a discrepancy, compare active blocks, Evaluation, trigger counts, PawScript errors and tracker values for the same turn; a rendered story alone cannot identify which stage failed.
-
 ---
 
 END OF DOCUMENT: reference/Craft.md

@@ -11,7 +11,7 @@ PawScript reads game data, computes values and updates trackers. It is its own l
 | PawScript trigger condition | `$coins >= 5` | Return true/false; no mutation |
 | Run Script trigger effect | `$coins -= 5` | Execute statements, save changes |
 
-An **expression** returns a value. A **statement** performs work, such as assignment or a loop. Script conditions are still expressions: the test after `if` decides whether its indented statements run. Use bare code in trigger conditions and Run Script, without `<<...>>` or Markdown fences. Text that a block-modification effect installs is a snapshot of its `<<...>>` values; a deferred `<=...=>` reference stays live in that destination. See [Runtime.md](Runtime.md#template-interpolation-runtime) for template timing.
+An **expression** returns a value. A **statement** performs work, such as assignment or a loop. Script conditions are still expressions: the test after `if` decides whether its indented statements run. Use bare code in trigger conditions and Run Script, without `<<...>>` or Markdown fences. Template timing by field is in [Runtime.md](Runtime.md#template-interpolation-runtime).
 
 Example, in the content of a Modify instruction block effect:
 
@@ -233,7 +233,7 @@ Additional presentation helpers include `.bold()`, `.italic()`, `.code()` and `.
 4. Test it in its trigger. Confirm timing, condition eligibility and order, not only script syntax.
 5. Check repeat execution and boundary cases: no matches, insufficient resources, missing optional fields and already-completed work.
 
-Statements in one script execute sequentially. Later triggers see earlier committed writes. Multiple native numeric effects in one trigger can overwrite rather than accumulate; they do not share script statement semantics. A script failure rolls back that script's changes, not preceding effects or the entire turn.
+Statements in one script execute sequentially, and a script failure rolls back that script's changes, not preceding effects or the entire turn. Trigger order and native-effect semantics (which differ from script statements) are in [Triggers.md](Triggers.md).
 
 Use `log("Coins: {$coins}")` for diagnostics in the PawScript Log. Logs are not player narration; messages logged before a failure remain useful for locating the problem. "Ran successfully, with no output" is normal for assignments. Writing a key that does not yet exist in a record succeeds but logs `created a new entry 'x' in $tracker - did you mean 'y'?`; treat it as a typo check. A model saying PASS is not runtime verification.
 
