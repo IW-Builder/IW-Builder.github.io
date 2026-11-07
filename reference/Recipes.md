@@ -49,6 +49,12 @@ Native block-modification effects substitute ordinary `<<...>>` templates when t
 
 **Offstage archive.** A script moves records of characters unseen for N turns (script-set lastSeenTurn) to a hidden tracker and restores them when the name returns in an update or the lookahead list. List archived names in the update instructions by template so spellings are reused.
 
+**Large library, drawn by template.** Keep hundreds or thousands of items (snacks, cards, encounters) as records in hidden YAML trackers: hidden values are not sent, so storage is free. An always-on block draws with `$lib.random(n).format_each("…").join("\n")`, and only the drawn lines bill. A template draw re-rolls on every render, so store it. Prefer a script: when a restock signal changes (a day counter, a button flag), a trigger writes the drawn names to a hidden tracker and the block lists `$lib.where(name in $drawn)`. If the AI copies the names into a tracker instead, a retyped or re-punctuated name drops out silently, an empty copy draws a new set next turn, and the new draw first shows a turn after the signal [PATTERN, one community world; failure modes read from the file, not measured].
+
+**Rules gated on what is present.** Render each category's rules only while one of its items is in play, `<<if($dolls.any(name in $present), "DOLL RULES…", "")>>`, and a combo line when two categories are both present. Rules for an effect that outlasts its item (a week-long change, a permanent trigger word) must also be gated on that effect's state, a progress tracker or the name in an effects log, or they leave with the item while the effect runs.
+
+**Setup dropdowns with a Custom checklist.** Player-chosen dropdown trackers (initialValueChoices, initialValueBasedOnPC player) are read by templates and Start triggers; compare each with its exact choice strings. A Custom choice opens a multi-select Present Choice into a hidden tracker; start each line with a unique prefix ("Angels:") and test `$picked contains "Angels:"`, checking no prefix appears inside another line. The AI needs only the rendered consequences, so the dropdown trackers can be player_only.
+
 ## Turn-state patterns
 
 Optional patterns; trigger order is execution order.
