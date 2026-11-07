@@ -78,7 +78,7 @@ Per the editor, script choices are evaluated at game start from initial tracker 
 
 ## Conditions
 
-A condition node is either a leaf (`category: "condition"` with type and data) or a logic group (`category: "logic"`, operator and a data array of child nodes; operators and, or, none_of). Normal condition lists are AND. Every node needs category, type and id. IDs are opaque, and importer preservation is entity-specific: use ASCII alphanumeric IDs for new trackers (see Identifiers above). Field case matters: trackedItemID, targetTrackedItemId and characterId are different native spellings.
+A condition node is either a leaf (`category: "condition"` with type and data) or a logic group (`category: "logic"`, operator and a data array of child nodes; operators and, or, none_of). Normal condition lists are AND. Every node needs category, type and id (conventions in Identifiers above). Field case matters: trackedItemID, targetTrackedItemId and characterId are different native spellings.
 
 |type|data shape and intent|
 |-|-|
@@ -160,7 +160,7 @@ Binding must be correct: targetTrackedItemId must name the intended tracker, usi
 
 ## Authoring context
 
-background, firstInput and objective feed AI context and direct play; objective also has a native update effect. They are not merely player-facing metadata. `<#...#>` are IW comment delimiters; fill sample authoring slots inside them, while genuine comments can remain. The sample Time and Location (whereWhen) block is a soft default for visible chronology; whereWhen is runtime output vocabulary, not a root export field.
+background, firstInput and objective feed AI context and direct play; objective also has a native update effect. They are not merely player-facing metadata. `<#...#>` are IW comment delimiters; fill sample authoring slots inside them, while genuine comments can remain. whereWhen and the other runtime output names are not root export fields ([Runtime.md](Runtime.md#specialist-requests-and-runtime-outputs)).
 
 Skill levels in possibleCharacters are integers from 0 through 5. The editor-provided Evaluation uses skill, difficulty, character context and common sense, including PARTIAL_SUCCESS; there is no established numeric success formula. See [Characters.md](Characters.md#evaluation).
 
@@ -192,7 +192,7 @@ PawScript reads game data, computes values and updates trackers. It is its own l
 | PawScript trigger condition | `$coins >= 5` | Return true/false; no mutation |
 | Run Script trigger effect | `$coins -= 5` | Execute statements, save changes |
 
-An **expression** returns a value. A **statement** performs work, such as assignment or a loop. Script conditions are still expressions: the test after `if` decides whether its indented statements run. Use bare code in trigger conditions and Run Script, without `<<...>>` or Markdown fences. Text that a block-modification effect installs is a snapshot of its `<<...>>` values; a deferred `<=...=>` reference stays live in that destination. See [Runtime.md](Runtime.md#template-interpolation-runtime) for template timing.
+An **expression** returns a value. A **statement** performs work, such as assignment or a loop. Script conditions are still expressions: the test after `if` decides whether its indented statements run. Use bare code in trigger conditions and Run Script, without `<<...>>` or Markdown fences. Template timing by field is in [Runtime.md](Runtime.md#template-interpolation-runtime).
 
 Example, in the content of a Modify instruction block effect:
 
@@ -414,7 +414,7 @@ Additional presentation helpers include `.bold()`, `.italic()`, `.code()` and `.
 4. Test it in its trigger. Confirm timing, condition eligibility and order, not only script syntax.
 5. Check repeat execution and boundary cases: no matches, insufficient resources, missing optional fields and already-completed work.
 
-Statements in one script execute sequentially. Later triggers see earlier committed writes. Multiple native numeric effects in one trigger can overwrite rather than accumulate; they do not share script statement semantics. A script failure rolls back that script's changes, not preceding effects or the entire turn.
+Statements in one script execute sequentially, and a script failure rolls back that script's changes, not preceding effects or the entire turn. Trigger order and native-effect semantics (which differ from script statements) are in [Triggers.md](Triggers.md).
 
 Use `log("Coins: {$coins}")` for diagnostics in the PawScript Log. Logs are not player narration; messages logged before a failure remain useful for locating the problem. "Ran successfully, with no output" is normal for assignments. Writing a key that does not yet exist in a record succeeds but logs `created a new entry 'x' in $tracker - did you mean 'y'?`; treat it as a typo check. A model saying PASS is not runtime verification.
 
@@ -514,7 +514,7 @@ Use `<<expression>>` inside supported text templates; use bare expressions in `t
 | Screens and exports: character-select text and PC description, View/edit world design, story export (text and PDF) background and character pages | Not rendered: they show the authored template. The export's background and character pages also ignore change effects. Turn text and tracker values in the export are as played |
 | NPC card detail, image fields, keyword lists, other metadata | Not tested; use ../examples/probe-template-timing.json before relying on a new field |
 
-To keep text that a change effect installs up to date, write the template in the world field itself and switch its content with a condition, or run the effect again when the source changes. An expression authored directly in a permanent block selects current text without a switching trigger. Ordinary `<<...>>` expressions passed through a block-modification effect become a snapshot; to keep a value live, write a deferred `<=...=>` reference in the installed text (worked example in [PawScript.md](PawScript.md)), keep the expression in a separate permanent block, or refresh the block when the source changes. Nested expression strings are not evaluated recursively. Selected text still enters context, so selection does not save tokens by itself. Independent random expressions give independent results; store a shared roll in a tracker when several outputs must agree. For temporary instruction-block installation with a retained result, see [on-demand generation](Recipes.md#dynamic-content).
+To keep text that a change effect installs up to date, write the template in the world field itself and switch its content with a condition, or run the effect again when the source changes. An expression authored directly in a permanent block selects current text without a switching trigger. Ordinary `<<...>>` expressions passed through a block-modification effect become a snapshot; to keep a value live, write a deferred `<=...=>` reference in the installed text (worked example in [PawScript.md](PawScript.md)), keep the expression in a separate permanent block, or refresh the block when the source changes. Nested expression strings are not evaluated recursively. Only rendered text enters context and is billed ([Cost](Cost.md#what-a-turn-is-made-of)). For temporary instruction-block installation with a retained result, see [on-demand generation](Recipes.md#dynamic-content).
 
 ## Specialist requests and runtime outputs
 
@@ -692,7 +692,7 @@ Player-visible preference trackers may be hidden from the storyteller; the trigg
 
 ## Dynamic content
 
-Native block-modification effects substitute ordinary `<<...>>` templates when the content is installed. For live values, write deferred `<=...=>` references in the installed text, use a separate permanent block, or reinstall content when the relevant values change. A block reinstalled every turn freezes values when its trigger runs, so values set by triggers below it arrive a turn late: order producers above the installer, or use `<=...=>`. See [Runtime.md](Runtime.md#template-interpolation-runtime) for the interpolation table.
+Text installed by a block-modification effect is a snapshot of its `<<...>>` values; the ways to keep a value live are in [Runtime.md](Runtime.md#template-interpolation-runtime). A block reinstalled every turn freezes values when its trigger runs, so values set by triggers below it arrive a turn late: order producers above the installer, or use `<=...=>`.
 
 **Player-selected layered openings.** Combine independent choices into meaningful variations using ordered text replacements, then install the result as background. This avoids authoring every full combination; keep fragments compatible and add combination-specific handling where needed. See [layered opening](../examples/recipe-layered-opening.json).
 

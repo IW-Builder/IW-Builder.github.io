@@ -34,7 +34,7 @@ Player-visible preference trackers may be hidden from the storyteller; the trigg
 
 ## Dynamic content
 
-Native block-modification effects substitute ordinary `<<...>>` templates when the content is installed. For live values, write deferred `<=...=>` references in the installed text, use a separate permanent block, or reinstall content when the relevant values change. A block reinstalled every turn freezes values when its trigger runs, so values set by triggers below it arrive a turn late: order producers above the installer, or use `<=...=>`. See [Runtime.md](Runtime.md#template-interpolation-runtime) for the interpolation table.
+Text installed by a block-modification effect is a snapshot of its `<<...>>` values; the ways to keep a value live are in [Runtime.md](Runtime.md#template-interpolation-runtime). A block reinstalled every turn freezes values when its trigger runs, so values set by triggers below it arrive a turn late: order producers above the installer, or use `<=...=>`.
 
 **Player-selected layered openings.** Combine independent choices into meaningful variations using ordered text replacements, then install the result as background. This avoids authoring every full combination; keep fragments compatible and add combination-specific handling where needed. See [layered opening](../examples/recipe-layered-opening.json).
 

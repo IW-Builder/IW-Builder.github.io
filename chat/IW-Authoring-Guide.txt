@@ -99,7 +99,7 @@ Raise relevant issues without forcing architecture changes. When two approaches 
 
 When implementation affects editability, reliability or maintenance, explain alternatives: narrative instructions and AI-managed trackers, native triggers, PawScript, or a hybrid. Recommend approach based on user needs and comfort editing. Simple native logic often easiest to editor-maintain; scripts suit structured data and sequential calculations. Hybrid uses scripts to calculate or assemble trackers, native effects for platform operations. Do not equate fewer triggers with lower token cost or faster execution.
 
-With limited tools or context, prefer small dependency sets and short scripts. Do not silently reduce requested functionality: explain any compromise and offer staged construction. Without code execution, avoid regenerating a large export casually; consider focused patches if the user accepts that delivery. Reading a validator is not running it.
+With limited tools or context, prefer small dependency sets and short scripts. Do not silently reduce requested functionality: explain any compromise and offer staged construction. Without code execution, avoid regenerating a large export casually; consider focused patches if the user accepts that delivery.
 
 ## 5. Construct and edit safely
 
@@ -410,10 +410,6 @@ An optional AI-updated Case File tracker (each label `not known` or `known: how`
 
 For narrative worlds, read the example closest to the requested genre and relationship structure. Borrow structure, never content: do not reuse example names, premises or signature details. These are authoring patterns; the expedition and horror examples are structurally validated only.
 
-## Existing worlds
-
-Preserve IDs and unrelated fields, report intended changes, validate the complete output and test the affected behavior. A live copy and its base world are separate. When diagnosing a discrepancy, compare active blocks, Evaluation, trigger counts, PawScript errors and tracker values for the same turn; a rendered story alone cannot identify which stage failed.
-
 ---
 
 END OF DOCUMENT: reference/Craft.md
@@ -433,7 +429,7 @@ The dataType vocabulary is `text`, `number`, `yaml` and `xml`; booleans and list
 
 Tracker `initialValue` is a JSON STRING even for numbers and YAML: `"10"`, or `"held: 0\nuses: 3\n"`. YAML content inside that string has its own parsed numbers, strings, lists and records. IW text entry does not enforce numeric-only input, but a mathematical tracker should start from an actual numeric literal. This does NOT make the entire export string-valued: JSON booleans, arrays and numeric fields elsewhere retain schema types.
 
-Initialize every mechanical path explicitly. Distinguish 0, false, empty text, an empty list, an absent key and null. Define each value's meaning consistently; numeric 0/1 is one practical flag convention. Narration must not reinterpret a stored value to justify a conflicting story. Treat missing required data as malformed/denied unless the design explicitly defines a fallback. Enforce format does not stop malformed manual/script writes, so use explicit shape and semantic checks before accepting generated state. `formatSchema` is the library's readable notation, not JSON Schema: text/number describe leaf values, `field?: text` marks an optional key, and `...:` permits additional content; its full grammar is unspecified. `formatExample` shows an intended value and should not double as a starting fact. Native path adjustment and script assignment have different missing-path behavior, and independent random expressions can disagree, so cache shared choices.
+Initialize every mechanical path explicitly. Distinguish 0, false, empty text, an empty list, an absent key and null. Define each value's meaning consistently; numeric 0/1 is one practical flag convention. Narration must not reinterpret a stored value to justify a conflicting story. Treat missing required data as malformed/denied unless the design explicitly defines a fallback. Enforce format does not stop malformed manual/script writes, so use explicit shape and semantic checks before accepting generated state. `formatSchema` is the library's readable notation, not JSON Schema: text/number describe leaf values, `field?: text` marks an optional key, and `...:` permits additional content; its full grammar is unspecified. `formatExample` shows an intended value and should not double as a starting fact.
 
 Ownership:
 
@@ -462,7 +458,7 @@ Recent story text, summaries, active instructions and tracker values serve diffe
 
 If a bad turn establishes a false fact, adding an instruction may leave conflicting history in place. Where the player's tools permit, editing or rewinding that turn can be cleaner than asking later prose to reconcile it. No correction engine is required by default.
 
-Native trigger changes can affect runtime instructions without changing the base editor definition. Inspect active instruction contents and trigger/debug results when troubleshooting; a base-world export alone does not show everything the model received. Base and live worlds are separate copies.
+Triggers can change the live instructions and tracker definitions without changing the base world, and a live game is a separate copy of its base world, so troubleshoot from the game's active instructions and debug view rather than from the base export alone ([Editor-UI](Editor-UI.md#play-debug-and-live-design)).
 
 Keep loaded instructions and AI-visible tracker names, descriptions, update rules and values purposeful. Prefer concise shared rules over repetition, keyword activation for occasional lore, and PawScript for exact calculations. Large AI-updated records can be expensive to rewrite. Summary compression runs after turn 8 and every six turns after that, so the 2–7 most recent turns are in short-term memory uncompressed while the rest is in a summary whose contents are not visible.
 
@@ -489,16 +485,7 @@ A one-time reward can require quest_complete = 1 AND reward_claimed = 0. Its eff
 
 ### Timing guidance:
 
-| Intent | Start | Mid Game | Repeat | Conditions |
-| --- | --- | --- | --- | --- |
-| One-time setup before opening | true | false | false | None, or a setup predicate |
-| Setup and every ordinary turn | true | true | true | None, or predicates checked on each pass |
-| Fire once when eligible, including setup | true | true | false | Required predicates |
-| Fire once when eligible after opening | false | false | false | Required predicates |
-| Fire repeatedly when eligible after opening | false | false | true | Required predicates; add state guards where needed |
-| Saved/inactive trigger | false | false | As intended | None; explicit dispatch is separate |
-
-Start enables pre-opening evaluation; additional conditions still apply except for the incompatible condition types noted below. Mid Game extends a Start-enabled trigger to ordinary turns. With Start disabled, ordinary conditional triggers do not require Mid Game.
+The intent-to-flags table (one-time setup, setup plus every turn, once when eligible, repeat when eligible, saved trigger) is in section 6 of the Authoring Prompt. Start enables pre-opening evaluation; additional conditions still apply except for the incompatible condition types noted below. Mid Game extends a Start-enabled trigger to ordinary turns. With Start disabled, ordinary conditional triggers do not require Mid Game.
 
 Start + Mid Game + Repeat can execute before the opening and again during turn 1, so guard counters and other effects that should run only once per turn.
 
@@ -512,7 +499,7 @@ With Start false, Mid Game has no effect; a stored true value requires no warnin
 
 1. Later triggers see earlier committed writes, including that turn's AI tracker updates and correctly bound Present Choice/Request Input answers. This does not describe every internal generation stage.
 2. Native numeric Set/Add effects within one trigger overwrite rather than accumulate (add 2 then add 3 ends at 3). Reads can nevertheless see changed values, so a later native effect's expression may or may not see an earlier native write in the same trigger.
-3. Run Script is different: sequential arithmetic accumulates, nested YAML changes preserve unrelated keys, and a failing script rolls back only its own writes, not earlier successful effects. For dependent operations prefer one script; otherwise put preparation in one trigger and consumption in a following trigger.
+3. Run Script is different: sequential arithmetic accumulates, nested YAML changes preserve unrelated keys, and a failing script rolls back only its own writes, not earlier successful effects. The trigger still counts as fired, consumes its one-shot and satisfies prerequisites, so an explicit completion flag set inside the script is distinct from firing history. For dependent operations prefer one script; otherwise put preparation in one trigger and consumption in a following trigger.
 4. Native text additions stack; removal removes all matches and literal quotes are retained. Do not apply numeric overwrite behavior to text or script statements.
 5. When guidance effects conflict, the first tends to win. Generate one coherent, mutually exclusive guidance outcome rather than contradictory directives whose priority you hope to control.
 
@@ -551,7 +538,7 @@ Switching automatic updating on or off works repeatedly, from the next turn: tri
 
 Read [Trigger-Catalog](Trigger-Catalog.md) for every identified condition and effect before saying a trigger cannot do something.
 
-Eligible no-effect triggers record firing. Random dispatch bypasses target conditions but not a consumed one-shot. A failing script can still consume its containing one-shot and satisfy prerequisites; explicit successful-completion flags are therefore distinct from firing history. Native And/Or groups and PawScript expressions short-circuit in order.
+Eligible no-effect triggers record firing. Random dispatch bypasses target conditions but not a consumed one-shot. Native And/Or groups and PawScript expressions short-circuit in order.
 
 ### Scenarios
 
@@ -618,7 +605,7 @@ Native startup payload examples: [background](../examples/effect-effectChangeBac
 
 ## Scope of this catalog
 
-Everything listed is represented in the schema and has a native example under ../examples/; read [Schema](Schema.md) and the specific payload only when implementing. **Modify tracked item details** changes a tracker's definition (Name, description, visibility, automatic updating, update instructions) rather than its value; its rules and the Request Input restriction are in [Triggers](Triggers.md#changing-a-trackers-definition-during-play). There is no effect that changes Evaluation, Summary or image settings; Change Description instructions is the only specialist-request effect.
+Everything listed is represented in the schema and has a native example under ../examples/; read [Schema](Schema.md) and the specific payload only when implementing. There is no effect that changes Evaluation, Summary or image settings; Change Description instructions is the only specialist-request effect.
 
 ---
 
@@ -727,7 +714,7 @@ END OF DOCUMENT: reference/Portable-Banks.md
 | Model-named bugfixes | The relevant model/behavior is actually targeted | These are user-authored workarounds, not universal official defaults |
 | Cover Image script | Preparing the game's cover prompt | Run/adapt as an authoring step; replace title/blurb and keep style separate |
 
-Discuss Storymaster's benefits, supporting instructions and approximate costs before selection. whereWhen remains a soft default; other modules are offered according to the brief. Removing an unused module from one world does not remove it from a personal library. Library maintenance and dependency-aware bundles use Data mode; see [Portable-Banks.md](../reference/Portable-Banks.md).
+Library maintenance and dependency-aware bundles use Data mode; see [Portable-Banks.md](../reference/Portable-Banks.md).
 
 ## Choosing Narrative Direction: Lightweight vs. Storymaster Suite
 
@@ -739,7 +726,7 @@ For new worlds, explain the trade-off between **Lightweight Direction** (in `Sam
 | **Full Storymaster Suite** | [Storymaster-Suite.json](https://iw-builder.github.io/library/Storymaster-Suite.json) | ~5,200+ tokens across `instructions`, `SecretInfo + Storymaster`, 17-step `evaluationRequest`, `descriptionRequest`, `summaryRequest`, `[MODE]` craft blocks, plus generated `secretInfo` planning | Implements a user-created dual-mode persona (`[MODE: SIMULATION ENGINE]` / `[MODE: NARRATIVE AUTHOR]`) with per-turn `[npcAction]`, `[worldAction]`, `[smPlan]`, and optional `Reader Profile` / `Story Metadata` calibration. |
 
 ### Rules for Storymaster Setups
-- Populate Genres, Core Appeals of Genres, Appeals of this Specific Narrative, Element of Novelty, Tone, Themes, Conflicts and Pacing. Pacing includes ongoing versus bounded length and appropriate scene estimates. These are creative inputs; derive them from the user description or ask targeted questions. The pacing line can include specialized scenes only when relevant.
+- Populate every line of the Storymaster VARIABLE BLOCK (the list is in the dependency checklist below). These are creative inputs; derive them from the user description or ask targeted questions.
 - The source's `[npcAction]`, `[worldAction]`, `[smPlan]` and other output labels are intentional runtime notation. They are not the same as `[LIST GENRES]`, `[DESCRIBE TONE]`, `[Author Style]` or `[title]` editing slots. Resolve nested pacing brackets thoughtfully instead of deleting everything between square brackets.
 - `<#...#>` are native IW comment delimiters. Resolve sample editing slots into world-specific text or ordinary headings; genuine comments may remain. Execute instructions such as selecting an appearance variant and copying its instructions to the buffer tracker; do not leave those comments for the live storyteller to interpret.
 
@@ -777,7 +764,7 @@ Initial blank list-like stores in the library are source examples. Direct appear
 
 The optional-block recipe is `../examples/optional-block.json`: a player-only On/Off preference, a hidden applied-state cache, and repeatable On/Off triggers. Enabling writes instructions and marks Enabled; disabling clears content and marks Disabled. No trigger runs again while the cached state matches the preference.
 
-An optional cosmetic block can clear its content when disabled. A director such as Storymaster needs fallback instructions and authorStyle appropriate to the disabled state. Choose the behavior required by the selected module. Retain block IDs rather than deleting target entries.
+An optional cosmetic block can clear its content when disabled; a director such as Storymaster needs a fallback bundle instead (see Module configuration below). Retain block IDs rather than deleting target entries.
 
 ## Module configuration
 
@@ -789,7 +776,6 @@ Storymaster as a player toggle is an advanced bundle. A simpler off state must r
 
 
 ## Storymaster dependency checklist
-
 
 The sample's root instructions, authorStyle ("Written by Storymaster"), Evaluation, Description and Summarization are written around its author/director vocabulary. Evaluation refers to npcAction, worldAction, smPlan, genres/core appeals, reader_profile and story_metadata. Summary refers to particular secretInfo sections. Some craft blocks use Simulation Engine/Narrative Author mode labels or cross-reference other blocks.
 
@@ -806,7 +792,8 @@ When using the Storymaster VARIABLE BLOCK, supply ALL of:
 - Conflicts.
 - Pacing: intended overall length or ongoing format, major/minor scene estimates, and any relevant specialized scene estimates. For an ongoing story, state that plainly rather than inventing a fixed total.
 
-Obtain these from the description or ask targeted creative questions where needed. Keep them coherent with authorStyle, story_metadata and any reader-profile instructions. Do not remove the variable section merely because it contains placeholders.
+Keep them coherent with authorStyle, story_metadata and any reader-profile instructions. Do not remove the variable section merely because it contains placeholders.
+
 For template substitution timing, see ../reference/Runtime.md. For generic optional-block composition, see ../reference/Recipes.md.
 
 ---
