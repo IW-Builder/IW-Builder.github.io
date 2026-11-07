@@ -44,15 +44,15 @@ Columns:
 - **K:** the extra credits a turn for each 1,000 characters of standing text. Thinking variants bill instructions like their base model.
 - **Narration, words per turn:** how much each model writes when nothing in the world asks for a length. A world that sets a length changes this.
 - **Credits per 100 words of narration:** the output cost of the narration alone, on the turn it is written.
-- **Thinking:** the model's thinking output, mean and range per turn. It varies a lot from turn to turn and is most of the cost on Leopard-2 (about two-thirds) and Leopard.
+- **Thinking:** the model's thinking output, mean and range per turn. It varies a lot from turn to turn and is most of the cost on Leopard-2 (about two-thirds) and Leopard. In the 15-turn Caracal game below (2026-11-07), no thinking was billed or shown on any turn.
 
-Turns took about 35–70 seconds on the models that were timed (Dolphin, Massivecat, Massivecat-thinking, Leopard, Leopard-2). Caracal took 5–8 minutes a turn. Wampus and Leopard-2 are under "Show niche models" in the model picker. Wildcat and the experimental Smilodon-2 models were not measured. For the model behind each name and the picker's typical range, see [Current-AI-Profiles.json](Current-AI-Profiles.json).
+Turns took about 35–70 seconds on the models that were timed (Dolphin, Massivecat, Massivecat-thinking, Leopard, Leopard-2). Caracal took 5–8 minutes a turn on 2026-10-30, but in a 15-turn game on 2026-11-07 its turns took 20–31 seconds (median 24, Dolphin 57 on the same world), apart from openings of 6–10 minutes, one of which failed with no charge. Wampus and Leopard-2 are under "Show niche models" in the model picker. Wildcat and the experimental Smilodon-2 models were not measured. For the model behind each name and the picker's typical range, see [Current-AI-Profiles.json](Current-AI-Profiles.json).
 
 ### Where these numbers come from
 
 [RUNTIME] One small sample world per model, one game each, played on 2026-10-30 with the same four fixed inputs. The averages come from **three turns** per model (turns 2–4; the opening is left out), and K rests on two of those turns. So treat every figure as a rough guide, not a price list: a second game, another world or another day could move a model's numbers by tens of percent, and thinking costs could move more.
 
-Three independent checks agree with it. Dolphin's and Massivecat's K match separate measurements on other worlds (1.6 and 2.7). On a long adventure world measured over 14 turns per model, Puma cost 0.85×, Smilodon 1.5× and Massivecat 2.0× Dolphin, close to the ratios above. Full games on one mystery world (below) gave Puma 0.82× and Smilodon 1.39×.
+Three independent checks agree with it. Dolphin's and Massivecat's K match separate measurements on other worlds (1.6 and 2.7). On a long adventure world measured over 14 turns per model, Puma cost 0.85×, Smilodon 1.5× and Massivecat 2.0× Dolphin, close to the ratios above. Full games on one mystery world (below) gave Puma 0.82× and Smilodon 1.39×; a shorter game gave Caracal 0.57×.
 
 ### Checked in full games
 
@@ -74,6 +74,8 @@ The words column is unguided output on a bare world. A world with a detailed aut
 - Smilodon wrote the fewest words but cost the most: its outputs (narration, a longer evaluation and its other output) ran about twice Puma's and Dolphin's. Short-term memory also bills about 1.45× Dolphin per word, so its saw-tooth climbs as fast as Dolphin's with two-thirds of the words.
 - The turn after the opening grew by about 30–50% by the median turn (Dolphin 87 → 128, Puma 80 → 105, Smilodon 126 → 178), as memory built up.
 - Each model played one game with its own draw, on slightly different versions of the world, so the instructions row is approximate.
+
+A shorter check on Caracal: 15 turns of a later version of the same world, against 13 turns of the same version on Dolphin (2026-11-07) [RUNTIME, one game each]. Caracal cost a median 68 credits a turn against Dolphin's 116 (0.57× over the same 13 turns; the table says 0.70×), wrote a median 627 words (384–1,110; unguided 346; Dolphin 660), and billed 0.9 credits per 100 words of narration (table 1.0). Its instructions came to 0.66× Dolphin's, as K predicts (0.68), and recent story about 0.6× per word. Inputs were 84% of its bill, because its output is so cheap: evaluation 1.6 credits a turn against 5.6. Its per-turn cost rose by about 26% from turn 2 to the median turn, which in a 15-turn game is before memory reaches its full saw-tooth.
 
 ## Why the same world costs different players different amounts
 

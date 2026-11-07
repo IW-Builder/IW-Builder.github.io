@@ -1,6 +1,6 @@
 {
   "algorithm": "sha256",
-  "generatedAt": "2026-11-07T03:17:53+00:00",
+  "generatedAt": "2026-11-07T13:35:00+00:00",
   "files": [
     {
       "path": "Authoring-Prompt.md",
@@ -29,13 +29,13 @@
     },
     {
       "path": "chat/IW-Behavior.txt",
-      "bytes": 83928,
-      "sha256": "9cdf261c6d372aad318deb77100f103c3a2de3c210ee1c442e245a9a611642f5"
+      "bytes": 85012,
+      "sha256": "3efdb8bd73120c14f7d4e3732bd64d9767b7c52e3ceec02d6a34355fcb6a6e7c"
     },
     {
       "path": "chat/IW-Complete-Reference.txt",
-      "bytes": 291520,
-      "sha256": "a58d0a3ec2f7fe9bf7d362ba960491ed590ca8f36f7f9325ea5dd11d81a67b84"
+      "bytes": 292604,
+      "sha256": "6e85404e7900073488a98918c17f4d1b0b9a0a9b026720338a80d3a07af6608f"
     },
     {
       "path": "chat/IW-Mechanics-Examples.txt",
@@ -85,7 +85,7 @@
     {
       "path": "chat/sources.json",
       "bytes": 4137,
-      "sha256": "578ff12c7197cacea608c38d21eebb803e986d4180fffbadbbd1ae031694567b"
+      "sha256": "22d28b886e8e65fb44c65fc22fa407bc10df3580e28b5dc645da96b5998283a4"
     },
     {
       "path": "checker/index.html",
@@ -460,7 +460,7 @@
     {
       "path": "llms.txt",
       "bytes": 27331,
-      "sha256": "c351cd64c9c568d8f0db2352da060fe9840f8434ec66ebb7c1ae983cd333d84a"
+      "sha256": "f25d555d67772df095685caae449f58e13b8c9cbe29ec20fa97e151ffc3df776"
     },
     {
       "path": "reference/Characters.md",
@@ -469,8 +469,8 @@
     },
     {
       "path": "reference/Cost.md",
-      "bytes": 12772,
-      "sha256": "9ec662f5f724f4bc725a19ffadef3ad9361529a1996f3f7b247b2cd8836c7971"
+      "bytes": 13856,
+      "sha256": "fd6d65893d5bfe1cc2ed75e410071c6d027e75922cb31025318b5a25b10159c8"
     },
     {
       "path": "reference/Craft.md",
@@ -555,7 +555,7 @@
     {
       "path": "reference/index.html",
       "bytes": 5778,
-      "sha256": "5c8cb60591984d5616b8fdc4de159bd96c2e2d19429587ae2954247a9620ed59"
+      "sha256": "95df2c473d2cbed2e056118d98e99630f296dcc109a81ac08765e5e6b728228d"
     },
     {
       "path": "tools/README.md",
