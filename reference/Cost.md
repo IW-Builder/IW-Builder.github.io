@@ -52,9 +52,28 @@ Turns took about 35–70 seconds on the models that were timed (Dolphin, Massive
 
 [RUNTIME] One small sample world per model, one game each, played on 2026-10-30 with the same four fixed inputs. The averages come from **three turns** per model (turns 2–4; the opening is left out), and K rests on two of those turns. So treat every figure as a rough guide, not a price list: a second game, another world or another day could move a model's numbers by tens of percent, and thinking costs could move more.
 
-Two independent checks agree with it. Dolphin's and Massivecat's K match separate measurements on other worlds (1.6 and 2.7). On a long adventure world measured over 14 turns per model, Puma cost 0.85×, Smilodon 1.5× and Massivecat 2.0× Dolphin, close to the ratios above.
+Three independent checks agree with it. Dolphin's and Massivecat's K match separate measurements on other worlds (1.6 and 2.7). On a long adventure world measured over 14 turns per model, Puma cost 0.85×, Smilodon 1.5× and Massivecat 2.0× Dolphin, close to the ratios above. Full games on one mystery world (below) gave Puma 0.82× and Smilodon 1.39×.
 
-The words-per-turn column is unguided output on a bare world. A world with a detailed author style gets far more: in a 33-turn game on an adult mystery with a two-paragraph author style and no length rule, Puma wrote 434–718 words a turn (median 509; Dolphin 693 on the same world), billed about 3.3 credits per 100 words of narration (close to the 3.0 above), and cost 0.84× Dolphin per turn (median 105 credits against about 125), with inputs 70% of each turn and short-term memory the part that grows between summaries. Smilodon on the same world (32 turns) wrote 382–657 words a turn (median 478), billed about 6.5 credits per 100 words (the table's 5.4) and cost 1.4× Dolphin per turn (median 178), with outputs twice Puma's [RUNTIME, 2026-11-06].
+### Checked in full games
+
+The words column is unguided output on a bare world. A world with a detailed author style gets more, and a real world bills more than the small-world turn in other ways too. One full game per model on the same adult mystery (a two-paragraph author style, no length rule, an evaluation checklist, 32–35 turns each) [RUNTIME, 2026-11-06/07]:
+
+| | Dolphin | Puma | Smilodon |
+| --- | --- | --- | --- |
+| Turns, total credits | 35, 4,510 | 33, 3,405 | 32, 5,569 |
+| Per turn, median (range) | 128 (82–167) | 105 (80–121) | 178 (124–218) |
+| × Dolphin per turn | 1.0 | 0.82 | 1.39 |
+| Narration words per turn, median (range) | 711 (480–1,124) | 509 (434–718) | 478 (382–657) |
+| Credits per 100 words of narration | 2.3 | 3.3 | 6.6 |
+| Instructions per turn, × Dolphin (table K ratio) | 1.0 | 0.69 (0.90) | 1.19 (1.26) |
+| Recent story, credits per 100 words it adds | 0.8 | 0.75 | 1.2 |
+| Evaluation output per turn, median | 4.0 | 4.5 | 12.4 |
+| Inputs, share of the game | 76% | 70% | 65% |
+
+- The per-turn ratios match the table's × Dolphin column. Smilodon's narration rate, measured over ten times as many turns, came out about 20% above the table's 5.4; use about 6.5 for long games.
+- Smilodon wrote the fewest words but cost the most: its outputs (narration, a longer evaluation and its other output) ran about twice Puma's and Dolphin's. Short-term memory also bills about 1.45× Dolphin per word, so its saw-tooth climbs as fast as Dolphin's with two-thirds of the words.
+- The turn after the opening grew by about 30–50% by the median turn (Dolphin 87 → 128, Puma 80 → 105, Smilodon 126 → 178), as memory built up.
+- Each model played one game with its own draw, on slightly different versions of the world, so the instructions row is approximate.
 
 ## Why the same world costs different players different amounts
 
@@ -74,10 +93,10 @@ The world sets the starting point; the player decides most of the rest.
 
 1. **Start from the model's small-world turn** in the table.
 2. **Add standing text:** K × the thousands of characters of standing text the world sends each turn (instructions, authorStyle, always-on blocks, AI-visible tracker definitions and values, typical active lore). Subtract about 1k for the text the small world already had.
-3. **Allow for memory:** add about 30% for a large world, and up to double for a small one, from about turn 8.
+3. **Allow for memory:** from about turn 8, add about 30% for a large world, 30–50% for a mid-sized one with long narration, and up to double for a small one.
 4. **Adjust for narration** if the world asks for much more or less than the model's natural length: (words asked − words in the table) ÷ 100 × the narration rate. This is the smallest of the four.
 
-Example (an estimate, not a measurement): a world with 18k characters of standing text, played on Smilodon. 70 + 1.99 × 17 ≈ 104 credits a turn early on, about 115–140 once memory builds up, so about 4,500–5,500 credits for a 40-turn game.
+Example (an estimate, not a measurement): a world with 18k characters of standing text, played on Smilodon. 70 + 1.99 × 17 ≈ 104 credits a turn early on, about 135–155 once memory builds up, so about 5,000–6,000 credits for a 40-turn game. The full Smilodon game above, on a world of similar size, ran higher still (124 on turn 1, 178 median), because its long narration and evaluation checklist added output the small-world turn doesn't include. Where a world asks for a long evaluation or long narration, start from turn 1 of a test game rather than the table.
 
 ### Broad situations on Dolphin
 

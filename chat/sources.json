@@ -24,7 +24,7 @@
       "examples/Payloads.md",
       "examples/index.json"
     ],
-    "sha256": "6f18bd37f55528c057ab247d6f7ad80d588411eefbd1c013403435b159d9d061"
+    "sha256": "a58d0a3ec2f7fe9bf7d362ba960491ed590ca8f36f7f9325ea5dd11d81a67b84"
   },
   "IW-Authoring-Guide.txt": {
     "sourceFiles": [
@@ -59,7 +59,7 @@
       "reference/Verified-Behavior.md",
       "reference/Default-Evaluation.txt"
     ],
-    "sha256": "86a79bf92bef38cd27963fc4698d4c100e779fd55972710c5136e94b382c43c5"
+    "sha256": "9cdf261c6d372aad318deb77100f103c3a2de3c210ee1c442e245a9a611642f5"
   },
   "IW-Payloads.txt": {
     "sourceFiles": [
