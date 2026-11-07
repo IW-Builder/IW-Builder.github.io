@@ -1,6 +1,6 @@
 {
   "algorithm": "sha256",
-  "generatedAt": "2026-11-07T17:02:21+00:00",
+  "generatedAt": "2026-11-07T17:17:29+00:00",
   "files": [
     {
       "path": "Authoring-Prompt.md",
@@ -24,18 +24,18 @@
     },
     {
       "path": "chat/IW-Authoring-Guide.txt",
-      "bytes": 88173,
-      "sha256": "d4bf74f115bbbb0baa6a81eb856ee61d34540ede7913626ae25cec9dd46c232e"
+      "bytes": 88172,
+      "sha256": "33df7b15c60c972f44526d29929d2495f7f845d678061a1b565940464766e266"
     },
     {
       "path": "chat/IW-Behavior.txt",
-      "bytes": 85931,
-      "sha256": "5b816e7709427d1b2c2f05ab0926eb1fc547106b8f67423d833fab023a2d9377"
+      "bytes": 86342,
+      "sha256": "69fdcbef771e0d2bfbd3534ad81ceb35583c530f57c83617953597fda47e4307"
     },
     {
       "path": "chat/IW-Complete-Reference.txt",
-      "bytes": 294740,
-      "sha256": "a263c6d0ec3b9f6e19bc947cea701c22cee7324960ae3b3c694d42ab6ddf8e5a"
+      "bytes": 295150,
+      "sha256": "5999a764d7d93c0669989b30ca7487a5c7f99160cf1ca48861c80d8c06324cd1"
     },
     {
       "path": "chat/IW-Mechanics-Examples.txt",
@@ -79,13 +79,13 @@
     },
     {
       "path": "chat/index.html",
-      "bytes": 92460,
-      "sha256": "d390476783fb412fd7a24ba2a893f8919cab4f98b579fe597b86cc55fe4a8a18"
+      "bytes": 92459,
+      "sha256": "5e15f742a78dda144c08f246140c5f432bfd2afdeed4b01c5120310e6a995e11"
     },
     {
       "path": "chat/sources.json",
       "bytes": 4137,
-      "sha256": "508767ba906f26bd9c9b048e26028278c97e0dbe850f21052d6486ad83537069"
+      "sha256": "60181700e1852fce1cac3b25677ab5aa3c34f2caeeab9cc5ac345fc0760b71b9"
     },
     {
       "path": "checker/index.html",
@@ -544,13 +544,13 @@
     },
     {
       "path": "reference/Triggers.md",
-      "bytes": 10811,
-      "sha256": "18e6613c4b4bc7b8a19c90344e0f7dfc2d5ed08665ac4eb63021334d1d7fe82c"
+      "bytes": 10810,
+      "sha256": "4903de4ab76329010cb702bd3c8ba2a782fdbb57092ad6942074480b2dea674f"
     },
     {
       "path": "reference/Verified-Behavior.md",
-      "bytes": 26433,
-      "sha256": "98e6e1376e5df2361b34f722b71992caf88825a9e7f6f64e684cbc77504ff4bc"
+      "bytes": 26844,
+      "sha256": "8032a7f58a6d95d6df221b181aa55d8224b859bf91daddefdcf769224f435744"
     },
     {
       "path": "reference/index.html",
@@ -570,7 +570,7 @@
     {
       "path": "tools/Validation-Report.json",
       "bytes": 10011,
-      "sha256": "d4c24db0ad4eaf0ec3fdb80053d74b2c200b3796b125bcd0940f4d8933df5b15"
+      "sha256": "13ce1321107360d22b8138d61ccba6acb6f370ea9efaa6b27aa4e8bcf838b6e3"
     },
     {
       "path": "tools/build_distribution.py",
