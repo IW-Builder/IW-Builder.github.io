@@ -24,7 +24,7 @@ With Start false, Mid Game has no effect; a stored true value requires no warnin
 
 ### Execution order and effect semantics:
 
-1. Later triggers see earlier committed writes, including that turn's AI tracker updates and correctly bound Present Choice/Request Input answers. This does not describe every internal generation stage.
+1. Later triggers see earlier committed writes, including that turn's AI tracker updates and correctly bound Present Choice/Request Input answers. This does not describe every internal generation stage. PawScript conditions see earlier script writes. Exception (one run): a native tracked-item condition missed an earlier trigger's script write and fired a turn late. When a trigger must fire on the turn a script changes a value, make its condition true both before and after the write.
 2. Native numeric Set/Add effects within one trigger overwrite rather than accumulate (add 2 then add 3 ends at 3). Reads can nevertheless see changed values, so a later native effect's expression may or may not see an earlier native write in the same trigger.
 3. Run Script is different: sequential arithmetic accumulates, nested YAML changes preserve unrelated keys, and a failing script rolls back only its own writes, not earlier successful effects. The trigger still counts as fired, consumes its one-shot and satisfies prerequisites, so an explicit completion flag set inside the script is distinct from firing history. For dependent operations prefer one script; otherwise put preparation in one trigger and consumption in a following trigger.
 4. Native text additions stack; removal removes all matches and literal quotes are retained. Do not apply numeric overwrite behavior to text or script statements.

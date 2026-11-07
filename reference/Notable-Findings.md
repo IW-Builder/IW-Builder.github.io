@@ -10,7 +10,7 @@ The Infinite Worlds behavior most likely to surprise an author or break a world,
 4. **Give information to AI does nothing on a Start-enabled trigger**, even on its later mid-game activations. Use background, an instruction block or a separate ordinary trigger.
 5. **Effects available depend on Start mode.** Background, first-action and Other Character changes are Start-only; Fire random trigger does not dispatch with Start on.
 6. **"Fired" does not mean "succeeded".** A script that errors rolls back only its own writes, but its trigger still counts as fired, uses up a one-shot and satisfies prerequisites. Set a completion flag inside the script that does the work.
-7. **Order in the trigger list is execution order.** Later triggers see earlier writes; a this-turn prerequisite only sees producers above it. Reversing two triggers can delay an effect by a turn.
+7. **Order in the trigger list is execution order.** Later triggers see earlier writes (PawScript conditions included; one run saw a native tracked-item condition miss an earlier script's write); a this-turn prerequisite only sees producers above it. Reversing two triggers can delay an effect by a turn.
 8. **Two native number changes to one tracker in one trigger overwrite each other.** Add 2 then add 3 ends at 3. Use one script for dependent arithmetic.
 9. **Fire random trigger skips the target's conditions** but will not rerun a one-shot that already fired. Put required checks inside the target's effects.
 10. **Thresholds need inequalities.** A countdown that jumps from 1 to -2 never equals 0. Use `<=`/`>=` and consume each crossing once.
