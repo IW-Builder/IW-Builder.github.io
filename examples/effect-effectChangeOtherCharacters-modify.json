@@ -1,7 +1,7 @@
 {
   "favorite": false,
   "title": "Native effect: Modify Other Character",
-  "description": "A compact startup payload example. Native editor payload verified; runtime character-record mutation unresolved. Startup picker availability is documented. Trigger firing, narration and the live-design NPC list do not establish that the live character record was added, modified or deleted. This adapted world is structurally validated only.",
+  "description": "A compact startup payload example. Native editor payload verified. At startup these effects apply only in triggers ordered above any Request Input or Present Choice trigger, and an add needs at least one premade Other Character (one readout model). This adapted world is structurally validated only.",
   "background": "You are visiting a quiet guild office before its morning appointments.",
   "instructions": "Keep the scene grounded in the supplied setting and characters. Do not invent mechanical rewards.",
   "authorStyle": "Clear, concise prose.",
@@ -137,5 +137,5 @@
     }
   ],
   "loreBookEntries": [],
-  "designNotes": "Native editor payload verified; runtime character-record mutation unresolved. Startup picker availability is documented. Trigger firing, narration and the live-design NPC list do not establish that the live character record was added, modified or deleted. This adapted world is structurally validated only. Uses Start-only with an empty condition list; do not transfer this arrangement to an ordinary trigger."
+  "designNotes": "Native editor payload verified. At startup these effects apply only in triggers ordered above any Request Input or Present Choice trigger, and an add needs at least one premade Other Character (one readout model). This adapted world is structurally validated only. Uses Start-only with an empty condition list; do not transfer this arrangement to an ordinary trigger."
 }
