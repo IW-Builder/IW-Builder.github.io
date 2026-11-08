@@ -40,7 +40,7 @@ Teach IW or PawScript = Consult mode. Establish programming familiarity if uncle
 
 ## 2. Load only what the task needs
 
-Start with the supplied document; skip README/index pages, duplicate editions, unrelated references and routine manifest retrieval. Fetch only missing material needed for the task. Design conversations in `samples/` are optional examples, not platform documentation. To find a file not listed below, use the file index at https://iw-builder.github.io/llms.txt: every published file with its URL, size and purpose.
+Start with the supplied document; skip README/index pages, duplicate editions, unrelated references and routine manifest retrieval. Fetch only missing material needed for the task. Never read `stories/`: it holds released games, not kit material. To find a file not listed below, use the file index at https://iw-builder.github.io/llms.txt: every published file with its URL, size and purpose.
 
 The template or current export is required for construction. Load the files below only for the features in use. The compatibility baseline and the evidence labels used across the kit are at the top of reference/Verified-Behavior.md.
 

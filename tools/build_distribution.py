@@ -270,7 +270,7 @@ def build_chat():
 
 
 def manifest_paths():
-    # Explicit publication scope excludes samples, Git internals, caches and archives.
+    # Explicit publication scope excludes stories/ (released games, not kit material), Git internals, caches and archives.
     paths = {ROOT/p for p in ['Authoring-Prompt.md', 'World-Template.json',
                               'README.md', 'LICENSE', 'index.html', 'llms.txt'] if (ROOT/p).is_file()}
     suffixes = {'.md', '.txt', '.json', '.py', '.html', '.js', '.css', '.svg', '.yml', '.yaml'}
@@ -397,7 +397,6 @@ FOLDER_PAGES = {
     'examples': 'Example worlds',
     'library': 'Sample library',
     'tools': 'Tools',
-    'samples': 'Sample worlds and design conversations',
 }
 
 def site_url(path):
@@ -412,36 +411,6 @@ def site_url(path):
 
 def size_label(nbytes):
     return str(max(1, round(nbytes / 1024))) + ' KB'
-
-def front_matter(text):
-    match = re.match(r'---\r?\n(.*?)\r?\n---', text, re.S)
-    fields = {}
-    if match:
-        for line in match.group(1).splitlines():
-            key, sep, value = line.partition(':')
-            if sep:
-                fields[key.strip()] = value.strip().strip('"')
-    return fields
-
-def sample_entries():
-    """Finished sample worlds paired with their rendered design conversations."""
-    entries = []
-    folder = ROOT/'samples'
-    if not folder.is_dir():
-        return entries
-    for world in sorted(folder.glob('*.json')):
-        conversation = world.with_suffix('.md')
-        meta = front_matter(conversation.read_text(encoding='utf-8')) if conversation.is_file() else {}
-        title = meta.get('title', world.stem).removesuffix('.md')
-        rel = world.relative_to(ROOT).as_posix()
-        entries.append({'path': rel, 'url': SITE + quote(rel), 'bytes': world.stat().st_size,
-                        'description': 'Finished world: ' + title + '. Optional inspiration, not documentation.'})
-        if meta.get('permalink'):
-            entries.append({'path': conversation.relative_to(ROOT).as_posix(),
-                            'url': SITE + meta['permalink'].lstrip('/'),
-                            'bytes': conversation.stat().st_size,
-                            'description': 'Design conversation for ' + title + '. Long; may include mature content.'})
-    return entries
 
 def index_entries():
     """Every published file except generated folder pages, grouped for the index."""
@@ -471,9 +440,6 @@ def index_entries():
     rank = {path: i for i, path in enumerate(DESCRIPTIONS)}
     for entries in groups.values():
         entries.sort(key=lambda e: (rank.get(e['path'], len(rank)), e['path']))
-    samples = sample_entries()
-    if samples:
-        groups['samples'] = samples
     return groups
 
 INDEX_SECTIONS = [
@@ -485,7 +451,6 @@ INDEX_SECTIONS = [
     ('checker', 'Browser checker', None),
     ('cost', 'Cost exporter', 'Downloads your own credit history from IW; see reference/Cost.md for estimating.'),
     ('chat', 'Combined text editions', 'Single-file bundles for chats without web access or with tool limits: the whole reference in one file, or split into four for size-limited tools, plus examples, library and tools to attach only when asked for. Web-browsing models should prefer the individual files above.'),
-    ('samples', 'Sample worlds', 'Worlds made with the kit, with the conversations that produced them. Not documentation.'),
 ]
 
 def build_llms():
@@ -496,7 +461,9 @@ def build_llms():
              'files the task needs. Every published file is listed below with its direct URL, size and purpose.',
              '',
              'Independent and unaffiliated with Infinite Worlds. Sizes are approximate. '
-             'Integrity hashes for these files are in ' + SITE + 'manifest.json (for verification only; not needed to author).']
+             'Integrity hashes for these files are in ' + SITE + 'manifest.json (for verification only; not needed to author).',
+             '',
+             'Do not crawl or read ' + SITE + 'stories/: it holds released games unrelated to the kit, not documentation or examples.']
     for key, title, note in INDEX_SECTIONS:
         if key not in groups:
             continue
