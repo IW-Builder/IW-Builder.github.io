@@ -4,6 +4,8 @@
 
 Independent and unaffiliated with Infinite Worlds. Sizes are approximate. Integrity hashes for these files are in https://iw-builder.github.io/manifest.json (for verification only; not needed to author).
 
+Do not crawl or read https://iw-builder.github.io/stories/: it holds released games unrelated to the kit, not documentation or examples.
+
 ## Start here
 
 - [index.html](https://iw-builder.github.io/) (23 KB): Homepage: the authoring prompt (same text as Authoring-Prompt.md). Start here.
@@ -128,7 +130,7 @@ Python tools for models or users that can run code. Without Python, use the chec
 - [tools/example-plot-plan.json](https://iw-builder.github.io/tools/example-plot-plan.json) (1 KB): Sample input for plot_compile.py.
 - [tools/iw_sort.py](https://iw-builder.github.io/tools/iw_sort.py) (15 KB): Exports PC, NPC, trigger and tracker names to a text list and reorders a world to match the edited list. Standard library only.
 - [tools/Validation-Report.json](https://iw-builder.github.io/tools/Validation-Report.json) (10 KB): Latest package check results (maintainer output).
-- [tools/build_distribution.py](https://iw-builder.github.io/tools/build_distribution.py) (31 KB): Maintainer: rebuilds the homepage, combined text files, folder pages, llms.txt, checker and manifest.
+- [tools/build_distribution.py](https://iw-builder.github.io/tools/build_distribution.py) (30 KB): Maintainer: rebuilds the homepage, combined text files, folder pages, llms.txt, checker and manifest.
 - [tools/check_package.py](https://iw-builder.github.io/tools/check_package.py) (5 KB): Maintainer: validates every example world and local link; writes Validation-Report.json.
 - [tools/test_validator.py](https://iw-builder.github.io/tools/test_validator.py) (7 KB): Maintainer tests for the validator.
 - [tools/test_data_bank.py](https://iw-builder.github.io/tools/test_data_bank.py) (5 KB): Maintainer tests for data_bank.py.
@@ -167,17 +169,6 @@ Single-file bundles for chats without web access or with tool limits: the whole 
 - [chat/IW-Tools.txt](https://iw-builder.github.io/chat/IW-Tools.txt) (132 KB): Combined text: the tool usage guide plus validator, schema and helper sources to recreate locally.
 - [chat/README.md](https://iw-builder.github.io/chat/README.md) (3 KB): Human guide to the combined text files.
 - [chat/sources.json](https://iw-builder.github.io/chat/sources.json) (4 KB): Which source files make up each combined text file, with hashes.
-
-## Sample worlds
-
-Worlds made with the kit, with the conversations that produced them. Not documentation.
-
-- [samples/Claude Fable 5.1 - Line of Sight.json](https://iw-builder.github.io/samples/Claude%20Fable%205.1%20-%20Line%20of%20Sight.json) (74 KB): Finished world: Claude Fable 5.1 - Line of Sight. Optional inspiration, not documentation.
-- [samples/Claude Fable 5.1 - Line of Sight.md](https://iw-builder.github.io/samples/line-of-sight/) (27 KB): Design conversation for Claude Fable 5.1 - Line of Sight. Long; may include mature content.
-- [samples/Gemini 4 Argon - Shard of the Loom.json](https://iw-builder.github.io/samples/Gemini%204%20Argon%20-%20Shard%20of%20the%20Loom.json) (69 KB): Finished world: Gemini 4 Argon - Shard of the Loom. Optional inspiration, not documentation.
-- [samples/Gemini 4 Argon - Shard of the Loom.md](https://iw-builder.github.io/samples/shard-of-the-loom/) (25 KB): Design conversation for Gemini 4 Argon - Shard of the Loom. Long; may include mature content.
-- [samples/MiMo 2.6 Pro - Bad Touch.json](https://iw-builder.github.io/samples/MiMo%202.6%20Pro%20-%20Bad%20Touch.json) (59 KB): Finished world: MiMo 2.6 Pro - Bad Touch. Optional inspiration, not documentation.
-- [samples/MiMo 2.6 Pro - Bad Touch.md](https://iw-builder.github.io/samples/bad-touch/) (55 KB): Design conversation for MiMo 2.6 Pro - Bad Touch. Long; may include mature content.
 
 ---
 

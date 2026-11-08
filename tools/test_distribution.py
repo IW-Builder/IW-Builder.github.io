@@ -17,7 +17,7 @@ class DistributionTests(unittest.TestCase):
     def setUpClass(cls):
         cls.temp = tempfile.TemporaryDirectory()
         cls.root = Path(cls.temp.name)/'kit'
-        shutil.copytree(SOURCE, cls.root, ignore=shutil.ignore_patterns('.git', '.venv', '__pycache__', 'samples', '*.zip'))
+        shutil.copytree(SOURCE, cls.root, ignore=shutil.ignore_patterns('.git', '.venv', '__pycache__', 'stories', '*.zip'))
         cls.script = cls.root/'tools/build_distribution.py'
         cls.run_build()
 
@@ -42,13 +42,13 @@ class DistributionTests(unittest.TestCase):
         self.assertIn('cost/index.html', paths)
         self.assertIn('chat/IW-Tools.txt', paths)
         self.assertNotIn('manifest.json', paths)
-        self.assertFalse(any(p.startswith('samples/') or p.endswith('.zip') for p in paths))
+        self.assertFalse(any(p.startswith('stories/') or p.endswith('.zip') for p in paths))
 
     def test_llms_index_covers_published_files(self):
         text = (self.root/'llms.txt').read_text()
         self.assertTrue(text.endswith('END OF DOCUMENT: llms.txt\n'))
         m = json.loads((self.root/'manifest.json').read_text())
-        folder_pages = {f + '/index.html' for f in ['reference', 'examples', 'library', 'tools', 'samples']}
+        folder_pages = {f + '/index.html' for f in ['reference', 'examples', 'library', 'tools']}
         for entry in m['files']:
             path = entry['path']
             if path in folder_pages or path == 'llms.txt':

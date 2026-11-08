@@ -24,7 +24,7 @@
       "examples/Payloads.md",
       "examples/index.json"
     ],
-    "sha256": "d80252e68f0d26d5609f98cfbd4e6d7df8865698aa52fdf9f87c1a048c0fc2b1"
+    "sha256": "74426094d681ee12409146a4c2883174385ca6fbb6c1797b48d38bf09aa245f0"
   },
   "IW-Authoring-Guide.txt": {
     "sourceFiles": [
@@ -37,7 +37,7 @@
       "reference/Portable-Banks.md",
       "library/Integration.md"
     ],
-    "sha256": "d1c7f3730faa4705dbd26a3daf1861b3f5594319b7e64e9a1a6e67e6c6b91463"
+    "sha256": "d57aa0b124c317bf91df8d96469ff136a11587e3db348425bbe6dd0a83919208"
   },
   "IW-Technical-Reference.txt": {
     "sourceFiles": [
@@ -121,6 +121,6 @@
       "tools/story_export.py",
       "tools/plot_compile.py"
     ],
-    "sha256": "3c7ee0ef81f33176c4098a5f0abcf8ebf34ff37aaeda3e58e3a9a08556b629fd"
+    "sha256": "30c0fbd3a0d0d63cb17c108ad3152044e817235eb2a4b9dfb906d5b2f8abb6e6"
   }
 }
