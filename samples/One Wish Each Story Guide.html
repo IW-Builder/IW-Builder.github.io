@@ -1,0 +1,158 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>One Wish Each Story Guide</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gloock&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one reading column like a page from Hester's ledger, with tables and timelines breaking out to a wider measure */
+:root{
+  --bg:#eef1f2; --panel:#ffffff; --ink:#1c2328; --muted:#56636b; --line:#cdd5d9;
+  --brass:#8a6418; --brass-soft:#f3e9d2; --glass:#2f6f78; --glass-soft:#dcecee;
+  --warn:#8c3b2e; --warn-soft:#f6e2dc;
+  --display:"Gloock", Georgia, "Times New Roman", serif;
+  --body:"Atkinson Hyperlegible", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono:"IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#12181b; --panel:#1a2226; --ink:#dfe5e8; --muted:#9aa8af; --line:#2f3b41;
+  --brass:#d9ae55; --brass-soft:#2c2617; --glass:#7cc2cb; --glass-soft:#17292c;
+  --warn:#e59a89; --warn-soft:#2e1c18; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#12181b; --panel:#1a2226; --ink:#dfe5e8; --muted:#9aa8af; --line:#2f3b41;
+  --brass:#d9ae55; --brass-soft:#2c2617; --glass:#7cc2cb; --glass-soft:#17292c;
+  --warn:#e59a89; --warn-soft:#2e1c18; color-scheme:dark}
+body{background:var(--bg);color:var(--ink);font:16px/1.6 var(--body);
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:40px 64px}
+.wrap{max-width:860px;margin:0 auto;display:flex;flex-direction:column;gap:40px}
+.read{max-width:66ch}
+header{display:flex;flex-direction:column;gap:10px;border-bottom:1px solid var(--line);padding-bottom:24px}
+.eyebrow{font:500 12px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--brass)}
+h1{font:400 clamp(34px,6vw,52px)/1.05 var(--display);margin:0;text-wrap:balance}
+h2{font:400 28px/1.15 var(--display);margin:0 0 12px;text-wrap:balance}
+h3{font:700 17px/1.3 var(--body);margin:0 0 6px}
+p{margin:0 0 12px}
+section{display:flex;flex-direction:column;gap:6px}
+.lede{font-size:18px;color:var(--muted);max-width:62ch}
+.note{background:var(--warn-soft);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:12px 16px;font-size:15px}
+.note b{color:var(--warn)}
+.other{font-size:15px;color:var(--muted)}
+a{color:var(--glass)}
+.mono,.t{font-family:var(--mono);font-size:.88em;font-variant-numeric:tabular-nums}
+.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:6px;background:var(--panel)}
+table{border-collapse:collapse;width:100%;font-size:15px;min-width:520px}
+th,td{text-align:left;vertical-align:top;padding:10px 14px;border-bottom:1px solid var(--line)}
+th{font:500 12px/1.3 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);background:var(--bg)}
+tr:last-child td{border-bottom:0}
+td:first-child{font-weight:700;white-space:nowrap}
+.days{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:6px;overflow:hidden}
+.day{background:var(--panel);padding:14px;display:flex;flex-direction:column;gap:4px;min-width:0}
+.day .n{font:500 12px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--brass)}
+.day b{font-family:var(--display);font-weight:400;font-size:19px;line-height:1.2}
+.day span{font-size:14px;color:var(--muted)}
+.chain{display:flex;flex-direction:column;gap:0;counter-reset:c;border-left:2px solid var(--glass);margin-left:8px}
+.chain li{list-style:none;position:relative;padding:0 0 16px 22px}
+.chain li::before{content:"";position:absolute;left:-7px;top:7px;width:12px;height:12px;border-radius:50%;background:var(--bg);border:2px solid var(--glass)}
+.chain li.key::before{background:var(--glass)}
+.chain{padding:0}
+.chain .fact{font:500 13px/1 var(--mono);letter-spacing:.06em;color:var(--glass);text-transform:uppercase}
+.pair{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:16px 18px;min-width:0}
+.card .tag{display:inline-block;font:500 11px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;padding:5px 8px;border-radius:3px;background:var(--glass-soft);color:var(--glass);margin-bottom:8px}
+.card .tag.b{background:var(--brass-soft);color:var(--brass)}
+.out{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
+.out .card h3{font-family:var(--display);font-weight:400;font-size:21px}
+ul.plain{margin:0;padding-left:20px}
+ul.plain li{margin-bottom:6px}
+.watchbar{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));border:1px solid var(--line);border-radius:6px;overflow:hidden;font-size:13px}
+.watchbar div{padding:10px 8px;background:var(--panel);border-right:1px solid var(--line);display:flex;flex-direction:column;gap:2px}
+.watchbar div:last-child{border-right:0}
+.watchbar .off{background:var(--bg);color:var(--muted)}
+.watchbar .t{color:var(--brass)}
+footer{font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:16px}
+@media (max-width:520px){.watchbar{grid-template-columns:repeat(3,minmax(0,1fr))}.watchbar div:nth-child(3){border-right:0}.watchbar div:nth-child(-n+3){border-bottom:1px solid var(--line)}}
+</style>
+<div class="wrap">
+<header>
+  <div class="eyebrow">One Wish Each 1.20 · story guide</div>
+  <h1>How the week plays out</h1>
+  <p class="lede">The shape of the story and the ways it can end. For how each part works underneath, see the mechanics guide. The world editor has every script.</p>
+</header>
+
+<div class="note read"><b>Spoilers.</b> This guide says what is really going on in the house. If you want to solve the mystery yourself, play first.</div>
+
+<section class="read">
+  <h2>The premise</h2>
+  <p>You and four old friends spend a week clearing your late great-aunt Hester's house before it is sold. On the first evening you force the attic door and find the Glass: a tall mirror that grants one wish a day to each person who speaks to it alone, in their own four-hour watch.</p>
+  <p>That night the group agrees one rule: nobody wishes on anyone else in the house. Each of you only changes yourself.</p>
+  <p>The secret is that one friend's first wish bound the Glass to that rule for everyone except themself. From then on, changes nobody owns up to keep landing on the rest of you. The group calls them echoes, spill from their own wishes. They're not.</p>
+</section>
+
+<section>
+  <h2>The week at a glance</h2>
+  <div class="days">
+    <div class="day"><span class="n">Day 0</span><b>Arrival</b><span>The friends arrive and the Glass is found. The pact is made.</span></div>
+    <div class="day"><span class="n">Day 1</span><b>First wishes</b><span>Everyone takes a turn. One friend quietly binds the Glass.</span></div>
+    <div class="day"><span class="n">Day 2</span><b>Echoes</b><span>The first unexplained change lands. The group has a theory.</span></div>
+    <div class="day"><span class="n">Day 3</span><b>A fizzle</b><span>Someone admits a wish on another person did nothing.</span></div>
+    <div class="day"><span class="n">Days 4–6</span><b>The pattern</b><span>The changes grow bolder, and the evidence piles up.</span></div>
+    <div class="day"><span class="n">Day 7</span><b>Last day</b><span>The Glass sleeps at midnight.</span></div>
+    <div class="day"><span class="n">After</span><b>The house after</b><span>Play on, in whatever arrangement your ending left.</span></div>
+  </div>
+</section>
+
+<section>
+  <h2>Two ways to play</h2>
+  <div class="pair">
+    <div class="card"><span class="tag">Detective · the default</span><h3>Find who is doing it</h3><p>You are one of the friends who keeps waking up changed. Use your own wish each day as you like, watch the others, and work out who broke the pact before the seventh midnight.</p></div>
+    <div class="card"><span class="tag b">Cheater · a code from the endings</span><h3>Be the one doing it</h3><p>You bound the Glass. Each day you can wish on anyone, while the friends try to work out why. Keep your secret to the seventh midnight, or get caught.</p></div>
+  </div>
+</section>
+
+<section class="read">
+  <h2>How the case comes together</h2>
+  <p>The answer can't be guessed early. It is built from facts, each one learnable only once the story has shown its evidence. The Case File records the facts you've learned.</p>
+  <ul class="chain">
+    <li><span class="fact">The old ways</span><br>Hester's ledger and letters: how the Glass works, and that it once let her wish on anyone.</li>
+    <li><span class="fact">The fizzle</span><br>A wish on someone else does nothing now. One friend admits it around day 3, or you try it yourself.</li>
+    <li class="key"><span class="fact">The binding</span><br>Put those two together: someone changed the Glass's rules, most likely with a wish.</li>
+    <li><span class="fact">The misfit</span><br>The "echoes" don't fit the theory. Some land with no wish just before, or on several people at once.</li>
+    <li class="key"><span class="fact">The cheat</span><br>Whoever bound the Glass left themself free, and is doing this on purpose.</li>
+    <li><span class="fact">Then two of three</span><br>The changes carry one friend's taste. That friend's claimed wishes never show. The changes always come within hours of their watch.</li>
+    <li class="key"><span class="fact">The culprit</span><br>Accuse them with that evidence, and they break and admit it.</li>
+  </ul>
+  <p class="other">One innocent friend shares the culprit's taste, and another's wishes are as quiet as the culprit's for the first days. So no single clue is enough; you need two. A wrong accusation makes the culprit bolder. Two wrong accusations split the group.</p>
+</section>
+
+<section>
+  <h2>Where it can end</h2>
+  <div class="tablewrap"><table>
+    <thead><tr><th>Ending</th><th>How you get there</th><th>After the week</th></tr></thead>
+    <tbody>
+      <tr><td>Unmasked</td><td>Detective: you accuse the right friend with the evidence. You then choose what happens to them.</td><td>Depends on your choice (below)</td></tr>
+      <tr><td>&nbsp;· Unwish it all</td><td>They undo every change they made.</td><td>Nobody uses the Glass again</td></tr>
+      <tr><td>&nbsp;· Send them home</td><td>The changes stay; they pack and leave.</td><td>Nobody uses the Glass again</td></tr>
+      <tr><td>&nbsp;· Lift the binding</td><td>The pact is gone, and the group takes its turn on them.</td><td>The Glass is yours</td></tr>
+      <tr><td>&nbsp;· Forgive and share</td><td>The binding stays and they take requests, openly.</td><td>They keep the Glass</td></tr>
+      <tr><td>Unsolved</td><td>Detective: the seventh midnight comes before you name them.</td><td>They keep it, secretly</td></tr>
+      <tr><td>Caught</td><td>Cheater: the friends piece it together and confront you.</td><td>A friend takes the Glass, and wishes on you too</td></tr>
+      <tr><td>Kept the secret</td><td>Cheater: you reach the seventh midnight unexposed.</td><td>The Glass stays yours</td></tr>
+      <tr><td>Broken</td><td>Either mode: someone smashes the Glass.</td><td>Nobody, at once</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section>
+  <h2>After the week</h2>
+  <p class="read">Every ending except a broken mirror leads into an open sandbox, picking up from where your story stopped. The ending decides which of three arrangements you get:</p>
+  <div class="out">
+    <div class="card"><h3>The Glass is yours</h3><p>Wish on anyone, once a day. The changes are still logged.</p></div>
+    <div class="card"><h3>A friend keeps it</h3><p>They make one wish a day, from their own tastes, on you or on the others.</p></div>
+    <div class="card"><h3>Nobody uses it</h3><p>By agreement or because it's broken. The changes stay, and the week goes on.</p></div>
+  </div>
+  <p class="other read">The mystery is over by then. Everyone is open about what they wished, and the case tools stop running, so turns cost less.</p>
+</section>
+
+<footer>One Wish Each 1.20 · an adult story; every character is 21 or over.</footer>
+</div>
+
+</body></html>
