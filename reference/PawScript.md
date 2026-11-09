@@ -125,7 +125,7 @@ else
   $message = "Not enough coins."
 ```
 
-Declare `coins`, `purchases` (including `total`) and `message` first. Use `else if` for additional branches, at the same indentation as `if`. `#` starts a script comment; instruction-text comments use `<#...#>` instead.
+Declare `coins`, `purchases` (including `total`) and `message` first. Use `else if` for additional branches, at the same indentation as `if`. `#` starts a script comment; instruction-text comments use `<#...#>` instead. A YAML tracker value also takes `#` line comments, never `<#...#>` ([Trackers](Trackers.md#storage-visibility-and-ownership)).
 
 ## 5. Collections: select, calculate, change
 

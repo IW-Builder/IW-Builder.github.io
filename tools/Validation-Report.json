@@ -59,7 +59,7 @@
     },
     "reference/Trackers.md": {
       "hedgePhrases": 1,
-      "perThousandWords": 1.0
+      "perThousandWords": 0.9
     },
     "reference/Trigger-Catalog.md": {
       "hedgePhrases": 0,
@@ -71,7 +71,7 @@
     },
     "reference/Verified-Behavior.md": {
       "hedgePhrases": 8,
-      "perThousandWords": 2.0
+      "perThousandWords": 1.9
     },
     "tools/Usage.md": {
       "hedgePhrases": 4,

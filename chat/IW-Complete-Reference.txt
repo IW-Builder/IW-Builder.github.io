@@ -429,6 +429,8 @@ The dataType vocabulary is `text`, `number`, `yaml` and `xml`; booleans and list
 
 Tracker `initialValue` is a JSON STRING even for numbers and YAML: `"10"`, or `"held: 0\nuses: 3\n"`. YAML content inside that string has its own parsed numbers, strings, lists and records. IW text entry does not enforce numeric-only input, but a mathematical tracker should start from an actual numeric literal. This does NOT make the entire export string-valued: JSON booleans, arrays and numeric fields elsewhere retain schema types.
 
+Comments inside a YAML value: use plain YAML `#` line comments, never `<#...#>`. The editor colours `<#...#>` as a comment in a YAML tracker too, but the value is parsed as ordinary YAML text. A `<#...#>` header with exactly one colon becomes a junk first key; with two or more colons the whole value fails with "mapping values are not allowed here", and expression evaluation then breaks across the world, in the sandbox too. A `<#...#>` wrapped around items inside a list does not disable them: the parser keeps them as live items, and the neighbouring items gain the stray `<#` or `#>`. A `#` comment line is skipped whatever it contains. `<#...#>` stays correct in text fields such as instructions, descriptions and update instructions.
+
 Initialize every mechanical path explicitly. Distinguish 0, false, empty text, an empty list, an absent key and null. Define each value's meaning consistently; numeric 0/1 is one practical flag convention. Narration must not reinterpret a stored value to justify a conflicting story. Treat missing required data as malformed/denied unless the design explicitly defines a fallback. Enforce format does not stop malformed manual/script writes, so use explicit shape and semantic checks before accepting generated state. `formatSchema` is the library's readable notation, not JSON Schema: text/number describe leaf values, `field?: text` marks an optional key, and `...:` permits additional content; its full grammar is unspecified. `formatExample` shows an intended value and should not double as a starting fact.
 
 Ownership:
@@ -728,7 +730,7 @@ For new worlds, explain the trade-off between **Lightweight Direction** (in `Sam
 ### Rules for Storymaster Setups
 - Populate every line of the Storymaster VARIABLE BLOCK (the list is in the dependency checklist below). These are creative inputs; derive them from the user description or ask targeted questions.
 - The source's `[npcAction]`, `[worldAction]`, `[smPlan]` and other output labels are intentional runtime notation. They are not the same as `[LIST GENRES]`, `[DESCRIBE TONE]`, `[Author Style]` or `[title]` editing slots. Resolve nested pacing brackets thoughtfully instead of deleting everything between square brackets.
-- `<#...#>` are native IW comment delimiters. Resolve sample editing slots into world-specific text or ordinary headings; genuine comments may remain. Execute instructions such as selecting an appearance variant and copying its instructions to the buffer tracker; do not leave those comments for the live storyteller to interpret.
+- `<#...#>` are native IW comment delimiters. Resolve sample editing slots into world-specific text or ordinary headings; genuine comments may remain. In a YAML tracker's value, use `#` line comments instead: IW parses `<#...#>` there as YAML text. Execute instructions such as selecting an appearance variant and copying its instructions to the buffer tracker; do not leave those comments for the live storyteller to interpret.
 
 ### Rules for Non-Storymaster Setups
 - **Leave `evaluationRequest` empty (`""`)** unless the world has a custom mechanical reason to override `reference/Default-Evaluation.txt`. The built-in default already evaluates feasibility, selects a relevant skill and difficulty, and returns `DENIED`, `SUCCESS`, `FAILURE`, or `PARTIAL_SUCCESS`.
@@ -948,7 +950,7 @@ Binding must be correct: targetTrackedItemId must name the intended tracker, usi
 
 ## Authoring context
 
-background, firstInput and objective feed AI context and direct play; objective also has a native update effect. They are not merely player-facing metadata. `<#...#>` are IW comment delimiters; fill sample authoring slots inside them, while genuine comments can remain. whereWhen and the other runtime output names are not root export fields ([Runtime.md](Runtime.md#specialist-requests-and-runtime-outputs)).
+background, firstInput and objective feed AI context and direct play; objective also has a native update effect. They are not merely player-facing metadata. `<#...#>` are IW comment delimiters in text fields; fill sample authoring slots inside them, while genuine comments can remain. Inside a YAML tracker value they are parsed as YAML, not skipped: use `#` line comments there ([Trackers.md](Trackers.md#storage-visibility-and-ownership)). whereWhen and the other runtime output names are not root export fields ([Runtime.md](Runtime.md#specialist-requests-and-runtime-outputs)).
 
 Skill levels in possibleCharacters are integers from 0 through 5. The editor-provided Evaluation uses skill, difficulty, character context and common sense, including PARTIAL_SUCCESS; there is no established numeric success formula. See [Characters.md](Characters.md#evaluation).
 
@@ -1094,7 +1096,7 @@ else
   $message = "Not enough coins."
 ```
 
-Declare `coins`, `purchases` (including `total`) and `message` first. Use `else if` for additional branches, at the same indentation as `if`. `#` starts a script comment; instruction-text comments use `<#...#>` instead.
+Declare `coins`, `purchases` (including `total`) and `message` first. Use `else if` for additional branches, at the same indentation as `if`. `#` starts a script comment; instruction-text comments use `<#...#>` instead. A YAML tracker value also takes `#` line comments, never `<#...#>` ([Trackers](Trackers.md#storage-visibility-and-ownership)).
 
 ## 5. Collections: select, calculate, change
 
@@ -2351,6 +2353,7 @@ Kit-wide caveats, not repeated per entry:
 - [RUNTIME] Plain nested assignments and runtime-key `.item` writes create paths. Scalar parents reject child writes and roll back the script. Missing-path compound arithmetic (`+=`) fails where assignment succeeds. `try`, `item(key, fallback)` and `if(x.exists(), x, fallback)` handle missing values; `first_available` preserves zero/false and skips empty text.
 - [RUNTIME] Locals do not cross Run Script effect boundaries. Executed branch locals and the last binding of a nonempty loop remain available later in that script. Filter bare fields resolve per row. [UNKNOWN] Empty-loop and shadowing behavior.
 - [RUNTIME] `current()` is rejected in Run Script even inside `try`; the diagnostic limits it to List Update Target/Value, which the current editor does not expose.
+- [RUNTIME] `<#...#>` in a YAML tracker's value is parsed as YAML text, not as a comment, although the editor highlights it as one. A one-colon header became a junk first key; a header with several colons failed the value with "mapping values are not allowed here" and broke expression evaluation, in the sandbox too. Plain `#` line comments fixed both. One world (an author's report). Items wrapped in `<#...#>` inside a list are expected to stay live by the same parsing; not checked in IW. See [Trackers](Trackers.md#storage-visibility-and-ownership).
 - [RUNTIME] Enforce format is not a write-validation boundary: malformed manual/script values persist. Hidden AI repair is not inspectable. Validate shape and meaning explicitly.
 - [RUNTIME] Comparisons and arithmetic coerce YAML values (see [PawScript](PawScript.md#2-values-trackers-and-scope)), and Boolean-expression writes serialize as quoted text. Rendered values and collapsed summaries do not prove types. Duplicate inventory records are not prevented.
 - [RUNTIME] The PawScript sandbox runs against editable copies of tracker data and nothing changed in it goes back to the editor or game. From the world editor it loads all base trackers, at fixed initial values or 0/empty for unspecified, player-chosen or character-dependent ones; from debug or from View/edit world design during play, it loads the game state of that turn. Entry points and the field-matched script/expression boxes: [Editor-UI](Editor-UI.md#pawscript-sandbox).
