@@ -143,7 +143,7 @@ Binding must be correct: targetTrackedItemId must name the intended tracker, usi
 
 ## Authoring context
 
-background, firstInput and objective feed AI context and direct play; objective also has a native update effect. They are not merely player-facing metadata. `<#...#>` are IW comment delimiters; fill sample authoring slots inside them, while genuine comments can remain. whereWhen and the other runtime output names are not root export fields ([Runtime.md](Runtime.md#specialist-requests-and-runtime-outputs)).
+background, firstInput and objective feed AI context and direct play; objective also has a native update effect. They are not merely player-facing metadata. `<#...#>` are IW comment delimiters in text fields; fill sample authoring slots inside them, while genuine comments can remain. Inside a YAML tracker value they are parsed as YAML, not skipped: use `#` line comments there ([Trackers.md](Trackers.md#storage-visibility-and-ownership)). whereWhen and the other runtime output names are not root export fields ([Runtime.md](Runtime.md#specialist-requests-and-runtime-outputs)).
 
 Skill levels in possibleCharacters are integers from 0 through 5. The editor-provided Evaluation uses skill, difficulty, character context and common sense, including PARTIAL_SUCCESS; there is no established numeric success formula. See [Characters.md](Characters.md#evaluation).
 

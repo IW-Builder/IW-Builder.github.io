@@ -34,7 +34,7 @@ For new worlds, explain the trade-off between **Lightweight Direction** (in `Sam
 ### Rules for Storymaster Setups
 - Populate every line of the Storymaster VARIABLE BLOCK (the list is in the dependency checklist below). These are creative inputs; derive them from the user description or ask targeted questions.
 - The source's `[npcAction]`, `[worldAction]`, `[smPlan]` and other output labels are intentional runtime notation. They are not the same as `[LIST GENRES]`, `[DESCRIBE TONE]`, `[Author Style]` or `[title]` editing slots. Resolve nested pacing brackets thoughtfully instead of deleting everything between square brackets.
-- `<#...#>` are native IW comment delimiters. Resolve sample editing slots into world-specific text or ordinary headings; genuine comments may remain. Execute instructions such as selecting an appearance variant and copying its instructions to the buffer tracker; do not leave those comments for the live storyteller to interpret.
+- `<#...#>` are native IW comment delimiters. Resolve sample editing slots into world-specific text or ordinary headings; genuine comments may remain. In a YAML tracker's value, use `#` line comments instead: IW parses `<#...#>` there as YAML text. Execute instructions such as selecting an appearance variant and copying its instructions to the buffer tracker; do not leave those comments for the live storyteller to interpret.
 
 ### Rules for Non-Storymaster Setups
 - **Leave `evaluationRequest` empty (`""`)** unless the world has a custom mechanical reason to override `reference/Default-Evaluation.txt`. The built-in default already evaluates feasibility, selects a relevant skill and difficulty, and returns `DENIED`, `SUCCESS`, `FAILURE`, or `PARTIAL_SUCCESS`.
