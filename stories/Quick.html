@@ -1,0 +1,109 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Dial It Up Quick Start</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one card you can read in thirty seconds. Header strip, then a grid of five tight blocks: turn, rules, world, cast, start. */
+:root{
+  --bg:#f3f6f6; --surface:#ffffff; --ink:#132a2e; --muted:#4f6669; --line:#d3dfdf;
+  --brass:#9a6b17; --pool:#0f7c86; --coral:#d4553f; --prism:#7a55c7; --chip:#e6eeee;
+  --c1:#e9b7a0; --c2:#e7a3b8; --c3:#9fd2d4; --c4:#c6b8ec; --c5:#f0c96a; --dial-ink:#2a1f0c;
+  --f-display:"Bricolage Grotesque","Avenir Next","Segoe UI",system-ui,sans-serif;
+  --f-body:"Instrument Sans","Helvetica Neue",Arial,system-ui,sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#08171b; --surface:#0f2428; --ink:#e4efee; --muted:#9ab3b3; --line:#21393d;
+  --brass:#e2b45a; --pool:#4fc3cc; --coral:#ff8a72; --prism:#b39bff; --chip:#16312f;
+  --c1:#b9785e; --c2:#b56a84; --c3:#4f9a9e; --c4:#7d6bb3; --c5:#c99a2e; --dial-ink:#fff6e6; color-scheme:dark }}
+:root[data-theme="dark"]{
+  --bg:#08171b; --surface:#0f2428; --ink:#e4efee; --muted:#9ab3b3; --line:#21393d;
+  --brass:#e2b45a; --pool:#4fc3cc; --coral:#ff8a72; --prism:#b39bff; --chip:#16312f;
+  --c1:#b9785e; --c2:#b56a84; --c3:#4f9a9e; --c4:#7d6bb3; --c5:#c99a2e; --dial-ink:#fff6e6; color-scheme:dark }
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.5}
+.wrap{max-width:1000px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:28px 40px;display:grid;gap:18px}
+h1,h2{font-family:var(--f-display);margin:0;line-height:1.05;text-wrap:balance}
+h1{font-size:clamp(2.2rem,6vw,3.4rem);font-weight:800;letter-spacing:-.02em}
+h2{font-size:1.05rem;font-weight:700}
+p{margin:0}
+.eyebrow{font-family:var(--f-mono);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--brass)}
+header{display:grid;gap:8px}
+header p{font-size:1.06rem;color:var(--muted);max-width:68ch}
+.grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px}
+.blk{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px;display:grid;gap:10px;align-content:start;min-width:0}
+.turn{grid-column:span 4}.rules{grid-column:span 2}.cast{grid-column:span 4}.world{grid-column:span 2}.start{grid-column:span 6}
+.steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.st{display:grid;gap:4px;min-width:0;align-content:start}
+.st b{font-family:var(--f-mono);font-weight:500;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--pool)}
+.st p{font-size:.92rem}
+ul{margin:0;padding-left:18px;display:grid;gap:6px}
+li{font-size:.92rem}
+.who{display:grid;gap:8px}
+.w{display:grid;grid-template-columns:48px 1fr;gap:12px;align-items:center}
+.av{width:48px;height:48px;border-radius:50%;object-fit:cover;display:grid;place-items:center;font-family:var(--f-display);font-weight:800;font-size:.8rem;color:var(--dial-ink)}
+.w p{font-size:.92rem}
+.w strong{font-weight:600}
+.res{display:flex;flex-wrap:wrap;gap:6px}
+.res span{color:var(--dial-ink);font-weight:500;font-family:var(--f-mono);font-size:.72rem;padding:3px 8px;border-radius:999px;background:var(--chip)}
+.start p{font-size:.95rem}
+.start strong{color:var(--brass);font-weight:600}
+a{color:var(--pool)}
+:focus-visible{outline:2px solid var(--pool);outline-offset:2px}
+@media (max-width:760px){.turn,.rules,.cast,.world,.start{grid-column:1 / -1}.steps{grid-template-columns:1fr}}
+</style>
+
+<div class="wrap">
+  <header>
+    <span class="eyebrow">30-second start</span>
+    <h1>Dial It Up</h1>
+    <p>You hold the Dial Shard, a brass chronometer that can rewrite anyone's body, mind or the rules of a room. It's a sun-soaked resort town, three rivals have Shards too, and nothing is off the table. Adults only.</p>
+  </header>
+
+  <div class="grid">
+    <div class="blk turn">
+      <h2>Every turn</h2>
+      <div class="steps">
+        <div class="st"><b>1 · Read the status</b><p>The 🕰️ Status banner after each turn: charges, when the next is back, the next Resonance and the side effect waiting for an off-tune shot.</p></div>
+        <div class="st"><b>2 · Do anything</b><p>Fire the Shard at someone, flirt, scheme, explore, or provoke a rival. Just describe it.</p></div>
+        <div class="st"><b>3 · Watch it land</b><p>The change happens right away. The game tracks charges and cooldowns for you.</p></div>
+      </div>
+    </div>
+
+    <div class="blk rules">
+      <h2>The big rules</h2>
+      <ul>
+        <li><strong>Two charges.</strong> Each takes five turns to come back.</li>
+        <li><strong>Match the Resonance</strong> for a clean edit. Miss it and you get the side effect.</li>
+        <li><strong>Siphon</strong> with a kiss or intimate touch to speed the recharge.</li>
+        <li><strong>Scan</strong> anyone to read their Shard.</li>
+      </ul>
+    </div>
+
+    <div class="blk cast">
+      <h2>Who to watch</h2>
+      <div class="who">
+        <div class="w"><img class="av" src="data:image/jpeg;base64,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" alt="Odette Ashby" width="48" height="48"><p><strong style="color:var(--coral)">Odette Ashby</strong>, the flirty heiress. Reshapes bodies with a touch, and loves to show off.</p></div>
+        <div class="w"><img class="av" src="data:image/jpeg;base64,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" alt="Dr. Cosima Sterling" width="48" height="48"><p><strong style="color:var(--brass)">Dr. Cosima Sterling</strong>, the cool professor. Rewrites the social rules and wants you as an ally, or under her pen.</p></div>
+        <div class="w"><img class="av" src="data:image/jpeg;base64,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" alt="Zoraia Quintero" width="48" height="48"><p><strong style="color:var(--prism)">Zoraia Quintero</strong>, the chaotic art student. Her camera splices ears, tails and gender swaps onto anyone she frames.</p></div>
+      </div>
+      <p style="font-size:.88rem;color:var(--muted)">Taunt a rival and she'll answer with her Shard. Otherwise they make moves on their own now and then.</p>
+    </div>
+
+    <div class="blk world">
+      <h2>The world</h2>
+      <p>Aurelia Cove: a college and luxury resort town. A week ago the Loom shattered in a cliffside lab and its Shards fused into everyday objects.</p>
+      <div class="res"><span style="background:var(--c1)">FLESH</span><span style="background:var(--c2)">LIBIDO</span><span style="background:var(--c3)">ATTIRE</span><span style="background:var(--c4)">PERSONA</span><span style="background:var(--c5)">WILD</span></div>
+      <p style="font-size:.88rem;color:var(--muted)">The five Resonances: one is live each turn.</p>
+    </div>
+
+    <div class="blk start">
+      <h2>Getting started</h2>
+      <p>Pick <strong>Caspian</strong> (steadier with the Shard) or <strong>Margo</strong> (smoother talker), or make your own. Choose a picture tier on the card: <strong>Lean</strong> (Thyrphax, fair cost, the default), <strong>Best</strong> (Storyloom, very expensive), or <strong>Off</strong> (cheapest). You start at a Friday pool party with both charges full. Try your first shot in tune with the Resonance, then see who notices. The bigger story of the Loom unfolds the more you use your Shard.</p>
+      <p style="font-size:.88rem;color:var(--muted)">Want the details? Read the <a href="https://claude.ai/artifact/Pfg9kBn4AaTxHHB62WUq6e">full guide</a>.</p>
+    </div>
+  </div>
+</div>
+
+</body></html>
