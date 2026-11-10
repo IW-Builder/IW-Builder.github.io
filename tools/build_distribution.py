@@ -34,7 +34,6 @@ GROUPS = {
         'reference/Characters.md',
         'reference/Images-and-Models.md',
         'reference/Recipes.md',
-        'reference/Current-AI-Profiles.json',
     ],
     'IW-Behavior.txt': [
         'reference/Notable-Findings.md',
@@ -46,6 +45,7 @@ GROUPS = {
     'IW-Payloads.txt': [
         'examples/Payloads.md',
         'examples/index.json',
+        'reference/Current-AI-Profiles.json',
     ],
     'IW-Mechanics-Examples.txt': [
         'examples/recipe-request-commit.json',
@@ -90,7 +90,7 @@ EDITION_PURPOSE = {
     'IW-Authoring-Guide.txt': 'start here: prompt, template, narrative craft, trackers, triggers, data banks and library integration',
     'IW-Technical-Reference.txt': 'exact payloads, PawScript, runtime, characters, images/models and recipes',
     'IW-Behavior.txt': 'notable findings and open questions, editor/UI workflows with import checks, cost, verified runtime behavior and the default Evaluation',
-    'IW-Payloads.txt': 'exact native payload snippets for every condition and effect, plus the example index',
+    'IW-Payloads.txt': 'exact native payload snippets for every condition and effect, the example index and the storyteller model IDs',
     'IW-Mechanics-Examples.txt': 'complete mechanics example worlds: recipes, optional block, starting values, layered opening, on-demand generation and a showcase',
     'IW-Narrative-Examples.txt': 'complete narrative example worlds: ensemble romance, fantasy expedition, contained horror, fantasy relationship and high-heat erotica',
     'IW-Sample-Blocks.txt': 'optional library modules (read library/Integration.md first)',
@@ -323,9 +323,9 @@ DESCRIPTIONS = {
     'chat/index.html': 'HTML page containing IW-Authoring-Guide.txt, with links to the companion editions.',
     'chat/IW-Complete-Reference.txt': 'Combined text, all reference in one attachment (about 75k tokens): the prompt, template, every reference guide, Payloads and the example index. Too large for most URL fetchers; attach it.',
     'chat/IW-Authoring-Guide.txt': 'Combined text, start here: prompt, template, Evidence, Craft, Trackers, Triggers, Trigger-Catalog, Portable-Banks and library Integration.',
-    'chat/IW-Technical-Reference.txt': 'Combined text: Schema, PawScript, Runtime, Characters, Images-and-Models, Recipes and AI profile IDs.',
+    'chat/IW-Technical-Reference.txt': 'Combined text: Schema, PawScript, Runtime, Characters, Images-and-Models, and Recipes.',
     'chat/IW-Behavior.txt': 'Combined text: Notable-Findings (with open questions), Editor-UI, Cost, Verified-Behavior and Default Evaluation.',
-    'chat/IW-Payloads.txt': 'Combined text: Payloads.md (every condition and effect) and the example index. Small and essential for mechanics.',
+    'chat/IW-Payloads.txt': 'Combined text: Payloads.md (every condition and effect), the example index and the storyteller model IDs. Small and essential for mechanics.',
     'chat/IW-Mechanics-Examples.txt': 'Combined text: complete mechanics example worlds (recipes, optional block, starting values, layered opening, on-demand generation, showcase).',
     'chat/IW-Narrative-Examples.txt': 'Combined text: all five complete narrative example worlds.',
     'chat/IW-Sample-Blocks.txt': 'Combined text: library modules (Sample-Blocks.json). Integration guide is in IW-Authoring-Guide.txt.',

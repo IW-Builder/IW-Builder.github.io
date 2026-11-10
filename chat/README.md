@@ -14,7 +14,7 @@ There are two kinds of file here. The **reference** is what the AI reads to do t
 | [Authoring Guide](IW-Authoring-Guide.txt) | The main prompt, starting template, core guides to creating worlds, and how to choose library modules. Start here if you attach the four files separately. |
 | [Technical Reference](IW-Technical-Reference.txt) | Exact world-file structure, PawScript, turn lifecycle, characters, images and models, and feature recipes. |
 | [IW Behavior](IW-Behavior.txt) | Notable findings and what is still unknown, editor and UI workflows with import checks, cost estimating, tested platform behavior and IW's default Evaluation text. Useful for debugging. |
-| [Payloads](IW-Payloads.txt) | The exact building block for every trigger condition and effect, plus an index of all example worlds. Small; useful for any world with mechanics. |
+| [Payloads](IW-Payloads.txt) | The exact building block for every trigger condition and effect, plus an index of all example worlds and the storyteller model IDs. Small; useful for any world with mechanics. |
 
 The four-file split exists for tools that cap attachment or fetch size around 100 KB: each file is under 90 KB. A model fetching by URL should use those or the individual files in [llms.txt](https://iw-builder.github.io/llms.txt), since most fetchers truncate the complete file.
 
