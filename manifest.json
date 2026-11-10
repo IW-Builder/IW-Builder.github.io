@@ -1,6 +1,6 @@
 {
   "algorithm": "sha256",
-  "generatedAt": "2026-11-10T14:13:28+00:00",
+  "generatedAt": "2026-11-10T15:28:47+00:00",
   "files": [
     {
       "path": "Authoring-Prompt.md",
@@ -29,13 +29,13 @@
     },
     {
       "path": "chat/IW-Behavior.txt",
-      "bytes": 87743,
-      "sha256": "064d63d3709e3a2796b39f81c751f40dcf734c109b96db66ee06a96b6dee5ff5"
+      "bytes": 88373,
+      "sha256": "609a79cd53d02c1af20b9c37fbcf8de99fc3f1e9cd6512f8e54263e39ce67a01"
     },
     {
       "path": "chat/IW-Complete-Reference.txt",
-      "bytes": 300361,
-      "sha256": "8834a18d84c09bbd0521e5877dfd7a9eee0edbb121625a894332df3d9702d3e0"
+      "bytes": 301443,
+      "sha256": "e0c22a1fbe704ca9f3f10ea8ba79998b6c3eef78345289655c3c1196d84c55d5"
     },
     {
       "path": "chat/IW-Mechanics-Examples.txt",
@@ -64,13 +64,13 @@
     },
     {
       "path": "chat/IW-Technical-Reference.txt",
-      "bytes": 83132,
-      "sha256": "c5badb878a05187bcfb21237d01a80d23004c68c64198531574b9b70e0b0de0e"
+      "bytes": 83584,
+      "sha256": "cedc8807604fc378f2a60c9f793b1c47ceb13a52c4f45ebfba09aa5e806dfb86"
     },
     {
       "path": "chat/IW-Tools.txt",
-      "bytes": 135231,
-      "sha256": "c4a054a02446419e0b7b8448f0b8381779ba93a19cb7f455505b17745dc46636"
+      "bytes": 136190,
+      "sha256": "f7fbc3c2a692c5e3e0da42843bc643322630276eb818d3d663dca53b4fa5d5f5"
     },
     {
       "path": "chat/README.md",
@@ -85,12 +85,12 @@
     {
       "path": "chat/sources.json",
       "bytes": 4137,
-      "sha256": "b8062f4fe1f343bcc4d76302513bd558a7be675edadbd2974a180613e75dcb52"
+      "sha256": "8abf83b7d99fb103c3d816dc9e7b2695a261b7c7bb3625a958358b0f4693ac0c"
     },
     {
       "path": "checker/index.html",
-      "bytes": 118961,
-      "sha256": "c65d53cfb6436a853392a5107546e521ef4c69f3de2ff0f6ed4f2493f6212b63"
+      "bytes": 119920,
+      "sha256": "e7197d193d6f17aac94ad50037b67bb7af45272fd75cf058fa5cdaf59c08bb55"
     },
     {
       "path": "cost/IW-Cost-Exporter-bookmarklet.js",
@@ -460,7 +460,7 @@
     {
       "path": "llms.txt",
       "bytes": 26083,
-      "sha256": "44c288ac551f339a4a9c3e6e562616d2c4f3c6d7b1548774126b3914f693d0a7"
+      "sha256": "ac4b2ed4a74d27080ca0f22809439271b6b46f42a12e0db06867ac5cccce8a1f"
     },
     {
       "path": "reference/Characters.md",
@@ -529,8 +529,8 @@
     },
     {
       "path": "reference/Schema.md",
-      "bytes": 18296,
-      "sha256": "5ae2be72a95068af724d875bfdbee5d2d6852bfc94d13b35679bfd1f116a9b9a"
+      "bytes": 18748,
+      "sha256": "cb7c3f0006b95d44220246fae02a669b0827913cf9aa5aee4b227b42161646f9"
     },
     {
       "path": "reference/Trackers.md",
@@ -549,13 +549,13 @@
     },
     {
       "path": "reference/Verified-Behavior.md",
-      "bytes": 27885,
-      "sha256": "fea70912a2bfa8d3de35b1aa5a189d24d92c97f9cd089de3e17564262068b0c6"
+      "bytes": 28515,
+      "sha256": "ac6807017d98519ff6db087fc319173a0a088a47233c90c4c8241420a9f41423"
     },
     {
       "path": "reference/index.html",
       "bytes": 5778,
-      "sha256": "bdc7546d74bdbb189fb17b5fd629754831213d387a0abe657e96765548ce0189"
+      "sha256": "7e056b2edee90921b7065760f9d2cfde837e75435f7437e2b317003f84c1cf4f"
     },
     {
       "path": "tools/README.md",
@@ -600,12 +600,12 @@
     {
       "path": "tools/index.html",
       "bytes": 5371,
-      "sha256": "741baf88a2ce8093e1b17528cf1b1af364a4ddac7645e608aaedae73a87918f7"
+      "sha256": "c61380ae38ad47a27440ffbc97d79b9383d4eadf8c81c1df8e89135e97fa31b1"
     },
     {
       "path": "tools/iw-export.schema.json",
-      "bytes": 48917,
-      "sha256": "b00f63f177872c3a076d006b955eb301ad2a04e5713733ba4c3e0731bfe9a30c"
+      "bytes": 48971,
+      "sha256": "48de03d212887e75478c57c234f6e40d838cb7ac2158467705d856b833d638d7"
     },
     {
       "path": "tools/iw_sort.py",
@@ -659,13 +659,13 @@
     },
     {
       "path": "tools/test_validator.py",
-      "bytes": 6956,
-      "sha256": "2f4d66c0bd06fc46bfb0773d5434f138b5a869f8ad2b8349b184d824f8be864b"
+      "bytes": 7905,
+      "sha256": "2c91f213c921c4cfc61cb5f792d4e4d544d7671ee7242c81835956758ba39927"
     },
     {
       "path": "tools/validate_iw_export.py",
-      "bytes": 19304,
-      "sha256": "c72fff961e222550ebf8800b31874eeb7aafef5be64b40bd01c9d206ba0144f6"
+      "bytes": 20209,
+      "sha256": "17181a0b735a5906c8c9abc0f398c0b3a5ff604a15dbf78612574435d204b379"
     }
   ]
 }
