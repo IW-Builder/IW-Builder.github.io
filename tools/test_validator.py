@@ -26,6 +26,19 @@ class ValidatorTests(unittest.TestCase):
        self.assertEqual(hits[0]['severity'],'warning')
        self.assertEqual(hits[0]['path'],'/triggerEvents/0/triggerEffects/0')
       self.assertNotIn('timing-editor-consistency',{f['code'] for f in findings})
+ def test_npc_ids(self):
+  def npc(**kw):
+   c={'name':'Nell','detail':'','one_liner':'Nell is a clerk.','appearance':'','location':'','secret_info':'','names':['Nell'],'img_appearance':'','img_clothing':'','positionInList':0};c.update(kw);return c
+  cases={'missing':([npc()],'missing-id','error'),'number':([npc(id=12345)],'non-text-id','warning'),
+   'duplicate':([npc(id='DupId0001'),npc(id='DupId0001',name='Ada')],'duplicate-id','warning'),
+   'odd text':([npc(id='npc space/é:+')],None,None)}
+  for label,(npcs,code,sev) in cases.items():
+   with self.subTest(label):
+    w=copy.deepcopy(BASE);w['NPCs']=npcs
+    findings=v.validate(w,SCHEMA)
+    self.assertFalse([f for f in findings if f['code']=='structure'],findings)
+    hits=[f for f in findings if f['code'] in ('missing-id','non-text-id','duplicate-id') and f['path'].startswith('/NPCs/')]
+    self.assertEqual([(f['code'],f['severity']) for f in hits],[(code,sev)] if code else [])
  def test_deferred_template_roots(self):
   text='Win path: <=choose($win_path, "a", "A", "B")=> now <<$coins>>'
   self.assertEqual(list(templates(text)),['choose($win_path, "a", "A", "B")','$coins'])
