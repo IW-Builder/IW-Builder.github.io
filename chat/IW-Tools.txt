@@ -245,9 +245,17 @@ def validate(doc, schema):
             if not isinstance(o,dict): continue
             p='/'+field+'/'+str(i)+'/'+idkey
             ident=o.get(idkey)
+            if field=='NPCs' and idkey not in o:
+                add('error','missing-id',p,'Other Character has no id key; IW refuses the whole raw-JSON import (KeyError: id) while still reporting it as imported.');continue
+            if field=='NPCs' and isinstance(ident,(int,float)) and not isinstance(ident,bool):
+                add('warning','non-text-id',p,'Numeric Other Character id is kept as a number on import; behavior in play is untested. Use a unique text id.');continue
+            if field=='NPCs' and ident=='':
+                add('warning','missing-id',p,'Empty Other Character id is kept on import; behavior in play is untested. Use a unique text id.');continue
             if not isinstance(ident,str) or not ident:
                 add('warning','missing-id',p,'No usable identifier; requiredness is not established, but references cannot resolve.');continue
-            if ident in tables[field]: add('error','duplicate-id',p,'Identifier is duplicated within '+field+': '+ident)
+            if ident in tables[field]:
+                if field=='NPCs': add('warning','duplicate-id',p,'Other Character id is duplicated: '+ident+'. Import keeps both cards; behavior in play is untested.')
+                else: add('error','duplicate-id',p,'Identifier is duplicated within '+field+': '+ident)
             tables[field][ident]=o
     def ref(ident,namespace,path,condition=False):
         if not isinstance(ident,str): return
@@ -335,7 +343,7 @@ def validate(doc, schema):
             if not isinstance(e,dict):continue
             node_id(e,q); et=e.get('type');d=e.get('data')
             if et=='effectChangeOtherCharacters':
-                add('warning','runtime-unverified-effect',q,'Change other characters has a native editor payload, but authoritative live character mutation is not observable; structural acceptance is not runtime certification.')
+                add('warning','runtime-unverified-effect',q,'Change other characters applies only in a Start trigger ordered above every Start Request Input or Present Choice, and an add needs at least one premade Other Character; mid-game use is untested.')
             if t.get('triggerOnStartOfGame') and et=='effectFireRandomTrigger':
                 add('warning','start-incompatible-effect',q,'Fire random trigger did not dispatch with Start enabled; use an ordinary-play dispatcher.')
             if t.get('triggerOnStartOfGame') and et == 'effectGiveInfo':
@@ -1184,7 +1192,10 @@ def pattern_advisories(doc):
         "type": "object",
         "properties": {
           "id": {
-            "type": "string"
+            "type": [
+              "string",
+              "number"
+            ]
           },
           "name": {
             "type": "string"

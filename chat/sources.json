@@ -24,7 +24,7 @@
       "examples/index.json",
       "reference/Current-AI-Profiles.json"
     ],
-    "sha256": "8834a18d84c09bbd0521e5877dfd7a9eee0edbb121625a894332df3d9702d3e0"
+    "sha256": "e0c22a1fbe704ca9f3f10ea8ba79998b6c3eef78345289655c3c1196d84c55d5"
   },
   "IW-Authoring-Guide.txt": {
     "sourceFiles": [
@@ -48,7 +48,7 @@
       "reference/Images-and-Models.md",
       "reference/Recipes.md"
     ],
-    "sha256": "c5badb878a05187bcfb21237d01a80d23004c68c64198531574b9b70e0b0de0e"
+    "sha256": "cedc8807604fc378f2a60c9f793b1c47ceb13a52c4f45ebfba09aa5e806dfb86"
   },
   "IW-Behavior.txt": {
     "sourceFiles": [
@@ -58,7 +58,7 @@
       "reference/Verified-Behavior.md",
       "reference/Default-Evaluation.txt"
     ],
-    "sha256": "064d63d3709e3a2796b39f81c751f40dcf734c109b96db66ee06a96b6dee5ff5"
+    "sha256": "609a79cd53d02c1af20b9c37fbcf8de99fc3f1e9cd6512f8e54263e39ce67a01"
   },
   "IW-Payloads.txt": {
     "sourceFiles": [
@@ -121,6 +121,6 @@
       "tools/story_export.py",
       "tools/plot_compile.py"
     ],
-    "sha256": "c4a054a02446419e0b7b8448f0b8381779ba93a19cb7f455505b17745dc46636"
+    "sha256": "f7fbc3c2a692c5e3e0da42843bc643322630276eb818d3d663dca53b4fa5d5f5"
   }
 }
