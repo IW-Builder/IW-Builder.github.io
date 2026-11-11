@@ -77,7 +77,7 @@ These are reading selections, not mandatory extra downloads. The AI can request 
 | [tools/](https://github.com/IW-Builder/IW-Builder.github.io/tree/main/tools) | World checks, reusable-content tools and kit-building scripts |
 | [chat/](https://github.com/IW-Builder/IW-Builder.github.io/tree/main/chat) | Combined text files to attach to your chat |
 | [checker/](https://iw-builder.github.io/checker/) | Browser validator, no Python needed |
-| [cost/](https://iw-builder.github.io/cost/) | Bookmarklet that downloads your IW credit history |
+| [cost/](https://iw-builder.github.io/cost/) | Deprecated: IW now downloads your credit history itself (Credit activity). The old bookmarklet stays for existing users but is no longer maintained |
 | [debug/](https://iw-builder.github.io/debug/) | Bookmarklet that exports every turn's debug data (evaluation, thinking, triggers fired, active blocks, PawScript results) for the open game |
 | [stories/](https://iw-builder.github.io/stories/) | Released games, unrelated to the builder prompt; not part of the kit, and AI builders should not read it |
 

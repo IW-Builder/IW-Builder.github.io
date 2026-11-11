@@ -1,4 +1,9 @@
-# IW Cost Exporter
+# IW Cost Exporter (deprecated)
+
+**Deprecated (November 2026).** Infinite Worlds now downloads your credit
+transaction history itself, from Credit activity. Use that. This bookmarklet
+is no longer maintained and may stop working when IW changes; it stays here
+only for anyone who already has it.
 
 Downloads your full Infinite Worlds credit history as CSV and JSON: every
 transaction with its UTC timestamp, world, turn, model, total cost, the
