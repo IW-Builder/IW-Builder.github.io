@@ -35,7 +35,7 @@ The Infinite Worlds behavior most likely to surprise an author or break a world,
 
 ## Trackers and PawScript
 
-23. **Hidden and extra-hidden trackers are not secret.** The storyteller and any Storyteller-mode player can see them; extra-hidden only filters one display.
+23. **Hidden and extra-hidden trackers are not secret from players.** Any Storyteller-mode player can see them; extra-hidden only filters one display. The AI itself is told nothing about hidden trackers, not even that they exist (IW update note, November 2026).
 24. **Hidden and player-only trackers cannot auto-update.** Import turns automatic updating off for them.
 25. **Enforce format does not reject bad data** written by scripts or by hand. Validate shape and values in scripts before accepting them.
 26. **Random expressions disagree with each other.** Two `random()` calls, even in one block, give different results. Store one roll in a tracker when several things must agree.

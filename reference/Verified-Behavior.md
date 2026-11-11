@@ -1,10 +1,10 @@
 # Consolidated behavior reference
 
-Detailed runtime conclusions for Infinite Worlds, current through 2026-11-06. [Notable findings](Notable-Findings.md) gives the plain-language summary and the list of what remains unknown; this file carries the detail and the evidence labels. Import success, rendered instructions and narration answer different questions.
+Detailed runtime conclusions for Infinite Worlds, current through 2026-11-11. [Notable findings](Notable-Findings.md) gives the plain-language summary and the list of what remains unknown; this file carries the detail and the evidence labels. Import success, rendered instructions and narration answer different questions.
 
 ## Compatibility and evidence
 
-This is an independent, unaffiliated kit. Platform baseline: Infinite Worlds' October 8, 2026 "Save/load system, Image style system and Pawscript update," with editor/runtime information consolidated through November 6, 2026. Export schemaVersion is 2.4. Kit version is 1.6.0; the structural profile is 1.2.0. Neither is an IW application version. The unaffiliated Script Library source snapshot is version 3.16, October 16, 2026; see ../library/Integration.md.
+This is an independent, unaffiliated kit. Platform baseline: Infinite Worlds' October 8, 2026 "Save/load system, Image style system and Pawscript update," with editor/runtime information consolidated through November 11, 2026. Export schemaVersion is 2.4. Kit version is 1.6.0; the structural profile is 1.2.0. Neither is an IW application version. The unaffiliated Script Library source snapshot is version 3.16, October 16, 2026; see ../library/Integration.md.
 
 Four evidence labels are used across the kit when a distinction matters; ordinary reference sentences do not carry a tag.
 
@@ -64,6 +64,7 @@ Kit-wide caveats, not repeated per entry:
 ## Tracker writes and PawScript
 
 - [RUNTIME] Native numeric effects within one trigger overwrite rather than accumulate (starting at 0, add 2 then add 3 ended at 3; starting at 1, set 5 then add 2 ended at 3). Text additions accumulate and text removal removes matching occurrences. Use sequential scripts for dependent arithmetic; sequential script arithmetic accumulates, nested YAML changes preserve unrelated keys, and separate script effects writing different YAML paths preserve both.
+- [DOCUMENTED] When the AI removes several items from a YAML list in one update (selling the first three items, say), the right items are removed. Before IW's November 2026 update the wrong ones could be; recheck a world that worked around this, and keep matching list entries by identity rather than position.
 - [RUNTIME] Native YAML paths support set/remove/append/adjust, one-based list indexes and interpolation. Record append stores structured data and permits duplicates. Numeric adjustment creates a missing parent/leaf. Whole-value replacement overrides stale path/action fields: interpret `updateMode` first.
 - [RUNTIME] Native And/Or and PawScript boolean expressions short-circuit left to right; debug lists only the deciding condition. Place existence guards before dependent reads. No speed benefit has been measured.
 - [RUNTIME] Plain nested assignments and runtime-key `.item` writes create paths. Scalar parents reject child writes and roll back the script. Missing-path compound arithmetic (`+=`) fails where assignment succeeds. `try`, `item(key, fallback)` and `if(x.exists(), x, fallback)` handle missing values; `first_available` preserves zero/false and skips empty text.

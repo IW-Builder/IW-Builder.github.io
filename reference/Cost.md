@@ -1,6 +1,6 @@
 # Estimating cost
 
-How much a turn costs, how it differs by Storyteller model, why two players of the same world can pay very different amounts, and how to make a rough estimate before anyone plays. Credit activity shows the real bill: see [Editor-UI](Editor-UI.md#credits-and-cost) for the cost breakdown and the [IW Cost Exporter](https://iw-builder.github.io/cost/) to download your history.
+How much a turn costs, how it differs by Storyteller model, why two players of the same world can pay very different amounts, and how to make a rough estimate before anyone plays. Credit activity shows the real bill: see [Editor-UI](Editor-UI.md#credits-and-cost) for the cost breakdown and for IW's own download of your credit history.
 
 ## What a turn is made of
 
