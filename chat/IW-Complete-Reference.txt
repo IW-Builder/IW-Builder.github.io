@@ -544,7 +544,7 @@ Eligible no-effect triggers record firing. Random dispatch bypasses target condi
 
 ### Scenarios
 
-Say Scenarios when talking to users; the root JSON field is `conditions`, referenced by `triggerOnEvent`. Binding requires an exact registry string, including case, spaces and punctuation; preserved JSON can still be unbound, so check the selector after import. A Scenario fires only when the event actually happens in the narrated outcome; the narrator can refuse or substitute a requested action. An event the narrator invents, or a player's purpose it rewrites, also satisfies the Scenario. Unused registry entries and duplicate references are tolerated, and import fills an absent registry from the trigger references. Use literal Scenarios with explicit state gates; dynamic Scenario text (`<<$slot>>`) did not fire at all when retested on 2026-11-01, even as a single slot, and blank slot text is not dependable deactivation. The editor stops adding Scenarios at ten entries, but imported registries of twelve or more work.
+Say Scenarios when talking to users; the root JSON field is `conditions`, referenced by `triggerOnEvent`. Binding requires an exact registry string, including case, spaces and punctuation; preserved JSON can still be unbound, so check the selector after import. A Scenario fires only when the event actually happens in the narrated outcome; the narrator can refuse or substitute a requested action. An event the narrator invents, or a player's purpose it rewrites, also satisfies the Scenario. Unused registry entries and duplicate references are tolerated, and import fills an absent registry from the trigger references. A registry that is present but empty (`"conditions": []`) is not a safe stand-in: in one community world every Scenario trigger showed no Scenario in the editor, so write the strings into the list or leave the field out. Use literal Scenarios with explicit state gates; dynamic Scenario text (`<<$slot>>`) did not fire at all when retested on 2026-11-01, even as a single slot, and blank slot text is not dependable deactivation. The editor stops adding Scenarios at ten entries, but imported registries of twelve or more work.
 
 ---
 
@@ -1074,7 +1074,7 @@ Use the expression/script Sandbox to try the read and change separately. For an 
 | Error fallback | `try($total / $count, 0)`; catches missing paths, type mismatches, division by zero, reads through a scalar and out-of-range `item(99)`. Do not use it to conceal broken essential state |
 | Existence | `$hero.nickname.exists()`; distinct from being nonempty or nonzero |
 | Numeric bounds | `$hp.constrain(0, $max_hp)` |
-| Rounding and bounds | `round_down($cost)`, `round_up($cost)`, `$cost.round()`; standalone `round(1.6)`, `min(2, 3)`, `max(2, 3)` also work |
+| Rounding and bounds | `round_down($cost)`, `round_up($cost)`, `$cost.round()`; standalone `round(1.6)`, `trunc(5.7)` (drops the fraction), `min(2, 3)`, `max(2, 3)` also work |
 | Text normalization | `$label.replace("_", " ")` |
 
 `=` compares within an expression and assigns in an assignment statement. In the following script, the first `=` tests; the second writes:
@@ -2059,6 +2059,7 @@ Kit-wide caveats, not repeated per entry:
 - [RUNTIME] Missing/blank PawScript condition data and legacy bare-array prerequisite/blocker data are omitted from exports. The open editor can still hold them (opening such a trigger raised a list-index TypeError), but importing that export elsewhere leaves the gate deleted; a trigger left with no conditions shows "will never fire". Convert legacy gates to object shape before import.
 - [RUNTIME] A numeric or text tracked-item condition with `textComparison` missing or "" is dropped from the export and its trigger stays dormant. After re-import, a trigger whose only condition was dropped never fires; one with other conditions loses that gate. Preserve the nonempty native value, which numeric conditions carry even though the UI hides it.
 - [RUNTIME] Import fills an absent root `conditions` registry from triggerOnEvent references, and normalizes schemaVersion 2.2 to 2.4 with trigger payloads unchanged.
+- [RUNTIME] A world shared with `"conditions": []` and seven Scenario triggers showed no Scenarios in the editor, in the world and in a live game copy (one community world, editor check 2026-11-11). How the list came to be empty, and whether import fills an empty list, is untested.
 - [RUNTIME] A round trip of well-formed native JSON was byte-identical, including Unicode, multiline text, quotes, backslashes, nulls and empty arrays. Export adds positionInList to Other Characters that lack it.
 - [RUNTIME] PawScript conditions require true/false, not numeric truthiness. Unknown handles produce missing-variable diagnostics. An interpolated comparison such as `<<$x>> >= 0` works in a PawScript condition.
 - [RUNTIME] Turn-at-least values can be native strings or numbers; both fire. Do not reject native exports for that representation.
