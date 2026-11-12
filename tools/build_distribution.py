@@ -357,6 +357,7 @@ DESCRIPTIONS = {
     'library/README.md': 'Human-friendly overview of the library.',
     'library/Sample-Blocks.json': 'Library modules in world-file format: time/location, characterization, craft, pacing, trackers, image styles and more. Copy whole content values by name.',
     'library/Storymaster-Suite.json': 'The Storymaster narrative-direction framework in world-file format. Substantial; read Integration.md first.',
+    'library/Storymaster-3-Beta.md': 'Official Storymaster 3 and 3 Proactive release text (beta) by SelfB and TWNT, unedited: reference for writing custom evaluation instructions. Using it in a world requires crediting the version and both creators in the description.',
     # Examples (individual worlds are described by examples/index.json)
     'examples/README.md': 'Human guide to the examples, grouped by what you want to do.',
     'examples/Payloads.md': 'Compact native payload snippets for every condition and effect, taken from the example worlds.',

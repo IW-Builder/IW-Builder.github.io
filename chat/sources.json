@@ -24,7 +24,7 @@
       "examples/index.json",
       "reference/Current-AI-Profiles.json"
     ],
-    "sha256": "fbe1417473f59c32a6f380fbcb11791dda507dd54a3dd02ce08e9c42b4c3582a"
+    "sha256": "6698fa70ab42e2b261714270b990d4414bfaf891012fcb5bd92bb7488abaff9c"
   },
   "IW-Authoring-Guide.txt": {
     "sourceFiles": [
@@ -37,7 +37,7 @@
       "reference/Portable-Banks.md",
       "library/Integration.md"
     ],
-    "sha256": "ddc32a10f26548c2ecfe5eaafb199df8d65e52785695f863f74752816a618374"
+    "sha256": "9cbd06fe456ee9289951c97e1b9edeab5183a1317fa3e1aac29c312262debed3"
   },
   "IW-Technical-Reference.txt": {
     "sourceFiles": [
@@ -58,7 +58,7 @@
       "reference/Verified-Behavior.md",
       "reference/Default-Evaluation.txt"
     ],
-    "sha256": "be0ab0acb7c684fe879e1b678ee95087d7527c7120f28ea28b2175a05dc6bce6"
+    "sha256": "f8f2893d9d60bc9b444e14f909513e6e98841c77905c6788051dd66902d3fd20"
   },
   "IW-Payloads.txt": {
     "sourceFiles": [

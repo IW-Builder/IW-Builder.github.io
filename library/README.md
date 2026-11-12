@@ -6,6 +6,7 @@ Want stronger character voices, a clearer sense of time, or help keeping track o
 | --- | --- |
 | [Sample Blocks](Sample-Blocks.json) | A selection of storytelling, pacing, time/location and continuity tools, plus image-related guidance. Pick the parts that fit your world. |
 | [Storymaster Suite](Storymaster-Suite.json) | A more substantial approach to story planning and direction. Popular in the IW community, but heavier than the lightweight options. |
+| [Storymaster 3 Beta](Storymaster-3-Beta.md) | The official Storymaster 3 and Storymaster 3 Proactive release text (beta) by SelfB and TWNT, unedited. Kept as a reference, especially for writing your own custom evaluation instructions: its step-by-step evaluation formats and secretinfo plan loops are a worked model. Its terms apply if you use it in a world: credit the version and both creators, "SelfB" and "TWNT", in the description. |
 | [Integration guide](Integration.md) | What each addition does, which parts belong together, and approximate token costs. Useful if you want to compare options or help your AI choose. |
 
 You can simply ask, "Which of these would help my world?" You do not need to understand their internal setup, and you do not need to include the whole library. More instructions are not always better; ask about cost as well as features.

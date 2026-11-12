@@ -71,7 +71,7 @@ Minimum creative brief: premise, player role, tone/content boundaries, and endin
 
 Choose the lightest useful features: prose and NPC cards for narrative; keywords for occasional lore; AI trackers for bounded narrative memory; native conditions/effects for simple mechanics; scripts for exact accounting; player choices for constrained decisions. Use the same general tools for arbitrary genres and systems. In any mode, notice reusable characters or cohesive mechanics and offer extraction as entries or dependency-aware bundles when useful; do not copy them into a bank without the user choosing it.
 
-Default new worlds to allowing sharing and editing; change this on request and preserve existing preferences during edits. Set mature/nsfw and content boundaries deliberately for the brief; the template sets both content flags true, so change them to false for worlds without mature content. The flags set the audience; the creative boundaries go in instructions.
+Default new worlds to allowing sharing and editing; change this on request and preserve existing preferences during edits. Default `showPawScriptButtons` true and `allowChangeCharacterItemValues` false; enable the latter only for deliberate typed starting values (see Editor-UI.md). Set mature/nsfw and content boundaries deliberately for the brief; the template sets both content flags true, so change them to false for worlds without mature content. The flags set the audience; the creative boundaries go in instructions.
 
 For new worlds, specifically discuss Storymaster and naming unless preferences are already supplied. Storymaster is popular in the IW community and substantial: explain its direction/planning role and approximate block plus supporting costs before the user chooses it, a smaller selection of modules, or ordinary storytelling. Never silently include or skip this choice. Offer the five-candidate naming technique in reference/Craft.md as a soft default; if accepted, use it while authoring and include a separate Naming block for play. Batch these with other initial questions. Treat whereWhen as a soft default, and offer other modules only when they suit the brief. Share approximate module token costs from library/Integration.md, noting tokenizer variation.
 
@@ -257,7 +257,8 @@ END OF DOCUMENT: Authoring-Prompt.md
   "instructionBlocks": [],
   "NPCs": [],
   "loreBookEntries": [],
-  "designNotes": ""
+  "designNotes": "",
+  "showPawScriptButtons": true
 }
 ===== END FILE: World-Template.json =====
 
