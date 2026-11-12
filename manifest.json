@@ -1,11 +1,11 @@
 {
   "algorithm": "sha256",
-  "generatedAt": "2026-11-11T15:32:04+00:00",
+  "generatedAt": "2026-11-12T01:20:24+00:00",
   "files": [
     {
       "path": "Authoring-Prompt.md",
-      "bytes": 21550,
-      "sha256": "dc28616ebe71e0a0a04f49a7b6813f2661c5291f0814ff7ea2210f4acc54e16d"
+      "bytes": 21710,
+      "sha256": "05ad6f05e4b63d6264990cc18e3a796ecd5a733b5de63266340ef4d5791ac40e"
     },
     {
       "path": "LICENSE",
@@ -19,23 +19,23 @@
     },
     {
       "path": "World-Template.json",
-      "bytes": 2415,
-      "sha256": "6839436ec35fdf8e92389ace093b47ae105ca5c6821db0573365ca30b0aaeb79"
+      "bytes": 2447,
+      "sha256": "53469c36f5abe632c45b6dbb91eac87b494f3d191c0950a3067d2742ffb16889"
     },
     {
       "path": "chat/IW-Authoring-Guide.txt",
-      "bytes": 89701,
-      "sha256": "ddc32a10f26548c2ecfe5eaafb199df8d65e52785695f863f74752816a618374"
+      "bytes": 89893,
+      "sha256": "9cbd06fe456ee9289951c97e1b9edeab5183a1317fa3e1aac29c312262debed3"
     },
     {
       "path": "chat/IW-Behavior.txt",
-      "bytes": 89462,
-      "sha256": "be0ab0acb7c684fe879e1b678ee95087d7527c7120f28ea28b2175a05dc6bce6"
+      "bytes": 89994,
+      "sha256": "f8f2893d9d60bc9b444e14f909513e6e98841c77905c6788051dd66902d3fd20"
     },
     {
       "path": "chat/IW-Complete-Reference.txt",
-      "bytes": 303281,
-      "sha256": "fbe1417473f59c32a6f380fbcb11791dda507dd54a3dd02ce08e9c42b4c3582a"
+      "bytes": 304005,
+      "sha256": "6698fa70ab42e2b261714270b990d4414bfaf891012fcb5bd92bb7488abaff9c"
     },
     {
       "path": "chat/IW-Mechanics-Examples.txt",
@@ -79,13 +79,13 @@
     },
     {
       "path": "chat/index.html",
-      "bytes": 94085,
-      "sha256": "29a1878cb7c9a75c7177fce752cf991e1648719eff46c2441308568988147330"
+      "bytes": 94287,
+      "sha256": "f85890e4bf9f1189e0bd227da46e4a783872057e49ff35ed0af5fb2f22ac3c5e"
     },
     {
       "path": "chat/sources.json",
       "bytes": 4137,
-      "sha256": "6ab5d75afb0092c04ba952ff0fe713ee8be8af86c17e68d2e644c67696f33240"
+      "sha256": "14798a5e818ca378dd8155beffd8b745bbfd928427989bae7a136d9e9159b96f"
     },
     {
       "path": "checker/index.html",
@@ -429,8 +429,8 @@
     },
     {
       "path": "index.html",
-      "bytes": 23215,
-      "sha256": "40353f6e7ffb6fae5d963250bfe95611eeb6a25ff8aff4ab8889583d063a2d52"
+      "bytes": 23375,
+      "sha256": "3f2c21d823f1119ce3a27c5599b23378de3c6ed379e64d0237c61bebe389bc28"
     },
     {
       "path": "library/Integration.md",
@@ -439,13 +439,18 @@
     },
     {
       "path": "library/README.md",
-      "bytes": 1382,
-      "sha256": "cb7766a67fca0b54ddb273edd1d4deda9df6204f33f9c6a14be4be58b0cf6e6c"
+      "bytes": 1823,
+      "sha256": "2a94afd3c72c615ac1686e5d2fe8256d0a6a2fdc8c58266cb88ccd695c040f33"
     },
     {
       "path": "library/Sample-Blocks.json",
       "bytes": 59406,
       "sha256": "64d4634cf42a336202702cfcb073086e3c5e43312541667e9e093f6bb5c6df8b"
+    },
+    {
+      "path": "library/Storymaster-3-Beta.md",
+      "bytes": 34543,
+      "sha256": "2cae9aa935f021076c4b48c32f36380fb6e5edbe5b4b00bb357505861c69820f"
     },
     {
       "path": "library/Storymaster-Suite.json",
@@ -454,13 +459,13 @@
     },
     {
       "path": "library/index.html",
-      "bytes": 1875,
-      "sha256": "033de0e9218d580c0c1b69db53ebd848868e730ae781d4cc909ea6e2eb276bed"
+      "bytes": 2262,
+      "sha256": "cd779f443cf8bca3392da53910782371ce8e4a9bde161f7bf76fdebe65263af7"
     },
     {
       "path": "llms.txt",
-      "bytes": 26160,
-      "sha256": "7a9b335f45efd7be20a5e81bdd8ffa98de13553be4f1f20f0bc087819e057d40"
+      "bytes": 26494,
+      "sha256": "7daf02e90d780da239344b1ab70a2d2f6b2383a4d25993f39b9f89632ef3b499"
     },
     {
       "path": "reference/Characters.md",
@@ -489,8 +494,8 @@
     },
     {
       "path": "reference/Editor-UI.md",
-      "bytes": 24072,
-      "sha256": "16bf1ae5b9058a47b3dabe0e3441cc8c84a6d930cc321bcf8732c77e623f96ab"
+      "bytes": 24604,
+      "sha256": "ff8985a72cef6dc090973a2f8e7ccb0dabcac58e3480fe12ba4b7de982768bc4"
     },
     {
       "path": "reference/Images-and-Models.md",
@@ -574,8 +579,8 @@
     },
     {
       "path": "tools/build_distribution.py",
-      "bytes": 30328,
-      "sha256": "dd2d65f4d1beba3eea3419628ee6b0937a14cc2033339a693909b539e76e365e"
+      "bytes": 30599,
+      "sha256": "482ef742af1783f4d1dc2ff0650751d475599ba2c565b270b4196441f7730e61"
     },
     {
       "path": "tools/check_package.py",

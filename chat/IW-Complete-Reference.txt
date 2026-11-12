@@ -71,7 +71,7 @@ Minimum creative brief: premise, player role, tone/content boundaries, and endin
 
 Choose the lightest useful features: prose and NPC cards for narrative; keywords for occasional lore; AI trackers for bounded narrative memory; native conditions/effects for simple mechanics; scripts for exact accounting; player choices for constrained decisions. Use the same general tools for arbitrary genres and systems. In any mode, notice reusable characters or cohesive mechanics and offer extraction as entries or dependency-aware bundles when useful; do not copy them into a bank without the user choosing it.
 
-Default new worlds to allowing sharing and editing; change this on request and preserve existing preferences during edits. Set mature/nsfw and content boundaries deliberately for the brief; the template sets both content flags true, so change them to false for worlds without mature content. The flags set the audience; the creative boundaries go in instructions.
+Default new worlds to allowing sharing and editing; change this on request and preserve existing preferences during edits. Default `showPawScriptButtons` true and `allowChangeCharacterItemValues` false; enable the latter only for deliberate typed starting values (see Editor-UI.md). Set mature/nsfw and content boundaries deliberately for the brief; the template sets both content flags true, so change them to false for worlds without mature content. The flags set the audience; the creative boundaries go in instructions.
 
 For new worlds, specifically discuss Storymaster and naming unless preferences are already supplied. Storymaster is popular in the IW community and substantial: explain its direction/planning role and approximate block plus supporting costs before the user chooses it, a smaller selection of modules, or ordinary storytelling. Never silently include or skip this choice. Offer the five-candidate naming technique in reference/Craft.md as a soft default; if accepted, use it while authoring and include a separate Naming block for play. Batch these with other initial questions. Treat whereWhen as a soft default, and offer other modules only when they suit the brief. Share approximate module token costs from library/Integration.md, noting tokenizer variation.
 
@@ -257,7 +257,8 @@ END OF DOCUMENT: Authoring-Prompt.md
   "instructionBlocks": [],
   "NPCs": [],
   "loreBookEntries": [],
-  "designNotes": ""
+  "designNotes": "",
+  "showPawScriptButtons": true
 }
 ===== END FILE: World-Template.json =====
 
@@ -1694,7 +1695,7 @@ Use tracker and trigger **Names**, not IDs, unless the user requests IDs. Distin
 | Trigger at start of game / Or mid-game | `triggerOnStartOfGame` / `triggerMidGame` |
 | Allow triggering multiple times | `canTriggerMoreThanOnce` |
 | Hide this item even in Storyteller Mode / Extra-hidden | `hidden_boring` or `ai_only_boring`; display filtering |
-| Change starting values of Tracked Items (if applicable) | `allowChangeCharacterItemValues`; character-selection permission |
+| Change starting values of Tracked Items (if applicable) | `allowChangeCharacterItemValues`; character-selection permission. Default false; true lets the player type a custom starting value, including one outside a dropdown's choices |
 | Custom Evaluation / Description / Summarisation | `evaluationRequest` / `descriptionRequest` / `summaryRequest` |
 
 ## Import, export and preserving work
@@ -1771,7 +1772,7 @@ The sandbox (PawScript Expression Editor) runs a script or expression against ed
 | Entry point | When it is available | Tracker data it starts with |
 | --- | --- | --- |
 | World editor: Paw icon beside a Run Script effect's script field | Always | All base trackers |
-| World editor: Paw icon beside other PawScript-capable fields | When **Show optional features > Misc advanced features > Show the PawScript Expression Editor button next to each expression field** is enabled for that world (`showPawScriptButtons: true`) | All base trackers |
+| World editor: Paw icon beside other PawScript-capable fields | When **Show optional features > Misc advanced features > Show the PawScript Expression Editor button next to each expression field** is enabled for that world (`showPawScriptButtons: true`; default it to true in new worlds) | All base trackers |
 | In play: **View/edit world design** | Same Paw icons as the world editor | The game state of that turn |
 | In play: debug **PawScript > Open in Sandbox** | For a script that has run in this game; with the expression-editor option enabled, evaluated conditions also get an entry. The play screen has no other sandbox button | The game state of the turn it ran |
 
@@ -1842,7 +1843,7 @@ These are the character-customization controls; account-role permissions are a s
 | Create a new portrait | allowChangeCharacterNewPortrait | New portrait creation permission |
 | Change starting values of Tracked Items | allowChangeCharacterItemValues | Applicable character-scoped starting values |
 
-[DOCUMENTED] These switches belong to character customization. They are distinct from `permissionsOnceShared.sharing` and `.editing`, and from Storyteller mode. Cross-account author/recipient permission enforcement is unverified, so a missing control may come from any of the three; keep them separate when diagnosing.
+Default `allowChangeCharacterItemValues` to false. A player-chosen dropdown (`initialValueBasedOnPC: "player"` with `initialValueChoices`) still offers its choices with it off; with it on, the player can also type their own value, which suits a deliberate custom input (a written character's own power, say) but can break a setup or picture dropdown that scripts compare by exact string. [DOCUMENTED] These switches belong to character customization. They are distinct from `permissionsOnceShared.sharing` and `.editing`, and from Storyteller mode. Cross-account author/recipient permission enforcement is unverified, so a missing control may come from any of the three; keep them separate when diagnosing.
 
 [DOCUMENTED] Custom Evaluation guides the AI's interpretation of the attempted action. The default includes skill/difficulty reasoning and labels such as SUCCESS and PARTIAL_SUCCESS; those labels are generated evaluation content, not direct state-changing commands. Custom Description guides narrated results. Custom Summarisation guides what the memory summary retains; it is not a viewer of the actual summary. Native specialist placeholders are context-specific and are not all PawScript tracker handles.
 
