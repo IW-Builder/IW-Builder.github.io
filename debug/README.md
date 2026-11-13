@@ -8,7 +8,7 @@ term memory the storyteller used on that turn. Downloads a readable `.txt` and
 a `.json`.
 
 **Install:** open [the install page](https://iw-builder.github.io/debug/) and
-drag the button to your bookmarks bar.
+drag the button to your bookmarks bar, or use the console method it offers.
 
 **Use:** open or load the game on infiniteworlds.app, wait until no turn is
 generating, then click the bookmark. When the status box says Done, both files
@@ -18,9 +18,13 @@ download and the game is back on the turn you were viewing.
 
 - `index.html`: the install page. Built by
   `npm i --no-save terser@5 && node debug/build.js` from `index.template.html`
-  and the source; don't edit it by hand. The build minifies the bookmark and
-  percent-encodes only what a URL can't carry (about 13k characters instead of
-  27k), because long bookmarks got cut off when shared or pasted.
+  and the source; don't edit it by hand. The build minifies the exporter, then
+  deflates and base64-encodes it inside a small loader that unpacks it with
+  `DecompressionStream` and runs it with `Function`. The bookmark is about 6,000
+  characters, because Edge's favorites editor cuts bookmarks off at about
+  10,000 (Chrome's editor only hides the rest). If a site ever blocks
+  `Function`, the bookmark says so, and the page's console method still works:
+  it copies the minified exporter to paste into DevTools.
 - `IW-Debug-Exporter-bookmarklet.js`: readable source of the bookmarklet.
 
 ## How it works

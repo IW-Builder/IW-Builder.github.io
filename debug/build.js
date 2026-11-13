@@ -1,9 +1,10 @@
 // Builds debug/index.html from the template and the readable bookmarklet source.
 // Run from the repo root: npm i --no-save terser@5 && node debug/build.js
-// The bookmark is minified (local names shortened, comments and indentation
-// dropped) and only the characters a URL can't carry are percent-encoded, so
-// it stays short enough for bookmark fields and copy-paste.
+// The exporter is minified, then deflated and base64-encoded inside a small
+// loader, because Edge's favorites editor cuts bookmarks off at about 10,000
+// characters. The page also offers the minified code for the browser console.
 const fs = require('fs');
+const zlib = require('zlib');
 let terser;
 try { terser = require('terser'); }
 catch { console.error('Needs terser: npm i --no-save terser@5'); process.exit(1); }
@@ -12,11 +13,17 @@ catch { console.error('Needs terser: npm i --no-save terser@5'); process.exit(1)
   const src = fs.readFileSync('debug/IW-Debug-Exporter-bookmarklet.js', 'utf8');
   new Function(src); // syntax check
   const { code } = await terser.minify(src, { compress: false, mangle: true, format: { ascii_only: true } });
-  const encoded = code.replace(/[%\s"<>#\\^`{|}]/g, c => '%' + c.charCodeAt(0).toString(16).padStart(2, '0').toUpperCase());
-  if (decodeURIComponent(encoded) !== code) throw new Error('encoding does not round-trip');
-  new Function(decodeURIComponent(encoded));
-  const bookmark = 'javascript:' + encoded;
-  const html = fs.readFileSync('debug/index.template.html', 'utf8').replace('"__BOOKMARK__"', () => JSON.stringify(bookmark));
+  new Function(code);
+  const packed = zlib.deflateRawSync(code, { level: 9 }).toString('base64');
+  if (zlib.inflateRawSync(Buffer.from(packed, 'base64')).toString() !== code) throw new Error('packing does not round-trip');
+  const loader = '(async()=>{try{Function(await new Response(new Blob([Uint8Array.from(atob("' + packed +
+    '"),c=>c.charCodeAt(0))]).stream().pipeThrough(new DecompressionStream("deflate-raw"))).text())()}' +
+    'catch(e){alert("IW Debug Exporter could not start ("+e.message+"). Use the console method on the install page.")}})()';
+  new Function(loader);
+  const bookmark = 'javascript:' + loader.replace(/[%\s"<>#\\^`{|}]/g, c => '%' + c.charCodeAt(0).toString(16).padStart(2, '0').toUpperCase());
+  const html = fs.readFileSync('debug/index.template.html', 'utf8')
+    .replace('"__BOOKMARK__"', () => JSON.stringify(bookmark))
+    .replace('"__CONSOLE__"', () => JSON.stringify(code));
   fs.writeFileSync('debug/index.html', html);
   console.log('debug/index.html written, bookmark', bookmark.length, 'chars');
 })();
