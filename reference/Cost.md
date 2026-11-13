@@ -12,7 +12,8 @@ Each turn is billed in two halves. **Input** is everything IW sends the model: i
 - AI-visible tracker definitions (name, description, update instructions, format), from turn 1, whether or not the AI updates that tracker [RUNTIME, Dolphin: about 1.7 credits per 1k characters];
 - AI-visible tracker values;
 - text inside a live `<<if(…)>>` template only on turns it renders; a false section costs nothing [RUNTIME, Dolphin: 40k added 63 credits only while true]. Price a gated block by rendering it per scene, and remember turn 1 if its gates default on;
-- lore entries and NPC cards while they are active (assumed to bill at about the instructions rate; not measured directly).
+- lore entries while they are active (assumed to bill at about the instructions rate; not measured directly);
+- every NPC card's name, Summary and **full appearance**, every turn, as Long Term Memory, plus detail and secret_info after a name mention [RUNTIME, Lynx: about 1.05 per 1k]. Keep appearances short.
 
 These cost nothing per turn: hidden (script-only) trackers, triggers and PawScript, and Request Input form text after it has been shown. A long descriptionRequest or evaluationRequest is not billed in full either [RUNTIME: 16k characters added about 3–4 credits a turn]; what it really costs is the narration it causes.
 
@@ -75,7 +76,7 @@ The words column is unguided output on a bare world. A world with a detailed aut
 - The turn after the opening grew by about 30–50% by the median turn (Dolphin 87 → 128, Puma 80 → 105, Smilodon 126 → 178), as memory built up.
 - Each model played one game with its own draw, on slightly different versions of the world, so the instructions row is approximate.
 
-A shorter check on Caracal: 15 turns of a later version of the same world, against 13 turns of the same version on Dolphin (2026-11-07) [RUNTIME, one game each]. Caracal cost a median 68 credits a turn against Dolphin's 116 (0.57× over the same 13 turns; the table says 0.70×), wrote a median 627 words (384–1,110; unguided 346; Dolphin 660), and billed 0.9 credits per 100 words of narration (table 1.0). Its instructions came to 0.66× Dolphin's, as K predicts (0.68), and recent story about 0.6× per word. Inputs were 84% of its bill, because its output is so cheap: evaluation 1.6 credits a turn against 5.6. Its per-turn cost rose by about 26% from turn 2 to the median turn, which in a 15-turn game is before memory reaches its full saw-tooth.
+Caracal check (2026-11-07) [RUNTIME, one game each: 15 Caracal turns of a later version of the same world, 13 on Dolphin]: median 68 credits a turn against Dolphin's 116 (0.57×; table 0.70×); median 627 words (384–1,110; unguided 346; Dolphin 660) at 0.9 credits per 100 words (table 1.0). Instructions 0.66× Dolphin's (K predicts 0.68), recent story about 0.6× per word. Inputs were 84% of its bill (evaluation 1.6 a turn against 5.6). Per-turn cost rose about 26% from turn 2 to the median turn, before memory reaches its full saw-tooth.
 
 ## Why the same world costs different players different amounts
 
