@@ -16,8 +16,11 @@ download and the game is back on the turn you were viewing.
 
 ## Files
 
-- `index.html`: the install page. Built by `node debug/build.js` from
-  `index.template.html` and the source; don't edit it by hand.
+- `index.html`: the install page. Built by
+  `npm i --no-save terser@5 && node debug/build.js` from `index.template.html`
+  and the source; don't edit it by hand. The build minifies the bookmark and
+  percent-encodes only what a URL can't carry (about 13k characters instead of
+  27k), because long bookmarks got cut off when shared or pasted.
 - `IW-Debug-Exporter-bookmarklet.js`: readable source of the bookmarklet.
 
 ## How it works
