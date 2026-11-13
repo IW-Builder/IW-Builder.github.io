@@ -2,9 +2,10 @@
 
 The debug counterpart of IW's Export story. For every turn of the open game it
 saves what World debug tools shows: the evaluation, thinking (on models that
-think), triggers fired, active instruction blocks (rendered), matched lore, and
-every PawScript condition and effect with its status and error. Downloads a
-readable `.txt` and a `.json`.
+think), triggers fired, active instruction blocks (rendered), matched lore,
+every PawScript condition and effect with its status and error, and the long
+term memory the storyteller used on that turn. Downloads a readable `.txt` and
+a `.json`.
 
 **Install:** open [the install page](https://iw-builder.github.io/debug/) and
 drag the button to your bookmarks bar.
@@ -37,6 +38,19 @@ of producing bad data. Fields used: 0 action, 3 turn, 4 last turn, 11 title,
 12 character, 24 evaluation, 25 thinking, and the debug object (26 as of
 2026-11-01).
 
+**Long term memory.** World debug tools > Long term memory doesn't come with
+the turn's view: the panel asks for it with `get_turn_long_term_memory`
+(`game_uuid`, `turn_number`). The game id is `gameUuid` in field 8 of each turn's
+reply. The answer holds `summary` (story, current_situation, key_moments,
+characters, plot_threads, secrets, lore, future_notes) and `summary_turn` (0 =
+the starting memory, before the first summary). The memory changes only when IW
+writes a summary, so the JSON keeps it in full on the turn it first appears and
+`{"same_as_turn": n}` after that; the text file prints it once and then
+"(unchanged since turn n)". Games still on the old memory system have no memory
+to read: the export says so once and carries on without it.
+
 It is read-only: it takes no game actions and sends nothing anywhere else.
 Tested 2026-11-01 on a 25-turn Dolphin game (complete, view restored from both
-the latest turn and turn 23).
+the latest turn and turn 23), and 2026-11-13 with long term memory on a 6-turn
+game and a 42-turn game whose memory was migrated (summaries at turns 8, 14,
+20, 26, 32 and 38, each printed once).

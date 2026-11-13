@@ -50,7 +50,7 @@ li::marker{color:var(--accent);font-weight:700}
 <main>
   <header style="display:grid;gap:10px">
     <h1>IW Debug Exporter</h1>
-    <p class="lede">The debug counterpart of Export story. For every turn of the game you have open, it saves what World debug tools shows: the evaluation, thinking (on models that think), triggers fired, active instruction blocks, matched lore, and PawScript results and errors. You get a readable text file and a JSON file.</p>
+    <p class="lede">The debug counterpart of Export story. For every turn of the game you have open, it saves what World debug tools shows: the evaluation, thinking (on models that think), triggers fired, active instruction blocks, matched lore, PawScript results and errors, and the long term memory the storyteller used. You get a readable text file and a JSON file.</p>
   </header>
   <section class="install" aria-labelledby="install-h">
     <h2 id="install-h">Install</h2>
@@ -78,8 +78,8 @@ li::marker{color:var(--accent);font-weight:700}
   <section aria-labelledby="files-h">
     <h2 id="files-h">What you get</h2>
     <div class="files">
-      <code>.txt</code><span>One section per turn: the action, evaluation, thinking, triggers fired, active instruction blocks (rendered text, printed in full only when a block changed since the previous turn), lore matched, every PawScript condition and effect with its status, and the error count.</span>
-      <code>.json</code><span>The same per turn, plus each script result's error field and IW's raw per-turn debug fields. World-wide definitions (trigger names, main instructions, lore keywords) appear once at the top.</span>
+      <code>.txt</code><span>One section per turn: the action, evaluation, thinking, triggers fired, active instruction blocks (rendered text, printed in full only when a block changed since the previous turn), lore matched, every PawScript condition and effect with its status, the error count, and the long term memory (printed in full when it changes: story, current situation, key moments, characters, plot threads, secrets, lore, future notes).</span>
+      <code>.json</code><span>The same per turn, plus each script result's error field and IW's raw per-turn debug fields and the long term memory as IW sends it (in full on the turn it changes, a pointer to that turn otherwise). World-wide definitions (trigger names, main instructions, lore keywords) appear once at the top.</span>
     </div>
   </section>
   <section class="note" aria-label="Notes">
