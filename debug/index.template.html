@@ -65,6 +65,13 @@ li::marker{color:var(--accent);font-weight:700}
         <textarea id="code" readonly aria-label="Bookmark code"></textarea>
       </div>
     </details>
+    <details>
+      <summary>Bookmark won't run? Use the console</summary>
+      <div class="alt">
+        <p>On infiniteworlds.app with your game open, press F12 (Cmd+Option+J on Mac) and open the Console tab. Copy the code, paste it into the console, and press Enter. If the browser asks you to type "allow pasting" first, type it and paste again.</p>
+        <button id="copy-console" type="button">Copy console code</button>
+      </div>
+    </details>
   </section>
   <section aria-labelledby="use-h">
     <h2 id="use-h">Use</h2>
@@ -94,6 +101,13 @@ link.href = BOOKMARK;
 link.addEventListener('click', e => { e.preventDefault(); });
 const code = document.getElementById('code');
 code.value = BOOKMARK;
+const CONSOLE = "__CONSOLE__";
+document.getElementById('copy-console').addEventListener('click', async e => {
+  const b = e.currentTarget;
+  try { await navigator.clipboard.writeText(CONSOLE); b.textContent = 'Copied'; }
+  catch { b.textContent = 'Copy failed; try another browser'; }
+  setTimeout(() => { b.textContent = 'Copy console code'; }, 2500);
+});
 document.getElementById('copy').addEventListener('click', async e => {
   const b = e.currentTarget;
   try { await navigator.clipboard.writeText(BOOKMARK); b.textContent = 'Copied'; }
