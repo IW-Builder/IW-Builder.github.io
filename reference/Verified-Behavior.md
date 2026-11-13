@@ -1,6 +1,6 @@
 # Consolidated behavior reference
 
-Detailed runtime conclusions for Infinite Worlds, current through 2026-11-12. [Notable findings](Notable-Findings.md) gives the plain-language summary and the list of what remains unknown; this file carries the detail and the evidence labels. Import success, rendered instructions and narration answer different questions.
+Detailed runtime conclusions for Infinite Worlds, current through 2026-11-13. [Notable findings](Notable-Findings.md) gives the plain-language summary and the list of what remains unknown; this file carries the detail and the evidence labels. Import success, rendered instructions and narration answer different questions.
 
 ## Compatibility and evidence
 
@@ -100,7 +100,7 @@ Kit-wide caveats, not repeated per entry:
 - [RUNTIME] Independent random expressions differ within and across blocks and effects, including from a hidden pool. Cache a choice when consumers must agree.
 - [RUNTIME] Selector case matters for equality/choose; provide explicit fallbacks. AI-managed dependencies can see same-turn updates despite tracker order. Stage prior-turn values explicitly.
 - [RUNTIME] Keyword matching accepts case variants, surrounding punctuation and authored alternate keywords; embedded substrings and a simple plural did not match. Activation lasts the matching turn and three more. Player actions, completed narration and Secret Info contribute, from the next generated turn; the complete scanned-field set is unspecified.
-- [RUNTIME] Memory v4 (2026-11-12, one model): every Other Character is Major; name, Summary and full appearance bill as Long Term Memory every turn (16.5k appearance +17 credits, Lynx). A name mention sends detail and secret_info; a location mention alone did nothing (see Characters).
+- [RUNTIME] Memory v4: every Other Character is Major; name, Summary and full appearance bill as LTM every turn (Lynx, Dolphin). A name mention sends the whole detail and secret_info for three turns; a location mention does nothing. With summary sections that fits LTM within 0.5 a turn (Cost). STM and summary timing are unchanged.
 - [RUNTIME] Character detail retrieval is unreliable: a name-only mention did not surface an authored hobby on two turns; the narrator invented one and history reinforced it. A player sharing an NPC's name used its facts. The narrator can add named NPCs to an opening that says the player is alone.
 - [RUNTIME] Secret Info and narration can disagree or misattribute knowledge. Characters can deny a fact just told to them, and hidden facts can become player knowledge in prose. A general provenance policy showed no clear benefit; explicit correction of the source chain did.
 - [RUNTIME] Once a secret reaches narration, removing or emptying its disclosure block does not remove it from later turns.

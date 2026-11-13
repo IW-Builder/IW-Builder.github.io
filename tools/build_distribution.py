@@ -385,9 +385,9 @@ DESCRIPTIONS = {
     'tools/test_story_export.py': 'Maintainer tests for story_export.py.',
     'tools/test_iw_sort.py': 'Maintainer tests for iw_sort.py.',
     # Cost exporter
-    'cost/index.html': 'Deprecated IW Cost Exporter: IW now downloads your credit history itself; the old bookmarklet install page is kept, unmaintained.',
-    'cost/IW-Cost-Exporter-bookmarklet.js': 'Readable source of the deprecated cost-exporter bookmarklet.',
-    'cost/README.md': 'Deprecation notice and the old guide to the cost exporter.',
+    'cost/index.html': 'IW Cost Exporter install page: a bookmarklet that downloads your credit history with every turn\'s cost breakdown (IW\'s own download has totals only).',
+    'cost/IW-Cost-Exporter-bookmarklet.js': 'Readable source of the cost-exporter bookmarklet.',
+    'cost/README.md': 'Guide to the cost exporter: install, use, output columns.',
     # Checker
     'checker/index.html': "Browser validator: paste a world or a model's whole reply; runs validate_iw_export.py locally, joins numbered chunks and copies a report for the AI.",
 }
@@ -450,7 +450,7 @@ INDEX_SECTIONS = [
     ('library', 'Sample library', 'Optional modules to adapt into worlds.'),
     ('tools', 'Tools', 'Python tools for models or users that can run code. Without Python, use the checker.'),
     ('checker', 'Browser checker', None),
-    ('cost', 'Cost exporter (deprecated)', 'IW now downloads your credit history itself; see reference/Editor-UI.md (Credits and cost) and reference/Cost.md for estimating.'),
+    ('cost', 'Cost exporter', 'Downloads your credit history with every turn\'s cost breakdown (IW\'s own download has totals only); see reference/Cost.md for estimating.'),
     ('chat', 'Combined text editions', 'Single-file bundles for chats without web access or with tool limits: the whole reference in one file, or split into four for size-limited tools, plus examples, library and tools to attach only when asked for. Web-browsing models should prefer the individual files above.'),
 ]
 

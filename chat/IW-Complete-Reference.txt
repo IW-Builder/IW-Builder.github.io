@@ -308,7 +308,7 @@ Write `detail` as labeled lines; they are easy for the storyteller to use and ha
 
 `appearance` describes body, face and movement in plain, specific facts: build, height, notable features, how they stand and move. "Broad-hipped, soft stomach, freckled shoulders" gives the storyteller something to use; "beautiful", "curvy" and "perfect" do not. Vary bodies across the cast. Put the default outfit in img_clothing and track current clothing separately if it changes.
 
-Reveal secret_info through opportunity (a late conversation, a mistake, a bargain), never exposition. Minor characters need only a one_liner and a few lines; spend detail where the player will spend time.
+Reveal secret_info through opportunity (a late conversation, a mistake, a bargain), never exposition. Minor characters need only a one_liner and a few lines; spend detail where the player will spend time. Each name mention bills the whole detail for three turns: cut needless biography.
 
 ## Romance, desire and adult worlds
 
@@ -1393,15 +1393,15 @@ NPC field purpose and activation guidance are [DOCUMENTED]; the keyword matching
 | img_appearance / img_clothing | Visual identity and clothing for image generation; inspect with the wrench under a character image |
 | positionInList | Ordering metadata; preserve existing values; use sequential integers for new lists |
 
-Only Name is required in the NPC editor; storytelling and image information are independent optional sections. Since IW's 2026-11-12 memory update (Long Term Memory v4), every Other Character is imported into the game's character memory at the start as a **Major** character: its name, brief summary and **full appearance** are sent on every turn, named or not, and bill as Long Term Memory. Naming the character sends detail and secret_info in full, and it stayed active the next turn. A mention of its location alone does not activate it [RUNTIME, one model, before the first summary]. Detail retrieval is unreliable even then, and the narrator can invent a substitute that history then repeats, or introduce named NPCs into an opening that says the player is alone. Put facts that must surface in one_liner or always-on text and repeat them in detail; correct a wrong invented detail early by editing the turn. For an opening scene, do not depend on card or keyword activation at all: there is no prior context to activate them, so put essential opening facts in firstInput or always-on instructions and give starting NPCs useful brief summaries without duplicating their entire cards. Mentioning footwear in image fields encourages full-body framing, per editor help.
+Only Name is required in the NPC editor; storytelling and image information are independent optional sections. Since IW's 2026-11-12 memory update (Long Term Memory v4), every Other Character is imported into the game's character memory at the start as a **Major** character: its name, brief summary and **full appearance** are sent on every turn, named or not, and bill as Long Term Memory. Naming the character (in an action, narration or Secret Info) sends its whole detail and secret_info for the next three turns, the same window as lore. Before the update only a fraction of detail was sent; now all of it bills, so a long detail costs on every turn the character is around [RUNTIME, Dolphin]. A mention of its location alone does not activate it [RUNTIME, one model, before the first summary]. Detail retrieval is unreliable even then, and the narrator can invent a substitute that history then repeats, or introduce named NPCs into an opening that says the player is alone. Put facts that must surface in one_liner or always-on text and repeat them in detail; correct a wrong invented detail early by editing the turn. For an opening scene, do not depend on card or keyword activation at all: there is no prior context to activate them, so put essential opening facts in firstInput or always-on instructions and give starting NPCs useful brief summaries without duplicating their entire cards. Mentioning footwear in image fields encourages full-body framing, per editor help.
 
 IW permits a character among both player choices and Other Characters under the same name; the selected player can retrieve information from that entry, while the internal merging is not visible. Unchosen player options are not NPCs unless also added as Other Characters. Author the intended relationship explicitly where it matters. PC/NPC conversion is available in Data mode: preserve the source and map relevant fields into the destination type ([Portable-Banks.md](Portable-Banks.md)).
 
 ## Character memory (Long Term Memory v4)
 
-IW keeps a character database in the game's memory, viewable and editable through World Debug Tools (turn on the memory view in Settings). Each character has a tier: Player, Major (brief summary, appearance, clothing and latest development always sent), Recurring (the default for characters the story creates: brief summary always, full entry while in scene) and Minor (dropped once no longer important); the summarizer can change a tier. Only the Major import is tested [RUNTIME]; the other tiers are as a beta tester described them. At game start each Other Character's fields are copied word for word: one_liner → One liner, appearance → Appearance, detail → Background, secret_info → Secrets, location → Location, names → Names. There is no Clothing entry yet, `img_appearance` and `img_clothing` are not copied, and a "Wearing …" line stays inside Appearance. The view does not change before the first summary [RUNTIME, one model].
+IW keeps a character database in the game's memory, viewable and editable through World Debug Tools (turn on the memory view in Settings). Each character has a tier: Player, Major (brief summary, appearance, clothing and latest development always sent), Recurring (the default for characters the story creates: brief summary always, full entry while in scene) and Minor (dropped once no longer important); the summarizer can change a tier. Only the Major import is tested [RUNTIME]; the other tiers are as a beta tester described them. At game start each Other Character's fields are copied word for word: one_liner → One liner, appearance → Appearance, detail → Background, secret_info → Secrets, location → Location, names → Names. There is no Clothing entry yet, `img_appearance` and `img_clothing` are not copied, and a "Wearing …" line stays inside Appearance. The view does not change before the first summary [RUNTIME, one model]. The summary schedule is the same as before the update: the first summary is written after turn 8, covers turns up to 6 and is used from turn 9, then every 6 turns. In a 23-card game the first summary added the player character, rewrote the brief summaries of the cards seen (fewer looks, more story), added a few Facts and Developments, and left every Appearance and Background untouched [RUNTIME, one game, Dolphin].
 
-In practice: keep card appearances short, because every card's full appearance bills on every turn; put looks that change in trackers; the brief summary no longer needs visual anchors; and bring a character in by name, not by its location. The editor has no Clothing field yet, so a starting outfit goes in Appearance. A beta tester reports that a summaryRequest can address the memory's field names (Appearance, Clothing, Background and so on) [untested]. One written for the old fields ("put everything in the brief summary") now makes every brief summary long and billed every turn. The memory of a game started before the update can't be viewed; it can only be migrated, which costs credits.
+In practice: keep card appearances short, because every card's full appearance bills on every turn; put looks that change in trackers; the brief summary no longer needs visual anchors; and bring a character in by name, not by its location. The editor has no Clothing field yet, so a starting outfit goes in Appearance. A beta tester reports that a summaryRequest can address the memory's field names (Appearance, Clothing, Background and so on) [untested]. Layout rules are not followed: the memory keeps its own structure (key moments with turn, time, place and several names; plot threads with keywords), so write a summaryRequest about content, not notation [RUNTIME, one game]. One written for the old fields ("put everything in the brief summary") now makes every brief summary long and billed every turn. The memory of a game started before the update can't be viewed; it can only be migrated, which costs credits.
 
 World Debug does not show NPC activation. Secret fields are a convention the instructions enforce, not a barrier: see the knowledge findings in [Notable-Findings.md](Notable-Findings.md#characters-knowledge-and-memory).
 
@@ -1624,7 +1624,7 @@ The Infinite Worlds behavior most likely to surprise an author or break a world,
 
 ## Characters, knowledge and memory
 
-34. **Only the Summary and appearance are guaranteed early.** Detail arrives after a name mention (since 2026-11-12, not a location mention), and even then often fails to surface; the narrator invents a substitute that history then repeats. Put must-know facts in the Summary or always-on text and repeat them in detail.
+34. **Only the Summary and appearance are guaranteed early.** Detail arrives after a name mention (since 2026-11-12, not a location mention, and then the whole detail bills for three turns), and even then often fails to surface; the narrator invents a substitute that history then repeats. Put must-know facts in the Summary or always-on text and repeat them in detail.
 35. **Keyword and character cards cannot activate on the opening turn** without prior context. Put opening facts in firstInput or always-on instructions.
 36. **Keyword blocks match whole words, any case, and stay active for the matching turn plus three.** Substrings and plurals do not match.
 37. **NPCs get knowledge wrong.** They deny facts they were just told, credit the wrong source, or know secrets they should not. Secret Info can contradict the narration. Anti-omniscience instructions alone do not fix this.
@@ -1667,7 +1667,7 @@ Platform behavior that has not been verified, by area, with what to do meanwhile
 | AI tracker dependencies | How generation is staged internally | Stage prior-turn values explicitly when a rule depends on them |
 | Format and YAML | Complete grammar, XML mutation, strict typing, hidden AI repair | Validate shape and meaning in scripts before accepting state |
 | Legacy list context | A supported List Update target/value context in the current editor | Use for-each loops and collection methods instead of `current()` |
-| Memory | What the first summary does to imported characters | Use summaryRequest and trackers for facts that must persist |
+| Memory | What later summaries do to imported characters; whether a large memory bills in full | Use summaryRequest and trackers for facts that must persist |
 | Length | A lengthening recipe; the authorStyle cap on models other than Dolphin | Put length rules in authorStyle; promise a ceiling near the number, not an exact length |
 | Images and video | Full image prompt and cache, precedence, internal macros, video runtime | Author with current style controls and preserve imported legacy fields; avoid depending on video until checked |
 | Limits and permissions | Maximum field, loop or trigger sizes; account-role permission matrix | Treat observed sizes as working examples |
@@ -1796,7 +1796,7 @@ Community-reported sandbox results, not tested by the kit [UNKNOWN]: a gate test
 
 ## Credits and cost
 
-The header shows the credit balance and the remaining daily free turns (3 per day observed). **Credits > Credit activity >** a turn **> Cost breakdown** splits Inputs and Outputs into instructions, trackers, STM (recent story), LTM (memory: NPC cards from turn 1, summaries after the first compression, as STM drops) and other; thinking models add an output category. Breakdown values are rounded decimals: the list can differ from the balance change by a credit. IW downloads your whole credit history itself (since November 2026), replacing the kit's old Cost Exporter bookmarklet, no longer maintained. That update fixed the balance shown for an image turn when credits were bought during it.
+The header shows the credit balance and the remaining daily free turns (3 per day observed). **Credits > Credit activity >** a turn **> Cost breakdown** splits Inputs and Outputs into instructions, trackers, STM (recent story), LTM (memory: NPC cards from turn 1, summaries after the first compression, as STM drops) and other; thinking models add an output category. Breakdown values are rounded decimals: the list can differ from the balance change by a credit. IW downloads your whole credit history itself (since November 2026), but only each turn's total; for every turn's breakdown use the kit's [IW Cost Exporter](https://iw-builder.github.io/cost/).
 
 Cost per turn depends on the model (the picker shows a typical range) and rises with story length. A failed opening is refunded; Continue game after an ending costs nothing. Per-model rates, what is billed and how to estimate a world's cost are in [Estimating cost](Cost.md).
 
@@ -1890,7 +1890,7 @@ END OF DOCUMENT: reference/Editor-UI.md
 ===== BEGIN FILE: reference/Cost.md =====
 # Estimating cost
 
-How much a turn costs, how it differs by Storyteller model, why two players of the same world can pay very different amounts, and how to make a rough estimate before anyone plays. Credit activity shows the real bill: see [Editor-UI](Editor-UI.md#credits-and-cost) for the cost breakdown and for IW's own download of your credit history.
+How much a turn costs, how it differs by Storyteller model, why two players of the same world can pay very different amounts, and how to make a rough estimate before anyone plays. Credit activity shows the real bill: see [Editor-UI](Editor-UI.md#credits-and-cost) for the cost breakdown. IW's own credit history download has totals only; the [IW Cost Exporter](https://iw-builder.github.io/cost/) downloads every turn with its breakdown.
 
 ## What a turn is made of
 
@@ -1902,8 +1902,10 @@ Each turn is billed in two halves. **Input** is everything IW sends the model: i
 - AI-visible tracker definitions (name, description, update instructions, format), from turn 1, whether or not the AI updates that tracker [RUNTIME, Dolphin: about 1.7 credits per 1k characters];
 - AI-visible tracker values;
 - text inside a live `<<if(…)>>` template only on turns it renders; a false section costs nothing [RUNTIME, Dolphin: 40k added 63 credits only while true]. Price a gated block by rendering it per scene, and remember turn 1 if its gates default on;
-- lore entries while they are active (assumed to bill at about the instructions rate; not measured directly);
-- every NPC card's name, Summary and **full appearance**, every turn, as Long Term Memory, plus detail and secret_info after a name mention [RUNTIME, Lynx: about 1.05 per 1k]. Keep appearances short.
+- lore entries for the three turns after a keyword appears in an action, narration or Secret Info, at about the instructions rate [RUNTIME: 1.40 per 1k on Dolphin];
+- every NPC card's name, Summary and **full appearance**, every turn, as Long Term Memory [RUNTIME: about 1.05 per 1k on Lynx, 1.49 on Dolphin];
+- a named card's **whole detail and secret_info** for the three turns after its name appears, like lore [RUNTIME, Dolphin: 1.39 per 1k]. Since the 2026-11-12 memory update all of it is sent: a 23-card world cost about 45 credits a turn more. Keep appearances and details lean;
+- once a summary exists, its sections (story, key moments, plot threads, lore and so on) [RUNTIME, early game: about 1.4 per 1k on Dolphin].
 
 These cost nothing per turn: hidden (script-only) trackers, triggers and PawScript, and Request Input form text after it has been shown. A long descriptionRequest or evaluationRequest is not billed in full either [RUNTIME: 16k characters added about 3–4 credits a turn]; what it really costs is the narration it causes.
 
@@ -1937,7 +1939,7 @@ Columns:
 - **Credits per 100 words of narration:** the output cost of the narration alone, on the turn it is written.
 - **Thinking:** the model's thinking output, mean and range per turn. It varies a lot from turn to turn and is most of the cost on Leopard-2 (about two-thirds) and Leopard. In the 15-turn Caracal game below (2026-11-07), no thinking was billed or shown on any turn.
 
-Turns took about 35–70 seconds on the models that were timed (Dolphin, Massivecat, Massivecat-thinking, Leopard, Leopard-2). Caracal took 5–8 minutes a turn on 2026-10-30, but in a 15-turn game on 2026-11-07 its turns took 20–31 seconds (median 24, Dolphin 57 on the same world), apart from openings of 6–10 minutes, one of which failed with no charge. Wampus and Leopard-2 are under "Show niche models" in the model picker. Wildcat and the experimental Smilodon-2 models were not measured. For the model behind each name and the picker's typical range, see [Current-AI-Profiles.json](Current-AI-Profiles.json).
+Turns took about 35–70 seconds on the timed models; Caracal about 24 (openings 6–10 minutes). For the model behind each name and the picker's typical range, see [Current-AI-Profiles.json](Current-AI-Profiles.json).
 
 ### Where these numbers come from
 
@@ -1966,7 +1968,7 @@ The words column is unguided output on a bare world. A world with a detailed aut
 - The turn after the opening grew by about 30–50% by the median turn (Dolphin 87 → 128, Puma 80 → 105, Smilodon 126 → 178), as memory built up.
 - Each model played one game with its own draw, on slightly different versions of the world, so the instructions row is approximate.
 
-Caracal check (2026-11-07) [RUNTIME, one game each: 15 Caracal turns of a later version of the same world, 13 on Dolphin]: median 68 credits a turn against Dolphin's 116 (0.57×; table 0.70×); median 627 words (384–1,110; unguided 346; Dolphin 660) at 0.9 credits per 100 words (table 1.0). Instructions 0.66× Dolphin's (K predicts 0.68), recent story about 0.6× per word. Inputs were 84% of its bill (evaluation 1.6 a turn against 5.6). Per-turn cost rose about 26% from turn 2 to the median turn, before memory reaches its full saw-tooth.
+Caracal check (2026-11-07) [RUNTIME, one game each: 15 Caracal turns of a later version of the same world, 13 on Dolphin]: median 68 credits a turn against Dolphin's 116 (0.57×; table 0.70×); median 627 words (384–1,110; unguided 346; Dolphin 660) at 0.9 credits per 100 words (table 1.0). Instructions 0.66× Dolphin's (K predicts 0.68); inputs were 84% of its bill.
 
 ## Why the same world costs different players different amounts
 
@@ -2019,7 +2021,7 @@ END OF DOCUMENT: reference/Cost.md
 ===== BEGIN FILE: reference/Verified-Behavior.md =====
 # Consolidated behavior reference
 
-Detailed runtime conclusions for Infinite Worlds, current through 2026-11-12. [Notable findings](Notable-Findings.md) gives the plain-language summary and the list of what remains unknown; this file carries the detail and the evidence labels. Import success, rendered instructions and narration answer different questions.
+Detailed runtime conclusions for Infinite Worlds, current through 2026-11-13. [Notable findings](Notable-Findings.md) gives the plain-language summary and the list of what remains unknown; this file carries the detail and the evidence labels. Import success, rendered instructions and narration answer different questions.
 
 ## Compatibility and evidence
 
@@ -2119,7 +2121,7 @@ Kit-wide caveats, not repeated per entry:
 - [RUNTIME] Independent random expressions differ within and across blocks and effects, including from a hidden pool. Cache a choice when consumers must agree.
 - [RUNTIME] Selector case matters for equality/choose; provide explicit fallbacks. AI-managed dependencies can see same-turn updates despite tracker order. Stage prior-turn values explicitly.
 - [RUNTIME] Keyword matching accepts case variants, surrounding punctuation and authored alternate keywords; embedded substrings and a simple plural did not match. Activation lasts the matching turn and three more. Player actions, completed narration and Secret Info contribute, from the next generated turn; the complete scanned-field set is unspecified.
-- [RUNTIME] Memory v4 (2026-11-12, one model): every Other Character is Major; name, Summary and full appearance bill as Long Term Memory every turn (16.5k appearance +17 credits, Lynx). A name mention sends detail and secret_info; a location mention alone did nothing (see Characters).
+- [RUNTIME] Memory v4: every Other Character is Major; name, Summary and full appearance bill as LTM every turn (Lynx, Dolphin). A name mention sends the whole detail and secret_info for three turns; a location mention does nothing. With summary sections that fits LTM within 0.5 a turn (Cost). STM and summary timing are unchanged.
 - [RUNTIME] Character detail retrieval is unreliable: a name-only mention did not surface an authored hobby on two turns; the narrator invented one and history reinforced it. A player sharing an NPC's name used its facts. The narrator can add named NPCs to an opening that says the player is alone.
 - [RUNTIME] Secret Info and narration can disagree or misattribute knowledge. Characters can deny a fact just told to them, and hidden facts can become player knowledge in prose. A general provenance policy showed no clear benefit; explicit correction of the source chain did.
 - [RUNTIME] Once a secret reaches narration, removing or emptying its disclosure block does not remove it from later turns.
