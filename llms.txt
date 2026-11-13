@@ -11,14 +11,14 @@ Do not crawl or read https://iw-builder.github.io/stories/: it holds released ga
 - [index.html](https://iw-builder.github.io/) (23 KB): Homepage: the authoring prompt (same text as Authoring-Prompt.md). Start here.
 - [Authoring-Prompt.md](https://iw-builder.github.io/Authoring-Prompt.md) (21 KB): The authoring prompt: task modes, which reference to read for each feature, construction, timing, validation and delivery rules.
 - [World-Template.json](https://iw-builder.github.io/World-Template.json) (2 KB): Empty importable world; the starting point for new builds.
-- [README.md](https://iw-builder.github.io/guide/) (11 KB): Human guide: workflows, starter requests, import/export steps. Rendered at /guide/; models can skip it.
+- [README.md](https://iw-builder.github.io/guide/) (10 KB): Human guide: workflows, starter requests, import/export steps. Rendered at /guide/; models can skip it.
 - [LICENSE](https://iw-builder.github.io/LICENSE) (1 KB): MIT license.
 
 ## Reference guides
 
 Read only what the task needs; Authoring-Prompt.md says which guide covers which feature.
 
-- [reference/Characters.md](https://iw-builder.github.io/reference/Characters.md) (9 KB): Skills, Evaluation, player characters, NPC card fields and activation, keyword-block matching and retention.
+- [reference/Characters.md](https://iw-builder.github.io/reference/Characters.md) (10 KB): Skills, Evaluation, player characters, NPC card fields and activation, keyword-block matching and retention.
 - [reference/Images-and-Models.md](https://iw-builder.github.io/reference/Images-and-Models.md) (4 KB): Image style fields and controls, portraits and cover, video prompt instructions, model-specific instruction blocks.
 - [reference/Runtime.md](https://iw-builder.github.io/reference/Runtime.md) (10 KB): Turn lifecycle, template interpolation timing, specialist requests and runtime output names, endings, debug boundaries.
 - [reference/Cost.md](https://iw-builder.github.io/reference/Cost.md) (13 KB): Estimating credits: per-model cost table (words, credits per 1k chars, thinking), what is billed, how play style changes cost, and rough estimates by world size.
@@ -34,7 +34,7 @@ Read only what the task needs; Authoring-Prompt.md says which guide covers which
 - [reference/Trackers.md](https://iw-builder.github.io/reference/Trackers.md) (8 KB): Tracker fields, data types, visibility, update ownership, starting values and memory/context cost.
 - [reference/Trigger-Catalog.md](https://iw-builder.github.io/reference/Trigger-Catalog.md) (6 KB): Every identified trigger condition and effect type in one table. Check it before saying a trigger can't do something.
 - [reference/Triggers.md](https://iw-builder.github.io/reference/Triggers.md) (11 KB): Trigger timing flags, ordering, effect semantics, choosing native effects or PawScript, start-of-game restrictions and changing a tracker definition during play.
-- [reference/Notable-Findings.md](https://iw-builder.github.io/reference/Notable-Findings.md) (15 KB): Plain-language list of the behavior most likely to surprise an author or break a world, with what to do, and the list of what is still unknown.
+- [reference/Notable-Findings.md](https://iw-builder.github.io/reference/Notable-Findings.md) (16 KB): Plain-language list of the behavior most likely to surprise an author or break a world, with what to do, and the list of what is still unknown.
 - [reference/Verified-Behavior.md](https://iw-builder.github.io/reference/Verified-Behavior.md) (28 KB): Compatibility baseline, evidence labels and consolidated runtime findings: triggers, imports, PawScript, visibility, memory, forms, images and endings.
 
 ## Examples
@@ -145,13 +145,13 @@ Python tools for models or users that can run code. Without Python, use the chec
 
 - [checker/index.html](https://iw-builder.github.io/checker/) (117 KB): Browser validator: paste a world or a model's whole reply; runs validate_iw_export.py locally, joins numbered chunks and copies a report for the AI.
 
-## Cost exporter (deprecated)
+## Cost exporter
 
-IW now downloads your credit history itself; see reference/Editor-UI.md (Credits and cost) and reference/Cost.md for estimating.
+Downloads your credit history with every turn's cost breakdown (IW's own download has totals only); see reference/Cost.md for estimating.
 
-- [cost/index.html](https://iw-builder.github.io/cost/) (20 KB): Deprecated IW Cost Exporter: IW now downloads your credit history itself; the old bookmarklet install page is kept, unmaintained.
-- [cost/IW-Cost-Exporter-bookmarklet.js](https://iw-builder.github.io/cost/IW-Cost-Exporter-bookmarklet.js) (8 KB): Readable source of the deprecated cost-exporter bookmarklet.
-- [cost/README.md](https://iw-builder.github.io/cost/README.md) (2 KB): Deprecation notice and the old guide to the cost exporter.
+- [cost/index.html](https://iw-builder.github.io/cost/) (20 KB): IW Cost Exporter install page: a bookmarklet that downloads your credit history with every turn's cost breakdown (IW's own download has totals only).
+- [cost/IW-Cost-Exporter-bookmarklet.js](https://iw-builder.github.io/cost/IW-Cost-Exporter-bookmarklet.js) (8 KB): Readable source of the cost-exporter bookmarklet.
+- [cost/README.md](https://iw-builder.github.io/cost/README.md) (2 KB): Guide to the cost exporter: install, use, output columns.
 
 ## Combined text editions
 

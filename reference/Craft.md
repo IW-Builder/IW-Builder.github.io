@@ -43,7 +43,7 @@ Write `detail` as labeled lines; they are easy for the storyteller to use and ha
 
 `appearance` describes body, face and movement in plain, specific facts: build, height, notable features, how they stand and move. "Broad-hipped, soft stomach, freckled shoulders" gives the storyteller something to use; "beautiful", "curvy" and "perfect" do not. Vary bodies across the cast. Put the default outfit in img_clothing and track current clothing separately if it changes.
 
-Reveal secret_info through opportunity (a late conversation, a mistake, a bargain), never exposition. Minor characters need only a one_liner and a few lines; spend detail where the player will spend time.
+Reveal secret_info through opportunity (a late conversation, a mistake, a bargain), never exposition. Minor characters need only a one_liner and a few lines; spend detail where the player will spend time. Each name mention bills the whole detail for three turns: cut needless biography.
 
 ## Romance, desire and adult worlds
 

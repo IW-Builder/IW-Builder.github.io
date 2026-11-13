@@ -112,7 +112,7 @@ Community-reported sandbox results, not tested by the kit [UNKNOWN]: a gate test
 
 ## Credits and cost
 
-The header shows the credit balance and the remaining daily free turns (3 per day observed). **Credits > Credit activity >** a turn **> Cost breakdown** splits Inputs and Outputs into instructions, trackers, STM (recent story), LTM (memory: NPC cards from turn 1, summaries after the first compression, as STM drops) and other; thinking models add an output category. Breakdown values are rounded decimals: the list can differ from the balance change by a credit. IW downloads your whole credit history itself (since November 2026), replacing the kit's old Cost Exporter bookmarklet, no longer maintained. That update fixed the balance shown for an image turn when credits were bought during it.
+The header shows the credit balance and the remaining daily free turns (3 per day observed). **Credits > Credit activity >** a turn **> Cost breakdown** splits Inputs and Outputs into instructions, trackers, STM (recent story), LTM (memory: NPC cards from turn 1, summaries after the first compression, as STM drops) and other; thinking models add an output category. Breakdown values are rounded decimals: the list can differ from the balance change by a credit. IW downloads your whole credit history itself (since November 2026), but only each turn's total; for every turn's breakdown use the kit's [IW Cost Exporter](https://iw-builder.github.io/cost/).
 
 Cost per turn depends on the model (the picker shows a typical range) and rises with story length. A failed opening is refunded; Continue game after an ending costs nothing. Per-model rates, what is billed and how to estimate a world's cost are in [Estimating cost](Cost.md).
 
