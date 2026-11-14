@@ -20,4 +20,4 @@ How to read it:
 - The Theme button switches between your system setting, light and dark.
 - A second export of the same world replaces the older one; the date in the file name (`<World> stats YYYY-MM-DD.csv`) decides.
 
-Until you load a file, the page shows example data: the 2026-11-14 exports of four IW-Builder worlds, kept in [examples/](examples/). Your first file replaces them; Clear all brings them back. The examples load only when the page is served over the web (opened straight from disk, it starts empty).
+Until you load a file, the page shows example data: three made-up worlds with invented numbers, in [examples/](examples/). One has live `Stats:` markers, one has none, and one has a marker build published but not yet played. Your first file replaces them; Clear all brings them back. The examples load only when the page is served over the web (opened straight from disk, it starts empty).
