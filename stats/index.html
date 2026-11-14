@@ -1,0 +1,578 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IW World Stats</title>
+<meta name="description" content="Combine one or more Infinite Worlds World Stats CSV exports into one infographic, entirely in your browser. Nothing is uploaded.">
+<style>
+:root{
+  color-scheme:light;
+  --bg:#f6f6f4; --panel:#fcfcfb; --line:#e3e2dd; --grid:#ecebe7;
+  --text:#0b0b0b; --text2:#52514e; --muted:#7a7974; --accent:#2a78d6;
+  --s1:#2a78d6; --s2:#eb6834; --s3:#1baf7a; --s4:#eda100;
+  --s5:#e87ba4; --s6:#008300; --s7:#6250d6; --s8:#e34948;
+  --track:#e9eef6; --warn:#b26b00; --warnbg:#fdf3e1;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --bg:#121211; --panel:#1a1a19; --line:#2e2e2b; --grid:#262624;
+    --text:#f0efec; --text2:#c3c2b7; --muted:#8f8e86; --accent:#3987e5;
+    --s1:#3987e5; --s2:#d95926; --s3:#199e70; --s4:#c98500;
+    --s5:#d55181; --s6:#0ca30c; --s7:#9085e9; --s8:#e66767;
+    --track:#22293a; --warn:#e8b04b; --warnbg:#2b2416;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#121211; --panel:#1a1a19; --line:#2e2e2b; --grid:#262624;
+  --text:#f0efec; --text2:#c3c2b7; --muted:#8f8e86; --accent:#3987e5;
+  --s1:#3987e5; --s2:#d95926; --s3:#199e70; --s4:#c98500;
+  --s5:#d55181; --s6:#0ca30c; --s7:#9085e9; --s8:#e66767;
+  --track:#22293a; --warn:#e8b04b; --warnbg:#2b2416;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);
+  font:15px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+main{max-width:1040px;margin:0 auto;padding:24px 16px 72px}
+h1{font-size:26px;margin:4px 0 2px}
+h2{font-size:19px;margin:0 0 2px}
+h3{font-size:15px;margin:18px 0 4px}
+p{margin:4px 0}
+a{color:var(--accent)}
+.lede,.note{color:var(--text2)}
+.note{font-size:13px;margin:0 0 10px}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:14px 0}
+.drop{border:2px dashed var(--line);border-radius:12px;padding:22px;text-align:center;background:var(--panel)}
+.drop.over{border-color:var(--accent)}
+button,.btn{font:inherit;font-weight:600;background:var(--accent);color:#fff;border:0;border-radius:8px;padding:8px 14px;cursor:pointer}
+button.ghost{background:transparent;color:var(--accent);border:1px solid var(--accent)}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.hidden{display:none!important}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 0}
+.chip{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);border-radius:999px;padding:4px 10px;font-size:13px;background:var(--panel);cursor:pointer;user-select:none}
+.chip input{margin:0}
+.chip .x{color:var(--muted);border:0;background:none;padding:0 0 0 4px;font-size:15px;cursor:pointer}
+.sw{display:inline-block;width:10px;height:10px;border-radius:3px;flex:none}
+.tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;margin:10px 0}
+.tile{border:1px solid var(--line);border-radius:10px;padding:10px 12px;background:var(--panel)}
+.tile .l{font-size:12px;color:var(--text2)}
+.tile .v{font-size:24px;font-weight:600;line-height:1.2}
+.tile .d{font-size:12px;color:var(--muted)}
+.scroll{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:13px}
+th,td{padding:5px 8px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+th{color:var(--text2);font-weight:600}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}
+.legend{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:13px;color:var(--text2);margin:6px 0}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+svg text{fill:var(--text2);font-size:11px}
+svg .grid{stroke:var(--grid);stroke-width:1}
+svg .axis{stroke:var(--line);stroke-width:1}
+.bars{display:grid;grid-template-columns:fit-content(42%) minmax(60px,1fr) max-content;gap:5px 10px;align-items:center;font-size:13px;margin:6px 0}
+.bars .lab{color:var(--text);overflow-wrap:anywhere}
+.bars .val{color:var(--text2);text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.track{position:relative;height:14px}
+.bar{height:14px;border-radius:0 4px 4px 0;min-width:2px}
+.bar.zero{background:transparent!important;border-left:2px solid var(--line);min-width:0}
+.bar.lt{opacity:.35}
+.multi{display:flex;flex-direction:column;gap:2px}
+.multi .bar{height:9px}
+.sub{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--text2);line-height:12px}
+.bars.two{grid-template-columns:fit-content(30%) minmax(60px,1fr);gap:0 10px}
+.bars.two>*{padding:12px 0;border-top:1px solid var(--line)}
+.bars.two>:nth-child(-n+2){border-top:0;padding-top:2px}
+.bars.two .multi{gap:3px}
+.grp{font-size:12px;color:var(--muted);grid-column:1/-1;margin-top:6px;text-transform:none}
+.flag{display:block;border-left:3px solid var(--warn);background:var(--warnbg);padding:6px 10px;border-radius:6px;font-size:13px;margin:6px 0;color:var(--text)}
+.ok{color:var(--text2);font-size:13px}
+details{margin:8px 0}
+summary{cursor:pointer;color:var(--accent);font-size:13px}
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:4px 26px}
+.world-head{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.world-head .sw{width:14px;height:14px}
+.tag{font-size:12px;color:var(--text2);border:1px solid var(--line);border-radius:999px;padding:1px 8px}
+#tip{position:fixed;pointer-events:none;z-index:10;background:var(--panel);color:var(--text);border:1px solid var(--line);border-radius:8px;padding:6px 9px;font-size:12px;line-height:1.45;box-shadow:0 4px 14px rgba(0,0,0,.15);max-width:280px;white-space:pre-line}
+footer{color:var(--muted);font-size:12px;margin-top:30px}
+code{font:12px ui-monospace,SFMono-Regular,Consolas,monospace}
+</style>
+<script>
+try { const t = localStorage.getItem("iwstats-theme"); if (t === "light" || t === "dark") document.documentElement.setAttribute("data-theme", t); } catch (e) {}
+</script>
+</head>
+<body>
+<main>
+<div class="row" style="justify-content:space-between"><h1>IW World Stats</h1><button id="theme" class="ghost" type="button" aria-label="Colour theme">Theme: auto</button></div>
+<p class="lede">Load one or more CSV exports from a world's <b>World Stats</b> page in Infinite Worlds and see them side by side. Files are read in your browser and never uploaded.</p>
+
+<div id="drop" class="drop panel">
+  <p><b>Drop CSV files anywhere on this page</b>, or</p>
+  <div class="row" style="justify-content:center;margin-top:8px">
+    <label class="btn" for="file">Choose files</label>
+    <input id="file" type="file" accept=".csv,text/csv" multiple class="hidden">
+    <button id="clear" class="ghost hidden" type="button">Clear all</button>
+  </div>
+  <p class="note" style="margin-top:10px">One file per world. A second export of the same world replaces the older one (the date in the file name decides). Worlds created with the <a href="https://github.com/IW-Builder/IW-Builder.github.io">IW-Builder</a> house kit also carry <code>Stats:</code> markers, charted per world below.</p>
+  <div id="chips" class="chips"></div>
+  <div id="errors"></div>
+</div>
+
+<div id="out" class="hidden">
+  <section class="panel">
+    <h2>At a glance</h2>
+    <p class="note">Totals across the worlds ticked above. Player counts are added per world: IW does not say whether the same person played two worlds.</p>
+    <div id="tiles" class="tiles"></div>
+    <div class="scroll"><table id="compare"></table></div>
+  </section>
+
+  <section class="panel">
+    <h2>Turns played each day</h2>
+    <p class="note">One line per world. Hover for that day's players and credits, where IW reports them (older days list turns only).</p>
+    <div id="daysLegend" class="legend"></div>
+    <div id="days"></div>
+    <details><summary>Show as a table</summary><div class="scroll" id="daysTable"></div></details>
+  </section>
+
+  <section class="panel">
+    <h2>How far they get</h2>
+    <p class="note">Share of each world's players whose longest game reached that turn. IW counts players, not games. A steep early drop is where new players leave.</p>
+    <div id="reachLegend" class="legend"></div>
+    <div id="reach"></div>
+    <details><summary>Show as a table</summary><div class="scroll" id="reachTable"></div></details>
+  </section>
+
+  <section class="panel">
+    <h2>Where players found it</h2>
+    <p class="note">Players by source. IW hides counts under 5; those show as a faint bar labelled "under 5".</p>
+    <div id="found"></div>
+  </section>
+
+  <div id="worlds"></div>
+</div>
+
+<footer>Part of the unaffiliated <a href="../">IW-Builder kit</a>. How to read the numbers: a trigger at 0 usually means no game has reached it yet; compare it with the "How far they get" curve before calling it a bug. Trigger rows are counted per trigger ID, so a trigger rebuilt with a new ID appears twice.</footer>
+</main>
+<div id="tip" class="hidden"></div>
+
+<script>
+"use strict";
+const COLORS = 8;
+const worlds = [];            // {key,name,date,file,on,colour,data}
+let colourNext = 0;
+
+/* ---------- CSV ---------- */
+function parseCSV(text){
+  text = text.replace(/^﻿/, "");
+  const rows = []; let row = [], f = "", q = false;
+  for (let i = 0; i < text.length; i++){
+    const c = text[i];
+    if (q){
+      if (c === '"'){ if (text[i+1] === '"'){ f += '"'; i++; } else q = false; }
+      else f += c;
+    } else if (c === '"') q = true;
+    else if (c === ",") { row.push(f); f = ""; }
+    else if (c === "\n" || c === "\r"){
+      if (c === "\r" && text[i+1] === "\n") i++;
+      row.push(f); f = ""; if (row.length > 1 || row[0] !== "") rows.push(row); row = [];
+    } else f += c;
+  }
+  if (f !== "" || row.length) { row.push(f); rows.push(row); }
+  return rows;
+}
+function val(s){
+  s = (s || "").trim();
+  const m = s.match(/^fewer than (\d+)/i);
+  if (m) return {n:null, lt:+m[1], text:s};
+  if (/^-?[\d,]+(\.\d+)?$/.test(s)) return {n:+s.replace(/,/g, ""), text:s};
+  return {n:null, text:s};
+}
+
+function readStats(text){
+  const rows = parseCSV(text);
+  const head = rows.shift() || [];
+  if (head.map(h => h.trim()).join(",") !== "Section,Item,Measure,Value")
+    throw new Error("not a World Stats export (expected the header Section,Item,Measure,Value)");
+  const d = {figures:{}, days:{}, reach:[], longest:null, found:{}, chars:[], ended:[],
+             versions:{}, keywords:[], triggers:[], other:[]};
+  let last = null;
+  for (const r of rows){
+    const [sec, item, meas, raw] = [r[0]||"", r[1]||"", r[2]||"", r[3]||""];
+    const v = val(raw);
+    switch (sec){
+      case "Figures": d.figures[meas] = v; break;
+      case "Turns played each day": (d.days[item] = d.days[item] || {})[meas] = v.n; break;
+      case "How far they get":
+        if (item === "") { if (/longest/i.test(meas)) d.longest = v.n; }
+        else d.reach.push({label:item, n:v.n}); break;
+      case "Where players found it": (d.found[item] = d.found[item] || {})[meas] = v; break;
+      case "Who they play as": d.chars.push({name:item, v}); break;
+      case "How games ended": d.ended.push({name:item, measure:meas, v}); break;
+      case "Which version they played": (d.versions[item] = d.versions[item] || {})[meas] = v; break;
+      case "Keyword instruction blocks": d.keywords.push({name:item, v, never:/never/i.test(meas)}); break;
+      case "Trigger": {
+        // One trigger name can appear for several IDs (a rebuilt trigger): a repeated measure starts a new entry.
+        if (!last || last.name !== item || meas in last) { last = {name:item}; d.triggers.push(last); }
+        last[meas] = v; break;
+      }
+      case "Guide": break;
+      default: d.other.push({sec, item, meas, v});
+    }
+  }
+  return d;
+}
+
+function nameFromFile(fn){
+  let base = fn.replace(/\.csv$/i, "").replace(/\s*\(\d+\)$/, "");
+  const m = base.match(/^(.*?)\s+stats\s+(\d{4}-\d{2}-\d{2})(.*)$/i);
+  if (m) return {name:m[1].trim().replace(/_ /g, ": "), date:m[2]};
+  return {name:base.trim(), date:""};
+}
+
+/* ---------- helpers ---------- */
+const $ = id => document.getElementById(id);
+const fmt = n => n == null ? "" : (Math.abs(n) >= 100 || Number.isInteger(n) ? Math.round(n).toLocaleString("en-US") : n.toLocaleString("en-US", {maximumFractionDigits:2}));
+const pct = (a, b) => b ? Math.round(100 * a / b) + "%" : "";
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const col = w => `var(--s${w.colour + 1})`;
+const showV = v => !v ? "" : v.lt ? `under ${v.lt}` : v.n != null ? fmt(v.n) : v.text;
+const fig = (w, k) => (w.data.figures[k] || {}).n;
+const active = () => worlds.filter(w => w.on);
+
+function reachAt(d, t){                      // players who reached turn t (exact row or the nearest "N+" at or below)
+  let best = null;
+  for (const r of d.reach){
+    const m = r.label.match(/^(\d+)(\+?)$/); if (!m) continue;
+    const k = +m[1];
+    if (k === t) return r.n;
+    if (m[2] && k <= t) best = r.n;          // "21+" counts players at 21 or beyond: good for t=21 only
+  }
+  return t <= 20 ? null : best;
+}
+
+/* ---------- tooltip ---------- */
+const tip = $("tip");
+document.addEventListener("mousemove", e => {
+  const t = e.target.closest && e.target.closest("[data-tip]");
+  if (!t){ tip.classList.add("hidden"); return; }
+  tip.textContent = t.getAttribute("data-tip");
+  tip.classList.remove("hidden");
+  const w = tip.offsetWidth, h = tip.offsetHeight;
+  let x = e.clientX + 14, y = e.clientY + 14;
+  if (x + w > innerWidth - 8) x = e.clientX - w - 14;
+  if (y + h > innerHeight - 8) y = e.clientY - h - 14;
+  tip.style.left = Math.max(4, x) + "px"; tip.style.top = Math.max(4, y) + "px";
+});
+
+/* ---------- charts ---------- */
+function niceMax(v){
+  if (v <= 0) return 1;
+  const p = Math.pow(10, Math.floor(Math.log10(v))), f = v / p;
+  return (f <= 1 ? 1 : f <= 2 ? 2 : f <= 2.5 ? 2.5 : f <= 5 ? 5 : 10) * p;
+}
+// series: [{name, colour, values:[number|null]}], xs: labels; tipFn(i) -> text
+function lineChart(el, xs, series, opt = {}){
+  const W = Math.max(300, el.clientWidth || 600), H = opt.height || 240;
+  const L = 44, R = 12, T = 10, B = 28;
+  const max = opt.max || niceMax(Math.max(1, ...series.flatMap(s => s.values.filter(v => v != null))));
+  const n = xs.length, step = n > 1 ? (W - L - R) / (n - 1) : 0;
+  const X = i => L + (n > 1 ? i * step : (W - L - R) / 2), Y = v => T + (H - T - B) * (1 - v / max);
+  let s = `<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(opt.label || "chart")}">`;
+  for (let k = 0; k <= 4; k++){
+    const v = max * k / 4, y = Y(v);
+    s += `<line class="${k ? "grid" : "axis"}" x1="${L}" x2="${W - R}" y1="${y}" y2="${y}"/>`;
+    s += `<text x="${L - 6}" y="${y + 4}" text-anchor="end">${opt.pct ? Math.round(v) + "%" : fmt(v)}</text>`;
+  }
+  const every = Math.max(1, Math.ceil(n / Math.floor((W - L - R) / 62)));
+  xs.forEach((x, i) => { if (i % every === 0 || i === n - 1 && (n - 1) % every > every / 2)
+    s += `<text x="${X(i)}" y="${H - 8}" text-anchor="middle">${esc(opt.xfmt ? opt.xfmt(x) : x)}</text>`; });
+  for (const se of series){
+    let d = "", pen = false;
+    se.values.forEach((v, i) => { if (v == null){ if (!opt.connect) pen = false; return; } d += (pen ? "L" : "M") + X(i).toFixed(1) + "," + Y(v).toFixed(1); pen = true; });
+    s += `<path d="${d}" fill="none" stroke="${se.colour}" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>`;
+    se.values.forEach((v, i) => {
+      const lone = !opt.connect && v != null && (i === 0 || se.values[i-1] == null) && (i === n - 1 || se.values[i+1] == null);
+      if (lone || n <= 31 && v != null) s += `<circle cx="${X(i)}" cy="${Y(v)}" r="${lone ? 4 : 2.5}" fill="${se.colour}" stroke="var(--panel)" stroke-width="${lone ? 2 : 1}"/>`;
+    });
+  }
+  const bw = n > 1 ? step : W - L - R;
+  xs.forEach((x, i) => { s += `<rect x="${X(i) - bw / 2}" y="${T}" width="${bw}" height="${H - T - B}" fill="transparent" data-tip="${esc(opt.tip(i))}"/>`; });
+  el.innerHTML = s + "</svg>";
+}
+function legend(el, ws){
+  el.innerHTML = ws.length < 2 ? "" : ws.map(w => `<span><i class="sw" style="background:${col(w)}"></i>${esc(w.name)}</span>`).join("");
+}
+// rows: [{label, n, lt, tip, colour, note}]; max shared
+function bars(rows, opt = {}){
+  const max = opt.max || Math.max(1, ...rows.map(r => r.n || r.lt || 0));
+  return `<div class="bars">` + rows.map(r => {
+    if (r.group) return `<div class="grp">${esc(r.group)}</div>`;
+    const v = r.n != null ? r.n : r.lt ? r.lt : 0;
+    const cls = r.n == null && r.lt ? "bar lt" : v === 0 ? "bar zero" : "bar";
+    const w = v ? Math.max(0.6, 100 * v / max) : 0;
+    return `<div class="lab">${esc(r.label)}</div><div class="track" data-tip="${esc(r.tip || r.label + ": " + (r.text || fmt(v)))}"><div class="${cls}" style="width:${w}%;background:${r.colour || "var(--s1)"}"></div></div><div class="val">${r.text != null ? esc(r.text) : fmt(r.n)}</div>`;
+  }).join("") + `</div>`;
+}
+function table(head, rows, numCols = []){
+  return `<table><thead><tr>${head.map((h, i) => `<th${numCols.includes(i) ? ' class="n"' : ""}>${esc(h)}</th>`).join("")}</tr></thead><tbody>` +
+    rows.map(r => `<tr>${r.map((c, i) => `<td${numCols.includes(i) ? ' class="n"' : ""}>${c}</td>`).join("")}</tr>`).join("") + `</tbody></table>`;
+}
+
+/* ---------- Stats markers (house kit K8) ---------- */
+const PREFIX = "Stats: ";
+function markerGroups(d){
+  const m = new Map();                        // marker name -> {games, fired}; duplicate IDs are summed
+  for (const t of d.triggers){
+    if (!t.name.startsWith(PREFIX)) continue;
+    const k = t.name.slice(PREFIX.length);
+    const e = m.get(k) || {games:0, fired:0, ids:0};
+    e.games += (t.Games && t.Games.n) || 0; e.fired += (t.Fired && t.Fired.n) || 0; e.ids++;
+    m.set(k, e);
+  }
+  if (!m.size) return null;
+  const started = m.has("Started") ? m.get("Started").games : null;
+  const order = [], groups = {};
+  const put = (g, label, e) => { if (!groups[g]){ groups[g] = []; order.push(g); } groups[g].push({label, ...e}); };
+  for (const [k, e] of m){
+    if (k === "Started") continue;
+    if (k.includes(" = ")){ const i = k.indexOf(" = "); put(k.slice(0, i), k.slice(i + 3), e); }
+    else { const g = ["Reached", "Turn", "Model"].find(p => k.startsWith(p + " ")); g ? put(g, k.slice(g.length + 1), e) : put("Other", k, e); }
+  }
+  const dayNum = l => { const x = l.match(/^Day (\d+)$/); return x ? +x[1] : null; };
+  if (groups.Reached) groups.Reached.sort((a, b) => {
+    const da = dayNum(a.label), db = dayNum(b.label);
+    return da != null && db != null ? da - db : da != null ? -1 : db != null ? 1 : b.games - a.games; });
+  if (groups.Turn) groups.Turn.sort((a, b) => (+a.label || 0) - (+b.label || 0));
+  if (groups.Model) groups.Model.sort((a, b) => b.fired - a.fired || b.games - a.games);
+  const tail = ["Reached", "Turn", "Model", "Other"];
+  const choices = order.filter(g => !tail.includes(g));
+  const total = [...m.values()].reduce((a, e) => a + e.games, 0);
+  return {started, choices, groups, tail:tail.filter(g => groups[g]), total, count:m.size};
+}
+
+function markersHTML(w){
+  const mg = markerGroups(w.data);
+  if (!mg) return `<p class="ok">No <code>Stats:</code> markers in this file. IW lists a trigger only once a version that has it is published, so a world whose marker build isn't published yet looks like this.</p>`;
+  const S = mg.started;
+  let h = `<p class="note">${mg.count} markers. Shares are of <b>Stats: Started</b>, the games played on versions that carry the markers; IW's Games figure also counts older versions and saved copies.</p>`;
+  if (!mg.total) return h + `<p class="flag">Every marker is at 0: no game has been played on a version with markers yet. Publish the build that has them, then export again.</p>`;
+  h += `<div class="tiles"><div class="tile"><div class="l">Started (games with markers)</div><div class="v">${S == null ? "–" : fmt(S)}</div><div class="d">of ${fmt(fig(w, "Games"))} games in all</div></div>`;
+  if (mg.groups.Model){
+    const turns = mg.groups.Model.reduce((a, r) => a + r.fired, 0);
+    h += `<div class="tile"><div class="l">Model markers fired</div><div class="v">${fmt(turns)}</div><div class="d">Model markers that repeat fire once per turn; older builds count once per game</div></div>`;
+  }
+  h += `</div>`;
+  const block = (g, title, kind) => {
+    const all = mg.groups[g]; if (!all) return "";
+    // a choice's unpicked options collapse into one line; funnels keep their zeros (the drop is the reading)
+    const rows = kind === "choice" || kind === "model" ? all.filter(r => r.games || r.fired) : all;
+    const unpicked = all.filter(r => !rows.includes(r));
+    const repeats = all.some(r => r.fired !== r.games);
+    const max = kind === "funnel" ? (S || Math.max(1, ...all.map(r => r.games))) : Math.max(1, ...all.map(r => r.games));
+    let out = `<div><h3>${esc(title)}</h3>` + bars(rows.map(r => ({
+      label: r.label, n: r.games, colour: col(w),
+      text: fmt(r.games) + (S ? ` · ${pct(r.games, S)}` : "") + (repeats ? ` · ${fmt(r.fired)} turns` : ""),
+      tip: `${g === "Other" ? "" : g + (kind === "choice" ? " = " : " ")}${r.label}\n${fmt(r.games)} games${S ? ` (${pct(r.games, S)} of Started)` : ""}` +
+           (repeats ? `\nFired ${fmt(r.fired)} times (turns, for a repeating marker)` : "") + (r.ids > 1 ? `\nSummed over ${r.ids} trigger IDs` : "")
+    })), {max});
+    if (unpicked.length) out += `<p class="note">${rows.length ? "At 0" : "All at 0"}: ${unpicked.map(r => esc(r.label)).join(", ")}</p>`;
+    if (kind === "choice" && S){
+      const sum = all.reduce((a, r) => a + r.games, 0);
+      if (sum !== S) out += `<p class="flag">Options add up to ${fmt(sum)}, not ${fmt(S)}. ${sum > S ? "A multi-select, several slots counted together, or a mid-game switch." : "Some games never reached this choice (or picked an option without a marker)."}</p>`;
+    }
+    if (g === "Model"){
+      const other = rows.find(r => r.label === "Other");
+      if (other && other.games && S && other.games > S / 4) out += `<p class="flag">Model Other is large: a model IW added since the world was built. Add its name to the kit's model list.</p>`;
+    }
+    return out + `</div>`;
+  };
+  h += `<div class="cols">`;
+  for (const g of mg.choices) h += block(g, g, "choice");
+  h += `</div><div class="cols">`;
+  h += block("Reached", "Reached (milestones)", "funnel");
+  h += block("Turn", "Turn reached", "funnel");
+  h += block("Model", "Model", "model");
+  h += block("Other", "Other markers", "other");
+  return h + `</div>`;
+}
+
+/* ---------- render ---------- */
+function render(){
+  const chips = $("chips");
+  chips.innerHTML = worlds.map((w, i) => `<label class="chip"><input type="checkbox" data-i="${i}" ${w.on ? "checked" : ""}><i class="sw" style="background:${col(w)}"></i>${esc(w.name)}${w.date ? ` <span style="color:var(--muted)">${w.date}</span>` : ""}<button class="x" data-rm="${i}" title="Remove" type="button">×</button></label>`).join("");
+  $("clear").classList.toggle("hidden", !worlds.length);
+  const ws = active();
+  $("out").classList.toggle("hidden", !ws.length);
+  if (!ws.length) return;
+
+  /* glance */
+  const sum = k => ws.reduce((a, w) => a + (fig(w, k) || 0), 0);
+  const turns = sum("Turns played");
+  const cpt = turns ? ws.reduce((a, w) => a + (fig(w, "Credits per turn") || 0) * (fig(w, "Turns played") || 0), 0) / turns : null;
+  const longest = Math.max(0, ...ws.map(w => w.data.longest || 0));
+  const reach5 = ws.reduce((a, w) => a + (reachAt(w.data, 5) || 0), 0), reach1 = ws.reduce((a, w) => a + (reachAt(w.data, 1) || 0), 0);
+  const T = (l, v, d = "") => `<div class="tile"><div class="l">${l}</div><div class="v">${v}</div><div class="d">${d}</div></div>`;
+  $("tiles").innerHTML = T("Worlds", ws.length) + T("Turns played", fmt(turns)) + T("Games", fmt(sum("Games"))) +
+    T("Players", fmt(sum("Unique players")), "added per world") + T("Credits per turn", cpt == null ? "–" : fmt(cpt), ws.length > 1 ? "weighted by turns" : "") +
+    T("Still playing at turn 5", pct(reach5, reach1), `${fmt(reach5)} of ${fmt(reach1)} players`) + T("Longest game", fmt(longest) + " turns");
+
+  const keys = ["Turns played", "Unique players", "Games", "Turns per player", "Turns per game", "Played 2+ games to turn 5", "Credits per turn", "Storytelling credits per turn"];
+  const extra = Object.keys(Object.assign({}, ...ws.map(w => w.data.figures))).filter(k => !keys.includes(k));
+  const rowsC = [...keys, ...extra].map(k => [esc(k), ...ws.map(w => showV(w.data.figures[k]))]);
+  for (const t of [5, 10, 21, 51, 100]){
+    if (ws.some(w => reachAt(w.data, t) != null))
+      rowsC.push([`Players reaching turn ${t}${t > 20 ? "+" : ""}`, ...ws.map(w => { const a = reachAt(w.data, t), b = reachAt(w.data, 1); return a == null ? "" : `${fmt(a)} <span style="color:var(--muted)">${pct(a, b)}</span>`; })]);
+  }
+  rowsC.push(["Longest game (turns)", ...ws.map(w => fmt(w.data.longest))]);
+  rowsC.push(["Stats: Started", ...ws.map(w => { const mg = markerGroups(w.data); return !mg ? "none" : mg.started == null ? "–" : fmt(mg.started); })]);
+  $("compare").innerHTML = table(["", ...ws.map(w => w.name)], rowsC, ws.map((_, i) => i + 1));
+  // add each world's swatch to its column header
+  $("compare").querySelectorAll("thead th").forEach((th, i) => { if (i) th.innerHTML = `<i class="sw" style="background:${col(ws[i-1])};margin-right:6px"></i>${esc(ws[i-1].name)}`; });
+
+  /* days */
+  const dates = [...new Set(ws.flatMap(w => Object.keys(w.data.days)))].sort();
+  if (dates.length){
+    // fill every calendar day between first and last so gaps read as gaps
+    const all = []; for (let t = Date.parse(dates[0] + "T00:00Z"); t <= Date.parse(dates[dates.length - 1] + "T00:00Z"); t += 864e5) all.push(new Date(t).toISOString().slice(0, 10));
+    const series = ws.map(w => ({name:w.name, colour:col(w), values: all.map(d => (w.data.days[d] || {}).Turns ?? null)}));
+    legend($("daysLegend"), ws);
+    lineChart($("days"), all, series, {label:"Turns played each day", xfmt: d => d.slice(5), tip: i => all[i] + "\n" + ws.map(w => {
+      const e = w.data.days[all[i]]; if (!e) return `${w.name}: –`;
+      return `${w.name}: ${fmt(e.Turns)} turns` + (e.Players != null ? `, ${fmt(e.Players)} players` : "") + (e.Credits != null ? `, ${fmt(e.Credits)} credits` : "");
+    }).join("\n")});
+    $("daysTable").innerHTML = table(["Day", ...ws.flatMap(w => [`${esc(w.name)} turns`, "players", "credits"])],
+      all.filter(d => ws.some(w => w.data.days[d])).map(d => [d, ...ws.flatMap(w => { const e = w.data.days[d] || {}; return [fmt(e.Turns), fmt(e.Players), fmt(e.Credits)]; })]),
+      ws.flatMap((_, i) => [1 + 3 * i, 2 + 3 * i, 3 + 3 * i]));
+  }
+
+  /* reach */
+  const labs = [...new Set(ws.flatMap(w => w.data.reach.map(r => r.label)))]
+    .sort((a, b) => (parseInt(a) - parseInt(b)) || (a.length - b.length));
+  legend($("reachLegend"), ws);
+  lineChart($("reach"), labs, ws.map(w => { const top = reachAt(w.data, 1) || 1;
+    return {name:w.name, colour:col(w), values: labs.map(l => { const r = w.data.reach.find(x => x.label === l); return r && r.n != null ? 100 * r.n / top : null; })}; }),
+    {label:"How far they get", pct:true, max:100, connect:true, tip: i => `Turn ${labs[i]}\n` + ws.map(w => { const r = w.data.reach.find(x => x.label === labs[i]);
+      return `${w.name}: ` + (r ? `${fmt(r.n)} players (${pct(r.n, reachAt(w.data, 1))})` : "–"); }).join("\n")});
+  $("reachTable").innerHTML = table(["Turn", ...ws.map(w => esc(w.name))], labs.map(l => [l, ...ws.map(w => { const r = w.data.reach.find(x => x.label === l); return r ? fmt(r.n) : ""; })]), ws.map((_, i) => i + 1));
+
+  /* found */
+  const srcs = [...new Set(ws.flatMap(w => Object.keys(w.data.found)))];
+  const fmax = Math.max(1, ...ws.flatMap(w => Object.values(w.data.found).map(e => (e.Players && (e.Players.n || e.Players.lt)) || 0)));
+  $("found").innerHTML = srcs.length ? `<div class="bars two">` + srcs.map(s => {
+    const parts = ws.map(w => { const e = w.data.found[s]; const p = e && e.Players;
+      const v = p ? (p.n != null ? p.n : p.lt || 0) : 0;
+      const tipT = `${w.name}, ${s}\n` + (e ? Object.entries(e).map(([k, x]) => `${k}: ${showV(x)}`).join("\n") : "not listed");
+      return `<div data-tip="${esc(tipT)}" class="sub"><div class="bar${p && p.n == null ? " lt" : !v ? " zero" : ""}" style="width:${v ? Math.max(0.6, 85 * v / fmax) : 0}%;background:${col(w)}"></div><span>${p ? esc(showV(p)) : "–"}</span></div>`; }).join("");
+    return `<div class="lab">${esc(s)}</div><div class="multi">${parts}</div>`;
+  }).join("") + `</div>` + (ws.length > 1 ? `<div class="legend">${ws.map(w => `<span><i class="sw" style="background:${col(w)}"></i>${esc(w.name)}</span>`).join("")}</div>` : "") : `<p class="ok">No source data in these files.</p>`;
+
+  /* per world */
+  $("worlds").innerHTML = ws.map((w, i) => worldHTML(w, i)).join("");
+}
+
+function worldHTML(w){
+  const d = w.data;
+  let h = `<section class="panel"><div class="world-head"><i class="sw" style="background:${col(w)}"></i><h2>${esc(w.name)}</h2>${w.date ? `<span class="tag">exported ${w.date}</span>` : ""}</div>`;
+  h += `<p class="note">${fmt(fig(w, "Turns played"))} turns · ${fmt(fig(w, "Games"))} games · ${fmt(fig(w, "Unique players"))} players · ${fmt(fig(w, "Credits per turn"))} credits per turn</p>`;
+
+  h += `<h3>Stats markers</h3>` + markersHTML(w);
+
+  h += `<div class="cols">`;
+  if (d.chars.length){
+    const max = Math.max(1, ...d.chars.map(c => c.v.n || c.v.lt || 0));
+    h += `<div><h3>Who they play as</h3><p class="note">Games started with each character.</p>` + bars(d.chars.map(c => ({label:c.name, n:c.v.n, lt:c.v.lt, colour:col(w), text:showV(c.v)})), {max}) + `</div>`;
+  }
+  const vers = Object.entries(d.versions);
+  if (vers.length){
+    const vk = v => v.replace(/^v/, "").split(".").map(x => parseInt(x) || 0);
+    vers.sort((a, b) => { const A = vk(a[0]), B = vk(b[0]); if (/own/i.test(a[0])) return 1; if (/own/i.test(b[0])) return -1;
+      const pa = (a[1].Published || {}).text || "", pb = (b[1].Published || {}).text || "";
+      if (pa !== pb) return pa < pb ? -1 : 1;
+      for (let i = 0; i < 4; i++) if ((A[i] || 0) !== (B[i] || 0)) return (A[i] || 0) - (B[i] || 0); return 0; });
+    h += `<div><h3>Which version they played</h3><p class="note">Games per version, oldest published first. Saved copies keep old versions alive.</p>` +
+      bars(vers.map(([v, e]) => ({label:v, n:(e.Games || {}).n, lt:(e.Games || {}).lt, colour:col(w), text:showV(e.Games),
+        tip:`${v}\nGames: ${showV(e.Games)}` + (e.Published ? `\nPublished ${e.Published.text}` : "") + (e["Last played"] ? `\nLast played ${e["Last played"].text}` : "")}))) + `</div>`;
+  }
+  if (d.keywords.length){
+    h += `<div><h3>Keyword instruction blocks</h3><p class="note">Games that pulled each block in.</p>` +
+      bars(d.keywords.map(k => ({label:k.name, n:k.never ? 0 : k.v.n, lt:k.v.lt, colour:col(w), text:k.never ? "never pulled in" : showV(k.v)}))) + `</div>`;
+  }
+  if (d.ended.length){
+    h += `<div><h3>How games ended</h3>` + bars(d.ended.map(e => ({label:e.name, n:e.v.n, lt:e.v.lt, colour:col(w), text:showV(e.v)}))) + `</div>`;
+  }
+  h += `</div>`;
+
+  const trig = d.triggers.filter(t => !t.name.startsWith(PREFIX));
+  if (trig.length){
+    const g = t => (t.Games && t.Games.n) || 0, f = t => (t.Fired && t.Fired.n) || 0;
+    const live = trig.filter(t => g(t) || f(t)).sort((a, b) => g(b) - g(a) || f(b) - f(a));
+    const zero = trig.filter(t => !g(t) && !f(t));
+    const games = fig(w, "Games");
+    h += `<h3>Triggers</h3><p class="note">Games each trigger went off in (bar) and times fired in all. A repeating trigger fires on every turn its condition holds. ${zero.length ? `${zero.length} at 0, listed below.` : ""}</p>`;
+    const trow = t => ({label:t.name, n:g(t), colour:col(w),
+      text:`${fmt(g(t))} · ${fmt(f(t))} fired`,
+      tip:`${t.name}\n${fmt(g(t))} games${games ? ` (${pct(g(t), games)} of all games)` : ""}\nFired ${fmt(f(t))} times` + (g(t) ? ` (${fmt(f(t) / g(t))} per game)` : "") + (t["Not recorded"] ? "\nGames not recorded for older stats" : "")});
+    const tmax = Math.max(1, ...live.map(g));
+    h += bars(live.slice(0, 25).map(trow), {max:tmax});
+    if (live.length > 25) h += `<details><summary>Show ${live.length - 25} more triggers that fired</summary>${bars(live.slice(25).map(trow), {max:tmax})}</details>`;
+    if (zero.length) h += `<details><summary>Show ${zero.length} triggers at 0</summary><p class="note">Usually not reached yet: compare with how far players get, or an old trigger ID kept after a rebuild.</p><p style="font-size:13px">${zero.map(t => esc(t.name)).join(" · ")}</p></details>`;
+  }
+  if (d.other.length){
+    h += `<details><summary>Other rows in this file (${d.other.length})</summary><div class="scroll">` +
+      table(["Section", "Item", "Measure", "Value"], d.other.map(o => [esc(o.sec), esc(o.item), esc(o.meas), esc(o.v.text)])) + `</div></details>`;
+  }
+  return h + `</section>`;
+}
+
+/* ---------- loading ---------- */
+async function addFiles(files){
+  const errs = [];
+  for (const file of files){
+    if (!/\.csv$/i.test(file.name) && file.type !== "text/csv"){ errs.push(`${file.name}: not a CSV file`); continue; }
+    try {
+      const data = readStats(await file.text());
+      const {name, date} = nameFromFile(file.name);
+      const key = name.toLowerCase();
+      const old = worlds.find(w => w.key === key);
+      if (old){
+        if (date && old.date && date < old.date){ errs.push(`${file.name}: older than the ${old.date} export already loaded, skipped`); continue; }
+        Object.assign(old, {date, file:file.name, data, on:true});
+      } else {
+        if (worlds.length >= COLORS){ errs.push(`${file.name}: up to ${COLORS} worlds at once; remove one first`); continue; }
+        const used = new Set(worlds.map(w => w.colour));
+        let c = 0; while (used.has(c)) c++;
+        worlds.push({key, name, date, file:file.name, data, on:true, colour:c});
+      }
+    } catch (e){ errs.push(`${file.name}: ${e.message}`); }
+  }
+  $("errors").innerHTML = errs.map(e => `<p class="flag" style="text-align:left">${esc(e)}</p>`).join("");
+  render();
+}
+$("file").addEventListener("change", e => { addFiles([...e.target.files]); e.target.value = ""; });
+$("clear").addEventListener("click", () => { worlds.length = 0; $("errors").innerHTML = ""; render(); });
+$("chips").addEventListener("click", e => {
+  const rm = e.target.closest("[data-rm]");
+  if (rm){ e.preventDefault(); worlds.splice(+rm.dataset.rm, 1); render(); }
+});
+$("chips").addEventListener("change", e => { const i = e.target.dataset.i; if (i != null){ worlds[+i].on = e.target.checked; render(); } });
+let dragDepth = 0;
+addEventListener("dragenter", e => { e.preventDefault(); dragDepth++; $("drop").classList.add("over"); });
+addEventListener("dragleave", () => { if (--dragDepth <= 0){ dragDepth = 0; $("drop").classList.remove("over"); } });
+addEventListener("dragover", e => e.preventDefault());
+addEventListener("drop", e => { e.preventDefault(); dragDepth = 0; $("drop").classList.remove("over"); addFiles([...e.dataTransfer.files]); });
+const THEMES = ["auto", "light", "dark"];
+function setTheme(t){
+  if (t === "auto") document.documentElement.removeAttribute("data-theme"); else document.documentElement.setAttribute("data-theme", t);
+  $("theme").textContent = "Theme: " + t;
+  try { localStorage.setItem("iwstats-theme", t); } catch (e) {}
+}
+let savedTheme = "auto"; try { savedTheme = localStorage.getItem("iwstats-theme") || "auto"; } catch (e) {}
+setTheme(THEMES.includes(savedTheme) ? savedTheme : "auto");
+$("theme").addEventListener("click", () => {
+  const cur = document.documentElement.getAttribute("data-theme") || "auto";
+  setTheme(THEMES[(THEMES.indexOf(cur) + 1) % 3]);
+});
+let rz; addEventListener("resize", () => { clearTimeout(rz); rz = setTimeout(() => { if (worlds.length) render(); }, 150); });
+</script>
+</body>
+</html>

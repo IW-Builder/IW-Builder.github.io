@@ -79,6 +79,7 @@ These are reading selections, not mandatory extra downloads. The AI can request 
 | [checker/](https://iw-builder.github.io/checker/) | Browser validator, no Python needed |
 | [cost/](https://iw-builder.github.io/cost/) | Bookmarklet that downloads your IW credit history with every turn's cost breakdown (IW's own download has totals only) |
 | [debug/](https://iw-builder.github.io/debug/) | Bookmarklet that exports every turn's debug data (evaluation, thinking, triggers fired, active blocks, PawScript results) for the open game |
+| [stats/](https://iw-builder.github.io/stats/) | Infographic page for the CSVs from a world's World Stats page: load one or more and compare worlds, with charts for IW-Builder `Stats:` markers. Read in your browser, never uploaded |
 | [stories/](https://iw-builder.github.io/stories/) | Released games, unrelated to the builder prompt; not part of the kit, and AI builders should not read it |
 
 Use [examples/README.md](examples/README.md) to find a feature. See [reference/Editor-UI.md](reference/Editor-UI.md) for import checks and live-world limitations.
