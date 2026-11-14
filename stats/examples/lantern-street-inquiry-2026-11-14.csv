@@ -1,0 +1,109 @@
+﻿Section,Item,Measure,Value
+Figures,,Turns played,968
+Figures,,Unique players,21
+Figures,,Played 2+ games to turn 5,2
+Figures,,Games,29
+Figures,,Turns per player,46
+Figures,,Turns per game,33
+Figures,,Credits per turn,221.30
+Figures,,Storytelling credits per turn,205.46
+Turns played each day,2026-11-02,Turns,106
+Turns played each day,2026-11-03,Turns,123
+Turns played each day,2026-11-04,Turns,104
+Turns played each day,2026-11-05,Turns,111
+Turns played each day,2026-11-05,Players,6
+Turns played each day,2026-11-05,Credits,25393.354482
+Turns played each day,2026-11-06,Turns,81
+Turns played each day,2026-11-06,Players,8
+Turns played each day,2026-11-06,Credits,12988.001146
+Turns played each day,2026-11-07,Turns,83
+Turns played each day,2026-11-07,Players,6
+Turns played each day,2026-11-07,Credits,13153.844018
+Turns played each day,2026-11-08,Turns,70
+Turns played each day,2026-11-08,Players,4
+Turns played each day,2026-11-08,Credits,14765.089313
+Turns played each day,2026-11-09,Turns,45
+Turns played each day,2026-11-09,Players,3
+Turns played each day,2026-11-09,Credits,9009.664687
+Turns played each day,2026-11-10,Turns,66
+Turns played each day,2026-11-10,Players,4
+Turns played each day,2026-11-10,Credits,16916.901698
+Turns played each day,2026-11-11,Turns,36
+Turns played each day,2026-11-11,Players,3
+Turns played each day,2026-11-11,Credits,7065.669169
+Turns played each day,2026-11-12,Turns,48
+Turns played each day,2026-11-12,Players,3
+Turns played each day,2026-11-12,Credits,9014.798097
+Turns played each day,2026-11-13,Turns,52
+Turns played each day,2026-11-13,Players,3
+Turns played each day,2026-11-13,Credits,11180.326818
+Turns played each day,2026-11-14,Turns,43
+Turns played each day,2026-11-14,Players,3
+Turns played each day,2026-11-14,Credits,9864.3614
+How far they get,1,Players who reached it,21
+How far they get,2,Players who reached it,17
+How far they get,3,Players who reached it,13
+How far they get,4,Players who reached it,11
+How far they get,5,Players who reached it,9
+How far they get,6,Players who reached it,8
+How far they get,7,Players who reached it,6
+How far they get,8,Players who reached it,6
+How far they get,9,Players who reached it,5
+How far they get,10,Players who reached it,4
+How far they get,11,Players who reached it,4
+How far they get,12,Players who reached it,4
+How far they get,13,Players who reached it,3
+How far they get,14,Players who reached it,3
+How far they get,15,Players who reached it,3
+How far they get,16,Players who reached it,3
+How far they get,17,Players who reached it,3
+How far they get,18,Players who reached it,3
+How far they get,19,Players who reached it,3
+How far they get,20,Players who reached it,3
+How far they get,21+,Players who reached it,2
+How far they get,31+,Players who reached it,1
+How far they get,41+,Players who reached it,1
+How far they get,51+,Players who reached it,1
+How far they get,,Longest game (turns),57
+Where players found it,World Browser,Players,Fewer than 5 players
+Where players found it,Your links,Players,12
+Where players found it,Your links,Games,17
+Where players found it,Your links,Played 2+ games to turn 5,1
+Where players found it,Your links,Turns per player,39
+Where players found it,Saved copy,Players,Fewer than 5 players
+Where players found it,Not known,Players,Fewer than 5 players
+Who they play as,You,Games,9
+Who they play as,Inspector Hollis Garrow,Games,8
+Who they play as,Dot Pennywhistle,Games,6
+Who they play as,Ambrose Kettering,Games,4
+Who they play as,Fen Osgood,Games,2
+Who they play as,Ruth Dallimore,Games,0
+Which version they played,v0.9,Games,11
+Which version they played,v0.9,Published,2026-11-02
+Which version they played,v0.9,Last played,2026-11-09
+Which version they played,v1.0,Games,18
+Which version they played,v1.0,Published,2026-11-08
+Which version they played,v1.0,Last played,2026-11-14
+Guide,Trigger,Games,How many games it went off in
+Guide,Trigger,Fired,"How many times it went off in all. One game can set it off more than once, so this is never less than Games"
+Guide,Trigger,Not recorded,These stats were worked out before games were counted per trigger
+Trigger,Clock,Games,29
+Trigger,Clock,Fired,214
+Trigger,Read the clues,Games,29
+Trigger,Read the clues,Fired,214
+Trigger,Case file guard,Games,29
+Trigger,Case file guard,Fired,211
+Trigger,Cast lock,Games,29
+Trigger,Cast lock,Fired,29
+Trigger,New day,Games,14
+Trigger,New day,Fired,19
+Trigger,First accusation,Games,6
+Trigger,First accusation,Fired,6
+Trigger,Culprit unmasked,Games,2
+Trigger,Culprit unmasked,Fired,2
+Trigger,Wrong arrest,Games,1
+Trigger,Wrong arrest,Fired,1
+Trigger,Epilogue,Games,0
+Trigger,Epilogue,Fired,0
+Trigger,Cast retry,Games,0
+Trigger,Cast retry,Fired,0

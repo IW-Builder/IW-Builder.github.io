@@ -115,7 +115,7 @@ try { const t = localStorage.getItem("iwstats-theme"); if (t === "light" || t ==
   </div>
   <p class="note" style="margin-top:10px">One file per world. A second export of the same world replaces the older one (the date in the file name decides). Worlds created with the <a href="https://github.com/IW-Builder/IW-Builder.github.io">IW-Builder</a> house kit also carry <code>Stats:</code> markers, charted per world below.</p>
   <div id="chips" class="chips"></div>
-  <p id="exampleNote" class="flag hidden" style="text-align:left">Showing example data: exports from four IW-Builder worlds, taken 2026-11-14. Load your own CSV files to replace them.</p>
+  <p id="exampleNote" class="flag hidden" style="text-align:left">Showing example data: three made-up worlds with invented numbers, in the same format as a real export. Load your own CSV files to replace them.</p>
   <div id="errors"></div>
 </div>
 
@@ -566,10 +566,9 @@ addEventListener("dragover", e => e.preventDefault());
 addEventListener("drop", e => { e.preventDefault(); dragDepth = 0; $("drop").classList.remove("over"); addFiles([...e.dataTransfer.files]); });
 // Example data shown until you load your own files. Fetching needs the page served over http(s), not opened from disk.
 const EXAMPLES = [
-  ["one-wish-each-2026-11-14.csv", "One Wish Each"],
-  ["overseer-vault-69-2026-11-14.csv", "Overseer: Vault 69"],
-  ["super-in-a-super-land-redux-2026-11-14.csv", "Super in a Super Land Redux"],
-  ["ugh-my-bully-2026-11-14.csv", "Ugh, My Bully Got Another Stupid Reality Thingy"],
+  ["ironvale-under-siege-2026-11-14.csv", "Ironvale Under Siege"],
+  ["lantern-street-inquiry-2026-11-14.csv", "The Lantern Street Inquiry"],
+  ["starlight-ferry-2026-11-14.csv", "Starlight Ferry"],
 ];
 async function loadExamples(){
   const got = [];
