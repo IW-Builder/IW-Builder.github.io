@@ -19,3 +19,5 @@ How to read it:
 - A world with no `Stats:` rows at all usually has no published version with markers yet: IW lists a trigger once a published version has it.
 - The Theme button switches between your system setting, light and dark.
 - A second export of the same world replaces the older one; the date in the file name (`<World> stats YYYY-MM-DD.csv`) decides.
+
+Until you load a file, the page shows example data: the 2026-11-14 exports of four IW-Builder worlds, kept in [examples/](examples/). Your first file replaces them; Clear all brings them back. The examples load only when the page is served over the web (opened straight from disk, it starts empty).
