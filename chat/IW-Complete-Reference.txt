@@ -4,9 +4,9 @@ Follow Authoring-Prompt.md (the first file below). This edition holds every refe
 Editions and their contents:
 - IW-Complete-Reference.txt: the whole reference in one file: everything in the four reference editions below. Files: the IW-Authoring-Guide.txt, IW-Technical-Reference.txt, IW-Behavior.txt, IW-Payloads.txt files
 - IW-Authoring-Guide.txt: start here: prompt, template, narrative craft, trackers, triggers, data banks and library integration. Files: Authoring-Prompt.md, World-Template.json, reference/Craft.md, reference/Trackers.md, reference/Triggers.md, reference/Trigger-Catalog.md, reference/Portable-Banks.md, library/Integration.md
-- IW-Technical-Reference.txt: exact payloads, PawScript, runtime, characters, images/models and recipes. Files: reference/Schema.md, reference/PawScript.md, reference/Runtime.md, reference/Characters.md, reference/Images-and-Models.md, reference/Recipes.md
-- IW-Behavior.txt: notable findings and open questions, editor/UI workflows with import checks, cost, verified runtime behavior and the default Evaluation. Files: reference/Notable-Findings.md, reference/Editor-UI.md, reference/Cost.md, reference/Verified-Behavior.md, reference/Default-Evaluation.txt
-- IW-Payloads.txt: exact native payload snippets for every condition and effect, the example index and the storyteller model IDs. Files: examples/Payloads.md, examples/index.json, reference/Current-AI-Profiles.json
+- IW-Technical-Reference.txt: exact payloads, PawScript, runtime, characters and recipes. Files: reference/Schema.md, reference/PawScript.md, reference/Runtime.md, reference/Characters.md, reference/Recipes.md
+- IW-Behavior.txt: notable findings and open questions, editor/UI workflows with import checks, cost and verified runtime behavior. Files: reference/Notable-Findings.md, reference/Editor-UI.md, reference/Cost.md, reference/Verified-Behavior.md
+- IW-Payloads.txt: exact native payload snippets for every condition and effect, the example index, the storyteller model IDs, images and models, and the default Evaluation. Files: examples/Payloads.md, examples/index.json, reference/Current-AI-Profiles.json, reference/Images-and-Models.md, reference/Default-Evaluation.txt
 - IW-Mechanics-Examples.txt: complete mechanics example worlds: recipes, optional block, starting values, layered opening, on-demand generation and a showcase. Files: examples/recipe-request-commit.json, examples/recipe-completion-award.json, examples/recipe-candidate-acceptance.json, examples/recipe-archive-reactivate.json, examples/recipe-cached-random.json, examples/recipe-consumed-timer.json, examples/recipe-choice-domain.json, examples/recipe-compiled-plot.json, examples/recipe-choice-followup.json, examples/recipe-threshold-unlock.json, examples/optional-block.json, examples/character-starting-values.json, examples/recipe-layered-opening.json, examples/recipe-on-demand-generation.json, examples/showcase-glass-ledger.json
 - IW-Narrative-Examples.txt: complete narrative example worlds: ensemble romance, fantasy expedition, contained horror, fantasy relationship and high-heat erotica. Files: examples/narrative-vendemmia.json, examples/narrative-listening-road.json, examples/narrative-address-after-midnight.json, examples/narrative-seven-nights.json, examples/narrative-velvet-wager.json
 - IW-Sample-Blocks.txt: optional library modules (read library/Integration.md first). Files: library/Sample-Blocks.json
@@ -71,7 +71,7 @@ Minimum creative brief: premise, player role, tone/content boundaries, and endin
 
 Choose the lightest useful features: prose and NPC cards for narrative; keywords for occasional lore; AI trackers for bounded narrative memory; native conditions/effects for simple mechanics; scripts for exact accounting; player choices for constrained decisions. Use the same general tools for arbitrary genres and systems. In any mode, notice reusable characters or cohesive mechanics and offer extraction as entries or dependency-aware bundles when useful; do not copy them into a bank without the user choosing it.
 
-Default new worlds to allowing sharing and editing; change this on request and preserve existing preferences during edits. Set mature/nsfw and content boundaries deliberately for the brief; the template sets both content flags true, so change them to false for worlds without mature content. The flags set the audience; the creative boundaries go in instructions.
+Default new worlds to allowing sharing and editing; change this on request and preserve existing preferences during edits. Default `showPawScriptButtons` true and `allowChangeCharacterItemValues` false; enable the latter only for deliberate typed starting values (see Editor-UI.md). Set mature/nsfw and content boundaries deliberately for the brief; the template sets both content flags true, so change them to false for worlds without mature content. The flags set the audience; the creative boundaries go in instructions.
 
 For new worlds, specifically discuss Storymaster and naming unless preferences are already supplied. Storymaster is popular in the IW community and substantial: explain its direction/planning role and approximate block plus supporting costs before the user chooses it, a smaller selection of modules, or ordinary storytelling. Never silently include or skip this choice. Offer the five-candidate naming technique in reference/Craft.md as a soft default; if accepted, use it while authoring and include a separate Naming block for play. Batch these with other initial questions. Treat whereWhen as a soft default, and offer other modules only when they suit the brief. Share approximate module token costs from library/Integration.md, noting tokenizer variation.
 
@@ -257,7 +257,8 @@ END OF DOCUMENT: Authoring-Prompt.md
   "instructionBlocks": [],
   "NPCs": [],
   "loreBookEntries": [],
-  "designNotes": ""
+  "designNotes": "",
+  "showPawScriptButtons": true
 }
 ===== END FILE: World-Template.json =====
 
@@ -278,7 +279,7 @@ When effort is limited, spend it here first, in this order: NPC one_liners; one 
 | authorStyle | How prose sounds: POV, tense, sensory focus, length, how turns end, phrases to avoid | Mechanics |
 | firstInput | First scene: place and time, who is present and what the player notices about them, the immediate situation, what not to decide | Introducing everyone; resolving the premise |
 | objective | Direction | A script |
-| NPC one_liner | Everything needed before first mention: name, age, role, one or two visual anchors, behavior, stance toward player | Adjectives only |
+| NPC one_liner | Identity and stance: name, age, role, behavior, stance toward player. Looks belong in appearance, which is always sent too | Adjectives only |
 | NPC detail | Essentials repeated, then labeled lines: Wants, Voice (with sample line), Tells, Toward you, Friction; for romance also Desire, In intimacy, Afterward | Biography |
 | appearance | Body, face, movement, distinguishing marks | Current outfit; verdicts like "beautiful" |
 | img_appearance / img_clothing | Short visual tags; default outfit | Personality |
@@ -307,7 +308,7 @@ Write `detail` as labeled lines; they are easy for the storyteller to use and ha
 
 `appearance` describes body, face and movement in plain, specific facts: build, height, notable features, how they stand and move. "Broad-hipped, soft stomach, freckled shoulders" gives the storyteller something to use; "beautiful", "curvy" and "perfect" do not. Vary bodies across the cast. Put the default outfit in img_clothing and track current clothing separately if it changes.
 
-Reveal secret_info through opportunity (a late conversation, a mistake, a bargain), never exposition. Minor characters need only a one_liner and a few lines; spend detail where the player will spend time.
+Reveal secret_info through opportunity (a late conversation, a mistake, a bargain), never exposition. Minor characters need only a one_liner and a few lines; spend detail where the player will spend time. Each name mention bills the whole detail for three turns: cut needless biography.
 
 ## Romance, desire and adult worlds
 
@@ -444,7 +445,7 @@ Ownership:
 
 Do not let the AI and scripts compete to rewrite the same mechanical YAML document. Consolidating related flags in a YAML tracker reduces editor clutter; it does not by itself reduce trigger count or guarantee lower token cost. Large AI-visible YAML and duplicative logs still cost context. Keep hidden cache text out of the storyteller unless needed.
 
-Visibility values are everyone (player and AI), ai_only and ai_only_boring (AI-only), player_only, hidden and hidden_boring (hidden from player and AI). The `_boring` suffix is the editor's "Hide this item even in Storyteller Mode", a display filter. The editor clears it when player visibility is enabled, so player_only_boring is not a combination. Exports can include hidden trackers and secret information when Storyteller Mode is enabled; select those export options when collecting diagnostics. Visibility is not script access control: hidden values remain script-usable at runtime.
+Visibility values are everyone (player and AI), ai_only and ai_only_boring (AI-only), player_only, hidden and hidden_boring (hidden from player and AI). The `_boring` suffix is the editor's "Hide this item even in Storyteller Mode", a display filter. The editor clears it when player visibility is enabled, so player_only_boring is not a combination. Exports can include hidden trackers and secret information when Storyteller Mode is enabled; select those export options when collecting diagnostics. Visibility is not script access control: hidden values remain script-usable at runtime. The AI is told nothing about hidden trackers, not even that they exist [DOCUMENTED: IW's November 2026 update note; before it, the AI was told they existed without their details]. Anything it must know reaches it through a visible tracker, an instruction block or a message.
 
 Import normalizes automatic updating off for hidden, hidden_boring and player_only; everyone, ai_only and ai_only_boring can retain automatic updates. Extra-hidden values remain visible in the Storyteller tracker editor. What the AI receives is not shown by any visibility setting.
 
@@ -494,7 +495,7 @@ Start + Mid Game + Repeat can execute before the opening and again during turn 1
 With Start false, Mid Game has no effect; a stored true value requires no warning or repair. A trigger with no conditions and Start false does not fire automatically, but can remain available for explicit dispatch.
 
 - Prerequisites/blockers with firedThisTurn true are this-turn checks that see a producer only when it is earlier in triggerEvents, and reset each turn. False uses game history, which sees a later-ordered producer from the next turn. It also sees an earlier-ordered producer on the same turn, so false means "has fired, this turn or before" and cannot defer a consumer to the next turn. To defer, order the consumer above its producer, or gate it on a stored turn stamp such as `$game.turn_number > $x.stamp_turn`. The editor disallows requiring and blocking the same trigger; do not generate that conflict.
-- Always serialize canTriggerMoreThanOnce and the timing flags explicitly rather than relying on defaults. When reading a shared export, treat a trigger with no `canTriggerMoreThanOnce` key as one-shot: exports write the key only when it is true, so an "hourly" or "nightly" trigger without it fires once per game [OBSERVED in three community exports; not run]. Use repeatable commit triggers with idempotent state guards where appropriate, and true one-shot events when required.
+- Always serialize canTriggerMoreThanOnce and the timing flags explicitly rather than relying on defaults. Use repeatable commit triggers with idempotent state guards where appropriate, and true one-shot events when required.
 - Restriction: Do not combine Start of Game with Scenario or minimum-turn conditions. The editor warns that these conditions are ignored; minimum-turn bypass is confirmed during both startup and mid-game execution. Use a separate startup trigger and leave Start off on the conditional trigger.
 
 ### Execution order and effect semantics:
@@ -544,7 +545,7 @@ Eligible no-effect triggers record firing. Random dispatch bypasses target condi
 
 ### Scenarios
 
-Say Scenarios when talking to users; the root JSON field is `conditions`, referenced by `triggerOnEvent`. Binding requires an exact registry string, including case, spaces and punctuation; preserved JSON can still be unbound, so check the selector after import. A Scenario fires only when the event actually happens in the narrated outcome; the narrator can refuse or substitute a requested action. An event the narrator invents, or a player's purpose it rewrites, also satisfies the Scenario. Unused registry entries and duplicate references are tolerated, and import fills an absent registry from the trigger references. Use literal Scenarios with explicit state gates; dynamic Scenario text (`<<$slot>>`) did not fire at all when retested on 2026-11-01, even as a single slot, and blank slot text is not dependable deactivation. The editor stops adding Scenarios at ten entries, but imported registries of twelve or more work.
+Say Scenarios when talking to users; the root JSON field is `conditions`, referenced by `triggerOnEvent`. Binding requires an exact registry string, including case, spaces and punctuation; preserved JSON can still be unbound, so check the selector after import. A Scenario fires only when the event actually happens in the narrated outcome; the narrator can refuse or substitute a requested action. An event the narrator invents, or a player's purpose it rewrites, also satisfies the Scenario. Unused registry entries and duplicate references are tolerated, and import fills an absent registry from the trigger references. A registry that is present but empty (`"conditions": []`) is not a safe stand-in: in one community world every Scenario trigger showed no Scenario in the editor, so write the strings into the list or leave the field out. Use literal Scenarios with explicit state gates; dynamic Scenario text (`<<$slot>>`) did not fire at all when retested on 2026-11-01, even as a single slot, and blank slot text is not dependable deactivation. The editor stops adding Scenarios at ten entries, but imported registries of twelve or more work.
 
 ---
 
@@ -848,7 +849,9 @@ Tracker definitions use an ID, display name, explicit variableName, dataType, vi
 
 dataType values: text, number, yaml, xml. Lists and booleans live inside YAML; there is no native boolean/list dataType. `initialValue` is a JSON string even for numeric or structured content. The editor does not enforce numeric-only input in Number controls, so use numeric literals when calculations depend on them.
 
-visibility values: everyone, player_only, ai_only, ai_only_boring, hidden, hidden_boring. Hidden trackers remain readable by scripts. A world export (the world JSON) always includes every tracker, hidden ones too, whatever the player settings, so a tracker missing from a world export does not exist. A story export leaves hidden trackers out while Storyteller mode is off and includes them when it is on [OBSERVED, editor].
+visibility values: everyone, player_only, ai_only, ai_only_boring, hidden, hidden_boring. Trigger flags: an export writes `canTriggerMoreThanOnce` only when it is true, so in a shared export a trigger without the key is one-shot, and an "hourly" or "nightly" trigger without it fires once per game [OBSERVED in three community exports; not run].
+
+Hidden trackers remain readable by scripts. A world export (the world JSON) always includes every tracker, hidden ones too, whatever the player settings, so a tracker missing from a world export does not exist. A story export leaves hidden trackers out while Storyteller mode is off and includes them when it is on [OBSERVED, editor].
 
 `formatExample` and `formatSchema` are strings. The library demonstrates a YAML-like schema notation with text/number, optional-key and open-content forms. formatSchema is not JSON Schema, and the validator does not enforce its grammar.
 
@@ -1074,7 +1077,7 @@ Use the expression/script Sandbox to try the read and change separately. For an 
 | Error fallback | `try($total / $count, 0)`; catches missing paths, type mismatches, division by zero, reads through a scalar and out-of-range `item(99)`. Do not use it to conceal broken essential state |
 | Existence | `$hero.nickname.exists()`; distinct from being nonempty or nonzero |
 | Numeric bounds | `$hp.constrain(0, $max_hp)` |
-| Rounding and bounds | `round_down($cost)`, `round_up($cost)`, `$cost.round()`; standalone `round(1.6)`, `min(2, 3)`, `max(2, 3)` also work |
+| Rounding and bounds | `round_down($cost)`, `round_up($cost)`, `$cost.round()`; standalone `round(1.6)`, `trunc(5.7)` (drops the fraction), `min(2, 3)`, `max(2, 3)` also work |
 | Text normalization | `$label.replace("_", " ")` |
 
 `=` compares within an expression and assigns in an assignment statement. In the following script, the first `=` tests; the second writes:
@@ -1361,7 +1364,7 @@ The structured character data IW works from: Skills and the Evaluation that uses
 
 ## Skills and player characters
 
-Root `skills` is a list of display names. Each possibleCharacters entry has a `skills` object keyed by those names, with integer levels from 0 through 5. Define focused skills with distinct jobs (Observation, Persuasion, Engineering); the AI selects the available skill whose name best matches the attempted action, so overlapping names make that choice ambiguous. A neutral generic skill is appropriate when the story does not need skill distinctions. PC `description` establishes identity, abilities and context for the storyteller, not only the selection page. `charSelectText` introduces the available choices to the player. The allowChangeCharacter* flags control which parts players may customize ([Editor-UI.md](Editor-UI.md#permissions-and-specialist-destinations)).
+Root `skills` is a list of display names. Each possibleCharacters entry has a `skills` object keyed by those names, with integer levels from 0 through 5. A level outside that range no longer stops the world from starting: IW treats it as the nearest valid level (IW update note, November 2026), so a 7 plays as 5. Still author 0 to 5; the validator reports anything else. Define focused skills with distinct jobs (Observation, Persuasion, Engineering); the AI selects the available skill whose name best matches the attempted action, so overlapping names make that choice ambiguous. A neutral generic skill is appropriate when the story does not need skill distinctions. PC `description` establishes identity, abilities and context for the storyteller, not only the selection page. `charSelectText` introduces the available choices to the player. The allowChangeCharacter* flags control which parts players may customize ([Editor-UI.md](Editor-UI.md#permissions-and-specialist-destinations)).
 
 Keep at least one skill. For generated JSON, use `hideSkillSystem: false` when Skills should be visible; an unchecked editor option omits the field, which is the normal visible-skills state. `hideSkillSystem` hides the skill system's presentation only.
 
@@ -1387,16 +1390,22 @@ NPC field purpose and activation guidance are [DOCUMENTED]; the keyword matching
 | one_liner | The Summary: compact identity and role; put essential identity here |
 | detail | Fuller personality, motives, history, behavior and relationships |
 | appearance | Narrative appearance description |
-| location | Short starting location (two words at most), an activation cue; not a movement lock |
+| location | Short starting location (two words at most); not a movement lock. Since IW's 2026-11-12 memory update it no longer activates the character [RUNTIME, one model] |
 | secret_info | Hidden character facts; instructions still govern who knows them |
 | img_appearance / img_clothing | Visual identity and clothing for image generation; inspect with the wrench under a character image |
 | positionInList | Ordering metadata; preserve existing values; use sequential integers for new lists |
 
-Only Name is required in the NPC editor; storytelling and image information are independent optional sections. The brief summary is the only character information available to the storyteller until the turn after the character or their location is first mentioned; characters can activate by name with no location. Detail retrieval is unreliable even then, and the narrator can invent a substitute that history then repeats, or introduce named NPCs into an opening that says the player is alone. Put facts that must surface in one_liner or always-on text and repeat them in detail; correct a wrong invented detail early by editing the turn. For an opening scene, do not depend on card or keyword activation at all: there is no prior context to activate them, so put essential opening facts in firstInput or always-on instructions and give starting NPCs useful brief summaries without duplicating their entire cards. Mentioning footwear in image fields encourages full-body framing, per editor help.
+Only Name is required in the NPC editor; storytelling and image information are independent optional sections. Since IW's 2026-11-12 memory update (Long Term Memory v4), every Other Character is imported into the game's character memory at the start as a **Major** character: its name, brief summary and **full appearance** are sent on every turn, named or not, and bill as Long Term Memory. Naming the character (in an action, narration or Secret Info) sends its whole detail and secret_info for the next three turns, the same window as lore. Before the update only a fraction of detail was sent; now all of it bills, so a long detail costs on every turn the character is around [RUNTIME, Dolphin]. A mention of its location alone does not activate it [RUNTIME, one model, before the first summary]. Detail retrieval is unreliable even then, and the narrator can invent a substitute that history then repeats, or introduce named NPCs into an opening that says the player is alone. Put facts that must surface in one_liner or always-on text and repeat them in detail; correct a wrong invented detail early by editing the turn. For an opening scene, do not depend on card or keyword activation at all: there is no prior context to activate them, so put essential opening facts in firstInput or always-on instructions and give starting NPCs useful brief summaries without duplicating their entire cards. Mentioning footwear in image fields encourages full-body framing, per editor help.
 
 IW permits a character among both player choices and Other Characters under the same name; the selected player can retrieve information from that entry, while the internal merging is not visible. Unchosen player options are not NPCs unless also added as Other Characters. Author the intended relationship explicitly where it matters. PC/NPC conversion is available in Data mode: preserve the source and map relevant fields into the destination type ([Portable-Banks.md](Portable-Banks.md)).
 
-World Debug does not show NPC activation or static character context. Secret fields are a convention the instructions enforce, not a barrier: see the knowledge findings in [Notable-Findings.md](Notable-Findings.md#characters-knowledge-and-memory).
+## Character memory (Long Term Memory v4)
+
+IW keeps a character database in the game's memory, viewable and editable through World Debug Tools (turn on the memory view in Settings). Each character has a tier: Player, Major (brief summary, appearance, clothing and latest development always sent), Recurring (the default for characters the story creates: brief summary always, full entry while in scene) and Minor (dropped once no longer important); the summarizer can change a tier. Only the Major import is tested [RUNTIME]; the other tiers are as a beta tester described them. At game start each Other Character's fields are copied word for word: one_liner → One liner, appearance → Appearance, detail → Background, secret_info → Secrets, location → Location, names → Names. There is no Clothing entry yet, `img_appearance` and `img_clothing` are not copied, and a "Wearing …" line stays inside Appearance. The view does not change before the first summary [RUNTIME, one model]. The summary schedule is the same as before the update: the first summary is written after turn 8, covers turns up to 6 and is used from turn 9, then every 6 turns. In a 23-card game the first summary added the player character, rewrote the brief summaries of the cards seen (fewer looks, more story), added a few Facts and Developments, and left every Appearance and Background untouched [RUNTIME, one game, Dolphin].
+
+In practice: keep card appearances short, because every card's full appearance bills on every turn; put looks that change in trackers; the brief summary no longer needs visual anchors; and bring a character in by name, not by its location. The editor has no Clothing field yet, so a starting outfit goes in Appearance. A beta tester reports that a summaryRequest can address the memory's field names (Appearance, Clothing, Background and so on) [untested]. Layout rules are not followed: the memory keeps its own structure (key moments with turn, time, place and several names; plot threads with keywords), so write a summaryRequest about content, not notation [RUNTIME, one game]. One written for the old fields ("put everything in the brief summary") now makes every brief summary long and billed every turn. The memory of a game started before the update can't be viewed; it can only be migrated, which costs credits.
+
+World Debug does not show NPC activation. Secret fields are a convention the instructions enforce, not a barrier: see the knowledge findings in [Notable-Findings.md](Notable-Findings.md#characters-knowledge-and-memory).
 
 ## Keyword blocks
 
@@ -1409,41 +1418,6 @@ Choose distinct phrases and relevant aliases; broad terms such as "man" activate
 END OF DOCUMENT: reference/Characters.md
 
 ===== END FILE: reference/Characters.md =====
-
-===== BEGIN FILE: reference/Images-and-Models.md =====
-# Images, video and model-specific blocks
-
-The export fields and editor controls for image style, portraits and video, and how instruction blocks are limited to particular storyteller models.
-
-## Image style
-
-The image-style editor is a reusable style with Name, Model and prompt wrappers. With separate character/scenery prompts enabled, Characters start/end and Scenery start/end add text before and after the respective image prompts; with it disabled, Start/End apply to every image. The export fields are imageStyleCharacterPre/Post and imageStyleNonCharacterPre/Post; a shared Start/End is exported by duplicating the values into both pairs, so no extra switch is needed. The imageStyle value is a generated identifier; preserve it rather than deriving it from the prompt text. A world export carries the style's values, not the reusable style itself.
-
-The older illustrationStyle*LowPriority/HighPriority fields still occur in exports but have no current controls; preserve them in existing worlds and author with the current Pre/Post wrappers, which took precedence over them in testing. Manticore is the model that editor help recommends; its preset text includes IWBeautiful/IWUpscaleFace macros whose mechanism is undocumented. The player can override the selected style. The cover prompt is separate from these wrappers. Exact prompt assembly is hidden.
-
-Dedicated Other Character image appearance/clothing populate Illustration details independently of narrative appearance. Edits change generated images and can be reversed; alias-related clothing drift can occur. Saving Illustration details generates a new image (about 4 credits).
-
-PC portraitPromptDetails holds four strings: illustrAppearance, illustrClothes, illustrExpressionPosition and illustrSetting ([Payloads.md](../examples/Payloads.md) has an example). Image generation and upload produce asset references, which belong in portrait and preview fields. The library's Cover Image script produces a prompt, not an asset: use it in the image workflow, select or upload the result as the world preview, and export the resulting metadata. previewImage holds the asset reference, not prose.
-
-When adapting library image-style text, resolve bracketed slots as deliberate choices: remove unselected alternatives and incidental sexualized defaults unless they match the requested audience and style, keep the neutral medium, composition, lighting and identity guidance, and pick one medium rather than a contradictory list.
-
-## Video
-
-videoPromptInstructions has videoPlan, videoImagePosition and videoPrompt strings: the library uses videoPlan to choose a beat, videoImagePosition to choose start/end anchoring, and videoPrompt to describe the clip. Its `$videoDuration` and `$videoStyle` references are video-context values, not declared trackers or general PawScript roots; confirm their availability in the video editor or debug context before adopting the sample. The kit has no video-enabled runnable example. Editor-side video controls are in [Editor-UI.md](Editor-UI.md#permissions-and-specialist-destinations).
-
-## Model-specific blocks
-
-Enable model selection per world under Show optional features > Misc advanced features > Enable AI-specific instruction blocks. Selected block models serialize in selectedAIProfiles. All-model blocks stay active while selected-model blocks follow the active model, including when the player switches model mid-game. Current-AI-Profiles.json lists each storyteller model's ID, underlying real-world model, isCurrent flag and typical credits per turn, including retired models, as of the date it records; models retire every few months. It is an authoring convenience, not a validator enum: accept historical IDs and preserve imported selections.
-
-Disabling the option removes selectedAIProfiles from exported blocks and hides their controls; the still-open editor remembers the choices if re-enabled, but not after it is closed. A block name alone does not select models.
-
-Per-model text inside one block, and per-model tracker update instructions, use `$game.ai_model` ([Recipes.md](Recipes.md#turn-state-patterns)). Per-model cost is in [Cost.md](Cost.md).
-
----
-
-END OF DOCUMENT: reference/Images-and-Models.md
-
-===== END FILE: reference/Images-and-Models.md =====
 
 ===== BEGIN FILE: reference/Recipes.md =====
 # Feature recipes
@@ -1487,6 +1461,10 @@ Player-visible preference trackers may be hidden from the storyteller; the trigg
 **Player-introduced items stay as given.** In worlds where the player plants or gives an object that acts on NPCs (clothing, a charm, a potion), tell the storyteller the item keeps exactly the description the player gave: an NPC may refuse or store it, but never reskins it, shrinks its effect or turns it into a protection against the mechanic. Narrators otherwise shield NPCs by quietly rewriting the item [PATTERN, one community world].
 
 **Closed magic.** When the premise has one supernatural source, say so and close the rest: the effect stays with whoever uses that source, does not spread to others, the house and objects have no will, there is no telepathy, and a character who believes in other magic is wrong. Without it, narrators tend to escalate the weirdness on their own [PATTERN, one community world].
+
+**Set-piece entrance.** For a boss or other big moment, a situation trigger on the threshold ("When the player opens the door to the boss room in the Verdant Temple") sends one Tell the AI what should happen next turn with the arena, the voice and the creature, ending in an instruction to close the page with a bold title card. That text lasts one turn, so keep a short standing note (personality, weak point) in the instructions or a keyword block for the rest of the fight. A second situation ("When the player breaks free of the hypnosis") can hold the reveal back until the player acts. Describe what the player sees and hears, and leave their reaction to them [PATTERN, one community world].
+
+**Escalation keyed to quest progress.** Tie the world's worsening to a Number count of the quest items (stones, seals) rather than to time, so exploring is never punished: non-repeatable triggers at `at_least` 2, 3, 4 and so on. Keep the count in a Number tracker: on a Text tracker only contains or does-not-contain applies, so a value written "1/5" contains "5" and fires the last step on the first item, and names ("Verdant Stone") fire nothing. Give information to AI is background for the turn it fires, not standing text, so let each step also replace a short World State block ("Caravans are attacked; towns are still safe") that lasts until the next step. Per-character change, such as a transformation each pregenerated character carries in their own description, can use the same shape: an AI-updated Number with one or two simple rules, and milestone triggers that each replace a stage block, since the AI cannot count turns for a rule like "add 1% every five turns" [PATTERN, one community world; the Number and block mechanisms RUNTIME].
 
 **Time and location: a soft default.** Offer the sample's Time and Location (whereWhen) block unless the premise makes a clock/location header unhelpful. Writing the current place and time each turn helps IW maintain chronology and gives the player a reference. Adapt the geography, calendar and precision to the setting; omit irrelevant levels rather than inventing a country or continent. Put exactly one header at the beginning of outcomeDescription, not a second competing heading. This is guidance for runtime output, not a new JSON root field.
 
@@ -1538,6 +1516,8 @@ Optional patterns; trigger order is execution order.
 **Per-model text.** `$game.ai_model` returns the display name (`Dolphin`, `Smilodon`) and text `=` is case-sensitive. Templates in a tracker's own update instructions are evaluated live, so `<<if($game.ai_model = "Dolphin", "…", "…")>>` there selects per model. Blocks can use selectedAIProfiles instead.
 
 **Start-up codes.** A player-only text tracker at character select holds typed codes; one one-shot Text-contains trigger (case-insensitive) per code applies each. List the codes in charSelectText.
+
+**World-stats markers.** IW's creator stats (the world's stats page and its CSV export) list every trigger by ID with Games (games it fired in) and Fired (times), so one-shot triggers can report which settings players pick and how far games get. Add a hidden Number tracker (`stats_markers`, 0) and non-repeatable triggers whose only effect is the script `$stats_markers = $stats_markers + 1`, named to sort together ("Stats: Pace = Fast"). Mark each option of a setting the player picks, at start of game and mid-game (`$pace = "Fast"`, exact and case-sensitive; `$themes.contains("Cats")` for a multi-select, with no option inside another); milestones with `>=` so a jump still counts (`$day >= 3`); turns (`$game.turn_number >= 25`); and the model (`$game.ai_model = "Dolphin"`, plus an Other marker that is `!=` every listed name). Always add "Stats: Started" on a condition that is always true: the stats' Games total also counts older versions and saved copies, so Started is the denominator. A trigger rebuilt with a new ID starts a new row, so keep marker IDs fixed across versions. Hidden values are not sent, so markers cost nothing. A setting's options add up to Started unless players switch mid-game; a zero is usually unreached or unpicked, so check the stats' "How far they get" curve first [PATTERN, one community world; per-ID counting RUNTIME].
 
 **Ordinal words.** `choose($e.intensity.lower(), "slight", 1, "mild", 2, "moderate", 3, 0) < 3` compares a word scale, for example to raise an entry to a minimum without lowering it.
 
@@ -1607,7 +1587,7 @@ The Infinite Worlds behavior most likely to surprise an author or break a world,
 
 ## Trackers and PawScript
 
-23. **Hidden and extra-hidden trackers are not secret.** The storyteller and any Storyteller-mode player can see them; extra-hidden only filters one display.
+23. **Hidden and extra-hidden trackers are not secret from players.** Any Storyteller-mode player can see them; extra-hidden only filters one display. The AI itself is told nothing about hidden trackers, not even that they exist (IW update note, November 2026).
 24. **Hidden and player-only trackers cannot auto-update.** Import turns automatic updating off for them.
 25. **Enforce format does not reject bad data** written by scripts or by hand. Validate shape and values in scripts before accepting them.
 26. **Random expressions disagree with each other.** Two `random()` calls, even in one block, give different results. Store one roll in a tracker when several things must agree.
@@ -1621,7 +1601,7 @@ The Infinite Worlds behavior most likely to surprise an author or break a world,
 
 ## Characters, knowledge and memory
 
-34. **Only the Summary is guaranteed early.** Character detail arrives after a name or location mention, and even then often fails to surface; the narrator invents a substitute that history then repeats. Put must-know facts in the Summary or always-on text and repeat them in detail.
+34. **Only the Summary and appearance are guaranteed early.** Detail arrives after a name mention (since 2026-11-12, not a location mention, and then the whole detail bills for three turns), and even then often fails to surface; the narrator invents a substitute that history then repeats. Put must-know facts in the Summary or always-on text and repeat them in detail.
 35. **Keyword and character cards cannot activate on the opening turn** without prior context. Put opening facts in firstInput or always-on instructions.
 36. **Keyword blocks match whole words, any case, and stay active for the matching turn plus three.** Substrings and plurals do not match.
 37. **NPCs get knowledge wrong.** They deny facts they were just told, credit the wrong source, or know secrets they should not. Secret Info can contradict the narration. Anti-omniscience instructions alone do not fix this.
@@ -1664,7 +1644,7 @@ Platform behavior that has not been verified, by area, with what to do meanwhile
 | AI tracker dependencies | How generation is staged internally | Stage prior-turn values explicitly when a rule depends on them |
 | Format and YAML | Complete grammar, XML mutation, strict typing, hidden AI repair | Validate shape and meaning in scripts before accepting state |
 | Legacy list context | A supported List Update target/value context in the current editor | Use for-each loops and collection methods instead of `current()` |
-| Memory | Summary contents and how they weigh against persistent context | Use summaryRequest and trackers for facts that must persist |
+| Memory | What later summaries do to imported characters; whether a large memory bills in full | Use summaryRequest and trackers for facts that must persist |
 | Length | A lengthening recipe; the authorStyle cap on models other than Dolphin | Put length rules in authorStyle; promise a ceiling near the number, not an exact length |
 | Images and video | Full image prompt and cache, precedence, internal macros, video runtime | Author with current style controls and preserve imported legacy fields; avoid depending on video until checked |
 | Limits and permissions | Maximum field, loop or trigger sizes; account-role permission matrix | Treat observed sizes as working examples |
@@ -1702,7 +1682,7 @@ Use tracker and trigger **Names**, not IDs, unless the user requests IDs. Distin
 | Trigger at start of game / Or mid-game | `triggerOnStartOfGame` / `triggerMidGame` |
 | Allow triggering multiple times | `canTriggerMoreThanOnce` |
 | Hide this item even in Storyteller Mode / Extra-hidden | `hidden_boring` or `ai_only_boring`; display filtering |
-| Change starting values of Tracked Items (if applicable) | `allowChangeCharacterItemValues`; character-selection permission |
+| Change starting values of Tracked Items (if applicable) | `allowChangeCharacterItemValues`; character-selection permission. Default false; true lets the player type a custom starting value, including one outside a dropdown's choices |
 | Custom Evaluation / Description / Summarisation | `evaluationRequest` / `descriptionRequest` / `summaryRequest` |
 
 ## Import, export and preserving work
@@ -1779,7 +1759,7 @@ The sandbox (PawScript Expression Editor) runs a script or expression against ed
 | Entry point | When it is available | Tracker data it starts with |
 | --- | --- | --- |
 | World editor: Paw icon beside a Run Script effect's script field | Always | All base trackers |
-| World editor: Paw icon beside other PawScript-capable fields | When **Show optional features > Misc advanced features > Show the PawScript Expression Editor button next to each expression field** is enabled for that world (`showPawScriptButtons: true`) | All base trackers |
+| World editor: Paw icon beside other PawScript-capable fields | When **Show optional features > Misc advanced features > Show the PawScript Expression Editor button next to each expression field** is enabled for that world (`showPawScriptButtons: true`; default it to true in new worlds) | All base trackers |
 | In play: **View/edit world design** | Same Paw icons as the world editor | The game state of that turn |
 | In play: debug **PawScript > Open in Sandbox** | For a script that has run in this game; with the expression-editor option enabled, evaluated conditions also get an entry. The play screen has no other sandbox button | The game state of the turn it ran |
 
@@ -1793,7 +1773,7 @@ Community-reported sandbox results, not tested by the kit [UNKNOWN]: a gate test
 
 ## Credits and cost
 
-The header shows the credit balance and the remaining daily free turns (3 per day observed). **Credits > Credit activity >** a turn **> Cost breakdown** splits Inputs and Outputs into instructions, trackers, STM (recent story), LTM (summaries) and other; thinking models add an output category. LTM first appears after the first summary compression, as STM drops. Breakdown values are rounded decimals: the list can differ from the balance change by a credit.
+The header shows the credit balance and the remaining daily free turns (3 per day observed). **Credits > Credit activity >** a turn **> Cost breakdown** splits Inputs and Outputs into instructions, trackers, STM (recent story), LTM (memory: NPC cards from turn 1, summaries after the first compression, as STM drops) and other; thinking models add an output category. Breakdown values are rounded decimals: the list can differ from the balance change by a credit. IW downloads your whole credit history itself (since November 2026), but only each turn's total; for every turn's breakdown use the kit's [IW Cost Exporter](https://iw-builder.github.io/cost/).
 
 Cost per turn depends on the model (the picker shows a typical range) and rises with story length. A failed opening is refunded; Continue game after an ending costs nothing. Per-model rates, what is billed and how to estimate a world's cost are in [Estimating cost](Cost.md).
 
@@ -1819,7 +1799,7 @@ Image style has a Model and Character/Scenery start/end prompts, mapped to `imag
 
 [DOCUMENTED] Video help describes `$videoDuration` and `$videoStyle` in video context (see below). The expression-editor option shows a Paw icon beside some PawScript-capable fields (see [PawScript sandbox](#pawscript-sandbox)). A field without an icon can still take expressions: YAML Set a value supports template expressions according to help despite having no icon.
 
-Editor syntax highlighting misleads for deferred references. In instruction blocks and tracker descriptions it colors `<<=...=>>` as PawScript and shows the working `<=...=>` as plain text, while initial values show both as plain text. At runtime it is the other way round: `<=...=>` is evaluated and `<<=...=>>` stays literal. If a user cites the highlighting, explain that it is wrong for this syntax ([PawScript.md](PawScript.md)).
+Editor syntax highlighting misleads for deferred references. In instruction blocks and tracker descriptions it colors `<<=...=>>` as PawScript and shows the working `<=...=>` as plain text. Since a November 2026 update the tracker Initial value box has the same PawScript highlighting and autocomplete as the description box, so expect the same misleading colors there (not yet checked). At runtime it is the other way round: `<=...=>` is evaluated and `<<=...=>>` stays literal. If a user cites the highlighting, explain that it is wrong for this syntax ([PawScript.md](PawScript.md)).
 
 Highlighting also misreads multi-line strings. A quoted string, in single or double quotes, may span lines inside a `<<...>>` template, and it evaluates correctly. With `$flag` true, this renders the three test lines on their own lines between Before script and After script:
 
@@ -1850,7 +1830,7 @@ These are the character-customization controls; account-role permissions are a s
 | Create a new portrait | allowChangeCharacterNewPortrait | New portrait creation permission |
 | Change starting values of Tracked Items | allowChangeCharacterItemValues | Applicable character-scoped starting values |
 
-[DOCUMENTED] These switches belong to character customization. They are distinct from `permissionsOnceShared.sharing` and `.editing`, and from Storyteller mode. Cross-account author/recipient permission enforcement is unverified, so a missing control may come from any of the three; keep them separate when diagnosing.
+Default `allowChangeCharacterItemValues` to false. A player-chosen dropdown (`initialValueBasedOnPC: "player"` with `initialValueChoices`) still offers its choices with it off; with it on, the player can also type their own value, which suits a deliberate custom input (a written character's own power, say) but can break a setup or picture dropdown that scripts compare by exact string. [DOCUMENTED] These switches belong to character customization. They are distinct from `permissionsOnceShared.sharing` and `.editing`, and from Storyteller mode. Cross-account author/recipient permission enforcement is unverified, so a missing control may come from any of the three; keep them separate when diagnosing.
 
 [DOCUMENTED] Custom Evaluation guides the AI's interpretation of the attempted action. The default includes skill/difficulty reasoning and labels such as SUCCESS and PARTIAL_SUCCESS; those labels are generated evaluation content, not direct state-changing commands. Custom Description guides narrated results. Custom Summarisation guides what the memory summary retains; it is not a viewer of the actual summary. Native specialist placeholders are context-specific and are not all PawScript tracker handles.
 
@@ -1887,7 +1867,7 @@ END OF DOCUMENT: reference/Editor-UI.md
 ===== BEGIN FILE: reference/Cost.md =====
 # Estimating cost
 
-How much a turn costs, how it differs by Storyteller model, why two players of the same world can pay very different amounts, and how to make a rough estimate before anyone plays. Credit activity shows the real bill: see [Editor-UI](Editor-UI.md#credits-and-cost) for the cost breakdown and the [IW Cost Exporter](https://iw-builder.github.io/cost/) to download your history.
+How much a turn costs, how it differs by Storyteller model, why two players of the same world can pay very different amounts, and how to make a rough estimate before anyone plays. Credit activity shows the real bill: see [Editor-UI](Editor-UI.md#credits-and-cost) for the cost breakdown. IW's own credit history download has totals only; the [IW Cost Exporter](https://iw-builder.github.io/cost/) downloads every turn with its breakdown.
 
 ## What a turn is made of
 
@@ -1899,7 +1879,10 @@ Each turn is billed in two halves. **Input** is everything IW sends the model: i
 - AI-visible tracker definitions (name, description, update instructions, format), from turn 1, whether or not the AI updates that tracker [RUNTIME, Dolphin: about 1.7 credits per 1k characters];
 - AI-visible tracker values;
 - text inside a live `<<if(…)>>` template only on turns it renders; a false section costs nothing [RUNTIME, Dolphin: 40k added 63 credits only while true]. Price a gated block by rendering it per scene, and remember turn 1 if its gates default on;
-- lore entries and NPC cards while they are active (assumed to bill at about the instructions rate; not measured directly).
+- lore entries for the three turns after a keyword appears in an action, narration or Secret Info, at about the instructions rate [RUNTIME: 1.40 per 1k on Dolphin];
+- every NPC card's name, Summary and **full appearance**, every turn, as Long Term Memory [RUNTIME: about 1.05 per 1k on Lynx, 1.49 on Dolphin];
+- a named card's **whole detail and secret_info** for the three turns after its name appears, like lore [RUNTIME, Dolphin: 1.39 per 1k]. Since the 2026-11-12 memory update all of it is sent: a 23-card world cost about 45 credits a turn more. Keep appearances and details lean;
+- once a summary exists, its sections (story, key moments, plot threads, lore and so on) [RUNTIME, early game: about 1.4 per 1k on Dolphin].
 
 These cost nothing per turn: hidden (script-only) trackers, triggers and PawScript, and Request Input form text after it has been shown. A long descriptionRequest or evaluationRequest is not billed in full either [RUNTIME: 16k characters added about 3–4 credits a turn]; what it really costs is the narration it causes.
 
@@ -1933,7 +1916,7 @@ Columns:
 - **Credits per 100 words of narration:** the output cost of the narration alone, on the turn it is written.
 - **Thinking:** the model's thinking output, mean and range per turn. It varies a lot from turn to turn and is most of the cost on Leopard-2 (about two-thirds) and Leopard. In the 15-turn Caracal game below (2026-11-07), no thinking was billed or shown on any turn.
 
-Turns took about 35–70 seconds on the models that were timed (Dolphin, Massivecat, Massivecat-thinking, Leopard, Leopard-2). Caracal took 5–8 minutes a turn on 2026-10-30, but in a 15-turn game on 2026-11-07 its turns took 20–31 seconds (median 24, Dolphin 57 on the same world), apart from openings of 6–10 minutes, one of which failed with no charge. Wampus and Leopard-2 are under "Show niche models" in the model picker. Wildcat and the experimental Smilodon-2 models were not measured. For the model behind each name and the picker's typical range, see [Current-AI-Profiles.json](Current-AI-Profiles.json).
+Turns took about 35–70 seconds on the timed models; Caracal about 24 (openings 6–10 minutes). For the model behind each name and the picker's typical range, see [Current-AI-Profiles.json](Current-AI-Profiles.json).
 
 ### Where these numbers come from
 
@@ -1962,7 +1945,7 @@ The words column is unguided output on a bare world. A world with a detailed aut
 - The turn after the opening grew by about 30–50% by the median turn (Dolphin 87 → 128, Puma 80 → 105, Smilodon 126 → 178), as memory built up.
 - Each model played one game with its own draw, on slightly different versions of the world, so the instructions row is approximate.
 
-A shorter check on Caracal: 15 turns of a later version of the same world, against 13 turns of the same version on Dolphin (2026-11-07) [RUNTIME, one game each]. Caracal cost a median 68 credits a turn against Dolphin's 116 (0.57× over the same 13 turns; the table says 0.70×), wrote a median 627 words (384–1,110; unguided 346; Dolphin 660), and billed 0.9 credits per 100 words of narration (table 1.0). Its instructions came to 0.66× Dolphin's, as K predicts (0.68), and recent story about 0.6× per word. Inputs were 84% of its bill, because its output is so cheap: evaluation 1.6 credits a turn against 5.6. Its per-turn cost rose by about 26% from turn 2 to the median turn, which in a 15-turn game is before memory reaches its full saw-tooth.
+Caracal check (2026-11-07) [RUNTIME, one game each: 15 Caracal turns of a later version of the same world, 13 on Dolphin]: median 68 credits a turn against Dolphin's 116 (0.57×; table 0.70×); median 627 words (384–1,110; unguided 346; Dolphin 660) at 0.9 credits per 100 words (table 1.0). Instructions 0.66× Dolphin's (K predicts 0.68); inputs were 84% of its bill.
 
 ## Why the same world costs different players different amounts
 
@@ -2015,11 +1998,11 @@ END OF DOCUMENT: reference/Cost.md
 ===== BEGIN FILE: reference/Verified-Behavior.md =====
 # Consolidated behavior reference
 
-Detailed runtime conclusions for Infinite Worlds, current through 2026-11-06. [Notable findings](Notable-Findings.md) gives the plain-language summary and the list of what remains unknown; this file carries the detail and the evidence labels. Import success, rendered instructions and narration answer different questions.
+Detailed runtime conclusions for Infinite Worlds, current through 2026-11-13. [Notable findings](Notable-Findings.md) gives the plain-language summary and the list of what remains unknown; this file carries the detail and the evidence labels. Import success, rendered instructions and narration answer different questions.
 
 ## Compatibility and evidence
 
-This is an independent, unaffiliated kit. Platform baseline: Infinite Worlds' October 8, 2026 "Save/load system, Image style system and Pawscript update," with editor/runtime information consolidated through November 6, 2026. Export schemaVersion is 2.4. Kit version is 1.6.0; the structural profile is 1.2.0. Neither is an IW application version. The unaffiliated Script Library source snapshot is version 3.16, October 16, 2026; see ../library/Integration.md.
+This is an independent, unaffiliated kit. Platform baseline: Infinite Worlds' October 8, 2026 "Save/load system, Image style system and Pawscript update," with editor/runtime information consolidated through November 11, 2026. Export schemaVersion is 2.4. Kit version is 1.6.0; the structural profile is 1.2.0. Neither is an IW application version. The unaffiliated Script Library source snapshot is version 3.16, October 16, 2026; see ../library/Integration.md.
 
 Four evidence labels are used across the kit when a distinction matters; ordinary reference sentences do not carry a tag.
 
@@ -2067,6 +2050,7 @@ Kit-wide caveats, not repeated per entry:
 - [RUNTIME] Missing/blank PawScript condition data and legacy bare-array prerequisite/blocker data are omitted from exports. The open editor can still hold them (opening such a trigger raised a list-index TypeError), but importing that export elsewhere leaves the gate deleted; a trigger left with no conditions shows "will never fire". Convert legacy gates to object shape before import.
 - [RUNTIME] A numeric or text tracked-item condition with `textComparison` missing or "" is dropped from the export and its trigger stays dormant. After re-import, a trigger whose only condition was dropped never fires; one with other conditions loses that gate. Preserve the nonempty native value, which numeric conditions carry even though the UI hides it.
 - [RUNTIME] Import fills an absent root `conditions` registry from triggerOnEvent references, and normalizes schemaVersion 2.2 to 2.4 with trigger payloads unchanged.
+- [RUNTIME] A world shared with `"conditions": []` and seven Scenario triggers showed no Scenarios in the editor, in the world and in a live game copy (one community world, editor check 2026-11-11). How the list came to be empty, and whether import fills an empty list, is untested.
 - [RUNTIME] A round trip of well-formed native JSON was byte-identical, including Unicode, multiline text, quotes, backslashes, nulls and empty arrays. Export adds positionInList to Other Characters that lack it.
 - [RUNTIME] PawScript conditions require true/false, not numeric truthiness. Unknown handles produce missing-variable diagnostics. An interpolated comparison such as `<<$x>> >= 0` works in a PawScript condition.
 - [RUNTIME] Turn-at-least values can be native strings or numbers; both fire. Do not reject native exports for that representation.
@@ -2078,6 +2062,7 @@ Kit-wide caveats, not repeated per entry:
 ## Tracker writes and PawScript
 
 - [RUNTIME] Native numeric effects within one trigger overwrite rather than accumulate (starting at 0, add 2 then add 3 ended at 3; starting at 1, set 5 then add 2 ended at 3). Text additions accumulate and text removal removes matching occurrences. Use sequential scripts for dependent arithmetic; sequential script arithmetic accumulates, nested YAML changes preserve unrelated keys, and separate script effects writing different YAML paths preserve both.
+- [DOCUMENTED] When the AI removes several items from a YAML list in one update (selling the first three items, say), the right items are removed. Before IW's November 2026 update the wrong ones could be; recheck a world that worked around this, and keep matching list entries by identity rather than position.
 - [RUNTIME] Native YAML paths support set/remove/append/adjust, one-based list indexes and interpolation. Record append stores structured data and permits duplicates. Numeric adjustment creates a missing parent/leaf. Whole-value replacement overrides stale path/action fields: interpret `updateMode` first.
 - [RUNTIME] Native And/Or and PawScript boolean expressions short-circuit left to right; debug lists only the deciding condition. Place existence guards before dependent reads. No speed benefit has been measured.
 - [RUNTIME] Plain nested assignments and runtime-key `.item` writes create paths. Scalar parents reject child writes and roll back the script. Missing-path compound arithmetic (`+=`) fails where assignment succeeds. `try`, `item(key, fallback)` and `if(x.exists(), x, fallback)` handle missing values; `first_available` preserves zero/false and skips empty text.
@@ -2113,12 +2098,12 @@ Kit-wide caveats, not repeated per entry:
 - [RUNTIME] Independent random expressions differ within and across blocks and effects, including from a hidden pool. Cache a choice when consumers must agree.
 - [RUNTIME] Selector case matters for equality/choose; provide explicit fallbacks. AI-managed dependencies can see same-turn updates despite tracker order. Stage prior-turn values explicitly.
 - [RUNTIME] Keyword matching accepts case variants, surrounding punctuation and authored alternate keywords; embedded substrings and a simple plural did not match. Activation lasts the matching turn and three more. Player actions, completed narration and Secret Info contribute, from the next generated turn; the complete scanned-field set is unspecified.
-- [DOCUMENTED] Other Character Summary is available before fuller detail, which editor help says becomes available the turn after a name/location mention. Repeat essential Summary facts in detail.
-- [RUNTIME] Character detail retrieval is unreliable. A selected player sharing an Other Character name used that entry's facts, but a name-only mention did not surface an authored hobby on two turns; the narrator invented one, and history then reinforced it. The narrator can also introduce named NPCs into an opening that says the player is alone. Internal identity merging and exclusion are unresolved.
+- [RUNTIME] Memory v4: every Other Character is Major; name, Summary and full appearance bill as LTM every turn (Lynx, Dolphin). A name mention sends the whole detail and secret_info for three turns; a location mention does nothing. With summary sections that fits LTM within 0.5 a turn (Cost). STM and summary timing are unchanged.
+- [RUNTIME] Character detail retrieval is unreliable: a name-only mention did not surface an authored hobby on two turns; the narrator invented one and history reinforced it. A player sharing an NPC's name used its facts. The narrator can add named NPCs to an opening that says the player is alone.
 - [RUNTIME] Secret Info and narration can disagree or misattribute knowledge. Characters can deny a fact just told to them, and hidden facts can become player knowledge in prose. A general provenance policy showed no clear benefit; explicit correction of the source chain did.
 - [RUNTIME] Once a secret reaches narration, removing or emptying its disclosure block does not remove it from later turns.
-- [RUNTIME] Mystery reveals (one small mystery, one game per check, one model): with the truth withheld and only "reveal it slowly", the storyteller committed to four contradicting facts in five turns, and a truth block installed afterwards was grafted on (the invented confession stayed). With the truth in an always-on block and prose prerequisite gates on what the player had learned, characters refused a direct question, an accusation, a correct guess and a bribe, and the gated fact came once its prerequisites were met. A search of the hiding place was narrated with details from the truth despite a descriptionRequest ban naming them; a positive description of what the place holds before the gate stopped it. A Secret Info rule cut but did not stop truth in Secret Info. An AI-updated case-file tracker marked each fact on the turn it was learned, never early, with the same gate timing as prose.
-- [RUNTIME] Summary compression runs after turn 8 and every six turns after that (after turns 8, 14, 20, …), so the turn being written has the 2–7 most recent turns in uncompressed short-term memory (from turn 2 on). The cost breakdown shows LTM from the first compression as STM drops; short and long term memory can be watched turn by turn in any game. Later recall of compressed material is possible; summary contents remain hidden.
+- [RUNTIME] Mystery reveals (one small mystery, one game per check, one model): with the truth withheld ("reveal it slowly"), the storyteller committed to four contradicting facts in five turns; a truth block added later was grafted on. With the truth in an always-on block and prose prerequisite gates on what the player had learned, characters refused a direct question, accusation, correct guess and bribe; the gated fact came once its prerequisites were met. A search of the hiding place was narrated with details from the truth despite a descriptionRequest ban naming them; a positive description of what the place holds before the gate stopped it. A Secret Info rule cut but did not stop truth in Secret Info. An AI-updated case-file tracker marked each fact on the turn it was learned, never early.
+- [RUNTIME] Summary compression runs after turn 8 and every six turns after that (after turns 8, 14, 20, …), so the turn being written has the 2–7 most recent turns in uncompressed short-term memory (from turn 2 on). The cost breakdown shows LTM from the first compression as STM drops; short and long term memory can be watched turn by turn in any game. Later recall of compressed material is possible. Since 2026-11-12 the memory can be viewed and edited in World Debug Tools (not for games started earlier); the cadence above is not re-measured under it.
 - [RUNTIME] Shortening (Dolphin, one world): a cap of at most 2 short paragraphs and 90 words, with priority-override framing, appended to authorStyle averaged 82 words (control 413) and held through a story-beat turn; a plain one-sentence version averaged 96. The same cap in descriptionRequest (mean 118, max 215) or an always-on block (max 226) broke on the story-beat turn. A per-turn Tell AI trigger held later turns but cannot reach the opening. The cap acts as a soft target; credits fell only about 10%.
 - [RUNTIME] Lengthening: paragraph-count requests and strong priority-overriding wording did not reliably lengthen narration, even with richer lore. A one-sentence descriptionRequest did not shorten it. [UNKNOWN] Other models for the authorStyle cap.
 
@@ -2144,24 +2129,6 @@ See [Editor and UI](Editor-UI.md) for workflows and [Notable findings](Notable-F
 END OF DOCUMENT: reference/Verified-Behavior.md
 
 ===== END FILE: reference/Verified-Behavior.md =====
-
-===== BEGIN FILE: reference/Default-Evaluation.txt =====
-Firstly, if I have made any assertions in my description, evaluate whether you judge that they are reasonable and likely. If they are nonsensical, incoherent or blatantly impossible, the action should be DENIED. On the other hand, if the action is trivial and there is nothing to complicate it, skip the evaluation entirely and deem the action a SUCCESS. Don't overthink this! If the action doesn't warrant further evaluation, make a judgement and move on.
-
-Assuming the action is not a trivial SUCCESS or DENIED, I would like you to evaluate what skill would be needed to succeed in this action, and how difficult it would be to do so. Please indicate which skill which is needed to succeed.
-If applicable use this list: (<<skill_list>>) and a difficulty (from the list: <<difficulty_list>>). For example: {<<skill_example>>: <<difficulty_example>>}. Consider the difficulties carefully, evaluating what might be feasible in the situation. Identifying the skill and difficulty is very important!
-
-Then, evaluate whether I would succeed in the action. To evaluate, consider my proficiency in various skills using either (<<skills_and_levels>>) or logical application of other skills. By comparing these difficulties to the stated difficulty of the action, you should conclusively decide whether the action is a SUCCESS or a FAILURE.
-
-Base your decision on player character description, past, rest of the instructions and common sense - for example, if my skill is low but you know that I am able to perform the given action due to past events, treat me as more competent in this case. Again, don't overthink this - just make a sensible judgement given the information available to you and based on what makes sense for the story.
-
-In some situations, you may wish to evaluate the action as a PARTIAL_SUCCESS instead - this is for something where my abilities are sufficient that I don't simply fail completely (or where failing completely would make for a boring story) but I also don't success. Either I achieve some but not all of what I wanted, I fail but have some silver lining, or I succeed but there are drawbacks or side-effects rather than a "clean" success.
-
-In total, your evaluation should consist of an extremely brief discussion of your thinking (just a single sentence), a skill and difficulty, and then either DENIED, SUCCESS, FAILURE, or PARTIAL_SUCCESS (along with any clarifying remarks).
-
-That's all you need to do for the evaluation, which should be returned in the 'evaluation' argument. Remember to conclude with one of DENIED, SUCCESS, FAILURE, or PARTIAL_SUCCESS.
-
-===== END FILE: reference/Default-Evaluation.txt =====
 
 ===== BEGIN FILE: examples/Payloads.md =====
 # Compact native payload cookbook
@@ -3476,5 +3443,58 @@ END OF DOCUMENT: examples/Payloads.md
 }
 
 ===== END FILE: reference/Current-AI-Profiles.json =====
+
+===== BEGIN FILE: reference/Images-and-Models.md =====
+# Images, video and model-specific blocks
+
+The export fields and editor controls for image style, portraits and video, and how instruction blocks are limited to particular storyteller models.
+
+## Image style
+
+The image-style editor is a reusable style with Name, Model and prompt wrappers. With separate character/scenery prompts enabled, Characters start/end and Scenery start/end add text before and after the respective image prompts; with it disabled, Start/End apply to every image. The export fields are imageStyleCharacterPre/Post and imageStyleNonCharacterPre/Post; a shared Start/End is exported by duplicating the values into both pairs, so no extra switch is needed. The imageStyle value is a generated identifier; preserve it rather than deriving it from the prompt text. A world export carries the style's values, not the reusable style itself.
+
+The older illustrationStyle*LowPriority/HighPriority fields still occur in exports but have no current controls; preserve them in existing worlds and author with the current Pre/Post wrappers, which took precedence over them in testing. Manticore is the model that editor help recommends; its preset text includes IWBeautiful/IWUpscaleFace macros whose mechanism is undocumented. The player can override the selected style. The cover prompt is separate from these wrappers. Exact prompt assembly is hidden.
+
+Dedicated Other Character image appearance/clothing populate Illustration details independently of narrative appearance. Edits change generated images and can be reversed; alias-related clothing drift can occur. Saving Illustration details generates a new image (about 4 credits).
+
+PC portraitPromptDetails holds four strings: illustrAppearance, illustrClothes, illustrExpressionPosition and illustrSetting ([Payloads.md](../examples/Payloads.md) has an example). Image generation and upload produce asset references, which belong in portrait and preview fields. The library's Cover Image script produces a prompt, not an asset: use it in the image workflow, select or upload the result as the world preview, and export the resulting metadata. previewImage holds the asset reference, not prose.
+
+When adapting library image-style text, resolve bracketed slots as deliberate choices: remove unselected alternatives and incidental sexualized defaults unless they match the requested audience and style, keep the neutral medium, composition, lighting and identity guidance, and pick one medium rather than a contradictory list.
+
+## Video
+
+videoPromptInstructions has videoPlan, videoImagePosition and videoPrompt strings: the library uses videoPlan to choose a beat, videoImagePosition to choose start/end anchoring, and videoPrompt to describe the clip. Its `$videoDuration` and `$videoStyle` references are video-context values, not declared trackers or general PawScript roots; confirm their availability in the video editor or debug context before adopting the sample. The kit has no video-enabled runnable example. Editor-side video controls are in [Editor-UI.md](Editor-UI.md#permissions-and-specialist-destinations).
+
+## Model-specific blocks
+
+Enable model selection per world under Show optional features > Misc advanced features > Enable AI-specific instruction blocks. Selected block models serialize in selectedAIProfiles. All-model blocks stay active while selected-model blocks follow the active model, including when the player switches model mid-game. Current-AI-Profiles.json lists each storyteller model's ID, underlying real-world model, isCurrent flag and typical credits per turn, including retired models, as of the date it records; models retire every few months. It is an authoring convenience, not a validator enum: accept historical IDs and preserve imported selections.
+
+Disabling the option removes selectedAIProfiles from exported blocks and hides their controls; the still-open editor remembers the choices if re-enabled, but not after it is closed. A block name alone does not select models.
+
+Per-model text inside one block, and per-model tracker update instructions, use `$game.ai_model` ([Recipes.md](Recipes.md#turn-state-patterns)). Per-model cost is in [Cost.md](Cost.md).
+
+---
+
+END OF DOCUMENT: reference/Images-and-Models.md
+
+===== END FILE: reference/Images-and-Models.md =====
+
+===== BEGIN FILE: reference/Default-Evaluation.txt =====
+Firstly, if I have made any assertions in my description, evaluate whether you judge that they are reasonable and likely. If they are nonsensical, incoherent or blatantly impossible, the action should be DENIED. On the other hand, if the action is trivial and there is nothing to complicate it, skip the evaluation entirely and deem the action a SUCCESS. Don't overthink this! If the action doesn't warrant further evaluation, make a judgement and move on.
+
+Assuming the action is not a trivial SUCCESS or DENIED, I would like you to evaluate what skill would be needed to succeed in this action, and how difficult it would be to do so. Please indicate which skill which is needed to succeed.
+If applicable use this list: (<<skill_list>>) and a difficulty (from the list: <<difficulty_list>>). For example: {<<skill_example>>: <<difficulty_example>>}. Consider the difficulties carefully, evaluating what might be feasible in the situation. Identifying the skill and difficulty is very important!
+
+Then, evaluate whether I would succeed in the action. To evaluate, consider my proficiency in various skills using either (<<skills_and_levels>>) or logical application of other skills. By comparing these difficulties to the stated difficulty of the action, you should conclusively decide whether the action is a SUCCESS or a FAILURE.
+
+Base your decision on player character description, past, rest of the instructions and common sense - for example, if my skill is low but you know that I am able to perform the given action due to past events, treat me as more competent in this case. Again, don't overthink this - just make a sensible judgement given the information available to you and based on what makes sense for the story.
+
+In some situations, you may wish to evaluate the action as a PARTIAL_SUCCESS instead - this is for something where my abilities are sufficient that I don't simply fail completely (or where failing completely would make for a boring story) but I also don't success. Either I achieve some but not all of what I wanted, I fail but have some silver lining, or I succeed but there are drawbacks or side-effects rather than a "clean" success.
+
+In total, your evaluation should consist of an extremely brief discussion of your thinking (just a single sentence), a skill and difficulty, and then either DENIED, SUCCESS, FAILURE, or PARTIAL_SUCCESS (along with any clarifying remarks).
+
+That's all you need to do for the evaluation, which should be returned in the 'evaluation' argument. Remember to conclude with one of DENIED, SUCCESS, FAILURE, or PARTIAL_SUCCESS.
+
+===== END FILE: reference/Default-Evaluation.txt =====
 
 END OF DOCUMENT: chat/IW-Complete-Reference.txt

@@ -21,7 +21,7 @@ Use tracker and trigger **Names**, not IDs, unless the user requests IDs. Distin
 | Trigger at start of game / Or mid-game | `triggerOnStartOfGame` / `triggerMidGame` |
 | Allow triggering multiple times | `canTriggerMoreThanOnce` |
 | Hide this item even in Storyteller Mode / Extra-hidden | `hidden_boring` or `ai_only_boring`; display filtering |
-| Change starting values of Tracked Items (if applicable) | `allowChangeCharacterItemValues`; character-selection permission |
+| Change starting values of Tracked Items (if applicable) | `allowChangeCharacterItemValues`; character-selection permission. Default false; true lets the player type a custom starting value, including one outside a dropdown's choices |
 | Custom Evaluation / Description / Summarisation | `evaluationRequest` / `descriptionRequest` / `summaryRequest` |
 
 ## Import, export and preserving work
@@ -98,7 +98,7 @@ The sandbox (PawScript Expression Editor) runs a script or expression against ed
 | Entry point | When it is available | Tracker data it starts with |
 | --- | --- | --- |
 | World editor: Paw icon beside a Run Script effect's script field | Always | All base trackers |
-| World editor: Paw icon beside other PawScript-capable fields | When **Show optional features > Misc advanced features > Show the PawScript Expression Editor button next to each expression field** is enabled for that world (`showPawScriptButtons: true`) | All base trackers |
+| World editor: Paw icon beside other PawScript-capable fields | When **Show optional features > Misc advanced features > Show the PawScript Expression Editor button next to each expression field** is enabled for that world (`showPawScriptButtons: true`; default it to true in new worlds) | All base trackers |
 | In play: **View/edit world design** | Same Paw icons as the world editor | The game state of that turn |
 | In play: debug **PawScript > Open in Sandbox** | For a script that has run in this game; with the expression-editor option enabled, evaluated conditions also get an entry. The play screen has no other sandbox button | The game state of the turn it ran |
 
@@ -112,7 +112,7 @@ Community-reported sandbox results, not tested by the kit [UNKNOWN]: a gate test
 
 ## Credits and cost
 
-The header shows the credit balance and the remaining daily free turns (3 per day observed). **Credits > Credit activity >** a turn **> Cost breakdown** splits Inputs and Outputs into instructions, trackers, STM (recent story), LTM (summaries) and other; thinking models add an output category. LTM first appears after the first summary compression, as STM drops. Breakdown values are rounded decimals: the list can differ from the balance change by a credit.
+The header shows the credit balance and the remaining daily free turns (3 per day observed). **Credits > Credit activity >** a turn **> Cost breakdown** splits Inputs and Outputs into instructions, trackers, STM (recent story), LTM (memory: NPC cards from turn 1, summaries after the first compression, as STM drops) and other; thinking models add an output category. Breakdown values are rounded decimals: the list can differ from the balance change by a credit. IW downloads your whole credit history itself (since November 2026), but only each turn's total; for every turn's breakdown use the kit's [IW Cost Exporter](https://iw-builder.github.io/cost/).
 
 Cost per turn depends on the model (the picker shows a typical range) and rises with story length. A failed opening is refunded; Continue game after an ending costs nothing. Per-model rates, what is billed and how to estimate a world's cost are in [Estimating cost](Cost.md).
 
@@ -138,7 +138,7 @@ Image style has a Model and Character/Scenery start/end prompts, mapped to `imag
 
 [DOCUMENTED] Video help describes `$videoDuration` and `$videoStyle` in video context (see below). The expression-editor option shows a Paw icon beside some PawScript-capable fields (see [PawScript sandbox](#pawscript-sandbox)). A field without an icon can still take expressions: YAML Set a value supports template expressions according to help despite having no icon.
 
-Editor syntax highlighting misleads for deferred references. In instruction blocks and tracker descriptions it colors `<<=...=>>` as PawScript and shows the working `<=...=>` as plain text, while initial values show both as plain text. At runtime it is the other way round: `<=...=>` is evaluated and `<<=...=>>` stays literal. If a user cites the highlighting, explain that it is wrong for this syntax ([PawScript.md](PawScript.md)).
+Editor syntax highlighting misleads for deferred references. In instruction blocks and tracker descriptions it colors `<<=...=>>` as PawScript and shows the working `<=...=>` as plain text. Since a November 2026 update the tracker Initial value box has the same PawScript highlighting and autocomplete as the description box, so expect the same misleading colors there (not yet checked). At runtime it is the other way round: `<=...=>` is evaluated and `<<=...=>>` stays literal. If a user cites the highlighting, explain that it is wrong for this syntax ([PawScript.md](PawScript.md)).
 
 Highlighting also misreads multi-line strings. A quoted string, in single or double quotes, may span lines inside a `<<...>>` template, and it evaluates correctly. With `$flag` true, this renders the three test lines on their own lines between Before script and After script:
 
@@ -169,7 +169,7 @@ These are the character-customization controls; account-role permissions are a s
 | Create a new portrait | allowChangeCharacterNewPortrait | New portrait creation permission |
 | Change starting values of Tracked Items | allowChangeCharacterItemValues | Applicable character-scoped starting values |
 
-[DOCUMENTED] These switches belong to character customization. They are distinct from `permissionsOnceShared.sharing` and `.editing`, and from Storyteller mode. Cross-account author/recipient permission enforcement is unverified, so a missing control may come from any of the three; keep them separate when diagnosing.
+Default `allowChangeCharacterItemValues` to false. A player-chosen dropdown (`initialValueBasedOnPC: "player"` with `initialValueChoices`) still offers its choices with it off; with it on, the player can also type their own value, which suits a deliberate custom input (a written character's own power, say) but can break a setup or picture dropdown that scripts compare by exact string. [DOCUMENTED] These switches belong to character customization. They are distinct from `permissionsOnceShared.sharing` and `.editing`, and from Storyteller mode. Cross-account author/recipient permission enforcement is unverified, so a missing control may come from any of the three; keep them separate when diagnosing.
 
 [DOCUMENTED] Custom Evaluation guides the AI's interpretation of the attempted action. The default includes skill/difficulty reasoning and labels such as SUCCESS and PARTIAL_SUCCESS; those labels are generated evaluation content, not direct state-changing commands. Custom Description guides narrated results. Custom Summarisation guides what the memory summary retains; it is not a viewer of the actual summary. Native specialist placeholders are context-specific and are not all PawScript tracker handles.
 

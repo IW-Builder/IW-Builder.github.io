@@ -103,7 +103,7 @@ Use the expression/script Sandbox to try the read and change separately. For an 
 | Error fallback | `try($total / $count, 0)`; catches missing paths, type mismatches, division by zero, reads through a scalar and out-of-range `item(99)`. Do not use it to conceal broken essential state |
 | Existence | `$hero.nickname.exists()`; distinct from being nonempty or nonzero |
 | Numeric bounds | `$hp.constrain(0, $max_hp)` |
-| Rounding and bounds | `round_down($cost)`, `round_up($cost)`, `$cost.round()`; standalone `round(1.6)`, `min(2, 3)`, `max(2, 3)` also work |
+| Rounding and bounds | `round_down($cost)`, `round_up($cost)`, `$cost.round()`; standalone `round(1.6)`, `trunc(5.7)` (drops the fraction), `min(2, 3)`, `max(2, 3)` also work |
 | Text normalization | `$label.replace("_", " ")` |
 
 `=` compares within an expression and assigns in an assignment statement. In the following script, the first `=` tests; the second writes:

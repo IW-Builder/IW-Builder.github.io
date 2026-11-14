@@ -14,7 +14,7 @@ When effort is limited, spend it here first, in this order: NPC one_liners; one 
 | authorStyle | How prose sounds: POV, tense, sensory focus, length, how turns end, phrases to avoid | Mechanics |
 | firstInput | First scene: place and time, who is present and what the player notices about them, the immediate situation, what not to decide | Introducing everyone; resolving the premise |
 | objective | Direction | A script |
-| NPC one_liner | Everything needed before first mention: name, age, role, one or two visual anchors, behavior, stance toward player | Adjectives only |
+| NPC one_liner | Identity and stance: name, age, role, behavior, stance toward player. Looks belong in appearance, which is always sent too | Adjectives only |
 | NPC detail | Essentials repeated, then labeled lines: Wants, Voice (with sample line), Tells, Toward you, Friction; for romance also Desire, In intimacy, Afterward | Biography |
 | appearance | Body, face, movement, distinguishing marks | Current outfit; verdicts like "beautiful" |
 | img_appearance / img_clothing | Short visual tags; default outfit | Personality |
@@ -43,7 +43,7 @@ Write `detail` as labeled lines; they are easy for the storyteller to use and ha
 
 `appearance` describes body, face and movement in plain, specific facts: build, height, notable features, how they stand and move. "Broad-hipped, soft stomach, freckled shoulders" gives the storyteller something to use; "beautiful", "curvy" and "perfect" do not. Vary bodies across the cast. Put the default outfit in img_clothing and track current clothing separately if it changes.
 
-Reveal secret_info through opportunity (a late conversation, a mistake, a bargain), never exposition. Minor characters need only a one_liner and a few lines; spend detail where the player will spend time.
+Reveal secret_info through opportunity (a late conversation, a mistake, a bargain), never exposition. Minor characters need only a one_liner and a few lines; spend detail where the player will spend time. Each name mention bills the whole detail for three turns: cut needless biography.
 
 ## Romance, desire and adult worlds
 

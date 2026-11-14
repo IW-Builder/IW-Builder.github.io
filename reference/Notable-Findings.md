@@ -35,7 +35,7 @@ The Infinite Worlds behavior most likely to surprise an author or break a world,
 
 ## Trackers and PawScript
 
-23. **Hidden and extra-hidden trackers are not secret.** The storyteller and any Storyteller-mode player can see them; extra-hidden only filters one display.
+23. **Hidden and extra-hidden trackers are not secret from players.** Any Storyteller-mode player can see them; extra-hidden only filters one display. The AI itself is told nothing about hidden trackers, not even that they exist (IW update note, November 2026).
 24. **Hidden and player-only trackers cannot auto-update.** Import turns automatic updating off for them.
 25. **Enforce format does not reject bad data** written by scripts or by hand. Validate shape and values in scripts before accepting them.
 26. **Random expressions disagree with each other.** Two `random()` calls, even in one block, give different results. Store one roll in a tracker when several things must agree.
@@ -49,7 +49,7 @@ The Infinite Worlds behavior most likely to surprise an author or break a world,
 
 ## Characters, knowledge and memory
 
-34. **Only the Summary is guaranteed early.** Character detail arrives after a name or location mention, and even then often fails to surface; the narrator invents a substitute that history then repeats. Put must-know facts in the Summary or always-on text and repeat them in detail.
+34. **Only the Summary and appearance are guaranteed early.** Detail arrives after a name mention (since 2026-11-12, not a location mention, and then the whole detail bills for three turns), and even then often fails to surface; the narrator invents a substitute that history then repeats. Put must-know facts in the Summary or always-on text and repeat them in detail.
 35. **Keyword and character cards cannot activate on the opening turn** without prior context. Put opening facts in firstInput or always-on instructions.
 36. **Keyword blocks match whole words, any case, and stay active for the matching turn plus three.** Substrings and plurals do not match.
 37. **NPCs get knowledge wrong.** They deny facts they were just told, credit the wrong source, or know secrets they should not. Secret Info can contradict the narration. Anti-omniscience instructions alone do not fix this.
@@ -92,7 +92,7 @@ Platform behavior that has not been verified, by area, with what to do meanwhile
 | AI tracker dependencies | How generation is staged internally | Stage prior-turn values explicitly when a rule depends on them |
 | Format and YAML | Complete grammar, XML mutation, strict typing, hidden AI repair | Validate shape and meaning in scripts before accepting state |
 | Legacy list context | A supported List Update target/value context in the current editor | Use for-each loops and collection methods instead of `current()` |
-| Memory | Summary contents and how they weigh against persistent context | Use summaryRequest and trackers for facts that must persist |
+| Memory | What later summaries do to imported characters; whether a large memory bills in full | Use summaryRequest and trackers for facts that must persist |
 | Length | A lengthening recipe; the authorStyle cap on models other than Dolphin | Put length rules in authorStyle; promise a ceiling near the number, not an exact length |
 | Images and video | Full image prompt and cache, precedence, internal macros, video runtime | Author with current style controls and preserve imported legacy fields; avoid depending on video until checked |
 | Limits and permissions | Maximum field, loop or trigger sizes; account-role permission matrix | Treat observed sizes as working examples |

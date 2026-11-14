@@ -2,7 +2,8 @@
  * Use on infiniteworlds.app with a game open (not while a turn is generating).
  * For every turn of the game it collects what World debug tools shows: the
  * evaluation, thinking (if the model has any), triggers fired, active
- * instruction blocks, matched lore and PawScript results and errors.
+ * instruction blocks, matched lore, PawScript results and errors, and the
+ * long term memory the storyteller used on that turn.
  * Downloads a readable .txt and a full .json. Read-only: it takes no game
  * actions, and puts the game back on the turn you were viewing.
  */
@@ -72,16 +73,39 @@
   // get_ui_info is what the "Previous turn" / "Next turn" buttons call.
   // change_to_turns_ago is relative to the turn the server is showing:
   // 1 = one turn back, -1 = one turn forward, 0 = stay.
-  function step(turnsAgo) {
+  function call(command, kwargs) {
     return new Promise((resolve, reject) => {
       if (socket.readyState !== WebSocket.OPEN) return reject(new Error('Connection to IW closed. Reload the page and try again.'));
       wrap(socket);
       const id = crypto.randomUUID();
       const timer = setTimeout(() => { pending.delete(id); late.add(id); reject(new Error('IW did not answer in time.')); }, 45000);
       pending.set(id, {resolve, reject, timer});
-      originalSend.call(socket, JSON.stringify({type: 'CALL', id, v: 8, args: [], vt_global: [], objects: [], command: 'get_ui_info',
-        kwargs: {change_to_turns_ago: turnsAgo, getting_alt_image: false, images_only_just_made: false}}));
+      originalSend.call(socket, JSON.stringify({type: 'CALL', id, v: 8, args: [], vt_global: [], objects: [], command, kwargs}));
     });
+  }
+  function step(turnsAgo) {
+    return call('get_ui_info', {change_to_turns_ago: turnsAgo, getting_alt_image: false, images_only_just_made: false});
+  }
+
+  // Long term memory: what World debug tools > Long term memory shows. The panel
+  // asks for it separately (get_turn_long_term_memory), by game id and turn.
+  // Games started before IW's memory system have none; one failure stops asking.
+  let memoryOff = null;
+  async function memory(gameUuid, turn) {
+    if (memoryOff) return {available: false, note: memoryOff};
+    if (!gameUuid) { memoryOff = 'no game id in the turn view'; return {available: false, note: memoryOff}; }
+    try {
+      const r = await call('get_turn_long_term_memory', {game_uuid: gameUuid, turn_number: turn});
+      if (!r || typeof r !== 'object' || !r.available || !r.summary) {
+        memoryOff = 'IW has no long term memory for this game (games started before the memory system have none)';
+        return {available: false, note: memoryOff, can_migrate: r && r.can_migrate};
+      }
+      return {available: true, summary_turn: r.summary_turn, latest_summary_turn: r.latest_summary_turn, recorded: r.recorded,
+        editable: r.editable, can_migrate: r.can_migrate, migration: r.migration, summary: r.summary};
+    } catch (e) {
+      memoryOff = 'could not read the long term memory (' + e.message + ')';
+      return {available: false, note: memoryOff};
+    }
   }
 
   // A turn's reply is a list of fields; the prologue's is a named object.
@@ -91,6 +115,7 @@
     const debug = r.find(x => x && typeof x === 'object' && !Array.isArray(x) && 'fired_triggers' in x && 'script_evaluations' in x);
     if (!debug || typeof r[3] !== 'number' || typeof r[4] !== 'number') throw new Error('IW changed its reply format; this exporter needs an update.');
     return {prologue: false, turn: r[3], max: r[4], action: r[0], narration: r[1], title: r[11], character: r[12], secret_info: r[13],
+      game_uuid: r[8] && typeof r[8] === 'object' ? r[8].gameUuid : null,
       tracked_items: (r[14] || []).map(t => ({name: t.name, value: t.value, visibility: t.visibility})),
       evaluation: typeof r[24] === 'string' ? r[24] : '', thinking: typeof r[25] === 'string' ? r[25] : '', debug};
   }
@@ -119,19 +144,62 @@
       instruction_block_names: (d.instruction_blocks || []).map(b => b.name)};
   }
   // In the JSON, a block's rendered content is kept only on turns where it changed.
+  // The long term memory changes only when IW writes a summary, so it is kept in
+  // full on the turn it first appears and pointed to (same_as_turn) after that.
   function compactTurns() {
-    let prev = {};
+    let prev = {}, memKey = null, memTurn = null;
     return turns.map(t => {
       const blocks = t.active_instruction_blocks.map(b => prev[b.name] === b.content && b.content != null ? {name: b.name, unchanged: true} : b);
       prev = Object.fromEntries(t.active_instruction_blocks.map(b => [b.name, b.content]));
-      return {...t, active_instruction_blocks: blocks};
+      let mem = t.long_term_memory;
+      if (mem && mem.available) {
+        const key = JSON.stringify(mem.summary);
+        if (key === memKey) mem = {available: true, same_as_turn: memTurn, summary_turn: mem.summary_turn};
+        else { memKey = key; memTurn = t.turn; }
+      }
+      return {...t, active_instruction_blocks: blocks, long_term_memory: mem};
     });
+  }
+
+  // Readable text for any memory value: nested objects and lists, indented.
+  function outline(v, pad) {
+    if (v == null || v === '') return [pad + '(empty)'];
+    if (typeof v !== 'object') return String(v).split('\n').map(s => pad + s);
+    const entries = Array.isArray(v) ? v.map(x => [null, x]) : Object.entries(v);
+    if (!entries.length) return [pad + '(empty)'];
+    const L = [];
+    for (const [k, x] of entries) {
+      const label = k == null ? '- ' : k + ':';
+      if (k == null && x != null && typeof x === 'object' && !Array.isArray(x) && Object.keys(x).length) {
+        // A list item that is an object: "- first: value", the rest lined up under it.
+        const inner = outline(x, pad + '  ');
+        inner[0] = pad + '- ' + inner[0].slice(pad.length + 2);
+        L.push(...inner);
+        continue;
+      }
+      if (x != null && typeof x === 'object' && (Array.isArray(x) ? x.length : Object.keys(x).length)) { L.push(pad + label); L.push(...outline(x, pad + '    ')); }
+      else if (typeof x === 'string' && x.includes('\n')) { L.push(pad + label); L.push(...outline(x, pad + '    ')); }
+      else L.push(pad + label + (k == null ? '' : ' ') + (x == null || x === '' ? '(empty)' : typeof x === 'object' ? '(empty)' : String(x)));
+    }
+    return L;
+  }
+  const MEMORY_SECTIONS = [['story', 'Story'], ['current_situation', 'Current situation'], ['key_moments', 'Key moments'], ['characters', 'Characters'],
+    ['plot_threads', 'Plot threads'], ['secrets', 'Secrets'], ['lore', 'Lore'], ['future_notes', 'Future notes']];
+  function memoryText(m) {
+    const s = m.summary || {}, L = [];
+    L.push((m.summary_turn ? 'Summary written after turn ' + m.summary_turn : 'Starting memory (no summary written yet)') +
+      (s.as_of_when ? ' (story time: ' + s.as_of_when + ')' : ''));
+    const known = new Set(MEMORY_SECTIONS.map(x => x[0]));
+    for (const [key, title] of MEMORY_SECTIONS) { L.push('', title + ':'); L.push(...outline(s[key], '    ')); }
+    const extra = Object.keys(s).filter(k => !known.has(k) && !k.startsWith('_') && !['format', 'v12_from_start', 'isCharactersOnlyStub', 'as_of_turn', 'as_of_when'].includes(k));
+    for (const k of extra) { L.push('', k + ':'); L.push(...outline(s[k], '    ')); }
+    return L;
   }
 
   function txt() {
     const L = [];
     L.push('== ' + (meta.title || 'Infinite Worlds game') + ' - debug export ==', '', 'Character: ' + (meta.character || ''), 'Exported: ' + new Date().toISOString(), 'Turns: ' + turns.length + (meta.complete ? '' : ' (incomplete: ' + meta.reason + ')'), '');
-    let prevBlocks = {};
+    let prevBlocks = {}, prevMemory = null, prevMemoryTurn = null;
     for (const t of turns) {
       L.push('', '-- Turn ' + t.turn + ' --', '');
       if (t.action) L.push('Action', '------', t.action, '');
@@ -153,6 +221,15 @@
       for (const s of t.pawscript) L.push('- ' + s.trigger + ' [' + s.kind + (s.effect ? ': ' + s.effect : '') + '] ' + s.status + (s.error ? '  ERROR: ' + (typeof s.error === 'string' ? s.error : JSON.stringify(s.error)) : ''));
       L.push('PawScript errors: ' + t.pawscript_errors.length, '');
       if (t.world_debug_log.length) L.push('World debug log', '---------------', t.world_debug_log.map(x => '- ' + (typeof x === 'string' ? x : JSON.stringify(x))).join('\n'), '');
+      const m = t.long_term_memory;
+      L.push('Long term memory', '----------------');
+      if (!m || !m.available) L.push('(' + ((m && m.note) || 'not available') + ')');
+      else {
+        const key = JSON.stringify(m.summary);
+        if (key === prevMemory) L.push('(unchanged since turn ' + prevMemoryTurn + ')');
+        else { L.push(...memoryText(m)); prevMemory = key; prevMemoryTurn = t.turn; }
+      }
+      L.push('');
     }
     return L.join('\n');
   }
@@ -188,7 +265,9 @@
       here = v.turn;
       if (v.turn !== 1) throw new Error('Could not reach turn 1 (got turn ' + v.turn + ').');
       for (;;) {
-        turns.push(record(v));
+        const rec = record(v);
+        rec.long_term_memory = await memory(v.game_uuid, v.turn);
+        turns.push(rec);
         meta.definitions = definitions(v); // keeps the latest turn's definitions
         say('collected turn ' + v.turn + ' of ' + v.max + '...');
         if (stopRequested) { reason = 'stopped by you'; break; }
@@ -208,6 +287,7 @@
       }
     } catch (e) { reason += ' Warning: could not restore the view (' + e.message + '); reload the page before playing.'; }
     meta.reason = reason;
+    if (memoryOff) meta.long_term_memory_note = memoryOff;
     if (!turns.length) return finish('Failed: ' + (reason || 'nothing collected'));
     save(meta.complete ? 'Done. ' : 'Partial export (' + reason + '). ');
   }

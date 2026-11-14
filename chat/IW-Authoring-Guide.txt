@@ -4,9 +4,9 @@ Follow Authoring-Prompt.md (in IW-Authoring-Guide.txt). Load companion editions 
 Editions and their contents:
 - IW-Complete-Reference.txt: the whole reference in one file: everything in the four reference editions below. Files: the IW-Authoring-Guide.txt, IW-Technical-Reference.txt, IW-Behavior.txt, IW-Payloads.txt files
 - IW-Authoring-Guide.txt: start here: prompt, template, narrative craft, trackers, triggers, data banks and library integration. Files: Authoring-Prompt.md, World-Template.json, reference/Craft.md, reference/Trackers.md, reference/Triggers.md, reference/Trigger-Catalog.md, reference/Portable-Banks.md, library/Integration.md
-- IW-Technical-Reference.txt: exact payloads, PawScript, runtime, characters, images/models and recipes. Files: reference/Schema.md, reference/PawScript.md, reference/Runtime.md, reference/Characters.md, reference/Images-and-Models.md, reference/Recipes.md
-- IW-Behavior.txt: notable findings and open questions, editor/UI workflows with import checks, cost, verified runtime behavior and the default Evaluation. Files: reference/Notable-Findings.md, reference/Editor-UI.md, reference/Cost.md, reference/Verified-Behavior.md, reference/Default-Evaluation.txt
-- IW-Payloads.txt: exact native payload snippets for every condition and effect, the example index and the storyteller model IDs. Files: examples/Payloads.md, examples/index.json, reference/Current-AI-Profiles.json
+- IW-Technical-Reference.txt: exact payloads, PawScript, runtime, characters and recipes. Files: reference/Schema.md, reference/PawScript.md, reference/Runtime.md, reference/Characters.md, reference/Recipes.md
+- IW-Behavior.txt: notable findings and open questions, editor/UI workflows with import checks, cost and verified runtime behavior. Files: reference/Notable-Findings.md, reference/Editor-UI.md, reference/Cost.md, reference/Verified-Behavior.md
+- IW-Payloads.txt: exact native payload snippets for every condition and effect, the example index, the storyteller model IDs, images and models, and the default Evaluation. Files: examples/Payloads.md, examples/index.json, reference/Current-AI-Profiles.json, reference/Images-and-Models.md, reference/Default-Evaluation.txt
 - IW-Mechanics-Examples.txt: complete mechanics example worlds: recipes, optional block, starting values, layered opening, on-demand generation and a showcase. Files: examples/recipe-request-commit.json, examples/recipe-completion-award.json, examples/recipe-candidate-acceptance.json, examples/recipe-archive-reactivate.json, examples/recipe-cached-random.json, examples/recipe-consumed-timer.json, examples/recipe-choice-domain.json, examples/recipe-compiled-plot.json, examples/recipe-choice-followup.json, examples/recipe-threshold-unlock.json, examples/optional-block.json, examples/character-starting-values.json, examples/recipe-layered-opening.json, examples/recipe-on-demand-generation.json, examples/showcase-glass-ledger.json
 - IW-Narrative-Examples.txt: complete narrative example worlds: ensemble romance, fantasy expedition, contained horror, fantasy relationship and high-heat erotica. Files: examples/narrative-vendemmia.json, examples/narrative-listening-road.json, examples/narrative-address-after-midnight.json, examples/narrative-seven-nights.json, examples/narrative-velvet-wager.json
 - IW-Sample-Blocks.txt: optional library modules (read library/Integration.md first). Files: library/Sample-Blocks.json
@@ -71,7 +71,7 @@ Minimum creative brief: premise, player role, tone/content boundaries, and endin
 
 Choose the lightest useful features: prose and NPC cards for narrative; keywords for occasional lore; AI trackers for bounded narrative memory; native conditions/effects for simple mechanics; scripts for exact accounting; player choices for constrained decisions. Use the same general tools for arbitrary genres and systems. In any mode, notice reusable characters or cohesive mechanics and offer extraction as entries or dependency-aware bundles when useful; do not copy them into a bank without the user choosing it.
 
-Default new worlds to allowing sharing and editing; change this on request and preserve existing preferences during edits. Set mature/nsfw and content boundaries deliberately for the brief; the template sets both content flags true, so change them to false for worlds without mature content. The flags set the audience; the creative boundaries go in instructions.
+Default new worlds to allowing sharing and editing; change this on request and preserve existing preferences during edits. Default `showPawScriptButtons` true and `allowChangeCharacterItemValues` false; enable the latter only for deliberate typed starting values (see Editor-UI.md). Set mature/nsfw and content boundaries deliberately for the brief; the template sets both content flags true, so change them to false for worlds without mature content. The flags set the audience; the creative boundaries go in instructions.
 
 For new worlds, specifically discuss Storymaster and naming unless preferences are already supplied. Storymaster is popular in the IW community and substantial: explain its direction/planning role and approximate block plus supporting costs before the user chooses it, a smaller selection of modules, or ordinary storytelling. Never silently include or skip this choice. Offer the five-candidate naming technique in reference/Craft.md as a soft default; if accepted, use it while authoring and include a separate Naming block for play. Batch these with other initial questions. Treat whereWhen as a soft default, and offer other modules only when they suit the brief. Share approximate module token costs from library/Integration.md, noting tokenizer variation.
 
@@ -257,7 +257,8 @@ END OF DOCUMENT: Authoring-Prompt.md
   "instructionBlocks": [],
   "NPCs": [],
   "loreBookEntries": [],
-  "designNotes": ""
+  "designNotes": "",
+  "showPawScriptButtons": true
 }
 ===== END FILE: World-Template.json =====
 
@@ -278,7 +279,7 @@ When effort is limited, spend it here first, in this order: NPC one_liners; one 
 | authorStyle | How prose sounds: POV, tense, sensory focus, length, how turns end, phrases to avoid | Mechanics |
 | firstInput | First scene: place and time, who is present and what the player notices about them, the immediate situation, what not to decide | Introducing everyone; resolving the premise |
 | objective | Direction | A script |
-| NPC one_liner | Everything needed before first mention: name, age, role, one or two visual anchors, behavior, stance toward player | Adjectives only |
+| NPC one_liner | Identity and stance: name, age, role, behavior, stance toward player. Looks belong in appearance, which is always sent too | Adjectives only |
 | NPC detail | Essentials repeated, then labeled lines: Wants, Voice (with sample line), Tells, Toward you, Friction; for romance also Desire, In intimacy, Afterward | Biography |
 | appearance | Body, face, movement, distinguishing marks | Current outfit; verdicts like "beautiful" |
 | img_appearance / img_clothing | Short visual tags; default outfit | Personality |
@@ -307,7 +308,7 @@ Write `detail` as labeled lines; they are easy for the storyteller to use and ha
 
 `appearance` describes body, face and movement in plain, specific facts: build, height, notable features, how they stand and move. "Broad-hipped, soft stomach, freckled shoulders" gives the storyteller something to use; "beautiful", "curvy" and "perfect" do not. Vary bodies across the cast. Put the default outfit in img_clothing and track current clothing separately if it changes.
 
-Reveal secret_info through opportunity (a late conversation, a mistake, a bargain), never exposition. Minor characters need only a one_liner and a few lines; spend detail where the player will spend time.
+Reveal secret_info through opportunity (a late conversation, a mistake, a bargain), never exposition. Minor characters need only a one_liner and a few lines; spend detail where the player will spend time. Each name mention bills the whole detail for three turns: cut needless biography.
 
 ## Romance, desire and adult worlds
 
@@ -444,7 +445,7 @@ Ownership:
 
 Do not let the AI and scripts compete to rewrite the same mechanical YAML document. Consolidating related flags in a YAML tracker reduces editor clutter; it does not by itself reduce trigger count or guarantee lower token cost. Large AI-visible YAML and duplicative logs still cost context. Keep hidden cache text out of the storyteller unless needed.
 
-Visibility values are everyone (player and AI), ai_only and ai_only_boring (AI-only), player_only, hidden and hidden_boring (hidden from player and AI). The `_boring` suffix is the editor's "Hide this item even in Storyteller Mode", a display filter. The editor clears it when player visibility is enabled, so player_only_boring is not a combination. Exports can include hidden trackers and secret information when Storyteller Mode is enabled; select those export options when collecting diagnostics. Visibility is not script access control: hidden values remain script-usable at runtime.
+Visibility values are everyone (player and AI), ai_only and ai_only_boring (AI-only), player_only, hidden and hidden_boring (hidden from player and AI). The `_boring` suffix is the editor's "Hide this item even in Storyteller Mode", a display filter. The editor clears it when player visibility is enabled, so player_only_boring is not a combination. Exports can include hidden trackers and secret information when Storyteller Mode is enabled; select those export options when collecting diagnostics. Visibility is not script access control: hidden values remain script-usable at runtime. The AI is told nothing about hidden trackers, not even that they exist [DOCUMENTED: IW's November 2026 update note; before it, the AI was told they existed without their details]. Anything it must know reaches it through a visible tracker, an instruction block or a message.
 
 Import normalizes automatic updating off for hidden, hidden_boring and player_only; everyone, ai_only and ai_only_boring can retain automatic updates. Extra-hidden values remain visible in the Storyteller tracker editor. What the AI receives is not shown by any visibility setting.
 
@@ -494,7 +495,7 @@ Start + Mid Game + Repeat can execute before the opening and again during turn 1
 With Start false, Mid Game has no effect; a stored true value requires no warning or repair. A trigger with no conditions and Start false does not fire automatically, but can remain available for explicit dispatch.
 
 - Prerequisites/blockers with firedThisTurn true are this-turn checks that see a producer only when it is earlier in triggerEvents, and reset each turn. False uses game history, which sees a later-ordered producer from the next turn. It also sees an earlier-ordered producer on the same turn, so false means "has fired, this turn or before" and cannot defer a consumer to the next turn. To defer, order the consumer above its producer, or gate it on a stored turn stamp such as `$game.turn_number > $x.stamp_turn`. The editor disallows requiring and blocking the same trigger; do not generate that conflict.
-- Always serialize canTriggerMoreThanOnce and the timing flags explicitly rather than relying on defaults. When reading a shared export, treat a trigger with no `canTriggerMoreThanOnce` key as one-shot: exports write the key only when it is true, so an "hourly" or "nightly" trigger without it fires once per game [OBSERVED in three community exports; not run]. Use repeatable commit triggers with idempotent state guards where appropriate, and true one-shot events when required.
+- Always serialize canTriggerMoreThanOnce and the timing flags explicitly rather than relying on defaults. Use repeatable commit triggers with idempotent state guards where appropriate, and true one-shot events when required.
 - Restriction: Do not combine Start of Game with Scenario or minimum-turn conditions. The editor warns that these conditions are ignored; minimum-turn bypass is confirmed during both startup and mid-game execution. Use a separate startup trigger and leave Start off on the conditional trigger.
 
 ### Execution order and effect semantics:
@@ -544,7 +545,7 @@ Eligible no-effect triggers record firing. Random dispatch bypasses target condi
 
 ### Scenarios
 
-Say Scenarios when talking to users; the root JSON field is `conditions`, referenced by `triggerOnEvent`. Binding requires an exact registry string, including case, spaces and punctuation; preserved JSON can still be unbound, so check the selector after import. A Scenario fires only when the event actually happens in the narrated outcome; the narrator can refuse or substitute a requested action. An event the narrator invents, or a player's purpose it rewrites, also satisfies the Scenario. Unused registry entries and duplicate references are tolerated, and import fills an absent registry from the trigger references. Use literal Scenarios with explicit state gates; dynamic Scenario text (`<<$slot>>`) did not fire at all when retested on 2026-11-01, even as a single slot, and blank slot text is not dependable deactivation. The editor stops adding Scenarios at ten entries, but imported registries of twelve or more work.
+Say Scenarios when talking to users; the root JSON field is `conditions`, referenced by `triggerOnEvent`. Binding requires an exact registry string, including case, spaces and punctuation; preserved JSON can still be unbound, so check the selector after import. A Scenario fires only when the event actually happens in the narrated outcome; the narrator can refuse or substitute a requested action. An event the narrator invents, or a player's purpose it rewrites, also satisfies the Scenario. Unused registry entries and duplicate references are tolerated, and import fills an absent registry from the trigger references. A registry that is present but empty (`"conditions": []`) is not a safe stand-in: in one community world every Scenario trigger showed no Scenario in the editor, so write the strings into the list or leave the field out. Use literal Scenarios with explicit state gates; dynamic Scenario text (`<<$slot>>`) did not fire at all when retested on 2026-11-01, even as a single slot, and blank slot text is not dependable deactivation. The editor stops adding Scenarios at ten entries, but imported registries of twelve or more work.
 
 ---
 

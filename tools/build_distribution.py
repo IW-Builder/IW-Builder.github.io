@@ -32,7 +32,6 @@ GROUPS = {
         'reference/PawScript.md',
         'reference/Runtime.md',
         'reference/Characters.md',
-        'reference/Images-and-Models.md',
         'reference/Recipes.md',
     ],
     'IW-Behavior.txt': [
@@ -40,12 +39,13 @@ GROUPS = {
         'reference/Editor-UI.md',
         'reference/Cost.md',
         'reference/Verified-Behavior.md',
-        'reference/Default-Evaluation.txt',
     ],
     'IW-Payloads.txt': [
         'examples/Payloads.md',
         'examples/index.json',
         'reference/Current-AI-Profiles.json',
+        'reference/Images-and-Models.md',
+        'reference/Default-Evaluation.txt',
     ],
     'IW-Mechanics-Examples.txt': [
         'examples/recipe-request-commit.json',
@@ -88,9 +88,9 @@ COMPLETE_EDITION = 'IW-Complete-Reference.txt'
 EDITION_PURPOSE = {
     COMPLETE_EDITION: 'the whole reference in one file: everything in the four reference editions below',
     'IW-Authoring-Guide.txt': 'start here: prompt, template, narrative craft, trackers, triggers, data banks and library integration',
-    'IW-Technical-Reference.txt': 'exact payloads, PawScript, runtime, characters, images/models and recipes',
-    'IW-Behavior.txt': 'notable findings and open questions, editor/UI workflows with import checks, cost, verified runtime behavior and the default Evaluation',
-    'IW-Payloads.txt': 'exact native payload snippets for every condition and effect, the example index and the storyteller model IDs',
+    'IW-Technical-Reference.txt': 'exact payloads, PawScript, runtime, characters and recipes',
+    'IW-Behavior.txt': 'notable findings and open questions, editor/UI workflows with import checks, cost and verified runtime behavior',
+    'IW-Payloads.txt': 'exact native payload snippets for every condition and effect, the example index, the storyteller model IDs, images and models, and the default Evaluation',
     'IW-Mechanics-Examples.txt': 'complete mechanics example worlds: recipes, optional block, starting values, layered opening, on-demand generation and a showcase',
     'IW-Narrative-Examples.txt': 'complete narrative example worlds: ensemble romance, fantasy expedition, contained horror, fantasy relationship and high-heat erotica',
     'IW-Sample-Blocks.txt': 'optional library modules (read library/Integration.md first)',
@@ -323,9 +323,9 @@ DESCRIPTIONS = {
     'chat/index.html': 'HTML page containing IW-Authoring-Guide.txt, with links to the companion editions.',
     'chat/IW-Complete-Reference.txt': 'Combined text, all reference in one attachment (about 75k tokens): the prompt, template, every reference guide, Payloads and the example index. Too large for most URL fetchers; attach it.',
     'chat/IW-Authoring-Guide.txt': 'Combined text, start here: prompt, template, Evidence, Craft, Trackers, Triggers, Trigger-Catalog, Portable-Banks and library Integration.',
-    'chat/IW-Technical-Reference.txt': 'Combined text: Schema, PawScript, Runtime, Characters, Images-and-Models, and Recipes.',
-    'chat/IW-Behavior.txt': 'Combined text: Notable-Findings (with open questions), Editor-UI, Cost, Verified-Behavior and Default Evaluation.',
-    'chat/IW-Payloads.txt': 'Combined text: Payloads.md (every condition and effect), the example index and the storyteller model IDs. Small and essential for mechanics.',
+    'chat/IW-Technical-Reference.txt': 'Combined text: Schema, PawScript, Runtime, Characters and Recipes.',
+    'chat/IW-Behavior.txt': 'Combined text: Notable-Findings (with open questions), Editor-UI, Cost and Verified-Behavior.',
+    'chat/IW-Payloads.txt': 'Combined text: Payloads.md (every condition and effect), the example index, the storyteller model IDs, Images-and-Models and the default Evaluation. Small and essential for mechanics.',
     'chat/IW-Mechanics-Examples.txt': 'Combined text: complete mechanics example worlds (recipes, optional block, starting values, layered opening, on-demand generation, showcase).',
     'chat/IW-Narrative-Examples.txt': 'Combined text: all five complete narrative example worlds.',
     'chat/IW-Sample-Blocks.txt': 'Combined text: library modules (Sample-Blocks.json). Integration guide is in IW-Authoring-Guide.txt.',
@@ -357,6 +357,7 @@ DESCRIPTIONS = {
     'library/README.md': 'Human-friendly overview of the library.',
     'library/Sample-Blocks.json': 'Library modules in world-file format: time/location, characterization, craft, pacing, trackers, image styles and more. Copy whole content values by name.',
     'library/Storymaster-Suite.json': 'The Storymaster narrative-direction framework in world-file format. Substantial; read Integration.md first.',
+    'library/Storymaster-3-Beta.md': 'Official Storymaster 3 and 3 Proactive release text (beta) by SelfB and TWNT, unedited: reference for writing custom evaluation instructions. Using it in a world requires crediting the version and both creators in the description.',
     # Examples (individual worlds are described by examples/index.json)
     'examples/README.md': 'Human guide to the examples, grouped by what you want to do.',
     'examples/Payloads.md': 'Compact native payload snippets for every condition and effect, taken from the example worlds.',
@@ -384,9 +385,9 @@ DESCRIPTIONS = {
     'tools/test_story_export.py': 'Maintainer tests for story_export.py.',
     'tools/test_iw_sort.py': 'Maintainer tests for iw_sort.py.',
     # Cost exporter
-    'cost/index.html': 'IW Cost Exporter: install page for a bookmarklet that downloads your IW credit history as CSV and JSON.',
+    'cost/index.html': 'IW Cost Exporter install page: a bookmarklet that downloads your credit history with every turn\'s cost breakdown (IW\'s own download has totals only).',
     'cost/IW-Cost-Exporter-bookmarklet.js': 'Readable source of the cost-exporter bookmarklet.',
-    'cost/README.md': 'Human guide to the cost exporter: install, use, how it works, spreadsheet tips.',
+    'cost/README.md': 'Guide to the cost exporter: install, use, output columns.',
     # Checker
     'checker/index.html': "Browser validator: paste a world or a model's whole reply; runs validate_iw_export.py locally, joins numbered chunks and copies a report for the AI.",
 }
@@ -449,7 +450,7 @@ INDEX_SECTIONS = [
     ('library', 'Sample library', 'Optional modules to adapt into worlds.'),
     ('tools', 'Tools', 'Python tools for models or users that can run code. Without Python, use the checker.'),
     ('checker', 'Browser checker', None),
-    ('cost', 'Cost exporter', 'Downloads your own credit history from IW; see reference/Cost.md for estimating.'),
+    ('cost', 'Cost exporter', 'Downloads your credit history with every turn\'s cost breakdown (IW\'s own download has totals only); see reference/Cost.md for estimating.'),
     ('chat', 'Combined text editions', 'Single-file bundles for chats without web access or with tool limits: the whole reference in one file, or split into four for size-limited tools, plus examples, library and tools to attach only when asked for. Web-browsing models should prefer the individual files above.'),
 ]
 

@@ -1,5 +1,10 @@
 # IW Cost Exporter
 
+Infinite Worlds can download your credit history itself (since November
+2026), but only with each turn's total. This bookmarklet adds the per-category
+breakdown of every turn (instructions, lore, trackers, short and long term
+memory, outputs), which is what you need to see where a world's cost goes.
+
 Downloads your full Infinite Worlds credit history as CSV and JSON: every
 transaction with its UTC timestamp, world, turn, model, total cost, the
 input/output cost breakdown, and your balance after it.
