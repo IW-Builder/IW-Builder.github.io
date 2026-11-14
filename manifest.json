@@ -1,6 +1,6 @@
 {
   "algorithm": "sha256",
-  "generatedAt": "2026-11-14T04:05:03+00:00",
+  "generatedAt": "2026-11-14T18:10:49+00:00",
   "files": [
     {
       "path": "Authoring-Prompt.md",
@@ -34,8 +34,8 @@
     },
     {
       "path": "chat/IW-Complete-Reference.txt",
-      "bytes": 310256,
-      "sha256": "24e6b5c9ec9153532897e8fae0402e339ceb73c932288e157498cbd84c196458"
+      "bytes": 310224,
+      "sha256": "91d758a6c7f45b7de905610ac54f66f2fa72e29501aa5964607962746a53e3a9"
     },
     {
       "path": "chat/IW-Mechanics-Examples.txt",
@@ -64,8 +64,8 @@
     },
     {
       "path": "chat/IW-Technical-Reference.txt",
-      "bytes": 89997,
-      "sha256": "7155699e927c173f4953cd6de8ac50e5c9444030869850b191c22aa929ec5c02"
+      "bytes": 89965,
+      "sha256": "736b6f9c201d2f3939addd12d50ef7823aeabcfc9512fa8847b7a3b66424454b"
     },
     {
       "path": "chat/IW-Tools.txt",
@@ -85,7 +85,7 @@
     {
       "path": "chat/sources.json",
       "bytes": 4137,
-      "sha256": "e40bd72cb0af0a138fb385de3f2f74fd577461a528f6e9684cac3b138c745efb"
+      "sha256": "02f7e4a5f8e99dbad5de5c2fe2037d420c15073e60d48c9206818dabd1107a79"
     },
     {
       "path": "checker/index.html",
@@ -524,8 +524,8 @@
     },
     {
       "path": "reference/Recipes.md",
-      "bytes": 23601,
-      "sha256": "6e9c1b3666d2d482accd0cbeb0e4c95ebcc793bd1739594635ce90689536ffea"
+      "bytes": 23569,
+      "sha256": "d3906585d6d45f7d19ef1a2f74c8f3df645e51d13ac6ad0f237c4b2e329a4205"
     },
     {
       "path": "reference/Runtime.md",
