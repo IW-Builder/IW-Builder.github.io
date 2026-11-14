@@ -24,7 +24,7 @@
       "examples/index.json",
       "reference/Current-AI-Profiles.json"
     ],
-    "sha256": "abeee79cf316b095b634f3a6c232134d461eb7d691a5ed3cf1d8e8d9eba8b8ed"
+    "sha256": "24e6b5c9ec9153532897e8fae0402e339ceb73c932288e157498cbd84c196458"
   },
   "IW-Authoring-Guide.txt": {
     "sourceFiles": [
@@ -48,7 +48,7 @@
       "reference/Images-and-Models.md",
       "reference/Recipes.md"
     ],
-    "sha256": "2ee0dd98771f0fe35f00b127c1dc31328c0ca77d50b49f9061f3701d74c3982e"
+    "sha256": "7155699e927c173f4953cd6de8ac50e5c9444030869850b191c22aa929ec5c02"
   },
   "IW-Behavior.txt": {
     "sourceFiles": [
