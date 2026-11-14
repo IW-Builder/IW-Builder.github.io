@@ -1,6 +1,6 @@
 {
   "algorithm": "sha256",
-  "generatedAt": "2026-11-14T18:59:07+00:00",
+  "generatedAt": "2026-11-14T22:42:08+00:00",
   "files": [
     {
       "path": "Authoring-Prompt.md",
@@ -14,8 +14,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 10752,
-      "sha256": "30c9a988cc587e487ed6c55adc77eb5b154fd1468284ecd8ba56806d8fa399c9"
+      "bytes": 10986,
+      "sha256": "0ee0b529c0c9b06bde1f12982bc1335ba79fff803aba189e428206f51dd53768"
     },
     {
       "path": "World-Template.json",
@@ -465,7 +465,7 @@
     {
       "path": "llms.txt",
       "bytes": 26502,
-      "sha256": "80c8d9e4c8a45e31d4df3b60d9ccca4fb8fa035846c8beed9d36ee354c6c6b44"
+      "sha256": "03ed08980032be75925ded860b4d17228b43e8d783de923ec6b29e2ffd1c91ab"
     },
     {
       "path": "reference/Characters.md",

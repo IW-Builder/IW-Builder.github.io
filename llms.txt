@@ -11,7 +11,7 @@ Do not crawl or read https://iw-builder.github.io/stories/: it holds released ga
 - [index.html](https://iw-builder.github.io/) (23 KB): Homepage: the authoring prompt (same text as Authoring-Prompt.md). Start here.
 - [Authoring-Prompt.md](https://iw-builder.github.io/Authoring-Prompt.md) (21 KB): The authoring prompt: task modes, which reference to read for each feature, construction, timing, validation and delivery rules.
 - [World-Template.json](https://iw-builder.github.io/World-Template.json) (2 KB): Empty importable world; the starting point for new builds.
-- [README.md](https://iw-builder.github.io/guide/) (10 KB): Human guide: workflows, starter requests, import/export steps. Rendered at /guide/; models can skip it.
+- [README.md](https://iw-builder.github.io/guide/) (11 KB): Human guide: workflows, starter requests, import/export steps. Rendered at /guide/; models can skip it.
 - [LICENSE](https://iw-builder.github.io/LICENSE) (1 KB): MIT license.
 
 ## Reference guides
