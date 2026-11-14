@@ -41,7 +41,9 @@ Tracker definitions use an ID, display name, explicit variableName, dataType, vi
 
 dataType values: text, number, yaml, xml. Lists and booleans live inside YAML; there is no native boolean/list dataType. `initialValue` is a JSON string even for numeric or structured content. The editor does not enforce numeric-only input in Number controls, so use numeric literals when calculations depend on them.
 
-visibility values: everyone, player_only, ai_only, ai_only_boring, hidden, hidden_boring. Hidden trackers remain readable by scripts and are omitted from ordinary player exports.
+visibility values: everyone, player_only, ai_only, ai_only_boring, hidden, hidden_boring. Trigger flags: an export writes `canTriggerMoreThanOnce` only when it is true, so in a shared export a trigger without the key is one-shot, and an "hourly" or "nightly" trigger without it fires once per game [OBSERVED in three community exports; not run].
+
+Hidden trackers remain readable by scripts. A world export (the world JSON) always includes every tracker, hidden ones too, whatever the player settings, so a tracker missing from a world export does not exist. A story export leaves hidden trackers out while Storyteller mode is off and includes them when it is on [OBSERVED, editor].
 
 `formatExample` and `formatSchema` are strings. The library demonstrates a YAML-like schema notation with text/number, optional-key and open-content forms. formatSchema is not JSON Schema, and the validator does not enforce its grammar.
 

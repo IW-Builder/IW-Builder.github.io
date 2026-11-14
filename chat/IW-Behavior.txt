@@ -1,12 +1,12 @@
-Infinite Worlds Authoring Kit: IW-Behavior.txt (notable findings and open questions, editor/UI workflows with import checks, cost, verified runtime behavior and the default Evaluation).
+Infinite Worlds Authoring Kit: IW-Behavior.txt (notable findings and open questions, editor/UI workflows with import checks, cost and verified runtime behavior).
 Generated text edition. BEGIN FILE / END FILE sections identify package-relative source paths. This is reference material, not one IW world.
 Follow Authoring-Prompt.md (in IW-Authoring-Guide.txt). Load companion editions only when the task needs them.
 Editions and their contents:
 - IW-Complete-Reference.txt: the whole reference in one file: everything in the four reference editions below. Files: the IW-Authoring-Guide.txt, IW-Technical-Reference.txt, IW-Behavior.txt, IW-Payloads.txt files
 - IW-Authoring-Guide.txt: start here: prompt, template, narrative craft, trackers, triggers, data banks and library integration. Files: Authoring-Prompt.md, World-Template.json, reference/Craft.md, reference/Trackers.md, reference/Triggers.md, reference/Trigger-Catalog.md, reference/Portable-Banks.md, library/Integration.md
-- IW-Technical-Reference.txt: exact payloads, PawScript, runtime, characters, images/models and recipes. Files: reference/Schema.md, reference/PawScript.md, reference/Runtime.md, reference/Characters.md, reference/Images-and-Models.md, reference/Recipes.md
-- IW-Behavior.txt: notable findings and open questions, editor/UI workflows with import checks, cost, verified runtime behavior and the default Evaluation. Files: reference/Notable-Findings.md, reference/Editor-UI.md, reference/Cost.md, reference/Verified-Behavior.md, reference/Default-Evaluation.txt
-- IW-Payloads.txt: exact native payload snippets for every condition and effect, the example index and the storyteller model IDs. Files: examples/Payloads.md, examples/index.json, reference/Current-AI-Profiles.json
+- IW-Technical-Reference.txt: exact payloads, PawScript, runtime, characters and recipes. Files: reference/Schema.md, reference/PawScript.md, reference/Runtime.md, reference/Characters.md, reference/Recipes.md
+- IW-Behavior.txt: notable findings and open questions, editor/UI workflows with import checks, cost and verified runtime behavior. Files: reference/Notable-Findings.md, reference/Editor-UI.md, reference/Cost.md, reference/Verified-Behavior.md
+- IW-Payloads.txt: exact native payload snippets for every condition and effect, the example index, the storyteller model IDs, images and models, and the default Evaluation. Files: examples/Payloads.md, examples/index.json, reference/Current-AI-Profiles.json, reference/Images-and-Models.md, reference/Default-Evaluation.txt
 - IW-Mechanics-Examples.txt: complete mechanics example worlds: recipes, optional block, starting values, layered opening, on-demand generation and a showcase. Files: examples/recipe-request-commit.json, examples/recipe-completion-award.json, examples/recipe-candidate-acceptance.json, examples/recipe-archive-reactivate.json, examples/recipe-cached-random.json, examples/recipe-consumed-timer.json, examples/recipe-choice-domain.json, examples/recipe-compiled-plot.json, examples/recipe-choice-followup.json, examples/recipe-threshold-unlock.json, examples/optional-block.json, examples/character-starting-values.json, examples/recipe-layered-opening.json, examples/recipe-on-demand-generation.json, examples/showcase-glass-ledger.json
 - IW-Narrative-Examples.txt: complete narrative example worlds: ensemble romance, fantasy expedition, contained horror, fantasy relationship and high-heat erotica. Files: examples/narrative-vendemmia.json, examples/narrative-listening-road.json, examples/narrative-address-after-midnight.json, examples/narrative-seven-nights.json, examples/narrative-velvet-wager.json
 - IW-Sample-Blocks.txt: optional library modules (read library/Integration.md first). Files: library/Sample-Blocks.json
@@ -213,7 +213,7 @@ The bug icon (beside the tracked-items icon) opens debug, which needs Storytelle
 
 The live-design notice warns that Player/Other Character changes do not affect the current playthrough (see Live copies above); a design export shows configuration, not the current live state.
 
-Story exports offer a turn range and optional background, character, secrets, trackers and hidden trackers, with text/PDF/image options. Select the relevant options. The background and character pages print the world as authored: templates appear raw, and Change background or Change PC effects are not reflected; the turn text and tracker values are as played. Secret Info is generated narrative data, not an authoritative character database. No live character-database or complete prompt viewer is available through these surfaces.
+Story exports offer a turn range and optional background, character, secrets, trackers and hidden trackers (hidden trackers only with Storyteller mode on; a world export always includes every tracker), with text/PDF/image options. Select the relevant options. The background and character pages print the world as authored: templates appear raw, and Change background or Change PC effects are not reflected; the turn text and tracker values are as played. Secret Info is generated narrative data, not an authoritative character database. No live character-database or complete prompt viewer is available through these surfaces.
 
 [RUNTIME] Some turn inputs are not kept anywhere you can see later (observed in play, not a controlled test). For past turns, the options the player did not pick cannot be viewed: that is two of the three, or all three when a custom action was typed instead. The text typed into the Storyteller guidance box is not shown either, and nothing marks that a turn used it. If a test or a design review needs these, write them down at the time.
 
@@ -594,23 +594,5 @@ See [Editor and UI](Editor-UI.md) for workflows and [Notable findings](Notable-F
 END OF DOCUMENT: reference/Verified-Behavior.md
 
 ===== END FILE: reference/Verified-Behavior.md =====
-
-===== BEGIN FILE: reference/Default-Evaluation.txt =====
-Firstly, if I have made any assertions in my description, evaluate whether you judge that they are reasonable and likely. If they are nonsensical, incoherent or blatantly impossible, the action should be DENIED. On the other hand, if the action is trivial and there is nothing to complicate it, skip the evaluation entirely and deem the action a SUCCESS. Don't overthink this! If the action doesn't warrant further evaluation, make a judgement and move on.
-
-Assuming the action is not a trivial SUCCESS or DENIED, I would like you to evaluate what skill would be needed to succeed in this action, and how difficult it would be to do so. Please indicate which skill which is needed to succeed.
-If applicable use this list: (<<skill_list>>) and a difficulty (from the list: <<difficulty_list>>). For example: {<<skill_example>>: <<difficulty_example>>}. Consider the difficulties carefully, evaluating what might be feasible in the situation. Identifying the skill and difficulty is very important!
-
-Then, evaluate whether I would succeed in the action. To evaluate, consider my proficiency in various skills using either (<<skills_and_levels>>) or logical application of other skills. By comparing these difficulties to the stated difficulty of the action, you should conclusively decide whether the action is a SUCCESS or a FAILURE.
-
-Base your decision on player character description, past, rest of the instructions and common sense - for example, if my skill is low but you know that I am able to perform the given action due to past events, treat me as more competent in this case. Again, don't overthink this - just make a sensible judgement given the information available to you and based on what makes sense for the story.
-
-In some situations, you may wish to evaluate the action as a PARTIAL_SUCCESS instead - this is for something where my abilities are sufficient that I don't simply fail completely (or where failing completely would make for a boring story) but I also don't success. Either I achieve some but not all of what I wanted, I fail but have some silver lining, or I succeed but there are drawbacks or side-effects rather than a "clean" success.
-
-In total, your evaluation should consist of an extremely brief discussion of your thinking (just a single sentence), a skill and difficulty, and then either DENIED, SUCCESS, FAILURE, or PARTIAL_SUCCESS (along with any clarifying remarks).
-
-That's all you need to do for the evaluation, which should be returned in the 'evaluation' argument. Remember to conclude with one of DENIED, SUCCESS, FAILURE, or PARTIAL_SUCCESS.
-
-===== END FILE: reference/Default-Evaluation.txt =====
 
 END OF DOCUMENT: chat/IW-Behavior.txt
