@@ -24,7 +24,7 @@
       "reference/Images-and-Models.md",
       "reference/Default-Evaluation.txt"
     ],
-    "sha256": "85438bf2716d54d851199248a1398bcf0f966a860b0130f3384ccad22737371a"
+    "sha256": "8ae44440018dcc6ffe8b00fad1991cc727bc4b1c6495cd9b3eca9fedea8b0ba0"
   },
   "IW-Authoring-Guide.txt": {
     "sourceFiles": [
@@ -47,7 +47,7 @@
       "reference/Characters.md",
       "reference/Recipes.md"
     ],
-    "sha256": "0605cacb898f06fc6ef7da1202564c5d98ce36f3377f82aed159a102e3393140"
+    "sha256": "12cf4a6cff7c7d82f6ddf14354349f55abdbea4b1c6ef0acec25966292c4e77d"
   },
   "IW-Behavior.txt": {
     "sourceFiles": [
