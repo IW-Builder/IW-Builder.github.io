@@ -16,4 +16,6 @@ How to read it:
 - A trigger or marker at 0 has usually not been reached yet. Check it against "How far they get" before calling it a bug.
 - IW counts triggers by ID, so a trigger rebuilt with a new ID shows up twice. The page adds duplicate `Stats:` markers together.
 - IW hides counts under 5 players; they show as a faint bar labelled "under 5".
+- A world with no `Stats:` rows at all usually has no published version with markers yet: IW lists a trigger once a published version has it (Bully's new version showed every marker at 0; One Wish Each, with 1.26 unpublished, showed none).
+- The Theme button switches between your system setting, light and dark.
 - A second export of the same world replaces the older one; the date in the file name (`<World> stats YYYY-MM-DD.csv`) decides.
