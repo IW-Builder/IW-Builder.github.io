@@ -115,6 +115,7 @@ try { const t = localStorage.getItem("iwstats-theme"); if (t === "light" || t ==
   </div>
   <p class="note" style="margin-top:10px">One file per world. A second export of the same world replaces the older one (the date in the file name decides). Worlds created with the <a href="https://github.com/IW-Builder/IW-Builder.github.io">IW-Builder</a> house kit also carry <code>Stats:</code> markers, charted per world below.</p>
   <div id="chips" class="chips"></div>
+  <p id="exampleNote" class="flag hidden" style="text-align:left">Showing example data: exports from four IW-Builder worlds, taken 2026-11-14. Load your own CSV files to replace them.</p>
   <div id="errors"></div>
 </div>
 
@@ -400,7 +401,9 @@ function markersHTML(w){
 function render(){
   const chips = $("chips");
   chips.innerHTML = worlds.map((w, i) => `<label class="chip"><input type="checkbox" data-i="${i}" ${w.on ? "checked" : ""}><i class="sw" style="background:${col(w)}"></i>${esc(w.name)}${w.date ? ` <span style="color:var(--muted)">${w.date}</span>` : ""}<button class="x" data-rm="${i}" title="Remove" type="button">×</button></label>`).join("");
-  $("clear").classList.toggle("hidden", !worlds.length);
+  const ex = worlds.length > 0 && worlds.every(w => w.example);
+  $("clear").classList.toggle("hidden", !worlds.length || ex);
+  $("exampleNote").classList.toggle("hidden", !ex);
   const ws = active();
   $("out").classList.toggle("hidden", !ws.length);
   if (!ws.length) return;
@@ -527,6 +530,7 @@ function worldHTML(w){
 /* ---------- loading ---------- */
 async function addFiles(files){
   const errs = [];
+  if (worlds.length && worlds.every(w => w.example)) worlds.length = 0;   // your first file replaces the examples
   for (const file of files){
     if (!/\.csv$/i.test(file.name) && file.type !== "text/csv"){ errs.push(`${file.name}: not a CSV file`); continue; }
     try {
@@ -549,10 +553,10 @@ async function addFiles(files){
   render();
 }
 $("file").addEventListener("change", e => { addFiles([...e.target.files]); e.target.value = ""; });
-$("clear").addEventListener("click", () => { worlds.length = 0; $("errors").innerHTML = ""; render(); });
+$("clear").addEventListener("click", () => { worlds.length = 0; $("errors").innerHTML = ""; render(); loadExamples(); });
 $("chips").addEventListener("click", e => {
   const rm = e.target.closest("[data-rm]");
-  if (rm){ e.preventDefault(); worlds.splice(+rm.dataset.rm, 1); render(); }
+  if (rm){ e.preventDefault(); worlds.splice(+rm.dataset.rm, 1); render(); if (!worlds.length) loadExamples(); }
 });
 $("chips").addEventListener("change", e => { const i = e.target.dataset.i; if (i != null){ worlds[+i].on = e.target.checked; render(); } });
 let dragDepth = 0;
@@ -560,6 +564,26 @@ addEventListener("dragenter", e => { e.preventDefault(); dragDepth++; $("drop").
 addEventListener("dragleave", () => { if (--dragDepth <= 0){ dragDepth = 0; $("drop").classList.remove("over"); } });
 addEventListener("dragover", e => e.preventDefault());
 addEventListener("drop", e => { e.preventDefault(); dragDepth = 0; $("drop").classList.remove("over"); addFiles([...e.dataTransfer.files]); });
+// Example data shown until you load your own files. Fetching needs the page served over http(s), not opened from disk.
+const EXAMPLES = [
+  ["one-wish-each-2026-11-14.csv", "One Wish Each"],
+  ["overseer-vault-69-2026-11-14.csv", "Overseer: Vault 69"],
+  ["super-in-a-super-land-redux-2026-11-14.csv", "Super in a Super Land Redux"],
+  ["ugh-my-bully-2026-11-14.csv", "Ugh, My Bully Got Another Stupid Reality Thingy"],
+];
+async function loadExamples(){
+  const got = [];
+  for (const [file, name] of EXAMPLES){
+    try {
+      const r = await fetch("examples/" + file);
+      if (!r.ok) continue;
+      got.push({key:"example:" + name.toLowerCase(), name, date:"2026-11-14", file, data:readStats(await r.text()), on:true, colour:got.length, example:true});
+    } catch (e) { /* offline or opened from disk: start empty */ }
+  }
+  if (worlds.length || !got.length) return;   // you loaded files while the examples were on their way
+  worlds.push(...got);
+  render();
+}
 const THEMES = ["auto", "light", "dark"];
 function setTheme(t){
   if (t === "auto") document.documentElement.removeAttribute("data-theme"); else document.documentElement.setAttribute("data-theme", t);
@@ -572,6 +596,7 @@ $("theme").addEventListener("click", () => {
   const cur = document.documentElement.getAttribute("data-theme") || "auto";
   setTheme(THEMES[(THEMES.indexOf(cur) + 1) % 3]);
 });
+loadExamples();
 let rz; addEventListener("resize", () => { clearTimeout(rz); rz = setTimeout(() => { if (worlds.length) render(); }, 150); });
 </script>
 </body>
