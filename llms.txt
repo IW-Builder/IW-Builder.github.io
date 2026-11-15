@@ -131,7 +131,7 @@ Python tools for models or users that can run code. Without Python, use the chec
 - [tools/example-plot-plan.json](https://iw-builder.github.io/tools/example-plot-plan.json) (1 KB): Sample input for plot_compile.py.
 - [tools/iw_sort.py](https://iw-builder.github.io/tools/iw_sort.py) (15 KB): Exports PC, NPC, trigger and tracker names to a text list and reorders a world to match the edited list. Standard library only.
 - [tools/Validation-Report.json](https://iw-builder.github.io/tools/Validation-Report.json) (10 KB): Latest package check results (maintainer output).
-- [tools/build_distribution.py](https://iw-builder.github.io/tools/build_distribution.py) (30 KB): Maintainer: rebuilds the homepage, combined text files, folder pages, llms.txt, checker and manifest.
+- [tools/build_distribution.py](https://iw-builder.github.io/tools/build_distribution.py) (32 KB): Maintainer: rebuilds the homepage, combined text files, folder pages, llms.txt, checker and manifest.
 - [tools/check_package.py](https://iw-builder.github.io/tools/check_package.py) (5 KB): Maintainer: validates every example world and local link; writes Validation-Report.json.
 - [tools/test_validator.py](https://iw-builder.github.io/tools/test_validator.py) (8 KB): Maintainer tests for the validator.
 - [tools/test_data_bank.py](https://iw-builder.github.io/tools/test_data_bank.py) (5 KB): Maintainer tests for data_bank.py.
@@ -155,18 +155,23 @@ Downloads your credit history with every turn's cost breakdown (IW's own downloa
 
 ## Combined text editions
 
-Single-file bundles for chats without web access or with tool limits: the whole reference in one file, or split into four for size-limited tools, plus examples, library and tools to attach only when asked for. Web-browsing models should prefer the individual files above.
+Single-file bundles for chats without web access or with tool limits: the whole reference in one file, or in numbered parts under 90 KB each for size-limited tools, plus examples, library and tools to attach only when asked for. Web-browsing models should prefer the individual files above.
 
-- [chat/index.html](https://iw-builder.github.io/chat/) (92 KB): HTML page containing IW-Authoring-Guide.txt, with links to the companion editions.
-- [chat/IW-Complete-Reference.txt](https://iw-builder.github.io/chat/IW-Complete-Reference.txt) (307 KB): Combined text, all reference in one attachment (about 75k tokens): the prompt, template, every reference guide, Payloads and the example index. Too large for most URL fetchers; attach it.
-- [chat/IW-Authoring-Guide.txt](https://iw-builder.github.io/chat/IW-Authoring-Guide.txt) (88 KB): Combined text, start here: prompt, template, Evidence, Craft, Trackers, Triggers, Trigger-Catalog, Portable-Banks and library Integration.
-- [chat/IW-Technical-Reference.txt](https://iw-builder.github.io/chat/IW-Technical-Reference.txt) (87 KB): Combined text: Schema, PawScript, Runtime, Characters and Recipes.
-- [chat/IW-Behavior.txt](https://iw-builder.github.io/chat/IW-Behavior.txt) (85 KB): Combined text: Notable-Findings (with open questions), Editor-UI, Cost and Verified-Behavior.
-- [chat/IW-Payloads.txt](https://iw-builder.github.io/chat/IW-Payloads.txt) (56 KB): Combined text: Payloads.md (every condition and effect), the example index, the storyteller model IDs, Images-and-Models and the default Evaluation. Small and essential for mechanics.
-- [chat/IW-Mechanics-Examples.txt](https://iw-builder.github.io/chat/IW-Mechanics-Examples.txt) (125 KB): Combined text: complete mechanics example worlds (recipes, optional block, starting values, layered opening, on-demand generation, showcase).
+- [chat/index.html](https://iw-builder.github.io/chat/) (80 KB): HTML page containing IW-Reference-1.txt (start here), with links to the other editions.
+- [chat/IW-Complete-Reference.txt](https://iw-builder.github.io/chat/IW-Complete-Reference.txt) (307 KB): Combined text, all reference in one attachment (about 80k tokens): the prompt, template, every reference guide, Payloads and the example index. Too large for most URL fetchers; attach it.
+- [chat/IW-Reference-1.txt](https://iw-builder.github.io/chat/IW-Reference-1.txt) (76 KB): Combined text, start here: reference part 1 of 5: Authoring-Prompt, World-Template, Craft, Trackers, Triggers, Trigger-Catalog, Portable-Banks.
+- [chat/IW-Reference-2.txt](https://iw-builder.github.io/chat/IW-Reference-2.txt) (73 KB): Combined text, reference part 2 of 5: Integration, Schema, PawScript, Runtime, Characters.
+- [chat/IW-Reference-3.txt](https://iw-builder.github.io/chat/IW-Reference-3.txt) (70 KB): Combined text, reference part 3 of 5: Recipes, Notable-Findings, Editor-UI.
+- [chat/IW-Reference-4.txt](https://iw-builder.github.io/chat/IW-Reference-4.txt) (63 KB): Combined text, reference part 4 of 5: Cost, Verified-Behavior, Payloads.
+- [chat/IW-Reference-5.txt](https://iw-builder.github.io/chat/IW-Reference-5.txt) (39 KB): Combined text, reference part 5 of 5: examples index, Current-AI-Profiles, Images-and-Models, Default-Evaluation.
+- [chat/IW-Authoring-Guide.txt](https://iw-builder.github.io/chat/IW-Authoring-Guide.txt) (1 KB): Old name, replaced 2026-11-15: points to the numbered reference parts.
+- [chat/IW-Technical-Reference.txt](https://iw-builder.github.io/chat/IW-Technical-Reference.txt) (1 KB): Old name, replaced 2026-11-15: points to the numbered reference parts.
+- [chat/IW-Behavior.txt](https://iw-builder.github.io/chat/IW-Behavior.txt) (1 KB): Old name, replaced 2026-11-15: points to the numbered reference parts.
+- [chat/IW-Payloads.txt](https://iw-builder.github.io/chat/IW-Payloads.txt) (1 KB): Old name, replaced 2026-11-15: points to the numbered reference parts.
+- [chat/IW-Mechanics-Examples.txt](https://iw-builder.github.io/chat/IW-Mechanics-Examples.txt) (124 KB): Combined text: complete mechanics example worlds (recipes, optional block, starting values, layered opening, on-demand generation, showcase).
 - [chat/IW-Narrative-Examples.txt](https://iw-builder.github.io/chat/IW-Narrative-Examples.txt) (151 KB): Combined text: all five complete narrative example worlds.
-- [chat/IW-Sample-Blocks.txt](https://iw-builder.github.io/chat/IW-Sample-Blocks.txt) (62 KB): Combined text: library modules (Sample-Blocks.json). Integration guide is in IW-Authoring-Guide.txt.
-- [chat/IW-Storymaster.txt](https://iw-builder.github.io/chat/IW-Storymaster.txt) (38 KB): Combined text: the Storymaster framework (Storymaster-Suite.json). Integration guide is in IW-Authoring-Guide.txt.
+- [chat/IW-Sample-Blocks.txt](https://iw-builder.github.io/chat/IW-Sample-Blocks.txt) (61 KB): Combined text: library modules (Sample-Blocks.json). Integration guide is in the reference parts (library/Integration.md).
+- [chat/IW-Storymaster.txt](https://iw-builder.github.io/chat/IW-Storymaster.txt) (38 KB): Combined text: the Storymaster framework (Storymaster-Suite.json). Integration guide is in the reference parts (library/Integration.md).
 - [chat/IW-Tools.txt](https://iw-builder.github.io/chat/IW-Tools.txt) (133 KB): Combined text: the tool usage guide plus validator, schema and helper sources to recreate locally.
 - [chat/README.md](https://iw-builder.github.io/chat/README.md) (3 KB): Human guide to the combined text files.
 - [chat/sources.json](https://iw-builder.github.io/chat/sources.json) (4 KB): Which source files make up each combined text file, with hashes.

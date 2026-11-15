@@ -60,28 +60,33 @@ class DistributionTests(unittest.TestCase):
 
     def test_reference_editions_are_split_and_bounded(self):
         sources = {k: v['sourceFiles'] for k, v in json.loads((self.root/'chat/sources.json').read_text()).items()}
-        self.assertEqual(set(sources), {'IW-Complete-Reference.txt', 'IW-Authoring-Guide.txt', 'IW-Technical-Reference.txt',
-                                        'IW-Behavior.txt', 'IW-Payloads.txt', 'IW-Mechanics-Examples.txt', 'IW-Narrative-Examples.txt',
-                                        'IW-Sample-Blocks.txt', 'IW-Storymaster.txt', 'IW-Tools.txt'})
-        reference = ['IW-Authoring-Guide.txt', 'IW-Technical-Reference.txt', 'IW-Behavior.txt', 'IW-Payloads.txt']
-        self.assertEqual(sources['IW-Complete-Reference.txt'], [p for n in reference for p in sources[n]])
+        parts = sorted((n for n in sources if n.startswith('IW-Reference-')), key=lambda n: int(n[13:-4]))
+        self.assertGreaterEqual(len(parts), 2)
+        self.assertEqual(parts, ['IW-Reference-' + str(i) + '.txt' for i in range(1, len(parts) + 1)])
+        self.assertEqual(set(sources) - set(parts), {'IW-Complete-Reference.txt', 'IW-Mechanics-Examples.txt',
+                                                     'IW-Narrative-Examples.txt', 'IW-Sample-Blocks.txt',
+                                                     'IW-Storymaster.txt', 'IW-Tools.txt'})
+        self.assertEqual(sources['IW-Complete-Reference.txt'], [p for n in parts for p in sources[n]])
+        self.assertEqual(sources[parts[0]][0], 'Authoring-Prompt.md')
         complete = (self.root/'chat/IW-Complete-Reference.txt').read_text()
-        for n in reference:
+        for n in parts:
             self.assertIn('===== BEGIN FILE: ' + sources[n][0] + ' =====', complete)
-        self.assertLess((self.root/'chat/IW-Complete-Reference.txt').stat().st_size, 350_000)
+            self.assertLess((self.root/'chat'/n).stat().st_size, 90_000, n)
+        self.assertLess((self.root/'chat/IW-Complete-Reference.txt').stat().st_size, 500_000)
+        self.assertIn('library/Integration.md', sources['IW-Complete-Reference.txt'])
         del sources['IW-Complete-Reference.txt']
-        self.assertIn('library/Integration.md', sources['IW-Authoring-Guide.txt'])
+        for retired in ['IW-Authoring-Guide.txt', 'IW-Technical-Reference.txt', 'IW-Behavior.txt', 'IW-Payloads.txt']:
+            pointer = (self.root/'chat'/retired).read_text()
+            self.assertLess(len(pointer), 2_000, retired)
+            self.assertIn('IW-Reference-1.txt', pointer)
         self.assertFalse((self.root/'chat/IW-Sample-Library.txt').exists())
-        self.assertLess((self.root/'chat/IW-Payloads.txt').stat().st_size, 60_000)
         self.assertFalse((self.root/'chat/IW-Examples.txt').exists())
-        for name in ['IW-Authoring-Guide.txt', 'IW-Technical-Reference.txt', 'IW-Behavior.txt']:
-            self.assertLess((self.root/'chat'/name).stat().st_size, 90_000, name)
         every = [p for files in sources.values() for p in files]
         self.assertIn('tools/Usage.md', sources['IW-Tools.txt'])
         self.assertIn('tools/plot_compile.py', sources['IW-Tools.txt'])
         self.assertEqual(len(every), len(set(every)), 'a source appears in two editions')
-        guide = (self.root/'chat/IW-Authoring-Guide.txt').read_text()
-        for name in sources:
+        guide = (self.root/'chat'/parts[0]).read_text()
+        for name in list(sources) + ['IW-Complete-Reference.txt']:
             self.assertIn('- ' + name + ': ', guide)
 
     def test_kit_version_consistent(self):

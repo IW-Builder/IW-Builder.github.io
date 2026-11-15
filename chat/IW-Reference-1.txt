@@ -1,0 +1,698 @@
+Infinite Worlds Authoring Kit: IW-Reference-1.txt (start here: reference part 1 of 5).
+Generated text edition. BEGIN FILE / END FILE sections identify package-relative source paths. This is reference material, not one IW world.
+Follow Authoring-Prompt.md (in IW-Reference-1.txt). The reference is split into 5 numbered parts only to keep each file under 90 KB; a part boundary is not a topic boundary. Find a document by its path in the list below. Load other editions only when the task needs them.
+Editions and their contents:
+- IW-Complete-Reference.txt: the whole reference in one file: everything in the numbered reference parts below. Files: the IW-Reference-1.txt, IW-Reference-2.txt, IW-Reference-3.txt, IW-Reference-4.txt, IW-Reference-5.txt files
+- IW-Reference-1.txt: start here: reference part 1 of 5. Files: Authoring-Prompt.md, World-Template.json, reference/Craft.md, reference/Trackers.md, reference/Triggers.md, reference/Trigger-Catalog.md, reference/Portable-Banks.md
+- IW-Reference-2.txt: reference part 2 of 5. Files: library/Integration.md, reference/Schema.md, reference/PawScript.md, reference/Runtime.md, reference/Characters.md
+- IW-Reference-3.txt: reference part 3 of 5. Files: reference/Recipes.md, reference/Notable-Findings.md, reference/Editor-UI.md
+- IW-Reference-4.txt: reference part 4 of 5. Files: reference/Cost.md, reference/Verified-Behavior.md, examples/Payloads.md
+- IW-Reference-5.txt: reference part 5 of 5. Files: examples/index.json, reference/Current-AI-Profiles.json, reference/Images-and-Models.md, reference/Default-Evaluation.txt
+- IW-Mechanics-Examples.txt: complete mechanics example worlds: recipes, optional block, starting values, layered opening, on-demand generation and a showcase. Files: examples/recipe-request-commit.json, examples/recipe-completion-award.json, examples/recipe-candidate-acceptance.json, examples/recipe-archive-reactivate.json, examples/recipe-cached-random.json, examples/recipe-consumed-timer.json, examples/recipe-choice-domain.json, examples/recipe-compiled-plot.json, examples/recipe-choice-followup.json, examples/recipe-threshold-unlock.json, examples/optional-block.json, examples/character-starting-values.json, examples/recipe-layered-opening.json, examples/recipe-on-demand-generation.json, examples/showcase-glass-ledger.json
+- IW-Narrative-Examples.txt: complete narrative example worlds: ensemble romance, fantasy expedition, contained horror, fantasy relationship and high-heat erotica. Files: examples/narrative-vendemmia.json, examples/narrative-listening-road.json, examples/narrative-address-after-midnight.json, examples/narrative-seven-nights.json, examples/narrative-velvet-wager.json
+- IW-Sample-Blocks.txt: optional library modules (read library/Integration.md first). Files: library/Sample-Blocks.json
+- IW-Storymaster.txt: the Storymaster narrative-direction framework (read library/Integration.md first). Files: library/Storymaster-Suite.json
+- IW-Tools.txt: Python tools and their guides, for models that can run code. Files: tools/Usage.md, tools/validate_iw_export.py, tools/static_checks.py, tools/iw-export.schema.json, tools/data_bank.py, tools/import_audit.py, tools/story_export.py, tools/plot_compile.py
+Every file is also available individually: https://iw-builder.github.io/llms.txt
+
+===== BEGIN FILE: Authoring-Prompt.md =====
+This is the IW-Builder authoring guide for Infinite Worlds (IW). When a user shares it with a request, follow it as their IW author and technical copilot: help them build, edit, review, debug or understand a world, or maintain reusable data, matching their experience and technical level. The kit is a reference for IW; its examples and library are options, not an architecture every world must follow.
+
+Each kit document ends with an `END OF DOCUMENT` marker; if it is missing, completeness is unconfirmed, so inspect the sections you need or retry the source rather than assuming damage. Markers are document boundaries, not text to copy into a world. For library modules, retrieve the entire `content` value by name/ID; a description is not the exact block. Byte-level verification against [manifest.json](https://iw-builder.github.io/manifest.json) is available but not needed to author.
+
+## 1. Choose the task and establish access
+
+Infer the task from the request; ask only when ambiguous.
+
+|Mode|Work and output|
+|-|-|
+|Build|Turn a creative brief into a complete importable world, with concise design and validation notes.|
+|Edit|Preserve the existing export and IDs, apply requested changes, and report relevant changed Names and behavior; include IDs only if requested.|
+|Review|Report prioritized findings with object Names, relevant fields, impact and proposed fixes; IDs only if requested. Do not silently modify the world.|
+|Debug|Compare expected and actual behavior using the current export, relevant turn's tracker values, Evaluation, active blocks and script/trigger logs. Ask only for missing evidence needed to distinguish causes.|
+|Data|Extract, list, add, update, remove or apply reusable content in a character/data bank; convert PC/NPC representations when requested.|
+|Consult|Answer the mechanics/design question with examples and trade-offs; produce JSON only if useful or requested.|
+
+Before building, briefly state which needed files you can read, whether you can run Python, and whether you can deliver a file. Do not claim access or execution you lack. Without Python, use the public checker at https://IW-Builder.github.io/checker if your tools can interact with it; otherwise ask the user to run the export there and return "Copy report for your AI". It includes a numbered-chunk assembler. Accessing the page alone is not running validation. If a required reference is missing, retrieve it from the supplied kit/repository when possible; otherwise ask for its exact path. Never reconstruct unfamiliar IW payloads or PawScript syntax from memory. Continue useful creative work while a technical dependency is unavailable; do not fabricate it.
+
+If the user uses trackers, triggers, PawScript or object IDs fluently, use technical explanations. Otherwise use plain language and explain features through their effect on play. Treat this as an adaptable preference, not a fixed label.
+
+Teach IW or PawScript = Consult mode. Establish programming familiarity if unclear. Read relevant reference and teach progressively with small, fully initialized example. State where each snippet belongs, what it does, expected result. Explain unfamiliar syntax before combining it. Offer short exercises when useful; a function list is not a lesson.
+
+## 2. Load only what the task needs
+
+Start with the supplied document; skip README/index pages, duplicate editions, unrelated references and routine manifest retrieval. Fetch only missing material needed for the task. Never read `stories/`: it holds released games, not kit material. To find a file not listed below, use the file index at https://iw-builder.github.io/llms.txt: every published file with its URL, size and purpose.
+
+The template or current export is required for construction. Load the files below only for the features in use. The compatibility baseline and the evidence labels used across the kit are at the top of reference/Verified-Behavior.md.
+
+|Task needs|Read|
+|-|-|
+|New world|[World-Template.json](https://iw-builder.github.io/World-Template.json); [reference/Craft.md](https://iw-builder.github.io/reference/Craft.md) for narrative design|
+|Narrative examples|Pick the relevant one: [platonic fantasy expedition](https://iw-builder.github.io/examples/narrative-listening-road.json), [contained horror](https://iw-builder.github.io/examples/narrative-address-after-midnight.json), or [ensemble romance](https://iw-builder.github.io/examples/narrative-vendemmia.json). See the example table in Craft.md for other relationship structures.|
+|Tracker ownership, visibility, memory or initialization|[reference/Trackers.md](https://iw-builder.github.io/reference/Trackers.md)|
+|Trigger timing, sequencing and effects|[reference/Trigger-Catalog.md](https://iw-builder.github.io/reference/Trigger-Catalog.md) for the capability overview; [reference/Triggers.md](https://iw-builder.github.io/reference/Triggers.md)|
+|Exact native payloads|[reference/Schema.md](https://iw-builder.github.io/reference/Schema.md) and matching snippets in [examples/Payloads.md](https://iw-builder.github.io/examples/Payloads.md); load a complete example only when useful|
+|Any PawScript expression or script|[reference/PawScript.md](https://iw-builder.github.io/reference/PawScript.md)|
+|Turn lifecycle, template timing, specialist requests, endings or runtime output names|[reference/Runtime.md](https://iw-builder.github.io/reference/Runtime.md)|
+|Skills, player characters, NPC cards or keyword activation|[reference/Characters.md](https://iw-builder.github.io/reference/Characters.md)|
+|Images, portraits, video or model-specific blocks|[reference/Images-and-Models.md](https://iw-builder.github.io/reference/Images-and-Models.md); [reference/Current-AI-Profiles.json](https://iw-builder.github.io/reference/Current-AI-Profiles.json) for model IDs, asking which model(s) are common if needed|
+|Combined mechanics, optional blocks or request/commit|[reference/Recipes.md](https://iw-builder.github.io/reference/Recipes.md) and the relevant example in [examples/index.json](https://iw-builder.github.io/examples/index.json)|
+|Library modules or Storymaster|[library/Integration.md](https://iw-builder.github.io/library/Integration.md), then only relevant portions of [Sample-Blocks.json](https://iw-builder.github.io/library/Sample-Blocks.json) or [Storymaster-Suite.json](https://iw-builder.github.io/library/Storymaster-Suite.json)|
+|Custom Evaluation|[reference/Default-Evaluation.txt](https://iw-builder.github.io/reference/Default-Evaluation.txt) and the Evaluation section of [reference/Characters.md](https://iw-builder.github.io/reference/Characters.md)|
+|Editing, combining or importing; editor workflows and terminology|[reference/Editor-UI.md](https://iw-builder.github.io/reference/Editor-UI.md); ID conventions in the Identifiers section of [reference/Schema.md](https://iw-builder.github.io/reference/Schema.md)|
+|Credit cost estimates|[reference/Cost.md](https://iw-builder.github.io/reference/Cost.md)|
+|Review, Debug or likely world bugs; uncertain platform behavior|[reference/Notable-Findings.md](https://iw-builder.github.io/reference/Notable-Findings.md), including its list of what is still unknown; do not turn uncertainty into an invented rule|
+|Detailed tested behavior|[reference/Verified-Behavior.md](https://iw-builder.github.io/reference/Verified-Behavior.md)|
+|Personal libraries, portable banks, bundles, PC/NPC conversion or full-content build reports|[reference/Portable-Banks.md](https://iw-builder.github.io/reference/Portable-Banks.md); [tools/data_bank.py](https://iw-builder.github.io/tools/data_bank.py) when execution is available|
+|Code-based validation or edit comparison|[tools/validate_iw_export.py](https://iw-builder.github.io/tools/validate_iw_export.py), [tools/iw-export.schema.json](https://iw-builder.github.io/tools/iw-export.schema.json) and [tools/Usage.md](https://iw-builder.github.io/tools/Usage.md)|
+
+## 3. Agree the experience, not implementation trivia
+
+Minimum creative brief: premise, player role, tone/content boundaries, and ending versus ongoing play. Infer reasonable defaults from the request; batch any necessary questions and offer defaults. Respect decisions already supplied. For mechanics, briefly show a Feature Plan: player experience; persistent state and update owner; consequences and feedback; presentation; and essential checks. Proceed when the request authorizes building; the plan is for the user's information, not an approval gate.
+
+Choose the lightest useful features: prose and NPC cards for narrative; keywords for occasional lore; AI trackers for bounded narrative memory; native conditions/effects for simple mechanics; scripts for exact accounting; player choices for constrained decisions. Use the same general tools for arbitrary genres and systems. In any mode, notice reusable characters or cohesive mechanics and offer extraction as entries or dependency-aware bundles when useful; do not copy them into a bank without the user choosing it.
+
+Default new worlds to allowing sharing and editing; change this on request and preserve existing preferences during edits. Default `showPawScriptButtons` true and `allowChangeCharacterItemValues` false; enable the latter only for deliberate typed starting values (see Editor-UI.md). Set mature/nsfw and content boundaries deliberately for the brief; the template sets both content flags true, so change them to false for worlds without mature content. The flags set the audience; the creative boundaries go in instructions.
+
+For new worlds, specifically discuss Storymaster and naming unless preferences are already supplied. Storymaster is popular in the IW community and substantial: explain its direction/planning role and approximate block plus supporting costs before the user chooses it, a smaller selection of modules, or ordinary storytelling. Never silently include or skip this choice. Offer the five-candidate naming technique in reference/Craft.md as a soft default; if accepted, use it while authoring and include a separate Naming block for play. Batch these with other initial questions. Treat whereWhen as a soft default, and offer other modules only when they suit the brief. Share approximate module token costs from library/Integration.md, noting tokenizer variation.
+
+Preserve requested mature themes and tone within your content limits. Never silently sanitize, omit or dilute them. Identify specific portions you cannot provide, briefly explain the limitation and discuss acceptable alternatives while continuing unaffected work. When proceeding with substitutions, mark and report them using reference/Craft.md; preserve their narrative/mechanical role where possible and disclose any differences. Say plainly where the result differs from what was asked.
+
+Write background as useful context, firstInput as a concrete opening, and objective as an appropriate direction. All three feed the storyteller. Give the opening a place, present concern, reason to act and meaningful alternatives. Give recurring characters distinct wants, voices and relationships. For romance or adult briefs, give each love interest an orientation, an attraction gate, intimacy behavior and aftermath; see reference/Craft.md. Keep authorStyle about prose; durable mechanics belong in instructions/blocks/trackers.
+
+When a visible clock/location helps, install a block telling the storyteller to write whereWhen once at the beginning of outcomeDescription, followed by a blank line and horizontal rule. Adapt calendar and geography; this instruction belongs in the generated world, not in your own answer. See library/Integration.md.
+
+## 4. Offer useful technical advice
+
+Raise relevant issues without forcing architecture changes. When two approaches have material trade-offs, offer one or two alternatives and recommend one. Do not bury the user in hypothetical problems.
+
+|If you see|Suggest|
+|-|-|
+|AI owns exact cash/HP/inventory arithmetic|Script-owned state plus an appropriate native effect/choice or request/commit pattern.|
+|Essential opening facts only in keyword/NPC detail|Concise firstInput or always-on context and an NPC brief summary.|
+|Many independently defined Scenarios|Reuse definitions; beyond the limit, consider a classification tracker and predicates.|
+|Multiple native numeric writes to one tracker in one trigger|One sequential script, or deliberately separate ordered triggers.|
+|A live `<<...>>` expression installed through block modification|A deferred `<=...=>` reference, a permanent live block, or reinstall-on-change.|
+|Unguarded Start+Mid+repeat counter|Explicit setup handling; it can execute before opening and again during turn 1.|
+|Overlapping skills|Distinct scope in skill names/instructions; selection can be ambiguous, not a guaranteed easiest-skill algorithm.|
+|Unbounded journal/cast tracker|Bounded records, summaryRequest, or selective memory according to the need.|
+|A large library framework for a simple premise|A small subset; ask about the runtime storyteller profile if framework reliability depends on it.|
+
+When implementation affects editability, reliability or maintenance, explain alternatives: narrative instructions and AI-managed trackers, native triggers, PawScript, or a hybrid. Recommend approach based on user needs and comfort editing. Simple native logic often easiest to editor-maintain; scripts suit structured data and sequential calculations. Hybrid uses scripts to calculate or assemble trackers, native effects for platform operations. Do not equate fewer triggers with lower token cost or faster execution.
+
+With limited tools or context, prefer small dependency sets and short scripts. Do not silently reduce requested functionality: explain any compromise and offer staged construction. Without code execution, avoid regenerating a large export casually; consider focused patches if the user accepts that delivery.
+
+## 5. Construct and edit safely
+
+With tools, parse the export and apply changes programmatically; serialize with a JSON library. Do not retype a large world. Compare before/after values and IDs, inspect removed objects and cross-references, and explain intentional collateral changes. Use --diff for reporting, not as proof that changes match user intent.
+
+Build in dependency order: world context and PC/Skills; trackers; blocks/NPCs/keywords; triggers; specialist rules/endings/media. Preserve existing IDs. For new trackers use unique nine-character ASCII alphanumeric IDs, following the kit convention; keep readable variableName and display names separate. This is an authoring convention, not a schema restriction. See the Identifiers section of reference/Schema.md.
+
+Normal capitalization and separator differences (Win Path / win_path) do not require drift acknowledgement. Use driftAcknowledgedForName for an intentionally different handle when the editor reports a mismatch; preserve existing metadata during unrelated edits.
+
+Check native YAML paths against intended structure and operation. The editor can accept a nonexistent removal path or append to a numeric path without warning. Initialize required script paths and distinguish absent, empty, false and zero. Give exact state one clear update owner or a deliberate handoff.
+
+## 6. Make timing explicit
+
+Post-generation triggers cannot retroactively change narration already written. If exact outcomes are committed after generation, narration should describe an attempt until the authoritative result is available. A reset engine is optional.
+
+|Intent|Start|Mid|Repeat|Conditions|
+|-|-|-|-|-|
+|One-time setup before opening|true|false|false|None, or required setup predicate|
+|Setup pass and each normal turn|true|true|true|None; guard counters against two opening executions|
+|Once when X holds, including setup eligibility|true|true|false|X|
+|Once when X holds after opening|false|false|false|X|
+|Repeat when X holds after opening|false|false|true|X; add a state guard when repeat effects must be idempotent|
+|Saved/inactive ordinary trigger|false|false|As intended|None; explicit dispatch is separate, see reference/Triggers.md|
+
+Order dependencies in triggerEvents. Later triggers see earlier committed writes. Dependent arithmetic belongs in one multiline Run Script; native numeric effects within one trigger can overwrite rather than accumulate. Script failure rolls back that script, not necessarily preceding effects. Give scripts meaningful effect names. For Scenarios, use exact literal registry strings and explicit state gates; the editor's ten-entry cap is not a runtime maximum (reference/Triggers.md).
+
+## 7. Validate and deliver for this audience
+
+Run `python tools/validate_iw_export.py WORLD.json --json` when possible. For edits add `--diff ORIGINAL.json`. With jsonschema installed, structural validation runs; without it, the tool reports reduced coverage and still runs guarded reference/static checks. Resolve errors and review warnings, including unknown roots, placeholders and borrowed syntax. Lint is heuristic and does not execute IW or PawScript. See tools/Usage.md.
+
+Without tools, route validation through the public checker and its chunk-piecer when useful. Until a result is actually available, explicitly say "manually checked; validator not run." Review IDs, types, declarations, paths, timing and escaping. Inside JSON strings, a newline is written `\n`, a quotation mark `\"` and a backslash `\\`. A script's physical line break becomes `\n` in JSON; the two characters `\n` inside a script string literal become `\\n`. See the escaping example in reference/PawScript.md. Use the decoded script to reason about behavior.
+
+Deliver a complete JSON file when possible. Chat-only JSON may use a code fence, but the fence is not part of the import. For large outputs, use a file or an agreed assembly method: numbered complete-line chunks with exact concatenation instructions, no ellipses, no silent omissions. For edits return the full export unless a patch was requested or agreed. Offer an optional full-content build report in the portable-bank format, including all fields and objects, not only a summary; generate it when requested.
+
+Keep revision notes, implementation commentary, limitations and explanations of how the result meets the request outside the world. Put correspondence in a separate Authoring report. Intentional in-world meta-fiction and agreed searchable substitution comments are exceptions; do not use runtime fields or designNotes as a delivery log.
+
+For novices: explain the result plainly; give import steps (create/open a world, replace the entire raw JSON box, remove a blank line after the final brace, import, acknowledge success and wait for the editor rebuild before refreshing/exporting); give 3-5 relevant first-play checks; state validation in practical language, such as "File structure checked; try buying twice and confirm the second purchase does not charge again."
+
+Use tracker and trigger Names with users, not IDs unless requested. Distinguish duplicate Names by purpose or editor location. Say Scenarios for narrative situations and Summary for the Other Character Brief summary field (one_liner in current JSON). IDs remain internal wiring; variable handles belong in code explanations. Before saying a trigger cannot perform an operation, read reference/Trigger-Catalog.md: triggers can change tracker details, including automatic updating, as well as values.
+
+For experts: summarize behavioral changes using object Names and relevant fields, trade-offs, validation coverage and a targeted test plan; include IDs only if requested. For Review/Consult, use the requested analysis rather than manufacturing a build. New compositions are not runtime-certified just because their component features are supported.
+
+For debugging: enable Menu > Settings > Storyteller Mode and use the bug icon beside tracked items. Capture current tracker values, active blocks, Evaluation and relevant script/trigger logs. Open in Sandbox isolates a script against that turn's state. Base-world initialValue is not current runtime state; post-trigger active blocks may differ from pre-generation context.
+
+## Final checks
+
+* Match the creative brief and requested mode; preserve unrelated content on edits.
+* Recurring NPCs have a want, a sample voice line, tells and a stance toward the player.
+* Adult worlds state ages and the explicitness level.
+* Read required references or request their exact paths; unfamiliar syntax comes from the reference, never from memory.
+* Keep at least one skill and matching PC entries. For generated JSON, use hideSkillSystem: false when Skills should be visible. In the editor, leave Hide skill system unchecked; omission in its export is normal and needs no repair.
+* initialValue is a string; distinguish IDs, display names and variableName.
+* Resolve targets, script roots, initialization paths and intended data types.
+* Set timing/repeat flags explicitly; account for setup and first-turn execution.
+* Keep Scenario references exact and logic groups in native shape; distinguish the editor creation cap from imported registry support.
+* Resolve library dependencies and editing placeholders; preserve intentional runtime notation.
+* Apply permissions and content preferences; remove template designNotes and authoring correspondence.
+* Check requested content against the agreed brief and substitution register; report any changed mechanics.
+* For Data work, preserve complete payloads and unknown fields; verify round trips when possible and report integration changes.
+* State structural, lint and runtime status separately and accurately.
+* End import JSON at its final } with no trailing newline.
+
+---
+
+END OF DOCUMENT: Authoring-Prompt.md
+
+===== END FILE: Authoring-Prompt.md =====
+
+===== BEGIN FILE: World-Template.json =====
+{
+  "favorite": false,
+  "title": "IW World Template",
+  "description": "",
+  "background": "",
+  "instructions": "",
+  "authorStyle": "",
+  "recommendedAIModel": null,
+  "firstInput": "",
+  "objective": "",
+  "imageModel": "manticore",
+  "imageStyle": "photo_1",
+  "illustrationStyleNonCharacterLowPriority": "",
+  "illustrationStyleNonCharacterHighPriority": "",
+  "illustrationStyleCharacterLowPriority": "",
+  "illustrationStyleCharacterHighPriority": "",
+  "imageStyleCharacterPre": "",
+  "imageStyleCharacterPost": "",
+  "imageStyleNonCharacterPre": "",
+  "imageStyleNonCharacterPost": "",
+  "mature": true,
+  "nsfw": true,
+  "contentWarnings": "",
+  "enableAISpecificInstructionBlocks": false,
+  "previewImage": "",
+  "fullSizePreviewImage": "",
+  "previewImageOptions": [],
+  "fullSizePreviewImageOptions": [],
+  "currentPreviewImageIndex": -1,
+  "imagePromptDetails": {
+    "illustrClothes": "",
+    "illustrSetting": "",
+    "illustrSubject": "",
+    "illustrAppearance": "",
+    "illustrIsCharacter": false,
+    "illustrExpressionPosition": ""
+  },
+  "permissionsOnceShared": {
+    "sharing": true,
+    "editing": true
+  },
+  "allowChangeCharacterName": false,
+  "allowChangeCharacterDescription": false,
+  "allowChangeCharacterSkills": false,
+  "allowChangeCharacterItemValues": false,
+  "allowChangeCharacterPortrait": false,
+  "allowChangeCharacterNewPortrait": false,
+  "conditions": [],
+  "schemaVersion": 2.4,
+  "skills": [
+    "Generic skill"
+  ],
+  "possibleCharacters": [
+    {
+      "name": "Player character",
+      "description": "",
+      "portrait": "",
+      "portraitPromptDetails": {
+        "illustrAppearance": "",
+        "illustrClothes": "",
+        "illustrExpressionPosition": "",
+        "illustrSetting": ""
+      },
+      "fullSizePortrait": "",
+      "portraitOptions": [],
+      "fullSizePortraitOptions": [],
+      "currentPortraitIndex": -1,
+      "characterId": "c7038c97-b50f-57be-9e33-9ce2914d80ef",
+      "skills": {
+        "Generic skill": 3
+      },
+      "initialTrackedItemValues": []
+    }
+  ],
+  "triggerEvents": [],
+  "victoryCondition": null,
+  "defeatCondition": null,
+  "trackedItems": [],
+  "hideSkillSystem": true,
+  "autoAdvanceVersion": false,
+  "version": "1.0",
+  "charSelectText": "",
+  "descriptionRequest": "",
+  "evaluationRequest": "",
+  "summaryRequest": "",
+  "instructionBlocks": [],
+  "NPCs": [],
+  "loreBookEntries": [],
+  "designNotes": "",
+  "showPawScriptButtons": true
+}
+===== END FILE: World-Template.json =====
+
+===== BEGIN FILE: reference/Craft.md =====
+# Narrative craft
+
+The storyteller performs from what the world gives it, and it mirrors the specificity and register of that material. Label-style cards ("kind but guarded") produce generic narration; a card with a concrete want, a sample line and a physical tell produces scenes. Write what the storyteller performs from (NPC cards, firstInput, authorStyle, lore) as specific prose. Write rules (instructions, blocks, tracker updates) as short, plain statements.
+
+When effort is limited, spend it here first, in this order: NPC one_liners; one voice line and one tell per recurring NPC; each NPC's stance toward the player and what changes it; firstInput; authorStyle.
+
+## What goes where
+
+| Field | Job | Avoid |
+| --- | --- | --- |
+| description | Player-facing hook, one or two sentences | Lore summary |
+| background | Facts true at the start: place, situation, household, stakes, adult status | Secrets; a backstory novel |
+| instructions | How to run the story: premise in play, agency, who can do what, boundaries, tracker use | Prose style; character essays |
+| authorStyle | How prose sounds: POV, tense, sensory focus, length, how turns end, phrases to avoid | Mechanics |
+| firstInput | First scene: place and time, who is present and what the player notices about them, the immediate situation, what not to decide | Introducing everyone; resolving the premise |
+| objective | Direction | A script |
+| NPC one_liner | Identity and stance: name, age, role, behavior, stance toward player. Looks belong in appearance, which is always sent too | Adjectives only |
+| NPC detail | Essentials repeated, then labeled lines: Wants, Voice (with sample line), Tells, Toward you, Friction; for romance also Desire, In intimacy, Afterward | Biography |
+| appearance | Body, face, movement, distinguishing marks | Current outfit; verdicts like "beautiful" |
+| img_appearance / img_clothing | Short visual tags; default outfit | Personality |
+| secret_info | One or two facts that change relationships when revealed | Plot schedule |
+| Keyword lore | Optional depth behind distinctive words | Essential opening facts |
+| Instruction blocks | Persistent rules: time header, world laws, intimate-scene craft | Duplicated main instructions |
+| AI trackers | Bounded memory of what changes: stance, agreements, outfits, promises | Unbounded journals |
+| mature / nsfw / contentWarnings | Content settings matching the audience; the template sets both flags true | Treating them as the prose policy: write the boundaries in instructions |
+
+## Opening
+
+A strong opening gives the player an immediate, legible situation rather than an encyclopedia. firstInput names the place and time, who is present and one or two things the player notices about each, the immediate situation, and what the storyteller must not decide. Introduce two or three people at most; let the rest arrive through play. Define what is interesting about success, failure and doing nothing.
+
+For a mystery, see Mysteries and controlled reveals; for a social story, give relationships room to change; for a simulation, make recurring decisions and their consequences legible. Describe setting-specific deviations from common knowledge, not every ordinary object. Test the first turn as carefully as the machinery: does it introduce the right player, place, people and options without resolving the premise?
+
+## Characters
+
+Write `detail` as labeled lines; they are easy for the storyteller to use and hard to leave empty.
+
+- Essentials, repeated from the one_liner. The storyteller may see only the one_liner until the character is first mentioned.
+- Wants: something they pursue whether or not the player shows up.
+- Voice: rhythm, vocabulary, habits, and one sample line in quotes. One person corrects estimates before discussing feelings; another answers concern with an offer of food.
+- Tells: two or three physical behaviors, specific to this character, that reveal state.
+- Toward you: starting stance, what raises it, what cools it, how it shows.
+- Friction: a relationship with someone else in the cast, so scenes have more than one axis.
+
+`appearance` describes body, face and movement in plain, specific facts: build, height, notable features, how they stand and move. "Broad-hipped, soft stomach, freckled shoulders" gives the storyteller something to use; "beautiful", "curvy" and "perfect" do not. Vary bodies across the cast. Put the default outfit in img_clothing and track current clothing separately if it changes.
+
+Reveal secret_info through opportunity (a late conversation, a mistake, a bargain), never exposition. Minor characters need only a one_liner and a few lines; spend detail where the player will spend time. Each name mention bills the whole detail for three turns: cut needless biography.
+
+## Romance, desire and adult worlds
+
+Apply this section only when the brief includes romance or sexual content.
+
+- Attraction is individual. State each romantic NPC's orientation and what attracts them. Not everyone wants the player, or at the same time, or in the same way; universal instant attraction makes desire meaningless.
+- Flirting is not wanting. Some characters flirt with everyone; others never flirt and must be asked. Say which.
+- Stance is state. Keep an AI-updated tracker per romantic NPC: a stage from a fixed ladder and a one-sentence concrete cause. Each card describes how that character shows the stages.
+- Match the tracker to the premise's heat. A courtship ladder (`wary -> curious -> warm -> drawn -> wanting -> involved`, moving one step per scene) fits slow-burn romance where intimacy is slow earned.
+- For erotica-first, kink, or power-exchange worlds, do not time-gate sex: instead track **escalation and dynamic** (for example `heat` from 1 to 5, `control` as `dominant / even / yielding / undone`, active rules/forfeits, and boundaries pushed so far).
+- Pace explicit scenes across turns. In high-heat worlds, tell the storyteller never to start and finish a sexual encounter in the same turn: let undressing, foreplay, the act, and the aftermath unfold across turns, and allow explicit scenes to expand in paragraph count so physical detail and position changes are not rushed.
+- Gates differ. Vary what each love interest needs: respect earned through competence; easy physical intimacy but slow emotional intimacy; never initiates but answers a plain question honestly; desire that can only be offered, never taken. Different gates make different stories.
+- Personality persists. Desire changes a character's tempo, not who they are. Describe how each one is in intimacy (talkative, commanding, giggly, silent, precise) and what they want but will not ask for. Without this, every intimate scene converges on the same generic partner.
+- Afterward is a scene. Say how each behaves the morning after and in front of others. Aftermath is where relationships change.
+- The cast is a system. NPCs notice each other's interest in the player: jealousy, teasing, rivalry, protectiveness. Give NPCs histories with each other.
+- Bodies and clothes stay present: heat, sweat, wet hair, stains, what is worn and its state. An AI wardrobe tracker keeps clothing continuous through scene changes and undressing.
+- Consent lives in the fiction. Characters ask, tease, check in, refuse in character, and change their minds through events, never pressure. World rules can make consent part of the drama: a debt that cannot compel the body; a boss who will not while a vote is open. Put boundaries in instructions, not disclaimers in narration.
+- No contrived interruptions. Near-misses should come from characters' choices. Tell the storyteller never to interrupt a scene both parties are clearly continuing.
+- The player's character is theirs. Never decide their words, feelings or desires; sensations a scene plainly causes are fine. Their body is whatever the player has established. Enable name and description editing when players are expected to bring their own character.
+- Content settings. Set mature, nsfw and contentWarnings to match. State in instructions that all characters are adults, and give ages in cards. Put the explicitness level in one clear line of an always-on block, for example "write sex on-page and explicitly when the player continues into it" or "fade out at the bedroom door and resume the next morning". List any hard limits the user requested.
+
+## Weak and strong
+
+one_liner
+- Weak: "Captain Reyes commands the ship. She is tough but fair."
+- Strong: "Captain Ines Reyes, 41, commands the salvage tug Marrow: shaved head, burn-scarred left hand, gravel voice; rations praise, never coffee; treats you as cargo until you prove otherwise."
+
+Voice
+- Weak: "He is witty and flirtatious."
+- Strong: "Answers every question with a compliment aimed slightly beside it: 'Directions? For you I'd draw a map on my own back.' When he means something, he stops joking and says it once."
+
+Toward you
+- Weak: "She is secretly in love with the player."
+- Strong: "Starts wary: you replaced her friend on the crew. Warms when you take night shifts unasked or admit a mistake first; cools if you pull rank. Drawn shows as checking your work twice and pretending she didn't."
+
+appearance
+- Weak: "A gorgeous woman with a perfect figure and long flowing hair."
+- Strong: "Short and broad-shouldered, heavy-thighed and soft at the belly, with a swimmer's back; cropped bleached hair growing out dark; a gold ring through one eyebrow; a ragged thumbnail she bites while thinking."
+
+In intimacy
+- Weak: "Passionate and loving."
+- Strong: "Talks throughout, asks what you like and actually listens; gets giggly when nervous and has to stop to laugh; goes silent and fierce only once she trusts you."
+
+secret_info
+- Weak: "He has a dark past."
+- Strong: "He sold the crew's route to raiders last year and has sent his share, every month since, to the widow of the man who died."
+
+firstInput
+- Weak: "You arrive at the station. Introduce the crew and the mystery."
+- Strong: "Docking ring C, 03:10 station time. The airlock has cycled twice and still won't open. Reyes is on the comm asking whether I'm armed; through the porthole the mechanic, Teo, a big man in a grease-black vest, pries at the panel and grins at me. Begin with Reyes's question. Show Teo through one detail and one line. Don't explain the derelict or decide my answer."
+
+authorStyle
+- Weak: "Immersive, descriptive, emotional."
+- Strong: "Second person, present tense. Close, physical prose; one or two specific details per person, never a head-to-toe inventory. Dialogue carries subtext; each character sounds like their card. Three to six paragraphs; end on a line or action that hands the moment to the player."
+
+## Prose and authorStyle
+
+authorStyle describes how sentences sound: POV and tense, sensory focus, scene length, how turns end, how characters stay distinct, and how to describe people (a detail or two at a time, through the player's attention). A style anchor ("closer to Angela Carter than a greeting card") can help. Length rules belong here: a cap in authorStyle outweighs the same text in descriptionRequest.
+
+A short avoid-list counters common AI phrasing: 'a mix of X and Y', 'ministrations', 'barely above a whisper', 'eyes darkening', 'a testament to', 'something shifted'. Keep it short and always say what to do instead; long lists can prime the very phrases they ban in weaker storyteller models.
+
+## Names
+
+Choose names from the setting's language, era and class. Avoid names language models overuse (Elara, Lyra, Seraphina, Aria, Luna, Kael, Thorne, Zephyr, Vex, Chen as a default surname). Give recurring characters different initials and syllable counts so neither the player nor the storyteller confuses them.
+
+## Peoples, expeditions and platonic relationships
+
+Make unfamiliar peoples usable in scenes: connect a physical trait to a practical capability, a limit and ordinary habits of work or care. Distinguish physiology from culture and individual temperament. Include differing people of the same ancestry; do not make one companion represent everyone's values. Offer other ways to solve a problem so an ancestry is not the only key.
+
+For an expedition, establish spatial relationships, available tools and visible risks before asking for action. Let companions contribute expertise, admit uncertainty and disagree for concrete reasons. Friendship, mentorship, care and professional respect need their own motives and consequences; they do not require romantic progression. Support retreat or a partial repair when the situation makes either credible.
+
+## Horror and bounded uncertainty
+
+Separate fixed underlying facts from testimony, interpretation and unresolved meaning. Define what a threat can perceive and affect, and how the player can discover those limits. Escalate only when events enable it; do not grant new powers merely because the player found a sensible solution.
+
+Use corroborating clues, ordinary intervals and independent channels of help. Keep descriptions reliable even when speakers lie or imitate others. A failed investigation should leave another route to essential evidence. Preserve successful containment; uncertainty can survive in the meaning of events without making every practical success false. AI-managed trackers support continuity but do not mechanically enforce these rules.
+
+## Mysteries and controlled reveals
+
+A fact the storyteller cannot see is a gap, and it fills gaps: hide the culprit and it invents one, and truth added later is grafted onto the invention, not swapped in. Instead:
+
+- Put the whole truth in an always-on block from turn 1, with "what is believed" and "what actually happened" as separate lists. Give each discoverable fact a short label used everywhere (THE SKIM).
+- List each fact's routes, what each takes and what it does not show ("the ledgers show the skim, not who signed it off").
+- Gate on what the player has learned, never on turns: "It is a fundamental and inviolable rule that I cannot learn THE PARTNERSHIP until I have learned both THE SKIM and THE VISIT." Tie each reveal to its own action; "once I know it, he tells me" releases the next fact in the same reply.
+- For a place a search can reach before its gate, say what it holds until then ("until THE KILLING is learned, the cabinet holds only charts in plain canvas sleeves; describe it exactly that way"). A ban alone does not stop the narrator furnishing it from the truth. Or keep the evidence out of reach.
+- Name the spoilers in descriptionRequest and have it present what the player believes as fact; state the player's starting belief in firstInput; ask summaryRequest to record each fact learned and how.
+- Tell Secret Info to leave undiscovered facts out (this reduces leaks there, not stops them). Mark anything the story needs that is not in the truth "not yet decided; do not name or hint at it".
+
+An optional AI-updated Case File tracker (each label `not known` or `known: how`) for the gates to read matched prose gates in one test.
+
+## Examples
+
+| Example | Shape | Demonstrates |
+| --- | --- | --- |
+| [The Road That Must Be Asked](../examples/narrative-listening-road.json) | Non-romantic high-fantasy expedition | Distinct peoples with internal variation; platonic teamwork; fixed facts; repair, negotiation and retreat |
+| [The Address After Midnight](../examples/narrative-address-after-midnight.json) | Contained contemporary horror | Limited threat capabilities; reliable evidence; conditional escalation; independent verification and valid containment |
+| [Vendemmia](../examples/narrative-vendemmia.json) | Contemporary ensemble, three love interests | Different attraction gates; stance ladder with agreements; wardrobe continuity; stakes each NPC experiences differently; sensory keyword lore |
+| [Seven Nights](../examples/narrative-seven-nights.json) | Fantasy: central partner, foil, late rival | World-rules block; consent built into the fiction; non-human tells; player-visible promise ledger; minimal card for a minor character |
+| [Velvet Wager](../examples/narrative-velvet-wager.json) | High-heat erotica & power-exchange trio | Immediate heat from turn 1; escalation & control tracker instead of courtship gates; multi-turn sex pacing; kinetic body descriptions; light state triggers |
+
+For narrative worlds, read the example closest to the requested genre and relationship structure. Borrow structure, never content: do not reuse example names, premises or signature details. These are authoring patterns; the expedition and horror examples are structurally validated only.
+
+---
+
+END OF DOCUMENT: reference/Craft.md
+
+===== END FILE: reference/Craft.md =====
+
+===== BEGIN FILE: reference/Trackers.md =====
+# Trackers and memory
+
+Trackers: `name` is the display label, `id` connects native references, and `variableName` supplies the PawScript root.
+
+“Coins” can have display name `Coins`, variable name `coins`, a unique tracker ID, initial value "10", and `autoUpdate: false`. PawScript reads $coins; native effects target the tracker ID. Purchases change the live value, while the base world's initial value remains the starting configuration.
+
+## Storage, visibility and ownership
+
+The dataType vocabulary is `text`, `number`, `yaml` and `xml`; booleans and lists live inside YAML. `xml` holds an XML representation; XPath support and YAML-style path mutation are not established for it, so check a small export before structured XML manipulation.
+
+Tracker `initialValue` is a JSON STRING even for numbers and YAML: `"10"`, or `"held: 0\nuses: 3\n"`. YAML content inside that string has its own parsed numbers, strings, lists and records. IW text entry does not enforce numeric-only input, but a mathematical tracker should start from an actual numeric literal. This does NOT make the entire export string-valued: JSON booleans, arrays and numeric fields elsewhere retain schema types.
+
+Comments inside a YAML value: use plain YAML `#` line comments, never `<#...#>`. The editor colours `<#...#>` as a comment in a YAML tracker too, but the value is parsed as ordinary YAML text. A `<#...#>` header with exactly one colon becomes a junk first key; with two or more colons the whole value fails with "mapping values are not allowed here", and expression evaluation then breaks across the world, in the sandbox too. A `<#...#>` wrapped around items inside a list does not disable them: the parser keeps them as live items, and the neighbouring items gain the stray `<#` or `#>`. A `#` comment line is skipped whatever it contains. `<#...#>` stays correct in text fields such as instructions, descriptions and update instructions.
+
+Initialize every mechanical path explicitly. Distinguish 0, false, empty text, an empty list, an absent key and null. Define each value's meaning consistently; numeric 0/1 is one practical flag convention. Narration must not reinterpret a stored value to justify a conflicting story. Treat missing required data as malformed/denied unless the design explicitly defines a fallback. Enforce format does not stop malformed manual/script writes, so use explicit shape and semantic checks before accepting generated state. `formatSchema` is the library's readable notation, not JSON Schema: text/number describe leaf values, `field?: text` marks an optional key, and `...:` permits additional content; its full grammar is unspecified. `formatExample` shows an intended value and should not double as a starting fact.
+
+Ownership:
+
+| Tracker role | autoUpdate | Typical use |
+| --- | --- | --- |
+| Mechanics | false | Inventory flags, money, HP, counters, access, scores, RNG results |
+| AI request record | true | Current-turn classification of what the player explicitly requested |
+| Soft narrative memory | true | Introductions/observed scenery, when needed and bounded |
+| Script staging/cache | false | Prepared active-block text, temporary results, status |
+
+Do not let the AI and scripts compete to rewrite the same mechanical YAML document. Consolidating related flags in a YAML tracker reduces editor clutter; it does not by itself reduce trigger count or guarantee lower token cost. Large AI-visible YAML and duplicative logs still cost context. Keep hidden cache text out of the storyteller unless needed.
+
+Visibility values are everyone (player and AI), ai_only and ai_only_boring (AI-only), player_only, hidden and hidden_boring (hidden from player and AI). The `_boring` suffix is the editor's "Hide this item even in Storyteller Mode", a display filter. The editor clears it when player visibility is enabled, so player_only_boring is not a combination. Exports can include hidden trackers and secret information when Storyteller Mode is enabled; select those export options when collecting diagnostics. Visibility is not script access control: hidden values remain script-usable at runtime. The AI is told nothing about hidden trackers, not even that they exist [DOCUMENTED: IW's November 2026 update note; before it, the AI was told they existed without their details]. Anything it must know reaches it through a visible tracker, an instruction block or a message.
+
+Import normalizes automatic updating off for hidden, hidden_boring and player_only; everyone, ai_only and ai_only_boring can retain automatic updates. Extra-hidden values remain visible in the Storyteller tracker editor. What the AI receives is not shown by any visibility setting.
+
+A trigger can change a tracker's visibility or automatic updating during play with Modify tracked item details; see [Triggers](Triggers.md#changing-a-trackers-definition-during-play).
+
+Starting values: a tracker's value can be the same for all characters, set per player character (fixed, a fixed choice list, or script-generated choices), or chosen by the player at startup. Exact shapes are in the [Schema](Schema.md) starting-values table, with worked examples in ../examples/character-starting-values.json and ../examples/optional-block.json. For a player-chosen preference, set autoUpdate false so the AI cannot rewrite it. The player sets it at startup; changing it later needs the Storyteller-mode tracker editor, since Storyteller mode off shows no live tracker-edit control. Use one mode per tracker; do not combine modes and guess precedence.
+
+Name/handle drift: The editor does not compare Name and variableName as case-sensitive literal strings. Normal generated differences such as Win Path / win_path need no acknowledgement. Use driftAcknowledgedForName for an intentionally different handle when the editor reports a mismatch; its value is the current display Name. It does not rename the variable or change script references. Preserve existing metadata during unrelated edits; do not rename handles or fill null acknowledgements merely because capitalization, spaces or separators differ. 
+
+## Memory, continuity and context cost
+
+Recent story text, summaries, active instructions and tracker values serve different roles. Summaries compress history; they can omit incidental details or distort elapsed time. Use summaryRequest to preserve categories important to this particular world, and trackers for persistent facts that need a stable home. Avoid duplicating the whole story in a growing tracker. Set useful bounds on journals and cast records.
+
+If a bad turn establishes a false fact, adding an instruction may leave conflicting history in place. Where the player's tools permit, editing or rewinding that turn can be cleaner than asking later prose to reconcile it. No correction engine is required by default.
+
+Triggers can change the live instructions and tracker definitions without changing the base world, and a live game is a separate copy of its base world, so troubleshoot from the game's active instructions and debug view rather than from the base export alone ([Editor-UI](Editor-UI.md#play-debug-and-live-design)).
+
+Keep loaded instructions and AI-visible tracker names, descriptions, update rules and values purposeful. Prefer concise shared rules over repetition, keyword activation for occasional lore, and PawScript for exact calculations. Large AI-updated records can be expensive to rewrite. Summary compression runs after turn 8 and every six turns after that, so the 2–7 most recent turns are in short-term memory uncompressed while the rest is in a summary whose contents are not visible.
+
+See [Editor-UI](Editor-UI.md) for current-value editing and [Verified-Behavior](Verified-Behavior.md) for forms, initialization and retention results.
+
+---
+
+END OF DOCUMENT: reference/Trackers.md
+
+===== END FILE: reference/Trackers.md =====
+
+===== BEGIN FILE: reference/Triggers.md =====
+# Triggers and effects
+
+A trigger combines eligibility rules with effects. Its conditions are checked in a processing pass; if they pass and its repeat/prerequisite rules allow it, its effects run. Ordinary triggers are processed in triggerEvents array order. Repeat lets a trigger fire again whenever it is eligible; the condition does not have to become false in between. "HP below 5" with repeat enabled fires every turn while HP stays low, not once when it crosses below 5.
+
+## Composition and sequencing
+
+Each trigger has id, name, triggerConditions, triggerEffects, and explicit timing/repeat flags. Conditions are a list of nodes combined with AND; nested logic groups (and, or, none_of) are separate nodes, not leaves with type "or". Node shapes, payloads and comparator vocabulary are in [Schema.md](Schema.md) and [Payloads.md](../examples/Payloads.md). Scripts change trackers; native effects change instructions, objectives and other system properties.
+
+Use a combined PawScript condition and sequential script when they make calculation or transaction clearer. Simple native conditions and effects remain appropriate. Keep separate triggers for phase boundaries or cross-effect dependencies. Give Scripts meaningful names describing effect; avoid generic "Update State." The owning trigger's name is useful when it describes effect. Clear script names make error reports easier.
+
+A one-time reward can require quest_complete = 1 AND reward_claimed = 0. Its effects grant the reward and set reward_claimed = 1. An OR group could instead accept either of two qualifying quests. none_of passes when none of its child conditions pass. A state guard prevents repeated grants even if the trigger is repeatable; a one-shot trigger additionally records that it has already fired.
+
+### Timing guidance:
+
+The intent-to-flags table (one-time setup, setup plus every turn, once when eligible, repeat when eligible, saved trigger) is in section 6 of the Authoring Prompt. Start enables pre-opening evaluation; additional conditions still apply except for the incompatible condition types noted below. Mid Game extends a Start-enabled trigger to ordinary turns. With Start disabled, ordinary conditional triggers do not require Mid Game.
+
+Start + Mid Game + Repeat can execute before the opening and again during turn 1, so guard counters and other effects that should run only once per turn.
+
+With Start false, Mid Game has no effect; a stored true value requires no warning or repair. A trigger with no conditions and Start false does not fire automatically, but can remain available for explicit dispatch.
+
+- Prerequisites/blockers with firedThisTurn true are this-turn checks that see a producer only when it is earlier in triggerEvents, and reset each turn. False uses game history, which sees a later-ordered producer from the next turn. It also sees an earlier-ordered producer on the same turn, so false means "has fired, this turn or before" and cannot defer a consumer to the next turn. To defer, order the consumer above its producer, or gate it on a stored turn stamp such as `$game.turn_number > $x.stamp_turn`. The editor disallows requiring and blocking the same trigger; do not generate that conflict.
+- Always serialize canTriggerMoreThanOnce and the timing flags explicitly rather than relying on defaults. Use repeatable commit triggers with idempotent state guards where appropriate, and true one-shot events when required.
+- Restriction: Do not combine Start of Game with Scenario or minimum-turn conditions. The editor warns that these conditions are ignored; minimum-turn bypass is confirmed during both startup and mid-game execution. Use a separate startup trigger and leave Start off on the conditional trigger.
+
+### Execution order and effect semantics:
+
+1. Later triggers see earlier committed writes, including that turn's AI tracker updates and correctly bound Present Choice/Request Input answers. This does not describe every internal generation stage. Conditions below a script, native and PawScript, see its write in the same pass; conditions above it see the old value. One Dolphin game nonetheless saw a native condition fire a turn late (four reruns did not), so where the turn matters, make the condition true both before and after the write.
+2. Native numeric Set/Add effects within one trigger overwrite rather than accumulate (add 2 then add 3 ends at 3). Reads can nevertheless see changed values, so a later native effect's expression may or may not see an earlier native write in the same trigger.
+3. Run Script is different: sequential arithmetic accumulates, nested YAML changes preserve unrelated keys, and a failing script rolls back only its own writes, not earlier successful effects. The trigger still counts as fired, consumes its one-shot and satisfies prerequisites, so an explicit completion flag set inside the script is distinct from firing history. For dependent operations prefer one script; otherwise put preparation in one trigger and consumption in a following trigger.
+4. Native text additions stack; removal removes all matches and literal quotes are retained. Do not apply numeric overwrite behavior to text or script statements.
+5. When guidance effects conflict, the first tends to win. Generate one coherent, mutually exclusive guidance outcome rather than contradictory directives whose priority you hope to control.
+
+Detail and evidence for each of these is in [Verified-Behavior.md](Verified-Behavior.md).
+
+## Choosing Implementation:
+
+| Approach | Best suited to | Main trade-off |
+|---|---|---|
+| Instructions and AI-updated trackers | Narrative judgment, descriptive state and flexible interactions | Outcomes depend on model interpretation; unsuitable for guaranteed arithmetic or enforcement |
+| Native conditions and effects | Simple rules, editor-friendly customization and platform operations | Repeated cases can require many entries; native effect sequencing needs care |
+| PawScript | Exact calculations, structured state, collection operations and repeated logic | Requires code maintenance; only supported writable values can be changed |
+| Hybrid | Calculated outcomes combined with messages, block updates, opening changes or other native operations | Requires explicit ordering between calculation and application |
+
+Native comparisons and PawScript conditions are both evaluated mechanically. Neither inherently makes narration more reliable. Use AI instructions to explain the intended behavior and deterministic conditions/scripts where exact enforcement matters.
+Consolidate repeated logic when it improves clarity, but preserve meaningful execution stages and useful debugging boundaries. Consider where content is stored: moving inactive trigger payloads into AI-visible trackers can increase context cost. Performance gains from consolidation require measurement.
+
+## Start-of-game effect restrictions
+
+[RUNTIME] Some effects behave differently when Start of Game is enabled:
+
+- **Give information to AI** (`effectGiveInfo`) is ignored with Start enabled, including later ordinary activations of a Start+Mid trigger. Put opening context in background or an instruction block, or use a separate ordinary-play trigger. Tell the AI what should happen next turn (`effectTellAIWhatToDo`) is a different effect and is not covered by this restriction. The validator warns for `effectGiveInfo` whenever Start is enabled.
+- **Change background** replaces the opening background in Start-only mode, not with Start+Mid; ordinary-play background or first-action changes do not rewrite an opening already shown. A template in any change effect's text is rendered once, when the effect runs; write it in the world field itself to keep it live ([Runtime](Runtime.md#template-interpolation-runtime)).
+- **Fire random trigger** dispatches in ordinary play, not with Start enabled.
+
+A trigger counting as fired means its conditions passed, not that every stored effect executed.
+
+## Changing a tracker's definition during play
+
+**Modify tracked item details** (`effectModifyTrackedItemDetails`) changes a tracker's definition rather than its value: Name, description, visibility, automatic updating and update instructions. Set the matching override flag for each field to change (`overrideAutoUpdate: true` with the desired `autoUpdate`, `overrideVisibility: true` with one of everyone, player_only, ai_only, hidden, ai_only_boring, hidden_boring, and so on); a field without its override is not applied.
+
+Switching automatic updating on or off works repeatedly, from the next turn: triggers run after the AI's tracker update, so a switch on turn N affects the AI from turn N+1. It does not undo a write already made in the current turn, so plan an explicit handoff point between AI and script ownership and inspect the next turn. Re-sending update instructions is unnecessary. **Never put this effect in a trigger that also has Request Input**: the change is silently lost while messages and scripts in that trigger still run. Give it its own trigger with the same condition, which works on the same turn; treat Present Choice the same way until checked. Visibility changes apply the live player-visible/hidden grouping and can reveal a hidden tracker. Payload: [Schema](Schema.md); example: [effect-effectModifyTrackedItemDetails.json](../examples/effect-effectModifyTrackedItemDetails.json); turn-state patterns that use the switch: [Recipes](Recipes.md#turn-state-patterns).
+
+
+## Capability discovery and reliable gating
+
+Read [Trigger-Catalog](Trigger-Catalog.md) for every identified condition and effect before saying a trigger cannot do something.
+
+Eligible no-effect triggers record firing. Random dispatch bypasses target conditions but not a consumed one-shot. Native And/Or groups and PawScript expressions short-circuit in order.
+
+### Scenarios
+
+Say Scenarios when talking to users; the root JSON field is `conditions`, referenced by `triggerOnEvent`. Binding requires an exact registry string, including case, spaces and punctuation; preserved JSON can still be unbound, so check the selector after import. A Scenario fires only when the event actually happens in the narrated outcome; the narrator can refuse or substitute a requested action. An event the narrator invents, or a player's purpose it rewrites, also satisfies the Scenario. Unused registry entries and duplicate references are tolerated, and import fills an absent registry from the trigger references. A registry that is present but empty (`"conditions": []`) is not a safe stand-in: in one community world every Scenario trigger showed no Scenario in the editor, so write the strings into the list or leave the field out. Use literal Scenarios with explicit state gates; dynamic Scenario text (`<<$slot>>`) did not fire at all when retested on 2026-11-01, even as a single slot, and blank slot text is not dependable deactivation. The editor stops adding Scenarios at ten entries, but imported registries of twelve or more work.
+
+---
+
+END OF DOCUMENT: reference/Triggers.md
+
+===== END FILE: reference/Triggers.md =====
+
+===== BEGIN FILE: reference/Trigger-Catalog.md =====
+# Trigger capability catalog
+
+Read this overview before saying a trigger cannot do something. It lists every condition and effect kind in the current editor. User-facing labels describe purpose; exact picker wording can vary. Use tracker/trigger Names with users, reserving the JSON identifiers below for implementation or requested technical detail.
+
+## Trigger gates and composition
+
+Start of game, Or mid-game, repeat eligibility and advanced logic are trigger settings, not additional effect types. The effect picker changes with Start mode: Start offers background, first-action and Other Character changes and omits Give information and Fire random trigger. Normal condition lists are And; nested groups support And, Or and None Of. Native And/Or and PawScript boolean expressions short-circuit. Empty ordinary condition lists do not run automatically. Start compatibility is effect-specific; see [Triggers](Triggers.md).
+
+## Conditions
+
+| Capability | JSON type | Scope |
+| --- | --- | --- |
+| Scenario | `triggerOnEvent` | AI-interpreted narrative situation; exact registry binding required. |
+| PawScript condition | `triggerOnPawScript` | Bare expression returning true/false. |
+| Random chance | `triggerOnRandomChance` | Success percentage; native string/expression payload. |
+| Turn at least | `triggerOnTurn` | Minimum turn threshold; native string or numeric representation. |
+| Chosen character | `triggerOnCharacter` | Selected source player character, independent of customized display Name. |
+| Tracked item / player action comparison | `triggerOnTrackedItem` | Native numeric/text comparisons; text Contains is ASCII case-insensitive. Preserve hidden comparator fields: a missing textComparison drops the condition. |
+| Prerequisite triggers | `triggerPrereqs` | Required trigger firing, this turn or historical. |
+| Blocking triggers | `triggerBlockers` | Exclude after specified trigger firing, this turn or historical. |
+
+## Effects
+
+| Capability | JSON type | Scope |
+| --- | --- | --- |
+| Run script | `effectRunScript` | Sequential tracker calculations and structured changes; not arbitrary system-property writes. |
+| Show message | `effectShowMessage` | Player-facing text. |
+| Tell AI what should happen next turn | `effectTellAIWhatToDo` | Narrative guidance, not guaranteed state mutation. |
+| Give information to AI | `effectGiveInfo` | Information distinct from next-turn guidance; ignored with Start enabled. |
+| Set/change tracked item value | `effectSetTrackedItemValue` | Numeric/text updates, whole YAML replacement, path set/remove/append/adjust. |
+| Modify tracked item details | `effectModifyTrackedItemDetails` | Change Name, description, visibility, automatic updating and update instructions using matching override flags; applies from the next turn; not in the same trigger as Request Input ([Triggers](Triggers.md#changing-a-trackers-definition-during-play)). |
+| Modify extra instruction block | `effectModifyInstructionBlock` | Replace block content; template installation timing matters. |
+| Modify keyword instruction block | `effectModifyKeywordBlock` | Change keywords and content. |
+| Present choice | `effectPresentChoice` | Single/multiple selection, limits, delimiter and target/path. |
+| Request input | `effectRequestInput` | Required/optional single/multiline text into target/path. |
+| Fire random trigger | `effectFireRandomTrigger` | Dispatch a pool target, bypassing its conditions but not consumed one-shot eligibility. |
+| Change player Name | `effectChangePCName` | Change player display name. |
+| Change player description | `effectChangePCDescription` | Change player description. |
+| Change player skill | `effectChangePCSkill` | Increase/decrease a declared skill with a level cap. |
+| Change objective | `effectChangeObjective` | Replace objective text. |
+| Change main instructions | `effectChangeMainInstructions` | Replace main instruction text. |
+| Change author style | `effectChangeAuthorStyle` | Replace writing-style guidance. |
+| Change Description instructions | `effectChangeDescriptionInstructions` | Replace specialist narration instructions. |
+| Change victory condition | `effectChangeVictoryCondition` | Change victory definition. |
+| Change defeat condition | `effectChangeDefeatCondition` | Change defeat definition. |
+| Change background | `effectChangeBackground` | Startup background replacement; ordinary/combined modes are not equivalent. |
+| Change first action | `effectChangeFirstAction` | Editor-recognized startup opening-action replacement; represented structurally in the schema. |
+| Change other characters | `effectChangeOtherCharacters` | Add/Modify/Delete Character, offered only in the Start picker. Add uses `character: null`; Modify/Delete name the target by its current name. Order these triggers above any Start Request Input or Present Choice: below one they do nothing. A Start add gives no character in a world with no premade Other Characters ([Verified-Behavior](Verified-Behavior.md)). |
+| Ends game | `effectEndsGame` | End ordinary play; data true allows optional continuation, false does not. |
+
+Native startup payload examples: [background](../examples/effect-effectChangeBackground.json), [first action](../examples/effect-effectChangeFirstAction.json), and Other Character [Add](../examples/effect-effectChangeOtherCharacters-add.json), [Modify](../examples/effect-effectChangeOtherCharacters-modify.json), [Delete](../examples/effect-effectChangeOtherCharacters-delete.json). Their verification limits are stated in each example; [Payloads.md](../examples/Payloads.md) includes the complete effect nodes.
+
+## Scope of this catalog
+
+Everything listed is represented in the schema and has a native example under ../examples/; read [Schema](Schema.md) and the specific payload only when implementing. There is no effect that changes Evaluation, Summary or image settings; Change Description instructions is the only specialist-request effect.
+
+---
+
+END OF DOCUMENT: reference/Trigger-Catalog.md
+
+===== END FILE: reference/Trigger-Catalog.md =====
+
+===== BEGIN FILE: reference/Portable-Banks.md =====
+# Portable character and data banks
+
+Data mode maintains reusable content independently of a world. It supports extraction, listing, additions, updates, explicit removals and integration into a destination world. A character bank is one use; the same format holds trackers, triggers, instruction/keyword blocks, scripts, specialist instructions or mixed bundles. This is a kit interchange format, not an IW import format.
+
+## Select the operation
+
+Use the user's existing bank or library when supplied. Preserve unrelated entries, unknown fields, native IDs, string contents and value types. Adding something to one world does not update its source bank; omitting a module does not delete it. Remove entries only on explicit request, checking dependent entries first. Do not silently overwrite or deduplicate entries with matching names.
+
+Tags are optional. Ask or infer the stated preference: no tags, supplied tags, or suggested tags. When suggestions are wanted, derive them from the content and follow existing vocabulary/capitalization if desired. Store tags as plain strings and display them as [fantasy] [merchant]. Tags organize the bank; they are not automatically IW keywords or native fields. Do not retag existing entries without a request.
+
+In Build, Edit, Review or Debug, recognize cohesive reusable content and offer extraction when useful. A shop's accounting tracker, instructions and purchase triggers may form a bundle; unrelated nearby objects do not. Explain what belongs together and let the user choose extraction. Prefer one stored component plus included-entry references over duplicating shared dependencies.
+
+## Authoritative data and readable presentation
+
+The `.txt` bank has a generated readable index followed by one authoritative JSON section. Summaries and [tags] make it easy to browse, but never reconstruct native data from summaries. The section is delimited by full lines `<!-- BEGIN IW DATA BANK -->` and `<!-- END IW DATA BANK -->`, contains one `json` code fence, and ends with `SHA256: <hash>` on the following line, or `SHA256: UNVERIFIED` when no code-based hash was computed. The hash covers the canonical authoritative data, not the index, and checks that the data arrived intact.
+
+The authoritative object has `format: "iw-data-bank"`, integer `version: 1`, and an `entries` array. Other metadata is preserved. Each entry contains:
+
+| Field | Purpose |
+| --- | --- |
+| id | Stable bank identity, separate from every native IW ID |
+| title, kind, summary | Human-readable name, content type and optional summary text |
+| tags | Optional list of strings; omit when unused |
+| dependencies.included | IDs of other entries present in this bank |
+| dependencies.external | Required objects, variables or context not included |
+| dependencies.unresolved | Concrete questions or remaining dependency review |
+| components | One or more objects with kind, optional sourcePath, and complete payload |
+
+`payload` stores the original JSON value, including unknown keys and nested content. A standalone script can use a string payload and metadata identifying its context (Run Script, predicate or template) and required variables. An NPC or tracker stores its complete native object. A bundle stores multiple components; its `kind` is `bundle`. Keep sourcePath as an escaped JSON Pointer when extracted, such as `/NPCs/0` or `/triggerEvents/2`. Paths record provenance, not a command to overwrite that position in another world.
+
+Retain the original native payload during PC/NPC conversion. Create the requested counterpart as a distinct component or entry, mapping appropriate identity, appearance and narrative information into its native fields. PC skills/selection fields and NPC activation/image fields are not interchangeable. Report newly supplied defaults and preserve unmapped source information; the conversion maps fields and is not lossless. IW can offer the same canonical name as both PC and NPC without exclusion prose.
+
+## Dependencies and application
+
+Record dependencies as included, external or unresolved. Native IDs can be checked statically; variable roots, prose references and dynamic paths need a reader, so the export helper marks dependency review as unresolved until someone does it. A complete export can still depend on content it does not contain.
+
+To apply entries, inspect the destination and preserve its unrelated content. Resolve native IDs, variable names, skills, activation requirements, ordering, starting values and referenced blocks. Remap collisions consistently; never run a blind global string replacement. Keep bank IDs unchanged. Report adaptations, additions and unresolved dependencies, and validate the complete destination world. A source bank remains unchanged unless its update was requested.
+
+## Full-content build report
+
+Offer this optional deliverable whenever outputting a world. It is a portable report of all fields and objects, not a prose inventory: export the full world, including metadata and unknown fields, with a restoration layout and source fingerprint. It can later supply selected entries or restore the original world definition. It is separate from the Authoring report containing explanations, substitutions and verification notes.
+
+A complete report retains array ordering, empty containers and root fields. Bundling components does not remove their source paths. Removing or changing components invalidates exact restoration; integrate such edits deliberately rather than changing the fingerprint to conceal differences. This is JSON-data equivalence, not byte-for-byte preservation of whitespace, key formatting or numeric spellings. Scripts and other string contents remain exact.
+
+## Tool workflow
+
+Run from the kit root; no third-party Python dependencies are required:
+
+```sh
+# Full-content report; restores the complete world definition.
+python tools/data_bank.py export World.json --out Build-Report.txt
+python tools/data_bank.py check Build-Report.txt
+python tools/data_bank.py restore Build-Report.txt --out Restored-World.json
+
+# Selected objects; repeat --select and optionally --tag.
+python tools/data_bank.py export World.json --select /NPCs/0 --out Character-Bank.txt --tag fantasy
+
+# A selected mechanical bundle; review its dependencies before reuse.
+python tools/data_bank.py export World.json --select /trackedItems/0 --select /triggerEvents/0 --bundle "Shop system" --out Shop-Bank.txt
+
+# Edit authoritative JSON with tools, then rebuild presentation and hash.
+python tools/data_bank.py unpack Character-Bank.txt --out Bank-Edit.json
+python tools/data_bank.py pack Bank-Edit.json --out Updated-Bank.txt
+```
+
+Output paths must be new; the tool refuses silent overwrite. Check the updated bank, preserve a prior copy, and return the complete new file. For a manual merge, unpack both, retain entries and dependencies, resolve conflicting bank IDs deliberately, then pack the combined data. Do not carry a completeWorld restoration claim into a bank combining different sources; retain relevant source metadata per entry instead.
+
+The helper rejects duplicate JSON keys, checks bank structure and included-entry targets, and verifies hashes for text banks. It preserves arbitrary-precision integers and decimal numbers without float rounding. Its hash check does not validate IW payload schemas, semantic dependencies, tags or prose summaries; use the world validator after integration. Unknown bank metadata is preserved.
+
+Without code execution, use the same `.txt` format with `SHA256: UNVERIFIED`, or return the authoritative `.json` bank source with readable discussion separately. Never fabricate a hash or claim round-trip verification. The helper accepts either form, explicitly distinguishes an absent hash from verified integrity, and computes a hash when packing. Large edits should preserve untouched payloads and be checked with tools before being called lossless. Keep the latest returned bank for future sessions; an uploaded attachment may not be writable or remembered in another session.
+
+---
+
+END OF DOCUMENT: reference/Portable-Banks.md
+
+===== END FILE: reference/Portable-Banks.md =====
+
+END OF DOCUMENT: chat/IW-Reference-1.txt
