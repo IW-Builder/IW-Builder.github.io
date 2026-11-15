@@ -1,6 +1,6 @@
 {
   "algorithm": "sha256",
-  "generatedAt": "2026-11-15T00:00:09+00:00",
+  "generatedAt": "2026-11-15T01:45:15+00:00",
   "files": [
     {
       "path": "Authoring-Prompt.md",
@@ -14,8 +14,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 11093,
-      "sha256": "44b580555e93faebd6ca7dd5078ca8f4b3d487e786921855b4cc992de362327a"
+      "bytes": 11330,
+      "sha256": "e33239a9dc8e21c2158190c078e6c7a16a8de92e17d12daa72e044c7885024fa"
     },
     {
       "path": "World-Template.json",
@@ -104,8 +104,8 @@
     },
     {
       "path": "cost/index.html",
-      "bytes": 20147,
-      "sha256": "24252b5fd55bd84c0fc38a9fda70db0d8d06227fb69ca0186ae7223fcd280b6d"
+      "bytes": 20208,
+      "sha256": "ee774dd52e5a02bc3939795153b5a0485e873d396e680f3629d13648df892026"
     },
     {
       "path": "examples/Payloads.md",
