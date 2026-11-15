@@ -1,6 +1,6 @@
 {
   "algorithm": "sha256",
-  "generatedAt": "2026-11-14T22:42:08+00:00",
+  "generatedAt": "2026-11-15T00:00:09+00:00",
   "files": [
     {
       "path": "Authoring-Prompt.md",
@@ -14,8 +14,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 10986,
-      "sha256": "0ee0b529c0c9b06bde1f12982bc1335ba79fff803aba189e428206f51dd53768"
+      "bytes": 11093,
+      "sha256": "44b580555e93faebd6ca7dd5078ca8f4b3d487e786921855b4cc992de362327a"
     },
     {
       "path": "World-Template.json",

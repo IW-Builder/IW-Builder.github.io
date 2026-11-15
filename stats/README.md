@@ -21,3 +21,33 @@ How to read it:
 - A second export of the same world replaces the older one; the date in the file name (`<World> stats YYYY-MM-DD.csv`) decides.
 
 Until you load a file, the page shows example data: three made-up worlds with invented numbers, in [examples/](examples/). One has live `Stats:` markers, one has none, and one has a marker build published but not yet played. Your first file replaces them; Clear all brings them back. The examples load only when the page is served over the web (opened straight from disk, it starts empty).
+
+## Add the markers to your own world
+
+[stats-starter.json](stats-starter.json) is a tiny world that holds only the base markers, ready to copy. Its harbour-town story is a placeholder so it imports and plays. What it carries:
+
+| Marker | Condition | When it fires | What IW's stats show |
+| --- | --- | --- | --- |
+| `Stats: Started` | `$stats_markers >= 0` (always true) | Start of game, once | Games on versions with markers: the denominator for every share |
+| `Stats: Pace = Slow` (and Steady, Fast) | `$pace = "Slow - a week per chapter"` | Start of game or mid-game, once | Which option of a setting players pick. Copy one per option |
+| `Stats: Pictures = High` (and Basic, Off) | `$imagetype = "High"` | Start of game or mid-game, **repeating** | Games per picture setting, and turns on each (Fired) |
+| `Stats: Reached Day 1` … `Day 300` | `$story_day >= 1` | Mid-game, once | How far games get in story time. Use `>=` so a jump still counts |
+| `Stats: Model Dolphin` … `Model Other` | `$game.ai_model = "Dolphin"` | Mid-game, **repeating** | Games and turns on each model. Other is `!=` every listed model |
+
+Every marker has the same single effect, a Run Script of `$stats_markers = $stats_markers + 1`, and a hidden Number tracker **Stats Markers** (`stats_markers`, starting at 0) holds the count. Hidden trackers aren't sent to the AI and triggers don't bill, so the markers cost nothing to play.
+
+**Copy them by raw JSON** (fastest, and keeps the IDs):
+
+1. Open your world in the editor: **Show optional features > Misc advanced features > Show raw JSON**, then **Refresh raw JSON** and copy the whole value somewhere safe as a backup.
+2. Open `stats-starter.json` in a text editor. Copy the **Stats Markers** object from its `trackedItems` into yours, and every trigger named `Stats: …` from its `triggerEvents` onto the end of yours (they read each turn's final state, so last is best).
+3. Point the copied conditions at your own world: change `$pace` and its option texts to your own setting's variable and exact dropdown options (case and punctuation must match), `$imagetype` to your picture setting, and `$story_day` to your day count. Delete the markers you have no use for, and copy a setting's block once per extra setting, giving each copy a new ID (nine letters and digits).
+4. Paste the edited JSON back into the box and choose **Import JSON to world**. Remove any final newline first: the text should end at its last brace.
+
+**Or add them by hand** in the trigger editor: a PawScript condition, one Run Script effect, and the boxes from the table (**Trigger at start of game** for Started and settings, **Or mid-game** for all of them, **Allow triggering multiple times** only for Pictures and Model).
+
+Rules that keep the numbers right:
+
+- **Keep marker IDs fixed across versions.** IW counts triggers by ID, so a marker deleted and recreated starts a fresh row. Edit the name or condition freely; don't delete and re-add.
+- **Name them `Stats: …`** with ` = ` between a setting and its option, `Reached …` for milestones and `Model …` for models, and this page groups and charts them for you.
+- **Markers count only in a public Community World.** Load your next World Stats export here after publishing: Started should match the games on that version, and each setting's options should add up to Started.
+- Other markers fit the same pattern: a ready-made character (`$player.name = "Name"`, plus a `!=` catch-all for custom characters), a story milestone (`$chapter >= 3`), or the first use of a feature.
