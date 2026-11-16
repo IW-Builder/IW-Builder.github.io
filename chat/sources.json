@@ -24,7 +24,7 @@
       "reference/Images-and-Models.md",
       "reference/Default-Evaluation.txt"
     ],
-    "sha256": "a8d45ea3df94ac556b1f1d32e71a2bef12c49dc276c70fec6f36b12929d56fc5"
+    "sha256": "943cfdce8688941ad69f7b31e318870b53eb74a53b0c5c395ec95e651429d564"
   },
   "IW-Reference-1.txt": {
     "sourceFiles": [
@@ -36,7 +36,7 @@
       "reference/Trigger-Catalog.md",
       "reference/Portable-Banks.md"
     ],
-    "sha256": "2f1956023bfe9a1242c905db773ce26fc3141e7d02988ddf467ba64c36dce781"
+    "sha256": "c2ed786c40e5e35ac80d7f3de6da4ba3670f77ee8c553f0b608d739faa49af07"
   },
   "IW-Reference-2.txt": {
     "sourceFiles": [
@@ -46,32 +46,32 @@
       "reference/Runtime.md",
       "reference/Characters.md"
     ],
-    "sha256": "70377ddfb5b09c7f9cc900c108c669b16f8680b9457bc0050f85daccda226378"
+    "sha256": "ff7832a46293f6084b1d080930be17f6fb07a6695a954f8e6243b454f9fc5bec"
   },
   "IW-Reference-3.txt": {
     "sourceFiles": [
       "reference/Recipes.md",
-      "reference/Notable-Findings.md",
-      "reference/Editor-UI.md"
+      "reference/Notable-Findings.md"
     ],
-    "sha256": "dc0af4521374222e682fb6a248a71fec146dc744f25ad9926d2ef323a7e1dafc"
+    "sha256": "beca371f51bb5285bd535c9dfa9386f623c336a3b2e285f76b587f26402310ff"
   },
   "IW-Reference-4.txt": {
     "sourceFiles": [
+      "reference/Editor-UI.md",
       "reference/Cost.md",
-      "reference/Verified-Behavior.md",
-      "examples/Payloads.md"
+      "reference/Verified-Behavior.md"
     ],
-    "sha256": "a3884b7b8c86b862037e1e31605fbcbdcb6811f6f7b85eb9d4c335f43d7e73c7"
+    "sha256": "d76f793d6c4ebb42ab272ad02403804e2cb617c6b944a93d2bcf7e4bfae858bb"
   },
   "IW-Reference-5.txt": {
     "sourceFiles": [
+      "examples/Payloads.md",
       "examples/index.json",
       "reference/Current-AI-Profiles.json",
       "reference/Images-and-Models.md",
       "reference/Default-Evaluation.txt"
     ],
-    "sha256": "ad6bad45770f487ee45d3ab8bb0e6a992c242265c6a451cc89dc29368503b10f"
+    "sha256": "1ed6c7e4d211b602fdebc9a77138aaabd94a642a99a14d3f4172d6b71b4df38d"
   },
   "IW-Mechanics-Examples.txt": {
     "sourceFiles": [
@@ -91,7 +91,7 @@
       "examples/recipe-on-demand-generation.json",
       "examples/showcase-glass-ledger.json"
     ],
-    "sha256": "4a83349ba1d20bef3699fa4c2a1a907b65453092717083cd450486dfdbe70fa0"
+    "sha256": "64d8b1adc1ab9f0898c9533a11a57068dd6940adec8c37bf3941a17591a2b5b6"
   },
   "IW-Narrative-Examples.txt": {
     "sourceFiles": [
@@ -101,19 +101,19 @@
       "examples/narrative-seven-nights.json",
       "examples/narrative-velvet-wager.json"
     ],
-    "sha256": "67d76ea3e3b268513da5e5e0b859b248ca3c953134a0d786fdb9675f14c2724f"
+    "sha256": "3db3372a9ac07742c401322f7d2f4955e9e9db5c95246078af57fe3adb3bd520"
   },
   "IW-Sample-Blocks.txt": {
     "sourceFiles": [
       "library/Sample-Blocks.json"
     ],
-    "sha256": "306a021d6eeb04338ebac26ed14682e6c407b71e4dfe307c4b73c2f64cbed148"
+    "sha256": "8b99223b5c07a473f26ae5bdb74c0a22e66d65cfd2fbfa05098130d712eb048d"
   },
   "IW-Storymaster.txt": {
     "sourceFiles": [
       "library/Storymaster-Suite.json"
     ],
-    "sha256": "72ca765e851e825d2fc9098db95d96671e30161f6cd510bbfccd8ad044026470"
+    "sha256": "0d750520912fe8d8eb5c4146afb19e2489e288846b495a97c67a83c382a43dc5"
   },
   "IW-Tools.txt": {
     "sourceFiles": [
@@ -126,6 +126,6 @@
       "tools/story_export.py",
       "tools/plot_compile.py"
     ],
-    "sha256": "8edc79e2c81d52ad8b58b879b9129f5ca44af9e0161a8637e87f2c0c1948096b"
+    "sha256": "57dc15a0cc8cf3ed0f19ff643b851d63499b3a90a90ed3e6b1359a8eaeba2a03"
   }
 }

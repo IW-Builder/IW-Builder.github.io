@@ -5,9 +5,9 @@ Editions and their contents:
 - IW-Complete-Reference.txt: the whole reference in one file: everything in the numbered reference parts below. Files: the IW-Reference-1.txt, IW-Reference-2.txt, IW-Reference-3.txt, IW-Reference-4.txt, IW-Reference-5.txt files
 - IW-Reference-1.txt: start here: reference part 1 of 5. Files: Authoring-Prompt.md, World-Template.json, reference/Craft.md, reference/Trackers.md, reference/Triggers.md, reference/Trigger-Catalog.md, reference/Portable-Banks.md
 - IW-Reference-2.txt: reference part 2 of 5. Files: library/Integration.md, reference/Schema.md, reference/PawScript.md, reference/Runtime.md, reference/Characters.md
-- IW-Reference-3.txt: reference part 3 of 5. Files: reference/Recipes.md, reference/Notable-Findings.md, reference/Editor-UI.md
-- IW-Reference-4.txt: reference part 4 of 5. Files: reference/Cost.md, reference/Verified-Behavior.md, examples/Payloads.md
-- IW-Reference-5.txt: reference part 5 of 5. Files: examples/index.json, reference/Current-AI-Profiles.json, reference/Images-and-Models.md, reference/Default-Evaluation.txt
+- IW-Reference-3.txt: reference part 3 of 5. Files: reference/Recipes.md, reference/Notable-Findings.md
+- IW-Reference-4.txt: reference part 4 of 5. Files: reference/Editor-UI.md, reference/Cost.md, reference/Verified-Behavior.md
+- IW-Reference-5.txt: reference part 5 of 5. Files: examples/Payloads.md, examples/index.json, reference/Current-AI-Profiles.json, reference/Images-and-Models.md, reference/Default-Evaluation.txt
 - IW-Mechanics-Examples.txt: complete mechanics example worlds: recipes, optional block, starting values, layered opening, on-demand generation and a showcase. Files: examples/recipe-request-commit.json, examples/recipe-completion-award.json, examples/recipe-candidate-acceptance.json, examples/recipe-archive-reactivate.json, examples/recipe-cached-random.json, examples/recipe-consumed-timer.json, examples/recipe-choice-domain.json, examples/recipe-compiled-plot.json, examples/recipe-choice-followup.json, examples/recipe-threshold-unlock.json, examples/optional-block.json, examples/character-starting-values.json, examples/recipe-layered-opening.json, examples/recipe-on-demand-generation.json, examples/showcase-glass-ledger.json
 - IW-Narrative-Examples.txt: complete narrative example worlds: ensemble romance, fantasy expedition, contained horror, fantasy relationship and high-heat erotica. Files: examples/narrative-vendemmia.json, examples/narrative-listening-road.json, examples/narrative-address-after-midnight.json, examples/narrative-seven-nights.json, examples/narrative-velvet-wager.json
 - IW-Sample-Blocks.txt: optional library modules (read library/Integration.md first). Files: library/Sample-Blocks.json
@@ -397,6 +397,8 @@ A fact the storyteller cannot see is a gap, and it fills gaps: hide the culprit 
 - For a place a search can reach before its gate, say what it holds until then ("until THE KILLING is learned, the cabinet holds only charts in plain canvas sleeves; describe it exactly that way"). A ban alone does not stop the narrator furnishing it from the truth. Or keep the evidence out of reach.
 - Name the spoilers in descriptionRequest and have it present what the player believes as fact; state the player's starting belief in firstInput; ask summaryRequest to record each fact learned and how.
 - Tell Secret Info to leave undiscovered facts out (this reduces leaks there, not stops them). Mark anything the story needs that is not in the truth "not yet decided; do not name or hint at it".
+
+Setting secrets the story doesn't have to solve yet (who really runs the company, what the agency is for) can be withheld differently: wrap each in `<<if($clearance >= N, "the secret", "")>>` in the instructions and lore, with the level raised only by script (rank, chapter). The AI can't leak what it isn't sent, and gated text costs nothing until it renders. Since a hidden fact is a gap, say that the subject is unknown and must not be explained or resolved; a visible placeholder such as `[Secret]` makes the mystery felt but also invites foreshadowing. Use truth plus gates, above, for anything the player is meant to work out [PATTERN, one community world].
 
 An optional AI-updated Case File tracker (each label `not known` or `known: how`) for the gates to read matched prose gates in one test.
 
