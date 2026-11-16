@@ -24,7 +24,7 @@
       "reference/Images-and-Models.md",
       "reference/Default-Evaluation.txt"
     ],
-    "sha256": "943cfdce8688941ad69f7b31e318870b53eb74a53b0c5c395ec95e651429d564"
+    "sha256": "1e3255d52a12c32628394a7b3671a4a0764242551fbb20e8e34d9ff95b0e6189"
   },
   "IW-Reference-1.txt": {
     "sourceFiles": [
@@ -53,7 +53,7 @@
       "reference/Recipes.md",
       "reference/Notable-Findings.md"
     ],
-    "sha256": "beca371f51bb5285bd535c9dfa9386f623c336a3b2e285f76b587f26402310ff"
+    "sha256": "0798866a8ba2eee1d9f4c956f72e5be3e7dec0ad57bca12e9beac26fadc0f681"
   },
   "IW-Reference-4.txt": {
     "sourceFiles": [
