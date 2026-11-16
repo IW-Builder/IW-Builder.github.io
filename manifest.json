@@ -1,6 +1,6 @@
 {
   "algorithm": "sha256",
-  "generatedAt": "2026-11-16T04:18:13+00:00",
+  "generatedAt": "2026-11-16T22:19:05+00:00",
   "files": [
     {
       "path": "Authoring-Prompt.md",
@@ -34,8 +34,8 @@
     },
     {
       "path": "chat/IW-Complete-Reference.txt",
-      "bytes": 345556,
-      "sha256": "d854b4673274b8d4d73693d20428ba6809a5d35c99c4a20943d60e42be49698e"
+      "bytes": 348608,
+      "sha256": "0125714c74ca43abaa0da54bc565e355c8131dd43cd64ecb7fb47a074386450c"
     },
     {
       "path": "chat/IW-Mechanics-Examples.txt",
@@ -59,13 +59,13 @@
     },
     {
       "path": "chat/IW-Reference-2.txt",
-      "bytes": 74391,
-      "sha256": "ff7832a46293f6084b1d080930be17f6fb07a6695a954f8e6243b454f9fc5bec"
+      "bytes": 75087,
+      "sha256": "0c83ff34f0cc5bf690fb7f0ae944d60b2eb200bff0180ec6bd1f043009abb606"
     },
     {
       "path": "chat/IW-Reference-3.txt",
-      "bytes": 77081,
-      "sha256": "f0aad807fa97755e6243f59fb3533add20588d30ad035aebfe3a979a1edbacdd"
+      "bytes": 79437,
+      "sha256": "9e46121f7f2b8b191e165f6181c9e7a823773f23b450f226c513991475ca8123"
     },
     {
       "path": "chat/IW-Reference-4.txt",
@@ -110,7 +110,7 @@
     {
       "path": "chat/sources.json",
       "bytes": 4270,
-      "sha256": "edf81dd7a7eb458df780e63e8fcfed4d2202d774b8a2755e1c9c46adf7f7ed27"
+      "sha256": "a2cab474c90f4f1f6fa461d7d6889d1a664a037d9fa975f4ed69ba68fbd06753"
     },
     {
       "path": "checker/index.html",
@@ -490,12 +490,12 @@
     {
       "path": "llms.txt",
       "bytes": 27319,
-      "sha256": "e4a7d09e31bd8e01125f1cc5ec9478a73b67a83a7a2d9ce4355e32b56bf31d4c"
+      "sha256": "19df3651b944ad0dd2c59663bfe8f7d4e8bec11967cca10892c0b6db325e2961"
     },
     {
       "path": "reference/Characters.md",
-      "bytes": 10249,
-      "sha256": "503de66994ddcdc10e07e4b3d4441ae7920a7f0af4ccdb99e4291a476fd8b892"
+      "bytes": 10945,
+      "sha256": "7063d05c7fcfe0b1f6563dd3c6806d9056efa1cece618c76d916ddc160a45192"
     },
     {
       "path": "reference/Cost.md",
@@ -549,8 +549,8 @@
     },
     {
       "path": "reference/Recipes.md",
-      "bytes": 57620,
-      "sha256": "a556d1c677b824ddf5c4c1f3cd250391e64738c3cf71ebcc87e1dafb1a87c1ef"
+      "bytes": 59976,
+      "sha256": "629ee6fded0ef1d34d2d01c2090f2b7b70e77cbfb2e6a8d7e70bafa0bbc04c0e"
     },
     {
       "path": "reference/Runtime.md",
@@ -585,7 +585,7 @@
     {
       "path": "reference/index.html",
       "bytes": 5779,
-      "sha256": "a5f50c0c3927b72a820b36fa5c5cc9767c4421e4618146bf51633b1799bbf502"
+      "sha256": "cd75149e9eb0a0c35a272527834adf418cb87abdff25c769b66a7880991148aa"
     },
     {
       "path": "tools/README.md",

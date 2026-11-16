@@ -24,7 +24,7 @@
       "reference/Images-and-Models.md",
       "reference/Default-Evaluation.txt"
     ],
-    "sha256": "d854b4673274b8d4d73693d20428ba6809a5d35c99c4a20943d60e42be49698e"
+    "sha256": "0125714c74ca43abaa0da54bc565e355c8131dd43cd64ecb7fb47a074386450c"
   },
   "IW-Reference-1.txt": {
     "sourceFiles": [
@@ -46,14 +46,14 @@
       "reference/Runtime.md",
       "reference/Characters.md"
     ],
-    "sha256": "ff7832a46293f6084b1d080930be17f6fb07a6695a954f8e6243b454f9fc5bec"
+    "sha256": "0c83ff34f0cc5bf690fb7f0ae944d60b2eb200bff0180ec6bd1f043009abb606"
   },
   "IW-Reference-3.txt": {
     "sourceFiles": [
       "reference/Recipes.md",
       "reference/Notable-Findings.md"
     ],
-    "sha256": "f0aad807fa97755e6243f59fb3533add20588d30ad035aebfe3a979a1edbacdd"
+    "sha256": "9e46121f7f2b8b191e165f6181c9e7a823773f23b450f226c513991475ca8123"
   },
   "IW-Reference-4.txt": {
     "sourceFiles": [
