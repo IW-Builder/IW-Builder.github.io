@@ -132,6 +132,8 @@ A fact the storyteller cannot see is a gap, and it fills gaps: hide the culprit 
 - Name the spoilers in descriptionRequest and have it present what the player believes as fact; state the player's starting belief in firstInput; ask summaryRequest to record each fact learned and how.
 - Tell Secret Info to leave undiscovered facts out (this reduces leaks there, not stops them). Mark anything the story needs that is not in the truth "not yet decided; do not name or hint at it".
 
+Setting secrets the story doesn't have to solve yet (who really runs the company, what the agency is for) can be withheld differently: wrap each in `<<if($clearance >= N, "the secret", "")>>` in the instructions and lore, with the level raised only by script (rank, chapter). The AI can't leak what it isn't sent, and gated text costs nothing until it renders. Since a hidden fact is a gap, say that the subject is unknown and must not be explained or resolved; a visible placeholder such as `[Secret]` makes the mystery felt but also invites foreshadowing. Use truth plus gates, above, for anything the player is meant to work out [PATTERN, one community world].
+
 An optional AI-updated Case File tracker (each label `not known` or `known: how`) for the gates to read matched prose gates in one test.
 
 ## Examples
