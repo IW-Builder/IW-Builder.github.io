@@ -764,12 +764,150 @@
       "advancedLogic": false
     },
     {
+      "id": "QU5b728ae",
+      "name": "Stats: Model Leopard-2",
+      "triggerConditions": [
+        {
+          "type": "triggerOnPawScript",
+          "data": "$game.ai_model = \"Leopard-2\"",
+          "id": "QU5b728aec0",
+          "category": "condition"
+        }
+      ],
+      "triggerEffects": [
+        {
+          "type": "effectRunScript",
+          "data": "$stats_markers = $stats_markers + 1",
+          "id": "QU5b728aee0"
+        }
+      ],
+      "triggerOnStartOfGame": false,
+      "triggerMidGame": true,
+      "canTriggerMoreThanOnce": true,
+      "advancedLogic": false
+    },
+    {
+      "id": "QU9642394",
+      "name": "Stats: Model Wampus",
+      "triggerConditions": [
+        {
+          "type": "triggerOnPawScript",
+          "data": "$game.ai_model = \"Wampus\"",
+          "id": "QU9642394c0",
+          "category": "condition"
+        }
+      ],
+      "triggerEffects": [
+        {
+          "type": "effectRunScript",
+          "data": "$stats_markers = $stats_markers + 1",
+          "id": "QU9642394e0"
+        }
+      ],
+      "triggerOnStartOfGame": false,
+      "triggerMidGame": true,
+      "canTriggerMoreThanOnce": true,
+      "advancedLogic": false
+    },
+    {
+      "id": "QUd3c6846",
+      "name": "Stats: Model Wildcat",
+      "triggerConditions": [
+        {
+          "type": "triggerOnPawScript",
+          "data": "$game.ai_model = \"Wildcat\"",
+          "id": "QUd3c6846c0",
+          "category": "condition"
+        }
+      ],
+      "triggerEffects": [
+        {
+          "type": "effectRunScript",
+          "data": "$stats_markers = $stats_markers + 1",
+          "id": "QUd3c6846e0"
+        }
+      ],
+      "triggerOnStartOfGame": false,
+      "triggerMidGame": true,
+      "canTriggerMoreThanOnce": true,
+      "advancedLogic": false
+    },
+    {
+      "id": "QUfd16a5d",
+      "name": "Stats: Model Smilodon-2 (experimental)",
+      "triggerConditions": [
+        {
+          "type": "triggerOnPawScript",
+          "data": "$game.ai_model = \"Smilodon-2 (experimental)\"",
+          "id": "QUfd16a5dc0",
+          "category": "condition"
+        }
+      ],
+      "triggerEffects": [
+        {
+          "type": "effectRunScript",
+          "data": "$stats_markers = $stats_markers + 1",
+          "id": "QUfd16a5de0"
+        }
+      ],
+      "triggerOnStartOfGame": false,
+      "triggerMidGame": true,
+      "canTriggerMoreThanOnce": true,
+      "advancedLogic": false
+    },
+    {
+      "id": "QUb11f68c",
+      "name": "Stats: Model Smilodon-2 Thinking (experimental)",
+      "triggerConditions": [
+        {
+          "type": "triggerOnPawScript",
+          "data": "$game.ai_model = \"Smilodon-2 Thinking (experimental)\"",
+          "id": "QUb11f68cc0",
+          "category": "condition"
+        }
+      ],
+      "triggerEffects": [
+        {
+          "type": "effectRunScript",
+          "data": "$stats_markers = $stats_markers + 1",
+          "id": "QUb11f68ce0"
+        }
+      ],
+      "triggerOnStartOfGame": false,
+      "triggerMidGame": true,
+      "canTriggerMoreThanOnce": true,
+      "advancedLogic": false
+    },
+    {
+      "id": "QUdf6b5bc",
+      "name": "Stats: Model Galaxycat (experimental)",
+      "triggerConditions": [
+        {
+          "type": "triggerOnPawScript",
+          "data": "$game.ai_model = \"Galaxycat (experimental)\"",
+          "id": "QUdf6b5bcc0",
+          "category": "condition"
+        }
+      ],
+      "triggerEffects": [
+        {
+          "type": "effectRunScript",
+          "data": "$stats_markers = $stats_markers + 1",
+          "id": "QUdf6b5bce0"
+        }
+      ],
+      "triggerOnStartOfGame": false,
+      "triggerMidGame": true,
+      "canTriggerMoreThanOnce": true,
+      "advancedLogic": false
+    },
+    {
       "id": "QU519cfd6",
       "name": "Stats: Model Other",
       "triggerConditions": [
         {
           "type": "triggerOnPawScript",
-          "data": "$game.ai_model != \"Dolphin\" and $game.ai_model != \"Puma\" and $game.ai_model != \"Lynx\" and $game.ai_model != \"Lynx-Thinking\" and $game.ai_model != \"Caracal\" and $game.ai_model != \"Grimalkin\" and $game.ai_model != \"Smilodon\" and $game.ai_model != \"Smilodon-Thinking\" and $game.ai_model != \"Massivecat\" and $game.ai_model != \"Massivecat-Thinking\" and $game.ai_model != \"Leopard\"",
+          "data": "$game.ai_model != \"Dolphin\" and $game.ai_model != \"Puma\" and $game.ai_model != \"Lynx\" and $game.ai_model != \"Lynx-Thinking\" and $game.ai_model != \"Caracal\" and $game.ai_model != \"Grimalkin\" and $game.ai_model != \"Smilodon\" and $game.ai_model != \"Smilodon-Thinking\" and $game.ai_model != \"Massivecat\" and $game.ai_model != \"Massivecat-Thinking\" and $game.ai_model != \"Leopard\" and $game.ai_model != \"Leopard-2\" and $game.ai_model != \"Wampus\" and $game.ai_model != \"Wildcat\" and $game.ai_model != \"Smilodon-2 (experimental)\" and $game.ai_model != \"Smilodon-2 Thinking (experimental)\" and $game.ai_model != \"Galaxycat (experimental)\"",
           "id": "QU519cfd6c0",
           "category": "condition"
         }
@@ -871,7 +1009,7 @@
   ],
   "hideSkillSystem": true,
   "autoAdvanceVersion": false,
-  "version": "1.0",
+  "version": "1.1",
   "charSelectText": "Pick a pace and a picture setting. In your own world these would be your real settings; here they only show how the markers count them.",
   "descriptionRequest": "",
   "evaluationRequest": "",

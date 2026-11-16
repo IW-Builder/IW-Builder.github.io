@@ -32,7 +32,7 @@ Until you load a file, the page shows example data: three made-up worlds with in
 | `Stats: Pace = Slow` (and Steady, Fast) | `$pace = "Slow - a week per chapter"` | Start of game or mid-game, once | Which option of a setting players pick. Copy one per option |
 | `Stats: Pictures = High` (and Basic, Off) | `$imagetype = "High"` | Start of game or mid-game, **repeating** | Games per picture setting, and turns on each (Fired) |
 | `Stats: Reached Day 1` … `Day 300` | `$story_day >= 1` | Mid-game, once | How far games get in story time. Use `>=` so a jump still counts |
-| `Stats: Model Dolphin` … `Model Other` | `$game.ai_model = "Dolphin"` | Mid-game, **repeating** | Games and turns on each model. Other is `!=` every listed model |
+| `Stats: Model Dolphin` … `Model Other` | `$game.ai_model = "Dolphin"` | Mid-game, **repeating** | Games and turns on each model: the standard eleven, then Leopard-2, Wampus, Wildcat, `Smilodon-2 (experimental)`, `Smilodon-2 Thinking (experimental)` and `Galaxycat (experimental)` (the display name, which is what `$game.ai_model` returns). Other is `!=` every listed model |
 
 Every marker has the same single effect, a Run Script of `$stats_markers = $stats_markers + 1`, and a hidden Number tracker **Stats Markers** (`stats_markers`, starting at 0) holds the count. Hidden trackers aren't sent to the AI and triggers don't bill, so the markers cost nothing to play.
 
@@ -50,4 +50,5 @@ Rules that keep the numbers right:
 - **Keep marker IDs fixed across versions.** IW counts triggers by ID, so a marker deleted and recreated starts a fresh row. Edit the name or condition freely; don't delete and re-add.
 - **Name them `Stats: …`** with ` = ` between a setting and its option, `Reached …` for milestones and `Model …` for models, and this page groups and charts them for you.
 - **Markers count only in a public Community World.** Load your next World Stats export here after publishing: Started should match the games on that version, and each setting's options should add up to Started.
+- **`Reached …` takes any unit your story keeps.** Days are only the starter's example. For short games, hours work the same way: `Stats: Reached Hour 1` … `Hour 20` on a count of story hours (`$story_hours >= 4`), which needs a time of day the story keeps (the house kit's is a Story Time tracker the AI writes as HH:MM, turned into hours by a script). The page lists `Hour n` first, then `Day n`, then other milestones.
 - Other markers fit the same pattern: a ready-made character (`$player.name = "Name"`, plus a `!=` catch-all for custom characters), a story milestone (`$chapter >= 3`), or the first use of a feature.
