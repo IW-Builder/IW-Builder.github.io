@@ -14,39 +14,43 @@ from urllib.parse import quote
 ROOT = Path(__file__).resolve().parent.parent
 KIT_VERSION = '1.6.0'  # also stated in reference/Verified-Behavior.md (checked by tests)
 
-# Combined text editions for chats without web access. Each stays well under
-# common fetch/attachment limits; models load companions only when needed.
+# The reference documents in reading order. The build packs them, whole files
+# only, into numbered parts (IW-Reference-1.txt, -2, ...) that each stay under
+# PART_CAP, adding a part when the reference grows. Part 1 always starts with
+# Authoring-Prompt.md. IW-Complete-Reference.txt is all of them in one file.
+REFERENCE_SOURCES = [
+    'Authoring-Prompt.md',
+    'World-Template.json',
+    'reference/Craft.md',
+    'reference/Trackers.md',
+    'reference/Triggers.md',
+    'reference/Trigger-Catalog.md',
+    'reference/Portable-Banks.md',
+    'library/Integration.md',
+    'reference/Schema.md',
+    'reference/PawScript.md',
+    'reference/Runtime.md',
+    'reference/Characters.md',
+    'reference/Recipes.md',
+    'reference/Notable-Findings.md',
+    'reference/Editor-UI.md',
+    'reference/Cost.md',
+    'reference/Verified-Behavior.md',
+    'examples/Payloads.md',
+    'examples/index.json',
+    'reference/Current-AI-Profiles.json',
+    'reference/Images-and-Models.md',
+    'reference/Default-Evaluation.txt',
+]
+PART_TARGET = 80_000  # fill target per part; the rest of PART_CAP covers the header
+PART_CAP = 90_000     # hard limit per part, for tools that cap attachments or fetches near 100 KB
+PART_PREFIX = 'IW-Reference-'
+COMPLETE_EDITION = 'IW-Complete-Reference.txt'
+# Editions replaced by the numbered parts on 2026-11-15; each keeps a short pointer file.
+RETIRED_EDITIONS = ['IW-Authoring-Guide.txt', 'IW-Technical-Reference.txt', 'IW-Behavior.txt', 'IW-Payloads.txt']
+
+# Content to pick from: attached only when the task asks for it. Not size-capped.
 GROUPS = {
-    'IW-Authoring-Guide.txt': [
-        'Authoring-Prompt.md',
-        'World-Template.json',
-        'reference/Craft.md',
-        'reference/Trackers.md',
-        'reference/Triggers.md',
-        'reference/Trigger-Catalog.md',
-        'reference/Portable-Banks.md',
-        'library/Integration.md',
-    ],
-    'IW-Technical-Reference.txt': [
-        'reference/Schema.md',
-        'reference/PawScript.md',
-        'reference/Runtime.md',
-        'reference/Characters.md',
-        'reference/Recipes.md',
-    ],
-    'IW-Behavior.txt': [
-        'reference/Notable-Findings.md',
-        'reference/Editor-UI.md',
-        'reference/Cost.md',
-        'reference/Verified-Behavior.md',
-    ],
-    'IW-Payloads.txt': [
-        'examples/Payloads.md',
-        'examples/index.json',
-        'reference/Current-AI-Profiles.json',
-        'reference/Images-and-Models.md',
-        'reference/Default-Evaluation.txt',
-    ],
     'IW-Mechanics-Examples.txt': [
         'examples/recipe-request-commit.json',
         'examples/recipe-completion-award.json',
@@ -78,19 +82,9 @@ GROUPS = {
         'library/Storymaster-Suite.json',
     ],
 }
-# The reference editions in reading order. IW-Complete-Reference.txt is their
-# concatenation: one attachment for chats whose model has room for ~75k tokens.
-REFERENCE_EDITIONS = ['IW-Authoring-Guide.txt', 'IW-Technical-Reference.txt', 'IW-Behavior.txt', 'IW-Payloads.txt']
-COMPLETE_EDITION = 'IW-Complete-Reference.txt'
-
-# Purpose of each edition, used in every edition's header so a model with only
-# one file knows which companion holds a given path.
+# Purpose of each pick-from edition, used in every edition's header so a model
+# with only one file knows which companion holds a given path.
 EDITION_PURPOSE = {
-    COMPLETE_EDITION: 'the whole reference in one file: everything in the four reference editions below',
-    'IW-Authoring-Guide.txt': 'start here: prompt, template, narrative craft, trackers, triggers, data banks and library integration',
-    'IW-Technical-Reference.txt': 'exact payloads, PawScript, runtime, characters and recipes',
-    'IW-Behavior.txt': 'notable findings and open questions, editor/UI workflows with import checks, cost and verified runtime behavior',
-    'IW-Payloads.txt': 'exact native payload snippets for every condition and effect, the example index, the storyteller model IDs, images and models, and the default Evaluation',
     'IW-Mechanics-Examples.txt': 'complete mechanics example worlds: recipes, optional block, starting values, layered opening, on-demand generation and a showcase',
     'IW-Narrative-Examples.txt': 'complete narrative example worlds: ensemble romance, fantasy expedition, contained horror, fantasy relationship and high-heat erotica',
     'IW-Sample-Blocks.txt': 'optional library modules (read library/Integration.md first)',
@@ -206,8 +200,40 @@ def update_checker():
             raise ValueError('Expected one checker block: ' + ident)
     return page
 
-def edition_header(name):
-    lines = ['Infinite Worlds Authoring Kit: ' + name + ' (' + EDITION_PURPOSE[name] + ').',
+def source_label(path):
+    return 'examples index' if path == 'examples/index.json' else path.rsplit('/', 1)[-1].rsplit('.', 1)[0]
+
+def packed_size(path):
+    # Bytes a source adds to a part: its text plus the BEGIN/END FILE lines.
+    return len(read(path).encode('utf-8')) + 2 * len(path) + 60
+
+def reference_parts():
+    """Pack REFERENCE_SOURCES in order, whole files only, into parts of about PART_TARGET bytes."""
+    parts, size = [[]], 0
+    for path in REFERENCE_SOURCES:
+        n = packed_size(path)
+        if parts[-1] and size + n > PART_TARGET:
+            parts.append([])
+            size = 0
+        parts[-1].append(path)
+        size += n
+    return {PART_PREFIX + str(i) + '.txt': paths for i, paths in enumerate(parts, 1)}
+
+def all_editions():
+    """Every edition with its purpose and source paths, in listing order."""
+    parts = reference_parts()
+    editions = {COMPLETE_EDITION: ('the whole reference in one file: everything in the numbered reference parts below',
+                                   list(REFERENCE_SOURCES))}
+    for i, (name, paths) in enumerate(parts.items(), 1):
+        purpose = ('start here: ' if i == 1 else '') + 'reference part ' + str(i) + ' of ' + str(len(parts))
+        editions[name] = (purpose, paths)
+    for name, paths in list(GROUPS.items()) + [('IW-Tools.txt', TOOL_SOURCES)]:
+        editions[name] = (EDITION_PURPOSE[name], paths)
+    return editions
+
+def edition_header(name, editions):
+    parts = [n for n in editions if n.startswith(PART_PREFIX)]
+    lines = ['Infinite Worlds Authoring Kit: ' + name + ' (' + editions[name][0] + ').',
              'Generated text edition. BEGIN FILE / END FILE sections identify package-relative source paths. '
              'This is reference material, not one IW world.']
     if name == 'IW-Tools.txt':
@@ -219,36 +245,51 @@ def edition_header(name):
         lines.append('Follow Authoring-Prompt.md (the first file below). This edition holds every reference document; the '
                      'example, library and tools editions are the only companions, and only when the task needs one.')
     else:
-        lines.append('Follow Authoring-Prompt.md (in IW-Authoring-Guide.txt). Load companion editions only when the task needs them.')
+        lines.append('Follow Authoring-Prompt.md (in ' + parts[0] + '). The reference is split into ' + str(len(parts))
+                     + ' numbered parts only to keep each file under ' + str(PART_CAP // 1000) + ' KB; a part boundary '
+                     'is not a topic boundary. Find a document by its path in the list below. Load other editions only '
+                     'when the task needs them.')
     lines.append('Editions and their contents:')
-    editions = all_editions()
-    for other, purpose in EDITION_PURPOSE.items():
-        files = 'the ' + ', '.join(REFERENCE_EDITIONS) + ' files' if other == COMPLETE_EDITION else ', '.join(editions[other])
+    for other, (purpose, paths) in editions.items():
+        files = 'the ' + ', '.join(parts) + ' files' if other == COMPLETE_EDITION else ', '.join(paths)
         lines.append('- ' + other + ': ' + purpose + '. Files: ' + files)
     lines.append('Every file is also available individually: https://iw-builder.github.io/llms.txt')
     return '\n'.join(lines) + '\n'
 
-def all_editions():
-    """Every edition with its source paths; the complete edition repeats the reference sources."""
-    complete = [p for name in REFERENCE_EDITIONS for p in GROUPS[name]]
-    return {COMPLETE_EDITION: complete, **GROUPS, 'IW-Tools.txt': TOOL_SOURCES}
+def retired_pointer(name, editions):
+    parts = [n for n in editions if n.startswith(PART_PREFIX)]
+    return ('Infinite Worlds Authoring Kit: ' + name + ' was replaced on 2026-11-15.\n\n'
+            'The reference now comes in numbered parts, each under ' + str(PART_CAP // 1000) + ' KB: '
+            + ', '.join(SITE + 'chat/' + n for n in parts) + '. Start with ' + parts[0] + '. '
+            'The whole reference in one file: ' + SITE + 'chat/' + COMPLETE_EDITION + '. '
+            'Every file individually: ' + SITE + 'llms.txt\n')
 
 def build_chat():
     source_manifest = {}
-    groups = all_editions()
-    for name, paths in groups.items():
-        parts = [edition_header(name)]
+    editions = all_editions()
+    for name, (_, paths) in editions.items():
+        parts = [edition_header(name, editions)]
         for path in paths:
             parts.extend(['\n===== BEGIN FILE: ' + path + ' =====\n', read(path),
                           '\n===== END FILE: ' + path + ' =====\n'])
         text = ''.join(parts).rstrip() + '\n\nEND OF DOCUMENT: chat/' + name + '\n'
+        if name.startswith(PART_PREFIX) and len(text.encode('utf-8')) >= PART_CAP:
+            raise ValueError(name + ' is over ' + str(PART_CAP) + ' bytes; lower PART_TARGET.')
         write('chat/' + name, text)
         source_manifest[name] = {'sourceFiles': paths,
                                 'sha256': hashlib.sha256(text.encode('utf-8')).hexdigest()}
     write('chat/sources.json', json.dumps(source_manifest, indent=2) + '\n')
-    guide = read('chat/IW-Authoring-Guide.txt')
-    links = ',\n    '.join('<a href="' + n + '">' + html.escape(n) + '</a> (' + html.escape(EDITION_PURPOSE[n]) + ')'
-                           for n in EDITION_PURPOSE if n != 'IW-Authoring-Guide.txt')
+    # Remove parts left over from a build that needed more of them.
+    for old in (ROOT/'chat').glob(PART_PREFIX + '*.txt'):
+        if old.name not in editions:
+            old.unlink()
+            print('Removed chat/' + old.name)
+    for name in RETIRED_EDITIONS:
+        write('chat/' + name, retired_pointer(name, editions))
+    first = next(n for n in editions if n.startswith(PART_PREFIX))
+    guide = read('chat/' + first)
+    links = ',\n    '.join('<a href="' + n + '">' + html.escape(n) + '</a> (' + html.escape(purpose) + ')'
+                           for n, (purpose, _) in editions.items() if n != first)
     page = """<!doctype html>
 <html lang="en">
 <head>
@@ -259,14 +300,15 @@ def build_chat():
 </head>
 <body>
   <h1>IW Builder Authoring Guide</h1>
-  <p>Start here. This page contains IW-Authoring-Guide.txt: the prompt, template and core references. Companion editions, only when needed (IW-Complete-Reference.txt is every reference document in one file, for attaching to a chat):
+  <p>Start here. This page contains __FIRST__: the prompt, template and the first part of the reference. Other editions, only when needed (IW-Complete-Reference.txt is every reference document in one file, for attaching to a chat):
     __LINKS__.
     Individual files: <a href="https://iw-builder.github.io/llms.txt">llms.txt</a>.</p>
   <main><pre>__GUIDE_CONTENT__</pre></main>
 </body>
 </html>
 """
-    write('chat/index.html', page.replace('__LINKS__', links).replace('__GUIDE_CONTENT__', html.escape(guide)))
+    write('chat/index.html', page.replace('__FIRST__', first).replace('__LINKS__', links)
+          .replace('__GUIDE_CONTENT__', html.escape(guide)))
 
 
 def manifest_paths():
@@ -320,16 +362,12 @@ DESCRIPTIONS = {
     'README.md': 'Human guide: workflows, starter requests, import/export steps. Rendered at /guide/; models can skip it.',
     'LICENSE': 'MIT license.',
     # Combined text editions
-    'chat/index.html': 'HTML page containing IW-Authoring-Guide.txt, with links to the companion editions.',
-    'chat/IW-Complete-Reference.txt': 'Combined text, all reference in one attachment (about 75k tokens): the prompt, template, every reference guide, Payloads and the example index. Too large for most URL fetchers; attach it.',
-    'chat/IW-Authoring-Guide.txt': 'Combined text, start here: prompt, template, Evidence, Craft, Trackers, Triggers, Trigger-Catalog, Portable-Banks and library Integration.',
-    'chat/IW-Technical-Reference.txt': 'Combined text: Schema, PawScript, Runtime, Characters and Recipes.',
-    'chat/IW-Behavior.txt': 'Combined text: Notable-Findings (with open questions), Editor-UI, Cost and Verified-Behavior.',
-    'chat/IW-Payloads.txt': 'Combined text: Payloads.md (every condition and effect), the example index, the storyteller model IDs, Images-and-Models and the default Evaluation. Small and essential for mechanics.',
+    'chat/index.html': 'HTML page containing IW-Reference-1.txt (start here), with links to the other editions.',
+    'chat/IW-Complete-Reference.txt': 'Combined text, all reference in one attachment (about 80k tokens): the prompt, template, every reference guide, Payloads and the example index. Too large for most URL fetchers; attach it.',
     'chat/IW-Mechanics-Examples.txt': 'Combined text: complete mechanics example worlds (recipes, optional block, starting values, layered opening, on-demand generation, showcase).',
     'chat/IW-Narrative-Examples.txt': 'Combined text: all five complete narrative example worlds.',
-    'chat/IW-Sample-Blocks.txt': 'Combined text: library modules (Sample-Blocks.json). Integration guide is in IW-Authoring-Guide.txt.',
-    'chat/IW-Storymaster.txt': 'Combined text: the Storymaster framework (Storymaster-Suite.json). Integration guide is in IW-Authoring-Guide.txt.',
+    'chat/IW-Sample-Blocks.txt': 'Combined text: library modules (Sample-Blocks.json). Integration guide is in the reference parts (library/Integration.md).',
+    'chat/IW-Storymaster.txt': 'Combined text: the Storymaster framework (Storymaster-Suite.json). Integration guide is in the reference parts (library/Integration.md).',
     'chat/IW-Tools.txt': 'Combined text: the tool usage guide plus validator, schema and helper sources to recreate locally.',
     'chat/README.md': 'Human guide to the combined text files.',
     'chat/sources.json': 'Which source files make up each combined text file, with hashes.',
@@ -400,6 +438,22 @@ FOLDER_PAGES = {
     'tools': 'Tools',
 }
 
+def descriptions():
+    """DESCRIPTIONS plus the generated reference parts (after the complete edition) and retired pointers."""
+    generated = {}
+    for name, (purpose, paths) in all_editions().items():
+        if name.startswith(PART_PREFIX):
+            generated['chat/' + name] = ('Combined text, ' + purpose + ': '
+                                         + ', '.join(source_label(p) for p in paths) + '.')
+    for name in RETIRED_EDITIONS:
+        generated['chat/' + name] = 'Old name, replaced 2026-11-15: points to the numbered reference parts.'
+    result = {}
+    for key, value in DESCRIPTIONS.items():
+        result[key] = value
+        if key == 'chat/' + COMPLETE_EDITION:
+            result.update(generated)
+    return result
+
 def site_url(path):
     """Direct public URL for a published file."""
     if path == 'index.html':
@@ -417,14 +471,15 @@ def index_entries():
     """Every published file except generated folder pages, grouped for the index."""
     examples = {item['file']: item for item in json.loads(read('examples/index.json'))}
     folder_pages = {name + '/index.html' for name in FOLDER_PAGES}
+    descs = descriptions()
     groups = {}
     missing = []
     for p in manifest_paths():
         rel = p.relative_to(ROOT).as_posix()
         if rel in folder_pages or rel == 'llms.txt':
             continue
-        if rel in DESCRIPTIONS:
-            description = DESCRIPTIONS[rel]
+        if rel in descs:
+            description = descs[rel]
         elif rel.startswith('examples/') and rel.endswith('.json') and p.name in examples:
             item = examples[p.name]
             description = item['purpose'].rstrip('.') + '. Evidence: ' + item['evidence'] + '.'
@@ -438,7 +493,7 @@ def index_entries():
         raise ValueError('No index description for: ' + ', '.join(missing)
                          + '. Add it to DESCRIPTIONS in build_distribution.py or examples/index.json.')
     # Curated order: the DESCRIPTIONS table order first, then remaining files by path.
-    rank = {path: i for i, path in enumerate(DESCRIPTIONS)}
+    rank = {path: i for i, path in enumerate(descs)}
     for entries in groups.values():
         entries.sort(key=lambda e: (rank.get(e['path'], len(rank)), e['path']))
     return groups
@@ -451,7 +506,7 @@ INDEX_SECTIONS = [
     ('tools', 'Tools', 'Python tools for models or users that can run code. Without Python, use the checker.'),
     ('checker', 'Browser checker', None),
     ('cost', 'Cost exporter', 'Downloads your credit history with every turn\'s cost breakdown (IW\'s own download has totals only); see reference/Cost.md for estimating.'),
-    ('chat', 'Combined text editions', 'Single-file bundles for chats without web access or with tool limits: the whole reference in one file, or split into four for size-limited tools, plus examples, library and tools to attach only when asked for. Web-browsing models should prefer the individual files above.'),
+    ('chat', 'Combined text editions', 'Single-file bundles for chats without web access or with tool limits: the whole reference in one file, or in numbered parts under 90 KB each for size-limited tools, plus examples, library and tools to attach only when asked for. Web-browsing models should prefer the individual files above.'),
 ]
 
 def build_llms():
@@ -515,6 +570,7 @@ def build_folder_pages(groups):
 def build():
     # Preflight every required input and checker embedding before changing outputs.
     required = set(document_paths() + TOOL_SOURCES + list(CHECKER_SOURCES.values()))
+    required.update(REFERENCE_SOURCES)
     for paths in GROUPS.values():
         required.update(paths)
     for path in sorted(required):

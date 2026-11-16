@@ -1,0 +1,487 @@
+Infinite Worlds Authoring Kit: IW-Reference-3.txt (reference part 3 of 5).
+Generated text edition. BEGIN FILE / END FILE sections identify package-relative source paths. This is reference material, not one IW world.
+Follow Authoring-Prompt.md (in IW-Reference-1.txt). The reference is split into 5 numbered parts only to keep each file under 90 KB; a part boundary is not a topic boundary. Find a document by its path in the list below. Load other editions only when the task needs them.
+Editions and their contents:
+- IW-Complete-Reference.txt: the whole reference in one file: everything in the numbered reference parts below. Files: the IW-Reference-1.txt, IW-Reference-2.txt, IW-Reference-3.txt, IW-Reference-4.txt, IW-Reference-5.txt files
+- IW-Reference-1.txt: start here: reference part 1 of 5. Files: Authoring-Prompt.md, World-Template.json, reference/Craft.md, reference/Trackers.md, reference/Triggers.md, reference/Trigger-Catalog.md, reference/Portable-Banks.md
+- IW-Reference-2.txt: reference part 2 of 5. Files: library/Integration.md, reference/Schema.md, reference/PawScript.md, reference/Runtime.md, reference/Characters.md
+- IW-Reference-3.txt: reference part 3 of 5. Files: reference/Recipes.md, reference/Notable-Findings.md, reference/Editor-UI.md
+- IW-Reference-4.txt: reference part 4 of 5. Files: reference/Cost.md, reference/Verified-Behavior.md, examples/Payloads.md
+- IW-Reference-5.txt: reference part 5 of 5. Files: examples/index.json, reference/Current-AI-Profiles.json, reference/Images-and-Models.md, reference/Default-Evaluation.txt
+- IW-Mechanics-Examples.txt: complete mechanics example worlds: recipes, optional block, starting values, layered opening, on-demand generation and a showcase. Files: examples/recipe-request-commit.json, examples/recipe-completion-award.json, examples/recipe-candidate-acceptance.json, examples/recipe-archive-reactivate.json, examples/recipe-cached-random.json, examples/recipe-consumed-timer.json, examples/recipe-choice-domain.json, examples/recipe-compiled-plot.json, examples/recipe-choice-followup.json, examples/recipe-threshold-unlock.json, examples/optional-block.json, examples/character-starting-values.json, examples/recipe-layered-opening.json, examples/recipe-on-demand-generation.json, examples/showcase-glass-ledger.json
+- IW-Narrative-Examples.txt: complete narrative example worlds: ensemble romance, fantasy expedition, contained horror, fantasy relationship and high-heat erotica. Files: examples/narrative-vendemmia.json, examples/narrative-listening-road.json, examples/narrative-address-after-midnight.json, examples/narrative-seven-nights.json, examples/narrative-velvet-wager.json
+- IW-Sample-Blocks.txt: optional library modules (read library/Integration.md first). Files: library/Sample-Blocks.json
+- IW-Storymaster.txt: the Storymaster narrative-direction framework (read library/Integration.md first). Files: library/Storymaster-Suite.json
+- IW-Tools.txt: Python tools and their guides, for models that can run code. Files: tools/Usage.md, tools/validate_iw_export.py, tools/static_checks.py, tools/iw-export.schema.json, tools/data_bank.py, tools/import_audit.py, tools/story_export.py, tools/plot_compile.py
+Every file is also available individually: https://iw-builder.github.io/llms.txt
+
+===== BEGIN FILE: reference/Recipes.md =====
+# Feature recipes
+
+These are independent recipes. Select, adapt or omit them; none is a required world architecture.
+
+**Narrative instructions plus AI-updated trackers.** A relationship, journal, outfit, reputation or story-preference tracker can update from the ongoing story without an explicit mechanical action parser. Explain what belongs in it, when to add/change/remove entries, and what should remain stable. Match structured entries by stable identity or names/aliases as appropriate, not a list position that may change. Provide a useful format example; sample data must not silently become real world facts.
+
+**A situation followed by a consequence.** Situation-trigger effects follow story generation; guidance does not retroactively rewrite the scene that caused it. If a behavior must shape that scene, provide the rule beforehand in active instructions. Use triggerOnEvent for a narrative situation the AI recognizes, optionally AND a tracker/turn/prerequisite condition to narrow it. Situation classification is probabilistic; use explicit predicates only for requirements that genuinely need exact enforcement.
+
+**A threshold or dependency chain.** A relationship threshold can unlock a new characterization block; a turn condition can introduce weather or a letter; a prior event can enable another event. Intentional one-shot/repeat flags and firedThisTurn scope matter. Check order where the later trigger reads an earlier result. Avoid requiring and blocking the same trigger.
+
+**Choice/input plus later effects.** Present a selection or text form targeting a real tracker, then respond with a later ordered trigger. Correctly bound single-answer forms update immediately. Inspect binding after import; use current tracker data rather than initialValue from the live-world editor export.
+
+**AI update buffer plus scripted merge.** The library's update trackers let the AI propose changed structured entries, while a script merges them into a persistent list. Root the buffer in a record (`entries: []`); list-rooted AI buffers lose updates, even with "append-only" wording. A record root can still jam: the AI may write rows as one nested list (`entries: [[…]]`), and a merge gated on `.entries.any(name.exists())` then never fires again. Gate on a non-empty inbox, drop or unwrap non-record items, and flag an inbox still full after the merge. Match records by identity and ask for complete entries: the buffer is cleared after each merge, so field patches have nothing to apply to.
+
+**Conditional instruction content.** Use a native block-modification effect to add/replace/clear instructions. The source may be fixed text in the effect or text prepared in a tracker by an earlier script trigger. A script changes tracker values; the native effect changes the instruction block. Keep the block ID stable when disabling content so later re-enabling still targets a real block.
+
+**Player-optional block, with no repeated writes.** The pattern in ../examples/optional-block.json:
+
+1. A player-only text preference has initialValueBasedOnPC player, initialValue On or Off, initialValueChoices [On, Off], autoUpdate false. The player picks it at startup; later changes need the Storyteller-mode tracker editor.
+2. A hidden non-AI-updated text tracker (hidden_boring in the example) records which choice has actually been applied. It is a cache, not another player preference.
+3. A repeatable enabling trigger requires preference On AND cache not Enabled. It writes the enabled block content, then records Enabled.
+4. A repeatable disabling trigger requires preference Off AND cache not Disabled. It writes empty content, or a deliberately chosen simpler fallback, then records Disabled.
+5. Enable opening and later execution where needed. Initialize the cache empty so the selected startup choice gets applied. Once synchronized, neither trigger fires until the preference changes.
+
+Clear with `content: ""`; do not delete the block. If the bundle also changes authorStyle or specialist rules, restore all of it to a coherent fallback (for Storymaster: ordinary narration, no Storymaster specialists or trackers).
+
+Preference trackers can be hidden from the storyteller; triggers still read them. Tell the player the effect and turn cost, and never let an AI-updated tracker change the choice back.
+
+**Rules, not code.** IW runs only native triggers and PawScript. Pseudo-code in instructions or a Give information effect (`character.flags['x'] = true`, `narrative.queue(...)`, `driftFromTag(outfit)`, hourly ticks, `{{bar:x}}` placeholders) is plain text the AI may or may not imitate: it sets nothing, and its variables don't exist. Every number a rule reads needs a tracker, every timed rule needs a trigger or a turn-counted condition, and a status line the AI writes needs a tracker or a plain-language instruction. State each rule once, in words.
+
+**More exact mechanics when requested.** Script-owned numbers, independent prerequisite checks, a request-classification tracker or a controlled transaction may be useful for a precise system. If used, define who updates each value and avoid competing AI/script ownership of the same data. Freshness stamps are for consuming an AI-generated per-turn request, not for ordinary narrative trackers.
+
+**Level-up menu.** An AI-updated XP number and a player-chosen threshold tracker. A repeatable trigger fires when XP is at least `$threshold` (a `$variable` requiredValue is read live [RUNTIME]), opens a single-select Present Choice whose `choices` is `<<$player.skills.where(value() < 5).keys().plain_list().title_case()>>`, so maxed skills drop out, into a hidden tracker, and resets XP. One repeatable trigger per skill matches that tracker, raises the skill with Change player skill (cap 5) and sets the tracker back to none. Match each condition to the exact text the menu shows for that skill (check it in the sandbox: multi-word skills come from slugs), and give every skill its own value: a copied condition makes one pick raise two skills and another raise none. Subtracting the threshold instead of resetting to 0 keeps overflow XP [PATTERN, one community world].
+
+**Goal reached, game continues.** When the world's objective is met (a situation trigger, optionally narrowed by a tracker), one trigger shows a message, ends the game with continuation allowed (`effectEndsGame` true, see [Runtime](Runtime.md)), and replaces the route's instruction block with post-goal rules: what the player now controls, the new pressures, an open sandbox [PATTERN, one community world].
+
+**Per-character thresholds.** When several NPCs each move along the same scale (corruption, trust, suspicion), give each NPC its own number tracker (or a script-owned record per NPC), never one shared number the rules read "per girl". One one-shot trigger per NPC and threshold (`triggerOnTrackedItem` at least 25, 50, 75) tells the AI what changes for that NPC from now on, or swaps in that NPC's next characterization block. One-shot is the right default here; endings that need all of them ("every NPC at 90+") become one PawScript condition [PATTERN; the parts are standard, the combination is not run].
+
+**Many attributes on one ladder.** When one NPC has dozens of trainable attributes (habits, looks, skills), give every attribute the same named tiers at fixed scores (for example 5 Habitual, 10 Reflexive, 15 Anticipates, 20 Escalates on her own, 25 Complete), each with one behavioral meaning, and give each attribute only a one-line ladder of specifics. The AI learns one rule, not dozens. Keep the numbers apart from a present-tense behavior snapshot that the narration reads, with anti-logging rules: no dates or past events, delete a lower tier's text when a higher one locks, one merged profile per domain. Render an attribute's ladder only while its score is above 0, after a one-line index of every key, so a fresh game doesn't pay for the whole table [PATTERN, one community world; gated billing RUNTIME].
+
+**Attribute report, script ledger.** Don't let the AI keep many counters: it skips awards, misses a daily reset it judges from a free-text date, and stops moving them when it skips a tracker write, all silently when nothing reads the numbers back. Instead the AI rewrites a small ai_only report each turn, the story day as a number and up to a few keys from a fixed list that this turn trained (empty when none). A script after the updates adds 1 to each listed key not already trained today, clamps to the range, ignores unknown keys, clears the today-list when the day number rises, and refuses a day more than one away. Derive any global resistance from the scores (`max(0, 95 - total)`, or per domain) instead of decrementing it. A once-a-day gate keyed to an AI-written day opens on the sleep turn, from a report written before the morning is played: let the latest report of a day replace an earlier one. The script also writes a short AI-visible view of only the attributes past the first tier, each with its tier word, and on a crossing a one-turn line naming what to rewrite now ("reached 10: rewrite her figure in the cast tracker"), so the AI applies results instead of the tier table [RUNTIME for once-a-day meters on three NPCs, Dolphin, one world; the many-key version is a PATTERN].
+
+**Player-introduced items stay as given.** In worlds where the player plants or gives an object that acts on NPCs (clothing, a charm, a potion), tell the storyteller the item keeps exactly the description the player gave: an NPC may refuse or store it, but never reskins it, shrinks its effect or turns it into a protection against the mechanic. Narrators otherwise shield NPCs by quietly rewriting the item [PATTERN, one community world].
+
+**Closed magic.** When the premise has one supernatural source, say so and close the rest: the effect stays with whoever uses that source, does not spread to others, the house and objects have no will, there is no telepathy, and a character who believes in other magic is wrong. Without it, narrators tend to escalate the weirdness on their own [PATTERN, one community world].
+
+**Set-piece entrance.** For a boss or other big moment, a situation trigger on the threshold ("When the player opens the door to the boss room in the Verdant Temple") sends one Tell the AI what should happen next turn with the arena, the voice and the creature, ending in an instruction to close the page with a bold title card. That text lasts one turn, so keep a short standing note (personality, weak point) in the instructions or a keyword block for the rest of the fight. A second situation can hold the reveal back until the player acts. Describe what the player sees and hears, and leave their reaction to them [PATTERN, one community world].
+
+**Escalation keyed to quest progress.** Tie the world's worsening to a Number count of the quest items (stones, seals) rather than to time, so exploring is never punished: non-repeatable triggers at `at_least` 2, 3, 4 and so on. Keep the count in a Number tracker: on a Text tracker only contains or does-not-contain applies, so a value written "1/5" contains "5" and fires the last step on the first item, and names ("Verdant Stone") fire nothing. Give information to AI is background for the turn it fires, not standing text, so let each step also replace a short World State block that lasts until the next step. Per-character change can use the same shape: an AI-updated Number and milestone triggers that each replace a stage block (the AI cannot count turns for "add 1% every five turns") [PATTERN, one community world; the Number and block mechanisms RUNTIME].
+
+**Time and location: a soft default.** Offer the sample's Time and Location (whereWhen) block unless the premise makes a clock/location header unhelpful. It helps chronology and orients the player. Adapt the geography, calendar and precision to the setting; omit irrelevant levels rather than inventing a country or continent. Put exactly one header at the beginning of outcomeDescription, not a second competing heading.
+
+**NPCs, keyword blocks and always-on blocks** are chosen by intended activation; see [Characters.md](Characters.md#keyword-blocks).
+
+## Dynamic content
+
+Text installed by a block-modification effect is a snapshot of its `<<...>>` values; the ways to keep a value live are in [Runtime.md](Runtime.md#template-interpolation-runtime). A block reinstalled every turn freezes values when its trigger runs, so values set by triggers below it arrive a turn late: order producers above the installer, or use `<=...=>`.
+
+**Player-selected layered openings.** Combine independent choices into meaningful variations using ordered text replacements, then install the result as background. This avoids authoring every full combination; keep fragments compatible and add combination-specific handling where needed. See [layered opening](../examples/recipe-layered-opening.json).
+
+**On-demand generation with retained results.** Install a substantial generation brief only when needed, store a compact result, and clear the brief after a matching completed request. Do not clear merely because a turn elapsed. Prefer infrequent event-driven requests; retained tracker context and AI updates can outweigh the omitted instructions. See [on-demand generation](../examples/recipe-on-demand-generation.json).
+
+
+**Scene-gated sections.** For large reference text (creature guides, image rules), keep one always-on block and wrap each section in a live `<<if(flag, '…', "")>>`. A straight `'` inside the section, even in "subject's", ends the string and the section never renders: write ’ or reword. A script high in the trigger list sets the flags from scene state, for example AI-written tags matched against synonym lists in a hidden tracker, with a cap on how many count. Only rendered text bills, at the full instructions rate; a false section costs nothing [RUNTIME, Dolphin]. Gates read the previous turn's end, so check turn 1 against the start-of-game state: default-on gates or a "load everything" seed make the opening expensive. `try($scene.flag, true)` fails open (no scene data loads everything); `try(…, false)` fails closed. Choose per section.
+
+**Lookahead.** Also gate on an AI-written list of who or what is expected next turn. For an unannounced arrival, tell the narrator to end the turn on the arrival and describe them next turn.
+
+**Self-configuring setup.** A hidden tracker with empty fields. A start-of-game trigger copies any author-filled fields to a hidden seed, then sets the tracker ai_only with updates on; its update instructions say fill only empty fields, once. The AI fills it on turn 1 [RUNTIME, Dolphin]. A mid-game Keep trigger (turns 1–3) restores seeded fields; a one-shot Lock (all filled, or turn 3) hides it with updates off. Blocks read it by template, so it bills once, as instructions.
+
+**Offstage archive.** A script moves records of characters unseen for N turns (script-set lastSeenTurn) to a hidden tracker and restores them when the name returns in an update or the lookahead list. List archived names in the update instructions by template so spellings are reused.
+
+**Place archive.** For places the player returns to, keep the current place in one ai_only record (look, people, laws, open plot) and the rest in a hidden archive keyed by a place key the AI writes. Each turn a script compares the key with last turn's: on a change it files the record under the old key, then restores the new key's record or starts a blank one. A stage flag set from which fields are still empty picks a one-turn instruction ("now write the look", "now write the people and laws", "returning after N days"), so building a place spreads over turns with no long always-on rule. A move the AI never writes into the key is invisible to the script, so keep that rule short and loud [PATTERN, one community world].
+
+**Per-place picture style.** The image-style wrappers (imageStyleCharacterPre/Post, imageStyleNonCharacterPre/Post) can be templates reading a tracker, so a script can change the look. On arrival the AI writes a style family and short look slots (medium, artists, palette, lighting); a script compiles them into the wrapper text and archives them with the place [PATTERN, community worlds; styles changed per place in play].
+
+**Pre-seeded archive.** For a written cast, start the archive with each person's full record (per player character if circles differ); the restore step brings each in on first appearance. Hidden, so free until then; the same looks on cards bill as LTM every turn under v4. Add "never create an entry for anyone listed" [PATTERN, one community world].
+
+**Large library, drawn by template.** Keep hundreds or thousands of items as records in hidden YAML trackers: hidden values are not sent, so storage is free. An always-on block draws with `$lib.random(n).format_each("…").join("\n")`, and only the drawn lines bill. A template draw re-rolls on every render, so store it. Prefer a script: when a restock signal changes (a day counter, a button flag), a trigger writes the drawn names to a hidden tracker and the block lists `$lib.where(name in $drawn)`. If the AI copies the names instead, a retyped name drops out silently, an empty copy redraws next turn, and the new draw shows a turn after the signal, and a player-visible holder shows the secret names: keep it ai_only [PATTERN, one community world; failure modes read from the file, not measured].
+
+**Written hooks times modifiers.** Draw one concrete, scene-shaped entry per source per day, then stack small modifier sets on it: a player-picked setting, a drawn modifier, a stocked extra. The entries hand the narrator scenes; the modifiers keep repeats apart [PATTERN, one community world].
+
+**Items that remember an owner.** A changed item records its owner: the owner using it gets the effect, anyone else becomes like the owner plus the effect, an ownerless one gives the plain effect. A few uses each (rolled by template, recorded once) spread an effect through a household [PATTERN, one community world].
+
+**Rules gated on what is present.** Render each category's rules only while one of its items is in play, `<<if($dolls.any(name in $present), "DOLL RULES…", "")>>`, and a combo line when two categories are both present. Rules for an effect that outlasts its item must also be gated on that effect's state, a progress tracker or the name in an effects log, or they leave with the item while the effect runs.
+
+**Setup dropdowns with a Custom checklist.** Player-chosen dropdown trackers (initialValueChoices, initialValueBasedOnPC player) are read by templates and Start triggers; compare each with its exact choice strings. A Custom choice opens a multi-select Present Choice into a hidden tracker; start each line with a unique prefix ("Angels:") and test `$picked contains "Angels:"`, checking no prefix appears inside another line. The AI needs only the rendered consequences, so the dropdown trackers can be player_only.
+
+**Player-chosen cost options.** Offer the expensive extras as player_only dropdowns at character select. Start-of-game triggers read each one: install the block or swap descriptionRequest when chosen, hide and switch off the tracker that serves it when not, then hide the dropdown itself. Hidden trackers and empty blocks are not billed, so an unchosen extra costs nothing; tell the player what each choice adds per turn. The same triggers can hide trackers that only one starting route uses. Use the player-optional block pattern above instead when the choice must be changeable mid-game [PATTERN, one community world; hidden-tracker billing RUNTIME].
+
+## Turn-state patterns
+
+Optional patterns; trigger order is execution order.
+
+**Script calendar.** The AI writes only the story date (`2055-10-12`). A script after the updates refuses a date earlier than the last, appends `$d.format_date("weekday")`, counts days from the first date, and writes a strip of nearby dates (`Tue 12 Oct (TODAY) · Wed 13 Oct · …`) that a block shows; the narrator takes weekdays and day counts only from it, since AI-kept counts drift [PATTERN, one community world: 40 turns, no wrong weekday].
+
+**Script-awarded achievements and tips.** A script computes each achievement from state, adds new ones to a player_only list and states them in a one-turn beat for the AI to voice; say it awards no others, or it invents some. One-shot tips work the same way: (condition, message) pairs, at most one a turn, each once, spoken by a character [PATTERN, one community world].
+
+**Previous-value snapshot.** The last trigger (always true, repeat) copies watched values to script-only trackers: `$prev_lp = $lifepoints`. Triggers above it read this turn's change, such as `$lifepoints < $prev_lp` for a spend. AND a delta with an event condition when the story and the number must agree. Clamps (a maximum loss per turn) also go above the snapshot.
+
+**One-turn AI write window.** To let the AI rewrite a locked tracker once, a trigger switches its automatic updating on (optionally with new update instructions), stamps `$window = $game.turn_number` and tells the AI what to write. A relock trigger ordered above it, on `$window > 0 and $game.turn_number > $window`, switches updating off and zeroes the stamp. A mid-game switch applies from the next turn (a start-of-game one is live on turn 1), so the AI writes exactly once, on the turn it receives the instruction. Keep the switch out of triggers with Request Input.
+
+**Periodic AI updates.** Unlock a large, slow-changing tracker on `$game.turn_number % N = k` and relock on `% N = k + 1`; it is rewritten one turn in N.
+
+**Cooldowns.** Stamp the turn in the effect and gate on `$last_x <= 0 or $game.turn_number > $last_x + 3`. A very large stamp disables the trigger for good.
+
+**Per-turn verdict tag.** An AI-updated text tracker asks for tags judging only this turn, or None. Text-contains conditions react to each tag, and a last trigger resets it to None (copy it first to keep a record). Tags stay turn-specific; the classification is still the AI's judgement.
+
+**Situation catalog.** For more situations than the editor's ten Scenarios, or ones a script adds mid-game (dynamic Scenarios no longer fire), keep an AI-visible, read-only YAML catalog (`id: {when: …, once: true}`) beside a per-turn tag tracker for the ids whose `when` happened. One trigger per id reacts to its tag; the last removes used one-shots from the catalog and clears the tags. Triggers must exist in advance; a script-added id wakes its dormant trigger. Bare id lists (`[]`), record roots and text tags each landed every id on 10 of 10 turns [RUNTIME, Dolphin, one run]. Use lowercase ids that don't contain one another. Mis-tags burn one-shots, so script what must be exact. The catalog's `when` text bills every turn. Adapted from a [community wiki design](https://infiniteworlds.mywikis.wiki/wiki/Morwen%27s_Situation_State_Machine).
+
+**Wait for a well-formed write.** Gate a follow-up on the shape of an AI-written value (contains `(`, no longer contains the placeholder), not mere change, so a malformed write just waits.
+
+**Per-model text.** `$game.ai_model` returns the display name (`Dolphin`, `Smilodon`) and text `=` is case-sensitive. Templates in a tracker's own update instructions are evaluated live, so `<<if($game.ai_model = "Dolphin", "…", "…")>>` there selects per model. Blocks can use selectedAIProfiles instead.
+
+**Start-up codes.** A player-only text tracker at character select holds typed codes; one one-shot Text-contains trigger (case-insensitive) per code applies each. List the codes in charSelectText.
+
+**World-stats markers.** IW's creator stats (stats page and CSV) list every trigger by ID with Games and Fired counts, so one-shot triggers can report which settings players pick and how far games get. Add a hidden Number tracker (`stats_markers`, 0) and non-repeatable triggers whose only effect is the script `$stats_markers = $stats_markers + 1`, named to sort together ("Stats: Pace = Fast"). Mark each option of a setting the player picks, at start of game and mid-game (`$pace = "Fast"`, exact and case-sensitive; `$themes.contains("Cats")` for a multi-select, with no option inside another); milestones with `>=` so a jump still counts (`$day >= 3`); turns (`$game.turn_number >= 25`); and the model (`$game.ai_model = "Dolphin"`, plus an Other marker that is `!=` every listed name). Always add "Stats: Started" on a condition that is always true: the stats' Games total also counts older versions and saved copies, so Started is the denominator. A trigger rebuilt with a new ID starts a new row, so keep marker IDs fixed across versions. Hidden values are not sent, so markers cost nothing. A zero is usually unreached or unpicked; check "How far they get" first [PATTERN, one community world; per-ID counting RUNTIME].
+
+**Due today.** An AI-kept roster with a weekday field; a block lists `$roster.where(day contains $weekday or day contains "Daily")`, the weekday computed from the day counter with `choose()`. The AI keeps the roster, the template decides who turns up [PATTERN, one community world; an AI-kept day drifts, see Script calendar].
+
+**Daily NPC roll.** While a daily field is `none`, a template rolls and `choose()`s a trick; the AI records one line, or `quiet`, which then renders all day. An unrecorded miss re-rolls every turn, so store the roll by script or require `quiet` [PATTERN, one community world].
+
+**Computed stamps.** Render the number the AI must copy ("end today's lines with (ends day <<$c.day + 7>>)"), so expiry is copying, not arithmetic [PATTERN, one community world].
+
+**Ordinal words.** `choose($e.intensity.lower(), "slight", 1, "mild", 2, "moderate", 3, 0) < 3` compares a word scale, for example to raise an entry to a minimum without lowering it.
+
+## Request and commit example
+
+In [recipe-request-commit.json](../examples/recipe-request-commit.json), the AI records the current requested event and turn stamp. The first trigger resets the receipt, not the unconsumed request. A later trigger checks freshness, then checks funds/ownership and commits a purchase or rejection. A following effect displays the receipt and clears the request; the receipt remains for next-turn continuity. Narration describes an attempt until the committed result is available. A freshness stamp prevents stale reuse, not incorrect classification. The updater records the scene, not just the request: it logged narrator-invented actions as the player's until told to judge that field only from the player's own action text this turn (fixed on Dolphin). This pattern is optional: native choices, thresholds and timed effects do not need an AI request layer.
+
+The [example index](../examples/index.json) records each complete world's purpose and verification scope. [Payloads.md](../examples/Payloads.md) supplies smaller native shapes. Remap IDs when combining worlds and validate the result.
+
+## Guarded state patterns
+
+Optional complete worlds built from known primitives; do not impose them on a world's design.
+
+| Example | Intent and boundary |
+| --- | --- |
+| [Completion and award](../examples/recipe-completion-award.json) | Set Award state's ready field to 1 through an authored action. Commit the score and completed flag together; trigger firing alone is not successful completion. |
+| [Candidate acceptance](../examples/recipe-candidate-acceptance.json) | Keep candidate and accepted records separate. Set submitted to 1 to request acceptance. Checks identity, required field existence and quantity bounds before locking. A small semantic gate, not a YAML type validator. |
+| [Archive and restore](../examples/recipe-archive-reactivate.json) | Set Active record's request to archive or restore. Copy selected fields explicitly and consume the request. Whether an archived record reaches the AI depends on the tracker's visibility. |
+| [Cached random](../examples/recipe-cached-random.json) | One trigger samples once and both blocks read the stored roll. Before that trigger runs the initial value is 0; reset ready to 0 only when a new draw is intended. The roll is available to narration from the next generation. |
+| [Consumed milestone](../examples/recipe-consumed-timer.json) | Increment turn time before checking ticks >= 3; consume the crossing once. This counts ordinary eligible trigger cycles, not elapsed story time. |
+| [Choice domain](../examples/recipe-choice-domain.json) | Accept only Courier or Archivist at consumption. Blank offers the form again; unexpected manual/script values do not commit. Multiple selections need their own delimiter/representation validation. |
+| [Compiled plot](../examples/recipe-compiled-plot.json) | Literal Scenarios with ordered prerequisites and guarded awards. See the plot compiler in [tools/Usage.md](../tools/Usage.md#plot-compiler). |
+
+The validator's review advisories are prompts to inspect intent; an existing guard can trip one (see [tools/Usage.md](../tools/Usage.md)). Choice menus and Enforce format do not validate manual or script writes.
+
+---
+
+END OF DOCUMENT: reference/Recipes.md
+
+===== END FILE: reference/Recipes.md =====
+
+===== BEGIN FILE: reference/Notable-Findings.md =====
+# Notable findings
+
+The Infinite Worlds behavior most likely to surprise an author or break a world, in plain language. Each entry says what happens and what to do. Details and evidence labels are in [Verified behavior](Verified-Behavior.md). The last section lists what remains unknown. Use this page as a checklist when reviewing or debugging a world.
+
+## Triggers
+
+1. **A trigger with no conditions never fires on its own.** It is a saved trigger for Fire random trigger, not an "always" trigger. Start-of-game triggers are the exception: they fire at startup. With Start on, the editor drops its "so it will never fire" warning even when Mid-game and Repeat are also on, but firing on later turns is not established. For an every-turn trigger, add an always-true condition such as `$game.turn_number >= 0`.
+2. **Repeat means every eligible turn.** "HP below 5" with Allow triggering multiple times fires every turn HP stays low. Add a state guard for one-time effects.
+3. **Start + Mid-game + Repeat runs twice before the player acts:** once before the opening and again on turn 1. Guard counters and rewards.
+4. **Give information to AI does nothing on a Start-enabled trigger**, even on its later mid-game activations. Use background, an instruction block or a separate ordinary trigger.
+5. **Effects available depend on Start mode.** Background, first-action and Other Character changes are Start-only; Fire random trigger does not dispatch with Start on.
+6. **"Fired" does not mean "succeeded".** A script that errors rolls back only its own writes, but its trigger still counts as fired, uses up a one-shot and satisfies prerequisites. Set a completion flag inside the script that does the work.
+7. **Order in the trigger list is execution order.** Later triggers see earlier writes (native and PawScript conditions alike; one unexplained Dolphin run saw a native condition fire a turn late); a this-turn prerequisite only sees producers above it. Reversing two triggers can delay an effect by a turn.
+8. **Two native number changes to one tracker in one trigger overwrite each other.** Add 2 then add 3 ends at 3. Use one script for dependent arithmetic.
+9. **Fire random trigger skips the target's conditions** but will not rerun a one-shot that already fired. Put required checks inside the target's effects.
+10. **Thresholds need inequalities.** A countdown that jumps from 1 to -2 never equals 0. Use `<=`/`>=` and consume each crossing once.
+11. **Effects run after the narration is written.** A trigger cannot change the scene that caused it. If a rule must shape that scene, put it in active instructions beforehand.
+12. **When two guidance effects conflict, the first tends to win.** Generate one coherent outcome instead of competing directives.
+
+## Scenarios
+
+13. **Scenario text must match the registry exactly**: case, spaces and punctuation. A mismatch keeps the text in JSON but the selector shows "Select a situation" and the trigger never fires.
+14. **A Scenario fires only when the event really happens in the narration.** The narrator can refuse or alter a requested action. It also works the other way: an event the narrator invents fires the Scenario, including an action the player didn't take or a stated purpose the narrator rewrote. When the player's intent must decide, gate on an AI request field judged from the player's own words instead ([Recipes](Recipes.md#request-and-commit-example)).
+15. **Dynamic Scenario text (`<<$slot>>`) doesn't fire.** In a 2026-11-01 retest (one model, Lynx), a Scenario that is a tracker template never fired, even as the only slot and with literal text in front of it (`1: <<$slot>>`). Earlier tests (2026-10) saw single slots fire once, so this changed on IW's side and may change again. Write each step as a literal Scenario with a stage-tracker condition.
+16. **The editor's ten-Scenario limit is an editor limit.** Imported worlds with twelve or more work.
+
+## Import and editing
+
+17. **Tracker IDs with punctuation, spaces or accents are replaced on import, and triggers still point at the old ID.** Use letters and digits only for tracker IDs.
+18. **Some missing fields break things silently.** A condition without `textComparison` is dropped. A value effect without `replaceWith` was linked to the game failing at the opening. A tracker without `description` makes the editor rebuild fail after a "success" message.
+19. **Legacy array-style prerequisites and blank script conditions are dropped on import.** The trigger loses that gate, or never fires if it was the only one.
+20. **Import is saved immediately**, even if you later click Discard changes. Keep a backup. Wait for the editor to rebuild before refreshing the raw JSON.
+21. **A running game is a separate copy.** Editing the world, its starting values or its characters does not change a game in progress. Edit current tracker values in Storyteller mode, or start a new game.
+22. **Renaming a tracker's display Name with Ignore keeps its script handle.** Scripts keep working.
+
+## Trackers and PawScript
+
+23. **Hidden and extra-hidden trackers are not secret from players.** Any Storyteller-mode player can see them; extra-hidden only filters one display. The AI itself is told nothing about hidden trackers, not even that they exist (IW update note, November 2026).
+24. **Hidden and player-only trackers cannot auto-update.** Import turns automatic updating off for them.
+25. **Enforce format does not reject bad data** written by scripts or by hand. Validate shape and values in scripts before accepting them.
+26. **Random expressions disagree with each other.** Two `random()` calls, even in one block, give different results. Store one roll in a tracker when several things must agree.
+27. **Text installed by a block effect freezes its values.** Use a deferred `<=...=>` reference to keep a value live; `<<=...=>>` is inert text, although the editor highlights it as code and shows `<=...=>` as plain text. Saving the tracker editor by hand freezes any tracker holding `<<...>>` at its displayed value.
+28. **An unclosed `<<` can break the next instruction block too.** Check delimiters across neighboring blocks.
+29. **YAML types are loose.** `yes`/`no` are text, `"007"` counts as 7 in arithmetic, Boolean results are stored as quoted text, and appending to a list allows duplicates.
+30. **Reading a missing path stops a script.** Guard with `.exists()` first (`and`/`or` short-circuit), or use `try(...)`, `first_available(...)` or `item(key, fallback)`.
+31. **Script variables (`set $x`) vanish between Run Script effects** in the same trigger. Keep dependent work in one script.
+32. **Skill effects cap rather than add.** Raising a skill by 2 then by 1, each capped at 4, ends at 4. Skills not raised default to level 3; set every level explicitly.
+33. **The sandbox opened from a single-line field is a one-line expression box.** A multi-line paste there is refused and does nothing; its Text tab gives a multi-line box for `<<expression>>` text. To test a multi-line script, open the sandbox from the Paw icon beside a Run Script field, which the world editor always shows. Nothing changed in the sandbox goes back to the editor or game.
+
+## Characters, knowledge and memory
+
+34. **Only the Summary and appearance are guaranteed early.** Detail arrives after a name mention (since 2026-11-12, not a location mention, and then the whole detail bills for three turns), and even then often fails to surface; the narrator invents a substitute that history then repeats. Put must-know facts in the Summary or always-on text and repeat them in detail.
+35. **Keyword and character cards cannot activate on the opening turn** without prior context. Put opening facts in firstInput or always-on instructions.
+36. **Keyword blocks match whole words, any case, and stay active for the matching turn plus three.** Substrings and plurals do not match.
+37. **NPCs get knowledge wrong.** They deny facts they were just told, credit the wrong source, or know secrets they should not. Secret Info can contradict the narration. Anti-omniscience instructions alone do not fix this.
+38. **Once a secret is narrated it stays in the story**, even if you remove the block that revealed it. A mystery fact withheld from the storyteller gets invented, and supplying it later does not undo the invention. Use truth plus prerequisite gates ([Craft](Craft.md#mysteries-and-controlled-reveals)).
+39. **Memory compression runs after turn 8 and every six turns after that** (after turns 8, 14, 20, …). So when a turn is written, short-term memory holds the 2–7 most recent turns uncompressed; everything older is in the summary, whose contents are hidden. Keep facts that must persist in trackers.
+40. **A player character with the same name as an Other Character can draw on that card.** Unchosen player options are not NPCs unless added as Other Characters.
+
+## Narration, images and play
+
+41. **Shorten narration from authorStyle, not descriptionRequest.** A word-and-paragraph cap at the end of authorStyle held output near the stated number (often 10–20% over) even on story-beat turns; the same cap in descriptionRequest or an always-on block broke on those turns. Making narration longer is not established.
+42. **Raw HTML renders as literal text.** Use ordinary Markdown.
+43. **Short avoid-lists help, long ones backfire** on weaker models by priming the banned phrases.
+44. **Image style uses the start/end prompt fields.** The old illustrationStyle priority fields have no current controls and lost to the start/end prompts in testing. Saving Illustration details generates a new image (about 4 credits).
+45. **Ends game with continuation allowed offers Continue game at no cost.** Without it, the action box disappears but history and regeneration remain.
+46. **Reloading during generation can lose the turn and keep the charge.** Check the export's turn count before resubmitting.
+47. **Cost per turn grows with story length** and depends heavily on the model; see [Estimating cost](Cost.md).
+48. **One input form per turn is safest.** A turn that combined a malformed-candidate input with a Request Input form showed narration without the forms and was not saved, though it was charged. Two plain Request Input forms from separate triggers on one turn did work.
+49. **A tracker-detail change in the same trigger as Request Input is silently lost.** Modify tracked item details (for example switching automatic updating on) does nothing when its trigger also asks for input, while messages and scripts in that trigger still run. Put the change in its own trigger with the same condition. Switching automatic updating on and off otherwise works, from the next turn.
+50. **An AI-written buffer whose whole value is a list loses updates.** Root it in a record (`entries: []`) and have scripts read and clear `.entries`. Ask for complete entries of changed characters, not "only changed fields": once the buffer is cleared, a field patch has nothing to apply to. "Append-only" wording does not rescue a list root.
+51. **A record-rooted buffer can jam on one nested row.** If the AI writes rows as a list inside `entries`, a merge gated on `.entries.any(name.exists())` never fires again and every later update piles up. Gate on a non-empty inbox and drop or unwrap non-record items.
+52. **A block reinstalled every turn lags behind triggers below it.** Its `<<...>>` values freeze when its trigger runs. Order the triggers that compute those values above it, or write `<=...=>`.
+53. **`$game.ai_model` is the display name, and text `=` is case-sensitive.** On Dolphin, `= "Dolphin"` is true and `= "dolphin"` false.
+54. **Some native fields take live expressions.** A tracker condition's required value can be `$variable`, a random chance can be an expression, and numeric add/subtract accepts dice text such as `2d3`; each is evaluated every time. Templates in a tracker's update instructions are also evaluated live.
+55. **Start Other Character changes stop below a form.** Add, modify and delete do nothing in a Start trigger ordered below one that asks for input or a choice, though the trigger fires. Order them above every form, and give the world at least one premade Other Character: a Start add in a world with none gives no character.
+
+## Still unknown
+
+Platform behavior that has not been verified, by area, with what to do meanwhile. Elsewhere the kit states only what is established; do not turn any of these into an invented rule.
+
+| Area | Still unknown | What to do meanwhile |
+| --- | --- | --- |
+| Prompt construction | Full historical storyteller/specialist prompts, hidden wrappers, exact inclusion and timing | Put essential facts in fields known to reach the storyteller (background, firstInput, instructions, always-on blocks); treat UI visibility as display, not proof of what the AI receives |
+| Empty-condition triggers | Whether a Start+Mid+Repeat trigger with no conditions fires on ordinary turns | Give every-turn triggers an always-true condition such as `$game.turn_number >= 0` |
+| Scenarios | Why dynamic Scenario text stopped firing (single slots fired in 2026-10 tests); any runtime maximum | Use literal Scenarios with explicit state gates ([Triggers](Triggers.md#scenarios)) |
+| NPCs and knowledge | Live character records, identity merging, mid-game mutation and retrieval routing; why name-only mentions often fail to surface Character detail | Put facts that must surface in the Summary or always-on text; author relationships and knowledge explicitly; correct an invented detail early by editing the turn |
+| Import normalization | Internal failure stages; ID rules for every entity type; why an omitted replaceWith broke the opening | Use ASCII alphanumeric tracker IDs; always serialize description and replaceWith; re-export after import and compare with tools/import_audit.py |
+| Visibility | Whether visibility changes what the AI receives | Do not rely on visibility to keep information from the storyteller |
+| Interpolation | NPC card detail, image fields and other untested destinations; `<=...=>` in change effects | Use the template probe example before relying on a new field ([Runtime](Runtime.md#template-interpolation-runtime)) |
+| Randomness and selectors | Exact evaluation counts; whether unselected library text is excluded from context | Store a shared roll in a tracker when several consumers must agree |
+| AI tracker dependencies | How generation is staged internally | Stage prior-turn values explicitly when a rule depends on them |
+| Format and YAML | Complete grammar, XML mutation, strict typing, hidden AI repair | Validate shape and meaning in scripts before accepting state |
+| Legacy list context | A supported List Update target/value context in the current editor | Use for-each loops and collection methods instead of `current()` |
+| Memory | What later summaries do to imported characters; whether a large memory bills in full | Use summaryRequest and trackers for facts that must persist |
+| Length | A lengthening recipe; the authorStyle cap on models other than Dolphin | Put length rules in authorStyle; promise a ceiling near the number, not an exact length |
+| Images and video | Full image prompt and cache, precedence, internal macros, video runtime | Author with current style controls and preserve imported legacy fields; avoid depending on video until checked |
+| Limits and permissions | Maximum field, loop or trigger sizes; account-role permission matrix | Treat observed sizes as working examples |
+| Recovery and forms | Server-side cause of a lost-but-charged turn; automated recovery | After an interruption, inspect retained history and the export's turn count before resubmitting; prefer one input form per turn |
+
+The schema and validator are a partial compatibility profile, not a statement of every importer-required field or future vocabulary.
+
+---
+
+END OF DOCUMENT: reference/Notable-Findings.md
+
+===== END FILE: reference/Notable-Findings.md =====
+
+===== BEGIN FILE: reference/Editor-UI.md =====
+# Editor and UI reference
+
+Current through 2026-11-06. This covers observed authoring, play and troubleshooting surfaces, not every menu. [DOCUMENTED] means editor guidance; [RUNTIME] means observed behavior. Unlisted fields are not necessarily unsupported.
+
+## Terminology for users
+
+Use tracker and trigger **Names**, not IDs, unless the user requests IDs. Distinguish duplicate Names by purpose/editor location. Keep IDs for internal wiring and preserve them during edits. Use variable handles when explaining code. Say **Scenarios**, never ambiguous Conditions, for reusable narrative situations. Call a character's one_liner **Summary**.
+
+| User/editor term | JSON mapping or distinction |
+| --- | --- |
+| Tracker Name | `trackedItems[].name`; not `id` or `variableName` |
+| Trigger Name | `triggerEvents[].name`; not `id` |
+| Scenarios; Triggering situation / Manage Situations in the selector | Root `conditions`; referenced by `triggerOnEvent` |
+| Trigger conditions | `triggerConditions`; gates within a trigger |
+| Summary; Brief summary in Other Characters | `one_liner` (the only spelling in exports) |
+| Character detail | `detail` |
+| Extra instruction blocks | `instructionBlocks`; explain before abbreviating EIB |
+| Give information to AI | `effectGiveInfo` |
+| Tell the AI what should happen next turn | `effectTellAIWhatToDo`; distinct from Give information |
+| Change other characters / Change other character data | `effectChangeOtherCharacters`; picker/panel labels differ |
+| Trigger at start of game / Or mid-game | `triggerOnStartOfGame` / `triggerMidGame` |
+| Allow triggering multiple times | `canTriggerMoreThanOnce` |
+| Hide this item even in Storyteller Mode / Extra-hidden | `hidden_boring` or `ai_only_boring`; display filtering |
+| Change starting values of Tracked Items (if applicable) | `allowChangeCharacterItemValues`; character-selection permission. Default false; true lets the player type a custom starting value, including one outside a dropdown's choices |
+| Custom Evaluation / Description / Summarisation | `evaluationRequest` / `descriptionRequest` / `summaryRequest` |
+
+## Import, export and preserving work
+
+1. Open **Show optional features > Misc advanced features > Show raw JSON**.
+2. To export editor changes, **Refresh raw JSON** then copy/export the whole value. The box does not track native field edits automatically.
+3. To import, replace the whole raw value and select **Import JSON to world**. Accept the intended overwrite, acknowledge success, and wait for the editor to rebuild itself.
+4. After rebuilding, reopen optional/raw sections and refresh/export if needed. Do not refresh the old editor immediately after import or refresh a pasted source you intend to import.
+
+Opening a world in the editor advances its version in the export (for example 1.01 to 1.02), even if changes are then discarded.
+
+[RUNTIME] Import can persist independently of a later Discard changes action. Keep a backup.
+
+**Before import**
+
+- Serialize the complete world as JSON ending at its final closing brace, without a trailing newline. Do not paste Markdown fences.
+- Run the validator on that exact file. Resolve missing or duplicate IDs and mismatched target references.
+- Review native YAML paths against the tracker's declared initial structure and intended operation. The editor accepts unchecked paths without warning: removing a nonexistent key or appending to a numeric path may be syntactically valid but semantically wrong. Review script references separately; structural validation does not execute PawScript or prove its paths exist.
+- Give every tracker a `description` (it may be empty), and convert legacy bare-array prerequisites/blockers and blank PawScript conditions to native object shape; the troubleshooting table below says what happens otherwise.
+
+**After import**
+
+A round trip of well-formed native JSON is byte-identical, so any change after import points at a normalization (ID reminting, dropped gates, scope repair, registry population). Save and inspect affected target dropdowns and Scenario bindings, since preserved text can be unbound. An invalid-value target is a binding failure even if the original JSON had consistent references. Export the imported world and validate that export when diagnosing discrepancies; keep the untouched source so source and imported IDs can be compared with `tools/import_audit.py` ([tools/Usage.md](../tools/Usage.md)).
+
+For a native input, confirm the current target value after submitting an answer (form behavior is in [Schema](Schema.md#choice-and-input-forms)). The live-world editor's initialValue remains configuration, not the current runtime value.
+
+**Live copies**
+
+Base worlds and live games are separate copies. Starting play creates a live copy; editing the base, its starting values or its characters does not update an existing playthrough, and already-fired effects are not retroactively rewritten. Use Save as new world, or export the live JSON and import it over the intended base, to reuse live-world edits in future games. Image-style changes can require save/reload before their export reflects the editor.
+
+[RUNTIME] Narration can stream before background work finishes. Following interruption, inspect retained state and controls before submitting again; a temporary turn number is not a saved-turn guarantee.
+
+## Triggers and Scenarios
+
+An ordinary trigger with no conditions says it will never fire. With Trigger at start of game checked, the condition box reads only "(No conditions added to this block yet)", with or without Or mid-game and Allow triggering multiple times; the missing warning reflects startup firing, not an every-turn trigger ([Notable finding 1](Notable-Findings.md#triggers)).
+
+Start mode changes the picker and compatibility warnings. Start-only disables Repeat in the editor; Or mid-game enables it. **Use advanced logic** adds Add logic block; new blocks default to Or. Switching a condition between types keeps hidden fields: Turn number to Player action keeps the old inequality and clears the required value. Trigger history lists Start-pass firings as turn 0. Stored unsupported combinations may survive import while effects are ignored. Read the [trigger capability catalog](Trigger-Catalog.md) before declaring an operation unavailable.
+
+A mismatched Scenario shows **Select a situation** while the JSON keeps its string. The Situations manager's Add control stops at ten entries. Binding rules and limits are in [Triggers.md](Triggers.md#scenarios).
+
+## Trackers, visibility and customization
+
+**Menu > Settings > Storyteller mode** toggles the mode, rather than opening a status dialog; enabling asks for confirmation. **Menu > Settings > World debug tools** contains Include Extra-hidden. Reopen panels after changing this setting if they still show old content.
+
+| Surface | Observed behavior |
+| --- | --- |
+| Hidden Tracked Items, Storyteller on, Include Extra-hidden on | Extra-hidden values displayed |
+| Hidden Tracked Items, Storyteller on, override off | Extra-hidden omitted; ordinary hidden values remain |
+| Tracker editing dialog, Storyteller on, override off | Extra-hidden still visible/editable |
+| Storyteller off | Player-visible values remain; live tracker editing control unavailable in the observed UI |
+
+Neither hidden nor extra-hidden protects information from Storyteller inspection. Visibility and automatic-update rules are in [Trackers.md](Trackers.md).
+
+For per-character values, select **Initial value depends on which character the player chooses** under Tracked items, then edit under **Player character options > [Name]**. Player-selected preferences can appear on the character card and in Customize Character. Opening the customizer can reset card selections; check final values there. With starting-value permission on, Customize Character shows only character-scoped or player-chosen trackers, not same-for-everyone ones. Starting-value permission is not general in-play edit permission.
+
+Rename warnings offer **Update** and **Ignore** for a variable-name mismatch; Ignore preserves the handle and ID. When acknowledgement is needed is covered in [Trackers.md](Trackers.md).
+
+## Play, debug and live design
+
+The database icon opens trackers; the nearby edit control edits their values. The pencil opens action/outcome editing and **View/edit world design**. Regenerate turn opens modification of an existing turn. These operations have different purposes.
+
+The bug icon (beside the tracked-items icon) opens debug, which needs Storyteller mode. It shows the current turn's active instruction blocks including trigger updates, the triggers fired this turn, all-trigger history with first/last turn and counts, model thinking when available, Evaluation, and PawScript conditions, execution results, output, warnings and errors (including automatic tracker format repair and failed path updates). **Active instructions** is live rendered state, including post-narration trigger updates and live edits, not the full historical prompt or the exact context the already-generated narration used. The fired-trigger list is not always exhaustive; inspect detailed history and actual state.
+
+The live-design notice warns that Player/Other Character changes do not affect the current playthrough (see Live copies above); a design export shows configuration, not the current live state.
+
+Story exports offer a turn range and optional background, character, secrets, trackers and hidden trackers (hidden trackers only with Storyteller mode on; a world export always includes every tracker), with text/PDF/image options. Select the relevant options. The background and character pages print the world as authored: templates appear raw, and Change background or Change PC effects are not reflected; the turn text and tracker values are as played. Secret Info is generated narrative data, not an authoritative character database. No live character-database or complete prompt viewer is available through these surfaces.
+
+[RUNTIME] Some turn inputs are not kept anywhere you can see later (observed in play, not a controlled test). For past turns, the options the player did not pick cannot be viewed: that is two of the three, or all three when a custom action was typed instead. The text typed into the Storyteller guidance box is not shown either, and nothing marks that a turn used it. If a test or a design review needs these, write them down at the time.
+
+## PawScript sandbox
+
+The sandbox (PawScript Expression Editor) runs a script or expression against editable tracker data. Nothing changed in it goes back to the editor or game; copy anything worth keeping.
+
+| Entry point | When it is available | Tracker data it starts with |
+| --- | --- | --- |
+| World editor: Paw icon beside a Run Script effect's script field | Always | All base trackers |
+| World editor: Paw icon beside other PawScript-capable fields | When **Show optional features > Misc advanced features > Show the PawScript Expression Editor button next to each expression field** is enabled for that world (`showPawScriptButtons: true`; default it to true in new worlds) | All base trackers |
+| In play: **View/edit world design** | Same Paw icons as the world editor | The game state of that turn |
+| In play: debug **PawScript > Open in Sandbox** | For a script that has run in this game; with the expression-editor option enabled, evaluated conditions also get an entry. The play screen has no other sandbox button | The game state of the turn it ran |
+
+From the world editor, a tracker with a fixed initial value shows that value; one with no initial value, or a player-chosen or character-dependent one, shows 0 or empty. With the option enabled, Paw icons were observed beside trigger conditions and tracker description and update instructions, but not beside initial value, authorStyle, specialist instructions, main or keyword instruction blocks, background, first action or objective.
+
+The sandbox matches the field it was opened from. A script field opens a multi-line **Your script** box with **Run script**. A single-line field, such as a trigger condition, opens a one-line **Your expression** box in **Expression** mode with **Evaluate**; a multi-line paste there is refused and does nothing. Its **Text** tab switches to a multi-line box that evaluates text containing `<<expressions>>`. The standalone sandbox (Menu > PawScript Expression Sandbox) leaves `<=...=>` unchanged and rejects `<<=...=>>`; test deferred text in play. To test a multi-line script, open the sandbox from a Run Script field.
+
+Trackers can be added, edited and deleted in the sandbox, and runs use those values. From debug, the header names the script and says what it changed when it ran in the game. **Turn data** lists trackers plus the `$player` and `$game` roots (`$game` has seven keys, including turn_number, ai_model and skill_list); **Legacy turn data** holds older flat variables. In a short-circuited And/Or group, debug lists only the deciding condition. Sandbox data can differ from current manually edited values. A run displays a result/diff; **Update Game** is separate. A collapsed summary can misrepresent nested structure; inspect actual values or supported reads.
+
+Community-reported sandbox results, not tested by the kit [UNKNOWN]: a gate testing membership in an empty list is false, so emptying a lookup list switches its gated sections off; and `in` compares whole values ("minotaur" is not in a list holding "minotaur girl"), so synonym lists should carry every form the AI may write.
+
+## Credits and cost
+
+The header shows the credit balance and the remaining daily free turns (3 per day observed). **Credits > Credit activity >** a turn **> Cost breakdown** splits Inputs and Outputs into instructions, trackers, STM (recent story), LTM (memory: NPC cards from turn 1, summaries after the first compression, as STM drops) and other; thinking models add an output category. Breakdown values are rounded decimals: the list can differ from the balance change by a credit. IW downloads your whole credit history itself (since November 2026), but only each turn's total; for every turn's breakdown use the kit's [IW Cost Exporter](https://iw-builder.github.io/cost/).
+
+Cost per turn depends on the model (the picker shows a typical range) and rises with story length. A failed opening is refunded; Continue game after an ending costs nothing. Per-model rates, what is billed and how to estimate a world's cost are in [Estimating cost](Cost.md).
+
+## Characters, images and models
+
+Other Characters separates Summary, Character detail, narrative appearance and image appearance/clothing. Location guidance asks for no more than two words; Full list of names accepts comma-separated variants. Field purpose and activation are in [Characters](Characters.md#npc-cards).
+
+The illustration wrench opens **Illustration details**. Character fields: Appearance, Clothing, Expression/position, Setting. Scenery fields: Appearance, Setting. **Edit details > Save changes** immediately generates an image; it is not a text-only save. **Settings > Illustration options** supports one, two or three alternatives; automatic generation is separate.
+
+Image style has a Model and Character/Scenery start/end prompts, mapped to `imageStyleCharacterPre/Post` and `imageStyleNonCharacterPre/Post`. Retained `illustrationStyle*` fields are not current controls. Full image prompts and cache identities are hidden.
+
+**Misc advanced features > Enable AI-specific instruction blocks** exposes block model choices mapped to `selectedAIProfiles`. All-model blocks remain active during model switches; filtered blocks follow the selected model. Availability changes; imported unfamiliar IDs are not automatically invalid.
+
+**Picture prompt wording.** Reported by a community template author from rendering on Manticore; not tested by the kit [PATTERN]:
+
+- The image model tends to draw whatever the prompt names, even after "no", "without" or "rather than". Describe what should be there ("clothing on the upper body only", "long hair over the sides of the head") instead of what should not.
+- Describe a whole-body colour or covering (skin tone, fur, scales, plating) only on the parts the camera sees. Listing body parts that clothing covers can make the model show them uncovered.
+- Strongly sensual style words in the wrappers carry into every picture and can override described clothing. Keep a toned-down wrapper for clothed scenes and switch it by script.
+- Leave out illustrator lines that depend on seeing the result ("regenerate if…", "after three attempts…"). The AI that writes the prompt never sees the image, so they only cost words.
+- For an anime look, realism words ("lifelike", "subsurface scattering", "painterly realism") push toward a semi-real render; use illustration terms (clean lineart, cel-shading).
+
+## Specialist instructions, forms and PawScript cues
+
+[DOCUMENTED] Video help describes `$videoDuration` and `$videoStyle` in video context (see below). The expression-editor option shows a Paw icon beside some PawScript-capable fields (see [PawScript sandbox](#pawscript-sandbox)). A field without an icon can still take expressions: YAML Set a value supports template expressions according to help despite having no icon.
+
+Editor syntax highlighting misleads for deferred references. In instruction blocks and tracker descriptions it colors `<<=...=>>` as PawScript and shows the working `<=...=>` as plain text. Since a November 2026 update the tracker Initial value box has the same PawScript highlighting and autocomplete as the description box, so expect the same misleading colors there (not yet checked). At runtime it is the other way round: `<=...=>` is evaluated and `<<=...=>>` stays literal. If a user cites the highlighting, explain that it is wrong for this syntax ([PawScript.md](PawScript.md)).
+
+Highlighting also misreads multi-line strings. A quoted string, in single or double quotes, may span lines inside a `<<...>>` template, and it evaluates correctly. With `$flag` true, this renders the three test lines on their own lines between Before script and After script:
+
+```text
+Before script
+<<if($flag, 'Test line 1.
+Test line 2' & '
+Test line 3', '')>>
+After script
+```
+
+The highlighter treats each line break as the end of the string, so it colors the string's later lines as code and the ` & ` between the strings as string. It is display only. This was seen in the sandbox's Text tab (an author's report, not a probe), and it has been reported to the IW developer with no timeline for a fix. Whether a Run Script string can span lines is not confirmed: there a physical newline separates statements, so write `\n` ([PawScript.md](PawScript.md)). Authors have asked for multi-line strings in scripts too.
+
+Present choice enforces required selection and configured multiple-selection bounds. Required Request Input can leave Confirm enabled while empty, then reject submission with **Please enter a response**. Optional blank input clears its target. Single/multiline fields show counters of 600/3000 respectively, not universal tracker limits. Newline-delimited multiple selections remain text, not automatically a YAML list.
+
+Trigger-provided next-turn guidance can disable the Storyteller guidance box while leaving ordinary action input usable.
+
+## Permissions and specialist destinations
+
+These are the character-customization controls; account-role permissions are a separate, uncharacterized matter.
+
+| Editor control | JSON field | Scope |
+| --- | --- | --- |
+| Change character name | allowChangeCharacterName | Starting-character customization |
+| Change character description | allowChangeCharacterDescription | Starting-character customization |
+| Change character skills | allowChangeCharacterSkills | Starting-character customization |
+| Select other portraits from that character's gallery | allowChangeCharacterPortrait | Existing portrait choices |
+| Create a new portrait | allowChangeCharacterNewPortrait | New portrait creation permission |
+| Change starting values of Tracked Items | allowChangeCharacterItemValues | Applicable character-scoped starting values |
+
+Default `allowChangeCharacterItemValues` to false. A player-chosen dropdown (`initialValueBasedOnPC: "player"` with `initialValueChoices`) still offers its choices with it off; with it on, the player can also type their own value, which suits a deliberate custom input (a written character's own power, say) but can break a setup or picture dropdown that scripts compare by exact string. [DOCUMENTED] These switches belong to character customization. They are distinct from `permissionsOnceShared.sharing` and `.editing`, and from Storyteller mode. Cross-account author/recipient permission enforcement is unverified, so a missing control may come from any of the three; keep them separate when diagnosing.
+
+[DOCUMENTED] Custom Evaluation guides the AI's interpretation of the attempted action. The default includes skill/difficulty reasoning and labels such as SUCCESS and PARTIAL_SUCCESS; those labels are generated evaluation content, not direct state-changing commands. Custom Description guides narrated results. Custom Summarisation guides what the memory summary retains; it is not a viewer of the actual summary. Native specialist placeholders are context-specific and are not all PawScript tracker handles.
+
+[DOCUMENTED] Video prompt instructions are under the optional specialist settings. From an illustration's Generate video dialog, prompt preparation has three destinations: scene plan, first/last-frame decision and video-AI prompt. Editor help says each can be overridden independently, a blank field retains its default, and expressions are evaluated before sending. `$videoDuration` and `$videoStyle` are documented in this destination. Inspect a native export before editing these programmatically; their JSON key mapping and runtime precedence are unverified, as are video creation and cross-role access.
+
+## Troubleshooting by visible symptom
+
+| Symptom | First check |
+| --- | --- |
+| JSON does not reflect a field edit | Refresh raw JSON after completing the edit. Do not refresh over a pasted import. |
+| Imported trigger target is unassigned | Compare the target tracker by Name and inspect source/import ID references; normalization can leave dangling targets. |
+| Scenario selector is empty while JSON retains text | Match the declared Scenario exactly, including case, punctuation and whitespace. |
+| Character choice changes on entering customization | Check the choice again inside Customize Character; card selections have been observed to reset. |
+| Extra-hidden item appears unexpectedly | Distinguish the display panel override from the tracker editing dialog, which still exposes it in Storyteller mode. |
+| Form answer exists but later values are blank | Check trigger order and the answer's stored type/domain; consuming triggers must follow the form. |
+| Trigger history shows firing but accepted state is unchanged | Inspect script failure/rollback and an explicit completion flag; firing is not successful commit. |
+| Reload shows an earlier turn | Inspect retained history/export and controls before retrying; a turn that streamed can still be lost. Credit activity can list a charge for the lost turn, and the balance can stay stale until a second reload; the export dialog's turn count is authoritative. |
+| Opening fails with a generic streaming error | Check for effects missing `replaceWith` or other malformed payloads; failed openings are refunded. |
+| Import succeeds, then the editor errors (KeyError) while rebuilding | A tracker is missing `description`. |
+| `TypeError: list indices must be integers or slices, not str` when opening a trigger | Legacy bare-array prerequisites/blockers; convert them to object shape. |
+| `TypeError: npc_added() missing 1 required argument: 'npc'` | Seen while authoring an Other Character template; it persists until dismissed. Re-export and check the characters. |
+| Narration appears without the expected form, and the turn is not kept | Two input forms in one turn once did this; move one form to another turn. |
+| Deferred `<<=...=>>` text shows up literally in play | Use `<=...=>`. The editor highlights `<<=...=>>` as code, but only `<=...=>` runs. |
+| Scenario trigger did not fire | Confirm the narrated outcome actually contains the event; the narrator can refuse or substitute the action. |
+
+Additional roles, full prompts, live character records and video runtime remain reference gaps.
+
+---
+
+END OF DOCUMENT: reference/Editor-UI.md
+
+===== END FILE: reference/Editor-UI.md =====
+
+END OF DOCUMENT: chat/IW-Reference-3.txt

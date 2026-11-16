@@ -6,17 +6,17 @@ For web retrieval, an AI can open the [authoring guide page](https://iw-builder.
 
 There are two kinds of file here. The **reference** is what the AI reads to do the work; attach it once. The **content to pick from** is examples, library modules and tools; attach a piece only when the AI asks for it.
 
-## Reference: attach one file, or four
+## Reference: attach one file, or the numbered parts
 
 | File | What's inside |
 | --- | --- |
-| [Complete Reference](IW-Complete-Reference.txt) | Everything in the four files below in one attachment: about 290 KB, around 75k tokens. The simplest choice when your AI's chat accepts a file that size. |
-| [Authoring Guide](IW-Authoring-Guide.txt) | The main prompt, starting template, core guides to creating worlds, and how to choose library modules. Start here if you attach the four files separately. |
-| [Technical Reference](IW-Technical-Reference.txt) | Exact world-file structure, PawScript, turn lifecycle, characters and feature recipes. |
-| [IW Behavior](IW-Behavior.txt) | Notable findings and what is still unknown, editor and UI workflows with import checks, cost estimating, tested platform behavior. Useful for debugging. |
-| [Payloads](IW-Payloads.txt) | The exact building block for every trigger condition and effect, plus an index of all example worlds the storyteller model IDs, image and model controls, and IW's default Evaluation text. Small; useful for any world with mechanics. |
+| [Complete Reference](IW-Complete-Reference.txt) | The whole reference in one attachment: over 300 KB, around 80k tokens. The simplest choice when your AI's chat accepts a file that size. |
+| [Reference part 1](IW-Reference-1.txt) | Start here: the main prompt, starting template and the core guides to creating worlds. |
+| Reference parts 2, 3 and up | The rest of the reference in reading order: exact world-file structure, PawScript, runtime, characters, recipes, notable findings, editor and UI workflows, cost, tested platform behavior, payload snippets and model IDs. The [file index](https://iw-builder.github.io/llms.txt) lists each part with what it holds. |
 
-The four-file split exists for tools that cap attachment or fetch size around 100 KB: each file is under 90 KB. A model fetching by URL should use those or the individual files in [llms.txt](https://iw-builder.github.io/llms.txt), since most fetchers truncate the complete file.
+The parts exist for tools that cap attachment or fetch size around 100 KB: each is under 90 KB. They split the reference by size, not by topic, and the build adds a part when the reference grows, so attach all of them. Each part begins with a list of which documents are in which part. A model fetching by URL should use the parts or the individual files in [llms.txt](https://iw-builder.github.io/llms.txt), since most fetchers truncate the complete file.
+
+The older editions (IW-Authoring-Guide.txt, IW-Technical-Reference.txt, IW-Behavior.txt and IW-Payloads.txt) were replaced by the parts on 2026-11-15; their links now hold a short pointer.
 
 ## Content to pick from: attach only what is asked for
 
