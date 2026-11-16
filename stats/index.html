@@ -339,9 +339,9 @@ function markerGroups(d){
     if (k.includes(" = ")){ const i = k.indexOf(" = "); put(k.slice(0, i), k.slice(i + 3), e); }
     else { const g = ["Reached", "Turn", "Model"].find(p => k.startsWith(p + " ")); g ? put(g, k.slice(g.length + 1), e) : put("Other", k, e); }
   }
-  const dayNum = l => { const x = l.match(/^Day (\d+)$/); return x ? +x[1] : null; };
+  const timeKey = l => { const x = l.match(/^(Hour|Day) (\d+)$/); return x ? (x[1] === "Day" ? 1e6 : 0) + +x[2] : null; };  // hours, then days
   if (groups.Reached) groups.Reached.sort((a, b) => {
-    const da = dayNum(a.label), db = dayNum(b.label);
+    const da = timeKey(a.label), db = timeKey(b.label);
     return da != null && db != null ? da - db : da != null ? -1 : db != null ? 1 : b.games - a.games; });
   if (groups.Turn) groups.Turn.sort((a, b) => (+a.label || 0) - (+b.label || 0));
   if (groups.Model) groups.Model.sort((a, b) => b.fired - a.fired || b.games - a.games);
