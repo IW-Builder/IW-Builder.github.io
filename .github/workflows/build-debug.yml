@@ -1,0 +1,38 @@
+# Rebuilds debug/index.html (the IW Debug Exporter install page) whenever the
+# exporter source, template or build script changes, and commits the result.
+name: Build debug exporter page
+
+on:
+  push:
+    paths:
+      - 'debug/IW-Debug-Exporter-bookmarklet.js'
+      - 'debug/index.template.html'
+      - 'debug/build.js'
+      - '.github/workflows/build-debug.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: build-debug-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm i --no-save terser@5
+      - run: node debug/build.js
+      - name: Commit if changed
+        run: |
+          if git diff --quiet -- debug/index.html; then echo "index.html up to date"; exit 0; fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898283+github-actions[bot]@users.noreply.github.com"
+          git add debug/index.html
+          git commit -m "Rebuild debug/index.html"
+          git push
