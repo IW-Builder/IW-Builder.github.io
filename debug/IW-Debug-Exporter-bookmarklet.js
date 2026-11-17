@@ -119,14 +119,18 @@
       game_uuid: r[8] && typeof r[8] === 'object' ? r[8].gameUuid : null,
       tracked_items: (r[14] || []).map(t => ({name: t.name, value: t.value, visibility: t.visibility})),
       evaluation: typeof r[24] === 'string' ? r[24] : '', thinking: typeof r[25] === 'string' ? r[25] : '', debug,
-      image: image(r.find(x => x && typeof x === 'object' && !Array.isArray(x) && 'imagePromptInfo' in x && 'ageOfImageInTurnsBeforeRequestedTurn' in x))};
+      image_info: r.find(x => x && typeof x === 'object' && !Array.isArray(x) && 'imagePromptInfo' in x && 'ageOfImageInTurnsBeforeRequestedTurn' in x)};
   }
   // Image instructions: what the wrench under the image shows. The turn's view
-  // carries the image in effect; age 0 means it was generated on this turn.
+  // carries the image in effect; age 0 means it was generated on this turn, and
+  // a file already seen on the turn before is a carried-over image.
+  let lastImage = null;
   function image(i) {
-    if (!i || i.ageOfImageInTurnsBeforeRequestedTurn !== 0 || !(i.imageIDs || []).length) return null;
+    const url = i && (i.imageIDs || [])[i.currentImageIndex || 0];
+    if (!url || i.ageOfImageInTurnsBeforeRequestedTurn !== 0 || url === lastImage) return null;
+    lastImage = url;
     const p = i.imagePromptInfo || {};
-    return {caption: p.illustrationSubject ?? i.imageSubject ?? '', appearance: p.illustrationAppearance ?? '', clothing: p.illustrationClothing ?? '',
+    return {image_url: url, caption: p.illustrationSubject ?? i.imageSubject ?? '', appearance: p.illustrationAppearance ?? '', clothing: p.illustrationClothing ?? '',
       expression: p.illustrationExpression ?? '', setting: p.illustrationSetting ?? ''};
   }
   function record(v) {
@@ -142,7 +146,7 @@
       pawscript: evals,
       pawscript_errors: evals.filter(s => s.error || /error|fail/i.test(s.status || '')),
       world_debug_log: d.world_debug_log || [],
-      image_instructions: v.image || null,
+      image_instructions: image(v.image_info),
       // Narration, Secret Info and tracker values are left to IW's own Export story.
       // Per-turn raw fields only; world-wide definitions go once at the top of the JSON.
       raw_debug: {fired_triggers: d.fired_triggers, completed_triggers: d.completed_triggers, script_evaluations: d.script_evaluations, world_debug_log: d.world_debug_log, matched_lorebook_entries: d.matched_lorebook_entries}
@@ -234,7 +238,7 @@
       if (t.world_debug_log.length) L.push('World debug log', '---------------', t.world_debug_log.map(x => '- ' + (typeof x === 'string' ? x : JSON.stringify(x))).join('\n'), '');
       const im = t.image_instructions;
       if (im) {
-        L.push('Image instructions', '------------------', 'Caption: ' + im.caption);
+        L.push('Image instructions', '------------------', 'Caption: ' + im.caption, 'Image: ' + im.image_url);
         for (const [k, label] of [['appearance', 'Character data > Appearance'], ['clothing', 'Character data > Clothing'],
           ['expression', 'Situation data > Expression/position'], ['setting', 'Situation data > Setting']])
           L.push(label + ':', String(im[k] || '(empty)').split('\n').map(s => '    ' + s).join('\n'));

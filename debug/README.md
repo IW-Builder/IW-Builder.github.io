@@ -48,12 +48,14 @@ of producing bad data. Fields used: 0 action, 3 turn, 4 last turn, 11 title,
 
 **Image instructions.** Field 5 (found by its keys `imagePromptInfo` and
 `ageOfImageInTurnsBeforeRequestedTurn`) is the image in effect on that turn;
-age 0 means the turn generated it, otherwise it is carried over and skipped.
+age 0 means the turn generated it, otherwise it is carried over and skipped
+(as is a file already exported for the turn before). The caption's turn
+number is IW's own text and can lag (a turn-4 image captioned "3:...").
 From `imagePromptInfo` the export keeps the five fields the wrench panel
 shows: `illustrationSubject` (the caption), `illustrationAppearance`,
 `illustrationClothing` (Character data), `illustrationExpression` and
 `illustrationSetting` (Situation data). In the JSON they are
-`image_instructions` (`caption`, `appearance`, `clothing`, `expression`,
+`image_instructions` (`image_url`, `caption`, `appearance`, `clothing`, `expression`,
 `setting`), or null on turns without a new image.
 
 **Long term memory.** World debug tools > Long term memory doesn't come with
