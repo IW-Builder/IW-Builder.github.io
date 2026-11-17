@@ -24,7 +24,7 @@
       "reference/Images-and-Models.md",
       "reference/Default-Evaluation.txt"
     ],
-    "sha256": "d2fac59e3e3da5c5a5df984ff27061c8af19cca56c4c3a0f64c7236a250b4841"
+    "sha256": "c5f41bfcf9a0895e7a1c322f072e28ec1d7d2320bafeba92248094d08500b082"
   },
   "IW-Reference-1.txt": {
     "sourceFiles": [
@@ -60,7 +60,7 @@
       "reference/Editor-UI.md",
       "reference/Cost.md"
     ],
-    "sha256": "03441fe785728405e1f88b209c9d04c502db37d30f4c63e0e4f27088a91f29ee"
+    "sha256": "742d455f4de48087eda8334629577d44e6e11eac0bd6396428a95885251e6d17"
   },
   "IW-Reference-5.txt": {
     "sourceFiles": [

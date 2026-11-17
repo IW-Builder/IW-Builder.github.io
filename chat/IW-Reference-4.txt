@@ -370,7 +370,7 @@ These cost nothing per turn: hidden (script-only) trackers, triggers and PawScri
 | Wampus | 75 | 94 | 1.3–1.5 | 1.75 | 344 | 1.9 | 32 (19–39) |
 | Leopard | 98 | 104 | 1.5–2.0 | 1.22 | 334 | 4.8 | 42 (31–49) |
 | Massivecat | 114 | 167 | 2.3–3.2 | 2.77 | 540 | 8.2 (10) | – |
-| Massivecat-thinking | 136 | 196 | 2.75 | 2.78 | 515 | 9.1 | 21 (14–35) |
+| Massivecat-thinking | 136 | 196 | 2.75 | 2.78 | 515 | 9.1 (10) | 21 (14–35); 37 in a real game (0–120) |
 | Leopard-2 | 187 | 195 | 2.7–3.8 | 1.95 | 443 | 7.0 | 92 (65–107) |
 
 Columns:
@@ -416,7 +416,7 @@ Caracal check (2026-11-07) [RUNTIME, one game each: 15 Caracal turns of a later 
 
 ### Checked across all recorded turns
 
-[RUNTIME, 2026-11-17] Every turn we have recorded with a full cost breakdown: 694 turns on 7 models over 17 worlds (Dolphin 393, Lynx 122, Caracal 71, Puma 54, Grimalkin 21, Massivecat 21, Smilodon 12). Ratios come from the same world played on two models over the same turns.
+[RUNTIME, 2026-11-17] Every turn we have recorded with a full cost breakdown: 728 turns on 8 models over 20 worlds (Dolphin 393, Lynx 122, Caracal 71, Puma 54, Massivecat 27 and Massivecat-thinking 28, Grimalkin 21, Smilodon 12). Ratios come from the same world played on two models over the same turns.
 
 | | Turns (worlds) | × Dolphin, same world | Input rate × Dolphin | Output × Dolphin | Credits per 100 words of narration |
 | --- | --- | --- | --- | --- | --- |
@@ -425,13 +425,13 @@ Caracal check (2026-11-07) [RUNTIME, one game each: 15 Caracal turns of a later 
 | Caracal | 71 (2) | 0.57 | 0.66–0.72 | – | 0.9 |
 | Puma | 54 (4) | 0.91–1.10 with trackers and pictures; 0.82 lean | 0.82–0.98 | 1.1–1.6 | 3.4 |
 | Grimalkin | 21 (1) | probably 1.2–1.5 (not paired with Dolphin) | about 1.2–1.3 | – | 3.3 |
-| Massivecat | 21 (1) | 2.7 (first 6 turns) to 3.0–3.2 (21 turns) | 2.0 | 4–5 | about 10 |
+| Massivecat and Massivecat-thinking | 55 (2) | 2.7 (first 6 turns) to 3.0–3.2 (21 turns), one paired world | 2.0 | 4–5 | 10.2–10.3 on both worlds |
 
-- **Massivecat** is one game on a dialogue-heavy campaign world with pictures on, an 8-step evaluation and a Secret Info plan every turn. Its instructions and IW's fixed input billed 2.0× Dolphin's, but it wrote about 2,000 characters of Secret Info a turn (past the world's caps) and a long evaluation, and billed narration at about 10 credits per 100 words, so its output ran 4–5× Dolphin's. The more a world asks the model to write besides the narration, the further Massivecat moves above 2.3×.
+- **Massivecat** is one game on a dialogue-heavy campaign world with pictures on, an 8-step evaluation and a Secret Info plan every turn. Its instructions and IW's fixed input billed 2.0× Dolphin's, but it wrote about 2,000 characters of Secret Info a turn (past the world's caps) and a long evaluation, and billed narration at about 10 credits per 100 words, so its output ran 4–5× Dolphin's. The more a world asks the model to write besides the narration, the further Massivecat moves above 2.3×. A second game, on a transformation party world without pictures or a long evaluation, gave the same narration rate (10.3), the same fixed input (2.0× Dolphin's) and long Secret Info again (about 1,900 characters a turn); with about 960 words of narration a turn, output was 44–50% of its bill. Massivecat-thinking's thinking there billed a median 37 credits a turn (mean 46, up to 120), above the bare-world 21.
 - **Puma** bills input at about 0.85× Dolphin, as K says, but writes tracker updates and picture fields at length (6–24 credits a turn of tracker output against Dolphin's 1–9 on the same worlds). In a lean world with few AI-written trackers and no pictures it stays at about 0.82×; with them it costs about the same as Dolphin.
 - **Pictures** added 4 credits a turn on every model measured (Lynx, Dolphin, Puma, Massivecat). The rest of a picture system's cost is its standing text and the picture fields the model writes, which scale with the model.
 - **Small worlds** agree with the table: tiny test worlds billed 26–31 a turn on Dolphin with short narration and 32–48 over turns 1–5 with 300–500 words.
-- Smilodon, Grimalkin and Massivecat rest on one world each, so treat their rows as rough.
+- Smilodon and Grimalkin rest on one world each, and Massivecat's × Dolphin on one paired world, so treat those rows as rough.
 
 For a world that makes the model write a lot besides the narration, estimate input and output separately: input at the input-rate ratio (Massivecat about 2.0×, Puma about 0.85× Dolphin), output at the output ratio.
 
