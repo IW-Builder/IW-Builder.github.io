@@ -7,10 +7,10 @@ The page helper that browser agents load into an open [Infinite Worlds](https://
 An agent with a JavaScript tool on the IW tab pastes one line. The line fetches that exact build from this folder, checks the file's SHA-256 and the build id, and only then runs it. It answers with the helper's summary, or `ok: false` and the reason (for example a page that refuses to fetch from this site), in which case load the helper the older way, by pasting the parts.
 
 <!-- current -->
-Current build: **1.28**, build `d64a22fe217a`. Paste this line into the IW page's JavaScript tool:
+Current build: **1.29**, build `6e4aa8399755`. Paste this line into the IW page's JavaScript tool:
 
 ```js
-(async(B,H)=>{const u='https://iw-builder.github.io/harness/builds/'+B+'.js';let t;try{const r=await fetch(u,{cache:'no-store'});if(!r.ok)return{ok:false,reason:'HTTP '+r.status+' from '+u+' (not published yet?): paste the parts instead'};t=await r.text()}catch(e){return{ok:false,reason:'This page could not fetch '+u+' (its CSP or the network): paste the parts instead',error:String(e)}}const h=[...new Uint8Array(await crypto.subtle.digest('SHA-256',new TextEncoder().encode(t)))].map(b=>b.toString(16).padStart(2,'0')).join('');if(h!==H)return{ok:false,reason:'The fetched file is not build '+B+': paste the parts instead',got:h.slice(0,12)};const s=await(0,eval)(t);return window.IWH&&IWH.build===B?s:{ok:false,reason:'Loaded, but IWH.build is '+(window.IWH&&IWH.build)}})('d64a22fe217a','e6daa1e379b4f964e33d2a0b9a5906090c6c7ecbde4e9289f3c3d9ea2e83a37f')
+(async(B,H)=>{const u='https://iw-builder.github.io/harness/builds/'+B+'.js';let t;try{const r=await fetch(u,{cache:'no-store'});if(!r.ok)return{ok:false,reason:'HTTP '+r.status+' from '+u+' (not published yet?): paste the parts instead'};t=await r.text()}catch(e){return{ok:false,reason:'This page could not fetch '+u+' (its CSP or the network): paste the parts instead',error:String(e)}}const h=[...new Uint8Array(await crypto.subtle.digest('SHA-256',new TextEncoder().encode(t)))].map(b=>b.toString(16).padStart(2,'0')).join('');if(h!==H)return{ok:false,reason:'The fetched file is not build '+B+': paste the parts instead',got:h.slice(0,12)};const s=await(0,eval)(t);return window.IWH&&IWH.build===B?s:{ok:false,reason:'Loaded, but IWH.build is '+(window.IWH&&IWH.build)}})('6e4aa8399755','a50a3e0aa3b8bbd6ee93b747e47c4aec2255c35e7520dae70855e6835853d9d0')
 ```
 <!-- /current -->
 
