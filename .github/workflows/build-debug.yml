@@ -8,6 +8,7 @@ on:
       - 'debug/IW-Debug-Exporter-bookmarklet.js'
       - 'debug/index.template.html'
       - 'debug/build.js'
+      - '.github/workflows/build-debug.yml'
   workflow_dispatch:
 
 permissions:
