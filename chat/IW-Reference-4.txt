@@ -360,16 +360,16 @@ These cost nothing per turn: hidden (script-only) trackers, triggers and PawScri
 | Model | Small world, per turn | With 10k more instructions | × Dolphin | K: credits per 1k chars of instructions | Narration, words per turn | Credits per 100 words of narration | Thinking, credits per turn |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | Lynx | 33 | 47 | 0.66 | 0.99 | 406 | 2.2 | – |
-| Caracal | 35 | 49 | 0.70 | 1.08 | 346 | 1.0 | 11 (8–14) |
+| Caracal | 35 | 49 | 0.57–0.70 | 1.08 | 346 | 1.0 (0.9) | 11 (8–14) |
 | Lynx-thinking | 40 | 58 | 0.80 | 0.93 | 420 | 2.3 | 10 (9–11) |
-| Puma | 41 | 58 | 0.82 | 1.42 | 303 | 3.0 | – |
+| Puma | 41 | 58 | 0.82–1.1 | 1.42 | 303 | 3.0 (3.4) | – |
 | Grimalkin | 48 | 72 | 1.0 | 1.75 | 325 | 3.4 | – |
-| **Dolphin** | **49** | **72** | **1.0** | **1.58** | **515** | **2.2** | – |
+| **Dolphin** | **49** | **72** | **1.0** | **1.58** | **515** | **2.2 (2.45)** | – |
 | Smilodon | 70 | 104 | 1.45 | 1.99 | 435 | 5.4 | – |
 | Smilodon-thinking | 74 | 105 | 1.5 | 1.81 | 347 | 5.5 | 14 (13–15) |
 | Wampus | 75 | 94 | 1.3–1.5 | 1.75 | 344 | 1.9 | 32 (19–39) |
 | Leopard | 98 | 104 | 1.5–2.0 | 1.22 | 334 | 4.8 | 42 (31–49) |
-| Massivecat | 114 | 167 | 2.3 | 2.77 | 540 | 8.2 | – |
+| Massivecat | 114 | 167 | 2.3–3.2 | 2.77 | 540 | 8.2 (10) | – |
 | Massivecat-thinking | 136 | 196 | 2.75 | 2.78 | 515 | 9.1 | 21 (14–35) |
 | Leopard-2 | 187 | 195 | 2.7–3.8 | 1.95 | 443 | 7.0 | 92 (65–107) |
 
@@ -377,10 +377,10 @@ Columns:
 
 - **Small world, per turn:** turn 2 of a tiny world (1.2k characters of instructions, no trackers, lore, NPCs or blocks). This is about the least a turn costs on that model after the opening.
 - **With 10k more instructions:** the same world on turns 3–4, after 10k characters of plain text were added to the main instructions.
-- **× Dolphin:** each model's cost relative to Dolphin. Where two numbers are given, the first is for the larger world: thinking costs about the same whatever the world's size, so those models' lead narrows as the world grows.
+- **× Dolphin:** each model's cost relative to Dolphin. For thinking models (Wampus, Leopard, Leopard-2), the first number is for the larger world: thinking costs about the same whatever the world's size, so those models' lead narrows as the world grows. For Puma, Caracal and Massivecat, the range runs from a lean world to one that makes the model write a lot besides the narration (long evaluation, Secret Info plans, AI-written trackers, picture fields): their output rate differs from Dolphin's much more than their input rate does. See [Checked across all recorded turns](#checked-across-all-recorded-turns).
 - **K:** the extra credits a turn for each 1,000 characters of standing text. Thinking variants bill instructions like their base model.
 - **Narration, words per turn:** how much each model writes when nothing in the world asks for a length. A world that sets a length changes this.
-- **Credits per 100 words of narration:** the output cost of the narration alone, on the turn it is written.
+- **Credits per 100 words of narration:** the output cost of the narration alone, on the turn it is written. In brackets: the median over real, styled worlds, which bill a little more per word than the bare sample world.
 - **Thinking:** the model's thinking output, mean and range per turn. It varies a lot from turn to turn and is most of the cost on Leopard-2 (about two-thirds) and Leopard. In the 15-turn Caracal game below (2026-11-07), no thinking was billed or shown on any turn.
 
 Turns took about 35–70 seconds on the timed models; Caracal about 24 (openings 6–10 minutes). For the model behind each name and the picker's typical range, see [Current-AI-Profiles.json](Current-AI-Profiles.json).
@@ -389,7 +389,7 @@ Turns took about 35–70 seconds on the timed models; Caracal about 24 (openings
 
 [RUNTIME] One small sample world per model, one game each, played on 2026-10-30 with the same four fixed inputs. The averages come from **three turns** per model (turns 2–4; the opening is left out), and K rests on two of those turns. So treat every figure as a rough guide, not a price list: a second game, another world or another day could move a model's numbers by tens of percent, and thinking costs could move more.
 
-Three independent checks agree with it. Dolphin's and Massivecat's K match separate measurements on other worlds (1.6 and 2.7). On a long adventure world measured over 14 turns per model, Puma cost 0.85×, Smilodon 1.5× and Massivecat 2.0× Dolphin, close to the ratios above. Full games on one mystery world (below) gave Puma 0.82× and Smilodon 1.39×; a shorter game gave Caracal 0.57×.
+Three independent checks agree with it. Dolphin's and Massivecat's K match separate measurements on other worlds (1.6 and 2.7). On a long adventure world measured over 14 turns per model, Puma cost 0.85×, Smilodon 1.5× and Massivecat 2.0× Dolphin, close to the ratios above. Worlds that make the model write more besides the narration move Puma and Massivecat higher (below). Full games on one mystery world (below) gave Puma 0.82× and Smilodon 1.39×; a shorter game gave Caracal 0.57×.
 
 ### Checked in full games
 
@@ -413,6 +413,27 @@ The words column is unguided output on a bare world. A world with a detailed aut
 - Each model played one game with its own draw, on slightly different versions of the world, so the instructions row is approximate.
 
 Caracal check (2026-11-07) [RUNTIME, one game each: 15 Caracal turns of a later version of the same world, 13 on Dolphin]: median 68 credits a turn against Dolphin's 116 (0.57×; table 0.70×); median 627 words (384–1,110; unguided 346; Dolphin 660) at 0.9 credits per 100 words (table 1.0). Instructions 0.66× Dolphin's (K predicts 0.68); inputs were 84% of its bill.
+
+### Checked across all recorded turns
+
+[RUNTIME, 2026-11-17] Every turn we have recorded with a full cost breakdown: 694 turns on 7 models over 17 worlds (Dolphin 393, Lynx 122, Caracal 71, Puma 54, Grimalkin 21, Massivecat 21, Smilodon 12). Ratios come from the same world played on two models over the same turns.
+
+| | Turns (worlds) | × Dolphin, same world | Input rate × Dolphin | Output × Dolphin | Credits per 100 words of narration |
+| --- | --- | --- | --- | --- | --- |
+| Dolphin | 393 (17) | 1.0 | 1.0 | 1.0 | 2.45 (bare worlds 2.0–2.3, styled 2.3–2.65) |
+| Lynx | 122 (8) | 0.59–0.81 | 0.6–0.65 | 0.7–0.9 | 2.3 |
+| Caracal | 71 (2) | 0.57 | 0.66–0.72 | – | 0.9 |
+| Puma | 54 (4) | 0.91–1.10 with trackers and pictures; 0.82 lean | 0.82–0.98 | 1.1–1.6 | 3.4 |
+| Grimalkin | 21 (1) | probably 1.2–1.5 (not paired with Dolphin) | about 1.2–1.3 | – | 3.3 |
+| Massivecat | 21 (1) | 2.7 (first 6 turns) to 3.0–3.2 (21 turns) | 2.0 | 4–5 | about 10 |
+
+- **Massivecat** is one game on a dialogue-heavy campaign world with pictures on, an 8-step evaluation and a Secret Info plan every turn. Its instructions and IW's fixed input billed 2.0× Dolphin's, but it wrote about 2,000 characters of Secret Info a turn (past the world's caps) and a long evaluation, and billed narration at about 10 credits per 100 words, so its output ran 4–5× Dolphin's. The more a world asks the model to write besides the narration, the further Massivecat moves above 2.3×.
+- **Puma** bills input at about 0.85× Dolphin, as K says, but writes tracker updates and picture fields at length (6–24 credits a turn of tracker output against Dolphin's 1–9 on the same worlds). In a lean world with few AI-written trackers and no pictures it stays at about 0.82×; with them it costs about the same as Dolphin.
+- **Pictures** added 4 credits a turn on every model measured (Lynx, Dolphin, Puma, Massivecat). The rest of a picture system's cost is its standing text and the picture fields the model writes, which scale with the model.
+- **Small worlds** agree with the table: tiny test worlds billed 26–31 a turn on Dolphin with short narration and 32–48 over turns 1–5 with 300–500 words.
+- Smilodon, Grimalkin and Massivecat rest on one world each, so treat their rows as rough.
+
+For a world that makes the model write a lot besides the narration, estimate input and output separately: input at the input-rate ratio (Massivecat about 2.0×, Puma about 0.85× Dolphin), output at the output ratio.
 
 ## Why the same world costs different players different amounts
 
