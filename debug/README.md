@@ -19,7 +19,9 @@ download and the game is back on the turn you were viewing.
 
 - `index.html`: the install page. Built by
   `npm i --no-save terser@5 && node debug/build.js` from `index.template.html`
-  and the source; don't edit it by hand. The build minifies the exporter, then
+  and the source; don't edit it by hand. The `Build debug exporter page`
+  workflow (`.github/workflows/build-debug.yml`) runs this on GitHub whenever
+  the source, template or build script is pushed, and commits the result. The build minifies the exporter, then
   deflates and base64-encodes it inside a small loader that unpacks it with
   `DecompressionStream` and runs it with `Function`. The bookmark is about 6,000
   characters, because Edge's favorites editor cuts bookmarks off at about
