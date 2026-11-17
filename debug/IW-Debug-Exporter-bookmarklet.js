@@ -3,7 +3,8 @@
  * For every turn of the game it collects what World debug tools shows: the
  * evaluation, thinking (if the model has any), triggers fired, active
  * instruction blocks, matched lore, PawScript results and errors, and the
- * long term memory the storyteller used on that turn.
+ * long term memory the storyteller used on that turn, and the image
+ * instructions (the wrench under the image) on turns that made an image.
  * Downloads a readable .txt and a full .json. Read-only: it takes no game
  * actions, and puts the game back on the turn you were viewing.
  */
@@ -117,7 +118,16 @@
     return {prologue: false, turn: r[3], max: r[4], action: r[0], narration: r[1], title: r[11], character: r[12], secret_info: r[13],
       game_uuid: r[8] && typeof r[8] === 'object' ? r[8].gameUuid : null,
       tracked_items: (r[14] || []).map(t => ({name: t.name, value: t.value, visibility: t.visibility})),
-      evaluation: typeof r[24] === 'string' ? r[24] : '', thinking: typeof r[25] === 'string' ? r[25] : '', debug};
+      evaluation: typeof r[24] === 'string' ? r[24] : '', thinking: typeof r[25] === 'string' ? r[25] : '', debug,
+      image: image(r.find(x => x && typeof x === 'object' && !Array.isArray(x) && 'imagePromptInfo' in x && 'ageOfImageInTurnsBeforeRequestedTurn' in x))};
+  }
+  // Image instructions: what the wrench under the image shows. The turn's view
+  // carries the image in effect; age 0 means it was generated on this turn.
+  function image(i) {
+    if (!i || i.ageOfImageInTurnsBeforeRequestedTurn !== 0 || !(i.imageIDs || []).length) return null;
+    const p = i.imagePromptInfo || {};
+    return {caption: p.illustrationSubject ?? i.imageSubject ?? '', appearance: p.illustrationAppearance ?? '', clothing: p.illustrationClothing ?? '',
+      expression: p.illustrationExpression ?? '', setting: p.illustrationSetting ?? ''};
   }
   function record(v) {
     const d = v.debug || {};
@@ -132,6 +142,7 @@
       pawscript: evals,
       pawscript_errors: evals.filter(s => s.error || /error|fail/i.test(s.status || '')),
       world_debug_log: d.world_debug_log || [],
+      image_instructions: v.image || null,
       // Narration, Secret Info and tracker values are left to IW's own Export story.
       // Per-turn raw fields only; world-wide definitions go once at the top of the JSON.
       raw_debug: {fired_triggers: d.fired_triggers, completed_triggers: d.completed_triggers, script_evaluations: d.script_evaluations, world_debug_log: d.world_debug_log, matched_lorebook_entries: d.matched_lorebook_entries}
@@ -221,6 +232,14 @@
       for (const s of t.pawscript) L.push('- ' + s.trigger + ' [' + s.kind + (s.effect ? ': ' + s.effect : '') + '] ' + s.status + (s.error ? '  ERROR: ' + (typeof s.error === 'string' ? s.error : JSON.stringify(s.error)) : ''));
       L.push('PawScript errors: ' + t.pawscript_errors.length, '');
       if (t.world_debug_log.length) L.push('World debug log', '---------------', t.world_debug_log.map(x => '- ' + (typeof x === 'string' ? x : JSON.stringify(x))).join('\n'), '');
+      const im = t.image_instructions;
+      if (im) {
+        L.push('Image instructions', '------------------', 'Caption: ' + im.caption);
+        for (const [k, label] of [['appearance', 'Character data > Appearance'], ['clothing', 'Character data > Clothing'],
+          ['expression', 'Situation data > Expression/position'], ['setting', 'Situation data > Setting']])
+          L.push(label + ':', String(im[k] || '(empty)').split('\n').map(s => '    ' + s).join('\n'));
+        L.push('');
+      }
       const m = t.long_term_memory;
       L.push('Long term memory', '----------------');
       if (!m || !m.available) L.push('(' + ((m && m.note) || 'not available') + ')');

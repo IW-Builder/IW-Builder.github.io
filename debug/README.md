@@ -4,8 +4,9 @@ The debug counterpart of IW's Export story. For every turn of the open game it
 saves what World debug tools shows: the evaluation, thinking (on models that
 think), triggers fired, active instruction blocks (rendered), matched lore,
 every PawScript condition and effect with its status and error, and the long
-term memory the storyteller used on that turn. Downloads a readable `.txt` and
-a `.json`.
+term memory the storyteller used on that turn, plus the image instructions
+(the wrench under the image) on turns that generated an image. Downloads a
+readable `.txt` and a `.json`.
 
 **Install:** open [the install page](https://iw-builder.github.io/debug/) and
 drag the button to your bookmarks bar, or use the console method it offers.
@@ -42,8 +43,18 @@ A turn's reply is a list of fields; the exporter finds the debug object by its
 keys (`fired_triggers`, `script_evaluations`) and checks that the turn numbers
 are where it expects, so a format change in IW stops it with a message instead
 of producing bad data. Fields used: 0 action, 3 turn, 4 last turn, 11 title,
-12 character, 24 evaluation, 25 thinking, and the debug object (26 as of
+12 character, 5 image, 24 evaluation, 25 thinking, and the debug object (26 as of
 2026-11-01).
+
+**Image instructions.** Field 5 (found by its keys `imagePromptInfo` and
+`ageOfImageInTurnsBeforeRequestedTurn`) is the image in effect on that turn;
+age 0 means the turn generated it, otherwise it is carried over and skipped.
+From `imagePromptInfo` the export keeps the five fields the wrench panel
+shows: `illustrationSubject` (the caption), `illustrationAppearance`,
+`illustrationClothing` (Character data), `illustrationExpression` and
+`illustrationSetting` (Situation data). In the JSON they are
+`image_instructions` (`caption`, `appearance`, `clothing`, `expression`,
+`setting`), or null on turns without a new image.
 
 **Long term memory.** World debug tools > Long term memory doesn't come with
 the turn's view: the panel asks for it with `get_turn_long_term_memory`
