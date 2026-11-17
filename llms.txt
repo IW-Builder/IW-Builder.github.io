@@ -21,7 +21,7 @@ Read only what the task needs; Authoring-Prompt.md says which guide covers which
 - [reference/Characters.md](https://iw-builder.github.io/reference/Characters.md) (11 KB): Skills, Evaluation, player characters, NPC card fields and activation, keyword-block matching and retention.
 - [reference/Images-and-Models.md](https://iw-builder.github.io/reference/Images-and-Models.md) (4 KB): Image style fields and controls, portraits and cover, video prompt instructions, model-specific instruction blocks.
 - [reference/Runtime.md](https://iw-builder.github.io/reference/Runtime.md) (10 KB): Turn lifecycle, template interpolation timing, specialist requests and runtime output names, endings, debug boundaries.
-- [reference/Cost.md](https://iw-builder.github.io/reference/Cost.md) (13 KB): Estimating credits: per-model cost table (words, credits per 1k chars, thinking), what is billed, how play style changes cost, and rough estimates by world size.
+- [reference/Cost.md](https://iw-builder.github.io/reference/Cost.md) (17 KB): Estimating credits: per-model cost table (words, credits per 1k chars, thinking), what is billed, how play style changes cost, and rough estimates by world size.
 - [reference/Craft.md](https://iw-builder.github.io/reference/Craft.md) (17 KB): Narrative design: what goes in each field, openings, character cards, romance and adult worlds, prose style, names, example worlds by genre.
 - [reference/Current-AI-Profiles.json](https://iw-builder.github.io/reference/Current-AI-Profiles.json) (8 KB): Storyteller models, current and retired: block IDs, underlying real-world model, isCurrent flag and typical credits per turn.
 - [reference/Default-Evaluation.txt](https://iw-builder.github.io/reference/Default-Evaluation.txt) (3 KB): IW's built-in Evaluation instructions, verbatim; the baseline for a custom Evaluation.
@@ -158,11 +158,11 @@ Downloads your credit history with every turn's cost breakdown (IW's own downloa
 Single-file bundles for chats without web access or with tool limits: the whole reference in one file, or in numbered parts under 90 KB each for size-limited tools, plus examples, library and tools to attach only when asked for. Web-browsing models should prefer the individual files above.
 
 - [chat/index.html](https://iw-builder.github.io/chat/) (81 KB): HTML page containing IW-Reference-1.txt (start here), with links to the other editions.
-- [chat/IW-Complete-Reference.txt](https://iw-builder.github.io/chat/IW-Complete-Reference.txt) (347 KB): Combined text, all reference in one attachment (about 80k tokens): the prompt, template, every reference guide, Payloads and the example index. Too large for most URL fetchers; attach it.
+- [chat/IW-Complete-Reference.txt](https://iw-builder.github.io/chat/IW-Complete-Reference.txt) (350 KB): Combined text, all reference in one attachment (about 80k tokens): the prompt, template, every reference guide, Payloads and the example index. Too large for most URL fetchers; attach it.
 - [chat/IW-Reference-1.txt](https://iw-builder.github.io/chat/IW-Reference-1.txt) (77 KB): Combined text, start here: reference part 1 of 6: Authoring-Prompt, World-Template, Craft, Trackers, Triggers, Trigger-Catalog, Portable-Banks.
 - [chat/IW-Reference-2.txt](https://iw-builder.github.io/chat/IW-Reference-2.txt) (73 KB): Combined text, reference part 2 of 6: Integration, Schema, PawScript, Runtime, Characters.
 - [chat/IW-Reference-3.txt](https://iw-builder.github.io/chat/IW-Reference-3.txt) (68 KB): Combined text, reference part 3 of 6: Recipes.
-- [chat/IW-Reference-4.txt](https://iw-builder.github.io/chat/IW-Reference-4.txt) (57 KB): Combined text, reference part 4 of 6: Notable-Findings, Editor-UI, Cost.
+- [chat/IW-Reference-4.txt](https://iw-builder.github.io/chat/IW-Reference-4.txt) (60 KB): Combined text, reference part 4 of 6: Notable-Findings, Editor-UI, Cost.
 - [chat/IW-Reference-5.txt](https://iw-builder.github.io/chat/IW-Reference-5.txt) (78 KB): Combined text, reference part 5 of 6: Verified-Behavior, Payloads, examples index, Current-AI-Profiles.
 - [chat/IW-Reference-6.txt](https://iw-builder.github.io/chat/IW-Reference-6.txt) (10 KB): Combined text, reference part 6 of 6: Images-and-Models, Default-Evaluation.
 - [chat/IW-Authoring-Guide.txt](https://iw-builder.github.io/chat/IW-Authoring-Guide.txt) (1 KB): Old name, replaced 2026-11-15: points to the numbered reference parts.
