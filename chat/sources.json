@@ -24,7 +24,7 @@
       "reference/Images-and-Models.md",
       "reference/Default-Evaluation.txt"
     ],
-    "sha256": "c5f41bfcf9a0895e7a1c322f072e28ec1d7d2320bafeba92248094d08500b082"
+    "sha256": "e82dc5dbdd154c942c41626cd5acdb0aa599774624fe56adfaac253978772dc5"
   },
   "IW-Reference-1.txt": {
     "sourceFiles": [
@@ -46,13 +46,13 @@
       "reference/Runtime.md",
       "reference/Characters.md"
     ],
-    "sha256": "6e80f75a13db6d6abcc71a0a223f37387a0999a1e26d24d513de365578e03e6c"
+    "sha256": "fc073e1ad06f4298bb5e599826dfa482b56e6b7510eb26ed7beb83ff31a4e8eb"
   },
   "IW-Reference-3.txt": {
     "sourceFiles": [
       "reference/Recipes.md"
     ],
-    "sha256": "d45e45b1858908dd41e02a2e8aeb7b10f9934c951c0ab83b468fec0fb3dc5acd"
+    "sha256": "6c63483ebf86422e7ae208c591f1b2a1ba11add9d8e42727db4898f86f423e58"
   },
   "IW-Reference-4.txt": {
     "sourceFiles": [
