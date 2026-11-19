@@ -1,1022 +1,715 @@
 {
-  "favorite": false,
-  "title": "Stats Starter",
-  "description": "A tiny sample world that carries IW-Builder's base world-stats markers: hidden one-shot \"Stats:\" triggers that IW's World Stats page counts. Copy the triggers and the Stats Markers tracker into your own world, then read your export at iw-builder.github.io/stats/. The story itself is only a placeholder.",
-  "background": "A small harbour town on a quiet coast. Fishing boats, a market square, a lighthouse on the point.",
-  "instructions": "Write a gentle slice-of-life story in the harbour town, following the player's lead. Keep each entry short. Begin each new morning with the day number.",
-  "authorStyle": "",
-  "recommendedAIModel": null,
-  "firstInput": "I step off the morning ferry and look around the harbour.",
-  "objective": "",
-  "imageModel": "manticore",
-  "imageStyle": "photo_1",
-  "illustrationStyleNonCharacterLowPriority": "",
-  "illustrationStyleNonCharacterHighPriority": "",
-  "illustrationStyleCharacterLowPriority": "",
-  "illustrationStyleCharacterHighPriority": "",
-  "imageStyleCharacterPre": "",
-  "imageStyleCharacterPost": "",
-  "imageStyleNonCharacterPre": "",
-  "imageStyleNonCharacterPost": "",
-  "mature": false,
-  "nsfw": false,
-  "contentWarnings": "",
-  "enableAISpecificInstructionBlocks": false,
-  "previewImage": "",
-  "fullSizePreviewImage": "",
-  "previewImageOptions": [],
-  "fullSizePreviewImageOptions": [],
-  "currentPreviewImageIndex": -1,
-  "imagePromptDetails": {
-    "illustrClothes": "",
-    "illustrSetting": "",
-    "illustrSubject": "",
-    "illustrAppearance": "",
-    "illustrIsCharacter": false,
-    "illustrExpressionPosition": ""
-  },
-  "permissionsOnceShared": {
-    "sharing": true,
-    "editing": true
-  },
-  "allowChangeCharacterName": false,
-  "allowChangeCharacterDescription": false,
-  "allowChangeCharacterSkills": false,
-  "allowChangeCharacterItemValues": false,
-  "allowChangeCharacterPortrait": false,
-  "allowChangeCharacterNewPortrait": false,
-  "conditions": [],
-  "schemaVersion": 2.4,
-  "skills": [
-    "Generic skill"
-  ],
-  "possibleCharacters": [
-    {
-      "name": "Traveller",
-      "description": "A visitor arriving in town for the first time.",
-      "portrait": "",
-      "portraitPromptDetails": {
-        "illustrAppearance": "",
+    "favorite": false,
+    "title": "Stats Starter",
+    "description": "IW-Builder's base world-stats markers: hidden one-shot \"Stats:\" triggers that IW's World Stats page counts. Copy the triggers and the Stats Markers tracker into your own world, then read your export at https://iw-builder.github.io/stats/. \n\nAny triggers called \"Stats:\" in your exports are automatically tallied; \"Stats: Model [name]\", \"Stats: Reached [day]\", \"Stats: Turn [x]\" are specifically categorized, as well as \"Stats: [Category] = [Name]\".",
+    "background": "",
+    "instructions": "",
+    "authorStyle": "",
+    "recommendedAIModel": null,
+    "firstInput": "",
+    "objective": "",
+    "imageModel": "manticore",
+    "imageStyle": "photo_1",
+    "illustrationStyleNonCharacterLowPriority": "",
+    "illustrationStyleNonCharacterHighPriority": "",
+    "illustrationStyleCharacterLowPriority": "",
+    "illustrationStyleCharacterHighPriority": "",
+    "imageStyleCharacterPre": "A beautiful medium shot photographic portrait of",
+    "imageStyleCharacterPost": "The focus is razor-sharp on the texture of the face, showing every pore. IWBeautiful IWUpscaleFace",
+    "imageStyleNonCharacterPre": "A beautiful photograph of",
+    "imageStyleNonCharacterPost": "",
+    "mature": false,
+    "nsfw": false,
+    "contentWarnings": "",
+    "enableAISpecificInstructionBlocks": false,
+    "previewImage": "",
+    "fullSizePreviewImage": "",
+    "previewImageOptions": [],
+    "fullSizePreviewImageOptions": [],
+    "currentPreviewImageIndex": -1,
+    "imagePromptDetails": {
         "illustrClothes": "",
-        "illustrExpressionPosition": "",
-        "illustrSetting": ""
-      },
-      "fullSizePortrait": "",
-      "portraitOptions": [],
-      "fullSizePortraitOptions": [],
-      "currentPortraitIndex": -1,
-      "characterId": "c7038c97-b50f-57be-9e33-9ce2914d80ef",
-      "skills": {
-        "Generic skill": 3
-      },
-      "initialTrackedItemValues": []
-    }
-  ],
-  "triggerEvents": [
-    {
-      "id": "QU1c5f145",
-      "name": "Stats: Started",
-      "triggerConditions": [
-        {
-          "type": "triggerOnPawScript",
-          "data": "$stats_markers >= 0",
-          "id": "QU1c5f145c0",
-          "category": "condition"
-        }
-      ],
-      "triggerEffects": [
-        {
-          "type": "effectRunScript",
-          "data": "$stats_markers = $stats_markers + 1",
-          "id": "QU1c5f145e0"
-        }
-      ],
-      "triggerOnStartOfGame": true,
-      "triggerMidGame": true,
-      "canTriggerMoreThanOnce": false,
-      "advancedLogic": false
+        "illustrSetting": "",
+        "illustrSubject": "",
+        "illustrAppearance": "",
+        "illustrIsCharacter": false,
+        "illustrExpressionPosition": ""
     },
-    {
-      "id": "QUb71cf50",
-      "name": "Stats: Pace = Slow",
-      "triggerConditions": [
-        {
-          "type": "triggerOnPawScript",
-          "data": "$pace = \"Slow - a week per chapter\"",
-          "id": "QUb71cf50c0",
-          "category": "condition"
-        }
-      ],
-      "triggerEffects": [
-        {
-          "type": "effectRunScript",
-          "data": "$stats_markers = $stats_markers + 1",
-          "id": "QUb71cf50e0"
-        }
-      ],
-      "triggerOnStartOfGame": true,
-      "triggerMidGame": true,
-      "canTriggerMoreThanOnce": false,
-      "advancedLogic": false
+    "permissionsOnceShared": {
+        "sharing": true,
+        "editing": true
     },
-    {
-      "id": "QUf025a40",
-      "name": "Stats: Pace = Steady",
-      "triggerConditions": [
-        {
-          "type": "triggerOnPawScript",
-          "data": "$pace = \"Steady - a day per chapter\"",
-          "id": "QUf025a40c0",
-          "category": "condition"
-        }
-      ],
-      "triggerEffects": [
-        {
-          "type": "effectRunScript",
-          "data": "$stats_markers = $stats_markers + 1",
-          "id": "QUf025a40e0"
-        }
-      ],
-      "triggerOnStartOfGame": true,
-      "triggerMidGame": true,
-      "canTriggerMoreThanOnce": false,
-      "advancedLogic": false
-    },
-    {
-      "id": "QU67f8763",
-      "name": "Stats: Pace = Fast",
-      "triggerConditions": [
-        {
-          "type": "triggerOnPawScript",
-          "data": "$pace = \"Fast - an hour per chapter\"",
-          "id": "QU67f8763c0",
-          "category": "condition"
-        }
-      ],
-      "triggerEffects": [
-        {
-          "type": "effectRunScript",
-          "data": "$stats_markers = $stats_markers + 1",
-          "id": "QU67f8763e0"
-        }
-      ],
-      "triggerOnStartOfGame": true,
-      "triggerMidGame": true,
-      "canTriggerMoreThanOnce": false,
-      "advancedLogic": false
-    },
-    {
-      "id": "QU4a02e8d",
-      "name": "Stats: Pictures = High",
-      "triggerConditions": [
-        {
-          "type": "triggerOnPawScript",
-          "data": "$imagetype = \"High\"",
-          "id": "QU4a02e8dc0",
-          "category": "condition"
-        }
-      ],
-      "triggerEffects": [
-        {
-          "type": "effectRunScript",
-          "data": "$stats_markers = $stats_markers + 1",
-          "id": "QU4a02e8de0"
-        }
-      ],
-      "triggerOnStartOfGame": true,
-      "triggerMidGame": true,
-      "canTriggerMoreThanOnce": true,
-      "advancedLogic": false
-    },
-    {
-      "id": "QUbffd63f",
-      "name": "Stats: Pictures = Basic",
-      "triggerConditions": [
-        {
-          "type": "triggerOnPawScript",
-          "data": "$imagetype = \"Basic\"",
-          "id": "QUbffd63fc0",
-          "category": "condition"
-        }
-      ],
-      "triggerEffects": [
-        {
-          "type": "effectRunScript",
-          "data": "$stats_markers = $stats_markers + 1",
-          "id": "QUbffd63fe0"
-        }
-      ],
-      "triggerOnStartOfGame": true,
-      "triggerMidGame": true,
-      "canTriggerMoreThanOnce": true,
-      "advancedLogic": false
-    },
-    {
-      "id": "QU59c7fcb",
-      "name": "Stats: Pictures = Off",
-      "triggerConditions": [
-        {
-          "type": "triggerOnPawScript",
-          "data": "$imagetype = \"Off\"",
-          "id": "QU59c7fcbc0",
-          "category": "condition"
-        }
-      ],
-      "triggerEffects": [
-        {
-          "type": "effectRunScript",
-          "data": "$stats_markers = $stats_markers + 1",
-          "id": "QU59c7fcbe0"
-        }
-      ],
-      "triggerOnStartOfGame": true,
-      "triggerMidGame": true,
-      "canTriggerMoreThanOnce": true,
-      "advancedLogic": false
-    },
-    {
-      "id": "QU284bdd3",
-      "name": "Stats: Reached Day 1",
-      "triggerConditions": [
-        {
-          "type": "triggerOnPawScript",
-          "data": "$story_day >= 1",
-          "id": "QU284bdd3c0",
-          "category": "condition"
-        }
-      ],
-      "triggerEffects": [
-        {
-          "type": "effectRunScript",
-          "data": "$stats_markers = $stats_markers + 1",
-          "id": "QU284bdd3e0"
-        }
-      ],
-      "triggerOnStartOfGame": false,
-      "triggerMidGame": true,
-      "canTriggerMoreThanOnce": false,
-      "advancedLogic": false
-    },
-    {
-      "id": "QU161997f",
-      "name": "Stats: Reached Day 2",
-      "triggerConditions": [
-        {
-          "type": "triggerOnPawScript",
-          "data": "$story_day >= 2",
-          "id": "QU161997fc0",
-          "category": "condition"
-        }
-      ],
-      "triggerEffects": [
-        {
-          "type": "effectRunScript",
-          "data": "$stats_markers = $stats_markers + 1",
-          "id": "QU161997fe0"
-        }
-      ],
-      "triggerOnStartOfGame": false,
-      "triggerMidGame": true,
-      "canTriggerMoreThanOnce": false,
-      "advancedLogic": false
-    },
-    {
-      "id": "QU4389e9f",
-      "name": "Stats: Reached Day 3",
-      "triggerConditions": [
-        {
-          "type": "triggerOnPawScript",
-          "data": "$story_day >= 3",
-          "id": "QU4389e9fc0",
-          "category": "condition"
-        }
-      ],
-      "triggerEffects": [
-        {
-          "type": "effectRunScript",
-          "data": "$stats_markers = $stats_markers + 1",
-          "id": "QU4389e9fe0"
-        }
-      ],
-      "triggerOnStartOfGame": false,
-      "triggerMidGame": true,
-      "canTriggerMoreThanOnce": false,
-      "advancedLogic": false
-    },
-    {
-      "id": "QUcf9a531",
-      "name": "Stats: Reached Day 5",
-      "triggerConditions": [
-        {
-          "type": "triggerOnPawScript",
-          "data": "$story_day >= 5",
-          "id": "QUcf9a531c0",
-          "category": "condition"
-        }
-      ],
-      "triggerEffects": [
-        {
-          "type": "effectRunScript",
-          "data": "$stats_markers = $stats_markers + 1",
-          "id": "QUcf9a531e0"
-        }
-      ],
-      "triggerOnStartOfGame": false,
-      "triggerMidGame": true,
-      "canTriggerMoreThanOnce": false,
-      "advancedLogic": false
-    },
-    {
-      "id": "QUbbfef28",
-      "name": "Stats: Reached Day 7",
-      "triggerConditions": [
-        {
-          "type": "triggerOnPawScript",
-          "data": "$story_day >= 7",
-          "id": "QUbbfef28c0",
-          "category": "condition"
-        }
-      ],
-      "triggerEffects": [
-        {
-          "type": "effectRunScript",
-          "data": "$stats_markers = $stats_markers + 1",
-          "id": "QUbbfef28e0"
-        }
-      ],
-      "triggerOnStartOfGame": false,
-      "triggerMidGame": true,
-      "canTriggerMoreThanOnce": false,
-      "advancedLogic": false
-    },
-    {
-      "id": "QU7faaf8a",
-      "name": "Stats: Reached Day 10",
-      "triggerConditions": [
-        {
-          "type": "triggerOnPawScript",
-          "data": "$story_day >= 10",
-          "id": "QU7faaf8ac0",
-          "category": "condition"
-        }
-      ],
-      "triggerEffects": [
-        {
-          "type": "effectRunScript",
-          "data": "$stats_markers = $stats_markers + 1",
-          "id": "QU7faaf8ae0"
-        }
-      ],
-      "triggerOnStartOfGame": false,
-      "triggerMidGame": true,
-      "canTriggerMoreThanOnce": false,
-      "advancedLogic": false
-    },
-    {
-      "id": "QU76fd157",
-      "name": "Stats: Reached Day 15",
-      "triggerConditions": [
-        {
-          "type": "triggerOnPawScript",
-          "data": "$story_day >= 15",
-          "id": "QU76fd157c0",
-          "category": "condition"
-        }
-      ],
-      "triggerEffects": [
-        {
-          "type": "effectRunScript",
-          "data": "$stats_markers = $stats_markers + 1",
-          "id": "QU76fd157e0"
-        }
-      ],
-      "triggerOnStartOfGame": false,
-      "triggerMidGame": true,
-      "canTriggerMoreThanOnce": false,
-      "advancedLogic": false
-    },
-    {
-      "id": "QUa234add",
-      "name": "Stats: Reached Day 30",
-      "triggerConditions": [
-        {
-          "type": "triggerOnPawScript",
-          "data": "$story_day >= 30",
-          "id": "QUa234addc0",
-          "category": "condition"
-        }
-      ],
-      "triggerEffects": [
-        {
-          "type": "effectRunScript",
-          "data": "$stats_markers = $stats_markers + 1",
-          "id": "QUa234adde0"
-        }
-      ],
-      "triggerOnStartOfGame": false,
-      "triggerMidGame": true,
-      "canTriggerMoreThanOnce": false,
-      "advancedLogic": false
-    },
-    {
-      "id": "QUd356af5",
-      "name": "Stats: Reached Day 60",
-      "triggerConditions": [
-        {
-          "type": "triggerOnPawScript",
-          "data": "$story_day >= 60",
-          "id": "QUd356af5c0",
-          "category": "condition"
-        }
-      ],
-      "triggerEffects": [
-        {
-          "type": "effectRunScript",
-          "data": "$stats_markers = $stats_markers + 1",
-          "id": "QUd356af5e0"
-        }
-      ],
-      "triggerOnStartOfGame": false,
-      "triggerMidGame": true,
-      "canTriggerMoreThanOnce": false,
-      "advancedLogic": false
-    },
-    {
-      "id": "QU31777fc",
-      "name": "Stats: Reached Day 100",
-      "triggerConditions": [
-        {
-          "type": "triggerOnPawScript",
-          "data": "$story_day >= 100",
-          "id": "QU31777fcc0",
-          "category": "condition"
-        }
-      ],
-      "triggerEffects": [
-        {
-          "type": "effectRunScript",
-          "data": "$stats_markers = $stats_markers + 1",
-          "id": "QU31777fce0"
-        }
-      ],
-      "triggerOnStartOfGame": false,
-      "triggerMidGame": true,
-      "canTriggerMoreThanOnce": false,
-      "advancedLogic": false
-    },
-    {
-      "id": "QU1c41256",
-      "name": "Stats: Reached Day 200",
-      "triggerConditions": [
-        {
-          "type": "triggerOnPawScript",
-          "data": "$story_day >= 200",
-          "id": "QU1c41256c0",
-          "category": "condition"
-        }
-      ],
-      "triggerEffects": [
-        {
-          "type": "effectRunScript",
-          "data": "$stats_markers = $stats_markers + 1",
-          "id": "QU1c41256e0"
-        }
-      ],
-      "triggerOnStartOfGame": false,
-      "triggerMidGame": true,
-      "canTriggerMoreThanOnce": false,
-      "advancedLogic": false
-    },
-    {
-      "id": "QUd493bd5",
-      "name": "Stats: Reached Day 300",
-      "triggerConditions": [
-        {
-          "type": "triggerOnPawScript",
-          "data": "$story_day >= 300",
-          "id": "QUd493bd5c0",
-          "category": "condition"
-        }
-      ],
-      "triggerEffects": [
-        {
-          "type": "effectRunScript",
-          "data": "$stats_markers = $stats_markers + 1",
-          "id": "QUd493bd5e0"
-        }
-      ],
-      "triggerOnStartOfGame": false,
-      "triggerMidGame": true,
-      "canTriggerMoreThanOnce": false,
-      "advancedLogic": false
-    },
-    {
-      "id": "QU102e963",
-      "name": "Stats: Model Dolphin",
-      "triggerConditions": [
-        {
-          "type": "triggerOnPawScript",
-          "data": "$game.ai_model = \"Dolphin\"",
-          "id": "QU102e963c0",
-          "category": "condition"
-        }
-      ],
-      "triggerEffects": [
-        {
-          "type": "effectRunScript",
-          "data": "$stats_markers = $stats_markers + 1",
-          "id": "QU102e963e0"
-        }
-      ],
-      "triggerOnStartOfGame": false,
-      "triggerMidGame": true,
-      "canTriggerMoreThanOnce": true,
-      "advancedLogic": false
-    },
-    {
-      "id": "QU73e4faa",
-      "name": "Stats: Model Puma",
-      "triggerConditions": [
-        {
-          "type": "triggerOnPawScript",
-          "data": "$game.ai_model = \"Puma\"",
-          "id": "QU73e4faac0",
-          "category": "condition"
-        }
-      ],
-      "triggerEffects": [
-        {
-          "type": "effectRunScript",
-          "data": "$stats_markers = $stats_markers + 1",
-          "id": "QU73e4faae0"
-        }
-      ],
-      "triggerOnStartOfGame": false,
-      "triggerMidGame": true,
-      "canTriggerMoreThanOnce": true,
-      "advancedLogic": false
-    },
-    {
-      "id": "QUfce3af0",
-      "name": "Stats: Model Lynx",
-      "triggerConditions": [
-        {
-          "type": "triggerOnPawScript",
-          "data": "$game.ai_model = \"Lynx\"",
-          "id": "QUfce3af0c0",
-          "category": "condition"
-        }
-      ],
-      "triggerEffects": [
-        {
-          "type": "effectRunScript",
-          "data": "$stats_markers = $stats_markers + 1",
-          "id": "QUfce3af0e0"
-        }
-      ],
-      "triggerOnStartOfGame": false,
-      "triggerMidGame": true,
-      "canTriggerMoreThanOnce": true,
-      "advancedLogic": false
-    },
-    {
-      "id": "QUf41731a",
-      "name": "Stats: Model Lynx-Thinking",
-      "triggerConditions": [
-        {
-          "type": "triggerOnPawScript",
-          "data": "$game.ai_model = \"Lynx-Thinking\"",
-          "id": "QUf41731ac0",
-          "category": "condition"
-        }
-      ],
-      "triggerEffects": [
-        {
-          "type": "effectRunScript",
-          "data": "$stats_markers = $stats_markers + 1",
-          "id": "QUf41731ae0"
-        }
-      ],
-      "triggerOnStartOfGame": false,
-      "triggerMidGame": true,
-      "canTriggerMoreThanOnce": true,
-      "advancedLogic": false
-    },
-    {
-      "id": "QUe4aba59",
-      "name": "Stats: Model Caracal",
-      "triggerConditions": [
-        {
-          "type": "triggerOnPawScript",
-          "data": "$game.ai_model = \"Caracal\"",
-          "id": "QUe4aba59c0",
-          "category": "condition"
-        }
-      ],
-      "triggerEffects": [
-        {
-          "type": "effectRunScript",
-          "data": "$stats_markers = $stats_markers + 1",
-          "id": "QUe4aba59e0"
-        }
-      ],
-      "triggerOnStartOfGame": false,
-      "triggerMidGame": true,
-      "canTriggerMoreThanOnce": true,
-      "advancedLogic": false
-    },
-    {
-      "id": "QU627fd8c",
-      "name": "Stats: Model Grimalkin",
-      "triggerConditions": [
-        {
-          "type": "triggerOnPawScript",
-          "data": "$game.ai_model = \"Grimalkin\"",
-          "id": "QU627fd8cc0",
-          "category": "condition"
-        }
-      ],
-      "triggerEffects": [
-        {
-          "type": "effectRunScript",
-          "data": "$stats_markers = $stats_markers + 1",
-          "id": "QU627fd8ce0"
-        }
-      ],
-      "triggerOnStartOfGame": false,
-      "triggerMidGame": true,
-      "canTriggerMoreThanOnce": true,
-      "advancedLogic": false
-    },
-    {
-      "id": "QU087d53c",
-      "name": "Stats: Model Smilodon",
-      "triggerConditions": [
-        {
-          "type": "triggerOnPawScript",
-          "data": "$game.ai_model = \"Smilodon\"",
-          "id": "QU087d53cc0",
-          "category": "condition"
-        }
-      ],
-      "triggerEffects": [
-        {
-          "type": "effectRunScript",
-          "data": "$stats_markers = $stats_markers + 1",
-          "id": "QU087d53ce0"
-        }
-      ],
-      "triggerOnStartOfGame": false,
-      "triggerMidGame": true,
-      "canTriggerMoreThanOnce": true,
-      "advancedLogic": false
-    },
-    {
-      "id": "QU1aba222",
-      "name": "Stats: Model Smilodon-Thinking",
-      "triggerConditions": [
-        {
-          "type": "triggerOnPawScript",
-          "data": "$game.ai_model = \"Smilodon-Thinking\"",
-          "id": "QU1aba222c0",
-          "category": "condition"
-        }
-      ],
-      "triggerEffects": [
-        {
-          "type": "effectRunScript",
-          "data": "$stats_markers = $stats_markers + 1",
-          "id": "QU1aba222e0"
-        }
-      ],
-      "triggerOnStartOfGame": false,
-      "triggerMidGame": true,
-      "canTriggerMoreThanOnce": true,
-      "advancedLogic": false
-    },
-    {
-      "id": "QU5e72dda",
-      "name": "Stats: Model Massivecat",
-      "triggerConditions": [
-        {
-          "type": "triggerOnPawScript",
-          "data": "$game.ai_model = \"Massivecat\"",
-          "id": "QU5e72ddac0",
-          "category": "condition"
-        }
-      ],
-      "triggerEffects": [
-        {
-          "type": "effectRunScript",
-          "data": "$stats_markers = $stats_markers + 1",
-          "id": "QU5e72ddae0"
-        }
-      ],
-      "triggerOnStartOfGame": false,
-      "triggerMidGame": true,
-      "canTriggerMoreThanOnce": true,
-      "advancedLogic": false
-    },
-    {
-      "id": "QU85ac6c2",
-      "name": "Stats: Model Massivecat-Thinking",
-      "triggerConditions": [
-        {
-          "type": "triggerOnPawScript",
-          "data": "$game.ai_model = \"Massivecat-Thinking\"",
-          "id": "QU85ac6c2c0",
-          "category": "condition"
-        }
-      ],
-      "triggerEffects": [
-        {
-          "type": "effectRunScript",
-          "data": "$stats_markers = $stats_markers + 1",
-          "id": "QU85ac6c2e0"
-        }
-      ],
-      "triggerOnStartOfGame": false,
-      "triggerMidGame": true,
-      "canTriggerMoreThanOnce": true,
-      "advancedLogic": false
-    },
-    {
-      "id": "QUb1478e3",
-      "name": "Stats: Model Leopard",
-      "triggerConditions": [
-        {
-          "type": "triggerOnPawScript",
-          "data": "$game.ai_model = \"Leopard\"",
-          "id": "QUb1478e3c0",
-          "category": "condition"
-        }
-      ],
-      "triggerEffects": [
-        {
-          "type": "effectRunScript",
-          "data": "$stats_markers = $stats_markers + 1",
-          "id": "QUb1478e3e0"
-        }
-      ],
-      "triggerOnStartOfGame": false,
-      "triggerMidGame": true,
-      "canTriggerMoreThanOnce": true,
-      "advancedLogic": false
-    },
-    {
-      "id": "QU5b728ae",
-      "name": "Stats: Model Leopard-2",
-      "triggerConditions": [
-        {
-          "type": "triggerOnPawScript",
-          "data": "$game.ai_model = \"Leopard-2\"",
-          "id": "QU5b728aec0",
-          "category": "condition"
-        }
-      ],
-      "triggerEffects": [
-        {
-          "type": "effectRunScript",
-          "data": "$stats_markers = $stats_markers + 1",
-          "id": "QU5b728aee0"
-        }
-      ],
-      "triggerOnStartOfGame": false,
-      "triggerMidGame": true,
-      "canTriggerMoreThanOnce": true,
-      "advancedLogic": false
-    },
-    {
-      "id": "QU9642394",
-      "name": "Stats: Model Wampus",
-      "triggerConditions": [
-        {
-          "type": "triggerOnPawScript",
-          "data": "$game.ai_model = \"Wampus\"",
-          "id": "QU9642394c0",
-          "category": "condition"
-        }
-      ],
-      "triggerEffects": [
-        {
-          "type": "effectRunScript",
-          "data": "$stats_markers = $stats_markers + 1",
-          "id": "QU9642394e0"
-        }
-      ],
-      "triggerOnStartOfGame": false,
-      "triggerMidGame": true,
-      "canTriggerMoreThanOnce": true,
-      "advancedLogic": false
-    },
-    {
-      "id": "QUd3c6846",
-      "name": "Stats: Model Wildcat",
-      "triggerConditions": [
-        {
-          "type": "triggerOnPawScript",
-          "data": "$game.ai_model = \"Wildcat\"",
-          "id": "QUd3c6846c0",
-          "category": "condition"
-        }
-      ],
-      "triggerEffects": [
-        {
-          "type": "effectRunScript",
-          "data": "$stats_markers = $stats_markers + 1",
-          "id": "QUd3c6846e0"
-        }
-      ],
-      "triggerOnStartOfGame": false,
-      "triggerMidGame": true,
-      "canTriggerMoreThanOnce": true,
-      "advancedLogic": false
-    },
-    {
-      "id": "QUfd16a5d",
-      "name": "Stats: Model Smilodon-2 (experimental)",
-      "triggerConditions": [
-        {
-          "type": "triggerOnPawScript",
-          "data": "$game.ai_model = \"Smilodon-2 (experimental)\"",
-          "id": "QUfd16a5dc0",
-          "category": "condition"
-        }
-      ],
-      "triggerEffects": [
-        {
-          "type": "effectRunScript",
-          "data": "$stats_markers = $stats_markers + 1",
-          "id": "QUfd16a5de0"
-        }
-      ],
-      "triggerOnStartOfGame": false,
-      "triggerMidGame": true,
-      "canTriggerMoreThanOnce": true,
-      "advancedLogic": false
-    },
-    {
-      "id": "QUb11f68c",
-      "name": "Stats: Model Smilodon-2 Thinking (experimental)",
-      "triggerConditions": [
-        {
-          "type": "triggerOnPawScript",
-          "data": "$game.ai_model = \"Smilodon-2 Thinking (experimental)\"",
-          "id": "QUb11f68cc0",
-          "category": "condition"
-        }
-      ],
-      "triggerEffects": [
-        {
-          "type": "effectRunScript",
-          "data": "$stats_markers = $stats_markers + 1",
-          "id": "QUb11f68ce0"
-        }
-      ],
-      "triggerOnStartOfGame": false,
-      "triggerMidGame": true,
-      "canTriggerMoreThanOnce": true,
-      "advancedLogic": false
-    },
-    {
-      "id": "QUdf6b5bc",
-      "name": "Stats: Model Galaxycat (experimental)",
-      "triggerConditions": [
-        {
-          "type": "triggerOnPawScript",
-          "data": "$game.ai_model = \"Galaxycat (experimental)\"",
-          "id": "QUdf6b5bcc0",
-          "category": "condition"
-        }
-      ],
-      "triggerEffects": [
-        {
-          "type": "effectRunScript",
-          "data": "$stats_markers = $stats_markers + 1",
-          "id": "QUdf6b5bce0"
-        }
-      ],
-      "triggerOnStartOfGame": false,
-      "triggerMidGame": true,
-      "canTriggerMoreThanOnce": true,
-      "advancedLogic": false
-    },
-    {
-      "id": "QU519cfd6",
-      "name": "Stats: Model Other",
-      "triggerConditions": [
-        {
-          "type": "triggerOnPawScript",
-          "data": "$game.ai_model != \"Dolphin\" and $game.ai_model != \"Puma\" and $game.ai_model != \"Lynx\" and $game.ai_model != \"Lynx-Thinking\" and $game.ai_model != \"Caracal\" and $game.ai_model != \"Grimalkin\" and $game.ai_model != \"Smilodon\" and $game.ai_model != \"Smilodon-Thinking\" and $game.ai_model != \"Massivecat\" and $game.ai_model != \"Massivecat-Thinking\" and $game.ai_model != \"Leopard\" and $game.ai_model != \"Leopard-2\" and $game.ai_model != \"Wampus\" and $game.ai_model != \"Wildcat\" and $game.ai_model != \"Smilodon-2 (experimental)\" and $game.ai_model != \"Smilodon-2 Thinking (experimental)\" and $game.ai_model != \"Galaxycat (experimental)\"",
-          "id": "QU519cfd6c0",
-          "category": "condition"
-        }
-      ],
-      "triggerEffects": [
-        {
-          "type": "effectRunScript",
-          "data": "$stats_markers = $stats_markers + 1",
-          "id": "QU519cfd6e0"
-        }
-      ],
-      "triggerOnStartOfGame": false,
-      "triggerMidGame": true,
-      "canTriggerMoreThanOnce": true,
-      "advancedLogic": false
-    }
-  ],
-  "victoryCondition": null,
-  "defeatCondition": null,
-  "trackedItems": [
-    {
-      "id": "QU8e5a84c",
-      "name": "Pace",
-      "positionInList": 0,
-      "dataType": "text",
-      "visibility": "player_only",
-      "description": "How quickly the story moves. An example setting for the Stats markers.",
-      "updateInstructions": "",
-      "formatExample": "",
-      "enforceFormat": false,
-      "formatSchema": "",
-      "initialValue": "Steady - a day per chapter",
-      "initialValueBasedOnPC": "player",
-      "autoUpdate": false,
-      "variableName": "pace",
-      "driftAcknowledgedForName": "Pace",
-      "initialValueChoices": [
-        "Slow - a week per chapter",
-        "Steady - a day per chapter",
-        "Fast - an hour per chapter"
-      ]
-    },
-    {
-      "id": "QU9cda85d",
-      "name": "Pictures",
-      "positionInList": 1,
-      "dataType": "text",
-      "visibility": "player_only",
-      "description": "The picture setting. An example only: this world draws no pictures of its own.",
-      "updateInstructions": "",
-      "formatExample": "",
-      "enforceFormat": false,
-      "formatSchema": "",
-      "initialValue": "High",
-      "initialValueBasedOnPC": "player",
-      "autoUpdate": false,
-      "variableName": "imagetype",
-      "driftAcknowledgedForName": "Pictures",
-      "initialValueChoices": [
-        "High",
-        "Basic",
-        "Off"
-      ]
-    },
-    {
-      "id": "QU613cc0c",
-      "name": "Story Day",
-      "positionInList": 2,
-      "dataType": "number",
-      "visibility": "everyone",
-      "description": "Days passed since the story began.",
-      "updateInstructions": "Days passed since the story began: 0 on the first day, plus 1 at each new morning.",
-      "formatExample": "",
-      "enforceFormat": false,
-      "formatSchema": "",
-      "initialValue": "0",
-      "initialValueBasedOnPC": "same",
-      "autoUpdate": true,
-      "variableName": "story_day",
-      "driftAcknowledgedForName": "Story Day"
-    },
-    {
-      "id": "QUd6f2713",
-      "name": "Stats Markers",
-      "positionInList": 3,
-      "dataType": "number",
-      "visibility": "hidden",
-      "description": "Written only by the Stats triggers, so IW's world stats can count them. Not part of the story.",
-      "updateInstructions": "",
-      "formatExample": "",
-      "enforceFormat": false,
-      "formatSchema": "",
-      "initialValue": "0",
-      "initialValueBasedOnPC": "same",
-      "autoUpdate": false,
-      "variableName": "stats_markers",
-      "driftAcknowledgedForName": "Stats Markers"
-    }
-  ],
-  "hideSkillSystem": true,
-  "autoAdvanceVersion": false,
-  "version": "1.1",
-  "charSelectText": "Pick a pace and a picture setting. In your own world these would be your real settings; here they only show how the markers count them.",
-  "descriptionRequest": "",
-  "evaluationRequest": "",
-  "summaryRequest": "",
-  "instructionBlocks": [],
-  "NPCs": [],
-  "loreBookEntries": [],
-  "designNotes": "",
-  "showPawScriptButtons": true
+    "allowChangeCharacterName": false,
+    "allowChangeCharacterDescription": false,
+    "allowChangeCharacterSkills": false,
+    "allowChangeCharacterItemValues": false,
+    "allowChangeCharacterPortrait": false,
+    "allowChangeCharacterNewPortrait": false,
+    "conditions": [],
+    "hideSkillSystem": true,
+    "schemaVersion": 2.4,
+    "skills": [
+        "Generic skill"
+    ],
+    "possibleCharacters": [
+        {
+            "name": "Traveller",
+            "description": "A visitor arriving in town for the first time.",
+            "portrait": "",
+            "portraitPromptDetails": {
+                "illustrClothes": "",
+                "illustrSetting": "",
+                "illustrAppearance": "",
+                "illustrExpressionPosition": ""
+            },
+            "fullSizePortrait": "",
+            "portraitOptions": [],
+            "fullSizePortraitOptions": [],
+            "currentPortraitIndex": -1,
+            "characterId": "c7038c97-b50f-57be-9e33-9ce2914d80ef",
+            "skills": {
+                "Generic skill": 3
+            },
+            "initialTrackedItemValues": []
+        }
+    ],
+    "triggerEvents": [
+        {
+            "id": "QU1c5f145",
+            "name": "Stats: Started",
+            "advancedLogic": false,
+            "triggerEffects": [
+                {
+                    "id": "QU1c5f145e0",
+                    "data": "$stats_markers = $stats_markers + 1",
+                    "type": "effectRunScript"
+                }
+            ],
+            "triggerMidGame": true,
+            "triggerConditions": [
+                {
+                    "id": "QU1c5f145c0",
+                    "data": "$stats_markers >= 0",
+                    "type": "triggerOnPawScript",
+                    "category": "condition"
+                }
+            ],
+            "triggerOnStartOfGame": true,
+            "canTriggerMoreThanOnce": false
+        },
+        {
+            "id": "QUb71cf50",
+            "name": "Stats: Pace = Slow",
+            "advancedLogic": false,
+            "triggerEffects": [
+                {
+                    "id": "QUb71cf50e0",
+                    "data": "$stats_markers = $stats_markers + 1",
+                    "type": "effectRunScript"
+                }
+            ],
+            "triggerMidGame": true,
+            "triggerConditions": [
+                {
+                    "id": "QUb71cf50c0",
+                    "data": "$pace = \"Slow - a week per chapter\"",
+                    "type": "triggerOnPawScript",
+                    "category": "condition"
+                }
+            ],
+            "triggerOnStartOfGame": true,
+            "canTriggerMoreThanOnce": false
+        },
+        {
+            "id": "QUf025a40",
+            "name": "Stats: Pace = Steady",
+            "advancedLogic": false,
+            "triggerEffects": [
+                {
+                    "id": "QUf025a40e0",
+                    "data": "$stats_markers = $stats_markers + 1",
+                    "type": "effectRunScript"
+                }
+            ],
+            "triggerMidGame": true,
+            "triggerConditions": [
+                {
+                    "id": "QUf025a40c0",
+                    "data": "$pace = \"Steady - a day per chapter\"",
+                    "type": "triggerOnPawScript",
+                    "category": "condition"
+                }
+            ],
+            "triggerOnStartOfGame": true,
+            "canTriggerMoreThanOnce": false
+        },
+        {
+            "id": "QU67f8763",
+            "name": "Stats: Pace = Fast",
+            "advancedLogic": false,
+            "triggerEffects": [
+                {
+                    "id": "QU67f8763e0",
+                    "data": "$stats_markers = $stats_markers + 1",
+                    "type": "effectRunScript"
+                }
+            ],
+            "triggerMidGame": true,
+            "triggerConditions": [
+                {
+                    "id": "QU67f8763c0",
+                    "data": "$pace = \"Fast - an hour per chapter\"",
+                    "type": "triggerOnPawScript",
+                    "category": "condition"
+                }
+            ],
+            "triggerOnStartOfGame": true,
+            "canTriggerMoreThanOnce": false
+        },
+        {
+            "id": "QU4a02e8d",
+            "name": "Stats: Pictures = High",
+            "advancedLogic": false,
+            "triggerEffects": [
+                {
+                    "id": "QU4a02e8de0",
+                    "data": "$stats_markers = $stats_markers + 1",
+                    "type": "effectRunScript"
+                }
+            ],
+            "triggerMidGame": true,
+            "triggerConditions": [
+                {
+                    "id": "QU4a02e8dc0",
+                    "data": "$imagetype = \"High\"",
+                    "type": "triggerOnPawScript",
+                    "category": "condition"
+                }
+            ],
+            "triggerOnStartOfGame": true,
+            "canTriggerMoreThanOnce": true
+        },
+        {
+            "id": "QUbffd63f",
+            "name": "Stats: Pictures = Basic",
+            "advancedLogic": false,
+            "triggerEffects": [
+                {
+                    "id": "QUbffd63fe0",
+                    "data": "$stats_markers = $stats_markers + 1",
+                    "type": "effectRunScript"
+                }
+            ],
+            "triggerMidGame": true,
+            "triggerConditions": [
+                {
+                    "id": "QUbffd63fc0",
+                    "data": "$imagetype = \"Basic\"",
+                    "type": "triggerOnPawScript",
+                    "category": "condition"
+                }
+            ],
+            "triggerOnStartOfGame": true,
+            "canTriggerMoreThanOnce": true
+        },
+        {
+            "id": "QU59c7fcb",
+            "name": "Stats: Pictures = Off",
+            "advancedLogic": false,
+            "triggerEffects": [
+                {
+                    "id": "QU59c7fcbe0",
+                    "data": "$stats_markers = $stats_markers + 1",
+                    "type": "effectRunScript"
+                }
+            ],
+            "triggerMidGame": true,
+            "triggerConditions": [
+                {
+                    "id": "QU59c7fcbc0",
+                    "data": "$imagetype = \"Off\"",
+                    "type": "triggerOnPawScript",
+                    "category": "condition"
+                }
+            ],
+            "triggerOnStartOfGame": true,
+            "canTriggerMoreThanOnce": true
+        },
+        {
+            "id": "QU284bdd3",
+            "name": "Stats: Reached Day 1",
+            "advancedLogic": false,
+            "triggerEffects": [
+                {
+                    "id": "QU284bdd3e0",
+                    "data": "$stats_markers = $stats_markers + 1",
+                    "type": "effectRunScript"
+                }
+            ],
+            "triggerMidGame": true,
+            "triggerConditions": [
+                {
+                    "id": "QU284bdd3c0",
+                    "data": "$story_day >= 1",
+                    "type": "triggerOnPawScript",
+                    "category": "condition"
+                }
+            ],
+            "triggerOnStartOfGame": false,
+            "canTriggerMoreThanOnce": false
+        },
+        {
+            "id": "QU4389e9f",
+            "name": "Stats: Reached Day 3",
+            "advancedLogic": false,
+            "triggerEffects": [
+                {
+                    "id": "QU4389e9fe0",
+                    "data": "$stats_markers = $stats_markers + 1",
+                    "type": "effectRunScript"
+                }
+            ],
+            "triggerMidGame": true,
+            "triggerConditions": [
+                {
+                    "id": "QU4389e9fc0",
+                    "data": "$story_day >= 3",
+                    "type": "triggerOnPawScript",
+                    "category": "condition"
+                }
+            ],
+            "triggerOnStartOfGame": false,
+            "canTriggerMoreThanOnce": false
+        },
+        {
+            "id": "QUbbfef28",
+            "name": "Stats: Reached Day 7",
+            "advancedLogic": false,
+            "triggerEffects": [
+                {
+                    "id": "QUbbfef28e0",
+                    "data": "$stats_markers = $stats_markers + 1",
+                    "type": "effectRunScript"
+                }
+            ],
+            "triggerMidGame": true,
+            "triggerConditions": [
+                {
+                    "id": "QUbbfef28c0",
+                    "data": "$story_day >= 7",
+                    "type": "triggerOnPawScript",
+                    "category": "condition"
+                }
+            ],
+            "triggerOnStartOfGame": false,
+            "canTriggerMoreThanOnce": false
+        },
+        {
+            "id": "QU76fd157",
+            "name": "Stats: Reached Day 15",
+            "advancedLogic": false,
+            "triggerEffects": [
+                {
+                    "id": "QU76fd157e0",
+                    "data": "$stats_markers = $stats_markers + 1",
+                    "type": "effectRunScript"
+                }
+            ],
+            "triggerMidGame": true,
+            "triggerConditions": [
+                {
+                    "id": "QU76fd157c0",
+                    "data": "$story_day >= 15",
+                    "type": "triggerOnPawScript",
+                    "category": "condition"
+                }
+            ],
+            "triggerOnStartOfGame": false,
+            "canTriggerMoreThanOnce": false
+        },
+        {
+            "id": "QUa234add",
+            "name": "Stats: Reached Day 30",
+            "advancedLogic": false,
+            "triggerEffects": [
+                {
+                    "id": "QUa234adde0",
+                    "data": "$stats_markers = $stats_markers + 1",
+                    "type": "effectRunScript"
+                }
+            ],
+            "triggerMidGame": true,
+            "triggerConditions": [
+                {
+                    "id": "QUa234addc0",
+                    "data": "$story_day >= 30",
+                    "type": "triggerOnPawScript",
+                    "category": "condition"
+                }
+            ],
+            "triggerOnStartOfGame": false,
+            "canTriggerMoreThanOnce": false
+        },
+        {
+            "id": "QUd356af5",
+            "name": "Stats: Reached Day 60",
+            "advancedLogic": false,
+            "triggerEffects": [
+                {
+                    "id": "QUd356af5e0",
+                    "data": "$stats_markers = $stats_markers + 1",
+                    "type": "effectRunScript"
+                }
+            ],
+            "triggerMidGame": true,
+            "triggerConditions": [
+                {
+                    "id": "QUd356af5c0",
+                    "data": "$story_day >= 60",
+                    "type": "triggerOnPawScript",
+                    "category": "condition"
+                }
+            ],
+            "triggerOnStartOfGame": false,
+            "canTriggerMoreThanOnce": false
+        },
+        {
+            "id": "QU102e963",
+            "name": "Stats: Model Dolphin",
+            "advancedLogic": false,
+            "triggerEffects": [
+                {
+                    "id": "QU102e963e0",
+                    "data": "$stats_markers = $stats_markers + 1",
+                    "type": "effectRunScript"
+                }
+            ],
+            "triggerMidGame": true,
+            "triggerConditions": [
+                {
+                    "id": "QU102e963c0",
+                    "data": "$game.ai_model = \"Dolphin\"",
+                    "type": "triggerOnPawScript",
+                    "category": "condition"
+                }
+            ],
+            "triggerOnStartOfGame": false,
+            "canTriggerMoreThanOnce": true
+        },
+        {
+            "id": "QU73e4faa",
+            "name": "Stats: Model Puma",
+            "advancedLogic": false,
+            "triggerEffects": [
+                {
+                    "id": "QU73e4faae0",
+                    "data": "$stats_markers = $stats_markers + 1",
+                    "type": "effectRunScript"
+                }
+            ],
+            "triggerMidGame": true,
+            "triggerConditions": [
+                {
+                    "id": "QU73e4faac0",
+                    "data": "$game.ai_model = \"Puma\"",
+                    "type": "triggerOnPawScript",
+                    "category": "condition"
+                }
+            ],
+            "triggerOnStartOfGame": false,
+            "canTriggerMoreThanOnce": true
+        },
+        {
+            "id": "QUfce3af0",
+            "name": "Stats: Model Lynx",
+            "advancedLogic": false,
+            "triggerEffects": [
+                {
+                    "id": "QUfce3af0e0",
+                    "data": "$stats_markers = $stats_markers + 1",
+                    "type": "effectRunScript"
+                }
+            ],
+            "triggerMidGame": true,
+            "triggerConditions": [
+                {
+                    "id": "QUfce3af0c0",
+                    "data": "$game.ai_model = \"Lynx\" or $game.ai_model = \"Lynx-Thinking\"",
+                    "type": "triggerOnPawScript",
+                    "category": "condition"
+                }
+            ],
+            "triggerOnStartOfGame": false,
+            "canTriggerMoreThanOnce": true
+        },
+        {
+            "id": "QUe4aba59",
+            "name": "Stats: Model Caracal",
+            "advancedLogic": false,
+            "triggerEffects": [
+                {
+                    "id": "QUe4aba59e0",
+                    "data": "$stats_markers = $stats_markers + 1",
+                    "type": "effectRunScript"
+                }
+            ],
+            "triggerMidGame": true,
+            "triggerConditions": [
+                {
+                    "id": "QUe4aba59c0",
+                    "data": "$game.ai_model = \"Caracal\"",
+                    "type": "triggerOnPawScript",
+                    "category": "condition"
+                }
+            ],
+            "triggerOnStartOfGame": false,
+            "canTriggerMoreThanOnce": true
+        },
+        {
+            "id": "QU627fd8c",
+            "name": "Stats: Model Grimalkin",
+            "advancedLogic": false,
+            "triggerEffects": [
+                {
+                    "id": "QU627fd8ce0",
+                    "data": "$stats_markers = $stats_markers + 1",
+                    "type": "effectRunScript"
+                }
+            ],
+            "triggerMidGame": true,
+            "triggerConditions": [
+                {
+                    "id": "QU627fd8cc0",
+                    "data": "$game.ai_model = \"Grimalkin\"",
+                    "type": "triggerOnPawScript",
+                    "category": "condition"
+                }
+            ],
+            "triggerOnStartOfGame": false,
+            "canTriggerMoreThanOnce": true
+        },
+        {
+            "id": "QU087d53c",
+            "name": "Stats: Model Smilodon",
+            "advancedLogic": false,
+            "triggerEffects": [
+                {
+                    "id": "QU087d53ce0",
+                    "data": "$stats_markers = $stats_markers + 1",
+                    "type": "effectRunScript"
+                }
+            ],
+            "triggerMidGame": true,
+            "triggerConditions": [
+                {
+                    "id": "QU087d53cc0",
+                    "data": "$game.ai_model = \"Smilodon\" or $game.ai_model = \"Smilodon-Thinking\"",
+                    "type": "triggerOnPawScript",
+                    "category": "condition"
+                }
+            ],
+            "triggerOnStartOfGame": false,
+            "canTriggerMoreThanOnce": true
+        },
+        {
+            "id": "QU5e72dda",
+            "name": "Stats: Model Massivecat",
+            "advancedLogic": false,
+            "triggerEffects": [
+                {
+                    "id": "QU5e72ddae0",
+                    "data": "$stats_markers = $stats_markers + 1",
+                    "type": "effectRunScript"
+                }
+            ],
+            "triggerMidGame": true,
+            "triggerConditions": [
+                {
+                    "id": "QU5e72ddac0",
+                    "data": "$game.ai_model = \"Massivecat\" or $game.ai_model = \"Massivecat-Thinking\"",
+                    "type": "triggerOnPawScript",
+                    "category": "condition"
+                }
+            ],
+            "triggerOnStartOfGame": false,
+            "canTriggerMoreThanOnce": true
+        },
+        {
+            "id": "QUb1478e3",
+            "name": "Stats: Model Leopard",
+            "advancedLogic": false,
+            "triggerEffects": [
+                {
+                    "id": "QUb1478e3e0",
+                    "data": "$stats_markers = $stats_markers + 1",
+                    "type": "effectRunScript"
+                }
+            ],
+            "triggerMidGame": true,
+            "triggerConditions": [
+                {
+                    "id": "QUb1478e3c0",
+                    "data": "$game.ai_model = \"Leopard\" or $game.ai_model = \"Leopard-2\"",
+                    "type": "triggerOnPawScript",
+                    "category": "condition"
+                }
+            ],
+            "triggerOnStartOfGame": false,
+            "canTriggerMoreThanOnce": true
+        },
+        {
+            "id": "QU9642394",
+            "name": "Stats: Model Wampus",
+            "advancedLogic": false,
+            "triggerEffects": [
+                {
+                    "type": "effectRunScript",
+                    "data": "$stats_markers = $stats_markers + 1",
+                    "id": "QU9642394e0"
+                }
+            ],
+            "triggerMidGame": true,
+            "triggerConditions": [
+                {
+                    "type": "triggerOnPawScript",
+                    "data": "$game.ai_model = \"Wampus\"",
+                    "id": "QU9642394c0",
+                    "category": "condition"
+                }
+            ],
+            "triggerOnStartOfGame": false,
+            "canTriggerMoreThanOnce": true
+        },
+        {
+            "id": "QUfd16a5d",
+            "name": "Stats: Model Smilodon-2 (experimental)",
+            "advancedLogic": false,
+            "triggerEffects": [
+                {
+                    "type": "effectRunScript",
+                    "data": "$stats_markers = $stats_markers + 1",
+                    "id": "QUfd16a5de0"
+                }
+            ],
+            "triggerMidGame": true,
+            "triggerConditions": [
+                {
+                    "type": "triggerOnPawScript",
+                    "data": "$game.ai_model = \"Smilodon-2 (experimental)\" or $game.ai_model = \"Smilodon-2 Thinking (experimental)\"",
+                    "id": "QUfd16a5dc0",
+                    "category": "condition"
+                }
+            ],
+            "triggerOnStartOfGame": false,
+            "canTriggerMoreThanOnce": true
+        },
+        {
+            "id": "QU519cfd6",
+            "name": "Stats: Model Other",
+            "advancedLogic": false,
+            "triggerEffects": [
+                {
+                    "id": "QU519cfd6e0",
+                    "data": "$stats_markers = $stats_markers + 1",
+                    "type": "effectRunScript"
+                }
+            ],
+            "triggerMidGame": true,
+            "triggerConditions": [
+                {
+                    "id": "QU519cfd6c0",
+                    "data": "$game.ai_model != \"Dolphin\" and $game.ai_model != \"Puma\" and $game.ai_model != \"Lynx\" and $game.ai_model != \"Lynx-Thinking\" and $game.ai_model != \"Caracal\" and $game.ai_model != \"Grimalkin\" and $game.ai_model != \"Smilodon\" and $game.ai_model != \"Smilodon-Thinking\" and $game.ai_model != \"Massivecat\" and $game.ai_model != \"Massivecat-Thinking\" and $game.ai_model != \"Leopard\" and $game.ai_model != \"Leopard-2\" and $game.ai_model != \"Wampus\" and $game.ai_model != \"Smilodon-2 (experimental)\" and $game.ai_model != \"Smilodon-2 Thinking (experimental)\"",
+                    "type": "triggerOnPawScript",
+                    "category": "condition"
+                }
+            ],
+            "triggerOnStartOfGame": false,
+            "canTriggerMoreThanOnce": true
+        }
+    ],
+    "victoryCondition": null,
+    "defeatCondition": null,
+    "trackedItems": [
+        {
+            "id": "QU8e5a84c",
+            "name": "Pace",
+            "positionInList": 0,
+            "dataType": "text",
+            "visibility": "player_only",
+            "description": "How quickly the story moves. An example setting for the Stats markers.",
+            "updateInstructions": "",
+            "formatExample": "",
+            "enforceFormat": false,
+            "formatSchema": "",
+            "initialValue": "Slow - a week per chapter",
+            "initialValueBasedOnPC": "player",
+            "autoUpdate": false,
+            "variableName": "pace",
+            "driftAcknowledgedForName": "Pace",
+            "initialValueChoices": [
+                "Slow - a week per chapter",
+                "Steady - a day per chapter",
+                "Fast - an hour per chapter"
+            ]
+        },
+        {
+            "id": "QU9cda85d",
+            "name": "Pictures",
+            "positionInList": 1,
+            "dataType": "text",
+            "visibility": "player_only",
+            "description": "The picture setting. An example only: this world draws no pictures of its own.",
+            "updateInstructions": "",
+            "formatExample": "",
+            "enforceFormat": false,
+            "formatSchema": "",
+            "initialValue": "High",
+            "initialValueBasedOnPC": "player",
+            "autoUpdate": false,
+            "variableName": "imagetype",
+            "driftAcknowledgedForName": "Pictures",
+            "initialValueChoices": [
+                "High",
+                "Basic",
+                "Off"
+            ]
+        },
+        {
+            "id": "QU613cc0c",
+            "name": "Story Day",
+            "positionInList": 2,
+            "dataType": "number",
+            "visibility": "everyone",
+            "description": "Days passed since the story began.",
+            "updateInstructions": "Days passed since the story began: 0 on the first day, plus 1 at each new morning.",
+            "formatExample": "",
+            "enforceFormat": false,
+            "formatSchema": "",
+            "initialValue": "0",
+            "initialValueBasedOnPC": "same",
+            "autoUpdate": true,
+            "variableName": "story_day",
+            "driftAcknowledgedForName": "Story Day"
+        },
+        {
+            "id": "QUd6f2713",
+            "name": "Stats Markers",
+            "positionInList": 3,
+            "dataType": "number",
+            "visibility": "hidden",
+            "description": "Written only by the Stats triggers, so IW's world stats can count them. Not part of the story.",
+            "updateInstructions": "",
+            "formatExample": "",
+            "enforceFormat": false,
+            "formatSchema": "",
+            "initialValue": "0",
+            "initialValueBasedOnPC": "same",
+            "autoUpdate": false,
+            "variableName": "stats_markers",
+            "driftAcknowledgedForName": "Stats Markers"
+        }
+    ],
+    "autoAdvanceVersion": false,
+    "version": "1.2",
+    "showPawScriptButtons": true
 }
