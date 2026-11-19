@@ -1,0 +1,292 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Junebug&#x27;s Jubilee Jellybeans: Player&#x27;s Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,800&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --bg:#fff7f1; --surface:#ffffff; --ink:#3a1730; --muted:#7a5a6e; --line:#f0d9df; --chip:#fbe8ee;
+  --pink:#d6336c; --berry:#8e2a7a; --teal:#0d8a86; --gold:#b7791f; --lime:#5a8f1f;
+  --z1:#f7b2c8; --z2:#f9c98f; --z3:#f3e08a; --z4:#b6e3b0; --z5:#a9d8f0; --z6:#d0bdf2; --chip-ink:#3a1730;
+  --stripe:#fde3ea;
+  --f-display:"Fraunces","Georgia","Times New Roman",serif;
+  --f-body:"Instrument Sans","Helvetica Neue",Arial,system-ui,sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#1c0f1a; --surface:#2a1727; --ink:#fbeaf1; --muted:#c9a9bb; --line:#45283f; --chip:#3a2036;
+  --pink:#ff7aa8; --berry:#e39ad6; --teal:#5fd3cd; --gold:#f0c060; --lime:#a8d66a;
+  --z1:#a8496a; --z2:#a8702f; --z3:#8f7d22; --z4:#3f7f3d; --z5:#2f6f93; --z6:#6a52a3; --chip-ink:#fff6fa;
+  --stripe:#33192d; color-scheme:dark }}
+:root[data-theme="dark"]{
+  --bg:#1c0f1a; --surface:#2a1727; --ink:#fbeaf1; --muted:#c9a9bb; --line:#45283f; --chip:#3a2036;
+  --pink:#ff7aa8; --berry:#e39ad6; --teal:#5fd3cd; --gold:#f0c060; --lime:#a8d66a;
+  --z1:#a8496a; --z2:#a8702f; --z3:#8f7d22; --z4:#3f7f3d; --z5:#2f6f93; --z6:#6a52a3; --chip-ink:#fff6fa;
+  --stripe:#33192d; color-scheme:dark }
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.55}
+h1,h2,h3{font-family:var(--f-display);margin:0;line-height:1.1;text-wrap:balance}
+p{margin:0}
+a{color:var(--teal)}
+img{max-width:100%}
+:focus-visible{outline:2px solid var(--teal);outline-offset:2px}
+.eyebrow{font-family:var(--f-mono);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--pink)}
+.awning{height:14px;background:repeating-linear-gradient(90deg,var(--pink) 0 28px,var(--surface) 28px 56px);
+  border-bottom:1px solid var(--line)}
+.chip{display:inline-block;background:var(--chip);border-radius:999px;padding:3px 11px;font-size:.82rem}
+.zc{display:inline-block;border-radius:999px;padding:1px 9px;font-family:var(--f-mono);font-size:.72rem;
+  font-weight:500;color:var(--chip-ink);white-space:nowrap}
+.muted{color:var(--muted)}
+.small{font-size:.9rem}
+
+.wrap{max-width:1000px;margin:0 auto;padding:28px 16px 72px}
+h1{font-size:clamp(2.3rem,6.5vw,4rem);font-weight:800;letter-spacing:-.01em}
+h2{font-size:clamp(1.5rem,3.4vw,2.1rem);font-weight:800}
+h3{font-size:1.08rem;font-weight:600}
+p{max-width:68ch}
+.hero{display:grid;grid-template-columns:1.25fr 1fr;gap:28px;align-items:center;padding-bottom:28px}
+.hero > div{display:grid;gap:14px;min-width:0}
+.hero img{border-radius:16px;border:1px solid var(--line);width:100%;aspect-ratio:3/4;object-fit:cover}
+.lede{font-size:1.1rem;color:var(--muted)}
+.facts{display:flex;flex-wrap:wrap;gap:8px}
+nav{position:sticky;top:0;z-index:5;background:var(--bg);border-block:1px solid var(--line);padding:8px 0;
+  display:flex;gap:6px;overflow-x:auto;scrollbar-width:thin}
+nav a{flex:none;text-decoration:none;color:var(--ink);background:var(--chip);border-radius:999px;padding:4px 12px;
+  font-size:.86rem}
+nav a:hover{background:var(--pink);color:#fff}
+section{display:grid;gap:16px;padding-block:38px;border-top:1px solid var(--line);scroll-margin-top:56px}
+section.first{border-top:0}
+.cards{display:grid;gap:12px}
+.c3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.c2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;display:grid;gap:8px;
+  align-content:start;min-width:0}
+.card .big{font-family:var(--f-display);font-weight:800;font-size:1.5rem;color:var(--pink)}
+.card ul{margin:0;padding-left:18px;display:grid;gap:6px}
+.card li{font-size:.94rem}
+.levels{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;border:1px solid var(--line);
+  border-radius:14px;overflow:hidden}
+.levels div{padding:12px 14px;background:var(--surface);display:grid;gap:2px}
+.levels div + div{border-left:1px solid var(--line)}
+.levels b{font-family:var(--f-display);font-size:1.3rem;color:var(--berry)}
+ol.rules{margin:0;padding-left:22px;display:grid;gap:8px;max-width:70ch}
+table{width:100%;border-collapse:collapse;background:var(--surface);border:1px solid var(--line);border-radius:12px;
+  overflow:hidden;font-size:.94rem}
+th,td{text-align:left;vertical-align:top;padding:9px 12px;border-bottom:1px solid var(--line)}
+th{font-family:var(--f-mono);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);
+  font-weight:500;background:var(--stripe)}
+tr:last-child td{border-bottom:0}
+td:first-child{font-weight:600;white-space:nowrap}
+.scroll{overflow-x:auto}
+details.fl{background:var(--surface);border:1px solid var(--line);border-radius:12px}
+details.fl summary{cursor:pointer;list-style:none;padding:11px 14px;display:grid;
+  grid-template-columns:minmax(96px,auto) 1fr auto;gap:10px;align-items:baseline}
+details.fl summary::-webkit-details-marker{display:none}
+details.fl summary b{font-family:var(--f-display);font-size:1.05rem}
+details.fl summary span{color:var(--muted);font-size:.92rem;min-width:0}
+details.fl summary i{font-style:normal;color:var(--pink);font-family:var(--f-mono);font-size:.8rem}
+details.fl[open] summary i::before{content:"hide"}
+details.fl summary i::before{content:"show"}
+.zl{display:grid;gap:6px;padding:0 14px 14px}
+.zl div{display:grid;grid-template-columns:70px 1fr;gap:10px;align-items:baseline;font-size:.93rem}
+.zl .peak{border-top:1px dashed var(--line);padding-top:8px;margin-top:2px}
+.tools{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+button{font:inherit;font-size:.86rem;border:1px solid var(--line);background:var(--surface);color:var(--ink);
+  border-radius:999px;padding:4px 12px;cursor:pointer}
+button:hover{border-color:var(--pink)}
+details.spoil{border:2px dashed var(--pink);border-radius:14px;padding:4px 14px;background:var(--surface)}
+details.spoil > summary{cursor:pointer;padding:10px 0;font-family:var(--f-display);font-weight:600;font-size:1.1rem}
+details.spoil > div{display:grid;gap:12px;padding-bottom:14px}
+.pair{background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:12px;display:grid;gap:6px;
+  min-width:0}
+.pair b{font-family:var(--f-display);font-size:1.02rem}
+.pair .mix{font-family:var(--f-mono);font-size:.78rem;color:var(--berry)}
+.pair .sets{display:flex;flex-wrap:wrap;gap:4px}
+.pair p{font-size:.88rem;color:var(--muted)}
+.callout{border-left:4px solid var(--gold);background:var(--surface);padding:12px 14px;border-radius:0 12px 12px 0;
+  max-width:70ch}
+.who{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.who figure{margin:0;display:grid;gap:6px}
+.who img{border-radius:12px;border:1px solid var(--line);aspect-ratio:3/4;object-fit:cover;width:100%}
+.who figcaption{font-size:.86rem;color:var(--muted)}
+.who figcaption b{display:block;color:var(--ink);font-family:var(--f-display)}
+footer{border-top:1px solid var(--line);padding-top:20px;color:var(--muted);font-size:.9rem;display:grid;gap:6px}
+@media (max-width:760px){.hero,.c3,.c2,.levels{grid-template-columns:1fr}.levels div + div{border-left:0;
+  border-top:1px solid var(--line)}.who{grid-template-columns:repeat(2,minmax(0,1fr))}
+  details.fl summary{grid-template-columns:1fr auto}details.fl summary span{grid-column:1 / -1;grid-row:2}}
+@media print{nav,button{display:none}details.fl .zl{display:grid}body{background:#fff}}
+</style>
+</head>
+<body>
+<div class="awning" aria-hidden="true"></div>
+<div class="wrap">
+
+<section class="hero first" aria-label="Introduction">
+  <div>
+    <span class="eyebrow">Player's guide · version 2.14</span>
+    <h1>Junebug's Jubilee Jellybeans</h1>
+    <p class="lede">You bought a boarded-up storefront. Overnight it became a candy shop, stocked with jellybeans that change whoever eats them, and it came with Dulcie, an assistant manager who knows what every bean does and isn't allowed to say. Run the shop however you like.</p>
+    <div class="facts">
+      <span class="chip">Open-ended sandbox</span><span class="chip">Adults only</span>
+      <span class="chip">10 colors · 6 patterns</span>
+      <span class="chip">A new key every game</span>
+    </div>
+    <p class="small">In a hurry? Read the <a href="quick.html">one-page quick start</a>. Nothing here is required reading: eating or selling one bean is enough to begin.</p>
+  </div>
+  <img src="https://infinite-worlds-images-5.us-ord-10.linodeobjects.com/YvQNdssF8z.webp" alt="Dulcie leaning over the counter of a colorful candy shop with a jar of jellybeans" onerror="this.remove()">
+</section>
+
+<nav aria-label="Sections">
+  <a href="#bean">How a bean works</a><a href="#do">What you can do</a><a href="#flavors">Flavors</a>
+  <a href="#centers">Centers</a><a href="#shop">The shop's days</a><a href="#dulcie">Dulcie</a>
+  <a href="#start">Start options</a><a href="#spoilers">Spoilers</a>
+</nav>
+
+<section id="bean" aria-labelledby="h-bean">
+  <span class="eyebrow">The one idea</span>
+  <h2 id="h-bean">How a bean works</h2>
+  <p>Every bean has a color and a pattern. Which color is which flavor, and which pattern is which zone, is dealt fresh each game. That mapping is the key, and working it out by tasting is the puzzle (or pick Labeled shelves and skip it).</p>
+  <div class="cards c3">
+    <div class="card"><span class="big">Color</span><h3>is the flavor</h3><p class="small">What kind of change: Lush, Sleek, Glam and so on. Ten of the flavors are in stock each game, one per color.</p></div>
+    <div class="card"><span class="big">Pattern</span><h3>is the zone</h3><p class="small">Where on the body it lands. Six patterns, six zones. A change never leaves its zone.</p></div>
+    <div class="card"><span class="big">Center</span><h3>is the twist</h3><p class="small">One center applies to every bean bitten in a turn. Soft, the most common, adds nothing.</p></div>
+  </div>
+  <table>
+    <tr><th>Zone</th><th>Covers</th></tr><tr><td><span class="zc" style="background:var(--z1)">Crown</span></td><td>Hair, face, ears, voice</td></tr><tr><td><span class="zc" style="background:var(--z2)">Bust</span></td><td>Chest, shoulders, arms, hands</td></tr><tr><td><span class="zc" style="background:var(--z3)">Curve</span></td><td>Waist, hips, rear</td></tr><tr><td><span class="zc" style="background:var(--z4)">Stride</span></td><td>Legs, feet, height, tail</td></tr><tr><td><span class="zc" style="background:var(--z5)">Skin</span></td><td>The surface everywhere: color, texture, markings</td></tr><tr><td><span class="zc" style="background:var(--z6)">Mind</span></td><td>Manner, habits, urges, speech</td></tr>
+  </table>
+  <h3>Levels</h3>
+  <div class="levels">
+    <div><b>1</b><span>A hint. You would notice if you were looking.</span></div>
+    <div><b>2</b><span>Unmistakable.</span></div>
+    <div><b>3</b><span>Dramatic, and it has set.</span></div>
+  </div>
+  <ol class="rules">
+    <li><strong>Same flavor again in the same zone:</strong> one level deeper, up to 3.</li>
+    <li><strong>A different flavor in that zone:</strong> it replaces the old one at level 1. A level 3 change has set, so other flavors bounce off it.</li>
+    <li><strong>A clear bean of that zone's pattern:</strong> undoes one level, at any level. From level 1 the change is gone.</li>
+  </ol>
+  <p class="callout">Changes last until a clear bean undoes them. Each person has one slot per zone, so one person can carry up to six changes at once. The Bean Ledger tracker lists them all.</p>
+</section>
+
+<section id="do" aria-labelledby="h-do">
+  <span class="eyebrow">Your turn</span>
+  <h2 id="h-do">What you can do</h2>
+  <p>Type anything. These are the moves the game knows by name. Each turn also offers three suggestions, one of each kind.</p>
+  <div class="cards c3">
+    <div class="card"><h3>With a bean</h3><ul><li><strong>Bite.</strong> Eat one bean. Its color and pattern decide the change.</li><li><strong>Feed.</strong> Offer someone a bean. Whoever eats it changes.</li><li><strong>Pair.</strong> Two beans in one bite. Some colors pair into something special; otherwise both beans work.</li><li><strong>Slip.</strong> Hide a bean in food or drink. The eater notices the change but not the cause.</li><li><strong>Kiss-pass.</strong> Bite a bean and kiss someone: it changes both of you.</li><li><strong>Roulette.</strong> Everyone grabs a bean without looking. Each gets one of the turn&#x27;s lucky dips.</li><li><strong>Clear.</strong> A clear bean undoes one level of a change in its pattern&#x27;s zone.</li><li><strong>Special.</strong> One rare bean a day on the chalkboard. Its effect lasts until morning.</li></ul></div>
+    <div class="card"><h3>In the shop</h3><ul><li><strong>Serve.</strong> Sell a customer what they asked for, recommend something else, test it first, or say no.</li><li><strong>Sample tray.</strong> Put out free samples: walk-ins take lucky dips.</li><li><strong>Window display.</strong> Feature one bean in the window and see who it brings in.</li><li><strong>Gift bag.</strong> Sell beans to take home. Where they end up is out of your hands.</li><li><strong>Bake.</strong> Bake beans into fudge or cupcakes for a party or the counter.</li><li><strong>Dulcie in charge.</strong> Leave Dulcie minding the counter and go out into town.</li></ul></div>
+    <div class="card"><h3>People and the town</h3><ul><li><strong>Regulars.</strong> Your regulars each want something. Find out what.</li><li><strong>Town.</strong> Beans turn up around town from somewhere else. Follow the trail if you like.</li><li><strong>Returns.</strong> An unhappy customer can be fixed with a clear bean, won over, given a free bean, or talked into going further.</li><li><strong>Order.</strong> A customer has ordered something for a set day. Have it ready.</li><li><strong>Dulcie.</strong> Ask Dulcie to taste-test one. She is not supposed to.</li></ul></div>
+  </div>
+  <p class="callout"><strong>Lucky dips.</strong> Anyone who takes a bean without choosing (a blind grab, a free sample, roulette, a bean Dulcie holds out) gets a random one. Dulcie reads its color and pattern aloud first, which makes dips a cheap way to learn the key.</p>
+</section>
+
+<section id="flavors" aria-labelledby="h-flavors">
+  <span class="eyebrow">The effects map</span>
+  <h2 id="h-flavors">Flavors</h2>
+  <p>Each flavor does something different in each zone. Open a flavor to see all six, plus what level 3 looks like. The words are a direction, not a stock look: the change is fitted to the person.</p>
+  <div class="tools"><button type="button" data-open="1">Open all</button><button type="button" data-open="0">Close all</button></div>
+  <h3>Classic shelf <span class="muted small">(13 flavors, every change stays human)</span></h3>
+  <div class="cards"><details class="fl"><summary><b>Feminine</b><span>Softer, rounder, more delicate and womanly</span><i></i></summary><div class="zl"><div><span class="zc" style="background:var(--z1)">Crown</span><span>Softer jaw, long lashes, fuller lips, a lighter voice</span></div><div><span class="zc" style="background:var(--z2)">Bust</span><span>Soft shoulders, a gentle bust, slim hands</span></div><div><span class="zc" style="background:var(--z3)">Curve</span><span>A narrow waist flaring into hips</span></div><div><span class="zc" style="background:var(--z4)">Stride</span><span>Smooth, shapely legs, small feet</span></div><div><span class="zc" style="background:var(--z5)">Skin</span><span>Smooth, soft, hairless</span></div><div><span class="zc" style="background:var(--z6)">Mind</span><span>Gentle, graceful, warmly flirtatious</span></div><div class="peak"><span class="zc" style="background:var(--chip)">Level 3</span><span>Unmistakably, beautifully womanly from every angle</span></div></div></details><details class="fl"><summary><b>Lush</b><span>More of it: fuller, larger, abundant</span><i></i></summary><div class="zl"><div><span class="zc" style="background:var(--z1)">Crown</span><span>Thick, glossy hair, full lips, a rich voice</span></div><div><span class="zc" style="background:var(--z2)">Bust</span><span>A heavy, soft chest that strains buttons</span></div><div><span class="zc" style="background:var(--z3)">Curve</span><span>Wide hips and a full, round rear</span></div><div><span class="zc" style="background:var(--z4)">Stride</span><span>Thick thighs, plush calves</span></div><div><span class="zc" style="background:var(--z5)">Skin</span><span>Soft, plump, dewy all over</span></div><div><span class="zc" style="background:var(--z6)">Mind</span><span>Indulgent, generous, greedy for more</span></div><div class="peak"><span class="zc" style="background:var(--chip)">Level 3</span><span>Abundance past the point of clothes fitting; they move like someone carrying treasure</span></div></div></details><details class="fl"><summary><b>Dainty</b><span>Less of it: smaller, slighter, finer</span><i></i></summary><div class="zl"><div><span class="zc" style="background:var(--z1)">Crown</span><span>A small, fine-boned face, a light voice</span></div><div><span class="zc" style="background:var(--z2)">Bust</span><span>Narrow shoulders, slim arms, delicate hands</span></div><div><span class="zc" style="background:var(--z3)">Curve</span><span>A tiny waist, slight hips</span></div><div><span class="zc" style="background:var(--z4)">Stride</span><span>Slender legs, small feet, a little shorter</span></div><div><span class="zc" style="background:var(--z5)">Skin</span><span>Fine, pale, porcelain-smooth</span></div><div><span class="zc" style="background:var(--z6)">Mind</span><span>Quiet, meek, polite, easily flustered</span></div><div class="peak"><span class="zc" style="background:var(--chip)">Level 3</span><span>Petite and fragile-looking, a head shorter than before</span></div></div></details><details class="fl"><summary><b>Sleek</b><span>Lean, taut and graceful, a dancer&#x27;s line</span><i></i></summary><div class="zl"><div><span class="zc" style="background:var(--z1)">Crown</span><span>A sharp jaw, high cheekbones, sleek hair</span></div><div><span class="zc" style="background:var(--z2)">Bust</span><span>Toned shoulders, long arms</span></div><div><span class="zc" style="background:var(--z3)">Curve</span><span>A taut, flat waist, firm hips</span></div><div><span class="zc" style="background:var(--z4)">Stride</span><span>Long, lean dancer&#x27;s legs</span></div><div><span class="zc" style="background:var(--z5)">Skin</span><span>Taut, smooth, faintly glossy</span></div><div><span class="zc" style="background:var(--z6)">Mind</span><span>Composed, graceful, economical in every move</span></div><div class="peak"><span class="zc" style="background:var(--chip)">Level 3</span><span>A body like a drawn line; every motion looks choreographed</span></div></div></details><details class="fl"><summary><b>Statuesque</b><span>Taller, long-limbed, commanding</span><i></i></summary><div class="zl"><div><span class="zc" style="background:var(--z1)">Crown</span><span>A strong, striking face, a voice that carries</span></div><div><span class="zc" style="background:var(--z2)">Bust</span><span>Broad, elegant shoulders, long arms</span></div><div><span class="zc" style="background:var(--z3)">Curve</span><span>Long-waisted, proportioned like a sculpture</span></div><div><span class="zc" style="background:var(--z4)">Stride</span><span>Taller, long-limbed</span></div><div><span class="zc" style="background:var(--z5)">Skin</span><span>Flawless, even-toned</span></div><div><span class="zc" style="background:var(--z6)">Mind</span><span>Commanding, unhurried, used to being looked up to</span></div><div class="peak"><span class="zc" style="background:var(--chip)">Level 3</span><span>A head taller than the room, an Amazon in heels</span></div></div></details><details class="fl"><summary><b>Glam</b><span>Polished, showy, done-up, camera-ready</span><i></i></summary><div class="zl"><div><span class="zc" style="background:var(--z1)">Crown</span><span>Styled hair, a made-up face that stays made up</span></div><div><span class="zc" style="background:var(--z2)">Bust</span><span>Manicured hands, a showy neckline</span></div><div><span class="zc" style="background:var(--z3)">Curve</span><span>A dramatic, tailored silhouette</span></div><div><span class="zc" style="background:var(--z4)">Stride</span><span>Toned legs that want heels</span></div><div><span class="zc" style="background:var(--z5)">Skin</span><span>Glowing, highlighted, camera-ready</span></div><div><span class="zc" style="background:var(--z6)">Mind</span><span>Showy, poised, aware of every camera</span></div><div class="peak"><span class="zc" style="background:var(--chip)">Level 3</span><span>Red-carpet perfect at all hours</span></div></div></details><details class="fl"><summary><b>Bubbly</b><span>Bright, bouncy, big-haired, carefree</span><i></i></summary><div class="zl"><div><span class="zc" style="background:var(--z1)">Crown</span><span>Big, bouncy hair, bright eyes, a giggle</span></div><div><span class="zc" style="background:var(--z2)">Bust</span><span>A perky bust, expressive hands</span></div><div><span class="zc" style="background:var(--z3)">Curve</span><span>A bouncy, playful sway</span></div><div><span class="zc" style="background:var(--z4)">Stride</span><span>Springy legs, a skip in every step</span></div><div><span class="zc" style="background:var(--z5)">Skin</span><span>Rosy, freckled, glowing</span></div><div><span class="zc" style="background:var(--z6)">Mind</span><span>Cheerful, chatty, easily excited</span></div><div class="peak"><span class="zc" style="background:var(--chip)">Level 3</span><span>Sunshine in a body: everything bounces, everything is fun</span></div></div></details><details class="fl"><summary><b>Sultry</b><span>Dark, smoldering, low-voiced, teasing</span><i></i></summary><div class="zl"><div><span class="zc" style="background:var(--z1)">Crown</span><span>Dark hair, smoky eyes, a low, husky voice</span></div><div><span class="zc" style="background:var(--z2)">Bust</span><span>Bare-shouldered poise, slow hands</span></div><div><span class="zc" style="background:var(--z3)">Curve</span><span>A slow, deliberate sway of the hips</span></div><div><span class="zc" style="background:var(--z4)">Stride</span><span>Long legs that cross and uncross</span></div><div><span class="zc" style="background:var(--z5)">Skin</span><span>Olive, warm, faintly scented</span></div><div><span class="zc" style="background:var(--z6)">Mind</span><span>Teasing, confident, knows the effect they have</span></div><div class="peak"><span class="zc" style="background:var(--chip)">Level 3</span><span>A walking invitation; rooms go quiet when they arrive</span></div></div></details><details class="fl"><summary><b>Peach</b><span>Wholesome and fresh-faced: freckles, a soft glow, sweet-natured</span><i></i></summary><div class="zl"><div><span class="zc" style="background:var(--z1)">Crown</span><span>Fresh face, freckles, rosy cheeks</span></div><div><span class="zc" style="background:var(--z2)">Bust</span><span>Soft, rounded shoulders</span></div><div><span class="zc" style="background:var(--z3)">Curve</span><span>A soft, gentle curve</span></div><div><span class="zc" style="background:var(--z4)">Stride</span><span>Sturdy, shapely farm-girl legs</span></div><div><span class="zc" style="background:var(--z5)">Skin</span><span>A peaches-and-cream glow</span></div><div><span class="zc" style="background:var(--z6)">Mind</span><span>Sweet-natured, earnest, kind</span></div><div class="peak"><span class="zc" style="background:var(--chip)">Level 3</span><span>Wholesome to an almost unfair degree</span></div></div></details><details class="fl"><summary><b>Sunkissed</b><span>Bronzed, sun-streaked, beach-fit, easygoing</span><i></i></summary><div class="zl"><div><span class="zc" style="background:var(--z1)">Crown</span><span>Sun-streaked hair, bright smile, a few freckles</span></div><div><span class="zc" style="background:var(--z2)">Bust</span><span>Bronzed, toned shoulders and arms</span></div><div><span class="zc" style="background:var(--z3)">Curve</span><span>A beach-fit waist, firm hips</span></div><div><span class="zc" style="background:var(--z4)">Stride</span><span>Strong swimmer&#x27;s legs</span></div><div><span class="zc" style="background:var(--z5)">Skin</span><span>Bronzed, tan-lined, salt-soft</span></div><div><span class="zc" style="background:var(--z6)">Mind</span><span>Easygoing, sunny, unbothered</span></div><div class="peak"><span class="zc" style="background:var(--chip)">Level 3</span><span>A walking summer vacation</span></div></div></details><details class="fl"><summary><b>Pin-up</b><span>Retro glamour: curled hair, cinched waist, coy</span><i></i></summary><div class="zl"><div><span class="zc" style="background:var(--z1)">Crown</span><span>Victory-roll curls, red lips, winged liner</span></div><div><span class="zc" style="background:var(--z2)">Bust</span><span>A sweetheart neckline&#x27;s bust</span></div><div><span class="zc" style="background:var(--z3)">Curve</span><span>A cinched hourglass waist</span></div><div><span class="zc" style="background:var(--z4)">Stride</span><span>Stockinged legs, a heel-ready arch</span></div><div><span class="zc" style="background:var(--z5)">Skin</span><span>Creamy, beauty-marked</span></div><div><span class="zc" style="background:var(--z6)">Mind</span><span>Coy, playful, winks a lot</span></div><div class="peak"><span class="zc" style="background:var(--chip)">Level 3</span><span>A 1950s calendar girl stepped off the page</span></div></div></details><details class="fl"><summary><b>Edge</b><span>Ink, piercings, dyed hair, a rebel&#x27;s manner</span><i></i></summary><div class="zl"><div><span class="zc" style="background:var(--z1)">Crown</span><span>Dyed hair, piercings, dark liner</span></div><div><span class="zc" style="background:var(--z2)">Bust</span><span>Sleeve tattoos, ringed fingers</span></div><div><span class="zc" style="background:var(--z3)">Curve</span><span>An inked hip, a pierced navel</span></div><div><span class="zc" style="background:var(--z4)">Stride</span><span>Ankle tattoos, boot-ready legs</span></div><div><span class="zc" style="background:var(--z5)">Skin</span><span>Ink and piercings across the skin</span></div><div><span class="zc" style="background:var(--z6)">Mind</span><span>Defiant, sarcastic, rule-bending</span></div><div class="peak"><span class="zc" style="background:var(--chip)">Level 3</span><span>Covered in ink and attitude</span></div></div></details><details class="fl"><summary><b>Heat</b><span>Flushed, sensitive, hungry for touch</span><i></i></summary><div class="zl"><div><span class="zc" style="background:var(--z1)">Crown</span><span>Flushed cheeks, parted lips, a breathy voice</span></div><div><span class="zc" style="background:var(--z2)">Bust</span><span>A sensitive chest, restless hands</span></div><div><span class="zc" style="background:var(--z3)">Curve</span><span>Hips that won&#x27;t keep still</span></div><div><span class="zc" style="background:var(--z4)">Stride</span><span>Trembling legs, a warm ache</span></div><div><span class="zc" style="background:var(--z5)">Skin</span><span>Flushed, warm, hypersensitive to touch</span></div><div><span class="zc" style="background:var(--z6)">Mind</span><span>Hungry for touch, distracted, bold</span></div><div class="peak"><span class="zc" style="background:var(--chip)">Level 3</span><span>Permanently, deliciously on edge</span></div></div></details></div>
+  <h3>Fantastic shelf <span class="muted small">(9 flavors, only with the Everything or Custom assortment)</span></h3>
+  <div class="cards"><details class="fl"><summary><b>Masculine</b><span>Broader, harder, heavier, more manly</span><i></i></summary><div class="zl"><div><span class="zc" style="background:var(--z1)">Crown</span><span>A square jaw, stubble, a deep voice</span></div><div><span class="zc" style="background:var(--z2)">Bust</span><span>Broad shoulders, a flat, hard chest, big hands</span></div><div><span class="zc" style="background:var(--z3)">Curve</span><span>Narrow hips, a solid waist</span></div><div><span class="zc" style="background:var(--z4)">Stride</span><span>Heavier, hairier legs, bigger feet</span></div><div><span class="zc" style="background:var(--z5)">Skin</span><span>Coarser, hairier</span></div><div><span class="zc" style="background:var(--z6)">Mind</span><span>Blunt, assertive, competitive</span></div><div class="peak"><span class="zc" style="background:var(--chip)">Level 3</span><span>Unmistakably, ruggedly male</span></div></div></details><details class="fl"><summary><b>Brawn</b><span>Heavily muscled, strong, tireless</span><i></i></summary><div class="zl"><div><span class="zc" style="background:var(--z1)">Crown</span><span>A strong jaw, a thick neck</span></div><div><span class="zc" style="background:var(--z2)">Bust</span><span>Huge shoulders and arms</span></div><div><span class="zc" style="background:var(--z3)">Curve</span><span>A hard, ridged core</span></div><div><span class="zc" style="background:var(--z4)">Stride</span><span>Powerful, columnar legs</span></div><div><span class="zc" style="background:var(--z5)">Skin</span><span>Taut over muscle, veined</span></div><div><span class="zc" style="background:var(--z6)">Mind</span><span>Tireless, physical, loves a challenge</span></div><div class="peak"><span class="zc" style="background:var(--chip)">Level 3</span><span>A bodybuilder&#x27;s mass, doorways get tight</span></div></div></details><details class="fl"><summary><b>Beast</b><span>One animal&#x27;s traits (the animal is fixed per person at their first Beast bean)</span><i></i></summary><div class="zl"><div><span class="zc" style="background:var(--z1)">Crown</span><span>Animal ears, an animal&#x27;s eyes and hair</span></div><div><span class="zc" style="background:var(--z2)">Bust</span><span>Fur on the arms, paw-like hands</span></div><div><span class="zc" style="background:var(--z3)">Curve</span><span>A furred rear</span></div><div><span class="zc" style="background:var(--z4)">Stride</span><span>A tail, animal legs</span></div><div><span class="zc" style="background:var(--z5)">Skin</span><span>Patches or a coat of fur, markings</span></div><div><span class="zc" style="background:var(--z6)">Mind</span><span>Animal instincts: purring, grooming, play</span></div><div class="peak"><span class="zc" style="background:var(--chip)">Level 3</span><span>The animal fully woven in, still a person</span></div></div></details><details class="fl"><summary><b>Doll</b><span>Smooth, glossy, jointed, poised like a living doll</span><i></i></summary><div class="zl"><div><span class="zc" style="background:var(--z1)">Crown</span><span>Glossy hair, painted features, a doll&#x27;s smile</span></div><div><span class="zc" style="background:var(--z2)">Bust</span><span>Smooth, jointed shoulders and wrists</span></div><div><span class="zc" style="background:var(--z3)">Curve</span><span>A seamless, molded waist</span></div><div><span class="zc" style="background:var(--z4)">Stride</span><span>Jointed knees, arched doll feet</span></div><div><span class="zc" style="background:var(--z5)">Skin</span><span>Smooth, glossy, poreless</span></div><div><span class="zc" style="background:var(--z6)">Mind</span><span>Poised, posable, eager to please</span></div><div class="peak"><span class="zc" style="background:var(--chip)">Level 3</span><span>A living doll, perfect and posed</span></div></div></details><details class="fl"><summary><b>Mythic</b><span>Horns, pointed ears, wings, a faint glow</span><i></i></summary><div class="zl"><div><span class="zc" style="background:var(--z1)">Crown</span><span>Small horns, pointed ears, a faint glow in the eyes</span></div><div><span class="zc" style="background:var(--z2)">Bust</span><span>Small wings at the shoulders</span></div><div><span class="zc" style="background:var(--z3)">Curve</span><span>A faint, glowing sigil on the hips</span></div><div><span class="zc" style="background:var(--z4)">Stride</span><span>A slim tail, elegant hooves or long feet</span></div><div><span class="zc" style="background:var(--z5)">Skin</span><span>A shimmer, a faint glow</span></div><div><span class="zc" style="background:var(--z6)">Mind</span><span>Otherworldly, imperious, uncanny</span></div><div class="peak"><span class="zc" style="background:var(--chip)">Level 3</span><span>A creature out of legend</span></div></div></details><details class="fl"><summary><b>Bloom</b><span>Petals, vines, scent, a green tint</span><i></i></summary><div class="zl"><div><span class="zc" style="background:var(--z1)">Crown</span><span>Flower-threaded hair, green-tinted lips</span></div><div><span class="zc" style="background:var(--z2)">Bust</span><span>Vine patterns down the arms</span></div><div><span class="zc" style="background:var(--z3)">Curve</span><span>Petals at the hips</span></div><div><span class="zc" style="background:var(--z4)">Stride</span><span>Leafy tendrils at the ankles</span></div><div><span class="zc" style="background:var(--z5)">Skin</span><span>Green-tinted, sweet-scented, dewy</span></div><div><span class="zc" style="background:var(--z6)">Mind</span><span>Serene, sun-seeking, nurturing</span></div><div class="peak"><span class="zc" style="background:var(--chip)">Level 3</span><span>Half person, half garden in full flower</span></div></div></details><details class="fl"><summary><b>Confection</b><span>The body takes on candy: sugar-dusted, gummy, flavored</span><i></i></summary><div class="zl"><div><span class="zc" style="background:var(--z1)">Crown</span><span>Candy-floss hair, glossy candy lips</span></div><div><span class="zc" style="background:var(--z2)">Bust</span><span>Sugar-dusted shoulders</span></div><div><span class="zc" style="background:var(--z3)">Curve</span><span>Gummy-soft hips</span></div><div><span class="zc" style="background:var(--z4)">Stride</span><span>Candy-stripe legs</span></div><div><span class="zc" style="background:var(--z5)">Skin</span><span>Sugar-dusted, faintly flavored</span></div><div><span class="zc" style="background:var(--z6)">Mind</span><span>Sweet, sticky, indulgent</span></div><div class="peak"><span class="zc" style="background:var(--chip)">Level 3</span><span>Made of candy, and tastes of it</span></div></div></details><details class="fl"><summary><b>Gel</b><span>Translucent, stretchy, pliant</span><i></i></summary><div class="zl"><div><span class="zc" style="background:var(--z1)">Crown</span><span>Glossy, translucent hair</span></div><div><span class="zc" style="background:var(--z2)">Bust</span><span>Stretchy, pliant arms</span></div><div><span class="zc" style="background:var(--z3)">Curve</span><span>A wobbly, jelly-soft rear</span></div><div><span class="zc" style="background:var(--z4)">Stride</span><span>Bouncy, stretchy legs</span></div><div><span class="zc" style="background:var(--z5)">Skin</span><span>Translucent, cool, pliant</span></div><div><span class="zc" style="background:var(--z6)">Mind</span><span>Relaxed, shapeless, easygoing</span></div><div class="peak"><span class="zc" style="background:var(--chip)">Level 3</span><span>Jelly from head to toe, see-through and springy</span></div></div></details><details class="fl"><summary><b>Gleam</b><span>Metal and gemstone: gilded, faceted, cool to the touch</span><i></i></summary><div class="zl"><div><span class="zc" style="background:var(--z1)">Crown</span><span>Gilded hair, gemstone eyes</span></div><div><span class="zc" style="background:var(--z2)">Bust</span><span>Metallic sheen on the shoulders</span></div><div><span class="zc" style="background:var(--z3)">Curve</span><span>A polished, faceted waist</span></div><div><span class="zc" style="background:var(--z4)">Stride</span><span>Chrome-sheened legs</span></div><div><span class="zc" style="background:var(--z5)">Skin</span><span>Gilded, faceted, cool to the touch</span></div><div><span class="zc" style="background:var(--z6)">Mind</span><span>Cool, precious, vain</span></div><div class="peak"><span class="zc" style="background:var(--chip)">Level 3</span><span>A living statue of gold and gemstones</span></div></div></details></div>
+</section>
+
+<section id="centers" aria-labelledby="h-centers">
+  <span class="eyebrow">The twist</span>
+  <h2 id="h-centers">Centers</h2>
+  <p>The turn's center applies to every bean bitten that turn, by anyone. It applies once to a pairing and not at all to a clear bean.</p>
+  <div class="scroll"><table>
+    <tr><th>Center</th><th>What it adds</th><th>How often</th></tr><tr><td>Soft</td><td>Plain: the change arrives at once, exactly as the bean says.</td><td>Common</td></tr><tr><td>Fizzy</td><td>The change flares a step stronger whenever the eater is excited or embarrassed, then settles back.</td><td>Now and then</td></tr><tr><td>Sticky</td><td>The nearest person catches a faint, level 1 trace of the same change too.</td><td>Now and then</td></tr><tr><td>Slow-melt</td><td>The change creeps in over the next few turns, and other people notice it before the eater does.</td><td>Now and then</td></tr><tr><td>Sour</td><td>The change comes with a sharp matching mood that lasts the rest of the scene.</td><td>Now and then</td></tr><tr><td>Sweet</td><td>The eater craves that flavor again: drawn back to that color and restless until the change reaches level 3, without quite realizing why; the craving ends at level 3 or when the zone is cleared.</td><td>Now and then</td></tr><tr><td>Glazed</td><td>The eater is proud of the change and wants it seen: shows it off, dresses to display it and fishes for looks and compliments for the rest of the day.</td><td>Now and then</td></tr>
+  </table></div>
+</section>
+
+<section id="shop" aria-labelledby="h-shop">
+  <span class="eyebrow">Running the place</span>
+  <h2 id="h-shop">The shop's days</h2>
+  <div class="cards c2">
+    <div class="card"><h3>Customers</h3><p class="small">Two a day to start. One more at word of mouth 2, another at 4, and one extra on Saturday, market day. They know what change they want, not which bean does it. Bolder customers arrive as the shop's name spreads.</p></div>
+    <div class="card"><h3>Regulars</h3><p class="small">Each location has three. Every regular privately wants one flavor on one zone. Work it out and sell it to them, and they pick a new want.</p></div>
+    <div class="card"><h3>Returns</h3><p class="small">Someone you sold to may be back first thing on a later day. Only your own sales come back, and every return ends well: fixed with a clear bean, won over, made right with a free bean, or doubled down.</p></div>
+    <div class="card"><h3>Special orders</h3><p class="small">Now and then someone orders a pairing you haven't found or a level 3 effect, due in three days. Miss one and the order book stays shut for two days.</p></div>
+    <div class="card"><h3>Today's special</h3><p class="small">One rare bean a day on the chalkboard. Its effect is a mood or a moment, not a body change, and it is gone by morning.</p></div>
+    <div class="card"><h3>Around town</h3><p class="small">About every other day a bean from somewhere else turns up in town. Those are not yours and the trail goes cold. They are color for the day.</p></div>
+  </div>
+  <h3>Word of mouth <span class="muted small">(0 to 5, starts at 1)</span></h3>
+  <div class="scroll"><table>
+    <tr><th>What happens</th><th>Effect</th></tr>
+    <tr><td>A customer leaves happy</td><td>Up</td></tr>
+    <tr><td>A return ends won over or fixed</td><td>Up</td></tr>
+    <tr><td>A special order is filled</td><td>Up twice as much</td></tr>
+    <tr><td>You are rude to a customer</td><td>Down</td></tr>
+  </table></div>
+  <p class="small muted">There is a cap on how much it can rise in one day, so a steady week beats one frantic afternoon.</p>
+</section>
+
+<section id="dulcie" aria-labelledby="h-dulcie">
+  <span class="eyebrow">Your assistant manager</span>
+  <h2 id="h-dulcie">Dulcie</h2>
+  <p>Dulcie Marchpane came with the shop. She is eager, she has no power over any of this, and she never tells you the key. Her regard for you runs from 0 to 5. Being kind, being curious about her and standing up for her raise it. Mocking her lowers it.</p>
+  <div class="scroll"><table>
+    <tr><th>Regard</th><th>What you get</th></tr>
+    <tr><td>0 to 1</td><td>Brittle company patter</td></tr>
+    <tr><td>2 to 3</td><td>Warmer, more herself</td></tr>
+    <tr><td>4</td><td>Candid. She confirms a right guess and will mind the counter alone</td></tr>
+    <tr><td>5</td><td>Once a day she offers a second special</td></tr>
+  </table></div>
+</section>
+
+<section id="start" aria-labelledby="h-start">
+  <span class="eyebrow">Before turn one</span>
+  <h2 id="h-start">Start options</h2>
+  <div class="who"><figure><img src="https://infinite-worlds-images-5.us-ord-10.linodeobjects.com/EhWNituL5y.webp" alt="Portrait of Wendell Achterberg" loading="lazy" onerror="this.remove()"><figcaption><b>Wendell Achterberg</b>28, illustrator. Easygoing and curious; laughs first, takes notes second.</figcaption></figure><figure><img src="https://infinite-worlds-images-5.us-ord-10.linodeobjects.com/UaG3VLARuq.webp" alt="Portrait of Ylva Ahlgren" loading="lazy" onerror="this.remove()"><figcaption><b>Ylva Ahlgren</b>26, pastry chef. Precise and competitive; asks for a second sample.</figcaption></figure><figure><img src="https://infinite-worlds-images-5.us-ord-10.linodeobjects.com/qa82weRMui.webp" alt="Portrait of Cormac Adeyemi-Walsh" loading="lazy" onerror="this.remove()"><figcaption><b>Cormac Adeyemi-Walsh</b>31, account manager. Charming and in control; asks who else knows.</figcaption></figure><figure><img src="https://infinite-worlds-images-5.us-ord-10.linodeobjects.com/jLe3xd0YCm.webp" alt="Portrait of Ainhoa Etxeberria" loading="lazy" onerror="this.remove()"><figcaption><b>Ainhoa Etxeberria</b>24, dance teacher. Warm and impulsive; takes another one to check.</figcaption></figure></div>
+  <p class="small muted">Pick one of the four owners, or change the name and description to make your own.</p>
+  <div class="scroll"><table>
+    <tr><th>Option</th><th>Choices</th></tr>
+    <tr><td>Location</td><td>Larkspur Road (small town), Penhallow Arcade (city) or The Boardwalk (seaside). Each has its own three regulars.</td></tr>
+    <tr><td>Assortment</td><td>Classic (human flavors only), Everything (adds the fantastic shelf) or Custom (tick the flavors you want, at least three).</td></tr>
+    <tr><td>Labels</td><td>Blank (you work out the key by tasting) or Labeled (the shelf tags tell you).</td></tr>
+    <tr><td>Pictures</td><td>World, Photographic, Painted or Anime, each as Slim (the default: good pictures, low cost) or High (best pictures, high cost). Or Basic, or Off for the lowest cost.</td></tr>
+    <tr><td>Player Instructions</td><td>Your own standing notes. Anything you write there overrides the story's rules.</td></tr>
+  </table></div>
+  <h3>Trackers worth watching</h3>
+  <div class="scroll"><table>
+    <tr><th>Tracker</th><th>What it shows</th></tr>
+    <tr><td>The Shop Today</td><td>The day, the price board, today's special, word of mouth and any open order</td></tr>
+    <tr><td>Tasting Card</td><td>What you have worked out so far about colors, patterns and pairings</td></tr>
+    <tr><td>Bean Ledger</td><td>Every change in play: who, which zone, which flavor, which level</td></tr>
+    <tr><td>Dulcie's Regard</td><td>Where you stand with Dulcie</td></tr>
+    <tr><td>Shop Handbook</td><td>The in-game list of moves</td></tr>
+  </table></div>
+</section>
+
+<section id="spoilers" aria-labelledby="h-spoil">
+  <span class="eyebrow">Open at your own risk</span>
+  <h2 id="h-spoil">Spoilers</h2>
+  <p>Pairings and specials are meant to be found in play. Each game stocks up to four pairings, drawn from the ones whose two flavors are both on the shelf.</p>
+  <details class="spoil"><summary>All 24 pairings</summary><div>
+    <p class="small muted">Two beans of these flavors in one bite set all the listed zones at once. Any other two beans just both work as normal.</p>
+    <div class="cards c3"><div class="pair"><b>Starlet</b><span class="mix">Glam + Pin-up</span><div class="sets"><span class="zc" style="background:var(--z1)">Crown: Glam 2</span><span class="zc" style="background:var(--z3)">Curve: Pin-up 2</span><span class="zc" style="background:var(--z6)">Mind: Glam 1</span></div><p>A 1950s screen siren who finds the light in any room.</p></div><div class="pair"><b>Bombshell</b><span class="mix">Lush + Bubbly</span><div class="sets"><span class="zc" style="background:var(--z2)">Bust: Lush 2</span><span class="zc" style="background:var(--z1)">Crown: Bubbly 2</span><span class="zc" style="background:var(--z6)">Mind: Bubbly 1</span></div><p>Giggly, big-haired and bouncing out of everything.</p></div><div class="pair"><b>Siren</b><span class="mix">Sultry + Heat</span><div class="sets"><span class="zc" style="background:var(--z1)">Crown: Sultry 2</span><span class="zc" style="background:var(--z5)">Skin: Heat 1</span><span class="zc" style="background:var(--z6)">Mind: Heat 2</span></div><p>A smoky voice and a body that runs warm.</p></div><div class="pair"><b>Lifeguard</b><span class="mix">Sunkissed + Sleek</span><div class="sets"><span class="zc" style="background:var(--z5)">Skin: Sunkissed 2</span><span class="zc" style="background:var(--z4)">Stride: Sleek 2</span><span class="zc" style="background:var(--z2)">Bust: Sleek 1</span></div><p>Bronze, long-legged, built to swim.</p></div><div class="pair"><b>Ballerina</b><span class="mix">Dainty + Sleek</span><div class="sets"><span class="zc" style="background:var(--z4)">Stride: Sleek 2</span><span class="zc" style="background:var(--z3)">Curve: Dainty 2</span><span class="zc" style="background:var(--z6)">Mind: Dainty 1</span></div><p>A tiny waist on dancer&#x27;s legs, poise and manners.</p></div><div class="pair"><b>Amazon</b><span class="mix">Statuesque + Lush</span><div class="sets"><span class="zc" style="background:var(--z4)">Stride: Statuesque 2</span><span class="zc" style="background:var(--z2)">Bust: Lush 2</span><span class="zc" style="background:var(--z3)">Curve: Lush 1</span></div><p>Towering and generous.</p></div><div class="pair"><b>Girl Next Door</b><span class="mix">Peach + Bubbly</span><div class="sets"><span class="zc" style="background:var(--z5)">Skin: Peach 2</span><span class="zc" style="background:var(--z1)">Crown: Bubbly 1</span><span class="zc" style="background:var(--z6)">Mind: Peach 2</span></div><p>The sweetest person on the street.</p></div><div class="pair"><b>Rock Star</b><span class="mix">Edge + Glam</span><div class="sets"><span class="zc" style="background:var(--z5)">Skin: Edge 2</span><span class="zc" style="background:var(--z1)">Crown: Glam 2</span><span class="zc" style="background:var(--z6)">Mind: Edge 1</span></div><p>Ink, smudged liner and swagger.</p></div><div class="pair"><b>Femme Fatale</b><span class="mix">Sultry + Pin-up</span><div class="sets"><span class="zc" style="background:var(--z1)">Crown: Sultry 2</span><span class="zc" style="background:var(--z3)">Curve: Pin-up 2</span><span class="zc" style="background:var(--z6)">Mind: Sultry 1</span></div><p>Noir trouble in a fitted dress.</p></div><div class="pair"><b>Sweetheart</b><span class="mix">Feminine + Peach</span><div class="sets"><span class="zc" style="background:var(--z1)">Crown: Feminine 2</span><span class="zc" style="background:var(--z5)">Skin: Peach 1</span><span class="zc" style="background:var(--z6)">Mind: Feminine 2</span></div><p>Soft, rosy and adoring.</p></div><div class="pair"><b>Runway</b><span class="mix">Statuesque + Glam</span><div class="sets"><span class="zc" style="background:var(--z4)">Stride: Statuesque 2</span><span class="zc" style="background:var(--z5)">Skin: Glam 1</span><span class="zc" style="background:var(--z6)">Mind: Glam 2</span></div><p>A supermodel&#x27;s height and walk.</p></div><div class="pair"><b>Beach Babe</b><span class="mix">Sunkissed + Bubbly</span><div class="sets"><span class="zc" style="background:var(--z5)">Skin: Sunkissed 2</span><span class="zc" style="background:var(--z1)">Crown: Bubbly 2</span><span class="zc" style="background:var(--z6)">Mind: Sunkissed 1</span></div><p>Sun-streaked, sandy and always laughing.</p></div><div class="pair"><b>Wildcat</b><span class="mix">Edge + Heat</span><div class="sets"><span class="zc" style="background:var(--z1)">Crown: Edge 2</span><span class="zc" style="background:var(--z5)">Skin: Edge 1</span><span class="zc" style="background:var(--z6)">Mind: Heat 2</span></div><p>A pierced rebel who can&#x27;t sit still.</p></div><div class="pair"><b>Hourglass</b><span class="mix">Feminine + Lush</span><div class="sets"><span class="zc" style="background:var(--z3)">Curve: Lush 2</span><span class="zc" style="background:var(--z2)">Bust: Feminine 2</span><span class="zc" style="background:var(--z1)">Crown: Feminine 1</span></div><p>Every curve exaggerated, every line soft.</p></div><div class="pair"><b>Succubus</b><span class="mix">Mythic + Heat</span><div class="sets"><span class="zc" style="background:var(--z1)">Crown: Mythic 2</span><span class="zc" style="background:var(--z4)">Stride: Mythic 1</span><span class="zc" style="background:var(--z6)">Mind: Heat 2</span></div><p>Horns, a spaded tail and an appetite.</p></div><div class="pair"><b>Bunny</b><span class="mix">Beast + Bubbly</span><div class="sets"><span class="zc" style="background:var(--z1)">Crown: Beast 2</span><span class="zc" style="background:var(--z4)">Stride: Beast 1</span><span class="zc" style="background:var(--z6)">Mind: Bubbly 2</span></div><p>Rabbit ears, a cotton tail and endless bounce (the animal is rabbit unless already fixed).</p></div><div class="pair"><b>Kitten</b><span class="mix">Beast + Sultry</span><div class="sets"><span class="zc" style="background:var(--z1)">Crown: Beast 2</span><span class="zc" style="background:var(--z4)">Stride: Beast 1</span><span class="zc" style="background:var(--z6)">Mind: Sultry 2</span></div><p>Cat ears, a tail and a purr (cat unless already fixed).</p></div><div class="pair"><b>Porcelain Doll</b><span class="mix">Doll + Dainty</span><div class="sets"><span class="zc" style="background:var(--z5)">Skin: Doll 2</span><span class="zc" style="background:var(--z3)">Curve: Dainty 2</span><span class="zc" style="background:var(--z6)">Mind: Doll 1</span></div><p>Small, glossy and perfectly posed.</p></div><div class="pair"><b>Gummy</b><span class="mix">Confection + Gel</span><div class="sets"><span class="zc" style="background:var(--z5)">Skin: Confection 2</span><span class="zc" style="background:var(--z3)">Curve: Gel 2</span><span class="zc" style="background:var(--z6)">Mind: Confection 1</span></div><p>Soft, wobbly, sugar-dusted candy.</p></div><div class="pair"><b>Gilded Idol</b><span class="mix">Gleam + Statuesque</span><div class="sets"><span class="zc" style="background:var(--z5)">Skin: Gleam 2</span><span class="zc" style="background:var(--z4)">Stride: Statuesque 2</span><span class="zc" style="background:var(--z6)">Mind: Gleam 1</span></div><p>A tall golden statue come to life.</p></div><div class="pair"><b>Fairy</b><span class="mix">Mythic + Dainty</span><div class="sets"><span class="zc" style="background:var(--z2)">Bust: Mythic 2</span><span class="zc" style="background:var(--z4)">Stride: Dainty 2</span><span class="zc" style="background:var(--z1)">Crown: Mythic 1</span></div><p>Tiny, winged and glowing.</p></div><div class="pair"><b>Dryad</b><span class="mix">Bloom + Sleek</span><div class="sets"><span class="zc" style="background:var(--z5)">Skin: Bloom 2</span><span class="zc" style="background:var(--z4)">Stride: Sleek 2</span><span class="zc" style="background:var(--z1)">Crown: Bloom 1</span></div><p>A willowy figure in leaf and flower.</p></div><div class="pair"><b>Gym Hero</b><span class="mix">Brawn + Masculine</span><div class="sets"><span class="zc" style="background:var(--z2)">Bust: Brawn 2</span><span class="zc" style="background:var(--z4)">Stride: Brawn 1</span><span class="zc" style="background:var(--z1)">Crown: Masculine 2</span></div><p>A square-jawed wall of muscle.</p></div><div class="pair"><b>Valkyrie</b><span class="mix">Brawn + Statuesque</span><div class="sets"><span class="zc" style="background:var(--z2)">Bust: Brawn 2</span><span class="zc" style="background:var(--z4)">Stride: Statuesque 2</span><span class="zc" style="background:var(--z6)">Mind: Brawn 1</span></div><p>A towering, powerful shieldmaiden.</p></div></div>
+  </div></details>
+  <details class="spoil"><summary>All 12 daily specials</summary><div>
+    <div class="scroll"><table>
+      <tr><th>Special</th><th>Looks</th><th>Until morning</th></tr><tr><td>Smitten</td><td>heart-print</td><td>The eater falls giddily, helplessly smitten with the next person they look at.</td></tr><tr><td>Spotlight</td><td>gold-foil</td><td>The eater can&#x27;t be ignored: every eye in the room drifts to them, and compliments pour in.</td></tr><tr><td>Showgirl</td><td>glitter-dusted</td><td>The eater finds their clothes turned into a sequined stage costume.</td></tr><tr><td>Honest</td><td>frosted</td><td>The eater can only say exactly what they think.</td></tr><tr><td>Heatwave</td><td>chili-flecked</td><td>The eater runs hot, flushed and shedding layers.</td></tr><tr><td>Lingerie</td><td>lace-print</td><td>The eater finds their outer clothes have become lingerie.</td></tr><tr><td>Lucky</td><td>star-print</td><td>The eater has everything go their way.</td></tr><tr><td>Daydream</td><td>moon-pale</td><td>The eater drifts into a vivid daydream, shown as a short scene, about whoever is on their mind.</td></tr><tr><td>Sweet Talk</td><td>candy-heart</td><td>The eater can only speak in compliments and flirtation.</td></tr><tr><td>Giggles</td><td>bubble-glossed</td><td>The eater is tipsy and giggly with no drink involved.</td></tr><tr><td>Best Kiss</td><td>cherry-stem</td><td>The eater gives the best kiss the next person they kiss has ever had.</td></tr><tr><td>Gift</td><td>ribbon-wrapped</td><td>The eater wakes the urge to dress up and be someone&#x27;s present for the evening.</td></tr>
+    </table></div>
+  </div></details>
+</section>
+
+<footer>
+  <p>Junebug's Jubilee Jellybeans 2.14, an original erotic transformation sandbox for Infinite Worlds by UhhWheresDre. All characters are adults.</p>
+  <p>Custom Storyloom image directing by WolfishGrimm, with Thyrphax illustrations by Thyr + Xyrphax. Contact OnlyMurdersSometimes on Discord.</p>
+</footer>
+
+</div>
+<script>
+document.querySelectorAll('button[data-open]').forEach(function(b){b.addEventListener('click',function(){
+  document.querySelectorAll('details.fl').forEach(function(d){d.open = b.dataset.open === '1';});});});
+</script>
+</body>
+</html>

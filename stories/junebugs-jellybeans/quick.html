@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Junebug&#x27;s Jubilee Jellybeans: Quick Start</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,800&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --bg:#fff7f1; --surface:#ffffff; --ink:#3a1730; --muted:#7a5a6e; --line:#f0d9df; --chip:#fbe8ee;
+  --pink:#d6336c; --berry:#8e2a7a; --teal:#0d8a86; --gold:#b7791f; --lime:#5a8f1f;
+  --z1:#f7b2c8; --z2:#f9c98f; --z3:#f3e08a; --z4:#b6e3b0; --z5:#a9d8f0; --z6:#d0bdf2; --chip-ink:#3a1730;
+  --stripe:#fde3ea;
+  --f-display:"Fraunces","Georgia","Times New Roman",serif;
+  --f-body:"Instrument Sans","Helvetica Neue",Arial,system-ui,sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#1c0f1a; --surface:#2a1727; --ink:#fbeaf1; --muted:#c9a9bb; --line:#45283f; --chip:#3a2036;
+  --pink:#ff7aa8; --berry:#e39ad6; --teal:#5fd3cd; --gold:#f0c060; --lime:#a8d66a;
+  --z1:#a8496a; --z2:#a8702f; --z3:#8f7d22; --z4:#3f7f3d; --z5:#2f6f93; --z6:#6a52a3; --chip-ink:#fff6fa;
+  --stripe:#33192d; color-scheme:dark }}
+:root[data-theme="dark"]{
+  --bg:#1c0f1a; --surface:#2a1727; --ink:#fbeaf1; --muted:#c9a9bb; --line:#45283f; --chip:#3a2036;
+  --pink:#ff7aa8; --berry:#e39ad6; --teal:#5fd3cd; --gold:#f0c060; --lime:#a8d66a;
+  --z1:#a8496a; --z2:#a8702f; --z3:#8f7d22; --z4:#3f7f3d; --z5:#2f6f93; --z6:#6a52a3; --chip-ink:#fff6fa;
+  --stripe:#33192d; color-scheme:dark }
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.55}
+h1,h2,h3{font-family:var(--f-display);margin:0;line-height:1.1;text-wrap:balance}
+p{margin:0}
+a{color:var(--teal)}
+img{max-width:100%}
+:focus-visible{outline:2px solid var(--teal);outline-offset:2px}
+.eyebrow{font-family:var(--f-mono);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--pink)}
+.awning{height:14px;background:repeating-linear-gradient(90deg,var(--pink) 0 28px,var(--surface) 28px 56px);
+  border-bottom:1px solid var(--line)}
+.chip{display:inline-block;background:var(--chip);border-radius:999px;padding:3px 11px;font-size:.82rem}
+.zc{display:inline-block;border-radius:999px;padding:1px 9px;font-family:var(--f-mono);font-size:.72rem;
+  font-weight:500;color:var(--chip-ink);white-space:nowrap}
+.muted{color:var(--muted)}
+.small{font-size:.9rem}
+
+.wrap{max-width:1000px;margin:0 auto;padding:24px 16px 40px;display:grid;gap:16px}
+h1{font-size:clamp(2.1rem,6vw,3.3rem);font-weight:800}
+h2{font-size:1.08rem;font-weight:800}
+header{display:grid;gap:8px}
+header p{font-size:1.05rem;color:var(--muted);max-width:68ch}
+.grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px}
+.blk{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;display:grid;gap:10px;
+  align-content:start;min-width:0}
+.s4{grid-column:span 4}.s2{grid-column:span 2}.s3{grid-column:span 3}.s6{grid-column:span 6}
+.steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.st{display:grid;gap:4px;align-content:start;min-width:0}
+.st b{font-family:var(--f-mono);font-weight:500;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--teal)}
+.st p,li,.blk p{font-size:.93rem}
+ul{margin:0;padding-left:18px;display:grid;gap:6px}
+.bean{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.bean div{border-radius:12px;padding:10px;background:var(--chip);display:grid;gap:2px}
+.bean b{font-family:var(--f-display);font-size:1.05rem;color:var(--pink)}
+.bean span{font-size:.86rem}
+.who{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.who figure{margin:0;display:grid;gap:4px}
+.who img{border-radius:10px;border:1px solid var(--line);aspect-ratio:1/1;object-fit:cover;object-position:50% 18%;
+  width:100%}
+.who figcaption{font-size:.8rem;color:var(--muted)}
+.who b{display:block;color:var(--ink)}
+.tags{display:flex;flex-wrap:wrap;gap:6px}
+.blk strong{color:var(--berry);font-weight:600}
+@media (max-width:760px){.s4,.s2,.s3,.s6{grid-column:1 / -1}.steps,.bean{grid-template-columns:1fr}
+  .who{grid-template-columns:repeat(2,minmax(0,1fr))}}
+</style>
+</head>
+<body>
+<div class="awning" aria-hidden="true"></div>
+<div class="wrap">
+  <header>
+    <span class="eyebrow">One-minute start</span>
+    <h1>Junebug's Jubilee Jellybeans</h1>
+    <p>Your storefront turned into a candy shop overnight. The jellybeans change whoever eats them, customers are already at the door, and your assistant manager Dulcie knows what every bean does and isn't allowed to say. Adults only.</p>
+  </header>
+
+  <div class="grid">
+    <div class="blk s4">
+      <h2>Every turn</h2>
+      <div class="steps">
+        <div class="st"><b>1 · Look around</b><p>Who is in the shop and what do they want? The Shop Today tracker has the day's special and customers.</p></div>
+        <div class="st"><b>2 · Do anything</b><p>Eat a bean, sell one, feed one to someone, flirt, snoop. Type it, or pick one of the three suggestions.</p></div>
+        <div class="st"><b>3 · Watch it land</b><p>The change happens on the spot. The game keeps the ledger and the tasting card for you.</p></div>
+      </div>
+    </div>
+
+    <div class="blk s2">
+      <h2>Reading a bean</h2>
+      <div class="bean">
+        <div><b>Color</b><span>the flavor: what kind of change</span></div>
+        <div><b>Pattern</b><span>the zone: where it lands</span></div>
+        <div><b>Center</b><span>the turn's twist</span></div>
+      </div>
+      <p class="muted">Which color is which flavor is different every game.</p>
+    </div>
+
+    <div class="blk s3">
+      <h2>The big rules</h2>
+      <ul>
+        <li><strong>Same flavor, same zone:</strong> one level deeper. 1 is a hint, 2 is unmistakable, 3 is dramatic.</li>
+        <li><strong>A different flavor</strong> in that zone replaces the old one at level 1, unless the old one reached 3.</li>
+        <li><strong>A clear bean</strong> of the zone's pattern undoes one level.</li>
+        <li><strong>Two beans in one bite</strong> sometimes pair into something special.</li>
+      </ul>
+      <div class="tags"><span class="zc" style="background:var(--z1)">Crown</span><span class="zc" style="background:var(--z2)">Bust</span><span class="zc" style="background:var(--z3)">Curve</span><span class="zc" style="background:var(--z4)">Stride</span><span class="zc" style="background:var(--z5)">Skin</span><span class="zc" style="background:var(--z6)">Mind</span></div>
+    </div>
+
+    <div class="blk s3">
+      <h2>Good first moves</h2>
+      <ul>
+        <li><strong>Eat one yourself</strong> and see what changed. That is one color and one pattern learned.</li>
+        <li><strong>Sell the first customer</strong> your best guess. A happy sale spreads the word; a wrong one comes back as a return, and returns end well too.</li>
+        <li><strong>Put out a sample tray</strong> or start a round of roulette. Dulcie reads each bean aloud, so you learn fast.</li>
+        <li><strong>Be nice to Dulcie.</strong> The more she likes you, the more she lets slip.</li>
+      </ul>
+    </div>
+
+    <div class="blk s6">
+      <h2>Setting up</h2>
+      <div class="who"><figure><img src="https://infinite-worlds-images-5.us-ord-10.linodeobjects.com/EhWNituL5y.webp" alt="Portrait of Wendell Achterberg" loading="lazy" onerror="this.remove()"><figcaption><b>Wendell Achterberg</b>28, illustrator. Easygoing and curious; laughs first, takes notes second.</figcaption></figure><figure><img src="https://infinite-worlds-images-5.us-ord-10.linodeobjects.com/UaG3VLARuq.webp" alt="Portrait of Ylva Ahlgren" loading="lazy" onerror="this.remove()"><figcaption><b>Ylva Ahlgren</b>26, pastry chef. Precise and competitive; asks for a second sample.</figcaption></figure><figure><img src="https://infinite-worlds-images-5.us-ord-10.linodeobjects.com/qa82weRMui.webp" alt="Portrait of Cormac Adeyemi-Walsh" loading="lazy" onerror="this.remove()"><figcaption><b>Cormac Adeyemi-Walsh</b>31, account manager. Charming and in control; asks who else knows.</figcaption></figure><figure><img src="https://infinite-worlds-images-5.us-ord-10.linodeobjects.com/jLe3xd0YCm.webp" alt="Portrait of Ainhoa Etxeberria" loading="lazy" onerror="this.remove()"><figcaption><b>Ainhoa Etxeberria</b>24, dance teacher. Warm and impulsive; takes another one to check.</figcaption></figure></div>
+      <p>Pick an owner, then a <strong>Location</strong> (small town, city arcade or boardwalk). <strong>Assortment:</strong> Classic keeps every change human, Everything adds horns, tails and candy skin. <strong>Labels:</strong> Blank makes the key a puzzle, Labeled shows it from the start. <strong>Pictures:</strong> Slim is the low-cost default, High is the best and costs more, Off is cheapest.</p>
+      <p class="muted">Want the details? Read the <a href="index.html">full guide</a>, with every flavor's effect by zone.</p>
+    </div>
+  </div>
+</div>
+</body>
+</html>
