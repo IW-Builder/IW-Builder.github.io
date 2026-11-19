@@ -80,7 +80,8 @@ svg .axis{stroke:var(--line);stroke-width:1}
 .multi{display:flex;flex-direction:column;gap:2px}
 .multi .bar{height:9px}
 .sub{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--text2);line-height:12px}
-.bars.two{grid-template-columns:fit-content(30%) minmax(60px,1fr);gap:0 10px}
+.bars.two{grid-template-columns:fit-content(30%) minmax(60px,1fr);gap:0 10px;align-items:stretch}
+.bars.two>.lab{display:flex;align-items:center}
 .bars.two>*{padding:12px 0;border-top:1px solid var(--line)}
 .bars.two>:nth-child(-n+2){border-top:0;padding-top:2px}
 .bars.two .multi{gap:3px}
@@ -145,7 +146,7 @@ try { const t = localStorage.getItem("iwstats-theme"); if (t === "light" || t ==
 
   <section class="panel">
     <h2>Where players found it</h2>
-    <p class="note">Players by source. IW hides counts under 5; those show as a faint bar labelled "under 5".</p>
+    <p class="note">Players by source. IW hides counts under 5; those show as a short faint bar labelled "under 5". A world with no row for a source shows a stub labelled "Not listed", so every color stays visible.</p>
     <div id="found"></div>
   </section>
 
@@ -427,7 +428,24 @@ function render(){
       rowsC.push([`Players reaching turn ${t}${t > 20 ? "+" : ""}`, ...ws.map(w => { const a = reachAt(w.data, t), b = reachAt(w.data, 1); return a == null ? "" : `${fmt(a)} <span style="color:var(--muted)">${pct(a, b)}</span>`; })]);
   }
   rowsC.push(["Longest game (turns)", ...ws.map(w => fmt(w.data.longest))]);
-  rowsC.push(["Stats: Started", ...ws.map(w => { const mg = markerGroups(w.data); return !mg ? "none" : mg.started == null ? "–" : fmt(mg.started); })]);
+  const mgs = ws.map(w => markerGroups(w.data));
+  // story-time milestones from the Reached Day / Reached Hour markers: games, as a share of Stats: Started
+  const reached = (mg, label) => ((mg && mg.groups.Reached) || []).find(r => r.label === label);
+  for (const day of [1, 3, 7]){
+    if (mgs.some(mg => reached(mg, "Day " + day)))
+      rowsC.push([`Games reaching Day ${day}+`, ...mgs.map(mg => { const r = reached(mg, "Day " + day); return !r ? "" : `${fmt(r.games)}${mg.started ? ` <span style="color:var(--muted)">${pct(r.games, mg.started)}</span>` : ""}`; })]);
+  }
+  const longTime = mg => { let best = null, key = -1;          // furthest Day marker any game reached, else furthest Hour
+    for (const r of (mg && mg.groups.Reached) || []){ const x = r.games && r.label.match(/^(Hour|Day) (\d+)$/); if (!x) continue;
+      const k = (x[1] === "Day" ? 1e6 : 0) + +x[2]; if (k > key){ key = k; best = r.label; } }
+    return best; };
+  if (mgs.some(longTime)) rowsC.push(["Longest game (time)", ...mgs.map(mg => { const l = longTime(mg); return l ? esc(l) + "+" : ""; })]);
+  const models = mg => ((mg && mg.groups.Model) || []).filter(r => r.fired || r.games);   // already sorted by turns, then games
+  ["first", "second", "third"].forEach((nth, i) => {
+    if (mgs.some(mg => models(mg)[i]))
+      rowsC.push([`Top model, ${nth}`, ...mgs.map(mg => { const r = models(mg)[i]; return !r ? "" : `${esc(r.label)} <span style="color:var(--muted)">${fmt(r.fired)} turns</span>`; })]);
+  });
+  rowsC.push(["Stats: Started", ...mgs.map(mg => !mg ? "none" : mg.started == null ? "–" : fmt(mg.started))]);
   $("compare").innerHTML = table(["", ...ws.map(w => w.name)], rowsC, ws.map((_, i) => i + 1));
   // add each world's swatch to its column header
   $("compare").querySelectorAll("thead th").forEach((th, i) => { if (i) th.innerHTML = `<i class="sw" style="background:${col(ws[i-1])};margin-right:6px"></i>${esc(ws[i-1].name)}`; });
@@ -439,10 +457,10 @@ function render(){
     const all = []; for (let t = Date.parse(dates[0] + "T00:00Z"); t <= Date.parse(dates[dates.length - 1] + "T00:00Z"); t += 864e5) all.push(new Date(t).toISOString().slice(0, 10));
     const series = ws.map(w => ({name:w.name, colour:col(w), values: all.map(d => (w.data.days[d] || {}).Turns ?? null)}));
     legend($("daysLegend"), ws);
-    lineChart($("days"), all, series, {label:"Turns played each day", xfmt: d => d.slice(5), tip: i => all[i] + "\n" + ws.map(w => {
-      const e = w.data.days[all[i]]; if (!e) return `${w.name}: –`;
-      return `${w.name}: ${fmt(e.Turns)} turns` + (e.Players != null ? `, ${fmt(e.Players)} players` : "") + (e.Credits != null ? `, ${fmt(e.Credits)} credits` : "");
-    }).join("\n")});
+    lineChart($("days"), all, series, {label:"Turns played each day", xfmt: d => d.slice(5), tip: i => { const on = ws.filter(w => ((w.data.days[all[i]] || {}).Turns || 0) >= 1);
+      return all[i] + "\n" + (on.length ? on.map(w => { const e = w.data.days[all[i]];
+        return `${w.name}: ${fmt(e.Turns)} turns` + (e.Players != null ? `, ${fmt(e.Players)} players` : "") + (e.Credits != null ? `, ${fmt(e.Credits)} credits` : "");
+      }).join("\n") : "No turns played"); }});
     $("daysTable").innerHTML = table(["Day", ...ws.flatMap(w => [`${esc(w.name)} turns`, "players", "credits"])],
       all.filter(d => ws.some(w => w.data.days[d])).map(d => [d, ...ws.flatMap(w => { const e = w.data.days[d] || {}; return [fmt(e.Turns), fmt(e.Players), fmt(e.Credits)]; })]),
       ws.flatMap((_, i) => [1 + 3 * i, 2 + 3 * i, 3 + 3 * i]));
@@ -460,12 +478,14 @@ function render(){
 
   /* found */
   const srcs = [...new Set(ws.flatMap(w => Object.keys(w.data.found)))];
-  const fmax = Math.max(1, ...ws.flatMap(w => Object.values(w.data.found).map(e => (e.Players && (e.Players.n || e.Players.lt)) || 0)));
+  const fmax = Math.max(3, ...ws.flatMap(w => Object.values(w.data.found).map(e => (e.Players && e.Players.n) || 0)));
   $("found").innerHTML = srcs.length ? `<div class="bars two">` + srcs.map(s => {
     const parts = ws.map(w => { const e = w.data.found[s]; const p = e && e.Players;
-      const v = p ? (p.n != null ? p.n : p.lt || 0) : 0;
+      // every world keeps a visible bar: under 5 draws as 3, not listed (or 0) as 1, both faint
+      const lt = p && p.n == null && p.lt, none = !p || (!lt && !p.n);
+      const v = none ? 1 : lt ? 3 : p.n;
       const tipT = `${w.name}, ${s}\n` + (e ? Object.entries(e).map(([k, x]) => `${k}: ${showV(x)}`).join("\n") : "not listed");
-      return `<div data-tip="${esc(tipT)}" class="sub"><div class="bar${p && p.n == null ? " lt" : !v ? " zero" : ""}" style="width:${v ? Math.max(0.6, 85 * v / fmax) : 0}%;background:${col(w)}"></div><span>${p ? esc(showV(p)) : "–"}</span></div>`; }).join("");
+      return `<div data-tip="${esc(tipT)}" class="sub"><div class="bar${lt || none ? " lt" : ""}" style="width:${Math.max(0.6, 85 * v / fmax)}%;background:${col(w)}"></div><span>${p && !none ? esc(showV(p)) : p ? "0" : "Not listed"}</span></div>`; }).join("");
     return `<div class="lab">${esc(s)}</div><div class="multi">${parts}</div>`;
   }).join("") + `</div>` + (ws.length > 1 ? `<div class="legend">${ws.map(w => `<span><i class="sw" style="background:${col(w)}"></i>${esc(w.name)}</span>`).join("")}</div>` : "") : `<p class="ok">No source data in these files.</p>`;
 
