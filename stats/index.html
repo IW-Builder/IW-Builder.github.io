@@ -340,10 +340,17 @@ function markerGroups(d){
     if (k.includes(" = ")){ const i = k.indexOf(" = "); put(k.slice(0, i), k.slice(i + 3), e); }
     else { const g = ["Reached", "Turn", "Model"].find(p => k.startsWith(p + " ")); g ? put(g, k.slice(g.length + 1), e) : put("Other", k, e); }
   }
-  const timeKey = l => { const x = l.match(/^(Hour|Day) (\d+)$/); return x ? (x[1] === "Day" ? 1e6 : 0) + +x[2] : null; };  // hours, then days
-  if (groups.Reached) groups.Reached.sort((a, b) => {
-    const da = timeKey(a.label), db = timeKey(b.label);
-    return da != null && db != null ? da - db : da != null ? -1 : db != null ? 1 : b.games - a.games; });
+  // milestone ladders ("Level 2", "Day 5", "Quest Q3") sort by number within their family: Hour, Day, then the busiest family first
+  const ladder = l => { const x = l.match(/^(.*?)(\d+)(\D*)$/); return x ? {fam: x[1] + "#" + x[3], n: +x[2]} : null; };
+  if (groups.Reached){
+    const famGames = {};
+    for (const r of groups.Reached){ const k = ladder(r.label); if (k) famGames[k.fam] = Math.max(famGames[k.fam] || 0, r.games); }
+    const famRank = f => f === "Hour #" ? 2e9 : f === "Day #" ? 1e9 : famGames[f];
+    groups.Reached.sort((a, b) => {
+      const ka = ladder(a.label), kb = ladder(b.label);
+      if (ka && kb) return ka.fam === kb.fam ? ka.n - kb.n : (famRank(kb.fam) - famRank(ka.fam)) || (ka.fam < kb.fam ? -1 : 1);
+      return ka ? -1 : kb ? 1 : b.games - a.games; });
+  }
   if (groups.Turn) groups.Turn.sort((a, b) => (+a.label || 0) - (+b.label || 0));
   if (groups.Model) groups.Model.sort((a, b) => b.fired - a.fired || b.games - a.games);
   const tail = ["Reached", "Turn", "Model", "Other"];
@@ -472,8 +479,8 @@ function render(){
   legend($("reachLegend"), ws);
   lineChart($("reach"), labs, ws.map(w => { const top = reachAt(w.data, 1) || 1;
     return {name:w.name, colour:col(w), values: labs.map(l => { const r = w.data.reach.find(x => x.label === l); return r && r.n != null ? 100 * r.n / top : null; })}; }),
-    {label:"How far they get", pct:true, max:100, connect:true, tip: i => `Turn ${labs[i]}\n` + ws.map(w => { const r = w.data.reach.find(x => x.label === labs[i]);
-      return `${w.name}: ` + (r ? `${fmt(r.n)} players (${pct(r.n, reachAt(w.data, 1))})` : "–"); }).join("\n")});
+    {label:"How far they get", pct:true, max:100, connect:true, tip: i => { const on = ws.map(w => [w, w.data.reach.find(x => x.label === labs[i])]).filter(([, r]) => r && r.n >= 1);
+      return `Turn ${labs[i]}\n` + (on.length ? on.map(([w, r]) => `${w.name}: ${fmt(r.n)} players (${pct(r.n, reachAt(w.data, 1))})`).join("\n") : "No players"); }});
   $("reachTable").innerHTML = table(["Turn", ...ws.map(w => esc(w.name))], labs.map(l => [l, ...ws.map(w => { const r = w.data.reach.find(x => x.label === l); return r ? fmt(r.n) : ""; })]), ws.map((_, i) => i + 1));
 
   /* found */
