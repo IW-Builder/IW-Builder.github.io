@@ -1,0 +1,473 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IW Playthrough Stats</title>
+<meta name="description" content="Load your Infinite Worlds credit activity export and see stats for one playthrough of one world: cost per turn, models, dates, turns per day and extra images. Read in your browser, never uploaded.">
+<style>
+:root{
+  color-scheme:light;
+  --bg:#f6f6f4; --panel:#fcfcfb; --line:#e3e2dd; --grid:#ecebe7;
+  --text:#0b0b0b; --text2:#52514e; --muted:#7a7974; --accent:#2a78d6;
+  --s1:#2a78d6; --s2:#eb6834; --s3:#1baf7a; --s4:#eda100;
+  --s5:#e87ba4; --s6:#008300; --s7:#6250d6; --s8:#e34948; --s9:#8a8984;
+  --warn:#b26b00; --warnbg:#fdf3e1;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --bg:#121211; --panel:#1a1a19; --line:#2e2e2b; --grid:#262624;
+    --text:#f0efec; --text2:#c3c2b7; --muted:#8f8e86; --accent:#3987e5;
+    --s1:#3987e5; --s2:#d95926; --s3:#199e70; --s4:#c98500;
+    --s5:#d55181; --s6:#0ca30c; --s7:#9085e9; --s8:#e66767; --s9:#6e6d68;
+    --warn:#e8b04b; --warnbg:#2b2416;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#121211; --panel:#1a1a19; --line:#2e2e2b; --grid:#262624;
+  --text:#f0efec; --text2:#c3c2b7; --muted:#8f8e86; --accent:#3987e5;
+  --s1:#3987e5; --s2:#d95926; --s3:#199e70; --s4:#c98500;
+  --s5:#d55181; --s6:#0ca30c; --s7:#9085e9; --s8:#e66767; --s9:#6e6d68;
+  --warn:#e8b04b; --warnbg:#2b2416;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:15px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+main{max-width:1040px;margin:0 auto;padding:24px 16px 72px}
+h1{font-size:24px;margin:4px 0 2px}
+h2{font-size:17px;margin:0 0 4px}
+p{margin:4px 0}
+a{color:var(--accent)}
+.lede,.note{color:var(--text2)}
+.note{font-size:13px;margin:4px 0 10px}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:14px 0}
+.drop{border:2px dashed var(--line);border-radius:12px;padding:18px;text-align:center;background:var(--panel)}
+body.over .drop{border-color:var(--accent)}
+button{font:inherit;font-weight:600;background:var(--accent);color:#fff;border:0;border-radius:8px;padding:8px 14px;cursor:pointer}
+button.ghost{background:transparent;color:var(--accent);border:1px solid var(--accent);padding:5px 10px;font-size:13px}
+select{font:inherit;background:var(--panel);color:var(--text);border:1px solid var(--line);border-radius:8px;padding:6px 8px;max-width:100%}
+label.f{display:flex;flex-direction:column;gap:4px;font-size:12px;color:var(--text2);min-width:0;flex:1 1 280px}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.hidden{display:none!important}
+.tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:0;background:var(--panel);border:1px solid var(--line);border-radius:12px;overflow:hidden;margin:14px 0}
+.tile{padding:12px 14px;box-shadow:1px 0 0 var(--line),0 1px 0 var(--line)}
+.tile .l{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--text2)}
+.tile .v{font-size:24px;font-weight:650;line-height:1.25;font-variant-numeric:tabular-nums}
+.tile .d{font-size:12px;color:var(--muted)}
+.scroll{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:13px}
+th,td{padding:5px 8px;border-bottom:1px solid var(--line);text-align:left;vertical-align:middle}
+th{color:var(--text2);font-weight:600}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.legend{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:13px;color:var(--text2);margin:6px 0}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.sw{display:inline-block;width:10px;height:10px;border-radius:3px;flex:none}
+.stack{display:flex;height:22px;border-radius:6px;overflow:hidden;margin:8px 0}
+.stack div{height:100%}
+.mini{display:flex;height:10px;width:120px;border-radius:3px;overflow:hidden;background:var(--grid)}
+.mini div{height:100%}
+svg{display:block;width:100%;height:auto}
+svg text{fill:var(--text2);font-size:11px}
+svg .grid{stroke:var(--grid);stroke-width:1}
+svg .avg{stroke:var(--text2);stroke-width:1;stroke-dasharray:4 3}
+svg text.halo{paint-order:stroke;stroke:var(--panel);stroke-width:4px;stroke-linejoin:round;fill:var(--text)}
+.warn{background:var(--warnbg);color:var(--warn);border-radius:8px;padding:8px 12px;font-size:13px;margin:8px 0}
+.list{font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+#tip{position:fixed;pointer-events:none;background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:6px 9px;font-size:12px;box-shadow:0 4px 14px rgba(0,0,0,.18);z-index:9}
+footer{color:var(--muted);font-size:12px;margin-top:28px}
+</style>
+<script>
+try { const t = localStorage.getItem("iwstats-theme"); if (t === "light" || t === "dark") document.documentElement.setAttribute("data-theme", t); } catch (e) {}
+</script>
+</head>
+<body>
+<main>
+<div class="row" style="justify-content:space-between"><h1>IW Playthrough Stats</h1><button id="theme" class="ghost" type="button" aria-label="Color theme">Theme: auto</button></div>
+<p class="lede">Stats for one playthrough of one world, from your Infinite Worlds credit activity export. For your whole account, see <a href="https://iwstats.netlify.app/">IW analyzer</a>; for a world you built, see <a href="../stats/">World Stats</a>.</p>
+
+<div class="drop panel" id="drop">
+  <div class="row" style="justify-content:center">
+    <button type="button" id="pick">Load credit activity CSV</button>
+    <input type="file" id="file" accept=".csv,text/csv" multiple class="hidden">
+  </div>
+  <p class="note" style="margin-top:8px">or drop the file anywhere on the page. It is read in your browser and never uploaded. In Infinite Worlds, download it from your Credit activity page (<code>credit-activity-YYYY-MM-DD.csv</code>).</p>
+  <p id="loaded" class="note"></p>
+</div>
+
+<div id="app" class="hidden">
+  <div class="panel">
+    <div class="row" style="align-items:flex-end">
+      <label class="f">World<select id="world"></select></label>
+      <label class="f">Playthrough<select id="play"></select></label>
+    </div>
+    <p class="note" id="playNote">A playthrough starts each time a world goes back to Turn 1 after a later turn. Retries of the same turn stay in the playthrough.</p>
+  </div>
+
+  <h2 id="title"></h2>
+  <p class="note" id="sub"></p>
+  <div class="tiles" id="tiles"></div>
+
+  <div class="panel">
+    <h2>Cost per turn</h2>
+    <p class="note" id="costNote"></p>
+    <div class="legend" id="costLegend"></div>
+    <div id="costChart"></div>
+  </div>
+
+  <div class="panel" id="blocksPanel">
+    <h2>Cost per turn in 10% blocks</h2>
+    <p class="note" id="blocksNote"></p>
+    <div id="blocksChart"></div>
+    <div class="scroll"><table id="blocks"></table></div>
+  </div>
+
+  <div class="panel">
+    <h2>Models used</h2>
+    <p class="note">Share of turns played on each AI model, as named on each turn of the export.</p>
+    <div class="stack" id="modelStack"></div>
+    <div class="scroll"><table id="models"></table></div>
+  </div>
+
+  <div class="panel">
+    <h2>Turns per day</h2>
+    <p class="note" id="daysNote"></p>
+    <div id="daysChart"></div>
+  </div>
+
+  <div class="panel">
+    <h2>Images</h2>
+    <div class="warn">The export doesn't say which turns got their automatic picture: that cost is part of the turn. It only lists images you made yourself (the "N images" rows, 4 credits each), with no world or turn named. This page credits each of those to the last turn you played before it, within 2 hours.</div>
+    <div class="tiles" id="imgTiles" style="margin:10px 0"></div>
+    <p><strong>Turns with no image you made yourself</strong> <button type="button" class="ghost" id="copyGaps">Copy</button></p>
+    <p class="list note" id="gaps"></p>
+    <p><strong>Turns with images you made</strong></p>
+    <p class="list note" id="withImg"></p>
+  </div>
+</div>
+
+<footer>Part of <a href="../">IW-Builder</a>. Dates are the export's own (your time zone when you downloaded it). Credits are shown as spent, rounded for display.</footer>
+</main>
+<div id="tip" class="hidden"></div>
+
+<script>
+"use strict";
+const $ = id => document.getElementById(id);
+const IMG_WINDOW_MS = 2 * 3600 * 1000;
+const fmt = (n, d = 0) => Number(n).toLocaleString("en-US", { minimumFractionDigits: d, maximumFractionDigits: d });
+const pct = (a, b) => b ? fmt(100 * a / b, a === b || a === 0 ? 0 : 1) + "%" : "–";
+const esc = s => String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const MONTHS = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+const niceDate = d => { const [y, m, dd] = d.split("-").map(Number); return MONTHS[m - 1] + " " + dd + ", " + y; };
+const shortDate = d => { const [, m, dd] = d.split("-").map(Number); return MONTHS[m - 1] + " " + dd; };
+const dayNum = d => Date.UTC(+d.slice(0, 4), +d.slice(5, 7) - 1, +d.slice(8, 10)) / 864e5;
+const dayStr = n => new Date(n * 864e5).toISOString().slice(0, 10);
+
+/* ---------- CSV ---------- */
+function parseCSV(text) {
+  text = text.replace(/^﻿/, "");
+  const rows = []; let row = [], f = "", q = false;
+  for (let i = 0; i < text.length; i++) {
+    const c = text[i];
+    if (q) {
+      if (c === '"') { if (text[i + 1] === '"') { f += '"'; i++; } else q = false; }
+      else f += c;
+    } else if (c === '"') q = true;
+    else if (c === ",") { row.push(f); f = ""; }
+    else if (c === "\n" || c === "\r") {
+      if (c === "\r" && text[i + 1] === "\n") i++;
+      row.push(f); f = ""; if (row.length > 1 || row[0] !== "") rows.push(row); row = [];
+    } else f += c;
+  }
+  if (f !== "" || row.length) { row.push(f); rows.push(row); }
+  return rows;
+}
+
+let allRows = [];      // deduped raw records
+const seen = new Set();
+let files = [];
+
+function addFile(name, text) {
+  const rows = parseCSV(text);
+  if (!rows.length) throw new Error("empty file");
+  const h = rows[0].map(s => s.trim().toLowerCase());
+  const need = ["type", "credits", "world", "details"];
+  for (const k of need) if (h.indexOf(k) < 0) throw new Error("this doesn't look like a credit activity export (no \"" + k + "\" column)");
+  const ix = k => h.indexOf(k);
+  let added = 0;
+  for (let i = 1; i < rows.length; i++) {
+    const r = rows[i]; const key = r.join("\u0001");
+    if (seen.has(key)) continue; seen.add(key);
+    const utc = ix("datetime_utc") >= 0 ? r[ix("datetime_utc")] : "";
+    const date = ix("date") >= 0 && r[ix("date")] ? r[ix("date")] : utc.slice(0, 10);
+    const time = ix("time") >= 0 ? r[ix("time")] : utc.slice(11, 19);
+    const ms = Date.parse(utc) || Date.parse(date + "T" + time + "Z") || 0;
+    allRows.push({ date, time, ms, order: allRows.length, type: r[ix("type")], credits: parseFloat(r[ix("credits")]) || 0, world: r[ix("world")] || "", details: r[ix("details")] || "" });
+    added++;
+  }
+  files.push(name + " (" + fmt(added) + " new rows)");
+}
+
+/* ---------- Build playthroughs ---------- */
+let worlds = [];   // [{name, plays:[...], last}]
+function build() {
+  const rows = allRows.slice().sort((a, b) => a.ms - b.ms || a.order - b.order);
+  const byWorld = new Map();
+  let lastTurn = null;
+  let unassigned = 0;
+  for (const r of rows) {
+    if (r.type === "turn") {
+      const m = /Turn\s+(\d+)(?:,\s*AI\s+([^,]+))?/i.exec(r.details);
+      if (!m) continue;
+      const t = { n: +m[1], model: (m[2] || "unknown").trim(), free: /free turn/i.test(r.details), cost: -r.credits, date: r.date, time: r.time, ms: r.ms, imgs: 0, imgCost: 0 };
+      const wname = r.world || "(no world name)";
+      let w = byWorld.get(wname);
+      if (!w) { w = { name: wname, plays: [] }; byWorld.set(wname, w); }
+      let p = w.plays[w.plays.length - 1];
+      if (!p || (t.n === 1 && p.lastN > 1)) { p = { turns: [], lastN: 0 }; w.plays.push(p); }
+      p.turns.push(t); p.lastN = t.n; w.last = r.ms;
+      lastTurn = t;
+    } else if (r.type === "images") {
+      const k = parseInt(r.details, 10) || 1;
+      if (lastTurn && r.ms - lastTurn.ms <= IMG_WINDOW_MS) { lastTurn.imgs += k; lastTurn.imgCost += -r.credits; }
+      else unassigned += k;
+    }
+  }
+  worlds = [...byWorld.values()].sort((a, b) => b.last - a.last);
+  worlds.forEach(w => w.plays.forEach((p, i) => { p.idx = i + 1; summarize(p); }));
+  return unassigned;
+}
+
+function summarize(p) {
+  const T = p.turns;
+  p.first = T[0]; p.final = T[T.length - 1];
+  p.minN = Math.min(...T.map(t => t.n)); p.maxN = Math.max(...T.map(t => t.n));
+  p.distinct = new Set(T.map(t => t.n)).size;
+}
+
+function playLabel(p, total) {
+  const d1 = shortDate(p.first.date), d2 = shortDate(p.final.date);
+  return (total > 1 ? "#" + p.idx + ": " : "") + "Turns " + p.minN + "–" + p.maxN + ", " + fmt(p.turns.length) + " played, " + (d1 === d2 ? d1 : d1 + " to " + d2) + " " + p.final.date.slice(0, 4);
+}
+
+/* ---------- UI: pickers ---------- */
+function fillWorlds() {
+  const sel = $("world"); const prev = sel.value;
+  sel.innerHTML = worlds.map((w, i) => {
+    const n = w.plays.reduce((s, p) => s + p.turns.length, 0);
+    return '<option value="' + i + '">' + esc(w.name) + " (" + fmt(n) + " turns" + (w.plays.length > 1 ? ", " + w.plays.length + " playthroughs" : "") + ")</option>";
+  }).join("");
+  const keep = worlds.findIndex(w => w.name === prev);
+  sel.value = keep >= 0 ? keep : 0;
+  fillPlays();
+}
+function fillPlays() {
+  const w = worlds[+$("world").value]; if (!w) return;
+  const opts = w.plays.map((p, i) => ({ v: String(i), p })).reverse();
+  let html = opts.map(o => '<option value="' + o.v + '">' + esc(playLabel(o.p, w.plays.length)) + "</option>").join("");
+  if (w.plays.length > 1) html += '<option value="all">All ' + w.plays.length + " playthroughs together</option>";
+  $("play").innerHTML = html;
+  // default: the longest playthrough
+  let best = 0; w.plays.forEach((p, i) => { if (p.turns.length > w.plays[best].turns.length) best = i; });
+  $("play").value = String(best);
+  render();
+}
+
+/* ---------- Charts ---------- */
+const MODEL_COLORS = ["--s1","--s2","--s3","--s4","--s5","--s6","--s7","--s8"];
+let modelColor = {};
+function colorFor(m) { return "var(" + (modelColor[m] || "--s9") + ")"; }
+
+const tip = $("tip");
+function bindTips(root) {
+  root.querySelectorAll("[data-tip]").forEach(el => {
+    el.addEventListener("mousemove", e => {
+      tip.innerHTML = el.getAttribute("data-tip"); tip.classList.remove("hidden");
+      const x = Math.min(e.clientX + 12, innerWidth - tip.offsetWidth - 8);
+      tip.style.left = x + "px"; tip.style.top = (e.clientY + 14) + "px";
+    });
+    el.addEventListener("mouseleave", () => tip.classList.add("hidden"));
+  });
+}
+
+function niceMax(v) { if (v <= 0) return 4; const raw = v / 4, e = Math.pow(10, Math.floor(Math.log10(raw))); for (const m of [1, 2, 2.5, 5, 10]) if (m * e >= raw) return 4 * m * e; return 40 * e; }
+
+// bars: [{v, color, tip, label}] ; xLabels: [{i, text}]
+function barChart(el, bars, { avg, height = 200, xLabels = [], fmtY = v => fmt(v) } = {}) {
+  const W = Math.max(300, el.clientWidth || 1000), H = height, L = 44, R = 8, Tp = 10, B = 22;
+  const max = niceMax(Math.max(...bars.map(b => b.v), avg || 0));
+  const n = bars.length, bw = (W - L - R) / n, gap = n > 60 ? 0 : Math.min(4, bw * 0.2);
+  const y = v => Tp + (H - Tp - B) * (1 - v / max);
+  let s = '<svg viewBox="0 0 ' + W + " " + H + '" role="img">';
+  for (let k = 0; k <= 4; k++) { const v = max * k / 4; s += '<line class="grid" x1="' + L + '" x2="' + (W - R) + '" y1="' + y(v) + '" y2="' + y(v) + '"/><text x="' + (L - 6) + '" y="' + (y(v) + 4) + '" text-anchor="end">' + fmtY(v) + "</text>"; }
+  bars.forEach((b, i) => {
+    const h = b.v > 0 ? Math.max(1, y(0) - y(b.v)) : (b.stub ? 3 : 0);
+    s += '<rect x="' + (L + i * bw + gap / 2) + '" y="' + (y(0) - h) + '" width="' + Math.max(0.6, bw - gap) + '" height="' + h + '" rx="' + (bw > 8 ? 2 : 0) + '" fill="' + (b.v > 0 ? b.color : "var(--muted)") + '" data-tip="' + esc(b.tip) + '"/>';
+    if (b.label) s += '<text x="' + (L + i * bw + bw / 2) + '" y="' + (y(0) - h - 4) + '" text-anchor="middle">' + b.label + "</text>";
+  });
+  if (avg) s += '<line class="avg" x1="' + L + '" x2="' + (W - R) + '" y1="' + y(avg) + '" y2="' + y(avg) + '"/><text class="halo" x="' + (L + 6) + '" y="' + (y(avg) - 5) + '">avg ' + fmtY(avg) + "</text>";
+  xLabels.forEach(l => { s += '<text x="' + (L + l.i * bw + bw / 2) + '" y="' + (H - 6) + '" text-anchor="middle">' + esc(l.text) + "</text>"; });
+  return s + "</svg>";
+}
+
+function ranges(nums) {
+  const a = [...nums].sort((x, y) => x - y); const out = [];
+  for (let i = 0; i < a.length; i++) { let j = i; while (j + 1 < a.length && a[j + 1] === a[j] + 1) j++; out.push(i === j ? String(a[i]) : a[i] + "–" + a[j]); i = j; }
+  return out.join(", ");
+}
+
+/* ---------- Render ---------- */
+function tile(l, v, d) { return '<div class="tile"><div class="l">' + l + '</div><div class="v">' + v + '</div><div class="d">' + (d || "&nbsp;") + "</div></div>"; }
+
+function render() {
+  const w = worlds[+$("world").value]; if (!w) return;
+  const pv = $("play").value;
+  const plays = pv === "all" ? w.plays : [w.plays[+pv]];
+  const T = plays.flatMap(p => p.turns);
+  const multi = plays.length > 1;
+
+  // models, colored by overall share in this selection
+  const mc = new Map(); T.forEach(t => mc.set(t.model, (mc.get(t.model) || 0) + 1));
+  const models = [...mc.entries()].sort((a, b) => b[1] - a[1]);
+  modelColor = {}; models.forEach(([m], i) => { if (i < MODEL_COLORS.length) modelColor[m] = MODEL_COLORS[i]; });
+
+  const spent = T.reduce((s, t) => s + t.cost, 0);
+  const paid = T.filter(t => !t.free), free = T.length - paid.length;
+  const paidSpent = paid.reduce((s, t) => s + t.cost, 0);
+  const distinct = plays.reduce((s, p) => s + p.distinct, 0);
+  const retries = T.length - distinct;
+  const imgs = T.reduce((s, t) => s + t.imgs, 0), imgCost = T.reduce((s, t) => s + t.imgCost, 0);
+  const firstDate = T.reduce((a, t) => t.date < a ? t.date : a, T[0].date);
+  const lastDate = T.reduce((a, t) => t.date > a ? t.date : a, T[0].date);
+  const perDay = new Map(); T.forEach(t => perDay.set(t.date, (perDay.get(t.date) || 0) + 1));
+  const span = dayNum(lastDate) - dayNum(firstDate) + 1;
+  const daysPlayed = perDay.size;
+  const reached = multi ? Math.max(...plays.map(p => p.maxN)) : plays[0].maxN;
+
+  $("title").textContent = w.name;
+  $("sub").textContent = (multi ? "All " + plays.length + " playthroughs together" : "Playthrough " + (w.plays.length > 1 ? "#" + plays[0].idx + " of " + w.plays.length : "") + (plays[0].minN > 1 ? " (picks up at Turn " + plays[0].minN + ": it began before this export or from a save)" : "")).trim();
+
+  $("tiles").innerHTML =
+    tile("Avg cost per turn", fmt(T.length ? spent / T.length : 0, 1), paid.length ? fmt(paidSpent / paid.length, 1) + " per paid turn" : "all turns free") +
+    tile("Credits spent", fmt(spent), "on turns" + (imgCost ? ", plus " + fmt(imgCost) + " on images" : "")) +
+    tile("Turns played", fmt(T.length), (multi ? "furthest turn " + fmt(reached) : "reached Turn " + fmt(reached)) + (retries ? ", " + fmt(retries) + (retries === 1 ? " retry" : " retries") : "")) +
+    tile("Free turns", fmt(free), free ? pct(free, T.length) + " of turns" : "") +
+    tile("Started", niceDate(firstDate), T[0].time ? "at " + T.slice().sort((a, b) => a.ms - b.ms)[0].time.slice(0, 5) : "") +
+    tile("Last played", niceDate(lastDate), span === 1 ? "same day" : fmt(span) + " days from start to finish") +
+    tile("Turns per day", fmt(T.length / daysPlayed, 1), "per day played (" + fmt(daysPlayed) + "); " + fmt(T.length / span, 1) + " per calendar day") +
+    tile("Main model", esc(models[0][0]), pct(models[0][1], T.length) + " of turns" + (models.length > 1 ? ", " + (models.length - 1) + " other" + (models.length > 2 ? "s" : "") : ""));
+
+  // cost per turn chart, in play order
+  const avg = T.length ? spent / T.length : 0;
+  const ordered = plays.flatMap(p => p.turns);
+  const step = Math.max(1, Math.ceil(ordered.length / Math.max(4, Math.floor($("costChart").clientWidth / 80))));
+  $("costNote").textContent = "Each bar is one turn as billed, in the order played; a retried turn shows once per try. Dashed line: average " + fmt(avg, 1) + "." + (free ? " Free turns show as a short gray stub." : "");
+  $("costLegend").innerHTML = models.map(([m]) => '<span><i class="sw" style="background:' + colorFor(m) + '"></i>' + esc(m) + "</span>").join("");
+  $("costChart").innerHTML = barChart($("costChart"), ordered.map(t => ({
+    v: t.cost, stub: t.free, color: colorFor(t.model),
+    tip: "<b>Turn " + t.n + "</b> · " + esc(t.model) + (t.free ? " · free" : "") + "<br>" + fmt(t.cost, 2) + " credits<br>" + niceDate(t.date) + " " + t.time.slice(0, 5) + (t.imgs ? "<br>+" + t.imgs + " image" + (t.imgs > 1 ? "s" : "") + " you made" : "")
+  })), { avg, xLabels: ordered.map((t, i) => ({ i, text: "T" + t.n })).filter((_, i) => i % step === 0) });
+  bindTips($("costChart"));
+
+  // 10% blocks by turn number, per playthrough position
+  const show = T.length >= 20;
+  $("blocksPanel").classList.toggle("hidden", !show);
+  if (show) {
+    const blocks = Array.from({ length: 10 }, () => ({ turns: [], lo: Infinity, hi: -Infinity }));
+    plays.forEach(p => {
+      const range = p.maxN - p.minN + 1;
+      p.turns.forEach(t => {
+        const b = Math.min(9, Math.floor(10 * (t.n - p.minN) / range));
+        blocks[b].turns.push(t); blocks[b].lo = Math.min(blocks[b].lo, t.n); blocks[b].hi = Math.max(blocks[b].hi, t.n);
+      });
+    });
+    $("blocksNote").textContent = "The turns from first to last split into ten equal parts, so you can see whether the game gets dearer as it goes on." + (multi ? " With all playthroughs together, each one is split on its own and the parts are added up." : "") + (T.length < 100 ? " Under 100 turns each block is only a few turns, so read the trend loosely." : "");
+    const bs = blocks.map((b, i) => {
+      const c = b.turns.reduce((s, t) => s + t.cost, 0); const pc = b.turns.filter(t => !t.free);
+      return { i, b, n: b.turns.length, avg: b.turns.length ? c / b.turns.length : 0, paidAvg: pc.length ? pc.reduce((s, t) => s + t.cost, 0) / pc.length : 0, c };
+    });
+    $("blocksChart").innerHTML = barChart($("blocksChart"), bs.map(x => ({ v: x.avg, color: "var(--s1)", label: x.n ? fmt(x.avg, 0) : "", tip: "<b>" + (x.i * 10) + "–" + (x.i * 10 + 10) + "%</b><br>" + (x.n ? "Turns " + x.b.lo + "–" + x.b.hi + ", " + x.n + " played<br>avg " + fmt(x.avg, 1) : "no turns") })),
+      { avg, height: 170, xLabels: bs.map(x => ({ i: x.i, text: $("blocksChart").clientWidth < 600 ? (x.i * 10 + 10) + "%" : (x.i * 10) + "–" + (x.i * 10 + 10) + "%" })) });
+    bindTips($("blocksChart"));
+    $("blocks").innerHTML = "<tr><th>Block</th><th>Turns</th><th class=n>Played</th><th class=n>Avg per turn</th><th class=n>Per paid turn</th><th class=n>vs. overall</th><th>Models</th></tr>" + bs.map(x => {
+      const mm = new Map(); x.b.turns.forEach(t => mm.set(t.model, (mm.get(t.model) || 0) + 1));
+      const bar = [...mm.entries()].sort((a, b) => b[1] - a[1]).map(([m, k]) => '<div style="width:' + (100 * k / x.n) + "%;background:" + colorFor(m) + '" title="' + esc(m) + " " + pct(k, x.n) + '"></div>').join("");
+      const diff = x.n && avg ? (x.avg / avg - 1) * 100 : 0;
+      return "<tr><td style=\"white-space:nowrap\">" + (x.i * 10) + "–" + (x.i * 10 + 10) + "%</td><td>" + (x.n ? (multi ? "" : x.b.lo === x.b.hi ? x.b.lo : x.b.lo + "–" + x.b.hi) : "–") + "</td><td class=n>" + fmt(x.n) + "</td><td class=n>" + (x.n ? fmt(x.avg, 1) : "–") + "</td><td class=n>" + (x.n && x.paidAvg ? fmt(x.paidAvg, 1) : "–") + "</td><td class=n>" + (x.n ? (diff >= 0 ? "+" : "−") + fmt(Math.abs(diff), 0) + "%" : "–") + '</td><td><div class="mini">' + bar + "</div></td></tr>";
+    }).join("");
+  }
+
+  // models
+  $("modelStack").innerHTML = models.map(([m, k]) => '<div style="width:' + (100 * k / T.length) + "%;background:" + colorFor(m) + '" title="' + esc(m) + " " + pct(k, T.length) + '"></div>').join("");
+  $("models").innerHTML = "<tr><th>Model</th><th class=n>Share</th><th class=n>Turns</th><th class=n>Free</th><th class=n>Credits</th><th class=n>Per paid turn</th><th>First</th><th>Last</th></tr>" + models.map(([m, k]) => {
+    const ts = T.filter(t => t.model === m), pt = ts.filter(t => !t.free);
+    const c = ts.reduce((s, t) => s + t.cost, 0);
+    const ds = ts.map(t => t.date).sort();
+    return '<tr><td><span class="row" style="gap:6px"><i class="sw" style="background:' + colorFor(m) + '"></i>' + esc(m) + "</span></td><td class=n>" + pct(k, T.length) + "</td><td class=n>" + fmt(k) + "</td><td class=n>" + fmt(k - pt.length) + "</td><td class=n>" + fmt(c) + "</td><td class=n>" + (pt.length ? fmt(pt.reduce((s, t) => s + t.cost, 0) / pt.length, 1) : "–") + "</td><td>" + shortDate(ds[0]) + "</td><td>" + shortDate(ds[ds.length - 1]) + "</td></tr>";
+  }).join("");
+
+  // turns per day (every calendar day in the span)
+  const days = []; for (let d = dayNum(firstDate); d <= dayNum(lastDate); d++) days.push(dayStr(d));
+  const busiest = [...perDay.entries()].sort((a, b) => b[1] - a[1])[0];
+  $("daysNote").textContent = fmt(T.length / daysPlayed, 1) + " turns per day played, over " + fmt(daysPlayed) + " of " + fmt(span) + " days (dashed line). Busiest: " + niceDate(busiest[0]) + ", " + fmt(busiest[1]) + " turns.";
+  const dstep = Math.max(1, Math.ceil(days.length / Math.max(3, Math.floor($("daysChart").clientWidth / 90))));
+  $("daysChart").innerHTML = barChart($("daysChart"), days.map(d => ({ v: perDay.get(d) || 0, color: "var(--s3)", tip: "<b>" + niceDate(d) + "</b><br>" + fmt(perDay.get(d) || 0) + " turns" })),
+    { avg: T.length / daysPlayed, height: 170, xLabels: days.map((d, i) => ({ i, text: shortDate(d) })).filter((_, i) => i % dstep === 0) });
+  bindTips($("daysChart"));
+
+  // images
+  const key = (p, t) => p.idx + ":" + t.n;
+  const withSet = new Set(plays.flatMap(p => p.turns.filter(t => t.imgs).map(t => key(p, t))));
+  const allN = new Set(plays.flatMap(p => p.turns.map(t => key(p, t))));
+  const gaps = [...allN].filter(n => !withSet.has(n));
+  $("imgTiles").innerHTML =
+    tile("Turns with an image you made", pct(withSet.size, allN.size), fmt(withSet.size) + " of " + fmt(allN.size) + " turns") +
+    tile("Images you made", fmt(imgs), imgs ? fmt(imgCost) + " credits" : "none found") +
+    tile("Turns without one", fmt(gaps.length), "listed below");
+  const num = set => [...set].map(k => +k.split(":")[1]);
+  if (multi) { $("gaps").textContent = $("withImg").textContent = "Pick a single playthrough to list its turns."; }
+  else {
+    $("gaps").textContent = gaps.length ? ranges(num(gaps)) : "None: every turn has at least one.";
+    $("withImg").textContent = withSet.size ? ranges(num(withSet)) : "None.";
+  }
+}
+
+/* ---------- Loading ---------- */
+async function loadFiles(list) {
+  const errs = [];
+  for (const f of list) {
+    try { addFile(f.name, await f.text()); } catch (e) { errs.push(f.name + ": " + e.message); }
+  }
+  if (!allRows.length) { $("loaded").textContent = errs.join(" · "); return; }
+  const unassigned = build();
+  if (!worlds.length) { $("loaded").textContent = "No turns found in this file." + (errs.length ? " " + errs.join(" · ") : ""); return; }
+  const turns = worlds.reduce((s, w) => s + w.plays.reduce((a, p) => a + p.turns.length, 0), 0);
+  $("loaded").innerHTML = "Loaded " + esc(files.join(", ")) + ": " + fmt(turns) + " turns in " + fmt(worlds.length) + " worlds." + (unassigned ? " " + fmt(unassigned) + " images had no turn within 2 hours before them and are left out." : "") + (errs.length ? '<br><span style="color:var(--warn)">' + esc(errs.join(" · ")) + "</span>" : "");
+  $("app").classList.remove("hidden");
+  fillWorlds();
+}
+$("pick").addEventListener("click", () => $("file").click());
+$("file").addEventListener("change", e => { loadFiles([...e.target.files]); e.target.value = ""; });
+addEventListener("dragover", e => { e.preventDefault(); document.body.classList.add("over"); });
+addEventListener("dragleave", e => { if (!e.relatedTarget) document.body.classList.remove("over"); });
+addEventListener("drop", e => { e.preventDefault(); document.body.classList.remove("over"); if (e.dataTransfer.files.length) loadFiles([...e.dataTransfer.files]); });
+$("world").addEventListener("change", fillPlays);
+$("play").addEventListener("change", render);
+let lastW = innerWidth, rt; addEventListener("resize", () => { if (innerWidth === lastW) return; lastW = innerWidth; clearTimeout(rt); rt = setTimeout(() => { if (worlds.length) render(); }, 150); });
+$("copyGaps").addEventListener("click", () => { try { navigator.clipboard.writeText($("gaps").textContent); } catch (e) {} });
+
+/* ---------- Theme (shared with World Stats) ---------- */
+function applyTheme(t) {
+  if (t === "auto") document.documentElement.removeAttribute("data-theme"); else document.documentElement.setAttribute("data-theme", t);
+  $("theme").textContent = "Theme: " + t;
+  try { localStorage.setItem("iwstats-theme", t); } catch (e) {}
+}
+let savedTheme = "auto"; try { savedTheme = localStorage.getItem("iwstats-theme") || "auto"; } catch (e) {}
+applyTheme(savedTheme);
+$("theme").addEventListener("click", () => {
+  const cur = document.documentElement.getAttribute("data-theme") || "auto";
+  applyTheme(cur === "auto" ? "light" : cur === "light" ? "dark" : "auto");
+});
+</script>
+</body>
+</html>
