@@ -443,12 +443,12 @@
             "canTriggerMoreThanOnce": true
         },
         {
-            "id": "QUe4aba59",
-            "name": "Stats: Model Caracal",
+            "id": "QU089aeac",
+            "name": "Stats: Model Caracal-2",
             "advancedLogic": false,
             "triggerEffects": [
                 {
-                    "id": "QUe4aba59e0",
+                    "id": "QU089aeace0",
                     "data": "$stats_markers = $stats_markers + 1",
                     "type": "effectRunScript"
                 }
@@ -456,8 +456,8 @@
             "triggerMidGame": true,
             "triggerConditions": [
                 {
-                    "id": "QUe4aba59c0",
-                    "data": "$game.ai_model = \"Caracal\"",
+                    "id": "QU089aeacc0",
+                    "data": "$game.ai_model = \"Caracal-2\"",
                     "type": "triggerOnPawScript",
                     "category": "condition"
                 }
@@ -618,7 +618,7 @@
             "triggerConditions": [
                 {
                     "id": "QU519cfd6c0",
-                    "data": "$game.ai_model != \"Dolphin\" and $game.ai_model != \"Puma\" and $game.ai_model != \"Lynx\" and $game.ai_model != \"Lynx-Thinking\" and $game.ai_model != \"Caracal\" and $game.ai_model != \"Grimalkin\" and $game.ai_model != \"Smilodon\" and $game.ai_model != \"Smilodon-Thinking\" and $game.ai_model != \"Massivecat\" and $game.ai_model != \"Massivecat-Thinking\" and $game.ai_model != \"Leopard\" and $game.ai_model != \"Leopard-2\" and $game.ai_model != \"Wampus\" and $game.ai_model != \"Smilodon-2 (experimental)\" and $game.ai_model != \"Smilodon-2 Thinking (experimental)\"",
+                    "data": "$game.ai_model != \"Dolphin\" and $game.ai_model != \"Puma\" and $game.ai_model != \"Lynx\" and $game.ai_model != \"Lynx-Thinking\" and $game.ai_model != \"Caracal-2\" and $game.ai_model != \"Grimalkin\" and $game.ai_model != \"Smilodon\" and $game.ai_model != \"Smilodon-Thinking\" and $game.ai_model != \"Massivecat\" and $game.ai_model != \"Massivecat-Thinking\" and $game.ai_model != \"Leopard\" and $game.ai_model != \"Leopard-2\" and $game.ai_model != \"Wampus\" and $game.ai_model != \"Smilodon-2 (experimental)\" and $game.ai_model != \"Smilodon-2 Thinking (experimental)\"",
                     "type": "triggerOnPawScript",
                     "category": "condition"
                 }
@@ -710,6 +710,6 @@
         }
     ],
     "autoAdvanceVersion": false,
-    "version": "1.2",
+    "version": "1.3",
     "showPawScriptButtons": true
 }
