@@ -620,7 +620,8 @@ Use `<<expression>>` inside supported text templates; use bare expressions in `t
 | Show Message / native effect text | When that effect runs |
 | Initial values / PC script-generated options | At initialization only; not a live binding |
 | Native block-modification content | When the effect installs the text, and never again: `coins=13` stayed 13 while Coins advanced to 14 and 15. A deferred `<=...=>` reference in the installed text stays live |
-| A tracker's own update instructions | Every turn, before the AI writes the tracker |
+| A tracker's own update instructions | Every turn, before the AI writes the tracker. A template naming a tracker that doesn't exist reaches the model as literal text (one debug export, Caracal) |
+| Scenario text (situation triggers) | Not rendered: the evaluator quoted `<<…>>` literally and guessed what it stood for (one debug export, Caracal). Matches tracker-template Scenarios not firing; write literal Scenarios gated on a stage |
 | World fields: background, authorStyle, objective, descriptionRequest, evaluationRequest, the PC description, an AI-visible tracker's description | Every turn, like instruction text. A Start-only Request Input that fills a tracker shows in a templated background on the opening screen (one model) |
 | firstInput | Once: it becomes turn 1's action and is stored as rendered |
 | Text installed by a change effect: Change background, first action, objective, PC description, PC name, author style, main instructions, description instructions | When the effect runs, and never again, like block modification (one model). `<=...=>` in these effects is not tested |
