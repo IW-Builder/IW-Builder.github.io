@@ -40,7 +40,7 @@ Start of game, Or mid-game, repeat eligibility and advanced logic are trigger se
 | Change objective | `effectChangeObjective` | Replace objective text. |
 | Change main instructions | `effectChangeMainInstructions` | Replace main instruction text. |
 | Change author style | `effectChangeAuthorStyle` | Replace writing-style guidance. |
-| Change Description instructions | `effectChangeDescriptionInstructions` | Replace specialist narration instructions. |
+| Change specialist instructions | `effectChangeSpecialistInstructions` | Replace any of descriptionRequest, evaluationRequest and summaryRequest from this point on; each has its own override flag. Replaced the older `effectChangeDescriptionInstructions` (description only) in IW's 2026-11-24 update; a world saved since then had its old effect converted in place [OBSERVED, one community world's export]. Payload in [Payloads.md](../examples/Payloads.md#effectchangespecialistinstructions). |
 | Change victory condition | `effectChangeVictoryCondition` | Change victory definition. |
 | Change defeat condition | `effectChangeDefeatCondition` | Change defeat definition. |
 | Change background | `effectChangeBackground` | Startup background replacement; ordinary/combined modes are not equivalent. |
@@ -52,7 +52,7 @@ Native startup payload examples: [background](../examples/effect-effectChangeBac
 
 ## Scope of this catalog
 
-Everything listed is represented in the schema and has a native example under ../examples/; read [Schema](Schema.md) and the specific payload only when implementing. There is no effect that changes Evaluation, Summary or image settings; Change Description instructions is the only specialist-request effect.
+Everything listed is represented in the schema and has a native example under ../examples/; read [Schema](Schema.md) and the specific payload only when implementing. Change specialist instructions is the only effect that changes the specialist requests (description, evaluation, summary); no effect changes image settings. Its payload is from one export, not from a native example world.
 
 ---
 

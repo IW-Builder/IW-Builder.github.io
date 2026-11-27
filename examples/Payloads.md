@@ -177,6 +177,25 @@ Change Description specialist instructions. Full world: [effect-effectChangeDesc
 }
 ```
 
+## effectChangeSpecialistInstructions
+
+Change specialist instructions, the replacement for `effectChangeDescriptionInstructions` since IW's 2026-11-24 update. Shape as seen in one community world's export (no full example world yet): a field whose override is false is left as an empty string. Whether a video prompt field is written when set is not known.
+
+```json
+{
+  "type": "effectChangeSpecialistInstructions",
+  "data": {
+    "overrideDescription": true,
+    "descriptionRequest": "Write a concise second-person scene grounded in the guild office.",
+    "overrideEvaluation": false,
+    "evaluationRequest": "",
+    "overrideSummary": false,
+    "summaryRequest": ""
+  },
+  "id": "node-effect-effectChangeSpecialistInstructions-1"
+}
+```
+
 ## effectChangeMainInstructions
 
 Replace main storyteller instructions. Full world: [effect-effectChangeMainInstructions.json](effect-effectChangeMainInstructions.json).
