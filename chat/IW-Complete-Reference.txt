@@ -330,7 +330,7 @@ Apply this section only when the brief includes romance or sexual content.
 - Consent lives in the fiction. Characters ask, tease, check in, refuse in character, and change their minds through events, never pressure. World rules can make consent part of the drama: a debt that cannot compel the body; a boss who will not while a vote is open. Put boundaries in instructions, not disclaimers in narration.
 - No contrived interruptions. Near-misses should come from characters' choices. Tell the storyteller never to interrupt a scene both parties are clearly continuing.
 - The player's character is theirs. Never decide their words, feelings or desires; sensations a scene plainly causes are fine. Their body is whatever the player has established. Enable name and description editing when players are expected to bring their own character.
-- Content settings. Set mature, nsfw and contentWarnings to match. State in instructions that all characters are adults, and give ages in cards. Check every age before release, not only the cast's: route and quest text, blocks a trigger installs, victims and captives in dark plots, anyone short or youthful by species (give them a stated adult age), unnamed groups with no age near sexual content (students, a dance class, "her pupils": make them adults or move them), schools or youth groups as settings for a sexual storyline, and backstories set "in her teens" beside sexual content (start them at eighteen). Never write invented characters as "younger" without the adult floor. Put the explicitness level in one clear line of an always-on block, for example "write sex on-page and explicitly when the player continues into it" or "fade out at the bedroom door and resume the next morning". List any hard limits the user requested.
+- Content settings. Set mature, nsfw and contentWarnings to match. State in instructions that all characters are adults, and give ages in cards. Check every age before release, not only the cast's: route and quest text, blocks a trigger installs, victims and captives in dark plots, anyone short or youthful by species (give them a stated adult age), unnamed groups with no age near sexual content (students, a dance class, "her pupils": make them adults or move them), schools or youth groups as settings for a sexual storyline, and backstories set "in her teens" beside sexual content (start them at eighteen). Never write invented characters as "younger" without the adult floor. In a transformation world, the floor covers every change, temporary ones included ("never permanently under 18" leaves temporary ones open), and roles made retroactive by a change ("you have always been her daughter"). Put the explicitness level in one clear line of an always-on block, for example "write sex on-page and explicitly when the player continues into it" or "fade out at the bedroom door and resume the next morning". List any hard limits the user requested.
 
 ## Weak and strong
 
@@ -600,7 +600,7 @@ Start of game, Or mid-game, repeat eligibility and advanced logic are trigger se
 | Change objective | `effectChangeObjective` | Replace objective text. |
 | Change main instructions | `effectChangeMainInstructions` | Replace main instruction text. |
 | Change author style | `effectChangeAuthorStyle` | Replace writing-style guidance. |
-| Change Description instructions | `effectChangeDescriptionInstructions` | Replace specialist narration instructions. |
+| Change specialist instructions | `effectChangeSpecialistInstructions` | Replace any of descriptionRequest, evaluationRequest and summaryRequest from this point on; each has its own override flag. Replaced the older `effectChangeDescriptionInstructions` (description only) in IW's 2026-11-24 update; a world saved since then had its old effect converted in place [OBSERVED, one community world's export]. Payload in [Payloads.md](../examples/Payloads.md#effectchangespecialistinstructions). |
 | Change victory condition | `effectChangeVictoryCondition` | Change victory definition. |
 | Change defeat condition | `effectChangeDefeatCondition` | Change defeat definition. |
 | Change background | `effectChangeBackground` | Startup background replacement; ordinary/combined modes are not equivalent. |
@@ -612,7 +612,7 @@ Native startup payload examples: [background](../examples/effect-effectChangeBac
 
 ## Scope of this catalog
 
-Everything listed is represented in the schema and has a native example under ../examples/; read [Schema](Schema.md) and the specific payload only when implementing. There is no effect that changes Evaluation, Summary or image settings; Change Description instructions is the only specialist-request effect.
+Everything listed is represented in the schema and has a native example under ../examples/; read [Schema](Schema.md) and the specific payload only when implementing. Change specialist instructions is the only effect that changes the specialist requests (description, evaluation, summary); no effect changes image settings. Its payload is from one export, not from a native example world.
 
 ---
 
@@ -914,7 +914,7 @@ Native wrappers can repeat trackedItemID/inequality outside `data`. Keep wrapper
 |effectChangeBackground|String `data`, which can be a template such as `<<$opening_assembly>>`; it is rendered once, when the effect runs, so assemble the parts first; see [layered opening](../examples/recipe-layered-opening.json). A template written in the `background` field itself stays live. Startup behavior in [Triggers.md](Triggers.md)|
 |effectEndsGame|Boolean data means "player may continue": true allows continuation after the game-over message, false does not. It is not an enabled flag|
 
-Other schema-defined effects change PC name/description, objective, main instructions, author style, Description instructions and victory/defeat definitions; their exact payloads are in the schema and [Payloads.md](../examples/Payloads.md), and the full set of effects is the [Trigger-Catalog](Trigger-Catalog.md): there is no effect for Evaluation, Summary or image settings. Run Script cannot edit these system properties or the background: stage text in a tracker and apply it with the native effect. A null victoryCondition/defeatCondition is an exported disabled ending.
+Other schema-defined effects change PC name/description, objective, main instructions, author style, specialist instructions (`effectChangeSpecialistInstructions`, which replaced the older Description instructions effect) and victory/defeat definitions; their exact payloads are in the schema and [Payloads.md](../examples/Payloads.md), and the full set of effects is the [Trigger-Catalog](Trigger-Catalog.md): there is no effect for Evaluation, Summary or image settings. Run Script cannot edit these system properties or the background: stage text in a tracker and apply it with the native effect. A null victoryCondition/defeatCondition is an exported disabled ending.
 
 ## Native value effects
 
@@ -1481,7 +1481,7 @@ Preference trackers can be hidden from the storyteller; triggers still read them
 
 **A belief until it is discovered.** For a hidden rule the player can find by trying (the spell can be made permanent after all; the device has a back door), key a lore entry to the mechanic's word with what everyone in the world believes, stated as fact ("cannot be made permanent, as far as anyone knows"). A situation trigger on the player attempting it gives the truth once, rewrites the lore entry to the truth, and an earlier near-miss trigger can hint that they are close. The secret costs nothing until it matters, and finding it is a lasting reward [PATTERN, one community world].
 
-**Public text, secret effect.** For items the player buys or finds, give each one a public description (what the shop or label says) and a secret effect (the catch), and tell the AI that no character, label or shop ever states the secret: the player learns it by using the item. Items the player designs get a hidden catch too, chosen by the AI and recorded in Secret Info [PATTERN, one community world].
+**Public text, secret effect.** For items the player buys or finds, give each one a public description (what the shop or label says) and a secret effect (the catch), and tell the AI that no character, label or shop ever states the secret: the player learns it by using the item. Items the player designs get a hidden catch too, chosen by the AI and recorded in Secret Info [PATTERN, one community world]. The same split works for a pick among options: end the turn on three teasing names ("Sweet and Pink", "Strong and Solid"), put what each really does in Secret Info, and resolve the pick in the player's next action, so the player guesses and the AI stays consistent [PATTERN, a second community world].
 
 **A power with a budget.** A limitless power gives spectacle but no decisions. Give it two or three settings that trade reach, duration, side effects and how much attention they draw, a visible charge count with a cost per setting and a daily refill, and range and line-of-sight limits. Say that running out at a bad moment has real consequences [PATTERN, one community world]; the charges are AI-kept there, so a script-owned count (Attribute report, script ledger) is the safer build.
 
@@ -1602,6 +1602,10 @@ Text installed by a block-modification effect is a snapshot of its `<<...>>` val
 
 **Player-chosen cost options.** Offer the expensive extras as player_only dropdowns at character select. Start-of-game triggers read each one: install the block or swap descriptionRequest when chosen, hide and switch off the tracker that serves it when not, then hide the dropdown itself. Hidden trackers and empty blocks are not billed, so an unchosen extra costs nothing; tell the player what each choice adds per turn. The same triggers can hide trackers that only one starting route uses. Use the player-optional block pattern above instead when the choice must be changeable mid-game [PATTERN, one community world; hidden-tracker billing RUNTIME].
 
+**Player-written roll table.** To let the player curate what each outcome can do (each dice total, wheel slot or card), offer a start choice between the default table and Customize. Customize asks one Request Input per outcome into its own hidden-able tracker, then, as the last effect of the same Start trigger, installs the table block with `<<$outcome_3>>`-style templates. The install freezes the answers into the block (change effects render once), so hide the input trackers in a turn-2 cleanup trigger or the text is billed twice, as tracker values and as instructions. Put the install after every form: one placed before a Present Choice in the same Start trigger is dropped. Keep the examples in the main instructions neutral, or the default themes leak into a curated table, and keep any outcome names the AI invents in a tracker if they must stay stable [PATTERN, one community world; install order and freezing RUNTIME].
+
+**A length choice that survives.** A turn-length option (longer than usual, or IW's default) should live in one small always-on block that the short path empties, not in descriptionRequest. A later Change specialist instructions effect replaces the whole descriptionRequest, so a turn-2 cleanup that installs "at least 900 words" silently undoes the player's earlier choice; a second, full copy of the main instructions for the short path means every later edit has to be made twice [PATTERN, one community world; the block form is a design response].
+
 **Route board that loads one plan.** Offer several routes (jobs on a board, invitations, cases) as one-paragraph teasers in a short always-on block. When the pick is recorded, one trigger per route replaces the board with that route's full plan, hidden twists included, so only the chosen route is ever sent. Make the pick robust: a dropdown or Present Choice, or an AI-written value with an enforced format, matched on the route's name as well as its code, since a free-text "contains Q2" never fires on "The Siege" [PATTERN, one community world; the robust pick is a design response].
 
 **Next route as the post-game.** When a route ends, mark it done, restore the board without it (repeatable triggers), and start the next one with the history kept. The post-game is then the same game with a new route, not a cut-down sandbox [DESIGN RESPONSE, untested].
@@ -1669,6 +1673,8 @@ Optional patterns; trigger order is execution order.
 **Phase ceiling.** For a story that escalates in phases across sessions or chapters, a script advances the session every N turns (a hidden turn count; the AI never counts) and sets the highest allowed phase from it, shifted by a route or a pace dropdown. The phase block renders only that phase's text (a live `<<if>>` on the phase), and the narrator still decides whether to reach the ceiling. A one-turn Tell the AI near each session's end lets the narrator close the session in the story [DESIGN RESPONSE, untested; gated text bills only when rendered, RUNTIME].
 
 **Dice the narrator can fudge.** Name four outcomes: Success, Failure, and Success or Failure "(Fixed)", where the narrator quietly overruled the dice; fixed results are always played as real and logged in Secret Info. To make the dice real, a script rolls the next few d20s into an ai_only tracker each turn and the rules say how a skill becomes a modifier; a player_only log of the real rolls lets the player catch a fudge [PATTERN, one community world; the script dice are a design response].
+
+**A dice race that can finish.** In a points race (first to N), size N to the turns a game can take: N divided by the average gain per roll, times the players, times the turns one roll actually takes. One community dice game asked for 100 points on 2d6 with six players; its recorded game covered 12 rolls in 34 turns (an open-ended break between rounds took 10), so the win was about 240 turns away. Lower the target, resolve the NPCs' rolls for a round in one turn, or cap the break, and let a trigger end the game when a score passes N rather than leaving it to the AI's reading of a text scoreboard. Give the extreme rolls stakes (the lowest hands the choice to the table, the highest gives a powerup saved beside the name). A template roll in firstInput or evaluationRequest is real only for the player's own action; the NPCs' rolls are the narrator's choice unless a script rolls them, as in the dice above [RUNTIME, one recorded game on Massivecat; the remedies are design responses].
 
 **Dread clock.** For episodes that should grow more dangerous the longer they run, a script counts turns inside the episode and compares them with a soft and a hard budget set by the episode's class (12 and 14 turns for the easiest), adding pressure past the soft budget and a jump at the hard one; a script-counted rule-breach term can add to it. Bands of the result fire one Give information beat each, once per episode (flags reset at the episode's start), from "the place has noticed you" to "terminal pressure: force the choice in two or three turns". Give every episode class its own budget [PATTERN, one community world].
 
@@ -2033,7 +2039,7 @@ Each turn is billed in two halves. **Input** is everything IW sends the model: i
 **Standing text** is the part the world author controls. It is billed on every turn it is present, at roughly the same rate per character for each model (K in the table below):
 
 - main instructions, authorStyle and every always-on instruction block, plus any block a trigger has installed;
-- AI-visible tracker definitions (name, description, update instructions, format), from turn 1, whether or not the AI updates that tracker [RUNTIME, Dolphin: about 1.7 credits per 1k characters; one tracker-heavy community world billed its tracker text at about 1.27 times its instructions rate per character on Caracal, Leopard-2 and Massivecat];
+- AI-visible tracker definitions (name, description, update instructions, format), from turn 1, whether or not the AI updates that tracker [RUNTIME, Dolphin: about 1.7 credits per 1k characters; one tracker-heavy community world billed its tracker text at about 1.27 times its instructions rate per character on Caracal, Leopard-2 and Massivecat; a second, on Massivecat, about 1.1 times, so the ratio varies by world];
 - AI-visible tracker values;
 - text inside a live `<<if(…)>>` template only on turns it renders; a false section costs nothing [RUNTIME, Dolphin: 40k added 63 credits only while true]. Price a gated block by rendering it per scene, and remember turn 1 if its gates default on;
 - lore entries for the three turns after a keyword appears in an action, narration or Secret Info, at about the instructions rate [RUNTIME: 1.40 per 1k on Dolphin];
@@ -2119,7 +2125,7 @@ Caracal check (2026-11-07) [RUNTIME, one game each: 15 Caracal turns of a later 
 
 - **Massivecat** is one game on a dialogue-heavy campaign world with pictures on, an 8-step evaluation and a Secret Info plan every turn. Its instructions and IW's fixed input billed 2.0× Dolphin's, but it wrote about 2,000 characters of Secret Info a turn (past the world's caps) and a long evaluation, and billed narration at about 10 credits per 100 words, so its output ran 4–5× Dolphin's. The more a world asks the model to write besides the narration, the further Massivecat moves above 2.3×. A second game, on a transformation party world without pictures or a long evaluation, gave the same narration rate (10.3), the same fixed input (2.0× Dolphin's) and long Secret Info again (about 1,900 characters a turn); with about 960 words of narration a turn, output was 44–50% of its bill. Massivecat-thinking's thinking there billed a median 37 credits a turn (mean 46, up to 120), above the bare-world 21.
 - **Puma** bills input at about 0.85× Dolphin, as K says, but writes tracker updates and picture fields at length (6–24 credits a turn of tracker output against Dolphin's 1–9 on the same worlds). In a lean world with few AI-written trackers and no pictures it stays at about 0.82×; with them it costs about the same as Dolphin.
-- **Pictures** added 4 credits a turn on every model measured (Lynx, Dolphin, Puma, Massivecat). The rest of a picture system's cost is its standing text and the picture fields the model writes, which scale with the model.
+- **Pictures** added 4 credits a turn on every model measured (Lynx, Dolphin, Puma, Massivecat). Turning pictures off doesn't stop the model writing the picture fields: one community world whose image rules ask for long prompts with every bystander described billed a median 70 a turn of output Everything Else on Massivecat with pictures off, against 56 for another world with High pictures, and about 12 is typical on Dolphin. The rest of a picture system's cost is its standing text and the picture fields the model writes, which scale with the model.
 - **Small worlds** agree with the table: tiny test worlds billed 26–31 a turn on Dolphin with short narration and 32–48 over turns 1–5 with 300–500 words.
 - Smilodon and Grimalkin rest on one world each, and Massivecat's × Dolphin on one paired world, so treat those rows as rough.
 
@@ -2290,6 +2296,8 @@ Kit-wide caveats, not repeated per entry:
 - [RUNTIME] Bound Choice/Request Input answers are available to subsequent triggers in the same turn. Multiple-choice min/max constrain submission. Newline-delimited selections store text, not a YAML list. Optional blank input clears the destination while preserving siblings; required blank input is rejected. Multiline input preserves line breaks at nested paths.
 - [RUNTIME] One turn combining a malformed-candidate input with a multiline Request Input showed narration without forms and did not persist, though it was charged; each worked alone, and two plain Request Input forms from separate triggers on one turn worked. Prefer one input form per turn. [UNKNOWN] the server-side cause.
 - [RUNTIME] Preset back-fill is order-sensitive: a script after the choice fills in the same turn, before it fills nothing. Fill missing fields without overwriting nonblank choices. Starting-value customization is distinct from live editing.
+- [RUNTIME] A Modify instruction block placed before a Present Choice in the same Start trigger is dropped: the block stayed as it was although the choice stored its answer (one probe world). Put installs after every form in the trigger, or in a later Start trigger.
+- [RUNTIME] Templates resolve variable names (`<<$mothers_personality>>`) and bare built-ins (`<<player_name>>`, `<<skill_list>>`); a tracker's display name (`<<Mothers Personality>>`) is printed literally (one probe world).
 - [RUNTIME] Source/live-design initial-value changes do not migrate current values; fresh games use the new values. Renaming a display Name with Ignore preserves the variable handle and ID.
 - [RUNTIME] Dedicated Other Character image fields populate Illustration details independently of narrative appearance. Appearance/clothing edits change images and can be reversed. Alias-associated clothing drift can occur.
 - [RUNTIME] Character/scenery results followed `imageStyle*Pre/Post` when opposed to `illustrationStyle*HighPriority`. Exact prompt assembly is hidden. Preserve imported fields and author with current style controls.
@@ -2485,6 +2493,25 @@ Change Description specialist instructions. Full world: [effect-effectChangeDesc
   "type": "effectChangeDescriptionInstructions",
   "data": "Write a concise second-person scene grounded in the guild office. Keep the player's intentions intact.",
   "id": "node-effect-effectChangeDescriptionInstructions-2"
+}
+```
+
+## effectChangeSpecialistInstructions
+
+Change specialist instructions, the replacement for `effectChangeDescriptionInstructions` since IW's 2026-11-24 update. Shape as seen in one community world's export (no full example world yet): a field whose override is false is left as an empty string. Whether a video prompt field is written when set is not known.
+
+```json
+{
+  "type": "effectChangeSpecialistInstructions",
+  "data": {
+    "overrideDescription": true,
+    "descriptionRequest": "Write a concise second-person scene grounded in the guild office.",
+    "overrideEvaluation": false,
+    "evaluationRequest": "",
+    "overrideSummary": false,
+    "summaryRequest": ""
+  },
+  "id": "node-effect-effectChangeSpecialistInstructions-1"
 }
 ```
 

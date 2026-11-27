@@ -133,6 +133,8 @@ Kit-wide caveats, not repeated per entry:
 - [RUNTIME] Bound Choice/Request Input answers are available to subsequent triggers in the same turn. Multiple-choice min/max constrain submission. Newline-delimited selections store text, not a YAML list. Optional blank input clears the destination while preserving siblings; required blank input is rejected. Multiline input preserves line breaks at nested paths.
 - [RUNTIME] One turn combining a malformed-candidate input with a multiline Request Input showed narration without forms and did not persist, though it was charged; each worked alone, and two plain Request Input forms from separate triggers on one turn worked. Prefer one input form per turn. [UNKNOWN] the server-side cause.
 - [RUNTIME] Preset back-fill is order-sensitive: a script after the choice fills in the same turn, before it fills nothing. Fill missing fields without overwriting nonblank choices. Starting-value customization is distinct from live editing.
+- [RUNTIME] A Modify instruction block placed before a Present Choice in the same Start trigger is dropped: the block stayed as it was although the choice stored its answer (one probe world). Put installs after every form in the trigger, or in a later Start trigger.
+- [RUNTIME] Templates resolve variable names (`<<$mothers_personality>>`) and bare built-ins (`<<player_name>>`, `<<skill_list>>`); a tracker's display name (`<<Mothers Personality>>`) is printed literally (one probe world).
 - [RUNTIME] Source/live-design initial-value changes do not migrate current values; fresh games use the new values. Renaming a display Name with Ignore preserves the variable handle and ID.
 - [RUNTIME] Dedicated Other Character image fields populate Illustration details independently of narrative appearance. Appearance/clothing edits change images and can be reversed. Alias-associated clothing drift can occur.
 - [RUNTIME] Character/scenery results followed `imageStyle*Pre/Post` when opposed to `illustrationStyle*HighPriority`. Exact prompt assembly is hidden. Preserve imported fields and author with current style controls.
@@ -328,6 +330,25 @@ Change Description specialist instructions. Full world: [effect-effectChangeDesc
   "type": "effectChangeDescriptionInstructions",
   "data": "Write a concise second-person scene grounded in the guild office. Keep the player's intentions intact.",
   "id": "node-effect-effectChangeDescriptionInstructions-2"
+}
+```
+
+## effectChangeSpecialistInstructions
+
+Change specialist instructions, the replacement for `effectChangeDescriptionInstructions` since IW's 2026-11-24 update. Shape as seen in one community world's export (no full example world yet): a field whose override is false is left as an empty string. Whether a video prompt field is written when set is not known.
+
+```json
+{
+  "type": "effectChangeSpecialistInstructions",
+  "data": {
+    "overrideDescription": true,
+    "descriptionRequest": "Write a concise second-person scene grounded in the guild office.",
+    "overrideEvaluation": false,
+    "evaluationRequest": "",
+    "overrideSummary": false,
+    "summaryRequest": ""
+  },
+  "id": "node-effect-effectChangeSpecialistInstructions-1"
 }
 ```
 
