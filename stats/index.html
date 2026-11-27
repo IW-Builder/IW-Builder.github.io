@@ -12,6 +12,7 @@
   --text:#0b0b0b; --text2:#52514e; --muted:#7a7974; --accent:#2a78d6;
   --s1:#2a78d6; --s2:#eb6834; --s3:#1baf7a; --s4:#eda100;
   --s5:#e87ba4; --s6:#008300; --s7:#6250d6; --s8:#e34948;
+  --s9:#0e8fa3; --s10:#9a6b3f; --s11:#8a9612; --s12:#b04fc2;
   --track:#e9eef6; --warn:#b26b00; --warnbg:#fdf3e1;
 }
 @media (prefers-color-scheme: dark){
@@ -21,6 +22,7 @@
     --text:#f0efec; --text2:#c3c2b7; --muted:#8f8e86; --accent:#3987e5;
     --s1:#3987e5; --s2:#d95926; --s3:#199e70; --s4:#c98500;
     --s5:#d55181; --s6:#0ca30c; --s7:#9085e9; --s8:#e66767;
+    --s9:#22a7bb; --s10:#b58457; --s11:#a5b02a; --s12:#c46bd6;
     --track:#22293a; --warn:#e8b04b; --warnbg:#2b2416;
   }
 }
@@ -30,6 +32,7 @@
   --text:#f0efec; --text2:#c3c2b7; --muted:#8f8e86; --accent:#3987e5;
   --s1:#3987e5; --s2:#d95926; --s3:#199e70; --s4:#c98500;
   --s5:#d55181; --s6:#0ca30c; --s7:#9085e9; --s8:#e66767;
+    --s9:#22a7bb; --s10:#b58457; --s11:#a5b02a; --s12:#c46bd6;
   --track:#22293a; --warn:#e8b04b; --warnbg:#2b2416;
 }
 *{box-sizing:border-box}
@@ -65,6 +68,11 @@ table{border-collapse:collapse;width:100%;font-size:13px}
 th,td{padding:5px 8px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
 th{color:var(--text2);font-weight:600}
 td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}
+#compare{table-layout:fixed}
+#compare th,#compare td{overflow-wrap:anywhere}
+#compare th:first-child,#compare td:first-child{position:sticky;left:0;z-index:1;background:var(--panel)}
+#compare .agg{font-weight:600}
+#compare td.agg span{font-weight:400}
 .legend{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:13px;color:var(--text2);margin:6px 0}
 .legend span{display:inline-flex;align-items:center;gap:6px}
 svg text{fill:var(--text2);font-size:11px}
@@ -89,6 +97,12 @@ svg .axis{stroke:var(--line);stroke-width:1}
 .flag{display:block;border-left:3px solid var(--warn);background:var(--warnbg);padding:6px 10px;border-radius:6px;font-size:13px;margin:6px 0;color:var(--text)}
 .ok{color:var(--text2);font-size:13px}
 details{margin:8px 0}
+details.world{margin:14px 0}
+details.world>summary{display:block;list-style:none;color:var(--text);font-size:inherit}
+details.world>summary::-webkit-details-marker{display:none}
+details.world>summary .world-head::before{content:"";width:7px;height:7px;border:solid var(--text2);border-width:0 2px 2px 0;transform:rotate(-45deg);margin:0 4px 0 2px;transition:transform .15s}
+details.world[open]>summary .world-head::before{transform:rotate(45deg)}
+details.world>summary .note{margin:4px 0 0}
 summary{cursor:pointer;color:var(--accent);font-size:13px}
 .cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:4px 26px}
 .world-head{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
@@ -159,7 +173,7 @@ try { const t = localStorage.getItem("iwstats-theme"); if (t === "light" || t ==
 
 <script>
 "use strict";
-const COLORS = 8;
+const COLORS = 12;              // colours repeat after 12 worlds
 const worlds = [];            // {key,name,date,file,on,colour,data}
 let colourNext = 0;
 
@@ -236,7 +250,7 @@ const $ = id => document.getElementById(id);
 const fmt = n => n == null ? "" : (Math.abs(n) >= 100 || Number.isInteger(n) ? Math.round(n).toLocaleString("en-US") : n.toLocaleString("en-US", {maximumFractionDigits:2}));
 const pct = (a, b) => b ? Math.round(100 * a / b) + "%" : "";
 const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
-const col = w => `var(--s${w.colour + 1})`;
+const col = w => `var(--s${w.colour % COLORS + 1})`;
 const showV = v => !v ? "" : v.lt ? `under ${v.lt}` : v.n != null ? fmt(v.n) : v.text;
 const fig = (w, k) => (w.data.figures[k] || {}).n;
 const active = () => worlds.filter(w => w.on);
@@ -427,35 +441,67 @@ function render(){
     T("Players", fmt(sum("Unique players")), "added per world") + T("Credits per turn", cpt == null ? "–" : fmt(cpt), ws.length > 1 ? "weighted by turns" : "") +
     T("Still playing at turn 5", pct(reach5, reach1), `${fmt(reach5)} of ${fmt(reach1)} players`) + T("Longest game", fmt(longest) + " turns");
 
-  const keys = ["Turns played", "Unique players", "Games", "Turns per player", "Turns per game", "Played 2+ games to turn 5", "Credits per turn", "Storytelling credits per turn"];
+  // one row per measure: [label, aggregate across the ticked worlds, ...one cell per world]
+  const many = ws.length > 1, mut = t => ` <span style="color:var(--muted)">${t}</span>`;
+  const rowsC = [];
+  const add = (label, agg, cells) => rowsC.push([label, agg == null ? "" : agg, ...cells]);
+  const figSum = k => { let n = 0, hid = false, any = false;
+    for (const w of ws){ const v = w.data.figures[k]; if (!v) continue; if (v.n != null){ n += v.n; any = true; } else if (v.lt) hid = true; }
+    return any ? fmt(n) + (hid ? "+" : "") : hid ? "under 5" : ""; };
+  const ratio = (a, b) => { const A = sum(a), B = sum(b); return B ? fmt(A / B) : ""; };
+  const weighted = k => { let num = 0, den = 0;
+    for (const w of ws){ const c = fig(w, k), t = fig(w, "Turns played"); if (c != null && t){ num += c * t; den += t; } }
+    return den ? fmt(num / den) : ""; };
+  const AGG = {"Turns played": () => figSum("Turns played"), "Unique players": () => figSum("Unique players"), "Games": () => figSum("Games"),
+    "Played 2+ games to turn 5": () => figSum("Played 2+ games to turn 5"),
+    "Turns per player": () => ratio("Turns played", "Unique players"), "Turns per game": () => ratio("Turns played", "Games"),
+    "Credits per turn": () => weighted("Credits per turn"), "Storytelling credits per turn": () => weighted("Storytelling credits per turn")};
+  const keys = Object.keys(AGG);
   const extra = Object.keys(Object.assign({}, ...ws.map(w => w.data.figures))).filter(k => !keys.includes(k));
-  const rowsC = [...keys, ...extra].map(k => [esc(k), ...ws.map(w => showV(w.data.figures[k]))]);
+  for (const k of [...keys, ...extra]) add(esc(k), AGG[k] ? AGG[k]() : "", ws.map(w => showV(w.data.figures[k])));
   for (const t of [5, 10, 21, 51, 100]){
-    if (ws.some(w => reachAt(w.data, t) != null))
-      rowsC.push([`Players reaching turn ${t}${t > 20 ? "+" : ""}`, ...ws.map(w => { const a = reachAt(w.data, t), b = reachAt(w.data, 1); return a == null ? "" : `${fmt(a)} <span style="color:var(--muted)">${pct(a, b)}</span>`; })]);
+    if (!ws.some(w => reachAt(w.data, t) != null)) continue;
+    let A = 0, B = 0;
+    for (const w of ws){ const a = reachAt(w.data, t); if (a != null){ A += a; B += reachAt(w.data, 1) || 0; } }
+    add(`Players reaching turn ${t}${t > 20 ? "+" : ""}`, fmt(A) + mut(pct(A, B)), ws.map(w => { const a = reachAt(w.data, t), b = reachAt(w.data, 1); return a == null ? "" : fmt(a) + mut(pct(a, b)); }));
   }
-  rowsC.push(["Longest game (turns)", ...ws.map(w => fmt(w.data.longest))]);
+  add("Longest game (turns)", fmt(Math.max(0, ...ws.map(w => w.data.longest || 0)) || null), ws.map(w => fmt(w.data.longest)));
   const mgs = ws.map(w => markerGroups(w.data));
   // story-time milestones from the Reached Day / Reached Hour markers: games, as a share of Stats: Started
   const reached = (mg, label) => ((mg && mg.groups.Reached) || []).find(r => r.label === label);
   for (const day of [1, 3, 7]){
-    if (mgs.some(mg => reached(mg, "Day " + day)))
-      rowsC.push([`Games reaching Day ${day}+`, ...mgs.map(mg => { const r = reached(mg, "Day " + day); return !r ? "" : `${fmt(r.games)}${mg.started ? ` <span style="color:var(--muted)">${pct(r.games, mg.started)}</span>` : ""}`; })]);
+    if (!mgs.some(mg => reached(mg, "Day " + day))) continue;
+    let A = 0, B = 0;
+    for (const mg of mgs){ const r = reached(mg, "Day " + day); if (r){ A += r.games; B += mg.started || 0; } }
+    add(`Games reaching Day ${day}+`, fmt(A) + (B ? mut(pct(A, B)) : ""), mgs.map(mg => { const r = reached(mg, "Day " + day); return !r ? "" : fmt(r.games) + (mg.started ? mut(pct(r.games, mg.started)) : ""); }));
   }
   const longTime = mg => { let best = null, key = -1;          // furthest Day marker any game reached, else furthest Hour
     for (const r of (mg && mg.groups.Reached) || []){ const x = r.games && r.label.match(/^(Hour|Day) (\d+)$/); if (!x) continue;
-      const k = (x[1] === "Day" ? 1e6 : 0) + +x[2]; if (k > key){ key = k; best = r.label; } }
+      const k = (x[1] === "Day" ? 1e6 : 0) + +x[2]; if (k > key){ key = k; best = {label:r.label, key:k}; } }
     return best; };
-  if (mgs.some(longTime)) rowsC.push(["Longest game (time)", ...mgs.map(mg => { const l = longTime(mg); return l ? esc(l) + "+" : ""; })]);
+  if (mgs.some(longTime)){
+    const top = mgs.map(longTime).filter(Boolean).sort((a, b) => b.key - a.key)[0];
+    add("Longest game (time)", esc(top.label) + "+", mgs.map(mg => { const l = longTime(mg); return l ? esc(l.label) + "+" : ""; }));
+  }
   const models = mg => ((mg && mg.groups.Model) || []).filter(r => r.fired || r.games);   // already sorted by turns, then games
+  const allModels = (() => { const m = new Map();
+    for (const mg of mgs) for (const r of models(mg)){ const e = m.get(r.label) || {label:r.label, fired:0, games:0}; e.fired += r.fired; e.games += r.games; m.set(r.label, e); }
+    return [...m.values()].sort((a, b) => b.fired - a.fired || b.games - a.games); })();
+  const modelCell = r => !r ? "" : esc(r.label) + mut(fmt(r.fired) + " turns");
   ["first", "second", "third"].forEach((nth, i) => {
-    if (mgs.some(mg => models(mg)[i]))
-      rowsC.push([`Top model, ${nth}`, ...mgs.map(mg => { const r = models(mg)[i]; return !r ? "" : `${esc(r.label)} <span style="color:var(--muted)">${fmt(r.fired)} turns</span>`; })]);
+    if (mgs.some(mg => models(mg)[i])) add(`Top model, ${nth}`, modelCell(allModels[i]), mgs.map(mg => modelCell(models(mg)[i])));
   });
-  rowsC.push(["Stats: Started", ...mgs.map(mg => !mg ? "none" : mg.started == null ? "–" : fmt(mg.started))]);
-  $("compare").innerHTML = table(["", ...ws.map(w => w.name)], rowsC, ws.map((_, i) => i + 1));
-  // add each world's swatch to its column header
-  $("compare").querySelectorAll("thead th").forEach((th, i) => { if (i) th.innerHTML = `<i class="sw" style="background:${col(ws[i-1])};margin-right:6px"></i>${esc(ws[i-1].name)}`; });
+  add("Stats: Started", mgs.some(mg => mg && mg.started != null) ? fmt(mgs.reduce((a, mg) => a + ((mg && mg.started) || 0), 0)) : "",
+    mgs.map(mg => !mg ? "none" : mg.started == null ? "–" : fmt(mg.started)));
+  // the aggregate column shows only when two or more worlds are ticked; world columns keep a fixed width and the table scrolls sideways
+  const cols = ws.map(w => ({head:`<i class="sw" style="background:${col(w)};margin-right:6px"></i>${esc(w.name)}`}));
+  if (many) cols.unshift({head:"All worlds", agg:true});
+  const COLW = 104, LABELW = 180;
+  const cmp = $("compare");
+  cmp.style.width = `max(100%, ${LABELW + cols.length * COLW}px)`;
+  cmp.innerHTML = `<colgroup><col>${cols.map(() => `<col style="width:${COLW}px">`).join("")}</colgroup>` +
+    `<thead><tr><th></th>${cols.map(c => `<th class="n${c.agg ? " agg" : ""}">${c.head}</th>`).join("")}</tr></thead><tbody>` +
+    rowsC.map(r => `<tr><td>${r[0]}</td>${(many ? r.slice(1) : r.slice(2)).map((c, i) => `<td class="n${many && !i ? " agg" : ""}">${c}</td>`).join("")}</tr>`).join("") + `</tbody>`;
 
   /* days */
   const dates = [...new Set(ws.flatMap(w => Object.keys(w.data.days)))].sort();
@@ -464,7 +510,8 @@ function render(){
     const all = []; for (let t = Date.parse(dates[0] + "T00:00Z"); t <= Date.parse(dates[dates.length - 1] + "T00:00Z"); t += 864e5) all.push(new Date(t).toISOString().slice(0, 10));
     const series = ws.map(w => ({name:w.name, colour:col(w), values: all.map(d => (w.data.days[d] || {}).Turns ?? null)}));
     legend($("daysLegend"), ws);
-    lineChart($("days"), all, series, {label:"Turns played each day", xfmt: d => d.slice(5), tip: i => { const on = ws.filter(w => ((w.data.days[all[i]] || {}).Turns || 0) >= 1);
+    lineChart($("days"), all, series, {label:"Turns played each day", xfmt: d => d.slice(5), tip: i => { const on = ws.filter(w => ((w.data.days[all[i]] || {}).Turns || 0) >= 1)
+        .sort((a, b) => b.data.days[all[i]].Turns - a.data.days[all[i]].Turns);
       return all[i] + "\n" + (on.length ? on.map(w => { const e = w.data.days[all[i]];
         return `${w.name}: ${fmt(e.Turns)} turns` + (e.Players != null ? `, ${fmt(e.Players)} players` : "") + (e.Credits != null ? `, ${fmt(e.Credits)} credits` : "");
       }).join("\n") : "No turns played"); }});
@@ -479,7 +526,8 @@ function render(){
   legend($("reachLegend"), ws);
   lineChart($("reach"), labs, ws.map(w => { const top = reachAt(w.data, 1) || 1;
     return {name:w.name, colour:col(w), values: labs.map(l => { const r = w.data.reach.find(x => x.label === l); return r && r.n != null ? 100 * r.n / top : null; })}; }),
-    {label:"How far they get", pct:true, max:100, connect:true, tip: i => { const on = ws.map(w => [w, w.data.reach.find(x => x.label === labs[i])]).filter(([, r]) => r && r.n >= 1);
+    {label:"How far they get", pct:true, max:100, connect:true, tip: i => { const on = ws.map(w => [w, w.data.reach.find(x => x.label === labs[i])]).filter(([, r]) => r && r.n >= 1)
+        .sort(([wa, ra], [wb, rb]) => rb.n / (reachAt(wb.data, 1) || 1) - ra.n / (reachAt(wa.data, 1) || 1));
       return `Turn ${labs[i]}\n` + (on.length ? on.map(([w, r]) => `${w.name}: ${fmt(r.n)} players (${pct(r.n, reachAt(w.data, 1))})`).join("\n") : "No players"); }});
   $("reachTable").innerHTML = table(["Turn", ...ws.map(w => esc(w.name))], labs.map(l => [l, ...ws.map(w => { const r = w.data.reach.find(x => x.label === l); return r ? fmt(r.n) : ""; })]), ws.map((_, i) => i + 1));
 
@@ -502,8 +550,10 @@ function render(){
 
 function worldHTML(w){
   const d = w.data;
-  let h = `<section class="panel"><div class="world-head"><i class="sw" style="background:${col(w)}"></i><h2>${esc(w.name)}</h2>${w.date ? `<span class="tag">exported ${w.date}</span>` : ""}</div>`;
-  h += `<p class="note">${fmt(fig(w, "Turns played"))} turns · ${fmt(fig(w, "Games"))} games · ${fmt(fig(w, "Unique players"))} players · ${fmt(fig(w, "Credits per turn"))} credits per turn</p>`;
+  const last = lastPlayed(d);
+  let h = `<details class="panel world" data-key="${esc(w.key)}"${w.closed ? "" : " open"}><summary><div class="world-head"><i class="sw" style="background:${col(w)}"></i><h2>${esc(w.name)}</h2>` +
+    (w.date ? `<span class="tag">exported ${w.date}</span>` : "") + (last ? `<span class="tag">last played ${last}</span>` : "") + `</div>`;
+  h += `<p class="note">${fmt(fig(w, "Turns played"))} turns · ${fmt(fig(w, "Games"))} games · ${fmt(fig(w, "Unique players"))} players · ${fmt(fig(w, "Credits per turn"))} credits per turn</p></summary>`;
 
   h += `<h3>Stats markers</h3>` + markersHTML(w);
 
@@ -551,8 +601,20 @@ function worldHTML(w){
     h += `<details><summary>Other rows in this file (${d.other.length})</summary><div class="scroll">` +
       table(["Section", "Item", "Measure", "Value"], d.other.map(o => [esc(o.sec), esc(o.item), esc(o.meas), esc(o.v.text)])) + `</div></details>`;
   }
-  return h + `</section>`;
+  return h + `</details>`;
 }
+// newest date in the file with play recorded: a day with turns, or a version's "Last played"
+function lastPlayed(d){
+  let best = "";
+  for (const [day, e] of Object.entries(d.days)) if (e.Turns > 0 && /^\d{4}-\d{2}-\d{2}/.test(day) && day > best) best = day.slice(0, 10);
+  for (const e of Object.values(d.versions)){ const t = ((e["Last played"] || {}).text || "").slice(0, 10); if (/^\d{4}-\d{2}-\d{2}$/.test(t) && t > best) best = t; }
+  return best;
+}
+// remember which world sections are collapsed across re-renders (resizing redraws the page)
+$("worlds").addEventListener("toggle", e => {
+  const el = e.target; if (!el.classList || !el.classList.contains("world")) return;
+  const w = worlds.find(x => x.key === el.dataset.key); if (w) w.closed = !el.open;
+}, true);
 
 /* ---------- loading ---------- */
 async function addFiles(files){
@@ -569,7 +631,6 @@ async function addFiles(files){
         if (date && old.date && date < old.date){ errs.push(`${file.name}: older than the ${old.date} export already loaded, skipped`); continue; }
         Object.assign(old, {date, file:file.name, data, on:true});
       } else {
-        if (worlds.length >= COLORS){ errs.push(`${file.name}: up to ${COLORS} worlds at once; remove one first`); continue; }
         const used = new Set(worlds.map(w => w.colour));
         let c = 0; while (used.has(c)) c++;
         worlds.push({key, name, date, file:file.name, data, on:true, colour:c});
