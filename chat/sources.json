@@ -24,7 +24,7 @@
       "reference/Images-and-Models.md",
       "reference/Default-Evaluation.txt"
     ],
-    "sha256": "e82dc5dbdd154c942c41626cd5acdb0aa599774624fe56adfaac253978772dc5"
+    "sha256": "2812f15522704afb8de489e6a07cf01ff7b0cfab30fc15c63f580b1a8a2ae7b9"
   },
   "IW-Reference-1.txt": {
     "sourceFiles": [
@@ -36,7 +36,7 @@
       "reference/Trigger-Catalog.md",
       "reference/Portable-Banks.md"
     ],
-    "sha256": "000c1e9491e6f785ba0e39070b5202cae28b4e1f5bf0c5c38e791b8b171a11ac"
+    "sha256": "5ef8c7d7d041f3c0304853630e1b32de73692d053b9d953f01c904ec498dc90b"
   },
   "IW-Reference-2.txt": {
     "sourceFiles": [
@@ -46,13 +46,13 @@
       "reference/Runtime.md",
       "reference/Characters.md"
     ],
-    "sha256": "fc073e1ad06f4298bb5e599826dfa482b56e6b7510eb26ed7beb83ff31a4e8eb"
+    "sha256": "a9ff3960c38310e3a760bbd38b52d7f686b785c71b1a9c4a51183125901a2655"
   },
   "IW-Reference-3.txt": {
     "sourceFiles": [
       "reference/Recipes.md"
     ],
-    "sha256": "6c63483ebf86422e7ae208c591f1b2a1ba11add9d8e42727db4898f86f423e58"
+    "sha256": "b096861ca6c5c7f2ed491e4a476266e5c07c71d2ebf74772d697919f181216de"
   },
   "IW-Reference-4.txt": {
     "sourceFiles": [
@@ -60,7 +60,7 @@
       "reference/Editor-UI.md",
       "reference/Cost.md"
     ],
-    "sha256": "742d455f4de48087eda8334629577d44e6e11eac0bd6396428a95885251e6d17"
+    "sha256": "34be8321658e88b8ef1c4ce147d2a47395660ff294ca6d5f6e1248913c6ec406"
   },
   "IW-Reference-5.txt": {
     "sourceFiles": [
